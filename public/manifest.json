@@ -1,0 +1,18 @@
+{
+    "name": "Carvis - Oto Servis Asistanı",
+    "short_name": "Carvis",
+    "description": "Yapay zeka destekli oto servis ve bakım asistanınız.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#020617",
+    "theme_color": "#020617",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/pwa-icon.png",
+            "sizes": "192x192 512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
