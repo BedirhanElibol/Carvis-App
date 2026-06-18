@@ -245,20 +245,38 @@ const CartDrawer = () => {
                 {total.toLocaleString()} ₺
               </span>
             </div>
-            <button
-              onClick={handleCheckout}
-              disabled={cart.length === 0 || isProcessingCheckout}
-              className="w-full bg-primary-600 text-white py-4 rounded-2xl font-black hover:bg-primary-500 transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-primary-900/50 active-scale font-sans"
-            >
-              {isProcessingCheckout ? (
-                <Icons.Loader2 className="animate-spin" size={18} />
-              ) : (
-                <Icons.CreditCard size={18} />
-              )}
-              {isProcessingCheckout
-                ? t.checkingPrice || "İşleniyor..."
-                : t.buyNow || "Ödemeye Geç"}
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => {
+                  if (!selectedAddress) {
+                    setAddressError(true);
+                    showAlert(
+                      "Adres Gerekli",
+                      "Lütfen teslimat adresinizi seçin.",
+                      "warning"
+                    );
+                    setTimeout(() => setAddressError(false), 2000);
+                    return;
+                  }
+                  handleCheckout();
+                }}
+                disabled={cart.length === 0 || isProcessingCheckout}
+                className={`w-full text-white py-4 rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl active-scale font-sans ${
+                  !selectedAddress && cart.length > 0
+                    ? "bg-slate-500 opacity-80"
+                    : "bg-primary-600 hover:bg-primary-500 shadow-primary-900/50 disabled:opacity-50 disabled:cursor-not-allowed"
+                }`}
+              >
+                {isProcessingCheckout ? (
+                  <Icons.Loader2 className="animate-spin" size={18} />
+                ) : (
+                  <Icons.CreditCard size={18} />
+                )}
+                {isProcessingCheckout
+                  ? t.checkingPrice || "İşleniyor..."
+                  : (!selectedAddress ? "Adres Seçin" : (t.buyNow || "Ödemeye Geç"))}
+              </button>
+            </div>
           </div>
         </div>
       </div>
