@@ -1,6 +1,6 @@
 # 🤖 Phase 7: AI Intelligence Implementation Plan
 
-**Objective**: Integrate "Smart" features into Carvis to differentiate it from standard apps.
+**Objective**: Integrate "Smart" features into Rapidsy to differentiate it from standard apps.
 **Strategy**: Implement a structured `AIService` that currently returns high-fidelity mock data but is ready for real Gemini/OpenAI API integration.
 
 ## 🏗️ 1. Architecture: The AI Layer
@@ -16,7 +16,7 @@
 
 ## 🧩 2. Features & UI Components
 
-### A. The "Carvis Brain" (Floating Assistant)
+### A. The "Rapidsy Brain" (Floating Assistant)
 - **Component**: `AIAssistant.jsx`
 - **Location**: Global Floating Action Button (FAB) on bottom-right (except Auth screens).
 - **Capabilities**:

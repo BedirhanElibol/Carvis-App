@@ -36,8 +36,20 @@ self.addEventListener('activate', (event) => {
 
 // Fetch Event
 self.addEventListener('fetch', (event) => {
-    // Skip non-GET requests and Supabase API calls (let them be handled by network or specific logic)
-    if (event.request.method !== 'GET' || event.request.url.includes('supabase.co')) {
+    const url = new URL(event.request.url);
+
+    // Bypasses:
+    // 1. Non-GET requests
+    // 2. Supabase API calls
+    // 3. Vite development resources (HMR, internal scripts)
+    // 4. Chrome extensions or other protocols
+    if (
+        event.request.method !== 'GET' ||
+        url.hostname.includes('supabase.co') ||
+        url.pathname.startsWith('/@') ||           // Vite internal paths like /@react-refresh
+        url.pathname.includes('node_modules') ||    // Development dependencies
+        url.protocol !== 'http:' && url.protocol !== 'https:'
+    ) {
         return;
     }
 
@@ -50,11 +62,19 @@ self.addEventListener('fetch', (event) => {
 
             // Network fallback
             return fetch(event.request).then((networkResponse) => {
-                return caches.open(DYNAMIC_CACHE).then((cache) => {
-                    // Cache the new resource (clone it because response stream can be used once)
-                    cache.put(event.request.url, networkResponse.clone());
-                    return networkResponse;
-                });
+                // If the request was for a resource that we should cache dynamically
+                // (Avoiding caching huge assets or development scripts that might leak into the check above)
+                if (networkResponse && networkResponse.status === 200) {
+                    return caches.open(DYNAMIC_CACHE).then((cache) => {
+                        // Cache the new resource (clone it because response stream can be used once)
+                        cache.put(event.request.url, networkResponse.clone());
+                        return networkResponse;
+                    });
+                }
+                return networkResponse;
+            }).catch(() => {
+                // If fetch fails (offline), and we have a cached page for it, return it or just fail
+                return caches.match('/offline.html');
             });
         })
     );

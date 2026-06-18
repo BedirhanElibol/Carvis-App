@@ -1,4 +1,4 @@
-# 🤖 Carvis-App .agent Kapsamlı Rehberi (Antigravity Kit)
+# 🤖 Rapidsy-App .agent Kapsamlı Rehberi (Antigravity Kit)
 
 Bu rehber, `.agent` klasörü içindeki tüm dosyaların, uzmanların (agents), yeteneklerin (skills) ve iş akışlarının (workflows) eksiksiz listesini ve kullanım amaçlarını içerir.
 

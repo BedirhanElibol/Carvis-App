@@ -1,6 +1,6 @@
 # 🏥 Plan: Database Consolidation (The "True Master" Protocol)
 
-**Objective**: Create a single, self-contained SQL script that builds the *entire* Carvis backend v3.0 from scratch, error-free.
+**Objective**: Create a single, self-contained SQL script that builds the *entire* Rapidsy backend v3.0 from scratch, error-free.
 
 ## 🕵️‍♂️ Explorer Findings
 - **Current State**: Fragmented. `MASTER_SCHEMA.sql` + `FIX_QUOTES.sql` + `FIX_USERS...`

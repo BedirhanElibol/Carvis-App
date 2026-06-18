@@ -1,4 +1,4 @@
-# 🚀 Carvis App - Deployment Guide (v2.1 Partner Edition)
+# 🚀 Rapidsy App - Deployment Guide (v2.1 Partner Edition)
 
 **Build Status:** ✅ SUCCESS
 **New Mode:** Partner Ecosystem (Otopark, Vale, Usta)

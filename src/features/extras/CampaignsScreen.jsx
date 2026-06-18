@@ -1,103 +1,153 @@
-import React, { useState, useEffect } from 'react';
-import { Ticket, Loader2, Copy, ArrowLeft } from 'lucide-react';
-import { supabase } from '../../supabaseClient';
-import { useUI } from '../../context/UIContext';
-import { useNavigate } from 'react-router-dom';
-
-// Mock campaigns if DB is empty
-const MOCK_CAMPAIGNS = [
-    { id: 1, code: 'CARVIS20', description: '%20 İndirim - İlk Siparişinize Özel', discount_type: 'percentage', discount_value: 20, valid_until: '2026-03-01' },
-    { id: 2, code: 'YAKIT50', description: '50₺ Yakıt İndirimi', discount_type: 'fixed', discount_value: 50, valid_until: '2026-02-15' },
-    { id: 3, code: 'SERVIS100', description: '100₺ Servis Kuponu', discount_type: 'fixed', discount_value: 100, valid_until: '2026-02-28' },
-    { id: 4, code: 'BAKIM15', description: '%15 Periyodik Bakım İndirimi', discount_type: 'percentage', discount_value: 15, valid_until: '2026-04-01' },
-];
+import React, { useState, useEffect } from "react";
+import * as Icons from "lucide-react";
+import { supabase } from "../../supabaseClient";
+import { useUI } from "../../context/UIContext";
+import { useNavigate } from "react-router-dom";
+import PackageStore from "./PackageStore";
 
 const CampaignsScreen = () => {
-    const { t, showAlert } = useUI();
-    const navigate = useNavigate();
-    const [coupons, setCoupons] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const { t, showAlert } = useUI();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("coupons"); // coupons or packages
+  const [coupons, setCoupons] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchCoupons = async () => {
-            try {
-                const { data, error } = await supabase
-                    .from('coupons')
-                    .select('*')
-                    .eq('is_active', true);
-
-                if (error) throw error;
-                setCoupons(data?.length > 0 ? data : MOCK_CAMPAIGNS);
-            } catch (error) {
-                console.error("Kupon hatası:", error);
-                setCoupons(MOCK_CAMPAIGNS);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchCoupons();
-    }, []);
-
-    const copyCoupon = (code) => {
-        navigator.clipboard.writeText(code);
-        showAlert("Kopyalandı", `${code} kodu panoya kopyalandı!`, "success");
+  useEffect(() => {
+    const fetchCoupons = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("coupons")
+          .select("*")
+          .eq("is_active", true);
+        if (error) throw error;
+        setCoupons(data || []);
+      } catch (error) {
+        console.error("Kupon hatası:", error);
+        setCoupons([]);
+      } finally {
+        setLoading(false);
+      }
     };
+    fetchCoupons();
+  }, []);
 
-    if (!t) return null;
+  const copyCoupon = (code) => {
+    navigator.clipboard.writeText(code);
+    showAlert("Kopyalandı", `${code} kodu panoya kopyalandı!`, "success");
+  };
 
-    return (
-        <div className="p-5 pb-32 space-y-4 min-h-screen bg-slate-950">
-            {/* Header */}
-            <div className="flex items-center gap-4 mb-4">
-                <button onClick={() => navigate(-1)} className="p-2.5 glass-card rounded-xl text-white active-scale border border-white/10">
-                    <ArrowLeft size={20} />
-                </button>
-                <h3 className="font-black text-2xl text-white italic flex items-center gap-2">
-                    <Ticket size={28} className="text-orange-500" /> {t.campaignsTitle || "Fırsatlar"}
-                </h3>
-            </div>
+  if (!t) return null;
 
-            {loading ? (
-                <div className="text-center py-10"><Loader2 className="animate-spin mx-auto text-orange-500" size={32} /></div>
-            ) : coupons.length === 0 ? (
-                <div className="text-center py-10 text-slate-400">Aktif kampanya bulunamadı.</div>
-            ) : (
-                <div className="space-y-4">
-                    {coupons.map(coupon => (
-                        <div key={coupon.id} className="glass-card rounded-2xl border border-white/10 shadow-xl overflow-hidden relative group">
-                            <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-orange-500 to-red-600"></div>
+  return (
+    <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-950 relative overflow-hidden">
+      {/* Glow Effect */}
+      <div className="absolute top-0 left-1/4 w-1/2 h-64 bg-primary-600/10 blur-[120px] pointer-events-none"></div>
 
-                            <div className="p-5 pl-7">
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <h4 className="font-black text-lg text-white">{coupon.description}</h4>
-                                        <p className="text-xs text-slate-400 mt-1">Son Tarih: {new Date(coupon.valid_until).toLocaleDateString('tr-TR')}</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <span className="block font-black text-2xl text-orange-500">
-                                            {coupon.discount_type === 'percentage' ? `%${coupon.discount_value}` : `${coupon.discount_value}₺`}
-                                        </span>
-                                        <span className="text-[10px] font-bold text-slate-500 uppercase">İndirim</span>
-                                    </div>
-                                </div>
-
-                                <div className="mt-4 flex gap-3 items-center bg-slate-800/50 p-3 rounded-xl border border-dashed border-slate-600">
-                                    <code className="font-mono font-bold text-orange-400 text-lg flex-1 text-center tracking-widest">
-                                        {coupon.code}
-                                    </code>
-                                    <button onClick={() => copyCoupon(coupon.code)} className="bg-orange-600 text-white p-2 rounded-lg hover:bg-orange-500 transition shadow-lg active-scale">
-                                        <Copy size={16} />
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-orange-500/20 rounded-full blur-2xl opacity-50 pointer-events-none"></div>
-                        </div>
-                    ))}
-                </div>
-            )}
+      {/* Header */}
+      <div className="flex items-center gap-4 relative z-10">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-3 glass-card rounded-2xl text-white active-scale border border-white/10"
+        >
+          <Icons.ArrowLeft size={20} />
+        </button>
+        <div>
+          <h3 className="font-black text-2xl text-white tracking-tighter uppercase">
+            {activeTab === "coupons" ? "FIRSATLAR" : "SERVİS PAKETLERİ"}
+          </h3>
+          <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mt-0.5">
+            Carvis Avantajlar Dünyası
+          </p>
         </div>
-    );
+      </div>
+
+      {/* Modern Tabs */}
+      <div className="flex p-1.5 bg-slate-900/50 rounded-[1.5rem] border border-white/5 relative z-10">
+        <button
+          onClick={() => setActiveTab("coupons")}
+          className={`flex-1 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${
+            activeTab === "coupons"
+              ? "bg-orange-600 text-white shadow-lg shadow-orange-900/40"
+              : "text-slate-500 hover:text-slate-400"
+          }`}
+        >
+          <Icons.Ticket size={14} /> Kuponlar
+        </button>
+        <button
+          onClick={() => setActiveTab("packages")}
+          className={`flex-1 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${
+            activeTab === "packages"
+              ? "bg-primary-600 text-white shadow-lg shadow-primary-900/40"
+              : "text-slate-500 hover:text-slate-400"
+          }`}
+        >
+          <Icons.Package size={14} /> Paketler
+        </button>
+      </div>
+
+      <div className="relative z-10">
+        {activeTab === "packages" ? (
+          <PackageStore />
+        ) : (
+          <div className="space-y-4">
+            {loading ? (
+              <div className="text-center py-20">
+                <Icons.Loader2 className="animate-spin mx-auto text-orange-500" size={40} />
+              </div>
+            ) : coupons.length === 0 ? (
+              <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-dashed border-white/10">
+                <Icons.Ticket size={40} className="mx-auto text-slate-600 mb-4" />
+                <p className="text-sm font-bold text-slate-500">Aktif kupon bulunamadı.</p>
+              </div>
+            ) : (
+              coupons.map((coupon) => (
+                <div
+                  key={coupon.id}
+                  className="glass-card rounded-[2rem] border border-white/10 shadow-xl overflow-hidden relative group"
+                >
+                  <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-orange-500 to-red-600"></div>
+                  <div className="p-6 pl-8">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="font-black text-lg text-white leading-tight">
+                          {coupon.description}
+                        </h4>
+                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-2">
+                          GEÇERLİLİK: {new Date(coupon.valid_until).toLocaleDateString("tr-TR")}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <span className="block font-black text-3xl text-orange-500 tracking-tighter">
+                          {coupon.discount_type === "percentage"
+                            ? `%${coupon.discount_value}`
+                            : `${coupon.discount_value}₺`}
+                        </span>
+                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                          İNDİRİM
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 flex gap-3 items-center bg-slate-950/50 p-4 rounded-2xl border border-dashed border-white/10">
+                      <code className="font-mono font-black text-orange-400 text-xl flex-1 text-center tracking-[0.3em]">
+                        {coupon.code}
+                      </code>
+                      <button
+                        onClick={() => copyCoupon(coupon.code)}
+                        className="bg-orange-600/20 text-orange-500 p-3 rounded-xl hover:bg-orange-600/30 transition active-scale border border-orange-500/20"
+                      >
+                        <Icons.Copy size={20} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default CampaignsScreen;

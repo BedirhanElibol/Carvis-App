@@ -28,3 +28,15 @@ dist-ssr
 .env.local
 .env.*.local
 .env.production
+
+# WhatsApp bot sessions & credentials
+scripts/whatsapp-bot/.wwebjs_auth/
+scripts/whatsapp-bot/.wwebjs_cache/
+scripts/whatsapp-bot/contacts.csv
+
+# Build logs & temp files
+*_log.txt
+*.log
+tmp/
+.agent/
+.vscode/

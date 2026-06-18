@@ -1,6 +1,6 @@
 # 🛡️ Phase 8: Platform Maturity & Admin Panel
 
-**Objective**: Create a "Control Center" for Carvis owners to manage the ecosystem and prepare the app for public distribution (PWA).
+**Objective**: Create a "Control Center" for Rapidsy owners to manage the ecosystem and prepare the app for public distribution (PWA).
 
 ## 🏗️ 1. Admin Dashboard (`/admin`)
 

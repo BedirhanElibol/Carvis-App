@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  ================================================================
+  Carvis — iOS Info.plist Eklentileri
+  ================================================================
+  Bu dosya, iOS projesindeki Info.plist dosyasına eklenmesi
+  gereken permission açıklamalarını içerir.
+  
+  Xcode'da: ios/App/App/Info.plist dosyasına ekleyin.
+  ================================================================
+-->
+<plist version="1.0">
+<dict>
+
+  <!-- KONUM İZİNLERİ -->
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Rapidsy, yakınındaki onaylı ustaları, otopark alanlarını ve acil yol yardım servislerini haritada göstermek için konumunuza ihtiyaç duyar. Konumunuz yalnızca bu özellikler kullanılırken erişilir.</string>
+
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>Rapidsy, acil yol yardımı (SOS) çağrısı sırasında konumunuzu yardım ekibine iletmek için arka plan konum erişimi ister. Bu, yalnızca SOS aktif iken kullanılır.</string>
+
+  <!-- KAMERA İZNİ -->
+  <key>NSCameraUsageDescription</key>
+  <string>Carvis AI Mekanik Asistanı, araç arıza lambası veya hasar fotoğrafını analiz ederek size tanı sunabilmek için kameranıza erişmek ister. Fotoğraflarınız sunucularımızda saklanmaz.</string>
+
+  <!-- FOTOĞRAF KÜTÜPHANESİ -->
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Rapidsy, Carvis AI arıza analizi için galerinizdeki araç fotoğraflarını seçmenize izin verir. Fotoğraflarınız sunucularımızda saklanmaz.</string>
+
+  <!-- KAMERA RULOSU (KAYDETME) -->
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Rapidsy, araç belgelerini ve servis fişlerini fotoğraf olarak kaydetmenize imkan tanır.</string>
+
+  <!-- MİKROFON (İleride sesli komut için) -->
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Rapidsy, sesli arıza bildirimi özelliği için mikrofon erişimi talep eder. Bu özellik, yalnızca sesli komut kullanmayı seçtiğinizde aktif olur.</string>
+
+  <!-- UYGULAMA TRANSPORT GÜVENLİĞİ -->
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <false/>
+    <key>NSExceptionDomains</key>
+    <dict>
+      <key>supabase.co</key>
+      <dict>
+        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+        <false/>
+        <key>NSIncludesSubdomains</key>
+        <true/>
+        <key>NSRequiresCertificateTransparency</key>
+        <true/>
+      </dict>
+      <key>googleapis.com</key>
+      <dict>
+        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+        <false/>
+        <key>NSIncludesSubdomains</key>
+        <true/>
+      </dict>
+    </dict>
+  </dict>
+
+  <!-- MINIMUM iOS VERSİYONU -->
+  <key>MinimumOSVersion</key>
+  <string>16.0</string>
+
+  <!-- DESTEKLENEN EKRAN YÖNLERİ -->
+  <key>UISupportedInterfaceOrientations</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+  </array>
+
+  <!-- DURUM ÇUBUĞU STİLİ -->
+  <key>UIStatusBarStyle</key>
+  <string>UIStatusBarStyleLightContent</string>
+  <key>UIViewControllerBasedStatusBarAppearance</key>
+  <false/>
+
+</dict>
+</plist>

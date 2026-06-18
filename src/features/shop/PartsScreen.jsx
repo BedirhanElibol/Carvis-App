@@ -13,7 +13,6 @@ const PartsScreen = () => {
     const { t } = useUI();
     const {
         products,
-        toggleCart,
         cart,
         toggleFavorite,
         favorites,

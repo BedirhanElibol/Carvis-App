@@ -1,216 +1,624 @@
 export const OFFER_DATA = [
-    { sellerId: 1, seller: "Yedek Parça Dünyası", price: 850, stock: 10, rating: 4.8, deliveryTime: 1, isBuyBoxWinner: false, type: "new" },
-    { sellerId: 2, seller: "Oto Hızlı Parça", price: 865, stock: 5, rating: 4.5, deliveryTime: 1, isBuyBoxWinner: false, type: "new" },
-    { sellerId: 3, seller: "En Ucuz Parçacı", price: 830, stock: 2, rating: 4.0, deliveryTime: 3, isBuyBoxWinner: false, type: "new" },
-    { sellerId: 4, seller: "Çıkmacı Erhan", price: 500, stock: 1, rating: 4.9, deliveryTime: 1, isBuyBoxWinner: false, type: "used" },
+  {
+    sellerId: 1,
+    seller: "Yedek Parça Dünyası",
+    price: 850,
+    stock: 10,
+    rating: 4.8,
+    deliveryTime: 1,
+    isBuyBoxWinner: false,
+    type: "new",
+  },
+  {
+    sellerId: 2,
+    seller: "Oto Hızlı Parça",
+    price: 865,
+    stock: 5,
+    rating: 4.5,
+    deliveryTime: 1,
+    isBuyBoxWinner: false,
+    type: "new",
+  },
+  {
+    sellerId: 3,
+    seller: "En Ucuz Parçacı",
+    price: 830,
+    stock: 2,
+    rating: 4.0,
+    deliveryTime: 3,
+    isBuyBoxWinner: false,
+    type: "new",
+  },
+  {
+    sellerId: 4,
+    seller: "Çıkmacı Erhan",
+    price: 500,
+    stock: 1,
+    rating: 4.9,
+    deliveryTime: 1,
+    isBuyBoxWinner: false,
+    type: "used",
+  },
 ];
-
 export const INITIAL_PRODUCTS = [
-    {
-        id: 101,
-        name: "Fren Balatası Ön Takım (Egea)",
-        brand: "Bosch",
-        category: "Fren",
-        offers: OFFER_DATA,
-        img: "https://placehold.co/300x300/1e293b/FFFFFF?text=FREN+BALATASI",
-        compatibility: [
-            { brand: "Fiat", model: "Egea", years: ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"], engine: "1.3 MultiJet/1.4 Fire" }
-        ],
-        certified: true,
-        tecDocId: "BD-1923-FIAT"
-    },
-    {
-        id: 102,
-        name: "Motor Yağı 5W-30 4L (Castrol Edge)",
-        brand: "Castrol",
-        category: "Yağ",
-        offers: [{ sellerId: 5, seller: "Global Yağlar", price: 1200, stock: 5, rating: 4.9, deliveryTime: 1, isBuyBoxWinner: true, type: "new" }],
-        img: "https://placehold.co/300x300/1e293b/FFFFFF?text=MOTOR+YAGI",
-        compatibility: [
-            { brand: "Volkswagen", model: "Passat", years: ["2012-2023"], engine: "TDI/TSI" },
-            { brand: "Volkswagen", model: "Golf", years: ["2013-2023"], engine: "TDI/TSI" },
-            { brand: "Audi", model: "A4", years: ["2015+"], engine: "TDI" }
-        ],
-        certified: true
-    },
-    {
-        id: 103,
-        name: "Çıkma Şanzıman (Clio 4)",
-        brand: "Orijinal OPAR",
-        category: "Şanzıman",
-        offers: [{ sellerId: 6, seller: "Parçacı Mehmet", price: 15000, stock: 1, rating: 4.7, deliveryTime: 5, type: "used", isBuyBoxWinner: true }],
-        img: "https://placehold.co/300x300/1e293b/FFFFFF?text=SANZIMAN",
-        certified: true,
-        compatibility: [
-            { brand: "Renault", model: "Clio", years: ["2012", "2013", "2014", "2015", "2016", "2017", "2018"], engine: "1.5 dCi" }
-        ]
-    },
-    {
-        id: 104,
-        name: "Hava Filtresi (Togg T10X)",
-        brand: "MAHLE",
-        category: "Filtre",
-        offers: [{ sellerId: 7, seller: "Akıllı Parça", price: 450, stock: 20, rating: 5.0, deliveryTime: 2, isBuyBoxWinner: true, type: "new" }],
-        img: "https://placehold.co/300x300/1e293b/FFFFFF?text=HAVA+FILTRESI",
-        compatibility: [
-            { brand: "Togg", model: "T10X", years: ["2023", "2024"], engine: "Electrical" }
-        ],
-        certified: true
-    },
-    {
-        id: 105,
-        name: "Debriyaj Seti (BMW F30)",
-        brand: "SACHS",
-        category: "Motor",
-        offers: [{ sellerId: 8, seller: "Bavyera Parça", price: 8250, stock: 3, rating: 4.9, deliveryTime: 1, isBuyBoxWinner: true, type: "new" }],
-        img: "https://placehold.co/300x300/1e293b/FFFFFF?text=DEBRIYAJ+SETI",
-        compatibility: [
-            { brand: "BMW", model: "3 Serisi", years: ["2012-2019"], engine: "F30 / 320d" }
-        ],
-        certified: true
-    }
-];
-
-export const SERVICE_REQUESTS_MOCK = [
-    { id: 'req-1', plate: "34 RPG 1923", brand: "Togg", model: "T10X", demand_type: "service", description: "Periyodik bakım ve kontrol. Fren balataları ses yapıyor.", status: "pending", created_at: "2026-01-28T10:00:00Z", distance: "2.4 km" },
-    { id: 'req-2', plate: "06 RPD 06", brand: "Fiat", model: "Egea", demand_type: "service", description: "Motor arıza lambası yanıyor. Bilgisayarlı arıza tespiti gerekiyor.", status: "pending", created_at: "2026-01-28T11:30:00Z", distance: "5.1 km" },
-];
-
-export const MECHANICS = [
-    { id: 1, name: "Ahmet Usta", shop: "Yıldız Oto", city: "Ankara", district: "Ostim", lat: 39.96, lng: 32.75, rating: 4.8, reviews: 124, specialties: ["Motor", "Şanzıman"], brands: ["BMW", "Mercedes", "Audi"], verified: true, image: "https://placehold.co/100x100/1e3a8a/FFFFFF?text=AU" },
-    { id: 2, name: "Maslak Performans", shop: "Pro Garage", city: "İstanbul", district: "Maslak", lat: 41.11, lng: 29.02, rating: 4.9, reviews: 312, specialties: ["Modifiye", "Periyodik Bakım", "Togg Servis"], brands: ["Togg", "Tesla", "BMW"], verified: true, image: "https://placehold.co/100x100/ea580c/FFFFFF?text=PG" },
-    { id: 3, name: "Ege Otomotiv", shop: "Usta Eller", city: "İzmir", district: "Bornova", lat: 38.46, lng: 27.21, rating: 4.7, reviews: 156, specialties: ["Fren", "Süspansiyon"], brands: ["Fiat", "Renault", "Toyota"], verified: true, image: "https://placehold.co/100x100/3b82f6/FFFFFF?text=EO" },
-];
-
-export const INITIAL_ORDERS = [
-    { id: "SIP-1923", product: "Fiat Egea Ön Tampon", date: "Bugün, 10:30", customer: "Mehmet Y.", price: 3500, status: "new" },
-    { id: "SIP-1920", product: "Clio 4 Far", date: "Dün, 14:20", customer: "Ali K.", price: 1200, status: "shipping" },
-];
-
-export const USER_ADDRESSES_MOCK = [
-    { id: 1, title: 'Ev', fullAddress: 'Çiçek Mah. Gül Sok. No:5/2 Ankara' },
-    { id: 2, title: 'İş', fullAddress: 'Ostim OSB 1234. Cadde No:88 Ankara' },
-];
-
-export const USER_ORDERS_MOCK = [
-    { id: "S-4421", product: "Polen Filtresi", date: "2023-11-01", status: "Teslim Edildi", price: 150 },
-    { id: "S-4425", product: "Silecek Takımı", date: "2023-11-05", status: "Kargoda", price: 320 },
-];
-
-export const PENDING_APPOINTMENTS = [
-    { id: 'RND-001', customer: "Ayşe T.", car: "Fiat Egea", service: "Periyodik Bakım", date: "Bugün, 14:00", status: "PENDING", shopName: "Ahmet Usta" },
-    { id: 'RND-002', customer: "Can Y.", car: "Renault Clio", service: "Fren Kontrolü", date: "Yarın, 10:30", status: "PENDING", shopName: "Perf. Garage" },
-];
-
-export const PENDING_QUESTIONS = [
-    { id: 10, product: "Fren Balatası Ön Takım", question: "Çelik jant ile uyumlu mu?", date: "1 saat önce" },
-    { id: 11, product: "Motor Yağı 5W-30 4L", question: "Filtre hediyesi var mı?", date: "3 saat önce" },
-];
-
-export const TENDERS = [
-    { id: 1, title: "Hasarlı BMW F30 Ön Tampon", currentBid: "1.200 ₺", timeLeft: "02:14:50", image: "https://placehold.co/100x100/3498DB/FFFFFF?text=TENDER1", bids: 12 },
-    { id: 2, title: "2018 Ford Focus Şanzıman (Çıkma)", currentBid: "18.500 ₺", timeLeft: "00:45:20", image: "https://placehold.co/100x100/9B59B6/FFFFFF?text=TENDER2", bids: 5 },
-];
-
-export const PARKING_SPOTS = [
-    { id: 1, name: "Ostim Merkez Otopark", distance: "200m", price: "30 ₺/saat", occupancy: 80 },
-    { id: 2, name: "AVM Kapalı Otopark", distance: "1.2km", price: "Ücretsiz (3 Saat)", occupancy: 45 },
-];
-
-export const FUEL_STATIONS = [
-    { id: 1, name: "Shell Ostim", distance: "500m", price: "41.20 ₺", type: "Benzin" },
-    { id: 2, name: "Opet İvedik", distance: "1.1km", price: "40.95 ₺", type: "Dizel" },
-];
-
-export const NOTIFICATIONS_MOCK = [
-    { id: 1, title: "Kargo Yola Çıktı", message: "Fren balatası siparişiniz kargoya verildi.", time: "10 dk önce", type: "info" },
-    { id: 2, title: "Randevu Hatırlatması", message: "Yarın 14:00'te Ahmet Usta ile randevunuz var.", time: "1 saat önce", type: "warning" },
-    { id: 3, title: "Kampanya", message: "Motor yağlarında %20 indirim başladı!", time: "Dün", type: "success" },
-];
-
-export const MECHANIC_BIDS_MOCK = [
-    { id: 'bid-1', mechanicName: "Ahmet Usta", shopName: "Yıldız Oto", price: 2400, date: "2026-01-26", rating: 4.8, note: "Orijinal parçalar kullanılacaktır. 1 yıl parça garantisi veriyoruz.", image: "https://placehold.co/100x100/1e3a8a/FFFFFF?text=AU" },
-    { id: 'bid-2', mechanicName: "Mustafa Uzman", shopName: "Pro Garage", price: 2150, date: "2026-01-25", rating: 4.9, note: "TSE onaylı yan sanayi parçalar. Hızlı teslimat.", image: "https://placehold.co/100x100/ea580c/FFFFFF?text=MU" },
-    { id: 'bid-3', mechanicName: "Zeynep Teknik", shopName: "Hanım Eli Servis", price: 2800, date: "2026-01-27", rating: 5.0, note: "VIP paket: İç-dış yıkama hediye. %100 memnuniyet garantisi.", image: "https://placehold.co/100x100/3b82f6/FFFFFF?text=ZT" },
-];
-
-export const VEHICLES_MOCK_INIT = [
-    { id: "mock-1", brand: "Togg", model: "T10X", plate: "34 RPG 1923", km: "8500", lastInsuranceDate: "2025-10-29", lastInspectionDate: "2026-05-15", last_maintenance_km: 7000, last_maintenance_date: "2024-01-10" },
-    { id: "mock-2", brand: "Fiat", model: "Egea", plate: "06 RPD 06", km: "42105", lastInsuranceDate: "2025-01-20", lastInspectionDate: "2024-05-15", last_maintenance_km: 30000, last_maintenance_date: "2023-06-15" },
-    { id: "mock-3", brand: "Renault", model: "Clio", plate: "35 CRV 35", km: "12500", lastInsuranceDate: "2024-12-10", lastInspectionDate: "2024-03-01" },
-];
-
-export const SERVICE_HISTORY_MOCK = [
-    { id: 1, description: "10.000 KM Bakımı", km: 10200, cost: 4500, created_at: "2023-12-15T10:00:00Z" },
-    { id: 2, description: "Fren Balatası Değişimi", km: 12100, cost: 1200, created_at: "2024-01-20T14:30:00Z" }
-];
-
-export const PART_CATEGORIES = ["Tümü", "Fren", "Yağ", "Filtre", "Motor", "Şanzıman", "Aksesuar", "Lastik"];
-export const AI_SUGGESTIONS = ["Lastik basıncı kaç olmalı?", "Arıza lambası yandı", "Periyodik bakım ne zaman?", "Frenden ses geliyor"];
-
-export const CAR_DATA = [
-    {
+  {
+    id: 101,
+    name: "Fren Balatası Ön Takım (Egea)",
+    brand: "Bosch",
+    category: "Fren",
+    offers: OFFER_DATA,
+    img: "https://placehold.co/300x300/1e293b/FFFFFF?text=FREN+BALATASI",
+    compatibility: [
+      {
         brand: "Fiat",
-        models: ["Egea", "Linea", "Doblo", "Fiorino", "500", "Panda", "Egea Cross"]
-    },
-    {
-        brand: "Renault",
-        models: ["Clio", "Megane", "Symbol", "Taliant", "Captur", "Kadjar", "Austral", "Twingo"]
-    },
-    {
+        model: "Egea",
+        years: [
+          "2015",
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+        ],
+        engine: "1.3 MultiJet/1.4 Fire",
+      },
+    ],
+    certified: true,
+    tecDocId: "BD-1923-FIAT",
+  },
+  {
+    id: 102,
+    name: "Motor Yağı 5W-30 4L (Castrol Edge)",
+    brand: "Castrol",
+    category: "Yağ",
+    offers: [
+      {
+        sellerId: 5,
+        seller: "Global Yağlar",
+        price: 1200,
+        stock: 5,
+        rating: 4.9,
+        deliveryTime: 1,
+        isBuyBoxWinner: true,
+        type: "new",
+      },
+    ],
+    img: "https://placehold.co/300x300/1e293b/FFFFFF?text=MOTOR+YAGI",
+    compatibility: [
+      {
         brand: "Volkswagen",
-        models: ["Passat", "Golf", "Polo", "Tiguan", "T-Roc", "Caddy", "Transporter", "Amarok"]
-    },
-    {
-        brand: "Ford",
-        models: ["Focus", "Fiesta", "Puma", "Kuga", "Ranger", "Transit", "Tourneo Courier"]
-    },
-    {
-        brand: "Toyota",
-        models: ["Corolla", "Yaris", "C-HR", "RAV4", "Hilux", "Proace", "Camry"]
-    },
-    {
-        brand: "Honda",
-        models: ["Civic", "CR-V", "HR-V", "Jazz", "City", "Accord"]
-    },
-    {
-        brand: "Hyundai",
-        models: ["i10", "i20", "i30", "Bayon", "Tucson", "Kona", "Elantra", "Staria"]
-    },
-    {
-        brand: "BMW",
-        models: ["1 Serisi", "2 Serisi", "3 Serisi", "4 Serisi", "5 Serisi", "X1", "X3", "X5", "iX"]
-    },
-    {
-        brand: "Mercedes-Benz",
-        models: ["A-Serisi", "C-Serisi", "E-Serisi", "S-Serisi", "CLA", "GLA", "GLC", "Vito"]
-    },
-    {
-        brand: "Audi",
-        models: ["A3", "A4", "A5", "A6", "Q2", "Q3", "Q5", "Q7"]
-    },
-    {
-        brand: "Peugeot",
-        models: ["208", "308", "2008", "3008", "408", "508", "5008", "Rifter"]
-    },
-    {
-        brand: "Citroen",
-        models: ["C3", "C4", "C5 Aircross", "C-Elysee", "Berlingo", "Ami"]
-    },
-    {
-        brand: "Dacia",
-        models: ["Duster", "Sandero", "Sandero Stepway", "Jogger", "Spring"]
-    },
-    {
-        brand: "Opel",
-        models: ["Corsa", "Astra", "Mokka", "Crossland", "Grandland", "Insignia", "Combo"]
-    },
-    {
+        model: "Passat",
+        years: ["2012-2023"],
+        engine: "TDI/TSI",
+      },
+      {
+        brand: "Volkswagen",
+        model: "Golf",
+        years: ["2013-2023"],
+        engine: "TDI/TSI",
+      },
+      { brand: "Audi", model: "A4", years: ["2015+"], engine: "TDI" },
+    ],
+    certified: true,
+  },
+  {
+    id: 103,
+    name: "Çıkma Şanzıman (Clio 4)",
+    brand: "Orijinal OPAR",
+    category: "Şanzıman",
+    offers: [
+      {
+        sellerId: 6,
+        seller: "Parçacı Mehmet",
+        price: 15000,
+        stock: 1,
+        rating: 4.7,
+        deliveryTime: 5,
+        type: "used",
+        isBuyBoxWinner: true,
+      },
+    ],
+    img: "https://placehold.co/300x300/1e293b/FFFFFF?text=SANZIMAN",
+    certified: true,
+    compatibility: [
+      {
+        brand: "Renault",
+        model: "Clio",
+        years: ["2012", "2013", "2014", "2015", "2016", "2017", "2018"],
+        engine: "1.5 dCi",
+      },
+    ],
+  },
+  {
+    id: 104,
+    name: "Hava Filtresi (Togg T10X)",
+    brand: "MAHLE",
+    category: "Filtre",
+    offers: [
+      {
+        sellerId: 7,
+        seller: "Akıllı Parça",
+        price: 450,
+        stock: 20,
+        rating: 5.0,
+        deliveryTime: 2,
+        isBuyBoxWinner: true,
+        type: "new",
+      },
+    ],
+    img: "https://placehold.co/300x300/1e293b/FFFFFF?text=HAVA+FILTRESI",
+    compatibility: [
+      {
         brand: "Togg",
-        models: ["T10X"]
-    },
-    {
-        brand: "Tesla",
-        models: ["Model Y", "Model 3", "Model S", "Model X"]
-    }
+        model: "T10X",
+        years: ["2023", "2024"],
+        engine: "Electrical",
+      },
+    ],
+    certified: true,
+  },
+  {
+    id: 105,
+    name: "Debriyaj Seti (BMW F30)",
+    brand: "SACHS",
+    category: "Motor",
+    offers: [
+      {
+        sellerId: 8,
+        seller: "Bavyera Parça",
+        price: 8250,
+        stock: 3,
+        rating: 4.9,
+        deliveryTime: 1,
+        isBuyBoxWinner: true,
+        type: "new",
+      },
+    ],
+    img: "https://placehold.co/300x300/1e293b/FFFFFF?text=DEBRIYAJ+SETI",
+    compatibility: [
+      {
+        brand: "BMW",
+        model: "3 Serisi",
+        years: ["2012-2019"],
+        engine: "F30 / 320d",
+      },
+    ],
+    certified: true,
+  },
+];
+export const SERVICE_REQUESTS_MOCK = [
+  {
+    id: "req-1",
+    plate: "34 RPG 1923",
+    brand: "Togg",
+    model: "T10X",
+    demand_type: "service",
+    description: "Periyodik bakım ve kontrol. Fren balataları ses yapıyor.",
+    status: "pending",
+    created_at: "2026-01-28T10:00:00Z",
+    distance: "2.4 km",
+  },
+  {
+    id: "req-2",
+    plate: "06 RPD 06",
+    brand: "Fiat",
+    model: "Egea",
+    demand_type: "service",
+    description:
+      "Motor arıza lambası yanıyor. Bilgisayarlı arıza tespiti gerekiyor.",
+    status: "pending",
+    created_at: "2026-01-28T11:30:00Z",
+    distance: "5.1 km",
+  },
+];
+export const MECHANICS = [
+  {
+    id: 1,
+    name: "Ahmet Usta",
+    shop: "Yıldız Oto",
+    city: "Ankara",
+    district: "Ostim",
+    lat: 39.96,
+    lng: 32.75,
+    rating: 4.8,
+    reviews: 124,
+    specialties: ["Motor", "Şanzıman"],
+    brands: ["BMW", "Mercedes", "Audi"],
+    verified: true,
+    image: "https://placehold.co/100x100/1e3a8a/FFFFFF?text=AU",
+  },
+  {
+    id: 2,
+    name: "Maslak Performans",
+    shop: "Pro Garage",
+    city: "İstanbul",
+    district: "Maslak",
+    lat: 41.11,
+    lng: 29.02,
+    rating: 4.9,
+    reviews: 312,
+    specialties: ["Modifiye", "Periyodik Bakım", "Togg Servis"],
+    brands: ["Togg", "Tesla", "BMW"],
+    verified: true,
+    image: "https://placehold.co/100x100/ea580c/FFFFFF?text=PG",
+  },
+  {
+    id: 3,
+    name: "Ege Otomotiv",
+    shop: "Usta Eller",
+    city: "İzmir",
+    district: "Bornova",
+    lat: 38.46,
+    lng: 27.21,
+    rating: 4.7,
+    reviews: 156,
+    specialties: ["Fren", "Süspansiyon"],
+    brands: ["Fiat", "Renault", "Toyota"],
+    verified: true,
+    image: "https://placehold.co/100x100/3b82f6/FFFFFF?text=EO",
+  },
+];
+export const INITIAL_ORDERS = [
+  {
+    id: "SIP-1923",
+    product: "Fiat Egea Ön Tampon",
+    date: "Bugün, 10:30",
+    customer: "Mehmet Y.",
+    price: 3500,
+    status: "new",
+  },
+  {
+    id: "SIP-1920",
+    product: "Clio 4 Far",
+    date: "Dün, 14:20",
+    customer: "Ali K.",
+    price: 1200,
+    status: "shipping",
+  },
+];
+export const USER_ADDRESSES_MOCK = [
+  { id: 1, title: "Ev", fullAddress: "Çiçek Mah. Gül Sok. No:5/2 Ankara" },
+  { id: 2, title: "İş", fullAddress: "Ostim OSB 1234. Cadde No:88 Ankara" },
+];
+export const USER_ORDERS_MOCK = [
+  {
+    id: "S-4421",
+    product: "Polen Filtresi",
+    date: "2023-11-01",
+    status: "Teslim Edildi",
+    price: 150,
+  },
+  {
+    id: "S-4425",
+    product: "Silecek Takımı",
+    date: "2023-11-05",
+    status: "Kargoda",
+    price: 320,
+  },
+];
+export const PENDING_APPOINTMENTS = [
+  {
+    id: "RND-001",
+    customer: "Ayşe T.",
+    car: "Fiat Egea",
+    service: "Periyodik Bakım",
+    date: "Bugün, 14:00",
+    status: "PENDING",
+    shopName: "Ahmet Usta",
+  },
+  {
+    id: "RND-002",
+    customer: "Can Y.",
+    car: "Renault Clio",
+    service: "Fren Kontrolü",
+    date: "Yarın, 10:30",
+    status: "PENDING",
+    shopName: "Perf. Garage",
+  },
+];
+export const PENDING_QUESTIONS = [
+  {
+    id: 10,
+    product: "Fren Balatası Ön Takım",
+    question: "Çelik jant ile uyumlu mu?",
+    date: "1 saat önce",
+  },
+  {
+    id: 11,
+    product: "Motor Yağı 5W-30 4L",
+    question: "Filtre hediyesi var mı?",
+    date: "3 saat önce",
+  },
+];
+export const TENDERS = [
+  {
+    id: 1,
+    title: "Hasarlı BMW F30 Ön Tampon",
+    currentBid: "1.200 ₺",
+    timeLeft: "02:14:50",
+    image: "https://placehold.co/100x100/3498DB/FFFFFF?text=TENDER1",
+    bids: 12,
+  },
+  {
+    id: 2,
+    title: "2018 Ford Focus Şanzıman (Çıkma)",
+    currentBid: "18.500 ₺",
+    timeLeft: "00:45:20",
+    image: "https://placehold.co/100x100/9B59B6/FFFFFF?text=TENDER2",
+    bids: 5,
+  },
+];
+export const PARKING_SPOTS = [
+  {
+    id: 1,
+    name: "Ostim Merkez Otopark",
+    distance: "200m",
+    price: "30 ₺/saat",
+    occupancy: 80,
+  },
+  {
+    id: 2,
+    name: "AVM Kapalı Otopark",
+    distance: "1.2km",
+    price: "Ücretsiz (3 Saat)",
+    occupancy: 45,
+  },
+];
+export const FUEL_STATIONS = [
+  {
+    id: 1,
+    name: "Shell Ostim",
+    distance: "500m",
+    price: "41.20 ₺",
+    type: "Benzin",
+  },
+  {
+    id: 2,
+    name: "Opet İvedik",
+    distance: "1.1km",
+    price: "40.95 ₺",
+    type: "Dizel",
+  },
+];
+export const NOTIFICATIONS_MOCK = [
+  {
+    id: 1,
+    title: "Kargo Yola Çıktı",
+    message: "Fren balatası siparişiniz kargoya verildi.",
+    time: "10 dk önce",
+    type: "info",
+  },
+  {
+    id: 2,
+    title: "Randevu Hatırlatması",
+    message: "Yarın 14:00'te Ahmet Usta ile randevunuz var.",
+    time: "1 saat önce",
+    type: "warning",
+  },
+  {
+    id: 3,
+    title: "Kampanya",
+    message: "Motor yağlarında %20 indirim başladı!",
+    time: "Dün",
+    type: "success",
+  },
+];
+export const MECHANIC_BIDS_MOCK = [
+  {
+    id: "bid-1",
+    mechanicName: "Ahmet Usta",
+    shopName: "Yıldız Oto",
+    price: 2400,
+    date: "2026-01-26",
+    rating: 4.8,
+    note: "Orijinal parçalar kullanılacaktır. 1 yıl parça garantisi veriyoruz.",
+    image: "https://placehold.co/100x100/1e3a8a/FFFFFF?text=AU",
+  },
+  {
+    id: "bid-2",
+    mechanicName: "Mustafa Uzman",
+    shopName: "Pro Garage",
+    price: 2150,
+    date: "2026-01-25",
+    rating: 4.9,
+    note: "TSE onaylı yan sanayi parçalar. Hızlı teslimat.",
+    image: "https://placehold.co/100x100/ea580c/FFFFFF?text=MU",
+  },
+  {
+    id: "bid-3",
+    mechanicName: "Zeynep Teknik",
+    shopName: "Hanım Eli Servis",
+    price: 2800,
+    date: "2026-01-27",
+    rating: 5.0,
+    note: "VIP paket: İç-dış yıkama hediye. %100 memnuniyet garantisi.",
+    image: "https://placehold.co/100x100/3b82f6/FFFFFF?text=ZT",
+  },
+];
+export const VEHICLES_MOCK_INIT = [
+  {
+    id: "mock-1",
+    brand: "Togg",
+    model: "T10X",
+    plate: "34 RPG 1923",
+    km: "8500",
+    lastInsuranceDate: "2025-10-29",
+    lastInspectionDate: "2026-05-15",
+    last_maintenance_km: 7000,
+    last_maintenance_date: "2024-01-10",
+  },
+  {
+    id: "mock-2",
+    brand: "Fiat",
+    model: "Egea",
+    plate: "06 RPD 06",
+    km: "42105",
+    lastInsuranceDate: "2025-01-20",
+    lastInspectionDate: "2024-05-15",
+    last_maintenance_km: 30000,
+    last_maintenance_date: "2023-06-15",
+  },
+  {
+    id: "mock-3",
+    brand: "Renault",
+    model: "Clio",
+    plate: "35 CRV 35",
+    km: "12500",
+    lastInsuranceDate: "2024-12-10",
+    lastInspectionDate: "2024-03-01",
+  },
+];
+export const SERVICE_HISTORY_MOCK = [
+  {
+    id: 1,
+    description: "10.000 KM Bakımı",
+    km: 10200,
+    cost: 4500,
+    created_at: "2023-12-15T10:00:00Z",
+  },
+  {
+    id: 2,
+    description: "Fren Balatası Değişimi",
+    km: 12100,
+    cost: 1200,
+    created_at: "2024-01-20T14:30:00Z",
+  },
+];
+export const PART_CATEGORIES = [
+  "Tümü",
+  "Fren",
+  "Yağ",
+  "Filtre",
+  "Motor",
+  "Şanzıman",
+  "Aksesuar",
+  "Lastik",
+];
+export const AI_SUGGESTIONS = [
+  "Lastik basıncı kaç olmalı?",
+  "Arıza lambası yandı",
+  "Periyodik bakım ne zaman?",
+  "Frenden ses geliyor",
+];
+export const CAR_DATA = [
+  {
+    brand: "Fiat",
+    models: ["Egea", "Linea", "Doblo", "Fiorino", "500", "Panda", "Egea Cross"],
+  },
+  {
+    brand: "Renault",
+    models: [
+      "Clio",
+      "Megane",
+      "Symbol",
+      "Taliant",
+      "Captur",
+      "Kadjar",
+      "Austral",
+      "Twingo",
+    ],
+  },
+  {
+    brand: "Volkswagen",
+    models: [
+      "Passat",
+      "Golf",
+      "Polo",
+      "Tiguan",
+      "T-Roc",
+      "Caddy",
+      "Transporter",
+      "Amarok",
+    ],
+  },
+  {
+    brand: "Ford",
+    models: [
+      "Focus",
+      "Fiesta",
+      "Puma",
+      "Kuga",
+      "Ranger",
+      "Transit",
+      "Tourneo Courier",
+    ],
+  },
+  {
+    brand: "Toyota",
+    models: ["Corolla", "Yaris", "C-HR", "RAV4", "Hilux", "Proace", "Camry"],
+  },
+  {
+    brand: "Honda",
+    models: ["Civic", "CR-V", "HR-V", "Jazz", "City", "Accord"],
+  },
+  {
+    brand: "Hyundai",
+    models: [
+      "i10",
+      "i20",
+      "i30",
+      "Bayon",
+      "Tucson",
+      "Kona",
+      "Elantra",
+      "Staria",
+    ],
+  },
+  {
+    brand: "BMW",
+    models: [
+      "1 Serisi",
+      "2 Serisi",
+      "3 Serisi",
+      "4 Serisi",
+      "5 Serisi",
+      "X1",
+      "X3",
+      "X5",
+      "iX",
+    ],
+  },
+  {
+    brand: "Mercedes-Benz",
+    models: [
+      "A-Serisi",
+      "C-Serisi",
+      "E-Serisi",
+      "S-Serisi",
+      "CLA",
+      "GLA",
+      "GLC",
+      "Vito",
+    ],
+  },
+  { brand: "Audi", models: ["A3", "A4", "A5", "A6", "Q2", "Q3", "Q5", "Q7"] },
+  {
+    brand: "Peugeot",
+    models: ["208", "308", "2008", "3008", "408", "508", "5008", "Rifter"],
+  },
+  {
+    brand: "Citroen",
+    models: ["C3", "C4", "C5 Aircross", "C-Elysee", "Berlingo", "Ami"],
+  },
+  {
+    brand: "Dacia",
+    models: ["Duster", "Sandero", "Sandero Stepway", "Jogger", "Spring"],
+  },
+  {
+    brand: "Opel",
+    models: [
+      "Corsa",
+      "Astra",
+      "Mokka",
+      "Crossland",
+      "Grandland",
+      "Insignia",
+      "Combo",
+    ],
+  },
+  { brand: "Togg", models: ["T10X"] },
+  { brand: "Tesla", models: ["Model Y", "Model 3", "Model S", "Model X"] },
 ];

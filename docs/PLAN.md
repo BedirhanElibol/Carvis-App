@@ -1,38 +1,46 @@
-# Carvis App Geliştirme ve Stabilizasyon Planı
+# 📋 Carvis Uygulaması Yapısal ve Arayüz Düzeltmeleri Planı
 
-**Tarih:** 28 Ocak 2026
-**Durum:** Taslak (Onay Bekliyor)
-**Ajanlar:** project-planner, frontend-specialist, backend-specialist, security-auditor, test-engineer
+## 🎯 Hedef
+Uygulamanın veritabanı şeması, arayüz metinleri, bağımlılık uyarıları, PWA ayarları ve dış API bağlantılarında tespit edilen en kritik hataların giderilmesi.
 
-## 1. Analiz ve Hazırlık (Faz 1)
-- [ ] Mevcut `src` yapısındaki dosya yolu hatalarının (`predictiveMaintenance.js` vb.) tespiti ve taşınması.
-- [ ] Supabase veritabanı şemasının (`orders`, `order_items`, `service_requests`) mevcut Context'lerle uyumunun doğrulanması.
+## 🔎 Kapsam ve Görev Dağılımı
 
-## 2. Güvenlik ve Yetkilendirme (Faz 2)
-- [ ] `AuthContext` üzerinde kullanıcı rollerinin (`customer`, `partner`, `admin`) tanımlanması.
-- [ ] `routes.jsx` üzerindeki `ProtectedRoute` bileşeninin rol bazlı erişim kontrolü yapacak şekilde güncellenmesi.
-- [ ] `AppHeader` ve `BottomNav` üzerindeki butonların kullanıcı rollerine göre dinamik olarak gösterilmesi.
+### 1. Veritabanı ve Roller (Database & Backend)
+- **Sorun:** `partner` rolü app içerisinde kullanılıyor ancak Supabase Enum (`user_role`) içinde tanımlı değil.
+- **Çözüm:** `20260501_MASTER_SCHEMA_V7_2_2.sql` ve Supabase veritabanında `user_role` enum'ına `partner` eklenecek.
+- **Görevli Ajanlar:** `database-architect`, `backend-specialist`
 
-## 3. Servis ve AI İyileştirmeleri (Faz 2)
-- [ ] `AIService.js` üzerinde Gemini Vision API çağrılarının JSON parse mantığının güçlendirilmesi.
-- [ ] `AIChatScreen.jsx` üzerinde hasar analizi "Scanning" animasyonlarının ve görsel efektlerinin (Glassmorphism + Framer Motion) eklenmesi.
-- [ ] `GarageContext` üzerindeki bakım hesaplama mantığının `predictiveMaintenance.js` içine (veya yeni bir utility dosyasına) taşınarak stabilize edilmesi.
+### 2. Türkçe Karakter Bozulması (Mojibake - Frontend)
+- **Sorun:** `/app/valet` gibi sayfalarda (ör. `ValetScreen.jsx`) Türkçe karakterler (Annda, Teslim Noktas vb.) bozuk görüntüleniyor (Encoding sorunu).
+- **Çözüm:** İlgili dosyaların UTF-8 encoding ile yeniden kaydedilmesi veya içeriklerindeki bozuk karakterlerin düzeltilmesi.
+- **Görevli Ajan:** `frontend-specialist`
 
-## 4. Market ve Ödeme Akışı (Faz 2)
-- [ ] `ShopContext` ve `PaymentContext` üzerindeki checkout (ödeme) işlemlerinin gerçek `orders` tablosuna başarılı bir şekilde yazılmasının sağlanması.
-- [ ] `WalletScreen` üzerindeki bakiye güncelleme işlemlerinin Supabase real-time ile senkronize edilmesi.
+### 3. PWA / SEO Asset Eksikliği (Frontend)
+- **Sorun:** `public/manifest.json` dosyası `favicon.ico`, `logo192.png`, `logo512.png` dosyalarını bekliyor ama klasörde sadece `pwa-icon.png` var.
+- **Çözüm:** `manifest.json` ve `index.html` dosyalarının eldeki mevcut ikon (`pwa-icon.png`) ile uyumlu hale getirilmesi.
+- **Görevli Ajan:** `frontend-specialist`
 
-## 5. Doğrulama ve Teslimat (Faz 3)
-- [ ] `security_scan.py` ile güvenlik taraması.
-- [ ] `lint_runner.py` ile kod standardı kontrolü.
-- [ ] `checklist.py` ile projenin genel final denetimi.
+### 4. Hook Bağımlılık Uyarıları (Frontend)
+- **Sorun:** `ServiceBookingModal.jsx` ve `PackageManager.jsx` dosyalarında stale state riski yaratan useEffect / useCallback bağımlılık (dependency) eksiklikleri var.
+- **Çözüm:** Hook dependency'lerinin düzeltilip güncellenmesi.
+- **Görevli Ajan:** `frontend-specialist`
+
+### 5. Dış API Fallback (Backend / API)
+- **Sorun:** `externalApis.js` içinde kurlar çekilirken `Currency API using local fallback` hatası alınıyor.
+- **Çözüm:** `externalApis.js` içerisindeki API fetch URL, Header veya Rate Limit / API Key sorunlarının giderilmesi.
+- **Görevli Ajan:** `backend-specialist`
+
+## 🛠️ Faz 2: Uygulama (Implementation) - Paralel Ajan Çalışması
+Onayınızın ardından şu ajanlar eşzamanlı (parallel) çalıştırılacaktır:
+1. **`database-architect` & `backend-specialist`**: DB rol güncellemesini ve API düzeltmelerini yapar.
+2. **`frontend-specialist`**: Hook bağımlılıklarını, karakter bozukluklarını ve PWA manifest ayarlarını düzeltir.
+3. **`test-engineer`**: Kodda linting veya security hataları olup olmadığını doğrulama scriptleriyle (`lint_runner.py` / `security_scan.py`) kontrol eder.
 
 ---
 
-## Teknik Bağımlılıklar
-- **Frontend:** React, Tailwind CSS, Framer Motion, Lucide React
-- **Backend/DB:** Supabase (Auth, DB, Realtime)
-- **AI:** Google Generative AI (Gemini 1.5 Flash), Pollinations AI (Fallback)
-
----
-*Bu plan orchestrator tarafından oluşturulmuştur ve uygulama aşamasına geçmeden önce kullanıcı onayı gerektirir.*
+> ⚠️ **ONAY BEKLENİYOR:** 
+> Plan oluşturuldu: `docs/PLAN.md`
+> 
+> Onaylıyor musunuz? (Y/N)
+> - **Y:** Implementation (Uygulama) başlatılır (Paralel ajanlar devreye girer).
+> - **N:** Planı geri bildirimlerinize göre düzeltirim.

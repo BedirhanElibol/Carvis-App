@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { supabase } from "../supabaseClient";
 
 const AuthContext = createContext();
 
@@ -7,91 +7,111 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    const fetchUserRole = async (user) => {
-        if (!user) return null;
-        try {
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('role')
-                .eq('id', user.id)
-                .single();
+  const fetchProfile = async (user) => {
+    if (!user) return null;
+    try {
+      const { data: rows } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .limit(1);
 
-            if (error || !data) {
-                console.warn("Role fetch warning:", error || "No profile data");
-                return 'customer'; // Fail safe
-            }
-            return data.role || 'customer';
-        } catch (err) {
-            console.error(err);
-            return 'customer';
-        }
-    };
+      if (rows && rows.length > 0) return rows[0];
 
-    useEffect(() => {
-        // Initial session check
-        supabase.auth.getSession().then(async ({ data: { session } }) => {
-            if (session?.user) {
-                const role = await fetchUserRole(session.user);
-                setCurrentUser({ ...session.user, role });
-            } else {
-                setCurrentUser(null);
-            }
-            setLoading(false);
-        });
+      // Profile missing (OAuth user created before trigger) — auto-create it
+      const { data: newProfile } = await supabase
+        .from("profiles")
+        .upsert(
+          {
+            id: user.id,
+            email: user.email,
+            full_name:
+              user.user_metadata?.full_name ||
+              user.email?.split("@")[0] ||
+              "Kullanici",
+            role: "customer",
+          },
+          { onConflict: "id" },
+        )
+        .select()
+        .limit(1);
 
-        // Listen for auth changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-            if (session?.user) {
-                // If user is already set and ID matches, maybe don't refetch? 
-                // But for safety on role update, let's fetch.
-                const role = await fetchUserRole(session.user);
-                setCurrentUser({ ...session.user, role });
-            } else {
-                setCurrentUser(null);
-            }
-            setLoading(false);
-        });
+      return newProfile?.[0] || { role: "customer" };
+    } catch (err) {
+      if (err.code !== "42501") console.error("Profile fetch error:", err);
+      return { role: "customer" };
+    }
+  };
 
-        return () => subscription.unsubscribe();
-    }, []);
+  useEffect(() => {
+    const updateUserData = async (session) => {
+      if (session?.user) {
+        let profile = await fetchProfile(session.user);
+        
+        // Roles and Application statuses are strictly enforced by the Database and Admin panel.
+        // No client-side URL interception for privileges.
+        
+        // Check email confirmation OR if logged in via Social Provider
+        const isVerified =
+          profile?.is_verified ||
+          !!session.user.email_confirmed_at ||
+          ["google", "apple"].includes(session.user.app_metadata?.provider);
 
-    const handleLogout = async () => {
-        await supabase.auth.signOut();
+        setCurrentUser({ ...session.user, ...profile, isVerified });
+      } else {
         setCurrentUser(null);
+      }
+      setLoading(false);
     };
 
-    const loginAsGuest = () => {
-        const guestUser = {
-            id: 'guest-' + Math.random().toString(36).substr(2, 9),
-            aud: 'authenticated',
-            role: 'customer', // Explicitly set role
-            email: 'guest@carvis.app',
-            confirmed_at: new Date().toISOString(),
-            isAnonymous: true,
-            user_metadata: {
-                full_name: 'Misafir Kullanıcı',
-                role: 'customer' // Double assurance
-            }
-        };
-        // setSession({ user: guestUser }); // setSession is not defined in this context
-        setCurrentUser(guestUser);
-        setLoading(false);
-    };
+    // Initial session check
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      updateUserData(session);
+    });
 
-    const value = {
-        currentUser,
-        setCurrentUser,
-        loading,
-        handleLogout,
-        loginAsGuest
-    };
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      updateUserData(session);
+    });
 
-    return (
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
-    );
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setCurrentUser(null);
+  };
+
+  const loginAsGuest = () => {
+    // Valid UUID format for Postgres: 8-4-4-4-12
+    const guestId =
+      "00000000-0000-4000-8000-" +
+      Math.random().toString(16).slice(2, 14).padStart(12, "0");
+    const guestUser = {
+      id: guestId,
+      aud: "authenticated",
+      role: "customer",
+      email: "guest@rapidsy.app",
+      confirmed_at: new Date().toISOString(),
+      isAnonymous: true,
+      user_metadata: { full_name: "Misafir Kullanıcı", role: "customer" },
+    };
+    setCurrentUser(guestUser);
+    setLoading(false);
+  };
+
+  const value = {
+    currentUser,
+    setCurrentUser,
+    loading,
+    handleLogout,
+    loginAsGuest,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

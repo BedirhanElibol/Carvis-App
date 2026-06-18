@@ -1,4 +1,4 @@
-# CARVIS - PROJE TAMAMLANDI! 🎉
+# RAPIDSY - PROJE TAMAMLANDI! 🎉
 
 **Tarih**: 25 Ocak 2026, 00:35  
 **Süre**: 14 saat kesintisiz kodlama  
@@ -68,7 +68,7 @@
 ## 📁 PROJE YAPISI
 
 ```
-Carvis/
+Rapidsy/
 ├── src/
 │   ├── context/
 │   │   ├── AuthContext.jsx ✅
@@ -211,9 +211,9 @@ npm run dev
 
 ## 🌟 TEBRİKLER!
 
-**14 saat kesintisiz kodlama** ile Carvis'in **temel altyapısını** tamamladık!
+**14 saat kesintisiz kodlama** ile Rapidsy'in **temel altyapısını** tamamladık!
 
-### **Artık Carvis:**
+### **Artık Rapidsy:**
 - ✅ Müşterilere hizmet verebiliyor
 - ✅ Satıcılar teklif verebiliyor
 - ✅ Realtime iletişim sağlıyor

@@ -1,0 +1,945 @@
+{
+  "src\\App.jsx": [
+    "Nasıl?"
+  ],
+  "src\\components\\ai\\AIAssistant.jsx": [
+    "Oto Uzman Desteği",
+    "Carvis Asistan",
+    "Randevu Al"
+  ],
+  "src\\components\\layout\\AdminLayout.jsx": [
+    "RAPIDSY"
+  ],
+  "src\\components\\layout\\Footer.jsx": [
+    "Hakkımızda",
+    "Legal",
+    "KVKK Aydınlatma",
+    "Otomotiv dünyasının dijitalleşen yüzü. Güvenli ticaret, akıllı diagnostik ve şeffaf hizmet anlayışı ile her an yanınızda.",
+    "Güvenlik",
+    "Satış Sözleşmesi",
+    "PRO",
+    "Üye İlişkileri",
+    "Kurumsal",
+    "RAPIDSY",
+    "Kullanım Koşulları"
+  ],
+  "src\\components\\layout\\PartnerLayout.jsx": [
+    "Belgeleri Güncelle",
+    "Müşteri Modu",
+    "Simüle Modu (Dev)",
+    "PARTNER",
+    "Çıkış Yap",
+    "Usta",
+    "RAPIDSY",
+    "Oto",
+    "Vale"
+  ],
+  "src\\components\\modals\\AccidentAssistantModal.jsx": [
+    "Fotoğraf Çek veya Yükle",
+    "İleri",
+    "Yüklediğiniz fotoğraflar AI motorumuz tarafından saniyeler\n                  içinde incelenecek.",
+    "UNUTMAYIN",
+    "RAPORU KAYDET VE KAPAT",
+    "Dijital Tutanak Rehberi",
+    "Olay Özeti",
+    "Kaza Raporunuz Dijital Olarak Oluşturuldu",
+    "Maddi Hasarlı",
+    "KAZA ASİSTANI",
+    "Kaza mahalini, plakaları ve hasarı net şekilde fotoğraflayın.\n                  Mümkünse araçları trafiği engellemeyecek bir yere çekin.",
+    "Karşı Taraf Plaka",
+    "DOSYA HAZIR",
+    "Hasar Analizi Başlatılıyor"
+  ],
+  "src\\components\\modals\\AdvancedPaymentModal.jsx": [
+    "Kargo",
+    "Kayıtlı Kartlarım",
+    "Bedava",
+    "Toplam",
+    "Sipariş Özeti",
+    "Taksit Seçenekleri",
+    "Banka onayı bekleniyor, lütfen pencereyi kapatmayınız...",
+    "Aylık Ödeme",
+    "Ürün Toplamı",
+    "Güvenli ödeme için SMS onayı alınır.",
+    "Mesafeli Satış Sözleşmesi",
+    "Ödeme\n                Seçenekleri",
+    "Ön Bilgilendirme Koşulları",
+    "Ödemeniz İşleniyor",
+    "Alışverişe Dön",
+    "Kartımı sonraki alışverişler için Masterpass'e kaydet.",
+    "VADE FARKSIZ",
+    "Başka Kart ile Öde",
+    "Standart Teslimat",
+    "Son Kullanma Tarihi",
+    "Teşekkürler!",
+    "Kart Numarası",
+    "Ödemeyi Tamamla",
+    "Taksit Sayısı"
+  ],
+  "src\\components\\modals\\AlertModal.jsx": [
+    "Tamam"
+  ],
+  "src\\components\\modals\\AuthLoginModal.jsx": [
+    "Müşteri Girişi",
+    "Hemen Kayıt Ol",
+    "Hesabınıza erişmek için bilgilerinizi girin.",
+    "Veya"
+  ],
+  "src\\components\\modals\\CartDrawer.jsx": [
+    "Sepetin şimdilik boş.",
+    "Toplam Tutar"
+  ],
+  "src\\components\\modals\\DeleteAccountModal.jsx": [
+    "Onaylamak için aşağıya",
+    "Vazgeç",
+    "Bu İşlem Geri Alınamaz!",
+    "HESABINI SİLMEK İSTEDİĞİNE EMİN MİSİN?"
+  ],
+  "src\\components\\modals\\FilterModal.jsx": [
+    "Aramanı Özelleştir",
+    "Araç Filtreleme",
+    "MARKA SEÇ"
+  ],
+  "src\\components\\modals\\KVKKPolicyModal.jsx": [
+    "Bu metni onaylayarak, yukarıdaki şartlara uygun olarak\n                verilerinizin işlenmesini kabul etmiş olursunuz.",
+    "Rapidsy KVKK Aydınlatma Metni (Özet)"
+  ],
+  "src\\components\\modals\\LocationSelectModal.jsx": [
+    "Servis Bölgesini Belirleyin",
+    "En yakın usta ve parçaları bul",
+    "Aktif Konum"
+  ],
+  "src\\components\\modals\\PaymentModal.jsx": [
+    "CVV",
+    "Lütfen bekleyiniz, bankanızla iletişim kuruluyor...",
+    "Kart Sahibi",
+    "İşleminiz onaylandı. Teşekkür ederiz.",
+    "Kart Numarası",
+    "Güvenli Öde",
+    "SKT",
+    "Ödeme Başarılı!",
+    "Ödeme İşleniyor"
+  ],
+  "src\\components\\modals\\RegisterModal.jsx": [
+    "KVKK Aydınlatma Metni",
+    "Lütfen gelen kutunu (ve spam klasörünü) kontrol et.",
+    "Tarafıma bilgilendirme ve pazarlama içerikli e-iletiler gönderilmesine izin veriyorum (Opsiyonel).",
+    "Kullanıcı Sözleşmesi",
+    "Veya",
+    "Tamam"
+  ],
+  "src\\components\\modals\\ReviewsModal.jsx": [
+    "Yorumunuz",
+    "Deneyiminizi Puanlayın"
+  ],
+  "src\\components\\modals\\SellerRegistrationModal.jsx": [
+    "İş Ortağı Gizlilik Sözleşmesi'ni onaylıyorum.",
+    "İşletme Nicelikleri",
+    "Partner KVKK Aydınlatma Metni'ni okudum, verilerimin işlenmesini kabul ediyorum.",
+    "Usta Sayısı",
+    "Toplam Araç Kapasitesi",
+    "Kendi Kurye Hizmeti",
+    "Desteklenen Marka Sayısı",
+    "Yasal Onaylar",
+    "Kapasite Bilgilerine Geç",
+    "İşletme Adı",
+    "Yok",
+    "Var",
+    "Şoför Sayısı",
+    "Lift Sayısı",
+    "Gerekli belgeleri ve işletme kapasitesini paylaşarak aramıza katılın.",
+    "Kategori",
+    "Henüz yüklenmedi",
+    "Şehir",
+    "İşletmenizin kapasitesini detaylandırarak güvenilirliğinizi artırın.",
+    "Güvenlik Sistemi (Kamera)",
+    "Açık Adres",
+    "Gerekli Belgeler",
+    "Zorunlu",
+    "Geri"
+  ],
+  "src\\components\\modals\\ServiceApprovalModal.jsx": [
+    "Hizmet Onayı",
+    "Ustanız henüz hizmet kanıtlarını yüklemedi.",
+    "Kanıtlar yükleniyor...",
+    "Desteğe Başvur",
+    "Usta Notu"
+  ],
+  "src\\components\\modals\\ServiceHistoryModal.jsx": [
+    "Diğer Mekanik",
+    "Akü",
+    "Henüz bir servis kaydı yok.",
+    "Lastik",
+    "Geçmiş Kayıtlar",
+    "Kapat",
+    "YENİ KAYIT EKLE",
+    "Fren Sitemi",
+    "SERVİS GEÇMİŞİ",
+    "Yağ Bakımı",
+    "Kayıt Detayları"
+  ],
+  "src\\components\\modals\\SettingsModal.jsx": [
+    "Telefon",
+    "Kurumsal Partner Ol",
+    "Yapay Zeka (AI) API anahtarı bu ortamda otomatik olarak\n                  sağlanmaktadır. Carvis AI asistanınız her zaman aktif.",
+    "AI API Status",
+    "Ad Soyad"
+  ],
+  "src\\components\\modals\\SOSPanicModal.jsx": [
+    "ÇEKİCİ ÇAĞIR",
+    "Panik modu aktif edildiğinde bilgileriniz güvenli sunucularımıza\n            kaydedilir ve en yakın yardım ekibine iletilir.",
+    "Acil Durum Yardım Merkezi",
+    "PANİK MODU",
+    "ACİL ÇAĞRI MERKEZİ",
+    "Güvenlik Durumu",
+    "YOL YARDIM"
+  ],
+  "src\\components\\modals\\TopUpModal.jsx": [
+    "Kayıtlı Kart",
+    "Güvenli Ödeme Yap",
+    "Garanti BBVA - Bonus",
+    "Kredi kartınızla anında güvenli bakiye yükleyebilirsiniz.",
+    "Bakiye Yükle",
+    "Yüklenecek Tutar (TL)"
+  ],
+  "src\\components\\onboarding\\OnboardingSlides.jsx": [
+    "Atla"
+  ],
+  "src\\components\\payment\\PaymentModal.jsx": [
+    "lem Tamamland",
+    "lem kayd ve gvenlik kontrol tamamlanyor.",
+    "deme dorulanyor...",
+    "lem No",
+    "lem Tipi",
+    "TRY",
+    "Kapat",
+    "demeniz simle gvenli deme katmanndan geer. retime\n                  karken bu alan gerek salaycya balanmaya hazrdr.",
+    "Tutar"
+  ],
+  "src\\components\\shared\\ReviewSection.jsx": [
+    "Gönder",
+    "Puanınız",
+    "Yorum Yaz",
+    "Fotoğraf Ekle"
+  ],
+  "src\\components\\ui\\SkeletonCard.jsx": [
+    "or"
+  ],
+  "src\\features\\admin\\AdminDashboard.jsx": [
+    "Veritabanı Bağlantıları",
+    "Sunucu Performansı",
+    "Sistem Operasyonel",
+    "Genel Bakış",
+    "GoTrue",
+    "PostgreSql",
+    "Tüm Supabase servisleri (Auth, Database, Edge Functions) aktif ve\n            yüksek verimle yanıt veriyor.",
+    "Realtime",
+    "Sistem Online",
+    "Storage Kapasitesi",
+    "Sağlıklı",
+    "Canlı sistem metrikleri ve anlık durum.",
+    "API Gateway"
+  ],
+  "src\\features\\admin\\AdminFinance.jsx": [
+    "İşlem ID",
+    "Tarih",
+    "Son İşlemler",
+    "Henüz bir işlem bulunmuyor.",
+    "Açıklama",
+    "Platform gelirleri ve işlem geçmişi yönetimi.",
+    "Tür",
+    "Tutar"
+  ],
+  "src\\features\\admin\\AdminSettings.jsx": [
+    "Platform genelindeki küresel parametreler.",
+    "Değişiklikleri Kaydet",
+    "Sistem Ayarları"
+  ],
+  "src\\features\\admin\\MarketPulse.jsx": [
+    "Piyasa Nabzı",
+    "Güncel",
+    "Litre Fiyatı"
+  ],
+  "src\\features\\admin\\PartnerApplications.jsx": [
+    "Kayıt Bulunamadı",
+    "Bu kategoride henüz bir başvuru yok.",
+    "Gelen kurumsal iş ortağı taleplerini inceleyin ve yönetin.",
+    "Ticari Bilgiler",
+    "Başvuru Detayları ve Evrak İnceleme",
+    "Yüklenen Belgeler",
+    "Partner Başvuruları"
+  ],
+  "src\\features\\admin\\UserManagement.jsx": [
+    "Kullanıcıyı Askıya Al",
+    "Kullanıcı Ara",
+    "İşlem",
+    "Rol",
+    "Aktif İşler",
+    "Tamirci",
+    "Platformdaki tüm kullanıcıları görüntüleyin ve yönetin.",
+    "Kayıt Tarihi",
+    "Kullanıcı Yönetimi",
+    "Sistem erişimini tamamen keser.",
+    "Yükleniyor...",
+    "Mevcut Bakiye",
+    "Müşteri",
+    "Rol Değiştir",
+    "Otopark",
+    "Kullanıcı bulunamadı.",
+    "Kullanıcı",
+    "Vale"
+  ],
+  "src\\features\\ai\\AIChatScreen.jsx": [
+    "AI MEKANİK TAVSİYESİ",
+    "DIAGNOSTIC RAPORU",
+    "Servis Süresi",
+    "USTA ÇAĞIR",
+    "PARÇA BUL",
+    "HASAR DERİNLİK ANALİZİ",
+    "TARAMAYA BAŞLA",
+    "Görsel Parça Analizi",
+    "Tahmini Masraf",
+    "V2.0 PRO",
+    "Görsel ile anında maliyet ve parça tespiti",
+    "Yapay Zeka Mekanik Hazır",
+    "AI MEKANİK",
+    "Motor sesini dinletebilir, hasarlı bölgenin fotoğrafını\n              gönderebilir veya aracınla ilgili teknik sorular sorabilirsin.",
+    "ULTRA-BİLİNÇ"
+  ],
+  "src\\features\\ai\\AudioAnalyzer.jsx": [
+    "Analiz Ediliyor...",
+    "Sesli Arıza Tespiti",
+    "Normal Motor Sesi",
+    "Ateşleme sistemi kontrol edilmeli.",
+    "Tekrar Dene",
+    "Anormal bir rezonans tespit edilmedi.",
+    "Motor sesini dinletin, Carvis AI anormal sesleri (vuruntu, sürtünme, kayış sesi)\n        analiz etsin.",
+    "Düzensiz Rölanti Sesi"
+  ],
+  "src\\features\\ai\\PredictiveHealth.jsx": [
+    "AI Sağlık Skoru",
+    "Harika! Önemli bir risk tespit edilmedi.",
+    "Puan",
+    "Rapidsy tahmin motoru araç verilerini analiz etti.",
+    "Acil Bakım Randevusu Al"
+  ],
+  "src\\features\\ai\\components\\InteractiveCarMap.jsx": [
+    "Sistem Tarandı",
+    "TÜM BİRİMLER OK"
+  ],
+  "src\\features\\appointments\\AppointmentScreen.jsx": [
+    "Randevular yükleniyor...",
+    "Randevu bulunmuyor",
+    "Randevularım"
+  ],
+  "src\\features\\appointments\\ServiceBookingModal.jsx": [
+    "Tarih Seçin",
+    "Randevuyu Onayla",
+    "Seçilen günde müsait randevu bulunmuyor.",
+    "Müsait Saatler",
+    "Randevu Planla"
+  ],
+  "src\\features\\checkout\\CheckoutScreen.jsx": [
+    "Kargo",
+    "Güvenli Alışveriş",
+    "Ara Toplam",
+    "Anasayfaya Dön",
+    "Toplam",
+    "Mesafeli Satış Sözleşmesi",
+    "Vade Farkı",
+    "Sipariş Özeti",
+    "Ön Bilgilendirme",
+    "Siparişiniz Alındı!"
+  ],
+  "src\\features\\checkout\\components\\CheckoutAddressStep.jsx": [
+    "Yeni Adres",
+    "Yukarıdan yeni adres ekleyebilirsiniz.",
+    "Yeni Adres Ekle",
+    "Kaydet",
+    "Henüz kayıtlı adresiniz yok."
+  ],
+  "src\\features\\checkout\\components\\CheckoutCartStep.jsx": [
+    "Sepetinizde ürün bulunmuyor."
+  ],
+  "src\\features\\checkout\\components\\CheckoutPaymentStep.jsx": [
+    "Kredi Kartı",
+    "Aylık",
+    "CVV",
+    "Cüzdan Bakiyeniz",
+    "Kart Sahibi",
+    "Taksit",
+    "Kart Numarası",
+    "Toplam",
+    "SKT",
+    "Rapidsy Cüzdan"
+  ],
+  "src\\features\\extras\\CampaignsScreen.jsx": [
+    "İNDİRİM",
+    "Kuponlar",
+    "Aktif kupon bulunamadı.",
+    "Carvis Avantajlar Dünyası",
+    "Paketler"
+  ],
+  "src\\features\\extras\\ExpertHotline.jsx": [
+    "Aracınızla ilgili sorularınızı uzmanlarımıza anlık olarak sorun, profesyonel destek alın.",
+    "Usta Danışmanlığı",
+    "Rapidsy Expert",
+    "Detaylar (Opsiyonel)",
+    "Güvenli Danışmanlık"
+  ],
+  "src\\features\\extras\\FuelScreen.jsx": [
+    "SmartPay"
+  ],
+  "src\\features\\extras\\InsuranceMarket.jsx": [
+    "Sigorta Marketi",
+    "Teklifler yukleniyor...",
+    "Su anda listelenen sigorta teklifi bulunmuyor",
+    "Rapidsy Protection",
+    "DETAYLAR"
+  ],
+  "src\\features\\extras\\PackageStore.jsx": [
+    "FİYAT",
+    "Tam Bakım Paketi",
+    "Şu an aktif servis paketi bulunmamaktadır."
+  ],
+  "src\\features\\extras\\ParkingScreen.jsx": [
+    "Kadıköy,\n              İstanbul",
+    "Konumunuz"
+  ],
+  "src\\features\\extras\\ValetScreen.jsx": [
+    "Talebi ptal Et",
+    "Toplam Tutar",
+    "Tahmini Ulam",
+    "Carvis Vale",
+    "Teslim Noktas",
+    "Aktif Talep",
+    "Vale Notu",
+    "Paket Seimi",
+    "Talep Detaylar",
+    "Hizmet detayn sein",
+    "Vale ar",
+    "Koruma",
+    "Hizmet",
+    "Toplam",
+    "Teslim Notu",
+    "Vale Bilgisi",
+    "Annda Vale ar"
+  ],
+  "src\\features\\extras\\WalletScreen.jsx": [
+    "Tümü",
+    "Kart Sahibi",
+    "Diğer İşlemler",
+    "İşlem Gecmişi",
+    "Blokede (Escrow)",
+    "Henüz bir işlem bulunmuyor",
+    "PAY",
+    "Cüzdanım",
+    "RAPIDSY GÜVENCESİ",
+    "Bakiye Yükle",
+    "RAPIDSY"
+  ],
+  "src\\features\\garage\\DigitalPassport.jsx": [
+    "Henüz kayıtlı servis geçmişi yok",
+    "Toplam Kayıt",
+    "Carvis Verified History",
+    "Carvis Onaylı Kayıt",
+    "Güven Puanı",
+    "Bu belge Carvis Dijital Ekosistemi tarafından otomatik oluşturulmuştur.",
+    "KARNEYİ PDF OLARAK İNDİR",
+    "Dijital Servis Karnesi"
+  ],
+  "src\\features\\garage\\VehicleDemandForm.jsx": [
+    "Yedek Parça",
+    "Talebi Gönder",
+    "Talebinizi Açıklayın",
+    "Seçili Araç",
+    "Ne Lazım?"
+  ],
+  "src\\features\\garage\\VehicleProSettings.jsx": [
+    "Akıllı Hatırlatıcılar",
+    "TÜVTÜRK Muayene Tarihi",
+    "GELİŞMİŞ ARAÇ AYARLARI (PRO)",
+    "Bildirim al.",
+    "Ayarlar",
+    "Sigorta Bitiş Tarihi",
+    "Mevcut Kilometre",
+    "Dijital Karne"
+  ],
+  "src\\features\\garage\\VehicleSearch.jsx": [
+    "Şase No (VIN)",
+    "MODEL SEÇİN",
+    "Şase No Nerede Yazar?",
+    "ARACINIZI TANIMLAYIN",
+    "DEVAM ET",
+    "Manuel Seçim",
+    "Görüntü İşleniyor...",
+    "MARKA SEÇİN"
+  ],
+  "src\\features\\home\\AISuggestionCard.jsx": [
+    "AI Önerileri",
+    "Sepete Ekle",
+    "Parçalara Git"
+  ],
+  "src\\features\\home\\CustomerHome.jsx": [
+    "KAZA BİLDİR",
+    "Aktif teklif yok.",
+    "ONAYLI",
+    "PLAKA",
+    "TÜMÜ",
+    "USTAYA SOR",
+    "Tüm Servisler",
+    "AI DIAGNOSTIC",
+    "RAPIDSY YÜKLENİYOR...",
+    "ARAÇ EKLE",
+    "GARAJDA AKTİF",
+    "Rapidsy Akıllı Araç Yönetim Paneli ve Garajım",
+    "Hayalindeki Garaj",
+    "RAPIDSY",
+    "KİLOMETRE",
+    "DEEP SCAN BAŞLAT",
+    "EXTREME"
+  ],
+  "src\\features\\home\\LandingScreen.jsx": [
+    "TÜRKİYE'NİN AKILLI",
+    "Yedek parça, usta randevusu ve dijital servis takibi ile aracınızın kontrolü sizde olsun.",
+    "İşletmenizi Yönetin",
+    "OTO PLATFORMU",
+    "Üye Olmadan Devam Et",
+    "RAPIDSY"
+  ],
+  "src\\features\\home\\PredictiveMaintenanceCard.jsx": [
+    "SAĞLIK PUANI",
+    "Kritik",
+    "Servis Ömrü",
+    "Parça Bak",
+    "Geçmiş",
+    "KALAN KM",
+    "Akıllı Bakım"
+  ],
+  "src\\features\\legal\\LegalViewModal.jsx": [
+    "Anladım"
+  ],
+  "src\\features\\legal\\PrivacyPolicyScreen.jsx": [
+    "When In Use",
+    "Plaka,\n              marka, model, km bilgisi (sizin eklediğiniz)",
+    "Servis ve ürün siparişlerinizin yönetimi",
+    "Carvis AI Mekanik Asistanı (Gemini) tarafından arıza tanısı ve\n              ürün önerisi",
+    "Bu politika, Apple App Store ve Google Play gizlilik\n            gereksinimlerine uygundur.",
+    "Arıza\n              tanısı için girdiğiniz metin (oturum süresince)",
+    "Satın\n              alımlar, teklifler, randevular",
+    "Veri işlemeye itiraz etme",
+    "Verilerinizin silinmesini talep etme",
+    "Verilerinize erişim talep etme",
+    "AI'ya\n              fotoğraf ile arıza bildirimi (yalnızca sizin gönderdiğiniz)",
+    "Yanlış verilerin düzeltilmesini isteme",
+    "Yakındaki\n              ustaları bulmak için anlık konum (izin vermeniz halinde)",
+    "Uygulama performansının iyileştirilmesi",
+    "Bildirimler (sipariş, teklif, randevu)",
+    "Yakındaki onaylı ustalar ve acil yardım servislerinin gösterimi"
+  ],
+  "src\\features\\map\\LocationRequiredScreen.jsx": [
+    "Lütfen tarayıcı ayarlarından konuma izin verin ve devam edin.",
+    "Konum İzni",
+    "İzni Tekrar İste",
+    "Geri Dön",
+    "Gerekli",
+    "Rapidsy Global Privacy",
+    "Şimdi Değil, Geri Dön",
+    "Rapidsy piyasa fiyatlarını, yakındaki yedek parçacıları ve acil yol\n          yardım ekiplerini bulmak için gerçek konumunuza ihtiyaç duyar."
+  ],
+  "src\\features\\map\\MapComponent.jsx": [
+    "OpenStreetMap",
+    "Teklif İste",
+    "Buradasınız",
+    "CARTO"
+  ],
+  "src\\features\\map\\MapScreen.jsx": [
+    "Ekip 4 dakika içinde yanınızda olacak.",
+    "Resmi Rapidsy Güvencesi Altındasınız",
+    "X",
+    "Sistem Taranıyor...",
+    "ARA",
+    "SOS",
+    "ACİL YARDIM ÇAĞRISI",
+    "Yol Yardım Yolda",
+    "Sorun nedir? Ekip 15 dakika içinde yanında.",
+    "MESAJ AT",
+    "Harita Hazırlanıyor..."
+  ],
+  "src\\features\\messages\\MessageListScreen.jsx": [
+    "Mesajlar",
+    "Bir sohbet seçin veya yeni mesaj başlatın.",
+    "Konuşma bulunamadı."
+  ],
+  "src\\features\\messages\\MessageScreen.jsx": [
+    "Güvenliğiniz için ödemelerinizi uygulama dışından yapmayınız.",
+    "Çevrimiçi",
+    "Sohbeti Başlatın"
+  ],
+  "src\\features\\notifications\\NotificationScreen.jsx": [
+    "Tümü",
+    "Şu an için gösterilecek yeni bir bildiriminiz bulunmuyor.",
+    "Okunmamış",
+    "Bildirim Yok",
+    "Siparişler, teklifler ve sistem uyarıları."
+  ],
+  "src\\features\\orders\\OrderDetailsModal.jsx": [
+    "SONRA",
+    "Servis Kanıtları",
+    "İşlem Akışı",
+    "ONAYINIZ BEKLENİYOR",
+    "ÖNCE",
+    "ONAYLA",
+    "Sipariş Toplamı",
+    "Sipariş Detayı",
+    "EMANET ALTINDA",
+    "Usta Notları",
+    "GÜVENLİ İŞLEM (CARVIS TRUST ENGINE)",
+    "Ödeme Durumu"
+  ],
+  "src\\features\\orders\\OrdersScreen.jsx": [
+    "Toplam Tutar",
+    "Detaylı İzleme İçin Tıklayın",
+    "Hizmeti Onayla",
+    "Siparişlerim",
+    "İşlem Tamamlandı"
+  ],
+  "src\\features\\orders\\PaymentScreen.jsx": [
+    "Güvenli ödeme",
+    "Satıcı",
+    "Ödemeniz PayTR güvencesi altında 256-bit SSL şifreleme ile\n                korunmaktadır.",
+    "Siparişiniz oluşturuldu. Siparişler sayfasına\n              yönlendiriliyorsunuz...",
+    "Ödeme tamamlandıktan sonra satıcı ile iletişime geçebilir ve\n            teslimat detaylarını görüşebilirsiniz.",
+    "Toplam",
+    "Güvenli Ödeme",
+    "Ödemeyi Güvenle Tamamla",
+    "Garanti",
+    "Ödeme Başarılı!",
+    "Sipariş Özeti",
+    "Ödeme"
+  ],
+  "src\\features\\orders\\ServiceTimeline.jsx": [
+    "CANLI GÖRÜNTÜ"
+  ],
+  "src\\features\\partners\\ConsultationManager.jsx": [
+    "MESAJLAŞMAYA GİT",
+    "Bekleyen Havuz",
+    "Yükleniyor...",
+    "Benim Taleplerim",
+    "DANIŞMANLIĞI ÜSTLEN",
+    "Henüz talep bulunmuyor",
+    "TAMAMLA"
+  ],
+  "src\\features\\partners\\PackageManager.jsx": [
+    "Geçerlilik (Ay)",
+    "Yeni Servis Paketi",
+    "PAKETİ OLUŞTUR VE YAYINLA",
+    "Paket Adı",
+    "Dahil Hizmetler (Virgülle ayırın)",
+    "Abonelik bazlı gelir modelleri",
+    "Yeni Paket Ekle",
+    "Servis Paketlerim",
+    "Henüz paketiniz bulunmuyor",
+    "Açıklama"
+  ],
+  "src\\features\\partners\\PartnerDashboard.jsx": [
+    "YAKINDA",
+    "AY",
+    "Danışmanlıklar",
+    "Güncel hareket bulunamadı",
+    "Profil Ayarları",
+    "Aktif İşlem Takip\n                Paneli",
+    "Finansal Özet",
+    "Özet",
+    "Aktif Terminaller",
+    "CANLI BAĞLANTI",
+    "Özel Tahsilat",
+    "Paketlerim",
+    "TÜMÜNÜ İNCELE",
+    "Aylık raporunuzu indirin",
+    "Ekosistemi profesyonel araçlarla yönetin. Tüm istatistikler ve\n              anlık bildirimler aşağıdadır.",
+    "Başka aktif işlem bulunmuyor",
+    "TAHSİLAT YAP",
+    "Sistem Günlüğü"
+  ],
+  "src\\features\\partners\\PartnerLandingScreen.jsx": [
+    "ENTERPRISE",
+    "İşletmeniz için tasarlanmış profesyonel yönetim paneli. Devam etmek\n            için lütfen hizmet türünüzü seçin."
+  ],
+  "src\\features\\partners\\PartnerSettingsScreen.jsx": [
+    "Hazırlık Seviyesi",
+    "İşletme Adı",
+    "Operasyon Tercihleri",
+    "Yeni eşleşme ve görünürlük ayarları",
+    "Operasyon verilerini güncel tut",
+    "Temel operasyon tercihleri yapılandırıldı.",
+    "Operasyon ayarlarını tek merkezden yönet",
+    "Partner Settings",
+    "Hizmet görünürlüğü, teklif akışı, ödeme hesabı ve çalışma\n              tercihlerini düzenleyerek partner panelini aktif kullanım için\n              tamamla.",
+    "Hizmet Yarıçapı",
+    "Servis yarıçapı ve IBAN alanları ödeme ve eşleşme akışlarını\n            doğrudan etkiler.",
+    "Kaydediliyor...",
+    "Ödeme IBAN",
+    "İletişim Telefonu",
+    "Müşterilere görünen temel operasyon bilgileri",
+    "Kaydetmeden önce",
+    "İşletme Profili"
+  ],
+  "src\\features\\partners\\ProcessManager.jsx": [
+    "ŞU ANKİ AŞAMA",
+    "Müşteri onayı verdiğinde ödeme serbest bırakılacak.",
+    "Tutar bakiyenize başarıyla eklendi.",
+    "İŞLEM TAMAMLANDI - ONAY BEKLENİYOR",
+    "GÖNDER",
+    "Yeni Onay Talebi",
+    "HAKEDİŞ SERBEST BIRAKILDI",
+    "İPTAL",
+    "CANLI",
+    "FOTOĞRAF EKLE"
+  ],
+  "src\\features\\partners\\auth\\PartnerAuthScreen.jsx": [
+    "E-Posta",
+    "Hesap Bilgileri",
+    "Şifre",
+    "Vergi Dairesi",
+    "E-Posta Adresi",
+    "KEP Adresi (Kayıtlı E-Posta)",
+    "Belgeleriniz inceleme aşamasındadır. Onaylandığında size bilgilendirme mesajı gönderilecektir.",
+    "Vergi Numarası",
+    "Ana Sayfaya Dön",
+    "Google ile Devam Et",
+    "MERSİS Numarası",
+    "İş ortağı başvurunuz Trendyol standartlarında başarıyla sisteme kaydedildi.",
+    "Hızlı Giriş",
+    "Resmi İşyeri Adresi",
+    "Ticari Bilgiler (Trendyol Standardı)",
+    "Başvuru Alındı!",
+    "IBAN Numarası"
+  ],
+  "src\\features\\partners\\components\\MechanicProfileForm.jsx": [
+    "Teknik Servis Bilgileri",
+    "Hizmet Verilen Markalar",
+    "Uzmanlık Alanları",
+    "Yetkili Servis Durumu",
+    "Uzmanlık alanları ve marka yetkinlikleri",
+    "Teknisyen Sayısı"
+  ],
+  "src\\features\\partners\\components\\ParkingProfileForm.jsx": [
+    "Dolu Araç",
+    "Otopark Adresi",
+    "Kapasite ve tesis özellikleri yönetimi",
+    "Toplam Kapasite",
+    "Otopark Adı",
+    "TRY",
+    "Otopark İşletme Bilgileri",
+    "Saatlik Ücret"
+  ],
+  "src\\features\\partners\\components\\ProductProfileForm.jsx": [
+    "Mağaza Türü",
+    "Sevkiyat Günleri",
+    "Teslimat Yarıçapı",
+    "Satış Kategorileri",
+    "Depodan Doğrudan Satış",
+    "Minimum Sipariş",
+    "Mağaza olmadan sadece depo üzerinden sevkiyat yapıyorum.",
+    "TRY",
+    "Envanter kapsamı ve lojistik ayarları",
+    "Toptancı",
+    "Yedek Parça Mağaza Bilgileri"
+  ],
+  "src\\features\\partners\\components\\RevenueTrend.jsx": [
+    "Tahmini Aylık Büyüme",
+    "Haftalık Performans",
+    "Gelir Analizi"
+  ],
+  "src\\features\\partners\\components\\ValetProfileForm.jsx": [
+    "Taban Hizmet Bedeli",
+    "Çalışma Durumu",
+    "A2 - Motosiklet",
+    "Sigorta Doğrulama",
+    "C - Kamyon",
+    "B - Otomobil",
+    "TRY",
+    "Hizmet Yarıçapı",
+    "Vale Hizmet Bilgileri",
+    "Vale operasyonuna özel çalışma parametreleri",
+    "D - Otobüs",
+    "Aynı Anda Max Araç",
+    "Ehliyet Sınıfı"
+  ],
+  "src\\features\\partners\\mechanic\\MechanicJobs.jsx": [
+    "TALEBİ ÜSTLEN VEYA BİLGİ İSTE",
+    "ARACI TESLİM ALDIM",
+    "Tahmini Kazanç",
+    "GİZLİLİK MODU AKTİF - SADECE\n                ARAÇ DEĞERLERİ GÖSTERİLİR",
+    "MÜŞTERİ ONAYLI",
+    "Üstlendiğiniz bir iş bulunmuyor.",
+    "Şu an havuzda hiç açık iş yok.",
+    "Havuzdaki işleri üstlenin veya aktif işlerinizi yönetin.",
+    "İş Merkezi"
+  ],
+  "src\\features\\partners\\mechanic\\MechanicServices.jsx": [
+    "KAYDET",
+    "Servis Hizmetleri",
+    "Garantili İşçilik",
+    "YENİ HİZMET EKLE",
+    "Hizmet Adı",
+    "Süre",
+    "Kapsam (Virgülle ayırın)",
+    "DÜZENLE",
+    "Müşterilerinize sunduğunuz paketleri düzenleyin",
+    "Yeni Hizmet Paketi"
+  ],
+  "src\\features\\partners\\parking\\ParkingCapacity.jsx": [
+    "Kapasite",
+    "Kapasite ve fiyat ayarları",
+    "DOLULUK ORANI",
+    "Otopark Yönetimi",
+    "Saatlik Ücret (TL)"
+  ],
+  "src\\features\\partners\\products\\SellerProducts.jsx": [
+    "Genel",
+    "Motor Parçaları",
+    "Yedek Parça İlanları",
+    "Marka",
+    "Toplam Stok",
+    "Toplam Değer",
+    "Satıştaki ürünlerinizi yönetin",
+    "DÜZENLE",
+    "p.stock",
+    "Görsel Yükle (Tıkla)",
+    "Kaporta",
+    "Kategori",
+    "Stok",
+    "Yeni İlan Oluştur",
+    "Elektrik",
+    "YENİ İLAN EKLE",
+    "İLANI YAYINLA",
+    "Düşük Stok",
+    "Ürün Adı",
+    "Fren Sistemi",
+    "YAYINLANIYOR...",
+    "Aktif İlan"
+  ],
+  "src\\features\\partners\\valet\\ValetRequests.jsx": [
+    "KABUL ET",
+    "Bekleyen araç talepleri",
+    "REDDET",
+    "Vale Çağrıları",
+    "Şu an bekleyen çağrı yok."
+  ],
+  "src\\features\\profile\\ActivityCenter.jsx": [
+    "Tüm süreçlerini buradan yönetin",
+    "Aktivite Merkezi",
+    "Veriler çekiliyor..."
+  ],
+  "src\\features\\profile\\ProfileScreen.jsx": [
+    "Giriş Yapıldı",
+    "Kaydedilenler",
+    "Takip Et",
+    "Favorilerim",
+    "Hesabımı Sil (KVKK)",
+    "Rapidsy v1.0 - Premium Edition",
+    "Teklifleri Gör"
+  ],
+  "src\\features\\profile\\WalletCard.jsx": [
+    "Bu limitle Rapidsy servislerinde \"Şimdi Al, Sonra Öde\" avantajını kullanabilirsiniz.",
+    "Kullanılabilir Limit",
+    "YÜKLE",
+    "Kalan Bakiye",
+    "Rapidsy Credit (SNPL)",
+    "Rapidsy Wallet",
+    "AKTİF"
+  ],
+  "src\\features\\quotes\\CreateQuoteForm.jsx": [
+    "Garantisiz",
+    "Motor",
+    "Yetkisiz Erişim",
+    "Teklif Oluştur",
+    "Plaka",
+    "Garanti\n              Süresi (Ay)",
+    "Talep Bilgileri",
+    "Bu form sadece onaylı servisler ve idari yöneticiler içindir.",
+    "Geri Dön",
+    "Müşteri Notu",
+    "Teklifi Gönder",
+    "Tahmini\n              Teslimat (Gün)",
+    "Teklif\n              Açıklaması",
+    "Talep Tipi",
+    "Araç"
+  ],
+  "src\\features\\quotes\\QuoteCard.jsx": [
+    "Detaylar",
+    "Resmi"
+  ],
+  "src\\features\\quotes\\QuoteDetailScreen.jsx": [
+    "Toplam Tutar",
+    "Mesaj",
+    "Plaka",
+    "Puan",
+    "Talep Bilgileri",
+    "Firma",
+    "Ara",
+    "Satıcı ile iletişime geçebilirsiniz.",
+    "Talep Açıklaması",
+    "Teklif Detayları",
+    "Açıklama",
+    "Reddet",
+    "Kabul Et",
+    "Deneyim",
+    "Satıcı Bilgileri",
+    "Teklif Kabul Edildi",
+    "Araç"
+  ],
+  "src\\features\\quotes\\QuotesScreen.jsx": [
+    "Teklifler yükleniyor...",
+    "Tekliflerim"
+  ],
+  "src\\features\\services\\MechanicsScreen.jsx": [
+    "AKILLI TEKLİF TOPLA",
+    "RADAR AKTİF",
+    "En Yakın Ustalar Taranıyor..."
+  ],
+  "src\\features\\services\\ServiceRequestForm.jsx": [
+    "Araç Seçin",
+    "Servis Talebi",
+    "Parça veya servis talebi",
+    "Parça Talebi",
+    "Talebi Gönder",
+    "Motor Kodu",
+    "Yeni Talep Oluştur",
+    "Araç seçin...",
+    "Talep Açıklaması",
+    "Talep Tipi",
+    "Detaylı açıklama yaparsanız daha doğru teklifler alırsınız."
+  ],
+  "src\\features\\shop\\AuctionMarket.jsx": [
+    "Canlı İhaleler",
+    "Mevcut Teklif",
+    "Aktif ihale bulunmuyor",
+    "CANLI İHALE",
+    "Canlı Yayın",
+    "İhaleler yükleniyor..."
+  ],
+  "src\\features\\shop\\FavoritesScreen.jsx": [
+    "SERTİFİKALI",
+    "Favorilerim"
+  ],
+  "src\\features\\shop\\PartsScreen.jsx": [
+    "Parça Ara",
+    "ONAYLI",
+    "Rapidsy Akıllı Yedek Parça ve Aksesuar Marketi"
+  ],
+  "src\\features\\shop\\ProductDetailScreen.jsx": [
+    "Çıkma",
+    "Tüm Satıcı Teklifleri",
+    "RPD-988231-X",
+    "RAPIDSY DİJİTAL SERTİFİKA"
+  ],
+  "src\\features\\sos\\SOSWidget.jsx": [
+    "Yolda mı kaldın?",
+    "Yardım Yolda",
+    "Carvis SOS ile tek tuşla yardım çağır.",
+    "Ekipler konuma yönlendirildi."
+  ]
+}

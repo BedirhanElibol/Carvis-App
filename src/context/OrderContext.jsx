@@ -1,135 +1,148 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
-import { useAuth } from './AuthContext';
-import { useUI } from './UIContext';
+/* eslint-disable react-refresh/only-export-components */
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
+import { supabase } from "../supabaseClient";
+import { useAuth } from "./AuthContext";
 
 const OrderContext = createContext();
 
 export const useOrder = () => {
-    const context = useContext(OrderContext);
-    if (!context) throw new Error("useOrder must be used within OrderProvider");
-    return context;
+  const context = useContext(OrderContext);
+  if (!context) throw new Error("useOrder must be used within OrderProvider");
+  return context;
 };
 
 export const OrderProvider = ({ children }) => {
-    const { currentUser } = useAuth();
-    const { showAlert } = useUI();
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const { currentUser } = useAuth();
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        if (!currentUser || currentUser.isAnonymous || !currentUser.id) {
-            setOrders([]);
-            setLoading(false);
-            return;
-        }
-
-        fetchOrders();
-
-        // Real-time subscription for order updates
-        const channel = supabase
-            .channel('order_changes')
-            .on(
-                'postgres_changes',
-                {
-                    event: '*',
-                    schema: 'public',
-                    table: 'orders',
-                    filter: `customer_id=eq.${currentUser.id}`,
-                },
-                (payload) => {
-                    console.log('Order change detected:', payload);
-                    fetchOrders();
-                }
-            )
-            .subscribe();
-
-        return () => {
-            supabase.removeChannel(channel);
-        };
-    }, [currentUser]);
-
-    const fetchOrders = async () => {
-        if (!currentUser?.id) return;
-
-        // Prevent guest users from hitting real DB
-        if (currentUser.id.toString().startsWith('guest-')) {
-            setOrders([]);
-            setLoading(false);
-            return;
-        }
-
-        setLoading(true);
-        try {
-            const { data, error } = await supabase
-                .from('orders')
-                .select(`
+  const fetchOrders = useCallback(async () => {
+    if (!currentUser?.id || currentUser.isAnonymous) return;
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("orders")
+        .select(
+          `
                     *,
                     seller:seller_id(id, full_name, company_name, avatar_url),
                     quote:quote_id(id, price, description, warranty_months)
-                `)
-                .eq('customer_id', currentUser.id)
-                .order('created_at', { ascending: false });
+                `,
+        )
+        .eq("customer_id", currentUser.id)
+        .order("created_at", { ascending: false });
 
-            if (error) throw error;
-            setOrders(data || []);
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-        } finally {
-            setLoading(false);
+      if (error) {
+        if (error.code !== "42501" && error.code !== "42703") {
+          console.error("Error fetching orders:", error);
         }
-    };
+        setOrders([]);
+        return;
+      }
+      setOrders(data || []);
+    } catch (error) {
+      console.error("Orders Exception:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentUser?.id, currentUser?.isAnonymous]);
 
-    const createOrderFromQuote = async (quote) => {
-        if (!currentUser?.id || !quote) {
-            return { data: null, error: new Error('Missing user or quote') };
+  useEffect(() => {
+    if (!currentUser || currentUser.isAnonymous || !currentUser.id) {
+      setOrders([]);
+      setLoading(false);
+      return;
+    }
+
+    fetchOrders();
+
+    // Real-time subscription for order updates
+    const channel = supabase
+      .channel("order_changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "orders",
+          filter: `customer_id=eq.${currentUser.id}`,
+        },
+        () => {
+          fetchOrders();
+        },
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [currentUser, fetchOrders]);
+
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+
+  const createOrderFromQuote = async (quote) => {
+    if (!currentUser?.id || !quote) {
+      return { data: null, error: new Error("Missing user or quote") };
+    }
+    setIsCreatingOrder(true);
+    try {
+      const { data, error } = await supabase
+        .from("orders")
+        .insert([
+          {
+            customer_id: currentUser.id,
+            quote_id: quote.id,
+            seller_id: quote.seller_id,
+            total_amount: quote.price,
+            status: "paid", // Triggers commission calculation via DB trigger
+          },
+        ])
+        .select()
+        .single();
+
+      if (error) {
+        if (error.code === '23505') {
+          throw new Error("Bu teklif için zaten bir sipariş oluşturdunuz.");
         }
+        throw error;
+      }
 
-        try {
-            const { data, error } = await supabase
-                .from('orders')
-                .insert([{
-                    customer_id: currentUser.id,
-                    quote_id: quote.id,
-                    seller_id: quote.seller_id,
-                    total_amount: quote.price,
-                    status: 'paid' // Triggers commission calculation via DB trigger
-                }])
-                .select()
-                .single();
+      // Update the quote status to 'accepted'
+      await supabase
+        .from("quotes")
+        .update({ status: "accepted" })
+        .eq("id", quote.id);
 
-            if (error) throw error;
+      setOrders((prev) => [data, ...prev]);
+      return { data, error: null };
+    } catch (error) {
+      console.error("Error creating order:", error);
+      return { data: null, error };
+    } finally {
+      setIsCreatingOrder(false);
+    }
+  };
 
-            // Update the quote status to 'completed' or similar if needed
-            await supabase
-                .from('quotes')
-                .update({ status: 'accepted' })
-                .eq('id', quote.id);
+  const getOrderById = (orderId) => {
+    return orders.find((o) => o.id === orderId);
+  };
 
-            setOrders(prev => [data, ...prev]);
-            return { data, error: null };
+  const value = {
+    orders,
+    loading,
+    isCreatingOrder,
+    fetchOrders,
+    createOrderFromQuote,
+    getOrderById,
+  };
 
-        } catch (error) {
-            console.error('Error creating order:', error);
-            return { data: null, error };
-        }
-    };
-
-    const getOrderById = (orderId) => {
-        return orders.find(o => o.id === orderId);
-    };
-
-    const value = {
-        orders,
-        loading,
-        fetchOrders,
-        createOrderFromQuote,
-        getOrderById
-    };
-
-    return (
-        <OrderContext.Provider value={value}>
-            {children}
-        </OrderContext.Provider>
-    );
+  return (
+    <OrderContext.Provider value={value}>{children}</OrderContext.Provider>
+  );
 };

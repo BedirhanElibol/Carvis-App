@@ -1,4 +1,4 @@
-# CARVIS - HATA DÜZELTME KILAVUZU
+# RAPIDSY - HATA DÜZELTME KILAVUZU
 
 **Tarih**: 25 Ocak 2026, 00:50  
 **Durum**: Hatalar tespit edildi ve düzeltildi

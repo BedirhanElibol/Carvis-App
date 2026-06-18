@@ -46,8 +46,8 @@ def detect_project_type(project_path: Path) -> dict:
             elif "eslint" in deps:
                 result["linters"].append({"name": "eslint", "cmd": ["npx", "eslint", "."]})
             
-            # Check for TypeScript
-            if "typescript" in deps or (project_path / "tsconfig.json").exists():
+            # Check for TypeScript - Only run if config exists
+            if (project_path / "tsconfig.json").exists() and ("typescript" in deps):
                 result["linters"].append({"name": "tsc", "cmd": ["npx", "tsc", "--noEmit"]})
                 
         except:
@@ -82,6 +82,7 @@ def run_linter(linter: dict, cwd: Path) -> dict:
             cwd=str(cwd),
             capture_output=True,
             text=True,
+            shell=True, # Added for Windows compatibility
             encoding='utf-8',
             errors='replace',
             timeout=120

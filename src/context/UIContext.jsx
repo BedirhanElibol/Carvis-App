@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
-import { TRANSLATIONS } from '../constants/translations';
+import React, { createContext, useContext, useState } from "react";
+import { TRANSLATIONS } from "../constants/translations";
 
 const UIContext = createContext();
 
@@ -7,68 +7,94 @@ const UIContext = createContext();
 export const useUI = () => useContext(UIContext);
 
 export const UIProvider = ({ children }) => {
-    const [alertState, setAlertState] = useState({ show: false, title: '', message: '', type: 'info' });
-    const [language, setLanguage] = useState('tr');
-    const [isLoading, setIsLoading] = useState(false);
+  const [alertState, setAlertState] = useState({
+    show: false,
+    title: "",
+    message: "",
+    type: "info",
+  });
 
-    // Global Modal States
-    const [modals, setModals] = useState({
-        login: false,
-        register: false,
-        seller: false,
-        location: false,
-        kvkk: false,
-        sos: false,
-        accident: false
+  // Dil tespiti ve normalizasyonu (en-US -> en, tr-TR -> tr)
+  const [language, setLanguageState] = useState(() => {
+    try {
+      const savedLang = localStorage.getItem("__SAFE_TOKEN_8__carvis_lang__END_TOKEN_8__");
+      if (savedLang && TRANSLATIONS[savedLang]) return savedLang;
+      const browserLang = navigator.language?.split("-")[0] || "tr";
+      return TRANSLATIONS[browserLang] ? browserLang : "tr";
+    } catch {
+      return "tr";
+    }
+  });
+
+  const setLanguage = (langOrUpdater) => {
+    setLanguageState((prev) => {
+      const newLang = typeof langOrUpdater === "function" ? langOrUpdater(prev) : langOrUpdater;
+      if (TRANSLATIONS[newLang]) {
+        localStorage.setItem("__SAFE_TOKEN_8__carvis_lang__END_TOKEN_8__", newLang);
+        return newLang;
+      }
+      return prev;
     });
-    const [loginIntent, setLoginIntent] = useState(null);
-    const [selectedLocation, setSelectedLocation] = useState('Ankara, Ostim');
+  };
 
-    const t = TRANSLATIONS[language];
+  const [isLoading, setIsLoading] = useState(false);
 
-    const showAlert = (title, message, type = 'info') => {
-        setAlertState({ show: true, title, message, type });
-    };
+  // Global Modal States
+  const [modals, setModals] = useState({
+    login: false,
+    register: false,
+    seller: false,
+    location: false,
+    kvkk: false,
+    sos: false,
+    accident: false,
+  });
 
-    const closeAlert = () => {
-        setAlertState(prev => ({ ...prev, show: false }));
-    };
+  const [loginIntent, setLoginIntent] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState("Ankara, Ostim");
 
-    const openModal = (modalName, intent = null) => {
-        if (intent) setLoginIntent(intent);
-        setModals(prev => ({ ...prev, [modalName]: true }));
-    };
+  // Çeviri nesnesi (Eğer dil bulunamazsa varsayılan olarak Türkçe göster)
+  const t = TRANSLATIONS[language] || TRANSLATIONS["tr"];
 
-    const closeModal = (modalName) => {
-        setModals(prev => ({ ...prev, [modalName]: false }));
-        if (modalName === 'login' || modalName === 'register') setLoginIntent(null);
-    };
+  const showAlert = (title, message, type = "info") => {
+    setAlertState({ show: true, title, message, type });
+  };
 
-    const toggleLanguage = () => {
-        setLanguage(prev => prev === 'tr' ? 'en' : 'tr');
-    };
+  const closeAlert = () => {
+    setAlertState((prev) => ({ ...prev, show: false }));
+  };
 
-    const value = {
-        alertState,
-        showAlert,
-        closeAlert,
-        language,
-        setLanguage,
-        toggleLanguage,
-        t,
-        isLoading,
-        setIsLoading,
-        modals,
-        openModal,
-        closeModal,
-        loginIntent,
-        selectedLocation,
-        setSelectedLocation
-    };
+  const openModal = (modalName, intent = null) => {
+    if (intent) setLoginIntent(intent);
+    setModals((prev) => ({ ...prev, [modalName]: true }));
+  };
 
-    return (
-        <UIContext.Provider value={value}>
-            {children}
-        </UIContext.Provider>
-    );
+  const closeModal = (modalName) => {
+    setModals((prev) => ({ ...prev, [modalName]: false }));
+    if (modalName === "login" || modalName === "register") setLoginIntent(null);
+  };
+
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === "tr" ? "en" : "tr"));
+  };
+
+  const value = {
+    alertState,
+    showAlert,
+    closeAlert,
+    language,
+    setLanguage,
+    toggleLanguage,
+    t,
+    isLoading,
+    setIsLoading,
+    modals,
+    openModal,
+    closeModal,
+    loginIntent,
+    selectedLocation,
+    setSelectedLocation,
+  };
+
+  return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
 };

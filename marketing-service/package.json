@@ -1,0 +1,18 @@
+{
+  "name": "marketing-service",
+  "version": "1.0.0",
+  "description": "WhatsApp and Scraping microservice for Carvis",
+  "main": "whatsapp-bot.js",
+  "type": "module",
+  "scripts": {
+    "start": "node whatsapp-bot.js",
+    "scrape": "node scraper.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.0",
+    "dotenv": "^16.4.5",
+    "puppeteer": "^22.10.0",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.23.0"
+  }
+}

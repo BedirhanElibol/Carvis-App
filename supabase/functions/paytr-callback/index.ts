@@ -1,8 +1,8 @@
 // PayTR webhook handler - Ödeme onayı
 // SECURITY: Uses HMAC-SHA256 for hash validation
 
-import { createClient } from '@supabase/supabase-js'
-import { encodeBase64 } from "std/encoding/base64.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4'
+import { encodeBase64 } from "https://deno.land/std@0.224.0/encoding/base64.ts"
 
 // HMAC-SHA256 helper
 async function hmacSHA256(key: string, message: string): Promise<string> {
@@ -112,34 +112,61 @@ Deno.serve(async (req) => {
                 })
                 .eq('id', transaction.id)
 
-            // Order'ı güncelle (paid olarak işaretle)
-            await supabaseClient
-                .from('orders')
-                .update({
-                    status: 'paid',
-                    paid_at: new Date().toISOString(),
-                })
-                .eq('id', transaction.order_id)
+            if (transaction.order_id && transaction.order) {
+                // Order'ı güncelle (paid olarak işaretle)
+                await supabaseClient
+                    .from('orders')
+                    .update({
+                        status: 'paid',
+                        paid_at: new Date().toISOString(),
+                    })
+                    .eq('id', transaction.order_id)
 
-            // Müşteriye bildirim gönder
-            await supabaseClient
-                .from('notifications')
-                .insert({
-                    user_id: transaction.order.customer_id,
-                    type: 'payment',
-                    title: 'Ödeme Başarılı',
-                    message: `Sipariş #${transaction.order_id} için ödemeniz alındı.`,
-                })
+                // Müşteriye bildirim gönder
+                await supabaseClient
+                    .from('notifications')
+                    .insert({
+                        user_id: transaction.order.customer_id,
+                        type: 'payment',
+                        title: 'Ödeme Başarılı',
+                        message: `Sipariş #${transaction.order_id} için ödemeniz alındı.`,
+                    })
 
-            // Satıcıya bildirim gönder
-            await supabaseClient
-                .from('notifications')
-                .insert({
-                    user_id: transaction.order.seller_id,
-                    type: 'payment',
-                    title: 'Yeni Sipariş',
-                    message: `Sipariş #${transaction.order_id} için ödeme alındı. Hazırlığa başlayabilirsiniz.`,
-                })
+                // Satıcıya bildirim gönder
+                await supabaseClient
+                    .from('notifications')
+                    .insert({
+                        user_id: transaction.order.seller_id,
+                        type: 'payment',
+                        title: 'Yeni Sipariş',
+                        message: `Sipariş #${transaction.order_id} için ödeme alındı. Hazırlığa başlayabilirsiniz.`,
+                    })
+            } else if (transaction.user_id) {
+                // Cüzdan Bakiye Yüklemesi
+                const { data: wallet } = await supabaseClient.from('wallets').select('*').eq('user_id', transaction.user_id).single();
+                if (wallet) {
+                    const amountToAddTL = transaction.payment_amount;
+
+                    await supabaseClient
+                        .from('wallets')
+                        .update({ balance: wallet.balance + amountToAddTL })
+                        .eq('user_id', transaction.user_id)
+
+                    await supabaseClient.from('wallet_transactions').insert({
+                        wallet_id: transaction.user_id,
+                        amount: amountToAddTL,
+                        type: 'deposit',
+                        description: 'Kredi Kartı ile Bakiye Yükleme (PayTR)'
+                    })
+
+                    await supabaseClient.from('notifications').insert({
+                        user_id: transaction.user_id,
+                        type: 'wallet',
+                        title: 'Bakiye Yüklendi',
+                        message: `Cüzdanınıza ${amountToAddTL} TL yüklendi.`
+                    })
+                }
+            }
 
             console.log('Payment successful:', merchant_oid)
         } else {

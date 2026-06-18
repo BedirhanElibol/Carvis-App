@@ -21,7 +21,7 @@ const ProductDetailScreen = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { products, addToCart, toggleFavorite, favorites } = useShop();
-    const { t, showAlert } = useUI();
+    const { t } = useUI();
     const [showCert, setShowCert] = useState(false);
     const [product, setProduct] = useState(null);
 

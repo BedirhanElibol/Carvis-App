@@ -1,96 +1,131 @@
-import { Activity, Wrench, History } from 'lucide-react';
-import { useGarage } from '../../context/GarageContext';
-import { cn } from '../../lib/utils';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import * as Icons from "lucide-react";
 
-export const PredictiveMaintenanceCard = ({ currentVehicle, onShowHistory }) => {
-    const { getMaintenanceStatus } = useGarage();
-    const navigate = useNavigate();
+/**
+ * PredictiveMaintenanceCard Component
+ * Displays smart maintenance progress and suggestions based on vehicle state.
+ */
+const PredictiveMaintenanceCard = ({
+  currentVehicle,
+  t,
+  setActiveTab,
+  onShowHistory,
+}) => {
+  // Örnek mantık: KM'ye göre bakım yüzdesi hesaplama (15.000km periyodu baz alınır)
+  const km = Number(currentVehicle?.km) || 0;
+  const maintenanceInterval = 15000;
+  const progress = Math.min(
+    ((km % maintenanceInterval) / maintenanceInterval) * 100,
+    100,
+  );
+  const isCritical = progress > 85;
+  const isWarning = progress > 70;
 
-    if (!currentVehicle) return null;
+  return (
+    <div className="glass-card rounded-[2.5rem] p-6 border border-white/5 relative overflow-hidden group">
+      {/* Background Glow */}
+      <div
+        className={`absolute top-0 right-0 w-32 h-32 blur-[60px] opacity-20 transition-colors duration-500 ${
+          isCritical
+            ? "bg-red-500"
+            : isWarning
+              ? "bg-amber-500"
+              : "bg-primary-500"
+        }`}
+      ></div>
 
-    const maintenanceItems = getMaintenanceStatus(currentVehicle);
-    const minLife = Math.min(...maintenanceItems.map(i => i.value));
-    const isUrgent = minLife <= 20;
-
-    return (
-        <div className={cn(
-            "p-6 rounded-[2.5rem] border animate-slide-up shadow-2xl relative overflow-hidden group mb-6 transition-all duration-500 hover:scale-[1.02]",
-            isUrgent ? 'bg-red-950/40 border-red-500/50' : 'bg-slate-900 border-white/5'
-        )}>
-            {/* Background Glow */}
-            <div className={cn(
-                "absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl -mr-20 -mt-20",
-                isUrgent ? "bg-red-600/10" : "bg-primary-600/10"
-            )}></div>
-
-            <div className="relative z-10 flex flex-col gap-6">
-                <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-4">
-                        <div className={cn(
-                            "w-14 h-14 rounded-2xl flex items-center justify-center border shadow-2xl transition-all duration-700",
-                            isUrgent ? 'bg-red-500/20 border-red-500/40 text-red-400 rotate-12' : 'bg-primary-500/10 border-primary-500/20 text-primary-400'
-                        )}>
-                            <Activity size={30} className={isUrgent ? 'animate-pulse' : ''} />
-                        </div>
-                        <div>
-                            <h4 className="font-black text-white text-base italic tracking-tighter uppercase leading-none">AKILLI BAKIM RADARI</h4>
-                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">
-                                {isUrgent ? '⚠ DİKKAT: BAZI PARÇALAR KRİTİK SEVİYEDE' : 'TÜM SİSTEMLER OPTİMUM SEVİYEDE'}
-                            </p>
-                        </div>
-                    </div>
-                    <button
-                        onClick={onShowHistory}
-                        className="glass-card p-3 rounded-2xl border border-white/10 hover:bg-white/10 transition-all active-scale"
-                        title="Servis Geçmişi"
-                    >
-                        <History size={20} className="text-slate-400" />
-                    </button>
-                </div>
-
-                {/* Status Gauges Grid */}
-                <div className="grid grid-cols-1 gap-4">
-                    {maintenanceItems.map(item => (
-                        <div key={item.id} className="space-y-2">
-                            <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                                <span className="text-slate-400">{item.label}</span>
-                                <span className={cn(
-                                    "font-mono",
-                                    item.value <= 20 ? "text-red-400" : "text-white"
-                                )}>%{Math.round(item.value)} ÖMÜR</span>
-                            </div>
-                            <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden border border-white/5">
-                                <div
-                                    className={cn(
-                                        "h-full transition-all duration-1000 rounded-full",
-                                        item.value <= 20 ? "bg-gradient-to-r from-red-600 to-red-400 shadow-[0_0_10px_rgba(239,68,68,0.5)]" :
-                                            item.value <= 40 ? "bg-gradient-to-r from-orange-500 to-yellow-400" :
-                                                "bg-gradient-to-r from-primary-600 to-indigo-500"
-                                    )}
-                                    style={{ width: `${item.value}%` }}
-                                ></div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="flex gap-3">
-                    <button
-                        onClick={() => navigate('/service-request')}
-                        className={cn(
-                            "flex-1 py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all active-scale shadow-2xl flex items-center justify-center gap-3 border",
-                            isUrgent
-                                ? "bg-white text-slate-950 hover:bg-slate-100 border-white/20"
-                                : "bg-slate-950 text-white hover:bg-slate-900 border-white/5"
-                        )}
-                    >
-                        <Wrench size={18} /> BAKIM RANDEVUSU AL
-                    </button>
-                </div>
-            </div>
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center shadow-inner">
+            <Icons.Settings
+              size={20}
+              className="text-primary-400 group-hover:rotate-90 transition-transform duration-500"
+            />
+          </div>
+          <div>
+            <h4 className="text-sm font-black tracking-tighter text-white uppercase">
+              Akıllı Bakım
+            </h4>
+            <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
+              {t?.predictiveTitle || "Arıza Tahmini"}
+            </p>
+          </div>
         </div>
-    );
+        {isCritical && (
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full animate-pulse">
+            <Icons.AlertCircle size={10} className="text-red-500" />
+            <span className="text-[8px] font-black text-red-500 uppercase">
+              Kritik
+            </span>
+          </div>
+        )}
+      </div>
+
+      <div className="space-y-6">
+        <div>
+          <div className="flex justify-between text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-widest">
+            <span>Servis Ömrü</span>
+            <span className={isCritical ? "text-red-400" : "text-primary-400"}>
+              %{Math.round(progress)}
+            </span>
+          </div>
+          <div className="h-2.5 bg-slate-900 rounded-full overflow-hidden border border-white/5 p-0.5">
+            <div
+              className={`h-full rounded-full transition-all duration-1000 ${
+                isCritical
+                  ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"
+                  : isWarning
+                    ? "bg-amber-500"
+                    : "bg-primary-500 shadow-[0_0_10px_rgba(59,130,246,0.3)]"
+              }`}
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-slate-900/40 rounded-2xl p-3 border border-white/5">
+            <div className="flex items-center gap-2 mb-1">
+              <Icons.Clock size={12} className="text-primary-400" />
+              <span className="text-[9px] font-black text-slate-500 uppercase">
+                KALAN KM
+              </span>
+            </div>
+            <p className="text-lg font-black text-white">
+              {Math.max(
+                maintenanceInterval - (km % maintenanceInterval),
+                0,
+              ).toLocaleString()}
+            </p>
+          </div>
+          <div className="bg-slate-900/40 rounded-2xl p-3 border border-white/5">
+            <div className="flex items-center gap-2 mb-1">
+              <Icons.Activity size={12} className="text-accent-400" />
+              <span className="text-[9px] font-black text-slate-500 uppercase">
+                SAĞLIK PUANI
+              </span>
+            </div>
+            <p className="text-lg font-black text-white">A+</p>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={() => setActiveTab("parts")}
+            className="flex-1 py-3.5 bg-white text-black rounded-2xl font-black text-xs tracking-tighter hover:bg-slate-200 transition-all active-scale-95 uppercase flex items-center justify-center gap-2"
+          >
+            Parça Bak <Icons.ChevronRight size={14} />
+          </button>
+          <button
+            onClick={onShowHistory}
+            className="px-5 py-3.5 glass-card border border-white/10 text-white rounded-2xl font-black text-xs tracking-tighter hover:bg-white/5 transition-all active-scale-95 uppercase"
+          >
+            Geçmiş
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default PredictiveMaintenanceCard;

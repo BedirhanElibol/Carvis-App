@@ -2,12 +2,12 @@
 
 **Status**: Draft
 **Agent**: Project Planner
-**Context**: Enhancing Carvis with real-time external data using the newly compiled Public APIs resource.
+**Context**: Enhancing Rapidsy with real-time external data using the newly compiled Public APIs resource.
 
 ---
 
 ## 🎯 Objective
-Integrate 4 high-value public APIs to transform Carvis from a "Static App" to a "Live Platform".
+Integrate 4 high-value public APIs to transform Rapidsy from a "Static App" to a "Live Platform".
 Focus on Automotive Data, Real-Time Traffic, and Financial Metrics.
 
 ## 🔌 Selected Integrations
@@ -21,7 +21,7 @@ Focus on Automotive Data, Real-Time Traffic, and Financial Metrics.
 ### 2. Fuel Prices (CollectAPI / GlobalPetrolPrices Fallback)
 - **Target**: `MarketStats` (Dashboard), `PredictiveHealth`
 - **Use Case**: Show current gasoline/diesel avg prices in user's region (Turkey).
-- **Benefit**: "Carvis Intelligence" feature. Helps user calculate trip costs.
+- **Benefit**: "Rapidsy Intelligence" feature. Helps user calculate trip costs.
 - **Auth**: API Key required (We will use a mock/fallback for dev if key missing).
 
 ### 3. Traffic Data (TomTom / OpenRouteService)

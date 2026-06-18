@@ -1,6 +1,6 @@
 # 💸 FinTech & Payment Implementation Plan
 
-**Objective**: Turn Carvis into a revenue-generating platform by enabling real payments, user wallets, and commission automation.
+**Objective**: Turn Rapidsy into a revenue-generating platform by enabling real payments, user wallets, and commission automation.
 
 ## 🏗️ 1. Database Schema Extensions
 We need to support "Stored Balance" for all users (not just sellers) and track every transaction history.
@@ -23,7 +23,7 @@ We will use the existing `create-payment` Edge Function infrastructure but conne
 ### Flows
 1. **Direct Service Payment**: Customer -> PayTR -> Mechanic/Valet.
    - Status: `orders` table (Exists).
-2. **Wallet Top-up**: Customer -> PayTR -> Carvis Wallet.
+2. **Wallet Top-up**: Customer -> PayTR -> Rapidsy Wallet.
    - Action: `wallets` balance update.
 3. **Wallet Spending**: Customer -> Wallet Balance -> Service.
    - Action: Check balance -> Deduct -> Create Order (Paid).

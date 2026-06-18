@@ -1,4 +1,4 @@
-# Carvis UI Audit & Feedback (Brainstorming)
+# Rapidsy UI Audit & Feedback (Brainstorming)
 
 As requested, I've "clicked" through the code paths of every button. Here is the breakdown of findings and logic errors.
 

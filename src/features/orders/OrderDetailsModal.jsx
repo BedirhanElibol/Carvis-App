@@ -1,81 +1,196 @@
-import React from 'react';
-import { X, MapPin, Phone, Calendar, ShieldCheck } from 'lucide-react';
-import ServiceTimeline from './ServiceTimeline';
+import React, { useState, useEffect } from "react";
+import * as Icons from "lucide-react";
+import ServiceTimeline from "./ServiceTimeline";
+import { supabase } from "../../supabaseClient";
+import { useUI } from "../../context/UIContext";
 
 const OrderDetailsModal = ({ show, onClose, order }) => {
-    if (!show || !order) return null;
+  const { showAlert } = useUI();
+  const [localOrder, setLocalOrder] = useState(order);
 
-    // Mock evidence for demo
-    const evidencePhotos = [
-        "https://images.unsplash.com/photo-1632823471565-1ec85e2368a2?q=80&w=600&auto=format&fit=crop"
-    ];
+  useEffect(() => {
+    setLocalOrder(order);
+  }, [order]);
 
-    return (
-        <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in">
-            <div className="bg-[#0f172a] w-full max-w-lg rounded-3xl border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+  const handleAcceptApproval = async (itemId) => {
+    try {
+      const item = localOrder.pending_approval_items.find(i => i.id === itemId);
+      if (!item) return;
 
-                {/* Header */}
-                <div className="p-5 border-b border-white/5 flex justify-between items-center bg-slate-950">
-                    <div>
-                        <h3 className="font-black text-white text-lg">Sipariş Detayı</h3>
-                        <p className="text-xs text-slate-500">#{order.id.slice(0, 8).toUpperCase()}</p>
-                    </div>
-                    <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition text-slate-400 hover:text-white">
-                        <X size={20} />
-                    </button>
-                </div>
+      const updatedItems = localOrder.pending_approval_items.map(i => 
+        i.id === itemId ? { ...i, status: 'accepted' } : i
+      );
 
-                {/* Content */}
-                <div className="p-5 overflow-y-auto space-y-6 custom-scrollbar">
+      const newTotal = Number(localOrder.total_amount || 0) + Number(item.price);
 
-                    {/* Status Badge */}
-                    <div className="bg-primary-900/20 border border-primary-500/20 p-4 rounded-2xl flex items-center gap-3">
-                        <div className="bg-primary-500/20 p-2.5 rounded-xl">
-                            <ShieldCheck className="text-primary-400" size={24} />
-                        </div>
-                        <div>
-                            <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest">GÜVENLİ İŞLEM (TRANSPARENT EYE)</p>
-                            <p className="text-sm text-white font-medium">Bu servis işlemi Carvis güvencesi altındadır.</p>
-                        </div>
-                    </div>
+      const { data, error } = await supabase
+        .from("orders")
+        .update({ 
+          pending_approval_items: updatedItems,
+          total_amount: newTotal
+        })
+        .eq("id", localOrder.id)
+        .select()
+        .single();
 
-                    {/* Timeline */}
-                    <div>
-                        <h4 className="font-bold text-white text-sm mb-4 uppercase tracking-wider opacity-70 border-b border-white/5 pb-2">Canlı Süreç Takibi</h4>
-                        <ServiceTimeline status={order.status || 'pending'} evidencePhotos={evidencePhotos} />
-                    </div>
+      if (error) throw error;
+      setLocalOrder(data);
+      showAlert("Başarılı", "Ek işlem onaylandı ve toplam tutar güncellendi.", "success");
+    } catch (error) {
+      console.error("Accept approval error:", error);
+      showAlert("Hata", "Onay işlemi başarısız oldu.", "error");
+    }
+  };
 
-                    {/* Service Info */}
-                    <div className="space-y-4">
-                        <h4 className="font-bold text-white text-sm mb-2 uppercase tracking-wider opacity-70 border-b border-white/5 pb-2">Hizmet Bilgileri</h4>
+  if (!show || !localOrder) return null;
 
-                        <div className="flex items-start gap-3">
-                            <MapPin size={16} className="text-slate-500 mt-1" />
-                            <div>
-                                <p className="text-sm text-white font-bold">Oto Sanayi Sitesi, Maslak</p>
-                                <p className="text-xs text-slate-500">34. Sk No:12, İstanbul</p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Phone size={16} className="text-slate-500" />
-                            <p className="text-sm text-slate-300 font-bold">+90 532 555 00 00</p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Calendar size={16} className="text-slate-500" />
-                            <p className="text-sm text-slate-300 font-bold">28 Ocak 2026, 14:30</p>
-                        </div>
-                    </div>
-                </div>
+  // Real evidence from DB or Fallback
+  const proofs = localOrder.service_proofs?.[0] || {};
+  const beforePhotos = proofs.before_photos || [];
+  const afterPhotos = proofs.after_photos || [];
+  const technicianNotes = proofs.technician_notes || "";
 
-                {/* Footer */}
-                <div className="p-5 border-t border-white/5 bg-slate-950">
-                    <button onClick={onClose} className="w-full py-4 bg-white/5 hover:bg-white/10 rounded-2xl text-white font-bold text-xs uppercase tracking-[0.2em] transition-all">
-                        Kapat
-                    </button>
-                </div>
-            </div>
+  return (
+    <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in">
+      <div className="bg-[#0f172a] w-full max-w-lg rounded-3xl border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        {/* Header */}
+        <div className="p-5 border-b border-white/5 flex justify-between items-center bg-slate-950">
+          <div>
+            <h3 className="font-black text-white text-lg">Sipariş Detayı</h3>
+            <p className="text-xs text-slate-500">
+              #{localOrder.id.slice(0, 8).toUpperCase()}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-white/10 rounded-full transition text-slate-400 hover:text-white"
+          >
+            <Icons.X size={20} />
+          </button>
         </div>
-    );
+
+        {/* Content */}
+        <div className="p-5 overflow-y-auto space-y-6 custom-scrollbar">
+          {/* Status Badge */}
+          <div className="bg-primary-900/20 border border-primary-500/20 p-4 rounded-2xl flex items-center gap-3">
+            <div className="bg-primary-500/20 p-2.5 rounded-xl">
+              <Icons.ShieldCheck className="text-primary-400" size={24} />
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest">
+                GÜVENLİ İŞLEM (CARVIS TRUST ENGINE)
+              </p>
+              <p className="text-sm text-white font-medium">
+                Bu servis işlemi %100 şeffaflık garantisi altındadır.
+              </p>
+            </div>
+          </div>
+
+          {/* Live Approvals Section (Competitive Advantage) */}
+          {localOrder.pending_approval_items?.filter(i => i.status === 'pending').length > 0 && (
+            <div className="bg-amber-500/10 border border-amber-500/20 p-6 rounded-[2rem] space-y-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Icons.BellRing size={18} className="text-amber-500 animate-bounce" />
+                <h4 className="text-amber-500 font-black text-xs uppercase tracking-widest">ONAYINIZ BEKLENİYOR</h4>
+              </div>
+              {localOrder.pending_approval_items.filter(i => i.status === 'pending').map(item => (
+                <div key={item.id} className="bg-slate-950/50 p-4 rounded-2xl border border-white/5 flex justify-between items-center">
+                  <div>
+                    <p className="text-white font-black text-xs uppercase">{item.title}</p>
+                    <p className="text-amber-500 font-mono font-bold text-sm">₺{item.price}</p>
+                  </div>
+                  <button 
+                    onClick={() => handleAcceptApproval(item.id)}
+                    className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active-scale"
+                  >
+                    ONAYLA
+                  </button>
+                </div>
+              ))}
+              <p className="text-[9px] text-slate-500 font-medium leading-tight">
+                * Ustanız servis sırasında bu ek işlemlerin gerekli olduğunu tespit etti. Onayınız olmadan işleme devam edilmeyecektir.
+              </p>
+            </div>
+          )}
+
+          {/* Timeline */}
+          <div className="space-y-4">
+            <h4 className="text-white font-black text-xs uppercase tracking-widest px-1">
+              İşlem Akışı
+            </h4>
+            <ServiceTimeline status={localOrder.status} />
+          </div>
+
+          {/* Evidence Photos */}
+          <div className="space-y-4">
+            <h4 className="text-white font-black text-xs uppercase tracking-widest px-1">
+              Servis Kanıtları
+            </h4>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center">
+                  ÖNCE
+                </p>
+                <div className="h-32 bg-slate-900 rounded-2xl border border-white/5 overflow-hidden">
+                  {beforePhotos[0] ? (
+                    <img
+                      src={beforePhotos[0]}
+                      className="w-full h-full object-cover"
+                      alt="Before"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-slate-700">
+                      <Icons.Image size={24} />
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center">
+                  SONRA
+                </p>
+                <div className="h-32 bg-slate-900 rounded-2xl border border-white/5 overflow-hidden">
+                  {afterPhotos[0] ? (
+                    <img
+                      src={afterPhotos[0]}
+                      className="w-full h-full object-cover"
+                      alt="After"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-slate-700">
+                      <Icons.Image size={24} />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Technician Notes */}
+          <div className="bg-slate-900/50 p-5 rounded-3xl border border-white/5">
+            <h4 className="text-primary-400 font-black text-[10px] uppercase tracking-widest mb-2">
+              Usta Notları
+            </h4>
+            <p className="text-sm text-slate-300 italic leading-relaxed">
+              "{technicianNotes || "Henüz not girilmemiş."}"
+            </p>
+          </div>
+
+          {/* Price Breakdown */}
+          <div className="bg-white/5 p-6 rounded-3xl border border-white/5">
+             <div className="flex justify-between items-center mb-2">
+               <span className="text-xs text-slate-500 uppercase font-black">Sipariş Toplamı</span>
+               <span className="text-xl font-mono font-black text-white">₺{localOrder.total_amount?.toLocaleString('tr-TR')}</span>
+             </div>
+             <div className="flex justify-between items-center">
+               <span className="text-[10px] text-slate-600 uppercase font-bold">Ödeme Durumu</span>
+               <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">EMANET ALTINDA</span>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default OrderDetailsModal;

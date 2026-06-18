@@ -1,170 +1,90 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { supabase } from "../../supabaseClient";
 
-// Carvis AI Service (Gemini Integration)
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const SIMULATION_DELAY = 1000;
+// AI model operations are now securely handled by Supabase Edge Functions.
 
-// Initialize Gemini if API key is present
-let genAI = null;
-let model = null;
 
-if (API_KEY && API_KEY !== 'YOUR_GEMINI_API_KEY') {
-    try {
-        genAI = new GoogleGenerativeAI(API_KEY);
-        model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        console.log("Carvis AI: Gemini Pro initialized.");
-    } catch (e) {
-        console.error("Carvis AI Initialization Error:", e);
-    }
-}
+const LOCAL_KNOWLEDGE_BASE = {
+  "yağ": "Yağ lambası yanıyorsa aracınızı hemen durdurun. Yağ seviyesini kontrol edin, sızıntı varsa mutlaka servise başvurun.",
+  "fren": "Frenlerdeki ses veya yumuşama balataların bittiğine işaret eder. Güvenliğiniz için en kısa sürede kontrol ettirmelisiniz.",
+  "akü": "Araç çalışmıyorsa akü bitmiş olabilir. Takviye kablosu ile çalıştırmayı deneyebilir veya bir elektrikçiye danışabilirsiniz.",
+  "motor": "Motordan gelen tıkırtı veya vuruntu sesleri ciddi olabilir. Yağ seviyesini kontrol edip uzman bir ustaya görünmenizi öneririm.",
+  "lastik": "Lastik basınç uyarısı mevsimsel sıcaklık farklarından olabilir. En yakın istasyonda basınçları kontrol edebilirsiniz.",
+  "merhaba": "Merhaba! Ben Carvis Asistan. Aracınızla ilgili her türlü teknik soruda size yardımcı olmaya hazırım.",
+  "nasılsın": "Teşekkür ederim, size yardımcı olmak için buradayım. Aracınızda bir sorun mu var?",
+  "fiyat": "Fiyatlar parça ve işçiliğe göre değişebilir. Ustalardan canlı teklif alarak net maliyeti görebilirsiniz."
+};
+
+const getLocalResponse = (message) => {
+  const lowerMsg = (message || "").toLowerCase();
+  for (const [key, value] of Object.entries(LOCAL_KNOWLEDGE_BASE)) {
+    if (lowerMsg.includes(key)) return value;
+  }
+  return "Bu konuda size yardımcı olabilmem için biraz daha detay verebilir misiniz? Veya bir uzmanımıza yönlendirmemi ister misiniz?";
+};
 
 export const AIService = {
+  async searchProductsByKeyword(keyword) {
+    if (!keyword) return [];
+    try {
+      const { data } = await supabase
+        .from("products")
+        .select("id, name, brand, price, category, image_url, stock")
+        .or(`name.ilike.%${keyword}%,brand.ilike.%${keyword}%,category.ilike.%${keyword}%`)
+        .eq("certified", true)
+        .gt("stock", 0)
+        .limit(3);
+      return data || [];
+    } catch { return []; }
+  },
 
-    /**
-     * Metin tabanlı arıza tahmini
-     */
-    async diagnoseIssue(userText, carModel = "Bilinmeyen Araç") {
-        if (!model) return this.mockDiagnose(userText);
+  async diagnoseIssue(userText, carModel = "Araç") {
+    try {
+      const prompt = `Görevin: Oto-uzman asistan. Araç: ${carModel}. Şikayet: ${userText}. SADECE JSON döndür: {"title": "Başlık", "description": "Açıklama", "urgency": "low|medium|high|critical", "estimatedCost": "Fiyat", "suggestedPartKeyword": "parça veya null"}`;
+      
+      const { data, error } = await supabase.functions.invoke('ai-chat', {
+        body: { message: prompt }
+      });
 
-        try {
-            const prompt = `Sen Carvis uygulamasının uzman otomobil mekaniği asistanısın. 
-            Araç: ${carModel}
-            Kullanıcı Şikayeti: "${userText}"
-            
-            Lütfen şu formatta JSON cevabı dön (SADECE JSON):
-            {
-                "title": "Arıza Başlığı",
-                "description": "Detaylı açıklama",
-                "urgency": "low|medium|high|critical",
-                "estimatedCost": "Fiyat aralığı (₺)",
-                "suggestedService": "mechanic|electrician|tire_shop|body_shop"
-            }`;
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
-
-            // JSON temizleme (Markdown bloklarını kaldır)
-            const cleanJson = text.replace(/```json|```/g, "").trim();
-            const data = JSON.parse(cleanJson);
-
-            return { success: true, data, message: "AI Analizi Tamamlandı" };
-        } catch (error) {
-            console.error("Gemini Diagnose Error:", error);
-            return this.mockDiagnose(userText);
+      if (error) throw error;
+      
+      const text = data?.response || "";
+      const cleanJson = text.replace(/```json|```/g, "").trim();
+      return { success: true, data: JSON.parse(cleanJson) };
+    } catch {
+      const response = getLocalResponse(userText);
+      const risk = (userText.includes("fren") || userText.includes("yağ") || userText.includes("motor")) ? "high" : "medium";
+      return { 
+        success: true, 
+        data: {
+          title: "Ön Analiz",
+          description: response,
+          urgency: risk,
+          estimatedCost: "Teklif Alınız",
+          suggestedPartKeyword: userText.includes("fren") ? "balata" : (userText.includes("yağ") ? "yağ" : null)
         }
-    },
-
-    /**
-     * Görüntüden Arıza Lambası Tanıma
-     */
-    async analyzeDashboardLight(imageFile) {
-        if (!model || !imageFile) return this.mockAnalyzeLight();
-
-        try {
-            // Helper function to convert file to generative part
-            async function fileToGenerativePart(file) {
-                const base64EncodedDataPromise = new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result.split(',')[1]);
-                    reader.readAsDataURL(file);
-                });
-                return {
-                    inlineData: { data: await base64EncodedDataPromise, mimeType: file.type },
-                };
-            }
-
-            const imagePart = await fileToGenerativePart(imageFile);
-            const prompt = "Bu arıza lambasının anlamı nedir? Olası sebepleri ve çözüm önerilerini listeleyerek JSON formatında dön. {name, possibleCauses[], advice, riskLevel}";
-
-            const result = await model.generateContent([prompt, imagePart]);
-            const response = await result.response;
-            const text = response.text();
-
-            const cleanJson = text.replace(/```json|```/g, "").trim();
-            const data = JSON.parse(cleanJson);
-
-            return { success: true, data };
-        } catch (error) {
-            console.error("Gemini Vision Error:", error);
-            return this.mockAnalyzeLight();
-        }
-    },
-
-    /**
-     * AI Asistan (Chatbot)
-     */
-    async chat(message, history = []) {
-        if (!model) return this.mockChat(message);
-
-        try {
-            const chatSession = model.startChat({
-                history: history.map(h => ({
-                    role: h.role === 'ai' ? 'model' : 'user',
-                    parts: [{ text: h.content }],
-                })),
-                generationConfig: { maxOutputTokens: 500 }
-            });
-
-            const prompt = `Sen Carvis'in akıllı asistanısın. Kısa, samimi ve teknik olarak doğru cevaplar ver. 
-            Kullanıcılara arıza, bakım, otopark ve valet hizmetlerinde yardımcı ol.
-            Kullanıcı Mesajı: ${message}`;
-
-            const result = await chatSession.sendMessage(prompt);
-            const response = await result.response;
-
-            return {
-                role: 'ai',
-                content: response.text(),
-                timestamp: new Date().toISOString()
-            };
-        } catch (error) {
-            console.error("Gemini Chat Error:", error);
-            return this.mockChat(message);
-        }
-    },
-
-    // --- MOCK FALLBACKS ---
-
-    async mockDiagnose(userText) {
-        await new Promise(r => setTimeout(r, SIMULATION_DELAY));
-        const text = userText.toLowerCase();
-        let diagnosis = {
-            title: "Genel Kontrol Gerekli",
-            description: "Belirttiğiniz sorun için genel bir servis kontrolü önerilir.",
-            urgency: "medium",
-            estimatedCost: "500 - 1500 ₺",
-            suggestedService: "mechanic"
-        };
-
-        if (text.includes("ses") || text.includes("tıkırtı")) {
-            diagnosis.title = "Mekanik Aksam Sesi";
-            diagnosis.urgency = "high";
-        } else if (text.includes("fren")) {
-            diagnosis.title = "Fren Sistemi";
-            diagnosis.urgency = "critical";
-        }
-
-        return { success: true, data: diagnosis };
-    },
-
-    async mockAnalyzeLight() {
-        await new Promise(r => setTimeout(r, SIMULATION_DELAY));
-        return {
-            success: true,
-            data: {
-                name: "Simüle Edilen Arıza Lambası",
-                possibleCauses: ["Sensör hatası", "Sıvı seviyesi düşük"],
-                advice: "En yakın yetkili servise başvurun.",
-                riskLevel: "medium"
-            }
-        };
-    },
-
-    async mockChat(message) {
-        await new Promise(r => setTimeout(r, 600));
-        let reply = "Şu an bağlantımda bir sorun var ama temel araç bilgilerini verebilirim.";
-        if (message.toLowerCase().includes("merhaba")) reply = "Merhaba! Ben Carvis AI. Size nasıl yardımcı olabilirim?";
-        return { role: 'ai', content: reply, timestamp: new Date().toISOString() };
+      };
     }
+  },
+
+  async analyzeDashboardLight() {
+    return { success: false, error: "API required for vision." };
+  },
+
+  async chat(message, history = []) {
+    try {
+      const { data, error } = await supabase.functions.invoke('ai-chat', {
+        body: {
+          message: message,
+          systemPrompt: "Sen profesyonel bir oto uzmanı asistansın.",
+          history: history
+        }
+      });
+
+      if (error) throw error;
+      
+      return { role: "ai", content: data?.response || "Anlayamadım.", timestamp: new Date().toISOString() };
+    } catch { 
+      return { role: "ai", content: getLocalResponse(message), timestamp: new Date().toISOString() }; 
+    }
+  },
 };

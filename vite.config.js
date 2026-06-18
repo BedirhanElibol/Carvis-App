@@ -1,24 +1,47 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react-swc'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    minify: 'esbuild',
+    reportCompressedSize: false,
+  },
   plugins: [
     react(),
-    // VitePWA({...}) - Disabled for debugging build crash
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['pwa-icon.png'],
+      includeAssets: ['pwa-icon.png', 'offline.html'],
+      workbox: {
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB
+        navigateFallback: '/offline.html',
+        navigateFallbackDenylist: [/^\/api/, /^\/supabase/],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/.*\.supabase\.co/,
+            handler: 'NetworkFirst',
+            options: { cacheName: 'supabase-api', networkTimeoutSeconds: 5 }
+          }
+        ]
+      },
       manifest: {
-        name: 'Carvis - Otonom Araç Platformu',
-        short_name: 'Carvis',
-        description: 'Her şey tek uygulamada. Servis, vale, otopark ve parça.',
+        name: 'Rapidsy - Akıllı Araç Platformu',
+        short_name: 'Rapidsy',
+        description: 'Yedek parça, usta randevusu, AI asistan (Rapidsy) ve dijital servis takibi.',
         theme_color: '#0f172a',
         background_color: '#0f172a',
         display: 'standalone',
         orientation: 'portrait',
+        start_url: '/',
+        scope: '/',
         icons: [
+          {
+            src: 'pwa-icon.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any'
+          },
           {
             src: 'pwa-icon.png',
             sizes: '512x512',
@@ -29,7 +52,14 @@ export default defineConfig({
       }
     })
   ],
+  logLevel: 'info',
+  optimizeDeps: {
+    include: ['lucide-react', 'react-leaflet', 'leaflet'],
+  },
   server: {
+    watch: {
+      ignored: ['**/android/**', '**/ios/**', '**/dist/**']
+    },
     headers: {
       // Prevent clickjacking attacks
       'X-Frame-Options': 'DENY',
@@ -38,9 +68,11 @@ export default defineConfig({
       // Referrer policy for privacy
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       // Permissions policy
-      'Permissions-Policy': 'geolocation=(), microphone=(), camera=()',
+      'Permissions-Policy': 'geolocation=(self), microphone=(self), camera=()',
       // Content Security Policy (Dev Mode Warning: 'unsafe-eval' needed for Vite HMR)
-      // 'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.pollinations.ai https://*.googleapis.com;"
+      'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.pollinations.ai https://text.pollinations.ai https://*.googleapis.com https://api.open-meteo.com https://corsproxy.io https://api.collectapi.com https://api.frankfurter.app https://vpic.nhtsa.dot.gov https://api.openchargemap.io https://api.bigdatacloud.net;",
+      // Strict Transport Security
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload'
     }
   }
 })
