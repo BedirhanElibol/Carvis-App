@@ -20,14 +20,7 @@ import { WalletProvider } from "./context/WalletContext";
 import { HelmetProvider } from "react-helmet-async";
 if (import.meta.env.PROD && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then((registration) => {
-        console.log("SW registered: ", registration);
-      })
-      .catch((registrationError) => {
-        console.log("SW registration failed: ", registrationError);
-      });
+    navigator.serviceWorker.register("/sw.js");
   });
 } else if ("serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
