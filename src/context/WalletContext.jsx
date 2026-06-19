@@ -167,7 +167,14 @@ export const WalletProvider = ({ children }) => {
   const cancelEscrow = async (amount, _title = "Bloke İptali") => {
     try {
       // Security Fix: Replaced with authorized backend execution trace
-      await new Promise(res => setTimeout(res, 500));
+      const { error: escrowError } = await supabase.rpc('rpc_cancel_escrow', { p_amount: amount });
+
+      if (escrowError) {
+        console.error("RPC Cancel Escrow Error:", escrowError);
+        throw escrowError;
+      }
+
+      await fetchWalletData();
       return true;
     } catch (error) {
       console.error("Cancel escrow error:", error);
