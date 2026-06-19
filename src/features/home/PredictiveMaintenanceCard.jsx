@@ -73,10 +73,10 @@ const PredictiveMaintenanceCard = ({
             <div
               className={`h-full rounded-full transition-all duration-1000 ${
                 isCritical
-                  ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"
+                  ? "bg-red-500 shadow-glow shadow-red-500/50"
                   : isWarning
                     ? "bg-amber-500"
-                    : "bg-primary-500 shadow-[0_0_10px_rgba(59,130,246,0.3)]"
+                    : "bg-primary-500 shadow-glow shadow-primary-500/30"
               }`}
               style={{ width: `${progress}%` }}
             />
