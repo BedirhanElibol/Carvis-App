@@ -694,9 +694,9 @@ const CustomerHome = () => {
                 <span className="font-bold text-white">₺3.200 (%66)</span>
               </div>
               <div className="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden flex">
-                <div className="bg-emerald-500 h-full" style={{ width: "66%" }}></div>
-                <div className="bg-primary-500 h-full" style={{ width: "24%" }}></div>
-                <div className="bg-slate-600 h-full" style={{ width: "10%" }}></div>
+                <div className="bg-emerald-500 h-full w-[66%]"></div>
+                <div className="bg-primary-500 h-full w-[24%]"></div>
+                <div className="bg-slate-600 h-full w-[10%]"></div>
               </div>
               <div className="flex gap-4 text-[10px] text-slate-500 pt-2 font-black uppercase">
                 <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Akaryakıt</span>
