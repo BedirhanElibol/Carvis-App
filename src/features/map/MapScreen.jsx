@@ -431,8 +431,7 @@ const MapScreen = () => {
                 {/* Visual Progress Bar */}
                 <div className="relative w-full h-2 bg-slate-950 rounded-full overflow-hidden">
                   <div 
-                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-red-600 to-orange-500 transition-all duration-1000"
-                    style={{ width: `${sosStep === 1 ? '33%' : sosStep === 2 ? '66%' : '100%'}` }}
+                    className={`absolute top-0 left-0 h-full bg-gradient-to-r from-red-600 to-orange-500 transition-all duration-1000 ${sosStep === 1 ? 'w-[33%]' : sosStep === 2 ? 'w-[66%]' : 'w-full'}`}
                   ></div>
                 </div>
               </div>
