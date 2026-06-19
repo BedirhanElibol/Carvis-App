@@ -87,7 +87,8 @@ serve(async (req: Request) => {
         const data = await response.json()
 
         if (!response.ok) {
-            throw new Error(data.error?.message || 'Failed to call Gemini API')
+            console.error('Gemini API Error:', data.error?.message || 'Unknown API Error')
+            throw new Error('Failed to call Gemini API')
         }
 
         const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "Üzgünüm, cevap üretemedim."
