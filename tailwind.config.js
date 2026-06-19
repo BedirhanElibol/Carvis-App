@@ -60,6 +60,9 @@ export default {
       },
       backdropBlur: {
         xs: '2px',
+      },
+      boxShadow: {
+        glow: '0 0 10px var(--tw-shadow-color)',
       }
     },
   },
