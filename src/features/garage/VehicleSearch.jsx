@@ -83,6 +83,11 @@ const VehicleSearch = ({ onVehicleFound }) => {
       } else if (cleanVin.length >= 10) {
         // Partial match, let user fix it
         setVin(cleanVin.substring(0, 17));
+        showAlert(
+          "Bilgi",
+          "Şase numarası kısmen okundu. Lütfen eksik veya hatalı kısımları manuel düzeltin.",
+          "info"
+        );
       } else {
         showAlert(
           "Uyarı",
