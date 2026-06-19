@@ -139,6 +139,8 @@ const MechanicsScreen = () => {
     );
   }
 
+  const mapBackgroundStyle = mapUrl ? { backgroundImage: `url('${mapUrl}')` } : {};
+
   return (
     <div className="p-5 pb-32 space-y-6 animate-fade-in relative">
       <div className="absolute top-[10%] right-[-10%] w-[50%] h-[50%] bg-accent-600/5 rounded-full blur-[100px] pointer-events-none"></div>
@@ -198,7 +200,7 @@ const MechanicsScreen = () => {
           {mapUrl ? (
             <div
               className="absolute inset-0 bg-cover opacity-30 group-hover:scale-105 transition-transform duration-1000"
-              style={{ backgroundImage: `url('${mapUrl}')` }}
+              style={mapBackgroundStyle}
             ></div>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900 opacity-50"></div>
