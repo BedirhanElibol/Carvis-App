@@ -37,6 +37,7 @@ export const WalletProvider = ({ children }) => {
         setBalance(walletArray[0].balance || 0);
         setCreditLimit(walletArray[0].credit_limit || 0);
         setCreditUsed(walletArray[0].credit_used || 0);
+        setEscrowBalance(walletArray[0].blocked_amount || 0);
       } else {
         // Wallet missing — ONLY upsert if we are authenticated and not guest
         if (currentUser.isAnonymous) return;
@@ -143,9 +144,9 @@ export const WalletProvider = ({ children }) => {
       return false;
     }
     try {
-      // Security Fix: Prevent direct raw DB updates
-      // Replaced with RPC placeholder
-      await new Promise(res => setTimeout(res, 500));
+      const { error } = await supabase.rpc('rpc_block_wallet_funds', { p_amount: amount });
+      if (error) throw error;
+      await fetchWalletData();
       return true;
     } catch (error) {
       console.error("Block funds error:", error);
@@ -155,8 +156,9 @@ export const WalletProvider = ({ children }) => {
 
   const releaseFunds = async (amount, _title = "İşlem Tamamlandı") => {
     try {
-      // Security Fix: Replaced with an authorized backend execution trace
-      await new Promise(res => setTimeout(res, 500));
+      const { error } = await supabase.rpc('rpc_release_wallet_funds', { p_amount: amount });
+      if (error) throw error;
+      await fetchWalletData();
       return true;
     } catch (error) {
       console.error("Release funds error:", error);
@@ -166,8 +168,9 @@ export const WalletProvider = ({ children }) => {
 
   const cancelEscrow = async (amount, _title = "Bloke İptali") => {
     try {
-      // Security Fix: Replaced with authorized backend execution trace
-      await new Promise(res => setTimeout(res, 500));
+      const { error } = await supabase.rpc('rpc_cancel_escrow', { p_amount: amount });
+      if (error) throw error;
+      await fetchWalletData();
       return true;
     } catch (error) {
       console.error("Cancel escrow error:", error);

@@ -204,7 +204,7 @@ export const ShopProvider = ({ children }) => {
     if (installment === 6) total = total * 1.1;
 
     if (useWallet) {
-      const success = blockFunds(total, "Sipariş Ödemesi & Cüzdan Blokesi");
+      const success = await blockFunds(total, "Sipariş Ödemesi & Cüzdan Blokesi");
       if (!success) {
         showAlert("Yetersiz Bakiye", "Cüzdanınızda yeterli bakiye bulunmuyor.", "error");
         throw new Error("Insufficient funds");
