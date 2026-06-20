@@ -47,6 +47,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
+    // Check if there's an OAuth hash in the URL before finishing load
+    const isOAuthRedirect = window.location.hash.includes("access_token");
+    if (isOAuthRedirect) {
+      setLoading(true);
+    }
+
     const updateUserData = async (session) => {
       if (session?.user) {
         let profile = await fetchProfile(session.user);
@@ -60,26 +68,43 @@ export const AuthProvider = ({ children }) => {
           !!session.user.email_confirmed_at ||
           ["google", "apple"].includes(session.user.app_metadata?.provider);
 
-        setCurrentUser({ ...session.user, ...profile, isVerified });
+        if (isMounted) {
+          setCurrentUser({ ...session.user, ...profile, isVerified });
+          setLoading(false);
+        }
       } else {
-        setCurrentUser(null);
+        if (isMounted) {
+          setCurrentUser(null);
+          // Only stop loading if we are NOT in the middle of an OAuth redirect hash
+          if (!window.location.hash.includes("access_token")) {
+            setLoading(false);
+          }
+        }
       }
-      setLoading(false);
     };
 
     // Initial session check
     supabase.auth.getSession().then(({ data: { session } }) => {
-      updateUserData(session);
+      if (isMounted) {
+        updateUserData(session);
+      }
     });
 
     // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      updateUserData(session);
+      if (isMounted) {
+        // If we get an auth change event (e.g. SIGNED_IN after OAuth hash parsed)
+        // ensure we process it and remove loading.
+        updateUserData(session);
+      }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleLogout = async () => {
