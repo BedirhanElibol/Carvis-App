@@ -7,7 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const LandingScreen = () => {
   const { t, openModal } = useUI();
-  const { currentUser, loginAsGuest } = useAuth();
+  const { currentUser, loginAsGuest, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleGuestEntry = () => {
@@ -16,6 +16,7 @@ const LandingScreen = () => {
   };
 
   useEffect(() => {
+    // Only navigate if we're sure the auth state is fully loaded and user exists
     if (currentUser && !currentUser.isAnonymous) {
       if (currentUser.role === "admin") {
         navigate("/admin/dashboard");
@@ -26,6 +27,18 @@ const LandingScreen = () => {
       }
     }
   }, [currentUser, navigate]);
+
+  // If loading is true or an OAuth redirect hash is present, render a loading state
+  // This prevents the page from rendering and immediately unmounting when redirect happens
+  const isOAuthRedirect = window.location.hash.includes("access_token");
+
+  if (loading || isOAuthRedirect) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-slate-950">
+        <Icons.Loader2 className="animate-spin text-teal-500" size={32} />
+      </div>
+    );
+  }
 
   return (
     <div className="h-[100dvh] w-full flex flex-col relative bg-[#020617] overflow-hidden font-sans">
