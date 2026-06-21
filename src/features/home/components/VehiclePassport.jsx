@@ -296,17 +296,19 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                       { name: "Kalan Fren Balata Kalınlığı", val: mockAnalytics.brakeLife, color: "bg-orange-500" },
                       { name: "Lastik Diş Aşınma Durumu", val: mockAnalytics.tireWear, color: "bg-emerald-500" },
                       { name: "Akü Sağlık Durumu (SoH)", val: mockAnalytics.batteryHealth, color: "bg-cyan-500" }
-                    ].map((item, idx) => (
+                    ].map((item, idx) => {
+                      const itemWidthStyle = { width: `${item.val}%` };
+                      return (
                       <div key={idx} className="space-y-2">
                         <div className="flex justify-between text-xs font-black uppercase tracking-tight">
                           <span className="text-slate-400">{item.name}</span>
                           <span className="text-white">%{item.val}</span>
                         </div>
                         <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
-                          <div className={`h-full ${item.color} rounded-full`} style={{ width: `${item.val}%` }} />
+                          <div className={`h-full ${item.color} rounded-full`} style={itemWidthStyle} />
                         </div>
                       </div>
-                    ))}
+                    )})}
                   </div>
 
                   {/* Diagnostic warnings */}
