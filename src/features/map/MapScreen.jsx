@@ -107,6 +107,8 @@ const MapScreen = () => {
     };
   }, [activeSOS, userLocation, sosLoc]);
 
+  const sosProgressStyle = { width: `${sosStep === 1 ? '33%' : sosStep === 2 ? '66%' : '100%'}` };
+
   // Filtered providers for SOS mode
   const filteredProviders = useMemo(() => {
     let list = nearbyProviders || [];
@@ -432,7 +434,7 @@ const MapScreen = () => {
                 <div className="relative w-full h-2 bg-slate-950 rounded-full overflow-hidden">
                   <div 
                     className="absolute top-0 left-0 h-full bg-gradient-to-r from-red-600 to-orange-500 transition-all duration-1000"
-                    style={{ width: `${sosStep === 1 ? '33%' : sosStep === 2 ? '66%' : '100%'}` }}
+                    style={sosProgressStyle}
                   ></div>
                 </div>
               </div>

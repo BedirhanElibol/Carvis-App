@@ -96,7 +96,9 @@ const ParkingScreen = () => {
         </div>
       ) : (
         <div className="space-y-3">
-          {spots.map((p) => (
+          {spots.map((p) => {
+            const occupancyStyle = { width: `${p.occupancy}%` };
+            return (
             <div
               key={p.id}
               className="glass-card p-4 rounded-2xl border border-white/10 flex justify-between items-center active-scale cursor-pointer group animate-in fade-in slide-in-from-bottom-4"
@@ -127,7 +129,7 @@ const ParkingScreen = () => {
                     <div className="w-24 h-1.5 bg-slate-700 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all ${p.occupancy > 90 ? "bg-red-500" : p.occupancy > 70 ? "bg-yellow-500" : "bg-green-500"}`}
-                        style={{ width: `${p.occupancy}%` }}
+                        style={occupancyStyle}
                       ></div>
                     </div>
                     <span
@@ -148,7 +150,7 @@ const ParkingScreen = () => {
                 <Icons.Navigation size={20} />
               </button>
             </div>
-          ))}
+          )})}
         </div>
       )}
     </div>

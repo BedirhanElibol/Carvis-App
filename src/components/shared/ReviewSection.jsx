@@ -95,7 +95,9 @@ const ReviewSection = () => {
           </div>
           {/* Distribution Bars */}
           <div className="flex-1 space-y-1.5">
-            {ratingDistribution.map(({ star, count, pct }) => (
+            {ratingDistribution.map(({ star, count, pct }) => {
+              const widthStyle = { width: `${pct}%` };
+              return (
               <div key={star} className="flex items-center gap-2">
                 <span className="text-[10px] font-bold text-slate-500 w-3">
                   {star}
@@ -103,14 +105,14 @@ const ReviewSection = () => {
                 <div className="flex-1 bg-slate-800 rounded-full h-2 overflow-hidden">
                   <div
                     className="h-full bg-amber-400 rounded-full transition-all duration-500"
-                    style={{ width: `${pct}%` }}
+                    style={widthStyle}
                   />
                 </div>
                 <span className="text-[10px] font-bold text-slate-600 w-5">
                   {count}
                 </span>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </div>

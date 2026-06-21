@@ -21,6 +21,8 @@ const PredictiveMaintenanceCard = ({
   const isCritical = progress > 85;
   const isWarning = progress > 70;
 
+  const progressWidthStyle = { width: `${progress}%` };
+
   return (
     <div className="glass-card rounded-[2.5rem] p-6 border border-white/5 relative overflow-hidden group">
       {/* Background Glow */}
@@ -78,7 +80,7 @@ const PredictiveMaintenanceCard = ({
                     ? "bg-amber-500"
                     : "bg-primary-500 shadow-[0_0_10px_rgba(59,130,246,0.3)]"
               }`}
-              style={{ width: `${progress}%` }}
+              style={progressWidthStyle}
             />
           </div>
         </div>

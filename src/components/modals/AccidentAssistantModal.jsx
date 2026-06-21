@@ -33,6 +33,8 @@ const AccidentAssistantModal = ({ show, onClose }) => {
     nextStep();
   };
 
+  const stepProgressStyle = { width: `${(step - 1) * 33}%` };
+
   return (
     <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/40 backdrop-blur-2xl animate-in fade-in duration-500">
       <div className="bg-slate-900 w-full max-w-xl rounded-t-[2.5rem] sm:rounded-[3rem] border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.6)] overflow-hidden relative animate-in slide-in-from-bottom-full sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-300 pb-safe max-h-[90vh] flex flex-col">
@@ -91,7 +93,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
             <div className="absolute top-5 left-0 w-full h-0.5 bg-white/5 -z-0"></div>
             <div
               className="absolute top-5 left-0 h-0.5 bg-primary-600 transition-all duration-700 -z-0"
-              style={{ width: `${(step - 1) * 33}%` }}
+              style={stepProgressStyle}
             ></div>
           </div>
         </div>

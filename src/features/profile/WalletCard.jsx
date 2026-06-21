@@ -8,6 +8,8 @@ const WalletCard = () => {
   const availableCredit = creditLimit - creditUsed;
   const creditUsagePercent = creditLimit > 0 ? (creditUsed / creditLimit) * 100 : 0;
 
+  const progressStyle = { width: `${100 - creditUsagePercent}%` };
+
   return (
     <div className="space-y-4">
       {/* Main Balance Card */}
@@ -66,7 +68,7 @@ const WalletCard = () => {
           <div className="h-2 bg-slate-900 rounded-full overflow-hidden">
             <div 
               className="h-full bg-gradient-to-r from-accent-600 to-accent-400 rounded-full transition-all duration-1000"
-              style={{ width: `${100 - creditUsagePercent}%` }}
+              style={progressStyle}
             ></div>
           </div>
           <p className="text-[9px] text-slate-600 text-right">Toplam Limit: {creditLimit.toLocaleString()} ₺</p>
