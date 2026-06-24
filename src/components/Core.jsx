@@ -179,13 +179,11 @@ export const Badge = ({ children, type, className }) => {
 
 export const RapidsyLogo = ({ className = "w-64 h-auto" }) => (
   <div className="flex items-center gap-2 group cursor-pointer font-sans uppercase">
-    <div className="flex items-center justify-center h-8 md:h-12 w-32 md:w-48 overflow-hidden relative drop-shadow-sm transition-transform duration-300 group-hover:scale-105">
-      <img
-        src={logo}
-        alt="Rapidsy Logo"
-        className="absolute w-[180%] md:w-[200%] h-auto object-center"
-      />
-    </div>
+    <img
+      src={logo}
+      alt="Rapidsy Logo"
+      className="h-8 md:h-12 w-auto object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
+    />
   </div>
 );
 

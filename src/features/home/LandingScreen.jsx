@@ -57,13 +57,11 @@ const LandingScreen = () => {
       <nav className="fixed top-4 left-4 right-4 z-50 max-w-7xl mx-auto">
         <div className="w-full bg-white/75 dark:bg-[#0a0f1d]/75 backdrop-blur-xl border border-black/10 dark:border-white/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-2xl shadow-black/50 dark:shadow-black/50">
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
-            <div className="flex items-center justify-center h-8 md:h-10 w-32 md:w-40 overflow-hidden relative">
-              <img
-                src={logo}
-                alt="Rapidsy Logo"
-                className="absolute w-[180%] md:w-[200%] h-auto object-center"
-              />
-            </div>
+            <img
+              src={logo}
+              alt="Rapidsy Logo"
+              className="h-8 md:h-12 w-auto object-contain transition-transform duration-500 hover:scale-105"
+            />
           </div>
 
           <div className="flex items-center gap-3">
@@ -414,9 +412,7 @@ const LandingScreen = () => {
         <footer className="w-full border-t border-black/5 dark:border-white/5 py-12 bg-slate-100 dark:bg-[#02050c]">
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center h-8 w-28 overflow-hidden relative">
-                <img src={logo} alt="Rapidsy Logo" className="absolute w-[180%] h-auto object-center" />
-              </div>
+              <img src={logo} alt="Rapidsy Logo" className="h-6 md:h-8 w-auto object-contain" />
               <span className="text-slate-400 text-sm font-medium ml-2">© 2026</span>
             </div>
             
