@@ -378,6 +378,14 @@ const LandingScreen = () => {
                 border: "group-hover:border-teal-500/50"
               },
               {
+                title: "Yakıt & Gider Takibi",
+                desc: "Tüm akaryakıt alımlarınızı, masraflarınızı kaydedin ve aylık maliyet analizi raporları alın.",
+                icon: Icons.Fuel,
+                color: "text-indigo-500",
+                bg: "bg-indigo-500/10",
+                border: "group-hover:border-indigo-500/50"
+              },
+              {
                 title: "Teklif Toplama",
                 desc: "Arıza veya bakım ihtiyaçlarınız için onaylı servislerden anında rekabetçi teklifler alın.",
                 icon: Icons.FileText,
@@ -392,6 +400,30 @@ const LandingScreen = () => {
                 color: "text-rose-500",
                 bg: "bg-rose-500/10",
                 border: "group-hover:border-rose-500/50"
+              },
+              {
+                title: "Yol Yardım & Vale",
+                desc: "Acil durumlarda çekici çağırın veya aracınızın bakımını sizin yerinize yapacak vale talep edin.",
+                icon: Icons.MapPin,
+                color: "text-orange-500",
+                bg: "bg-orange-500/10",
+                border: "group-hover:border-orange-500/50"
+              },
+              {
+                title: "Güvenli Ödeme",
+                desc: "Hizmet tamamlanana kadar paranız havuzda güvende kalır, sürpriz maliyetlerle karşılaşmazsınız.",
+                icon: Icons.ShieldCheck,
+                color: "text-emerald-500",
+                bg: "bg-emerald-500/10",
+                border: "group-hover:border-emerald-500/50"
+              },
+              {
+                title: "Randevu Takvimi",
+                desc: "Servis randevularınızı takvime ekleyin, zamanınızı yönetin ve bildirimlerle hiçbirini kaçırmayın.",
+                icon: Icons.Calendar,
+                color: "text-cyan-500",
+                bg: "bg-cyan-500/10",
+                border: "group-hover:border-cyan-500/50"
               }
             ].map((feat, idx) => (
               <div key={idx} className={`bg-white/60 dark:bg-[#0a0f24]/60 border border-black/5 dark:border-white/5 rounded-3xl p-6 transition-all hover:-translate-y-1 cursor-default group relative overflow-hidden backdrop-blur-xl shadow-lg hover:shadow-2xl ${feat.border}`}>
