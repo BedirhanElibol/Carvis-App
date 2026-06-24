@@ -179,9 +179,8 @@ export const Badge = ({ children, type, className }) => {
 
 export const RapidsyLogo = ({ className = "" }) => (
   <div className={`flex items-center group cursor-pointer font-sans select-none ${className}`}>
-    <span className="text-2xl font-black tracking-tight">
-      <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">R</span>
-      <span className="text-slate-800 dark:text-white">APIDSY</span>
+    <span className="text-2xl font-black tracking-[0.12em] bg-gradient-to-r from-[#4A9FE6] via-[#2E6FBF] to-[#1B3A6B] bg-clip-text text-transparent">
+      RAPIDSY
     </span>
   </div>
 );
