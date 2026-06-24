@@ -70,7 +70,7 @@ const App = () => {
     <div className="w-full h-[100dvh] font-sans bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white relative selection:bg-orange-500/30 flex flex-col overflow-hidden">
       {/* Background Gradients */}
       <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white dark:from-slate-900 dark:via-slate-950 dark:to-black"></div>
       </div>
 
       {/* Header - Only show inside App */}

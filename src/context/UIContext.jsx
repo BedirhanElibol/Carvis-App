@@ -17,7 +17,7 @@ export const UIProvider = ({ children }) => {
   // Dil tespiti ve normalizasyonu (en-US -> en, tr-TR -> tr)
   const [language, setLanguageState] = useState(() => {
     try {
-      const savedLang = localStorage.getItem("__SAFE_TOKEN_8__carvis_lang__END_TOKEN_8__");
+      const savedLang = localStorage.getItem("carvis_lang");
       if (savedLang && TRANSLATIONS[savedLang]) return savedLang;
       const browserLang = navigator.language?.split("-")[0] || "tr";
       return TRANSLATIONS[browserLang] ? browserLang : "tr";
@@ -29,7 +29,7 @@ export const UIProvider = ({ children }) => {
   // Tema yönetimi
   const [theme, setTheme] = useState(() => {
     try {
-      const savedTheme = localStorage.getItem("__SAFE_TOKEN_8__carvis_theme__END_TOKEN_8__");
+      const savedTheme = localStorage.getItem("carvis_theme");
       if (savedTheme) return savedTheme;
       return "dark"; // Default to dark based on original design
     } catch {
@@ -44,14 +44,14 @@ export const UIProvider = ({ children }) => {
     } else {
       root.classList.remove("dark");
     }
-    localStorage.setItem("__SAFE_TOKEN_8__carvis_theme__END_TOKEN_8__", theme);
+    localStorage.setItem("carvis_theme", theme);
   }, [theme]);
 
   const setLanguage = (langOrUpdater) => {
     setLanguageState((prev) => {
       const newLang = typeof langOrUpdater === "function" ? langOrUpdater(prev) : langOrUpdater;
       if (TRANSLATIONS[newLang]) {
-        localStorage.setItem("__SAFE_TOKEN_8__carvis_lang__END_TOKEN_8__", newLang);
+        localStorage.setItem("carvis_lang", newLang);
         return newLang;
       }
       return prev;

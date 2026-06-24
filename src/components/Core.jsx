@@ -1,6 +1,6 @@
 import React from "react";
 import * as Icons from "lucide-react";
-import logo from "../assets/logo.png";
+
 import ReviewsModal from "./modals/ReviewsModal";
 import { useUI } from "../context/UIContext";
 
@@ -93,22 +93,28 @@ export const RapidsyLogoIcon = ({ className }) => (
     viewBox="0 0 100 60"
     className={className}
     fill="none"
-    stroke="currentColor"
+    stroke="url(#vibrantGradient)"
     strokeWidth="5"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <path d="M10 35 L20 20 H50 L60 35 H85 V50 H15 V35 Z" />
-    <circle cx="25" cy="50" r="8" fill="currentColor" stroke="none" />
-    <circle cx="75" cy="50" r="8" fill="currentColor" stroke="none" />
+    <defs>
+      <linearGradient id="vibrantGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#2dd4bf" /> {/* Teal 400 */}
+        <stop offset="100%" stopColor="#3b82f6" /> {/* Blue 500 */}
+      </linearGradient>
+    </defs>
+    <path d="M10 35 L20 20 H50 L60 35 H85 V50 H15 V35 Z" fill="url(#vibrantGradient)" fillOpacity="0.1" />
+    <circle cx="25" cy="50" r="8" fill="url(#vibrantGradient)" stroke="none" />
+    <circle cx="75" cy="50" r="8" fill="url(#vibrantGradient)" stroke="none" />
     <path
       d="M65 10 L68 18 L76 21 L68 24 L65 32 L62 24 L54 21 L62 18 Z"
-      fill="currentColor"
+      fill="url(#vibrantGradient)"
       stroke="none"
     />
     <path
       d="M80 5 L82 10 L87 12 L82 14 L80 19 L78 14 L73 12 L78 10 Z"
-      fill="currentColor"
+      fill="url(#vibrantGradient)"
       stroke="none"
       opacity="0.7"
     />
@@ -173,11 +179,10 @@ export const Badge = ({ children, type, className }) => {
 
 export const RapidsyLogo = ({ className = "w-64 h-auto" }) => (
   <div className="flex items-center gap-2 group cursor-pointer font-sans uppercase">
-    <img
-      src={logo}
-      alt="Rapidsy Logo"
-      className={`${className} object-contain`}
-    />
+    <RapidsyLogoIcon className="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(45,212,191,0.4)] transition-transform duration-500 group-hover:rotate-12" />
+    <span className="text-slate-900 dark:text-white text-2xl font-black tracking-[0.15em] font-sans uppercase">
+      RAPIDSY
+    </span>
   </div>
 );
 
