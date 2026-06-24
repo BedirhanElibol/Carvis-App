@@ -182,7 +182,7 @@ export const RapidsyLogo = ({ className = "w-64 h-auto" }) => (
     <img
       src={logo}
       alt="Rapidsy Logo"
-      className="h-8 md:h-12 w-auto p-1 md:p-1.5 object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
+      className="h-6 md:h-8 w-auto p-1 md:p-1.5 object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
     />
   </div>
 );
