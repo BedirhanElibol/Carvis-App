@@ -5,36 +5,70 @@ import { motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 
 const RoleCard = ({ title, icon: Icon, color, desc, onClick }) => {
-  // Dynamic color classes based on the 'color' prop
+  // Glow settings based on color
   const colorMap = {
-    cyan: "border-cyan-500/30 hover:border-cyan-400 bg-cyan-500/10 text-cyan-400",
-    amber:
-      "border-amber-500/30 hover:border-amber-400 bg-amber-500/10 text-amber-400",
-    orange:
-      "border-orange-500/30 hover:border-orange-400 bg-orange-500/10 text-orange-400",
-    emerald:
-      "border-emerald-500/30 hover:border-emerald-400 bg-emerald-500/10 text-emerald-400",
+    cyan: {
+      border: "border-cyan-500/20 hover:border-cyan-400/50",
+      bg: "bg-cyan-500/5 hover:bg-cyan-500/10",
+      text: "text-cyan-400",
+      glow: "rgba(6, 182, 212, 0.15)",
+      badge: "from-cyan-500 to-blue-600"
+    },
+    amber: {
+      border: "border-amber-500/20 hover:border-amber-400/50",
+      bg: "bg-amber-500/5 hover:bg-amber-500/10",
+      text: "text-amber-400",
+      glow: "rgba(245, 158, 11, 0.15)",
+      badge: "from-amber-500 to-orange-600"
+    },
+    orange: {
+      border: "border-orange-500/20 hover:border-orange-400/50",
+      bg: "bg-orange-500/5 hover:bg-orange-500/10",
+      text: "text-orange-400",
+      glow: "rgba(249, 115, 22, 0.15)",
+      badge: "from-orange-500 to-red-600"
+    },
+    emerald: {
+      border: "border-emerald-500/20 hover:border-emerald-400/50",
+      bg: "bg-emerald-500/5 hover:bg-emerald-500/10",
+      text: "text-emerald-400",
+      glow: "rgba(16, 185, 129, 0.15)",
+      badge: "from-emerald-500 to-teal-600"
+    },
   };
 
-  const themeClass = colorMap[color] || colorMap.cyan;
+  const currentTheme = colorMap[color] || colorMap.cyan;
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      className={`cursor-pointer rounded-2xl border backdrop-blur-xl p-6 transition-all duration-300 flex flex-col justify-between h-48 ${themeClass}`}
+      whileHover={{ y: -8, scale: 1.01 }}
+      className={`cursor-pointer rounded-[2rem] border backdrop-blur-xl p-6 transition-all duration-300 flex flex-col justify-between h-56 relative overflow-hidden group ${currentTheme.border} ${currentTheme.bg}`}
       onClick={onClick}
     >
-      <div className="flex justify-between items-start">
-        <div className="p-3 rounded-xl bg-black/20">
-          <Icon size={32} />
+      {/* Background glow on card hover */}
+      <div 
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
+        style={{
+          background: `radial-gradient(circle at top left, ${currentTheme.glow}, transparent 70%)`
+        }}
+      ></div>
+
+      <div className="relative z-10 flex justify-between items-start">
+        <div className={`p-4 rounded-2xl bg-gradient-to-br ${currentTheme.badge} text-white shadow-lg shadow-black/20`}>
+          <Icon size={26} />
         </div>
-        <Icons.ArrowRight className="opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className={`w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 group-hover:text-white group-hover:bg-white/10 transition-all active:scale-90`}>
+          <Icons.ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+        </div>
       </div>
-      <div>
-        <h3 className="text-2xl font-bold font-sans text-white mb-1">
+
+      <div className="relative z-10">
+        <h3 className="text-xl font-black font-sans text-white mb-2 uppercase tracking-tight">
           {title}
         </h3>
-        <p className="text-sm text-white/60 font-sans">{desc}</p>
+        <p className="text-xs text-slate-400 font-sans font-medium leading-relaxed">
+          {desc}
+        </p>
       </div>
     </motion.div>
   );
@@ -45,59 +79,102 @@ const PartnerLandingScreen = () => {
   const { currentUser } = useAuth();
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#030712] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+      
       {/* Background Ambience */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-emerald-600/10 rounded-full blur-[120px]" />
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-15%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[130px] animate-pulse-slow" />
+        <div className="absolute bottom-[-10%] right-[-15%] w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[130px] animate-liquid" />
       </div>
 
+      {/* Grid Pattern overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+          backgroundSize: "24px 24px"
+        }}
+      ></div>
+
       <div className="z-10 w-full max-w-5xl">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-black font-sans text-white mb-6 tracking-tight">
-            CARVIS{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 uppercase tracking-tighter font-black">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shadow-inner"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping"></span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">
+              RAPIDSY BUSINESS PORTAL
+            </span>
+          </motion.div>
+
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-5xl md:text-6xl font-black font-sans text-white mb-6 tracking-tight uppercase"
+          >
+            RAPIDSY{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 tracking-tighter drop-shadow-[0_0_30px_rgba(59,130,246,0.2)]">
               ENTERPRISE
             </span>
-          </h1>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto font-sans">
+          </motion.h1>
+
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-sm md:text-base text-slate-400 max-w-2xl mx-auto font-sans leading-relaxed font-medium"
+          >
             İşletmeniz için tasarlanmış profesyonel yönetim paneli. Devam etmek
-            için lütfen hizmet türünüzü seçin.
-          </p>
+            için lütfen hizmet türünüzü seçin ve oturum açın.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
           <RoleCard
             title="Otopark"
-            desc="Kapasite, Tarife ve Doluluk Yönetimi"
+            desc="Kapasite doluluk oranları, dinamik tarife düzenlemeleri ve kapı bariyer sistemleri yönetimi."
             icon={Icons.Car}
             color="cyan"
             onClick={() => navigate("/partner-login/parking")}
           />
           <RoleCard
-            title="Vale"
-            desc="Çağrı Karşılama ve Teslimat Takibi"
+            title="Vale Hizmeti"
+            desc="Müşteri karşılama, vale talepleri, anlık araç teslimatı ve teslim noktası takibi."
             icon={Icons.Key}
             color="amber"
             onClick={() => navigate("/partner-login/valet")}
           />
           <RoleCard
             title="Usta & Servis"
-            desc="Randevu, İş Emri ve Bakım Kartları"
+            desc="İş emri yönetim kartları, servis randevuları, müşteri onaylı bakım kartları."
             icon={Icons.Wrench}
             color="orange"
             onClick={() => navigate("/partner-login/mechanic")}
           />
           <RoleCard
             title="Parça Satıcısı"
-            desc="Stok, Sipariş ve Ürün Yönetimi"
+            desc="Stok seviyesi güncellemeleri, yedek parça sipariş takibi ve ürün kataloğu yönetimi."
             icon={Icons.Package}
             color="emerald"
             onClick={() => navigate("/partner-login/parts")}
           />
-        </div>
+        </motion.div>
 
-        <div className="mt-12 text-center">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-16 text-center"
+        >
           <button
             onClick={() => {
               if (currentUser) {
@@ -106,11 +183,12 @@ const PartnerLandingScreen = () => {
                 navigate("/");
               }
             }}
-            className="text-slate-500 hover:text-white transition-colors text-sm font-bold uppercase tracking-widest"
+            className="text-slate-500 hover:text-white transition-colors text-xs font-black uppercase tracking-widest flex items-center gap-2 mx-auto cursor-pointer"
           >
-            ← Uygulamaya Geri Dön
+            <Icons.ArrowLeft size={14} />
+            Uygulamaya Geri Dön
           </button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -47,10 +47,10 @@ const PartnerDashboard = () => {
         parts: {
             title: 'Parça Tedarikçisi',
             icon: Package,
-            color: 'purple',
-            gradient: 'from-purple-500/10 to-indigo-500/5',
-            border: 'border-purple-500/20',
-            text: 'text-purple-400'
+            color: 'emerald',
+            gradient: 'from-emerald-500/10 to-teal-500/5',
+            border: 'border-emerald-500/20',
+            text: 'text-emerald-400'
         }
     };
 

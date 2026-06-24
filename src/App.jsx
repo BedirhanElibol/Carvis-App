@@ -12,9 +12,11 @@ import SellerRegistrationModal from "./components/modals/SellerRegistrationModal
 import LocationSelectModal from "./components/modals/LocationSelectModal";
 import AlertModal from "./components/modals/AlertModal";
 import KVKKPolicyModal from "./components/modals/KVKKPolicyModal";
+import UpdatePasswordModal from "./components/modals/UpdatePasswordModal";
 import CartDrawer from "./components/modals/CartDrawer";
 import SOSPanicModal from "./components/modals/SOSPanicModal";
 import AccidentAssistantModal from "./components/modals/AccidentAssistantModal";
+import { supabase } from "./supabaseClient";
 import VehicleSearch from "./features/garage/VehicleSearch";
 import { useGarage } from "./context/GarageContext";
 import * as Icons from "lucide-react";
@@ -44,6 +46,16 @@ const App = () => {
   useEffect(() => {
     requestNotificationPermission();
   }, [requestNotificationPermission]);
+
+  // Şifre sıfırlama yönlendirmesini yakala (onAuthStateChange)
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
+      if (event === "PASSWORD_RECOVERY") {
+        openModal("updatePassword");
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [openModal]);
 
   // Global Nav Hider
   const isLanding = location.pathname === "/";
@@ -225,6 +237,12 @@ const App = () => {
         onClose={() => closeModal("kvkk")}
         t={t}
         onAgree={() => closeModal("kvkk")}
+      />
+
+      <UpdatePasswordModal
+        show={modals.updatePassword}
+        onClose={() => closeModal("updatePassword")}
+        t={t}
       />
 
       <CartDrawer />

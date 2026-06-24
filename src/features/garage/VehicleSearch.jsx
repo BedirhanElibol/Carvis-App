@@ -120,7 +120,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
       case "dizel":
         return "bg-blue-500/10 text-blue-400 border-blue-500/20";
       case "elektrik":
-        return "bg-purple-500/10 text-purple-400 border-purple-500/20";
+        return "bg-cyan-500/10 text-cyan-400 border-cyan-500/20";
       case "hibrit":
         return "bg-teal-500/10 text-teal-400 border-teal-500/20";
       case "lpg":

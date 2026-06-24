@@ -48,6 +48,7 @@ export const UIProvider = ({ children }) => {
     kvkk: false,
     sos: false,
     accident: false,
+    updatePassword: false,
   });
 
   const [loginIntent, setLoginIntent] = useState(null);

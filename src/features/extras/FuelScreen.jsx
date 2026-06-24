@@ -81,29 +81,32 @@ const FuelScreen = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          {stations.map((s, idx) => (
-            <ModernCard
-              key={s.id}
-              className="flex justify-between items-center border-white/5 bg-slate-900 shadow-xl hover:shadow-2xl hover:border-red-600/50 transition-all cursor-pointer animate-in fade-in slide-in-from-bottom-4"
-              style={{ animationDelay: `${idx * 100}ms` }}
-              onClick={() => showAlert("İstasyon Seçildi", `${s.name} istasyonuna yol tarifi başlatılıyor...`, "success")}
-            >
-              <div className="flex items-center gap-3">
-                <div className="bg-red-500/20 p-2.5 rounded-xl border border-red-500/20">
-                  <Icons.Droplet size={20} className="text-red-500" />
+          {stations.map((s, idx) => {
+            const animationStyle = { animationDelay: `${idx * 100}ms` };
+            return (
+              <ModernCard
+                key={s.id}
+                className="flex justify-between items-center border-white/5 bg-slate-900 shadow-xl hover:shadow-2xl hover:border-red-600/50 transition-all cursor-pointer animate-in fade-in slide-in-from-bottom-4"
+                style={animationStyle}
+                onClick={() => showAlert("İstasyon Seçildi", `${s.name} istasyonuna yol tarifi başlatılıyor...`, "success")}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-red-500/20 p-2.5 rounded-xl border border-red-500/20">
+                    <Icons.Droplet size={20} className="text-red-500" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white tracking-tight">{s.name}</h4>
+                    <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500 mt-1">
+                      {s.distance} • {s.type}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-bold text-white tracking-tight">{s.name}</h4>
-                  <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500 mt-1">
-                    {s.distance} • {s.type}
-                  </p>
-                </div>
-              </div>
-              <span className="font-black text-red-400 text-lg">
-                {s.price} ₺
-              </span>
-            </ModernCard>
-          ))}
+                <span className="font-black text-red-400 text-lg">
+                  {s.price} ₺
+                </span>
+              </ModernCard>
+            );
+          })}
         </div>
       )}
     </div>

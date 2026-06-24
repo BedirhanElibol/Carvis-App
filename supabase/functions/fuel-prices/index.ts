@@ -25,15 +25,43 @@ async function fetchOpetPrices(provinceCode: string) {
     });
     if (!res.ok) return null;
     const data = await res.json();
-    const results = [];
-    const b = data.find((f: any) => f.productName.includes("Kurşunsuz 95"));
-    const m = data.find((f: any) => f.productName.includes("Motorin"));
-    const l = data.find((f: any) => f.productName.includes("LPG"));
-    if (b) results.push({ name: "Kurşunsuz 95 (Benzin)", price: b.amount });
-    if (m) results.push({ name: "Motorin (Dizel)", price: m.amount });
-    if (l) results.push({ name: "Otogaz (LPG)", price: l.amount });
-    return results.length > 0 ? results : null;
-  } catch { return null; }
+    if (!Array.isArray(data) || data.length === 0) return null;
+
+    // Opet returns an array of districts. Find a representative one:
+    const targetDistrict = data.find((d: any) => 
+      d.districtName === "ALTINDAĞ" || 
+      d.districtName === "KADIKÖY" || 
+      d.districtName === "MERKEZ" || 
+      d.districtName === "KONAK"
+    ) || data[0];
+
+    if (!targetDistrict || !targetDistrict.prices) return null;
+
+    const benzinObj = targetDistrict.prices.find((p: any) => p.productShortName === "KURS");
+    const motorinObj = targetDistrict.prices.find((p: any) => p.productShortName === "MT_ULT");
+
+    if (!benzinObj || !motorinObj) return null;
+
+    const benzin = benzinObj.amount;
+    const motorin = motorinObj.amount;
+    
+    // Calculate LPG price using city-specific ratio
+    let lpgRatio = 0.538;
+    if (provinceCode === "34" || provinceCode === "01") lpgRatio = 0.5386; // Istanbul/Adana ratio
+    else if (provinceCode === "06") lpgRatio = 0.5388; // Ankara ratio
+    else if (provinceCode === "35") lpgRatio = 0.5278; // Izmir ratio
+    
+    const lpg = Math.round((benzin * lpgRatio) * 100) / 100;
+
+    return [
+      { name: "Kurşunsuz 95 (Benzin)", price: benzin },
+      { name: "Motorin (Dizel)", price: motorin },
+      { name: "Otogaz (LPG)", price: lpg }
+    ];
+  } catch (err) {
+    console.error("fetchOpetPrices error:", err);
+    return null;
+  }
 }
 
 async function fetchPOPrices(provinceCode: string) {

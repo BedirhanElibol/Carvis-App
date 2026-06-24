@@ -9,7 +9,7 @@ import { encodeBase64 } from "https://deno.land/std@0.168.0/encoding/base64.ts"
 declare const Deno: any;
 
 const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': Deno.env.get('ALLOWED_ORIGIN') ?? '*',
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
@@ -102,7 +102,7 @@ serve(async (req: Request) => {
         const appUrl = Deno.env.get('APP_URL') || 'http://localhost:5173'
 
         // PayTR variables
-        const merchant_oid = orderId ? `${orderId}_${Math.random().toString(36).substring(2, 7)}` : `topup_${Date.now()}`
+        const merchant_oid = orderId ? `${orderId}_${crypto.randomUUID().split('-')[0]}` : `topup_${crypto.randomUUID()}`
         const user_ip = req.headers.get('x-real-ip') || '127.0.0.1'
         const payment_amount = Math.round(resolvedAmount * 100) // kurus format
         const user_basket = encodeBase64(JSON.stringify([
@@ -139,7 +139,7 @@ serve(async (req: Request) => {
                 JSON.stringify({
                     success: true,
                     simulated: true,
-                    token: "simulated_token_" + Math.random().toString(36).substring(2, 9),
+                    token: "simulated_token_" + crypto.randomUUID().split('-')[0],
                     iframeUrl: "about:blank"
                 }),
                 {

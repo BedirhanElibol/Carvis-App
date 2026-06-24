@@ -2151,4 +2151,18 @@ TO authenticated
 USING (bucket_id = 'service-proofs');
 
 
+-- Check Email Exists Helper Function
+-- Bypasses RLS to allow anonymous checks during password resets
+CREATE OR REPLACE FUNCTION public.check_email_exists(email_to_check text)
+RETURNS boolean
+SECURITY DEFINER
+AS $$
+BEGIN
+  RETURN EXISTS (
+    SELECT 1 FROM auth.users WHERE email = email_to_check
+  );
+END;
+$$ LANGUAGE plpgsql;
+
+
 

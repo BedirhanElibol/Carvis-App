@@ -6,9 +6,9 @@
 
 ---
 
-**Project:** Carvis
-**Generated:** 2026-06-23 19:01:13
-**Category:** Luxury/Premium Brand
+**Project:** Rapidsy
+**Generated:** 2026-06-19 18:27:40
+**Category:** Automotive/Car Dealership
 
 ---
 
@@ -24,7 +24,7 @@
 | Background | `#F8FAFC` | `--color-background` |
 | Text | `#1E293B` | `--color-text` |
 
-**Color Notes:** Trust colors + Category colors + Success green
+**Color Notes:** Brand colors + Metallic accents + Dark/Light
 
 ### Typography
 
@@ -153,13 +153,13 @@
 
 ## Style Guidelines
 
-**Style:** Liquid Glass
+**Style:** Motion-Driven
 
-**Keywords:** Flowing glass, morphing, smooth transitions, fluid effects, translucent, animated blur, iridescent, chromatic aberration
+**Keywords:** Animation-heavy, microinteractions, smooth transitions, scroll effects, parallax, entrance anim, page transitions
 
-**Best For:** Premium SaaS, high-end e-commerce, creative platforms, branding experiences, luxury portfolios
+**Best For:** Portfolio sites, storytelling platforms, interactive experiences, entertainment apps, creative, SaaS
 
-**Key Effects:** Morphing elements (SVG/CSS), fluid animations (400-600ms curves), dynamic blur (backdrop-filter), color transitions
+**Key Effects:** Scroll anim (Intersection Observer), hover (300-400ms), entrance, parallax (3-5 layers), page transitions
 
 ### Page Pattern
 
@@ -173,8 +173,8 @@
 
 ## Anti-Patterns (Do NOT Use)
 
-- ❌ Cheap visuals
-- ❌ Fast animations
+- ❌ Static product pages
+- ❌ Poor UX
 
 ### Additional Forbidden Patterns
 
