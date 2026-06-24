@@ -35,7 +35,7 @@ const LandingScreen = () => {
 
 
   return (
-    <div className="min-h-screen w-full bg-[#030712] text-slate-900 dark:text-white overflow-x-hidden font-sans relative selection:bg-teal-500/30">
+    <div className="min-h-screen w-full bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white overflow-x-hidden font-sans relative selection:bg-teal-500/30">
       
       {/* Dynamic Glow Backgrounds */}
       <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] pointer-events-none overflow-hidden z-0">
@@ -55,7 +55,7 @@ const LandingScreen = () => {
 
       {/* Floating Glass Navbar */}
       <nav className="fixed top-4 left-4 right-4 z-50 max-w-7xl mx-auto">
-        <div className="w-full bg-[#0a0f1d]/75 backdrop-blur-xl border border-black/10 dark:border-white/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-2xl shadow-black/50">
+        <div className="w-full bg-white/75 dark:bg-[#0a0f1d]/75 backdrop-blur-xl border border-black/10 dark:border-white/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-2xl shadow-black/50 dark:shadow-black/50">
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
             <img
               src={logo}
@@ -160,7 +160,7 @@ const LandingScreen = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="w-full max-w-4xl mx-auto px-2 md:px-0 mb-10"
           >
-            <div className="bg-[#0a0f24]/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-3xl p-3 md:p-4 shadow-[0_0_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-3 relative z-20">
+            <div className="bg-white/90 dark:bg-[#0a0f24]/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-3xl p-3 md:p-4 shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-3 relative z-20">
               
               {/* Search Query Input */}
               <div className="flex-1 relative group">
@@ -170,7 +170,7 @@ const LandingScreen = () => {
                   placeholder="Hangi hizmeti arıyorsunuz? (Örn: Periyodik Bakım)" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#030712] border border-black/10 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 transition-all placeholder:text-slate-500"
+                  className="w-full bg-slate-50 dark:bg-[#030712] border border-black/10 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 transition-all placeholder:text-slate-500"
                 />
               </div>
 
@@ -180,7 +180,7 @@ const LandingScreen = () => {
                 <select 
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
-                  className="w-full bg-[#030712] border border-black/10 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-10 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 transition-all appearance-none cursor-pointer"
+                  className="w-full bg-slate-50 dark:bg-[#030712] border border-black/10 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-10 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 transition-all appearance-none cursor-pointer"
                 >
                   <option value="istanbul">İstanbul</option>
                   <option value="ankara">Ankara</option>
@@ -248,7 +248,7 @@ const LandingScreen = () => {
                   onMouseEnter={() => setHoveredPin(prov.id)}
                   onMouseLeave={() => setHoveredPin(null)}
                   onClick={() => openModal("login", "customer")}
-                  className={`bg-[#0a0f24]/80 border ${hoveredPin === prov.id ? 'border-orange-500/50 bg-black/10 dark:bg-white/10' : 'border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20'} p-5 rounded-3xl transition-all cursor-pointer group flex flex-col gap-3 shadow-xl backdrop-blur-md`}
+                  className={`bg-white/80 dark:bg-[#0a0f24]/80 border ${hoveredPin === prov.id ? 'border-orange-500/50 bg-black/10 dark:bg-white/10' : 'border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20'} p-5 rounded-3xl transition-all cursor-pointer group flex flex-col gap-3 shadow-xl backdrop-blur-md`}
                 >
                   <div className="flex justify-between items-start">
                     <div>
@@ -271,7 +271,7 @@ const LandingScreen = () => {
             </div>
 
             {/* Right Column: Interactive SVG Map */}
-            <div className="flex-1 bg-[#050814] border border-black/10 dark:border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex items-center justify-center p-4">
+            <div className="flex-1 bg-slate-50 dark:bg-[#050814] border border-black/10 dark:border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex items-center justify-center p-4">
               {/* Map background grid/texture */}
               <div 
                 className="absolute inset-0 opacity-[0.05]"
@@ -303,7 +303,7 @@ const LandingScreen = () => {
               ].map((pin, i) => (
                 <div 
                   key={i}
-                  className={`absolute w-6 h-6 rounded-full ${pin.color} border-2 border-[#050814] shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-all duration-300 flex items-center justify-center cursor-pointer z-20 ${hoveredPin === pin.id ? 'scale-150 z-30 ring-4 ring-white/20' : 'scale-100 hover:scale-125'}`}
+                  className={`absolute w-6 h-6 rounded-full ${pin.color} border-2 border-white dark:border-[#050814] shadow-[0_0_15px_rgba(0,0,0,0.2)] dark:shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-all duration-300 flex items-center justify-center cursor-pointer z-20 ${hoveredPin === pin.id ? 'scale-150 z-30 ring-4 ring-black/10 dark:ring-white/20' : 'scale-100 hover:scale-125'}`}
                   style={{ top: pin.top, left: pin.left }}
                   onMouseEnter={() => setHoveredPin(pin.id)}
                   onMouseLeave={() => setHoveredPin(null)}
@@ -317,7 +317,7 @@ const LandingScreen = () => {
 
         {/* HOW RAPIDSY WORKS (3-Step Stepper) */}
         <section className="w-full max-w-7xl mx-auto px-6 mb-28">
-          <div className="bg-[#0a0f24]/60 border border-black/5 dark:border-white/5 rounded-[3rem] p-10 md:p-16 space-y-12 relative overflow-hidden backdrop-blur-xl shadow-2xl">
+          <div className="bg-white/60 dark:bg-[#0a0f24]/60 border border-black/5 dark:border-white/5 rounded-[3rem] p-10 md:p-16 space-y-12 relative overflow-hidden backdrop-blur-xl shadow-2xl">
             <div className="text-center max-w-2xl mx-auto">
               <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400">NASIL ÇALIŞIR?</span>
               <h3 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-3 uppercase tracking-tight">3 Adımda Kolayca Yönetin</h3>
@@ -347,7 +347,7 @@ const LandingScreen = () => {
 
         {/* STATS / TRUST SIGNALS */}
         <section className="w-full max-w-7xl mx-auto px-6 mb-24">
-          <div className="bg-gradient-to-r from-[#070b19] to-[#0a1024] border border-black/5 dark:border-white/5 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
+          <div className="bg-gradient-to-r from-white to-slate-50 dark:from-[#070b19] dark:to-[#0a1024] border border-black/5 dark:border-white/5 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
             
             <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-blue-600/5 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -385,7 +385,7 @@ const LandingScreen = () => {
 
         {/* BOTTOM BUSINESS PORTAL CTA */}
         <section className="w-full max-w-7xl mx-auto px-6 mb-28 text-center relative">
-          <div className="max-w-4xl mx-auto bg-gradient-to-b from-[#090e21] to-[#040713] border border-black/10 dark:border-white/10 rounded-[3rem] p-10 md:p-16 relative overflow-hidden shadow-2xl">
+          <div className="max-w-4xl mx-auto bg-gradient-to-b from-white to-slate-50 dark:from-[#090e21] dark:to-[#040713] border border-black/10 dark:border-white/10 rounded-[3rem] p-10 md:p-16 relative overflow-hidden shadow-2xl">
             {/* Background elements */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -412,7 +412,7 @@ const LandingScreen = () => {
         </section>
 
         {/* FOOTER */}
-        <footer className="w-full border-t border-black/5 dark:border-white/5 py-12 bg-[#02050c]">
+        <footer className="w-full border-t border-black/5 dark:border-white/5 py-12 bg-slate-100 dark:bg-[#02050c]">
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
               <img src={logo} alt="Rapidsy Logo" className="w-8 h-8 object-contain" />
