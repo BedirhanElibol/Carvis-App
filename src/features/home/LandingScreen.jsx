@@ -60,7 +60,7 @@ const LandingScreen = () => {
             <img
               src={logo}
               alt="Rapidsy Logo"
-              className="h-8 md:h-12 w-auto object-contain transition-transform duration-500 hover:scale-105"
+              className="h-8 md:h-12 w-auto p-1 md:p-1.5 object-contain transition-transform duration-500 hover:scale-105"
             />
           </div>
 
