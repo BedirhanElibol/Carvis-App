@@ -12,7 +12,7 @@ const MessageListScreen = () => {
   const [mobileChatOpen, setMobileChatOpen] = useState(false);
 
   // Filter conversations
-  const filteredConversations = conversations.filter((conv) => {
+  const filteredConversations = (conversations || []).filter((conv) => {
     const name = conv.user?.company_name || conv.user?.full_name || "İsimsiz";
     return name.toLowerCase().includes(searchTerm.toLowerCase());
   });

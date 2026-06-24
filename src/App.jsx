@@ -20,8 +20,7 @@ import { supabase } from "./supabaseClient";
 import VehicleSearch from "./features/garage/VehicleSearch";
 import { useGarage } from "./context/GarageContext";
 import * as Icons from "lucide-react";
-import AIAssistant from "./components/ai/AIAssistant";
-
+import ThemeToggleFAB from "./components/common/ThemeToggleFAB";
 const App = () => {
   const {
     alertState,
@@ -257,8 +256,8 @@ const App = () => {
         t={t}
       />
 
-      {/* AI Assistant (Global FAB) */}
-      {!isLanding && <AIAssistant />}
+      {/* Theme Toggle for Dashboards without AppHeader */}
+      {hideGlobalNav && !isLanding && <ThemeToggleFAB />}
 
       {/* Vehicle Selector Modal */}
       {showVehicleSelector && (

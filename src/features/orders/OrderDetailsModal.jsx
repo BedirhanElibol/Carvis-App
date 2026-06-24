@@ -52,7 +52,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
 
   return (
     <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in">
-      <div className="bg-[#0f172a] w-full max-w-lg rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-white dark:bg-[#0f172a] w-full max-w-lg rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="p-5 border-b border-black/5 dark:border-white/5 flex justify-between items-center bg-slate-50 dark:bg-slate-950">
           <div>

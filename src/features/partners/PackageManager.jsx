@@ -158,7 +158,7 @@ const PackageManager = () => {
       {/* Add Package Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-in fade-in">
-          <div className="bg-[#0f172a] w-full max-w-lg rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <div className="bg-white dark:bg-[#0f172a] w-full max-w-lg rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div className="p-6 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
               <h3 className="font-black text-slate-900 dark:text-white text-xl uppercase tracking-tighter">Yeni Servis Paketi</h3>
               <button onClick={() => setShowAddModal(false)} className="text-slate-500 hover:text-slate-900 dark:text-white transition"><Icons.X size={20} /></button>

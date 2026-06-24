@@ -50,13 +50,13 @@ const PaymentModal = ({
   const completeTopUp = async (value) => {
     const topUpSucceeded = await addFunds(value);
     if (!topUpSucceeded) {
-      throw new Error("Bakiye yükleme kaydý oluþturulamadý.");
+      throw new Error("Bakiye yï¿½kleme kaydï¿½ oluï¿½turulamadï¿½.");
     }
   };
 
   const handlePaymentStart = async () => {
     if (!finalAmount || Number.isNaN(finalAmount) || finalAmount <= 0) {
-      showAlert("Hata", "Lütfen geçerli bir tutar girin.", "warning");
+      showAlert("Hata", "Lï¿½tfen geï¿½erli bir tutar girin.", "warning");
       return;
     }
 
@@ -87,13 +87,13 @@ const PaymentModal = ({
 
       if (error) throw error;
       if (!data?.success)
-        throw new Error(data?.error || "Ödeme doðrulanamadý.");
+        throw new Error(data?.error || "ï¿½deme doï¿½rulanamadï¿½.");
 
       if (type === "topup") {
         await completeTopUp(finalAmount);
         showAlert(
-          "Bakiye Güncellendi",
-          `${formatCurrency(finalAmount)} cüzdanýnýza eklendi.`,
+          "Bakiye Gï¿½ncellendi",
+          `${formatCurrency(finalAmount)} cï¿½zdanï¿½nï¿½za eklendi.`,
           "success",
         );
       }
@@ -102,8 +102,8 @@ const PaymentModal = ({
         await onSuccess(data);
       } else if (type !== "topup") {
         showAlert(
-          "Ödeme Baþarýlý",
-          `${formatCurrency(finalAmount)} tutarýndaki iþlem tamamlandý.`,
+          "ï¿½deme Baï¿½arï¿½lï¿½",
+          `${formatCurrency(finalAmount)} tutarï¿½ndaki iï¿½lem tamamlandï¿½.`,
           "success",
         );
       }
@@ -113,8 +113,8 @@ const PaymentModal = ({
     } catch (error) {
       console.error("Payment start error:", error);
       showAlert(
-        "Ödeme Baþlatýlamadý",
-        error.message || "Sistem þu an yanýt vermiyor, lütfen tekrar deneyin.",
+        "ï¿½deme Baï¿½latï¿½lamadï¿½",
+        error.message || "Sistem ï¿½u an yanï¿½t vermiyor, lï¿½tfen tekrar deneyin.",
         "error",
       );
       setStep("input");
@@ -133,7 +133,7 @@ const PaymentModal = ({
         <div className="p-5 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-slate-100 dark:bg-slate-800/50">
           <h3 className="font-bold text-slate-900 dark:text-white text-lg flex items-center gap-2">
             <Icons.CreditCard className="text-primary-500" />
-            {type === "topup" ? "Bakiye Yükle" : "Ödeme Yap"}
+            {type === "topup" ? "Bakiye Yï¿½kle" : "ï¿½deme Yap"}
           </h3>
           <button
             onClick={onClose}
@@ -148,7 +148,7 @@ const PaymentModal = ({
             <div className="space-y-6">
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-sm font-bold mb-2">
-                  {type === "topup" ? "Yüklenecek Tutar (?)" : "Ýþlem Tutarý"}
+                  {type === "topup" ? "Yï¿½klenecek Tutar (?)" : "ï¿½ï¿½lem Tutarï¿½"}
                 </label>
                 <div className="relative">
                   <input
@@ -186,8 +186,8 @@ const PaymentModal = ({
                   size={20}
                 />
                 <p className="text-xs text-blue-200">
-                  Ödemeniz simüle güvenli ödeme katmanýndan geçer. Üretime
-                  çýkarken bu alan gerçek saðlayýcýya baðlanmaya hazýrdýr.
+                  ï¿½demeniz simï¿½le gï¿½venli ï¿½deme katmanï¿½ndan geï¿½er. ï¿½retime
+                  ï¿½ï¿½karken bu alan gerï¿½ek saï¿½layï¿½cï¿½ya baï¿½lanmaya hazï¿½rdï¿½r.
                 </p>
               </div>
 
@@ -211,9 +211,9 @@ const PaymentModal = ({
                 size={48}
                 className="text-primary-500 animate-spin mb-4"
               />
-              <p className="text-slate-900 dark:text-white font-bold">Ödeme doðrulanýyor...</p>
+              <p className="text-slate-900 dark:text-white font-bold">ï¿½deme doï¿½rulanï¿½yor...</p>
               <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 text-center">
-                Ýþlem kaydý ve güvenlik kontrolü tamamlanýyor.
+                ï¿½ï¿½lem kaydï¿½ ve gï¿½venlik kontrolï¿½ tamamlanï¿½yor.
               </p>
             </div>
           )}
@@ -225,23 +225,23 @@ const PaymentModal = ({
               </div>
               <div>
                 <h4 className="text-2xl font-black text-slate-900 dark:text-white">
-                  Ýþlem Tamamlandý
+                  ï¿½ï¿½lem Tamamlandï¿½
                 </h4>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
                   {type === "topup"
-                    ? `${formatCurrency(finalAmount)} bakiyenize iþlendi.`
-                    : `${formatCurrency(finalAmount)} tutarýndaki ödeme baþarýyla alýndý.`}
+                    ? `${formatCurrency(finalAmount)} bakiyenize iï¿½lendi.`
+                    : `${formatCurrency(finalAmount)} tutarï¿½ndaki ï¿½deme baï¿½arï¿½yla alï¿½ndï¿½.`}
                 </p>
               </div>
               <div className="rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-4 text-left space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">Ýþlem No</span>
+                  <span className="text-slate-500">ï¿½ï¿½lem No</span>
                   <span className="text-slate-900 dark:text-white font-bold">
                     {paymentResult?.transactionId || "-"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">Ýþlem Tipi</span>
+                  <span className="text-slate-500">ï¿½ï¿½lem Tipi</span>
                   <span className="text-slate-900 dark:text-white font-bold">
                     {paymentResult?.paymentType || type}
                   </span>

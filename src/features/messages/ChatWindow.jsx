@@ -18,7 +18,7 @@ const ChatWindow = ({ activeUserId, onBack }) => {
   const [sending, setSending] = useState(false);
 
   // Get active user details from conversations
-  const activeChat = conversations.find((c) => c.userId === activeUserId);
+  const activeChat = (conversations || []).find((c) => c.userId === activeUserId);
   const activeUserName =
     activeChat?.user?.company_name || activeChat?.user?.full_name || "Sohbet";
   const initials = activeUserName
@@ -84,7 +84,7 @@ const ChatWindow = ({ activeUserId, onBack }) => {
           </div>
         ) : (
           messages.map((msg) => {
-            const isMe = msg.sender_id === currentUser.id;
+            const isMe = msg.sender_id === currentUser?.id;
             return (
               <div
                 key={msg.id}

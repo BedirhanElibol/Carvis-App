@@ -159,7 +159,7 @@ const MapScreen = () => {
   return (
     <div className="h-screen bg-slate-50 dark:bg-slate-950 relative overflow-hidden text-slate-900 dark:text-white">
       {/* --- REAL LEAFLET MAP VIEW --- */}
-      <div className="absolute inset-0 bg-[#060a12] overflow-hidden">
+      <div className="absolute inset-0 bg-slate-50 dark:bg-[#060a12] overflow-hidden">
         <MapComponent
           userLocation={userLocation}
           providers={filteredProviders}

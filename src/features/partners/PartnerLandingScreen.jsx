@@ -79,7 +79,7 @@ const PartnerLandingScreen = () => {
   const { currentUser } = useAuth();
 
   return (
-    <div className="min-h-screen bg-[#030712] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] flex flex-col items-center justify-center p-6 relative overflow-hidden">
       
       {/* Background Ambience */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">

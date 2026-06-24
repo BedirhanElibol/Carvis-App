@@ -110,7 +110,7 @@ const RegisterModal = ({
 
   return (
     <div className="fixed inset-0 bg-black/80 z-[110] flex sm:items-center items-start justify-center backdrop-blur-md animate-in fade-in p-4 overflow-y-auto pt-10 sm:pt-4">
-      <div className="bg-[#0a0f24]/90 border border-black/10 dark:border-white/10 w-full max-w-md rounded-[2.5rem] shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-200 my-auto text-slate-900 dark:text-white">
+      <div className="bg-white dark:bg-[#0a0f24]/90 border border-black/10 dark:border-white/10 w-full max-w-md rounded-[2.5rem] shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-200 my-auto text-slate-900 dark:text-white">
         
         {/* Decorative Background Glows */}
         <div className="absolute -top-20 -right-20 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>

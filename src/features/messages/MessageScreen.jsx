@@ -40,7 +40,7 @@ const MessageScreen = () => {
 
   const otherUser =
     messages.length > 0
-      ? messages[0]?.sender_id === currentUser.id
+      ? messages[0]?.sender_id === currentUser?.id
         ? messages[0]?.receiver
         : messages[0]?.sender
       : null;
@@ -118,7 +118,7 @@ const MessageScreen = () => {
           </div>
         ) : (
           messages.map((message, index) => {
-            const isOwn = message.sender_id === currentUser.id;
+            const isOwn = message.sender_id === currentUser?.id;
             const showDate =
               index === 0 ||
               new Date(messages[index - 1].created_at).toDateString() !==
