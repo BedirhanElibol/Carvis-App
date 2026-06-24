@@ -555,7 +555,7 @@ const CustomerHome = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
         <div className="hidden md:block absolute top-7 left-[15%] right-[15%] h-0.5 bg-black/5 dark:bg-white/5 pointer-events-none z-0"></div>
         {[
-          { step: "01", title: "Arıza & Belirti Bildir", desc: "AI ses teşhisi veya formla arızayı bildirin veya parçanızı seçin.", icon: Icons.Activity, color: "from-teal-500 to-blue-500" },
+          { step: "01", title: "Arıza & Belirti Bildir", desc: "Arızanızı bildirin veya değişecek parçanızı seçin.", icon: Icons.Activity, color: "from-teal-500 to-blue-500" },
           { step: "02", title: "Teklifleri Topla", desc: "Onaylı usta ve servislerimiz arasından size en uygun fiyatı karşılaştırın.", icon: Icons.FileText, color: "from-blue-500 to-cyan-500" },
           { step: "03", title: "Randevu Al & Öde", desc: "Rezervasyonu onaylayıp ödemeyi tamamlayın, paranızı koruma altına alalım.", icon: Icons.ShieldCheck, color: "from-cyan-500 to-emerald-500" }
         ].map((item, idx) => (
@@ -574,47 +574,6 @@ const CustomerHome = () => {
     </div>
   );
 
-  // Load a demo vehicle with scanning simulation
-  const handleLoadDemoVehicle = () => {
-    triggerHaptic("impact");
-    setIsScanning(true);
-    setScanStep(0);
-
-    // Step 1: Scan ECU
-    setTimeout(() => {
-      setScanStep(1);
-      triggerHaptic("selection");
-    }, 800);
-
-    // Step 2: Scan Electrical
-    setTimeout(() => {
-      setScanStep(2);
-      triggerHaptic("selection");
-    }, 1600);
-
-    // Step 3: Scan Brakes
-    setTimeout(() => {
-      setScanStep(3);
-      triggerHaptic("warning");
-    }, 2400);
-
-    // Step 4: Finalize
-    setTimeout(() => {
-      setIsScanning(false);
-      setDemoVehicle({
-        brand: "Volkswagen",
-        model: "Golf 1.4 TSI",
-        plate: "34 RPD 88",
-        km: 62450,
-        health_score: 96,
-        last_oil_change: new Date(Date.now() - 86400000 * 45).toISOString(),
-        year: 2021,
-        engine_code: "1.4 TSI"
-      });
-      triggerHaptic("success");
-      showAlert("Tarama Tamamlandı", "Volkswagen Golf demo aracı yüklendi! 1 adet fren balatası uyarısı algılandı.", "warning");
-    }, 3200);
-  };
 
   // Quotes list
   const activeQuotes = useMemo(() => {
@@ -1056,7 +1015,6 @@ const CustomerHome = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center mb-1.5">
                       <span className="text-[8px] font-black uppercase tracking-[0.2em] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/25">
-                        AI CANLI TELEMETRİ
                         CANLI TELEMETRİ
                       </span>
                       <span className="text-[9px] font-black text-amber-400 flex items-center gap-1 group-hover:text-slate-900 dark:text-white transition-colors uppercase">

@@ -328,7 +328,7 @@ const LandingScreen = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mt-12">
               <div className="hidden md:block absolute top-10 left-[15%] right-[15%] h-0.5 bg-black/10 dark:bg-white/10 pointer-events-none z-0"></div>
               {[
-                { step: "01", title: "İhtiyacını Belirt", desc: "Arama kutusundan veya yapay zeka asistanımızla aracınızın ihtiyacını belirtin.", icon: Icons.Search, color: "from-teal-500 to-blue-500" },
+                { step: "01", title: "İhtiyacını Belirt", desc: "Arama kutusundan hızlıca aracınızın ihtiyacını belirtin.", icon: Icons.Search, color: "from-teal-500 to-blue-500" },
                 { step: "02", title: "Teklifleri İncele", desc: "Bulunduğunuz konuma en yakın onaylı servislerden anında fiyat ve teklif alın.", icon: Icons.List, color: "from-blue-500 to-cyan-500" },
                 { step: "03", title: "Güvenle Randevu Al", desc: "Teklifleri karşılaştırın, size en uygun olanı seçip güvenli ödeme ile randevunuzu kesinleştirin.", icon: Icons.CalendarCheck, color: "from-cyan-500 to-emerald-500" }
               ].map((item, idx) => (
@@ -344,6 +344,67 @@ const LandingScreen = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* APP FEATURES (ÖZELLİKLER) */}
+        <section className="w-full max-w-7xl mx-auto px-6 mb-28">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-blue-500">UYGULAMA ÖZELLİKLERİ</span>
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tight uppercase">
+              Carvis İle Neler Yapabilirsiniz?
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
+              Aracınızın tüm ihtiyaçlarını dijitalleştirin. Garaj yönetiminden parça siparişine kadar her şey parmaklarınızın ucunda.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: "Dijital Garaj",
+                desc: "Birden fazla aracınızı ekleyin, km, muayene ve poliçe bitiş tarihlerini tek ekrandan yönetin.",
+                icon: Icons.Car,
+                color: "text-blue-500",
+                bg: "bg-blue-500/10",
+                border: "group-hover:border-blue-500/50"
+              },
+              {
+                title: "Bakım Takibi",
+                desc: "Periyodik bakımlarınızı ve yağ değişimlerini kilometre bazlı olarak akıllıca takip edin.",
+                icon: Icons.Wrench,
+                color: "text-teal-500",
+                bg: "bg-teal-500/10",
+                border: "group-hover:border-teal-500/50"
+              },
+              {
+                title: "Teklif Toplama",
+                desc: "Arıza veya bakım ihtiyaçlarınız için onaylı servislerden anında rekabetçi teklifler alın.",
+                icon: Icons.FileText,
+                color: "text-amber-500",
+                bg: "bg-amber-500/10",
+                border: "group-hover:border-amber-500/50"
+              },
+              {
+                title: "Parça Marketi",
+                desc: "Aracınıza %100 uyumlu orijinal ve yan sanayi yedek parçaları güvenle sipariş verin.",
+                icon: Icons.Package,
+                color: "text-rose-500",
+                bg: "bg-rose-500/10",
+                border: "group-hover:border-rose-500/50"
+              }
+            ].map((feat, idx) => (
+              <div key={idx} className={`bg-white/60 dark:bg-[#0a0f24]/60 border border-black/5 dark:border-white/5 rounded-3xl p-6 transition-all hover:-translate-y-1 cursor-default group relative overflow-hidden backdrop-blur-xl shadow-lg hover:shadow-2xl ${feat.border}`}>
+                <div className="absolute -right-4 -top-4 w-24 h-24 bg-gradient-to-br from-white/5 to-white/0 dark:from-white/5 dark:to-transparent rounded-full pointer-events-none group-hover:scale-150 transition-transform duration-500"></div>
+                <div className={`w-12 h-12 rounded-2xl ${feat.bg} flex items-center justify-center mb-5`}>
+                  <feat.icon size={24} className={feat.color} />
+                </div>
+                <h4 className="text-base font-black text-slate-900 dark:text-white uppercase tracking-tight mb-2">{feat.title}</h4>
+                <p className="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                  {feat.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -379,7 +440,7 @@ const LandingScreen = () => {
                 <span className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-pink-500">
                   24/7
                 </span>
-                <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 tracking-widest uppercase mt-2">Yapay Zeka Teşhisi</p>
+                <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 tracking-widest uppercase mt-2">Kesintisiz Destek</p>
               </div>
             </div>
           </div>
