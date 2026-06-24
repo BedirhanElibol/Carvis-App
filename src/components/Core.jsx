@@ -177,11 +177,13 @@ export const Badge = ({ children, type, className }) => {
   );
 };
 
-export const RapidsyLogo = ({ className = "" }) => (
-  <div className={`flex items-center group cursor-pointer font-sans select-none ${className}`}>
-    <span className="text-2xl font-black tracking-[0.12em] bg-gradient-to-r from-[#4A9FE6] via-[#2E6FBF] to-[#1B3A6B] bg-clip-text text-transparent">
-      RAPIDSY
-    </span>
+export const RapidsyLogo = ({ className = "w-64 h-auto" }) => (
+  <div className="flex items-center gap-2 group cursor-pointer font-sans uppercase">
+    <img
+      src={logo}
+      alt="Rapidsy Logo"
+      className="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-md transition-transform duration-500 group-hover:scale-105"
+    />
   </div>
 );
 
