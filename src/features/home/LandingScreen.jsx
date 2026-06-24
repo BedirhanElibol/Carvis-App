@@ -6,6 +6,10 @@ import logo from "../../assets/logo.png";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 
+const CITIES = [
+  "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin", "Aydın", "Balıkesir", "Bartın", "Batman", "Bayburt", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Düzce", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Iğdır", "Isparta", "İstanbul", "İzmir", "Kahramanmaraş", "Karabük", "Karaman", "Kars", "Kastamonu", "Kayseri", "Kırıkkale", "Kırklareli", "Kırşehir", "Kilis", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Mardin", "Mersin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Osmaniye", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Şanlıurfa", "Şırnak", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat", "Zonguldak"
+];
+
 const LandingScreen = () => {
   const { t, openModal, language, toggleLanguage, theme, toggleTheme } = useUI();
   const { currentUser, loginAsGuest } = useAuth();
@@ -13,7 +17,7 @@ const LandingScreen = () => {
 
   // Search, Location & Map Interaction States
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchLocation, setSearchLocation] = useState("istanbul");
+  const [searchLocation, setSearchLocation] = useState("all");
   const [hoveredPin, setHoveredPin] = useState(null);
 
   const handleGuestEntry = (query = "", city = "istanbul") => {
@@ -179,9 +183,10 @@ const LandingScreen = () => {
                   onChange={(e) => setSearchLocation(e.target.value)}
                   className="w-full bg-slate-50 dark:bg-[#030712] border border-black/10 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-10 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 transition-all appearance-none cursor-pointer"
                 >
-                  <option value="istanbul">İstanbul</option>
-                  <option value="ankara">Ankara</option>
-                  <option value="izmir">İzmir</option>
+                  <option value="all">Tüm Şehirler</option>
+                  {CITIES.map(city => (
+                    <option key={city} value={city.toLowerCase()}>{city}</option>
+                  ))}
                 </select>
                 <Icons.ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={16} />
               </div>
