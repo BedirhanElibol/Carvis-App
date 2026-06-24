@@ -25,7 +25,7 @@ const RevenueTrend = ({ color = "primary" }) => {
   const gradient = colorConfig[color] || colorConfig.primary;
 
   return (
-    <div className="glass-card p-6 rounded-3xl border border-white/5 relative overflow-hidden group">
+    <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 relative overflow-hidden group">
       {/* Background Glow */}
       <div
         className={`absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br ${gradient} opacity-5 blur-[80px] group-hover:opacity-10 transition-opacity`}
@@ -37,7 +37,7 @@ const RevenueTrend = ({ color = "primary" }) => {
             Haftalık Performans
           </h3>
           <div className="flex items-center gap-2">
-            <span className="text-2xl font-black tracking-tighter text-white uppercase">
+            <span className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white uppercase">
               Gelir Analizi
             </span>
             <div className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center gap-1">
@@ -49,7 +49,7 @@ const RevenueTrend = ({ color = "primary" }) => {
           </div>
         </div>
         <div
-          className={`p-2.5 rounded-xl bg-white/5 border border-white/5 text-slate-400`}
+          className={`p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400`}
         >
           <Icons.TrendingUp size={18} />
         </div>
@@ -63,7 +63,7 @@ const RevenueTrend = ({ color = "primary" }) => {
             className="flex-1 flex flex-col items-center gap-3 group/bar"
           >
             {/* Tooltip on Hover */}
-            <div className="opacity-0 group-hover/bar:opacity-100 transition-opacity absolute -top-8 bg-slate-800 text-white text-[9px] font-black px-2 py-1 rounded-lg border border-white/10 whitespace-nowrap z-10 pointer-events-none">
+            <div className="opacity-0 group-hover/bar:opacity-100 transition-opacity absolute -top-8 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-[9px] font-black px-2 py-1 rounded-lg border border-black/10 dark:border-white/10 whitespace-nowrap z-10 pointer-events-none">
               {item.label}
             </div>
             {/* The Bar */}
@@ -79,7 +79,7 @@ const RevenueTrend = ({ color = "primary" }) => {
               </motion.div>
             </div>
             {/* Day Label */}
-            <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 group-hover/bar:text-white transition-colors duration-300">
+            <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 group-hover/bar:text-slate-900 dark:text-white transition-colors duration-300">
               {item.day}
             </span>
           </div>
@@ -87,7 +87,7 @@ const RevenueTrend = ({ color = "primary" }) => {
       </div>
 
       {/* Bottom Insight */}
-      <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+      <div className="mt-6 pt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
         <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">
           Tahmini Aylık Büyüme
         </p>

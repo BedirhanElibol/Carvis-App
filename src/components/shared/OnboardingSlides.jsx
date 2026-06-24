@@ -52,14 +52,14 @@ const OnboardingSlides = ({ onComplete }) => {
     onComplete();
   };
   return (
-    <div className="fixed inset-0 z-[999] bg-slate-950 flex flex-col items-center justify-between p-8 animate-fade-in">
+    <div className="fixed inset-0 z-[999] bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-between p-8 animate-fade-in">
       {" "}
       {/* Skip */}{" "}
       <div className="w-full flex justify-end">
         {" "}
         <button
           onClick={handleSkip}
-          className="text-slate-600 hover:text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-1 transition-colors"
+          className="text-slate-600 hover:text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-1 transition-colors"
         >
           {" "}
           Atla <Icons.X size={14} />{" "}
@@ -75,16 +75,16 @@ const OnboardingSlides = ({ onComplete }) => {
             className={`absolute inset-0 bg-gradient-to-br ${slide.color} rounded-full blur-3xl opacity-30 scale-150`}
           />{" "}
           <div
-            className={`relative bg-gradient-to-br ${slide.color} p-8 rounded-[2.5rem] shadow-2xl border border-white/10`}
+            className={`relative bg-gradient-to-br ${slide.color} p-8 rounded-[2.5rem] shadow-2xl border border-black/10 dark:border-white/10`}
           >
             {" "}
-            <Icon size={48} className="text-white" />{" "}
+            <Icon size={48} className="text-slate-900 dark:text-white" />{" "}
           </div>{" "}
         </div>{" "}
-        <h2 className="text-3xl font-black text-white tracking-tighter mb-3">
+        <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter mb-3">
           {slide.title}
         </h2>{" "}
-        <p className="text-sm text-slate-400 leading-relaxed mb-5">
+        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-5">
           {slide.subtitle}
         </p>{" "}
         <span className="text-[10px] font-black text-primary-400 uppercase tracking-widest bg-primary-500/10 px-4 py-2 rounded-xl border border-primary-500/20">
@@ -109,7 +109,7 @@ const OnboardingSlides = ({ onComplete }) => {
         {/* Next Button */}{" "}
         <button
           onClick={handleNext}
-          className={`w-full py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] active:scale-[0.98] transition-all shadow-2xl flex items-center justify-center gap-3 ${isLast ? "bg-primary-600 hover:bg-primary-500 text-white shadow-primary-900/40" : "bg-white text-slate-950 hover:bg-slate-100 shadow-white/10"}`}
+          className={`w-full py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] active:scale-[0.98] transition-all shadow-2xl flex items-center justify-center gap-3 ${isLast ? "bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white shadow-primary-900/40" : "bg-white text-slate-950 hover:bg-slate-100 shadow-white/10"}`}
         >
           {" "}
           {isLast ? "Başlayalım!" : "Devam"}{" "}

@@ -101,7 +101,7 @@ export const EmptyState = ({
   <div className={`text-center py-12 ${className}`}>
     {" "}
     {Icon && <Icon size={48} className="mx-auto mb-4 text-slate-600" />}{" "}
-    <h4 className="font-bold text-white mb-2">{title}</h4>{" "}
+    <h4 className="font-bold text-slate-900 dark:text-white mb-2">{title}</h4>{" "}
     {description && (
       <p className="text-sm text-slate-500 mb-4">{description}</p>
     )}{" "}
@@ -118,7 +118,7 @@ export const GlassCard = ({
 }) => (
   <div
     onClick={onClick}
-    className={` glass-card rounded-2xl border border-white/10 ${hover ? "hover:border-primary-500/30 transition-all" : ""} ${onClick ? "cursor-pointer active-scale" : ""} ${className} `}
+    className={` glass-card rounded-2xl border border-black/10 dark:border-white/10 ${hover ? "hover:border-primary-500/30 transition-all" : ""} ${onClick ? "cursor-pointer active-scale" : ""} ${className} `}
   >
     {" "}
     {children}{" "}

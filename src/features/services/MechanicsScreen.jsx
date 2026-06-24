@@ -74,12 +74,12 @@ const MechanicsScreen = () => {
         <div className="flex items-center gap-4 mb-8">
           <button
             onClick={() => setSpecialFlow(null)}
-            className="p-2.5 glass-card rounded-xl text-slate-400 active-scale border border-white/10"
+            className="p-2.5 glass-card rounded-xl text-slate-500 dark:text-slate-400 active-scale border border-black/10 dark:border-white/10"
           >
             <Icons.ChevronLeft size={20} />
           </button>
           <div>
-            <h3 className="font-black text-2xl text-white tracking-tighter">
+            <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter">
               AKILLI TEKLİF TOPLA
             </h3>
             <p className="text-[10px] text-primary-500 font-black uppercase tracking-widest">
@@ -128,7 +128,7 @@ const MechanicsScreen = () => {
           }}
         />
         {submitting && (
-          <div className="absolute inset-0 bg-slate-950/50 backdrop-blur-sm z-50 flex items-center justify-center rounded-3xl">
+          <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950/50 backdrop-blur-sm z-50 flex items-center justify-center rounded-3xl">
             <Icons.Loader2
               className="animate-spin text-primary-500"
               size={48}
@@ -143,10 +143,10 @@ const MechanicsScreen = () => {
     <div className="p-5 pb-32 space-y-6 animate-fade-in relative">
       <div className="absolute top-[10%] right-[-10%] w-[50%] h-[50%] bg-accent-600/5 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="flex justify-between items-center mb-4">
-        <h3 className="font-black text-3xl text-white tracking-tighter uppercase">
+        <h3 className="font-black text-3xl text-slate-900 dark:text-white tracking-tighter uppercase">
           {t.mechanics || "Servis & Tamir"}
         </h3>
-        <div className="glass-card p-1.5 rounded-2xl flex gap-1 shadow-2xl border border-white/10 backdrop-blur-xl">
+        <div className="glass-card p-1.5 rounded-2xl flex gap-1 shadow-2xl border border-black/10 dark:border-white/10 backdrop-blur-xl">
           <button
             onClick={() => {
               setIsMapView(false);
@@ -154,8 +154,8 @@ const MechanicsScreen = () => {
             }}
             className={`px-5 py-2.5 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all active-scale ${
               !isMapView
-                ? "bg-primary-600 shadow-lg text-white"
-                : "text-slate-500 hover:text-white"
+                ? "bg-primary-600 shadow-lg text-slate-900 dark:text-white"
+                : "text-slate-500 hover:text-slate-900 dark:text-white"
             }`}
           >
             {t.listView}
@@ -167,8 +167,8 @@ const MechanicsScreen = () => {
             }}
             className={`px-5 py-2.5 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all active-scale ${
               isMapView
-                ? "bg-primary-600 shadow-lg text-white"
-                : "text-slate-500 hover:text-white"
+                ? "bg-primary-600 shadow-lg text-slate-900 dark:text-white"
+                : "text-slate-500 hover:text-slate-900 dark:text-white"
             }`}
           >
             {t.mapView}
@@ -182,19 +182,19 @@ const MechanicsScreen = () => {
           <button aria-label="Yakınlık (En Yakın)" className="flex items-center gap-1.5 px-4 py-2 bg-primary-500/10 border border-primary-500/20 text-primary-400 rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
             <Icons.MapPin size={12} /> Yakınlık (En Yakın)
           </button>
-          <button aria-label="Puan (4.5+)" className="flex items-center gap-1.5 px-4 py-2 bg-white/5 border border-white/5 text-slate-400 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
+          <button aria-label="Puan (4.5+)" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
             <Icons.Star size={12} /> Puan (4.5+)
           </button>
-          <button aria-label="Açık/Kapalı" className="flex items-center gap-1.5 px-4 py-2 bg-white/5 border border-white/5 text-slate-400 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
+          <button aria-label="Açık/Kapalı" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
             <Icons.Clock size={12} /> Açık/Kapalı
           </button>
-          <button aria-label="Hizmet Tipi" className="flex items-center gap-1.5 px-4 py-2 bg-white/5 border border-white/5 text-slate-400 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
+          <button aria-label="Hizmet Tipi" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
             <Icons.SlidersHorizontal size={12} /> Hizmet Tipi
           </button>
         </div>
       )}
       {isMapView ? (
-        <div className="h-[60vh] glass-card rounded-[3rem] flex items-center justify-center relative overflow-hidden group shadow-2xl border border-white/5 mx-1">
+        <div className="h-[60vh] glass-card rounded-[3rem] flex items-center justify-center relative overflow-hidden group shadow-2xl border border-black/5 dark:border-white/5 mx-1">
           {mapUrl ? (
             <div
               className="absolute inset-0 bg-cover opacity-30 group-hover:scale-105 transition-transform duration-1000"
@@ -204,14 +204,14 @@ const MechanicsScreen = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900 opacity-50"></div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
-          <div className="relative z-10 glass-card p-8 rounded-[2.5rem] text-center shadow-2xl backdrop-blur-2xl border border-white/10 animate-slide-up">
+          <div className="relative z-10 glass-card p-8 rounded-[2.5rem] text-center shadow-2xl backdrop-blur-2xl border border-black/10 dark:border-white/10 animate-slide-up">
             <div className="w-16 h-16 bg-accent-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-accent-500/20">
               <Icons.MapPin size={32} className="text-accent-500" />
             </div>
-            <p className="font-black text-white text-xl tracking-tighter mb-1">
+            <p className="font-black text-slate-900 dark:text-white text-xl tracking-tighter mb-1">
               RADAR AKTİF
             </p>
-            <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-[0.2em]">
               En Yakın Ustalar Taranıyor...
             </p>
           </div>
@@ -230,7 +230,7 @@ const MechanicsScreen = () => {
                   className="relative animate-in slide-in-from-bottom-2"
                 >
                   {isBrandSpecialist && (
-                    <div className="absolute -top-2 left-6 z-10 bg-accent-600 text-white text-[8px] font-black px-3 py-1 rounded-full shadow-lg border border-accent-400/20 uppercase tracking-widest flex items-center gap-1.5">
+                    <div className="absolute -top-2 left-6 z-10 bg-accent-600 text-slate-900 dark:text-white text-[8px] font-black px-3 py-1 rounded-full shadow-lg border border-accent-400/20 uppercase tracking-widest flex items-center gap-1.5">
                       <Icons.ShieldCheck size={10} /> {currentVehicle.brand}{" "}
                       UZMANI
                     </div>

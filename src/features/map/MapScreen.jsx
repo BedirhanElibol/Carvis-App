@@ -7,8 +7,8 @@ import MapComponent from "./MapComponent";
 import LocationRequiredScreen from "./LocationRequiredScreen";
 import { AnimatePresence } from "framer-motion";
 
-const StatItem = ({ icon, label, value, color = "text-white" }) => (
-  <div className="bg-white/5 rounded-2xl p-3 border border-white/5 flex flex-col items-center justify-center text-center">
+const StatItem = ({ icon, label, value, color = "text-slate-900 dark:text-white" }) => (
+  <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-3 border border-black/5 dark:border-white/5 flex flex-col items-center justify-center text-center">
     <div className={`mb-1 ${color}`}>{icon}</div>
     <p className="text-[7px] font-black uppercase tracking-[0.1em] text-slate-500 mb-0.5">{label}</p>
     <p className={`text-[10px] font-black ${color}`}>{value}</p>
@@ -130,7 +130,7 @@ const MapScreen = () => {
 
   if (permissionStatus === "loading") {
     return (
-      <div className="fixed inset-0 bg-slate-950 flex flex-col items-center justify-center gap-4">
+      <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center gap-4">
         <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 animate-pulse">
           Harita Hazırlanıyor...
@@ -157,7 +157,7 @@ const MapScreen = () => {
   };
 
   return (
-    <div className="h-screen bg-slate-950 relative overflow-hidden text-white">
+    <div className="h-screen bg-slate-50 dark:bg-slate-950 relative overflow-hidden text-slate-900 dark:text-white">
       {/* --- REAL LEAFLET MAP VIEW --- */}
       <div className="absolute inset-0 bg-[#060a12] overflow-hidden">
         <MapComponent
@@ -172,10 +172,10 @@ const MapScreen = () => {
 
       {/* --- EXPERT SEARCH OVERLAY --- */}
       {loadingMap && (
-        <div className="absolute inset-0 z-20 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center pointer-events-none">
-          <div className="glass-card px-6 py-4 rounded-2xl border border-white/10 flex items-center gap-4 animate-in fade-in zoom-in duration-300">
+        <div className="absolute inset-0 z-20 bg-slate-50 dark:bg-slate-950/40 backdrop-blur-sm flex items-center justify-center pointer-events-none">
+          <div className="glass-card px-6 py-4 rounded-2xl border border-black/10 dark:border-white/10 flex items-center gap-4 animate-in fade-in zoom-in duration-300">
             <div className="w-5 h-5 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-            <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">
               Sistem Taranıyor...
             </span>
           </div>
@@ -186,16 +186,16 @@ const MapScreen = () => {
       <div className="absolute top-6 left-5 right-5 z-30 flex gap-3">
         <button
           onClick={() => navigate(-1)}
-          className="w-12 h-12 glass-card rounded-2xl flex items-center justify-center active-scale border border-white/10"
+          className="w-12 h-12 glass-card rounded-2xl flex items-center justify-center active-scale border border-black/10 dark:border-white/10"
         >
           <Icons.ChevronLeft size={24} />
         </button>
-        <div className="flex-1 glass-card rounded-2xl border border-white/10 flex items-center px-4 backdrop-blur-3xl shadow-2xl">
-          <Icons.Search size={18} className="text-slate-400 mr-3" />
+        <div className="flex-1 glass-card rounded-2xl border border-black/10 dark:border-white/10 flex items-center px-4 backdrop-blur-3xl shadow-2xl">
+          <Icons.Search size={18} className="text-slate-500 dark:text-slate-400 mr-3" />
           <input
             type="text"
             placeholder="Usta veya Yol Yardım ara..."
-            className="bg-transparent border-none outline-none text-xs font-bold text-white w-full placeholder-slate-500"
+            className="bg-transparent border-none outline-none text-xs font-bold text-slate-900 dark:text-white w-full placeholder-slate-500"
           />
         </div>
       </div>
@@ -204,7 +204,7 @@ const MapScreen = () => {
       {!activeSOS && (
         <button
           onClick={() => setShowSOSPanel(true)}
-          className="absolute bottom-32 right-5 z-30 w-16 h-16 bg-red-600 text-white rounded-[2rem] shadow-[0_0_30px_rgba(220,38,38,0.5)] flex flex-col items-center justify-center active-scale border-4 border-white/20 group hover:bg-red-500 transition-all"
+          className="absolute bottom-32 right-5 z-30 w-16 h-16 bg-red-600 text-slate-900 dark:text-white rounded-[2rem] shadow-[0_0_30px_rgba(220,38,38,0.5)] flex flex-col items-center justify-center active-scale border-4 border-black/20 dark:border-white/20 group hover:bg-red-500 transition-all"
         >
           <Icons.AlertTriangle size={20} className="group-hover:animate-bounce" />
           <span className="text-[10px] font-black mt-1">SOS</span>
@@ -214,7 +214,7 @@ const MapScreen = () => {
       {/* --- PROVIDER DETAIL PANEL --- */}
       {selectedProvider && !activeSOS && (
         <div className="absolute bottom-10 left-5 right-5 z-40 animate-in slide-in-from-bottom-5">
-          <div className="glass-card bg-slate-900/90 backdrop-blur-3xl border border-white/20 p-6 rounded-[2.5rem] shadow-2xl overflow-hidden relative">
+          <div className="glass-card bg-white dark:bg-slate-900/90 backdrop-blur-3xl border border-black/20 dark:border-white/20 p-6 rounded-[2.5rem] shadow-2xl overflow-hidden relative">
             <div className={`absolute top-0 right-0 w-32 h-32 opacity-10 bg-gradient-to-br blur-3xl ${
               selectedProvider.role === "valet" ? "from-blue-500" :
               selectedProvider.role === "parking" ? "from-emerald-500" :
@@ -223,13 +223,13 @@ const MapScreen = () => {
             
             <button
               onClick={() => setSelectedProvider(null)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-500 hover:text-white transition-colors z-10"
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-white transition-colors z-10"
             >
               <Icons.X size={18} />
             </button>
 
             <div className="flex items-start gap-4 mb-6 relative z-10">
-              <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-white border border-white/10 shadow-xl overflow-hidden">
+              <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-slate-900 dark:text-white border border-black/10 dark:border-white/10 shadow-xl overflow-hidden">
                 <img 
                   src={selectedProvider.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${selectedProvider.full_name}`} 
                   className="w-full h-full object-cover"
@@ -238,7 +238,7 @@ const MapScreen = () => {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-black text-xl uppercase tracking-tighter text-white">
+                  <h3 className="font-black text-xl uppercase tracking-tighter text-slate-900 dark:text-white">
                     {selectedProvider.full_name}
                   </h3>
                   {selectedProvider.specialized?.is_authorized_service && (
@@ -292,12 +292,12 @@ const MapScreen = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <button className="bg-slate-800 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active-scale border border-white/5">
+              <button className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active-scale border border-black/5 dark:border-white/5">
                 <Icons.Phone size={18} /> ARA
               </button>
               <button
                 onClick={() => navigate(`/messages/${selectedProvider.id || "mock"}`)}
-                className="bg-primary-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active-scale shadow-xl shadow-primary-900/20"
+                className="bg-primary-600 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active-scale shadow-xl shadow-primary-900/20"
               >
                 <Icons.MessageCircle size={18} /> MESAJ AT
               </button>
@@ -313,12 +313,12 @@ const MapScreen = () => {
             className="absolute inset-0 bg-red-950/20 backdrop-blur-md"
             onClick={() => setShowSOSPanel(false)}
           ></div>
-          <div className="w-full bg-slate-900 border-t-4 border-red-600 rounded-t-[3rem] p-8 pb-12 relative shadow-[0_-20px_100px_rgba(220,38,38,0.3)] z-10 animate-in slide-in-from-bottom-20 duration-500">
-            <div className="w-12 h-1.5 bg-slate-800 rounded-full mx-auto mb-8 opacity-50"></div>
+          <div className="w-full bg-white dark:bg-slate-900 border-t-4 border-red-600 rounded-t-[3rem] p-8 pb-12 relative shadow-[0_-20px_100px_rgba(220,38,38,0.3)] z-10 animate-in slide-in-from-bottom-20 duration-500">
+            <div className="w-12 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full mx-auto mb-8 opacity-50"></div>
             <h2 className="text-2xl font-black tracking-tighter uppercase text-center mb-2">
               ACİL YARDIM ÇAĞRISI
             </h2>
-            <p className="text-xs text-slate-400 text-center font-bold uppercase tracking-widest mb-10">
+            <p className="text-xs text-slate-500 dark:text-slate-400 text-center font-bold uppercase tracking-widest mb-10">
               Sorun nedir? Yol yardım 15 dakika içinde yanında.
             </p>
             <div className="grid grid-cols-2 gap-4">
@@ -351,14 +351,14 @@ const MapScreen = () => {
                 <button
                   key={item.id}
                   onClick={() => handleCreateSOS(item.id)}
-                  className="bg-white/5 border border-white/5 p-6 rounded-[2rem] flex flex-col items-center justify-center gap-4 transition-all active-scale hover:bg-white/10 group"
+                  className="bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 p-6 rounded-[2rem] flex flex-col items-center justify-center gap-4 transition-all active-scale hover:bg-black/10 dark:bg-white/10 group"
                 >
                   <div
-                    className={`p-4 rounded-2xl bg-slate-950/50 ${item.color} group-hover:scale-110 transition-transform shadow-inner`}
+                    className={`p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 ${item.color} group-hover:scale-110 transition-transform shadow-inner`}
                   >
                     <item.icon size={32} />
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">
                     {item.label}
                   </span>
                 </button>
@@ -378,7 +378,7 @@ const MapScreen = () => {
       <AnimatePresence>
         {activeSOS && (
           <div className="absolute bottom-6 left-5 right-5 z-40">
-            <div className="glass-card bg-slate-950/95 border-2 border-red-500 p-6 rounded-[2.5rem] shadow-2xl relative space-y-5 overflow-hidden">
+            <div className="glass-card bg-slate-50 dark:bg-slate-950/95 border-2 border-red-500 p-6 rounded-[2.5rem] shadow-2xl relative space-y-5 overflow-hidden">
               
               {/* Pulsing Emergency indicator */}
               <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-600 via-orange-500 to-red-600 animate-pulse"></div>
@@ -389,18 +389,18 @@ const MapScreen = () => {
                   <div className="relative">
                     <img 
                       src={simulatedSosProvider.avatar_url} 
-                      className="w-14 h-14 rounded-2xl border border-white/10 object-cover"
+                      className="w-14 h-14 rounded-2xl border border-black/10 dark:border-white/10 object-cover"
                       alt="Assigned Tow Driver" 
                     />
                     <span className="absolute -bottom-1 -right-1 w-5 h-5 bg-red-600 rounded-full flex items-center justify-center border-2 border-slate-950">
-                      <Icons.Truck size={10} className="text-white" />
+                      <Icons.Truck size={10} className="text-slate-900 dark:text-white" />
                     </span>
                   </div>
                   <div>
-                    <h3 className="font-black text-base uppercase text-white tracking-tight leading-none mb-1">
+                    <h3 className="font-black text-base uppercase text-slate-900 dark:text-white tracking-tight leading-none mb-1">
                       {simulatedSosProvider.full_name}
                     </h3>
-                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wide">
+                    <p className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wide">
                       {simulatedSosProvider.company_name}
                     </p>
                     <div className="flex items-center gap-1 mt-1 text-yellow-400">
@@ -415,13 +415,13 @@ const MapScreen = () => {
                     YOL YARDIM YOLDA
                   </Badge>
                   <p className="text-2xl font-black text-red-500 mt-2 tracking-tighter">
-                    {sosEta} <span className="text-[10px] font-bold text-slate-400 uppercase">DK</span>
+                    {sosEta} <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">DK</span>
                   </p>
                 </div>
               </div>
 
               {/* Progress Tracking Bar */}
-              <div className="bg-slate-900/60 p-4 rounded-2xl border border-white/5">
+              <div className="bg-white dark:bg-slate-900/60 p-4 rounded-2xl border border-black/5 dark:border-white/5">
                 <div className="flex justify-between items-center text-[8px] font-black text-slate-500 uppercase tracking-widest mb-3">
                   <span className={sosStep >= 1 ? "text-red-400" : ""}>Talebiniz Alındı</span>
                   <span className={sosStep >= 2 ? "text-red-400" : ""}>Ekip Yolda</span>
@@ -429,7 +429,7 @@ const MapScreen = () => {
                 </div>
                 
                 {/* Visual Progress Bar */}
-                <div className="relative w-full h-2 bg-slate-950 rounded-full overflow-hidden">
+                <div className="relative w-full h-2 bg-slate-50 dark:bg-slate-950 rounded-full overflow-hidden">
                   <div 
                     className="absolute top-0 left-0 h-full bg-gradient-to-r from-red-600 to-orange-500 transition-all duration-1000"
                     style={{ width: `${sosStep === 1 ? '33%' : sosStep === 2 ? '66%' : '100%'}` }}
@@ -439,7 +439,7 @@ const MapScreen = () => {
 
               {/* Cost & Action Controls */}
               <div className="grid grid-cols-3 gap-2">
-                <div className="bg-slate-900 p-3 rounded-2xl border border-white/5 flex flex-col items-center justify-center text-center">
+                <div className="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-black/5 dark:border-white/5 flex flex-col items-center justify-center text-center">
                   <Icons.Banknote size={14} className="text-emerald-500 mb-0.5" />
                   <p className="text-[7px] font-black uppercase text-slate-500">Sabit Ücret</p>
                   <p className="text-[10px] font-black text-emerald-400">₺1.750</p>
@@ -447,7 +447,7 @@ const MapScreen = () => {
                 
                 <button 
                   onClick={() => navigate(`/messages/${simulatedSosProvider.id}`)}
-                  className="bg-slate-900 text-white rounded-2xl font-black text-[9px] uppercase tracking-wider flex flex-col items-center justify-center gap-1 active-scale border border-white/5"
+                  className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl font-black text-[9px] uppercase tracking-wider flex flex-col items-center justify-center gap-1 active-scale border border-black/5 dark:border-white/5"
                 >
                   <Icons.MessageCircle size={14} className="text-primary-400" />
                   MESAJ AT

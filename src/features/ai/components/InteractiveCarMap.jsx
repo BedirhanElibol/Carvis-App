@@ -18,7 +18,7 @@ const InteractiveCarMap = ({ activeZones = [], onZoneClick }) => {
   ];
 
   return (
-    <div className="relative w-full aspect-[1/2] max-w-[280px] mx-auto bg-slate-900/40 rounded-[3rem] border border-white/5 p-8 backdrop-blur-3xl overflow-hidden group">
+    <div className="relative w-full aspect-[1/2] max-w-[280px] mx-auto bg-white dark:bg-slate-900/40 rounded-[3rem] border border-black/5 dark:border-white/5 p-8 backdrop-blur-3xl overflow-hidden group">
       {/* Holographic Background Glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary-500/5 to-transparent opacity-30"></div>
 
@@ -100,14 +100,14 @@ const InteractiveCarMap = ({ activeZones = [], onZoneClick }) => {
             className={`absolute -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500 ${
               isActive
                 ? "bg-red-500 border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.5)]"
-                : "bg-slate-800/80 border-white/10 hover:bg-slate-700"
+                : "bg-slate-100 dark:bg-slate-800/80 border-black/10 dark:border-white/10 hover:bg-slate-700"
             } border `}
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
           >
-            <Icon size={12} className={isActive ? "text-white" : "text-slate-400"} />
+            <Icon size={12} className={isActive ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-400"} />
             {/* Label on Hover */}
-            <div className="absolute top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-[8px] font-black px-2 py-1 rounded border border-white/10 whitespace-nowrap pointer-events-none z-20">
+            <div className="absolute top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-[8px] font-black px-2 py-1 rounded border border-black/10 dark:border-white/10 whitespace-nowrap pointer-events-none z-20">
               {zone.label}
             </div>
           </motion.button>

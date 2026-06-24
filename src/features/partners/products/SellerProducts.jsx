@@ -47,16 +47,16 @@ const SellerProducts = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black tracking-tighter text-white">
+          <h1 className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white">
             Yedek Parça İlanları
           </h1>
-          <p className="text-slate-400 text-sm">
+          <p className="text-slate-500 dark:text-slate-400 text-sm">
             Satıştaki ürünlerinizi yönetin
           </p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-primary-600 hover:bg-primary-500 text-white px-5 py-3 rounded-xl font-bold text-sm shadow-xl active-scale flex items-center gap-2"
+          className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white px-5 py-3 rounded-xl font-bold text-sm shadow-xl active-scale flex items-center gap-2"
         >
           <Icons.Plus size={18} /> YENİ İLAN EKLE
         </button>
@@ -64,13 +64,13 @@ const SellerProducts = () => {
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="glass-card p-4 rounded-2xl border border-white/5">
+        <div className="glass-card p-4 rounded-2xl border border-black/5 dark:border-white/5">
           <p className="text-slate-500 text-xs font-bold uppercase">
             Aktif İlan
           </p>
-          <p className="text-2xl font-black text-white">{sellerProducts.length}</p>
+          <p className="text-2xl font-black text-slate-900 dark:text-white">{sellerProducts.length}</p>
         </div>
-        <div className="glass-card p-4 rounded-2xl border border-white/5">
+        <div className="glass-card p-4 rounded-2xl border border-black/5 dark:border-white/5">
           <p className="text-slate-500 text-xs font-bold uppercase">
             Toplam Stok
           </p>
@@ -78,7 +78,7 @@ const SellerProducts = () => {
             {sellerProducts.reduce((acc, p) => acc + (p.stock || 0), 0)}
           </p>
         </div>
-        <div className="glass-card p-4 rounded-2xl border border-white/5">
+        <div className="glass-card p-4 rounded-2xl border border-black/5 dark:border-white/5">
           <p className="text-slate-500 text-xs font-bold uppercase">
             Düşük Stok
           </p>
@@ -86,7 +86,7 @@ const SellerProducts = () => {
             {sellerProducts.filter((p) => p.stock < 10).length}
           </p>
         </div>
-        <div className="glass-card p-4 rounded-2xl border border-white/5">
+        <div className="glass-card p-4 rounded-2xl border border-black/5 dark:border-white/5">
           <p className="text-slate-500 text-xs font-bold uppercase">
             Toplam Değer
           </p>
@@ -101,15 +101,15 @@ const SellerProducts = () => {
 
       {/* Search & Filter */}
       <div className="flex gap-4">
-        <div className="flex-1 glass-card px-4 py-3 rounded-xl border border-white/5 flex items-center gap-3">
+        <div className="flex-1 glass-card px-4 py-3 rounded-xl border border-black/5 dark:border-white/5 flex items-center gap-3">
           <Icons.Search size={18} className="text-slate-500" />
           <input
             type="text"
             placeholder="Ürün adı, marka veya kategori ara..."
-            className="bg-transparent w-full outline-none text-white text-sm placeholder:text-slate-600"
+            className="bg-transparent w-full outline-none text-slate-900 dark:text-white text-sm placeholder:text-slate-600"
           />
         </div>
-        <button className="glass-card w-12 flex items-center justify-center rounded-xl border border-white/5 text-slate-400 hover:text-white transition-colors">
+        <button className="glass-card w-12 flex items-center justify-center rounded-xl border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
           <Icons.Filter size={18} />
         </button>
       </div>
@@ -119,9 +119,9 @@ const SellerProducts = () => {
         {sellerProducts.map((product) => (
           <div
             key={product.id}
-            className="glass-card group p-4 rounded-2xl border border-white/5 hover:border-primary-500/30 transition-all hover:bg-white/5"
+            className="glass-card group p-4 rounded-2xl border border-black/5 dark:border-white/5 hover:border-primary-500/30 transition-all hover:bg-black/5 dark:bg-white/5"
           >
-            <div className="relative aspect-video bg-slate-900 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-white/5">
+            <div className="relative aspect-video bg-white dark:bg-slate-900 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-black/5 dark:border-white/5">
               {product.image_url ? (
                 <img
                   src={product.image_url}
@@ -131,7 +131,7 @@ const SellerProducts = () => {
               ) : (
                 <Icons.Package size={40} className="text-slate-700" />
               )}
-              <div className="absolute top-2 right-2 bg-slate-950/80 backdrop-blur px-2 py-1 rounded-lg text-xs font-bold text-white border border-white/10">
+              <div className="absolute top-2 right-2 bg-slate-50 dark:bg-slate-950/80 backdrop-blur px-2 py-1 rounded-lg text-xs font-bold text-slate-900 dark:text-white border border-black/10 dark:border-white/10">
                 {product.stock} Adet
               </div>
             </div>
@@ -140,14 +140,14 @@ const SellerProducts = () => {
                 <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest mb-1">
                   {product.brand}
                 </p>
-                <h3 className="font-bold text-white text-lg leading-tight">
+                <h3 className="font-bold text-slate-900 dark:text-white text-lg leading-tight">
                   {product.name}
                 </h3>
               </div>
-              <p className="font-black text-lg text-white">{product.price} ₺</p>
+              <p className="font-black text-lg text-slate-900 dark:text-white">{product.price} ₺</p>
             </div>
-            <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/5">
-              <button className="flex-1 bg-slate-800 hover:bg-slate-700 text-white py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2">
+            <div className="flex items-center gap-2 mt-4 pt-4 border-t border-black/5 dark:border-white/5">
+              <button className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2">
                 <Icons.Edit2 size={14} /> DÜZENLE
               </button>
               <button
@@ -163,15 +163,15 @@ const SellerProducts = () => {
 
       {/* Add Product Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
-          <div className="bg-slate-900 w-full max-w-lg rounded-3xl border border-white/10 shadow-2xl overflow-hidden animate-in zoom-in-95">
-            <div className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+        <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-in zoom-in-95">
+            <div className="p-6 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-black/5 dark:bg-white/5">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Icons.Package className="text-primary-500" /> Yeni İlan Oluştur
               </h2>
               <button
                 onClick={() => !addingProduct && setShowModal(false)}
-                className="text-slate-400 hover:text-white disabled:opacity-50"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white disabled:opacity-50"
                 disabled={addingProduct}
               >
                 <Icons.X size={24} />
@@ -180,7 +180,7 @@ const SellerProducts = () => {
             <form onSubmit={handleAddProduct} className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
-                  <label className="block text-xs font-bold text-slate-400 mb-1 ml-1">
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">
                     Ürün Adı
                   </label>
                   <input
@@ -190,12 +190,12 @@ const SellerProducts = () => {
                     onChange={(e) =>
                       setNewProduct({ ...newProduct, name: e.target.value })
                     }
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-primary-500 outline-none transition-colors disabled:opacity-50"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:border-primary-500 outline-none transition-colors disabled:opacity-50"
                     placeholder="Örn: Ön Fren Balatası"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 mb-1 ml-1">
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">
                     Marka
                   </label>
                   <input
@@ -205,17 +205,17 @@ const SellerProducts = () => {
                     onChange={(e) =>
                       setNewProduct({ ...newProduct, brand: e.target.value })
                     }
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-primary-500 outline-none transition-colors disabled:opacity-50"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:border-primary-500 outline-none transition-colors disabled:opacity-50"
                     placeholder="Örn: Bosch"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 mb-1 ml-1">
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">
                     Kategori
                   </label>
                   <select
                     disabled={addingProduct}
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-primary-500 outline-none transition-colors appearance-none disabled:opacity-50"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:border-primary-500 outline-none transition-colors appearance-none disabled:opacity-50"
                     onChange={(e) =>
                       setNewProduct({ ...newProduct, category: e.target.value })
                     }
@@ -228,7 +228,7 @@ const SellerProducts = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 mb-1 ml-1">
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">
                     Fiyat (₺)
                   </label>
                   <div className="relative">
@@ -244,13 +244,13 @@ const SellerProducts = () => {
                       onChange={(e) =>
                         setNewProduct({ ...newProduct, price: e.target.value })
                       }
-                      className="w-full bg-slate-950 border border-white/10 rounded-xl pl-9 pr-4 py-3 text-white text-sm focus:border-primary-500 outline-none transition-colors disabled:opacity-50"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl pl-9 pr-4 py-3 text-slate-900 dark:text-white text-sm focus:border-primary-500 outline-none transition-colors disabled:opacity-50"
                       placeholder="0.00"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 mb-1 ml-1">
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">
                     Stok
                   </label>
                   <input
@@ -261,12 +261,12 @@ const SellerProducts = () => {
                     onChange={(e) =>
                       setNewProduct({ ...newProduct, stock: e.target.value })
                     }
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-primary-500 outline-none transition-colors disabled:opacity-50"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:border-primary-500 outline-none transition-colors disabled:opacity-50"
                     placeholder="0"
                   />
                 </div>
               </div>
-              <div className="border border-dashed border-white/20 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 hover:bg-white/5 transition-colors cursor-pointer group">
+              <div className="border border-dashed border-black/20 dark:border-white/20 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 hover:bg-black/5 dark:bg-white/5 transition-colors cursor-pointer group">
                 <Icons.Image
                   size={32}
                   className="mb-2 group-hover:text-primary-500 transition-colors"
@@ -276,7 +276,7 @@ const SellerProducts = () => {
               <button
                 type="submit"
                 disabled={addingProduct}
-                className="w-full bg-primary-600 hover:bg-primary-500 text-white font-bold py-4 rounded-xl shadow-xl active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {addingProduct ? (
                   <>

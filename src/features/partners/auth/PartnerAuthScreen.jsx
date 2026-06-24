@@ -164,12 +164,12 @@ const PartnerAuthScreen = () => {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-slate-400 text-xs mb-1">E-Posta Adresi</label>
-                <input name="email" type="email" required className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary-500 outline-none" value={formData.email} onChange={handleChange} />
+                <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">E-Posta Adresi</label>
+                <input name="email" type="email" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.email} onChange={handleChange} />
               </div>
               <div>
-                <label className="block text-slate-400 text-xs mb-1">Şifre</label>
-                <input name="password" type="password" required className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary-500 outline-none" value={formData.password} onChange={handleChange} />
+                <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Şifre</label>
+                <input name="password" type="password" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.password} onChange={handleChange} />
               </div>
             </div>
           </motion.div>
@@ -183,22 +183,22 @@ const PartnerAuthScreen = () => {
             </div>
             <div className="grid grid-cols-1 gap-4">
               <div>
-                <label className="block text-slate-400 text-xs mb-1">Ticari Ünvan / Şirket Adı</label>
-                <input name="companyName" required className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary-500 outline-none" value={formData.companyName} onChange={handleChange} />
+                <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Ticari Ünvan / Şirket Adı</label>
+                <input name="companyName" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.companyName} onChange={handleChange} />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-400 text-xs mb-1">Vergi Numarası</label>
-                  <input name="taxNumber" className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary-500 outline-none" value={formData.taxNumber} onChange={handleChange} />
+                  <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Vergi Numarası</label>
+                  <input name="taxNumber" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.taxNumber} onChange={handleChange} />
                 </div>
                 <div>
-                  <label className="block text-slate-400 text-xs mb-1">Vergi Dairesi</label>
-                  <input name="taxOffice" className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary-500 outline-none" value={formData.taxOffice} onChange={handleChange} />
+                  <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Vergi Dairesi</label>
+                  <input name="taxOffice" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.taxOffice} onChange={handleChange} />
                 </div>
               </div>
               <div>
-                <label className="block text-slate-400 text-xs mb-1">MERSİS Numarası</label>
-                <input name="mersisNumber" className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary-500 outline-none" placeholder="16 haneli" value={formData.mersisNumber} onChange={handleChange} />
+                <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">MERSİS Numarası</label>
+                <input name="mersisNumber" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" placeholder="16 haneli" value={formData.mersisNumber} onChange={handleChange} />
               </div>
             </div>
           </motion.div>
@@ -212,16 +212,16 @@ const PartnerAuthScreen = () => {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-slate-400 text-xs mb-1">IBAN Numarası</label>
-                <input name="ibanNumber" placeholder="TR..." className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary-500 outline-none" value={formData.ibanNumber} onChange={handleChange} />
+                <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">IBAN Numarası</label>
+                <input name="ibanNumber" placeholder="TR..." className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.ibanNumber} onChange={handleChange} />
               </div>
               <div>
-                <label className="block text-slate-400 text-xs mb-1">KEP Adresi (Kayıtlı E-Posta)</label>
-                <input name="kepAddress" placeholder="hs01.kep.tr" className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary-500 outline-none" value={formData.kepAddress} onChange={handleChange} />
+                <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">KEP Adresi (Kayıtlı E-Posta)</label>
+                <input name="kepAddress" placeholder="hs01.kep.tr" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.kepAddress} onChange={handleChange} />
               </div>
               <div>
-                <label className="block text-slate-400 text-xs mb-1">Resmi İşyeri Adresi</label>
-                <textarea name="officeAddress" rows="2" className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary-500 outline-none resize-none" value={formData.officeAddress} onChange={handleChange} />
+                <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Resmi İşyeri Adresi</label>
+                <textarea name="officeAddress" rows="2" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none resize-none" value={formData.officeAddress} onChange={handleChange} />
               </div>
             </div>
           </motion.div>
@@ -232,8 +232,8 @@ const PartnerAuthScreen = () => {
             <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <Icons.CheckCircle size={40} className="text-green-500" />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2">Başvuru Alındı!</h3>
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Başvuru Alındı!</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
               İş ortağı başvurunuz Trendyol standartlarında başarıyla sisteme kaydedildi. <br />
               Belgeleriniz inceleme aşamasındadır. Onaylandığında size bilgilendirme mesajı gönderilecektir.
             </p>
@@ -247,11 +247,11 @@ const PartnerAuthScreen = () => {
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-4 bg-gradient-to-br ${currentTheme.bg}`}>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className={`w-full max-w-lg bg-slate-900/90 backdrop-blur-2xl border ${currentTheme.border} p-8 rounded-3xl shadow-2xl relative overflow-hidden`}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className={`w-full max-w-lg bg-white dark:bg-slate-900/90 backdrop-blur-2xl border ${currentTheme.border} p-8 rounded-3xl shadow-2xl relative overflow-hidden`}>
         <div className={`absolute top-0 left-0 w-full h-1.5 bg-${currentTheme.color}-500/50`} />
         
         <div className="flex justify-between items-center mb-8">
-          <button onClick={() => isLogin ? navigate("/partner-login") : setStep(Math.max(1, step - 1))} className="text-slate-400 hover:text-white transition-colors">
+          <button onClick={() => isLogin ? navigate("/partner-login") : setStep(Math.max(1, step - 1))} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
             <Icons.ArrowLeft size={20} />
           </button>
           <div className={`px-4 py-1.5 rounded-full bg-${currentTheme.color}-500/10 ${currentTheme.text} text-[10px] font-black uppercase tracking-widest`}>
@@ -260,10 +260,10 @@ const PartnerAuthScreen = () => {
         </div>
 
         <div className="mb-8">
-          <h2 className="text-3xl font-black text-white leading-tight">
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white leading-tight">
             {isLogin ? "Kurumsal Giriş" : "İş Ortağı Başvurusu"}
           </h2>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             {isLogin ? "Yönetim paneline güvenli erişim." : "Şeffaf ve profesyonel onboarding süreci."}
           </p>
         </div>
@@ -276,12 +276,12 @@ const PartnerAuthScreen = () => {
           {isLogin ? (
             <div className="space-y-4">
               <div>
-                <label className="block text-slate-400 text-xs mb-1 uppercase tracking-widest font-bold">E-Posta</label>
-                <input name="email" type="email" required className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white focus:border-primary-500 outline-none transition-all" value={formData.email} onChange={handleChange} />
+                <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1 uppercase tracking-widest font-bold">E-Posta</label>
+                <input name="email" type="email" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white focus:border-primary-500 outline-none transition-all" value={formData.email} onChange={handleChange} />
               </div>
               <div>
-                <label className="block text-slate-400 text-xs mb-1 uppercase tracking-widest font-bold">Şifre</label>
-                <input name="password" type="password" required className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white focus:border-primary-500 outline-none transition-all" value={formData.password} onChange={handleChange} />
+                <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1 uppercase tracking-widest font-bold">Şifre</label>
+                <input name="password" type="password" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white focus:border-primary-500 outline-none transition-all" value={formData.password} onChange={handleChange} />
               </div>
             </div>
           ) : renderStep()}
@@ -300,22 +300,22 @@ const PartnerAuthScreen = () => {
         {step < 4 && (
           <div className="mt-8 space-y-6">
             <div className="text-center">
-              <button onClick={() => { setIsLogin(!isLogin); setStep(1); }} className="text-slate-500 hover:text-white text-sm transition-colors font-medium">
+              <button onClick={() => { setIsLogin(!isLogin); setStep(1); }} className="text-slate-500 hover:text-slate-900 dark:text-white text-sm transition-colors font-medium">
                 {isLogin ? "Henüz iş ortağımız değil misiniz? Şimdi Başvurun" : "Zaten hesabınız var mı? Giriş Yapın"}
               </button>
             </div>
 
             {isLogin && (
-              <div className="pt-6 border-t border-white/5 space-y-4">
+              <div className="pt-6 border-t border-black/5 dark:border-white/5 space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="h-px bg-white/5 flex-1" />
+                  <div className="h-px bg-black/5 dark:bg-white/5 flex-1" />
                   <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Hızlı Giriş</span>
-                  <div className="h-px bg-white/5 flex-1" />
+                  <div className="h-px bg-black/5 dark:bg-white/5 flex-1" />
                 </div>
                 <button
                   type="button"
                   onClick={() => handleSocialAuth("google")}
-                  className="w-full py-4 bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl text-white flex items-center justify-center gap-3 transition-all"
+                  className="w-full py-4 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:bg-white/10 rounded-xl text-slate-900 dark:text-white flex items-center justify-center gap-3 transition-all"
                 >
                   <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5 h-5" alt="G" />
                   <span className="font-bold">Google ile Devam Et</span>

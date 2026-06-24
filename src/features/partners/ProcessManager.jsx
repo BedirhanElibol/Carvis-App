@@ -173,10 +173,10 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
   }
 
   return (
-    <div className="bg-slate-900/50 border border-white/10 p-6 rounded-[2rem] backdrop-blur-3xl">
+    <div className="bg-white dark:bg-slate-900/50 border border-black/10 dark:border-white/10 p-6 rounded-[2rem] backdrop-blur-3xl">
       <div className="flex justify-between items-start mb-6">
         <div className="flex gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-primary-400">
+          <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 flex items-center justify-center text-primary-400">
             {(() => {
               const Icon = currentStep.icon;
               return <Icon size={24} />;
@@ -186,7 +186,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
             <p className="text-[9px] uppercase tracking-[0.25em] text-slate-500 font-black mb-1 font-sans">
               ŞU ANKİ AŞAMA
             </p>
-            <h4 className="text-white font-black text-lg tracking-tight uppercase leading-none font-sans">
+            <h4 className="text-slate-900 dark:text-white font-black text-lg tracking-tight uppercase leading-none font-sans">
               {currentStep.label}
             </h4>
           </div>
@@ -207,14 +207,14 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
           value={technicianNote}
           onChange={(e) => setTechnicianNote(e.target.value)}
           placeholder="Yapılan işlemler hakkında kısa bir not bırakın..."
-          className="w-full bg-slate-950/50 border border-white/5 rounded-2xl p-4 text-xs text-white font-bold outline-none focus:border-primary-500/50 transition-all min-h-[80px]"
+          className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/5 dark:border-white/5 rounded-2xl p-4 text-xs text-slate-900 dark:text-white font-bold outline-none focus:border-primary-500/50 transition-all min-h-[80px]"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <button
           onClick={() => fileRef.current?.click()}
-          className="flex flex-col items-center justify-center gap-2 py-4 bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl text-slate-400 hover:text-white text-[10px] font-black uppercase tracking-widest transition-all active-scale font-sans"
+          className="flex flex-col items-center justify-center gap-2 py-4 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 border border-black/5 dark:border-white/5 rounded-2xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest transition-all active-scale font-sans"
         >
           <Icons.Camera size={20} />
           FOTOĞRAF EKLE
@@ -230,7 +230,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
         <button
           onClick={handleNextStep}
           disabled={uploading}
-          className="flex flex-col items-center justify-center gap-2 py-4 bg-gradient-to-br from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-primary-900/40 active-scale disabled:opacity-50 font-sans"
+          className="flex flex-col items-center justify-center gap-2 py-4 bg-gradient-to-br from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-primary-900/40 active-scale disabled:opacity-50 font-sans"
         >
           {uploading ? (
             <Icons.Loader2 size={20} className="animate-spin" />
@@ -244,7 +244,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
       </div>
 
       {/* Live Approval Section */}
-      <div className="mt-6 pt-6 border-t border-white/5">
+      <div className="mt-6 pt-6 border-t border-black/5 dark:border-white/5">
         {!showApprovalForm ? (
           <button 
             onClick={() => setShowApprovalForm(true)}
@@ -253,13 +253,13 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
             <Icons.Plus size={16} /> EK İŞLEM/PARÇA ONAYI İSTE
           </button>
         ) : (
-          <div className="bg-slate-950/50 p-4 rounded-2xl border border-amber-500/20 space-y-4 animate-in fade-in zoom-in-95">
+          <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-amber-500/20 space-y-4 animate-in fade-in zoom-in-95">
             <h5 className="text-amber-500 text-[10px] font-black uppercase tracking-widest">Yeni Onay Talebi</h5>
             <input 
               placeholder="İşlem/Parça Adı"
               value={newApproval.title}
               onChange={e => setNewApproval({...newApproval, title: e.target.value})}
-              className="w-full bg-slate-900 border border-white/5 rounded-xl p-3 text-xs text-white"
+              className="w-full bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-3 text-xs text-slate-900 dark:text-white"
             />
             <div className="grid grid-cols-2 gap-2">
               <input 
@@ -267,12 +267,12 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
                 placeholder="Fiyat (TL)"
                 value={newApproval.price}
                 onChange={e => setNewApproval({...newApproval, price: e.target.value})}
-                className="w-full bg-slate-900 border border-white/5 rounded-xl p-3 text-xs text-white"
+                className="w-full bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-3 text-xs text-slate-900 dark:text-white"
               />
               <button 
                 onClick={handleRequestApproval}
                 disabled={uploading}
-                className="bg-amber-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest"
+                className="bg-amber-600 text-slate-900 dark:text-white rounded-xl font-black text-[10px] uppercase tracking-widest"
               >
                 GÖNDER
               </button>

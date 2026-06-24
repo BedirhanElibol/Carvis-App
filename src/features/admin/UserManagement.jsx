@@ -87,7 +87,7 @@ const UserManagement = () => {
       case "valet":
         return "bg-emerald-500/20 text-emerald-400 border-emerald-500/20";
       default:
-        return "bg-slate-500/20 text-slate-400 border-slate-500/20";
+        return "bg-slate-500/20 text-slate-500 dark:text-slate-400 border-slate-500/20";
     }
   };
 
@@ -95,10 +95,10 @@ const UserManagement = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-black font-sans text-white uppercase tracking-tighter leading-[1.2]">
+          <h1 className="text-4xl font-black font-sans text-slate-900 dark:text-white uppercase tracking-tighter leading-[1.2]">
             Kullanıcı Yönetimi
           </h1>
-          <p className="text-slate-400 font-sans uppercase text-[10px] font-bold tracking-widest mt-1">
+          <p className="text-slate-500 dark:text-slate-400 font-sans uppercase text-[10px] font-bold tracking-widest mt-1">
             Platformdaki tüm kullanıcıları görüntüleyin ve yönetin.
           </p>
         </div>
@@ -112,28 +112,28 @@ const UserManagement = () => {
             id="user-search"
             type="text"
             placeholder="İsim, E-posta veya Rol ara..."
-            className="w-full bg-slate-900 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white focus:outline-none focus:border-red-500/50 transition font-sans"
+            className="w-full bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-red-500/50 transition font-sans"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="glass-card rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+      <div className="glass-card rounded-2xl border border-black/5 dark:border-white/5 overflow-hidden shadow-2xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-white/10 bg-white/5 font-sans">
-                <th className="p-4 text-xs font-black text-slate-400 uppercase tracking-widest">
+              <tr className="border-b border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 font-sans">
+                <th className="p-4 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                   Kullanıcı
                 </th>
-                <th className="p-4 text-xs font-black text-slate-400 uppercase tracking-widest">
+                <th className="p-4 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                   Rol
                 </th>
-                <th className="p-4 text-xs font-black text-slate-400 uppercase tracking-widest">
+                <th className="p-4 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                   Kayıt Tarihi
                 </th>
-                <th className="p-4 text-center text-xs font-black text-slate-400 uppercase tracking-widest">
+                <th className="p-4 text-center text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                   İşlem
                 </th>
               </tr>
@@ -153,14 +153,14 @@ const UserManagement = () => {
                 </tr>
               ) : (
                 filteredUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-white/5 transition">
+                  <tr key={user.id} className="hover:bg-black/5 dark:bg-white/5 transition">
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-400 border border-white/5">
+                        <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-slate-500 dark:text-slate-400 border border-black/5 dark:border-white/5">
                           {user.full_name?.charAt(0) || "?"}
                         </div>
                         <div>
-                          <p className="font-bold text-white text-sm">
+                          <p className="font-bold text-slate-900 dark:text-white text-sm">
                             {user.full_name || "İsimsiz"}
                           </p>
                           <p className="text-xs text-slate-500">
@@ -176,7 +176,7 @@ const UserManagement = () => {
                         {user.role || "customer"}
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-slate-400">
+                    <td className="p-4 text-sm text-slate-500 dark:text-slate-400">
                       {new Date(user.created_at).toLocaleDateString("tr-TR")}
                     </td>
                     <td className="p-4">
@@ -188,7 +188,7 @@ const UserManagement = () => {
                             <label htmlFor={`role-select-${user.id}`} className="sr-only">Rol Değiştir</label>
                             <select
                               id={`role-select-${user.id}`}
-                              className="appearance-none bg-slate-900 border border-white/10 text-xs text-slate-300 rounded-lg px-2 py-1 focus:outline-none cursor-pointer hover:bg-white/10 font-bold font-sans"
+                              className="appearance-none bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 text-xs text-slate-600 dark:text-slate-300 rounded-lg px-2 py-1 focus:outline-none cursor-pointer hover:bg-black/10 dark:bg-white/10 font-bold font-sans"
                               value={user.role || "customer"}
                               onChange={(e) => handleRoleUpdate(user.id, e.target.value)}
                               disabled={user.role === "admin"}
@@ -200,7 +200,7 @@ const UserManagement = () => {
                             </select>
                             <button
                               onClick={() => setSelectedUser(user)}
-                              className="bg-slate-800 hover:bg-primary-600 text-slate-300 hover:text-white p-1.5 rounded-lg transition-all active-scale border border-white/5"
+                              className="bg-slate-100 dark:bg-slate-800 hover:bg-primary-600 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white p-1.5 rounded-lg transition-all active-scale border border-black/5 dark:border-white/5"
                             >
                               <Icons.Eye size={16} />
                             </button>
@@ -228,52 +228,52 @@ const UserManagement = () => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden font-sans"
+              className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden font-sans"
             >
               <div className="flex items-start justify-between mb-6">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <Icons.BadgeCheck className="text-primary-500" size={16} />
-                    <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
+                    <span className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                       {selectedUser.role || "Müşteri"}
                     </span>
                   </div>
-                  <h3 className="text-2xl font-black text-white uppercase tracking-tighter">
+                  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">
                     {selectedUser.full_name || "İsimsiz Kullanıcı"}
                   </h3>
-                  <p className="text-sm text-slate-400">{selectedUser.email}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{selectedUser.email}</p>
                 </div>
                 <button
                   onClick={() => setSelectedUser(null)}
-                  className="text-slate-500 hover:text-white bg-white/5 p-2 rounded-full transition-colors"
+                  className="text-slate-500 hover:text-slate-900 dark:text-white bg-black/5 dark:bg-white/5 p-2 rounded-full transition-colors"
                 >
                   <Icons.UserX size={20} />
                 </button>
               </div>
               <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="bg-slate-800/50 p-4 rounded-2xl border border-white/5 relative overflow-hidden">
-                  <Icons.Banknote className="absolute -bottom-4 -right-4 text-white/5" size={80} />
+                <div className="bg-slate-100 dark:bg-slate-800/50 p-4 rounded-2xl border border-black/5 dark:border-white/5 relative overflow-hidden">
+                  <Icons.Banknote className="absolute -bottom-4 -right-4 text-slate-900 dark:text-white/5" size={80} />
                   <div className="relative z-10">
-                    <div className="text-slate-400 text-[10px] mb-1 font-black uppercase tracking-widest">
+                    <div className="text-slate-500 dark:text-slate-400 text-[10px] mb-1 font-black uppercase tracking-widest">
                       Mevcut Bakiye
                     </div>
-                    <div className="text-2xl font-black text-white">₺0</div>
+                    <div className="text-2xl font-black text-slate-900 dark:text-white">₺0</div>
                     <div className="text-xs text-yellow-500 mt-1 font-medium">
                       Bloke: ₺0
                     </div>
                   </div>
                 </div>
-                <div className="bg-slate-800/50 p-4 rounded-2xl border border-white/5">
-                  <div className="text-slate-400 text-[10px] mb-1 font-black uppercase tracking-widest">
+                <div className="bg-slate-100 dark:bg-slate-800/50 p-4 rounded-2xl border border-black/5 dark:border-white/5">
+                  <div className="text-slate-500 dark:text-slate-400 text-[10px] mb-1 font-black uppercase tracking-widest">
                     Aktif İşler
                   </div>
-                  <div className="text-2xl font-black text-white">0</div>
+                  <div className="text-2xl font-black text-slate-900 dark:text-white">0</div>
                   <div className="text-xs text-emerald-500 mt-1 font-medium">
                     Biten: 0
                   </div>
                 </div>
               </div>
-              <div className="space-y-3 pt-4 border-t border-white/5">
+              <div className="space-y-3 pt-4 border-t border-black/5 dark:border-white/5">
                 <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center justify-between">
                   <div>
                     <div className="text-sm font-black text-red-500 uppercase tracking-tight">
@@ -284,7 +284,7 @@ const UserManagement = () => {
                     </div>
                   </div>
                   <button
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg transition-all hover:scale-105 active-scale uppercase"
+                    className="bg-red-500 hover:bg-red-600 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg transition-all hover:scale-105 active-scale uppercase"
                     disabled={processingId === selectedUser.id}
                     onClick={async () => {
                       setProcessingId(selectedUser.id);

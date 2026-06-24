@@ -22,7 +22,7 @@ const PredictiveMaintenanceCard = ({
   const isWarning = progress > 70;
 
   return (
-    <div className="glass-card rounded-[2.5rem] p-6 border border-white/5 relative overflow-hidden group">
+    <div className="glass-card rounded-[2.5rem] p-6 border border-black/5 dark:border-white/5 relative overflow-hidden group">
       {/* Background Glow */}
       <div
         className={`absolute top-0 right-0 w-32 h-32 blur-[60px] opacity-20 transition-colors duration-500 ${
@@ -36,14 +36,14 @@ const PredictiveMaintenanceCard = ({
 
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center shadow-inner">
+          <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 flex items-center justify-center shadow-inner">
             <Icons.Settings
               size={20}
               className="text-primary-400 group-hover:rotate-90 transition-transform duration-500"
             />
           </div>
           <div>
-            <h4 className="text-sm font-black tracking-tighter text-white uppercase">
+            <h4 className="text-sm font-black tracking-tighter text-slate-900 dark:text-white uppercase">
               Akıllı Bakım
             </h4>
             <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
@@ -63,13 +63,13 @@ const PredictiveMaintenanceCard = ({
 
       <div className="space-y-6">
         <div>
-          <div className="flex justify-between text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-widest">
+          <div className="flex justify-between text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-widest">
             <span>Servis Ömrü</span>
             <span className={isCritical ? "text-red-400" : "text-primary-400"}>
               %{Math.round(progress)}
             </span>
           </div>
-          <div className="h-2.5 bg-slate-900 rounded-full overflow-hidden border border-white/5 p-0.5">
+          <div className="h-2.5 bg-white dark:bg-slate-900 rounded-full overflow-hidden border border-black/5 dark:border-white/5 p-0.5">
             <div
               className={`h-full rounded-full transition-all duration-1000 ${
                 isCritical
@@ -84,28 +84,28 @@ const PredictiveMaintenanceCard = ({
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-slate-900/40 rounded-2xl p-3 border border-white/5">
+          <div className="bg-white dark:bg-slate-900/40 rounded-2xl p-3 border border-black/5 dark:border-white/5">
             <div className="flex items-center gap-2 mb-1">
               <Icons.Clock size={12} className="text-primary-400" />
               <span className="text-[9px] font-black text-slate-500 uppercase">
                 KALAN KM
               </span>
             </div>
-            <p className="text-lg font-black text-white">
+            <p className="text-lg font-black text-slate-900 dark:text-white">
               {Math.max(
                 maintenanceInterval - (km % maintenanceInterval),
                 0,
               ).toLocaleString()}
             </p>
           </div>
-          <div className="bg-slate-900/40 rounded-2xl p-3 border border-white/5">
+          <div className="bg-white dark:bg-slate-900/40 rounded-2xl p-3 border border-black/5 dark:border-white/5">
             <div className="flex items-center gap-2 mb-1">
               <Icons.Activity size={12} className="text-accent-400" />
               <span className="text-[9px] font-black text-slate-500 uppercase">
                 SAĞLIK PUANI
               </span>
             </div>
-            <p className="text-lg font-black text-white">A+</p>
+            <p className="text-lg font-black text-slate-900 dark:text-white">A+</p>
           </div>
         </div>
 
@@ -118,7 +118,7 @@ const PredictiveMaintenanceCard = ({
           </button>
           <button
             onClick={onShowHistory}
-            className="px-5 py-3.5 glass-card border border-white/10 text-white rounded-2xl font-black text-xs tracking-tighter hover:bg-white/5 transition-all active-scale-95 uppercase"
+            className="px-5 py-3.5 glass-card border border-black/10 dark:border-white/10 text-slate-900 dark:text-white rounded-2xl font-black text-xs tracking-tighter hover:bg-black/5 dark:bg-white/5 transition-all active-scale-95 uppercase"
           >
             Geçmiş
           </button>

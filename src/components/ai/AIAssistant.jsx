@@ -23,14 +23,14 @@ const urgencyColors = {
 
 const ProductCard = ({ product, onAddToCart }) => (
   <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-    className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-3 hover:border-primary-500/40 transition-all">
-    <div className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl">🔧</div>
+    className="flex items-center gap-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl p-3 hover:border-primary-500/40 transition-all">
+    <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl">🔧</div>
     <div className="flex-1 min-w-0">
-      <p className="text-xs font-bold text-white truncate uppercase">{product.name}</p>
-      <p className="text-[10px] text-slate-400">{product.brand}</p>
+      <p className="text-xs font-bold text-slate-900 dark:text-white truncate uppercase">{product.name}</p>
+      <p className="text-[10px] text-slate-500 dark:text-slate-400">{product.brand}</p>
       <p className="text-sm font-black text-teal-400 mt-0.5">{product.price?.toLocaleString("tr-TR")} ₺</p>
     </div>
-    <button onClick={() => onAddToCart(product)} className="bg-teal-600 hover:bg-teal-500 text-white p-2 rounded-xl transition-all">
+    <button onClick={() => onAddToCart(product)} className="bg-teal-600 hover:bg-teal-500 text-slate-900 dark:text-white p-2 rounded-xl transition-all">
       <Icons.ShoppingCart size={16} />
     </button>
   </motion.div>
@@ -46,14 +46,14 @@ const DiagnosisCard = ({ data, onBookAppointment }) => (
         <p className="text-[11px] opacity-80 mt-1">{data.description}</p>
       </div>
     </div>
-    <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/10">
+    <div className="flex items-center justify-between mt-3 pt-2 border-t border-black/10 dark:border-white/10">
       <p className="text-xs font-black">{data.estimatedCost}</p>
       <span className="px-2 py-1 rounded-lg text-[9px] font-black uppercase bg-black/20">
         {data.urgency === 'critical' ? 'Kritik' : 'Ön Analiz'}
       </span>
     </div>
     {data.urgency !== 'low' && (
-      <button onClick={onBookAppointment} className="mt-3 w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 py-2.5 rounded-xl text-xs font-bold uppercase">
+      <button onClick={onBookAppointment} className="mt-3 w-full flex items-center justify-center gap-2 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:bg-white/20 py-2.5 rounded-xl text-xs font-bold uppercase">
         <Icons.CalendarPlus size={14} /> Randevu Al
       </button>
     )}
@@ -101,13 +101,13 @@ const AIAssistant = () => {
     if (msg.type === "diagnosis") return <div key={index} className="max-w-[90%] w-full"><DiagnosisCard data={msg.data} onBookAppointment={() => navigate("/app/appointments")} /></div>;
     if (msg.type === "products") return (
       <div key={index} className="max-w-[90%] w-full space-y-2">
-        <p className="text-xs text-slate-400 flex items-center gap-1 font-bold"><Icons.Package size={12} /> {msg.content}</p>
+        <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 font-bold"><Icons.Package size={12} /> {msg.content}</p>
         {msg.products.map(p => <ProductCard key={p.id} product={p} onAddToCart={addToCart} />)}
       </div>
     );
     return (
       <div key={index} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-        <div className={`max-w-[85%] p-3.5 rounded-2xl text-sm ${msg.role === "user" ? "bg-teal-600 text-white rounded-tr-none" : "bg-white/5 border border-white/10 text-slate-200 rounded-tl-none"}`}>
+        <div className={`max-w-[85%] p-3.5 rounded-2xl text-sm ${msg.role === "user" ? "bg-teal-600 text-slate-900 dark:text-white rounded-tr-none" : "bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-200 rounded-tl-none"}`}>
           {msg.role === "ai" && <Icons.Bot size={14} className="inline mr-2 text-teal-400" />}
           {msg.content}
         </div>
@@ -119,35 +119,35 @@ const AIAssistant = () => {
     <>
       {!isOpen && (
         <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(true)}
-          className="fixed bottom-24 right-5 z-50 w-16 h-16 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl shadow-xl flex items-center justify-center text-white border border-white/10">
+          className="fixed bottom-24 right-5 z-50 w-16 h-16 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl shadow-xl flex items-center justify-center text-slate-900 dark:text-white border border-black/10 dark:border-white/10">
           <Icons.MessageSquare size={26} className="animate-pulse" />
         </motion.button>
       )}
       <AnimatePresence>
         {isOpen && (
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 40 }}
-            className="fixed bottom-24 right-4 z-50 w-[92vw] max-w-sm h-[70vh] flex flex-col rounded-3xl border border-white/10 shadow-2xl bg-slate-950 overflow-hidden">
+            className="fixed bottom-24 right-4 z-50 w-[92vw] max-w-sm h-[70vh] flex flex-col rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl bg-slate-50 dark:bg-slate-950 overflow-hidden">
             <div className="p-4 bg-gradient-to-r from-teal-800 to-emerald-900 flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-white/10 rounded-xl"><Icons.Bot size={22} className="text-white" /></div>
-                <div><h3 className="font-black text-white text-sm uppercase">Carvis Asistan</h3><p className="text-[10px] text-teal-300 font-bold uppercase">Oto Uzman Desteği</p></div>
+                <div className="p-2 bg-black/10 dark:bg-white/10 rounded-xl"><Icons.Bot size={22} className="text-slate-900 dark:text-white" /></div>
+                <div><h3 className="font-black text-slate-900 dark:text-white text-sm uppercase">Carvis Asistan</h3><p className="text-[10px] text-teal-300 font-bold uppercase">Oto Uzman Desteği</p></div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full text-white"><Icons.X size={18} /></button>
+              <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full text-slate-900 dark:text-white"><Icons.X size={18} /></button>
             </div>
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950/50 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 dark:bg-slate-950/50 custom-scrollbar">
               {messages.map((msg, i) => renderMessage(msg, i))}
-              {isTyping && <div className="flex gap-1.5 p-3.5 bg-white/5 rounded-2xl w-fit"><span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce" /><span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce [animation-delay:0.2s]" /><span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce [animation-delay:0.4s]" /></div>}
+              {isTyping && <div className="flex gap-1.5 p-3.5 bg-black/5 dark:bg-white/5 rounded-2xl w-fit"><span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce" /><span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce [animation-delay:0.2s]" /><span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce [animation-delay:0.4s]" /></div>}
               <div ref={messagesEndRef} />
             </div>
             {messages.length <= 2 && (
               <div className="px-3 pb-2 flex gap-2 overflow-x-auto no-scrollbar">
-                {QUICK_PROMPTS.map(p => <button key={p.label} onClick={() => handleSendMessage(p.text)} className="whitespace-nowrap px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] text-slate-300 uppercase">{p.emoji} {p.label}</button>)}
+                {QUICK_PROMPTS.map(p => <button key={p.label} onClick={() => handleSendMessage(p.text)} className="whitespace-nowrap px-3 py-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl text-[10px] text-slate-600 dark:text-slate-300 uppercase">{p.emoji} {p.label}</button>)}
               </div>
             )}
-            <div className="p-3 bg-slate-900 border-t border-white/10 flex items-center gap-2">
-              <input type="text" placeholder="Sorununuzu yazın..." className="flex-1 bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-teal-500"
+            <div className="p-3 bg-white dark:bg-slate-900 border-t border-black/10 dark:border-white/10 flex items-center gap-2">
+              <input type="text" placeholder="Sorununuzu yazın..." className="flex-1 bg-black/20 border border-black/10 dark:border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-teal-500"
                 value={inputText} onChange={e => setInputText(e.target.value)} onKeyDown={e => e.key === "Enter" && !isTyping && handleSendMessage()} />
-              <button onClick={() => handleSendMessage()} disabled={!inputText.trim() || isTyping} className="p-2.5 bg-teal-600 text-white rounded-xl active:scale-95 transition"><Icons.Send size={18} /></button>
+              <button onClick={() => handleSendMessage()} disabled={!inputText.trim() || isTyping} className="p-2.5 bg-teal-600 text-slate-900 dark:text-white rounded-xl active:scale-95 transition"><Icons.Send size={18} /></button>
             </div>
           </motion.div>
         )}

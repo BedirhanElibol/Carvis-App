@@ -31,17 +31,17 @@ const FavoritesScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 pb-32 animate-fade-in">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-32 animate-fade-in">
       {/* Header */}
-      <div className="sticky top-0 z-20 glass-card px-5 py-5 border-b border-white/5 backdrop-blur-3xl flex items-center gap-4">
+      <div className="sticky top-0 z-20 glass-card px-5 py-5 border-b border-black/5 dark:border-white/5 backdrop-blur-3xl flex items-center gap-4">
         <button
           onClick={() => navigate(-1)}
-          className="p-2.5 glass-card rounded-2xl text-slate-400 active-scale-95 border border-white/10"
+          className="p-2.5 glass-card rounded-2xl text-slate-500 dark:text-slate-400 active-scale-95 border border-black/10 dark:border-white/10"
         >
           <Icons.ChevronLeft size={20} />
         </button>
         <div>
-          <h2 className="font-black text-white tracking-tighter text-lg uppercase">
+          <h2 className="font-black text-slate-900 dark:text-white tracking-tighter text-lg uppercase">
             Favorilerim
           </h2>
           <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
@@ -52,16 +52,16 @@ const FavoritesScreen = () => {
 
       <div className="p-5">
         {favoriteProducts.length === 0 ? (
-          <div className="glass-card p-10 rounded-[3rem] border border-white/5 bg-slate-900/40 text-center flex flex-col items-center justify-center relative overflow-hidden shadow-2xl">
+          <div className="glass-card p-10 rounded-[3rem] border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/40 text-center flex flex-col items-center justify-center relative overflow-hidden shadow-2xl">
             <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary-600/10 rounded-full blur-[60px] pointer-events-none"></div>
-            <div className="w-20 h-20 bg-slate-950 rounded-[1.75rem] border border-white/5 flex items-center justify-center text-primary-400 mb-6 shadow-xl relative">
+            <div className="w-20 h-20 bg-slate-50 dark:bg-slate-950 rounded-[1.75rem] border border-black/5 dark:border-white/5 flex items-center justify-center text-primary-400 mb-6 shadow-xl relative">
               <div className="absolute inset-0 bg-primary-500 blur-lg rounded-full opacity-10 animate-pulse"></div>
               <Icons.HeartOff size={36} className="relative z-10" />
             </div>
-            <h3 className="text-2xl font-black text-white tracking-tighter uppercase font-sans">
+            <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase font-sans">
               Favoriniz Bulunmuyor
             </h3>
-            <p className="text-slate-400 text-xs font-bold leading-relaxed max-w-sm mt-3 font-sans uppercase">
+            <p className="text-slate-500 dark:text-slate-400 text-xs font-bold leading-relaxed max-w-sm mt-3 font-sans uppercase">
               Kaydettiğiniz hiçbir parça veya usta bulunmuyor. Hemen ekosisteme göz atın!
             </p>
             <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md mt-8">
@@ -79,7 +79,7 @@ const FavoritesScreen = () => {
                   triggerHaptic("medium");
                   navigate("/app/parts");
                 }}
-                className="flex-1 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all active-scale font-sans flex items-center justify-center gap-2"
+                className="flex-1 py-4 bg-primary-600 hover:bg-primary-700 text-slate-900 dark:text-white rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all active-scale font-sans flex items-center justify-center gap-2"
               >
                 <Icons.Package size={14} /> Parçaları İncele
               </button>
@@ -93,12 +93,12 @@ const FavoritesScreen = () => {
               return (
                 <div
                   key={product.id}
-                  className="glass-card p-4 rounded-[2rem] border border-white/5 flex gap-4 group hover:border-primary-500/20 transition-all"
+                  className="glass-card p-4 rounded-[2rem] border border-black/5 dark:border-white/5 flex gap-4 group hover:border-primary-500/20 transition-all"
                 >
                   {/* Product Image */}
                   <div
                     onClick={() => navigate(`/app/product/${product.id}`)}
-                    className="w-24 h-24 bg-slate-900 rounded-2xl overflow-hidden flex-shrink-0 cursor-pointer border border-white/5"
+                    className="w-24 h-24 bg-white dark:bg-slate-900 rounded-2xl overflow-hidden flex-shrink-0 cursor-pointer border border-black/5 dark:border-white/5"
                   >
                     <img
                       src={product.img}
@@ -112,7 +112,7 @@ const FavoritesScreen = () => {
                       <p className="text-[10px] text-primary-500 font-black uppercase tracking-widest">
                         {product.brand}
                       </p>
-                      <h4 className="text-sm font-bold text-white truncate">
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white truncate">
                         {product.name}
                       </h4>
                       {product.certified && (
@@ -122,7 +122,7 @@ const FavoritesScreen = () => {
                       )}
                     </div>
                     <div className="flex items-center justify-between mt-2">
-                      <span className="text-lg font-black text-white">
+                      <span className="text-lg font-black text-slate-900 dark:text-white">
                         {price.toLocaleString("tr-TR")} ₺
                       </span>
                       <div className="flex gap-2">
@@ -134,7 +134,7 @@ const FavoritesScreen = () => {
                         </button>
                         <button
                           onClick={() => handleAddToCart(product)}
-                          className="p-2 bg-primary-600 text-white rounded-xl hover:bg-primary-500 active:scale-90 transition-all shadow-lg shadow-primary-900/30"
+                          className="p-2 bg-primary-600 text-slate-900 dark:text-white rounded-xl hover:bg-primary-500 active:scale-90 transition-all shadow-lg shadow-primary-900/30"
                         >
                           <Icons.ShoppingBag size={14} />
                         </button>

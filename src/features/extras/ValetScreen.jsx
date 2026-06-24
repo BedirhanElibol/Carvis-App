@@ -90,13 +90,13 @@ const ValetScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24">
-      <div className="sticky top-0 z-20 bg-slate-950/85 backdrop-blur-xl border-b border-white/5 px-5 py-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24">
+      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950/85 backdrop-blur-xl border-b border-black/5 dark:border-white/5 px-5 py-4">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate(-1)}
-              className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-white/10"
+              className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-black/10 dark:border-white/10"
             >
               <Icons.ArrowLeft size={20} />
             </button>
@@ -116,7 +116,7 @@ const ValetScreen = () => {
       </div>
 
       <div className="p-5 space-y-6">
-        <section className="glass-card rounded-[2rem] border border-white/10 p-6 overflow-hidden relative">
+        <section className="glass-card rounded-[2rem] border border-black/10 dark:border-white/10 p-6 overflow-hidden relative">
           <div className="absolute -top-16 right-[-40px] w-40 h-40 bg-primary-500/20 rounded-full blur-3xl" />
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
@@ -148,7 +148,7 @@ const ValetScreen = () => {
 
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-black uppercase tracking-[0.25em] text-slate-400">
+            <h2 className="text-sm font-black uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
               Paket Seçimi
             </h2>
             <span className="text-xs text-slate-500">
@@ -165,7 +165,7 @@ const ValetScreen = () => {
                   className={`text-left rounded-[1.75rem] border p-5 transition-all active-scale ${
                     isActive
                       ? "bg-primary-600/10 border-primary-500/40 shadow-lg shadow-primary-950/20"
-                      : "glass-card border-white/5 hover:border-white/15"
+                      : "glass-card border-black/5 dark:border-white/5 hover:border-white/15"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -181,12 +181,12 @@ const ValetScreen = () => {
                           />
                         )}
                       </div>
-                      <p className="text-sm text-slate-400 leading-relaxed">
+                      <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                         {pkg.description}
                       </p>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-lg font-black text-white">
+                      <p className="text-lg font-black text-slate-900 dark:text-white">
                         ₺{pkg.price}
                       </p>
                       <p className="text-xs text-slate-500 mt-1">{pkg.eta}</p>
@@ -198,21 +198,21 @@ const ValetScreen = () => {
           </div>
         </section>
 
-        <section className="glass-card rounded-[2rem] border border-white/5 p-5 space-y-4">
-          <h2 className="text-sm font-black uppercase tracking-[0.25em] text-slate-400">
+        <section className="glass-card rounded-[2rem] border border-black/5 dark:border-white/5 p-5 space-y-4">
+          <h2 className="text-sm font-black uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
             Talep Detayları
           </h2>
           <div>
             <label className="text-xs font-bold text-slate-500 uppercase">
               Teslim Noktası
             </label>
-            <div className="mt-2 flex items-center gap-3 bg-slate-900/80 rounded-2xl border border-white/10 px-4 py-3">
+            <div className="mt-2 flex items-center gap-3 bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3">
               <Icons.MapPin size={18} className="text-primary-400" />
               <input
                 value={pickupPoint || ""}
                 onChange={(event) => setPickupPoint(event.target.value)}
                 placeholder="Örn: Zorlu Center ana giriş"
-                className="w-full bg-transparent outline-none text-sm text-white placeholder:text-slate-600"
+                className="w-full bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-600"
               />
             </div>
           </div>
@@ -225,21 +225,21 @@ const ValetScreen = () => {
               onChange={(event) => setNote(event.target.value)}
               rows={3}
               placeholder="Anahtar teslim detayı, kat bilgisi veya araç konumu ekleyin"
-              className="mt-2 w-full bg-slate-900/80 rounded-2xl border border-white/10 px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none resize-none"
+              className="mt-2 w-full bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-600 outline-none resize-none"
             />
           </div>
           <div className="grid grid-cols-3 gap-3 text-xs">
-            <div className="rounded-2xl bg-white/5 border border-white/5 px-4 py-3">
+            <div className="rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 px-4 py-3">
               <p className="text-slate-500 uppercase font-black tracking-widest mb-1">
                 Hizmet
               </p>
-              <p className="text-white font-bold">₺{selectedPackage.price}</p>
+              <p className="text-slate-900 dark:text-white font-bold">₺{selectedPackage.price}</p>
             </div>
-            <div className="rounded-2xl bg-white/5 border border-white/5 px-4 py-3">
+            <div className="rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 px-4 py-3">
               <p className="text-slate-500 uppercase font-black tracking-widest mb-1">
                 Koruma
               </p>
-              <p className="text-white font-bold">
+              <p className="text-slate-900 dark:text-white font-bold">
                 ₺{packageSummary.protectionFee}
               </p>
             </div>
@@ -254,7 +254,7 @@ const ValetScreen = () => {
           </div>
           <button
             onClick={handleRequest}
-            className="w-full rounded-2xl bg-primary-600 hover:bg-primary-500 text-white font-black py-4 uppercase tracking-[0.25em] transition-all active-scale shadow-xl shadow-primary-950/30"
+            className="w-full rounded-2xl bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-black py-4 uppercase tracking-[0.25em] transition-all active-scale shadow-xl shadow-primary-950/30"
           >
             Vale Çağır
           </button>
@@ -270,19 +270,19 @@ const ValetScreen = () => {
                 <h2 className="text-2xl font-black tracking-tighter">
                   {activeRequest.package.title}
                 </h2>
-                <p className="text-sm text-slate-400 mt-1">
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                   Doğrulama kodunuz:{" "}
-                  <span className="text-white font-black">
+                  <span className="text-slate-900 dark:text-white font-black">
                     #{activeRequest.code}
                   </span>
                 </p>
               </div>
-              <div className="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-sm">
+              <div className="rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 px-4 py-3 text-sm">
                 <p className="text-slate-500 uppercase tracking-widest font-black mb-1">
                   Vale Bilgisi
                 </p>
                 <p className="font-bold">{activeRequest.driver}</p>
-                <p className="text-slate-400 text-xs mt-1">
+                <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">
                   {activeRequest.phone} • {activeRequest.plate}
                 </p>
               </div>
@@ -294,8 +294,8 @@ const ValetScreen = () => {
                   key={step}
                   className={`rounded-2xl border px-4 py-4 ${
                     index < 2
-                      ? "bg-primary-500/10 border-primary-500/20 text-white"
-                      : "bg-white/5 border-white/5 text-slate-500"
+                      ? "bg-primary-500/10 border-primary-500/20 text-slate-900 dark:text-white"
+                      : "bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 text-slate-500"
                   }`}
                 >
                   <p className="text-[10px] font-black uppercase tracking-[0.25em] mb-2">
@@ -306,12 +306,12 @@ const ValetScreen = () => {
               ))}
             </div>
 
-            <div className="rounded-[1.75rem] bg-slate-900/80 border border-white/10 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div className="rounded-[1.75rem] bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <div>
                 <p className="text-xs text-slate-500 uppercase tracking-widest font-black mb-1">
                   Teslim Notu
                 </p>
-                <p className="text-sm text-slate-300">
+                <p className="text-sm text-slate-600 dark:text-slate-300">
                   {activeRequest.note || "Ek not paylaşılmadı."}
                 </p>
               </div>

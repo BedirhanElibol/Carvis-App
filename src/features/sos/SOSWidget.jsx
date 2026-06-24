@@ -56,11 +56,11 @@ const SOSWidget = ({ userId, currentVehicle }) => {
     return (
       <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-[2rem] animate-pulse">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500 flex items-center justify-center text-white shadow-lg shadow-emerald-900/40">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-500 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-emerald-900/40">
             <Icons.Truck size={24} />
           </div>
           <div>
-            <h4 className="text-white font-black uppercase text-xs tracking-widest">Yardım Yolda</h4>
+            <h4 className="text-slate-900 dark:text-white font-black uppercase text-xs tracking-widest">Yardım Yolda</h4>
             <p className="text-[10px] text-slate-500 font-bold uppercase">Ekipler konuma yönlendirildi.</p>
           </div>
         </div>
@@ -74,11 +74,11 @@ const SOSWidget = ({ userId, currentVehicle }) => {
       
       <div className="relative z-10 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-red-600 flex items-center justify-center text-white shadow-xl shadow-red-900/40 group-hover:scale-110 transition-transform duration-500">
+          <div className="w-12 h-12 rounded-2xl bg-red-600 flex items-center justify-center text-slate-900 dark:text-white shadow-xl shadow-red-900/40 group-hover:scale-110 transition-transform duration-500">
             <Icons.AlertTriangle size={24} className="animate-pulse" />
           </div>
           <div>
-            <h4 className="text-white font-black uppercase text-sm tracking-tight">Yolda mı kaldın?</h4>
+            <h4 className="text-slate-900 dark:text-white font-black uppercase text-sm tracking-tight">Yolda mı kaldın?</h4>
             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Carvis SOS ile tek tuşla yardım çağır.</p>
           </div>
         </div>

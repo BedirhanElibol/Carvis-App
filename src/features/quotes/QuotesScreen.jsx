@@ -37,9 +37,9 @@ const QuotesScreen = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
@@ -50,12 +50,12 @@ const QuotesScreen = () => {
             </button>
             <div>
               <h1 className="text-xl font-bold">Tekliflerim</h1>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 {filteredQuotes.length} teklif
               </p>
             </div>
           </div>
-          <Icons.Filter size={20} className="text-slate-400" />
+          <Icons.Filter size={20} className="text-slate-500 dark:text-slate-400" />
         </div>
 
         {/* Filter Tabs */}
@@ -66,8 +66,8 @@ const QuotesScreen = () => {
               onClick={() => setFilter(option.value)}
               className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
                 filter === option.value
-                  ? "bg-primary-500 text-white"
-                  : "glass-card text-slate-400 hover:text-white"
+                  ? "bg-primary-500 text-slate-900 dark:text-white"
+                  : "glass-card text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               }`}
             >
               {option.label} ({option.count})
@@ -81,11 +81,11 @@ const QuotesScreen = () => {
         {loading ? (
           <div className="text-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
-            <p className="text-slate-400 mt-4">Teklifler yükleniyor...</p>
+            <p className="text-slate-500 dark:text-slate-400 mt-4">Teklifler yükleniyor...</p>
           </div>
         ) : filteredQuotes.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-slate-400">
+            <p className="text-slate-500 dark:text-slate-400">
               {filter === "all"
                 ? "Henüz teklif bulunmuyor"
                 : `${filterOptions.find((o) => o.value === filter)?.label} teklif yok`}

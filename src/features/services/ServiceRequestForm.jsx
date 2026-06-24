@@ -13,7 +13,7 @@ const SYMPTOMS_LIST = [
   { id: "loss_of_power", label: "Çekiş Düşüklüğü", icon: "ChevronsDown", desc: "Gaza basıldığında geç tepki verme", color: "text-indigo-400" },
   { id: "weak_brakes", label: "Fren Zayıflığı", icon: "CircleSlash", desc: "Geç yavaşlama veya fren sesi", color: "text-pink-400" },
   { id: "leak", label: "Sıvı Kaçağı", icon: "Droplets", desc: "Alt kısımdan yağ veya su sızıntısı", color: "text-emerald-400" },
-  { id: "smoke", label: "Egzoz Dumanı", icon: "Wind", desc: "Siyah veya mavi renkli yoğun duman", color: "text-slate-400" },
+  { id: "smoke", label: "Egzoz Dumanı", icon: "Wind", desc: "Siyah veya mavi renkli yoğun duman", color: "text-slate-500 dark:text-slate-400" },
   { id: "crank_issue", label: "Marş Sorunu", icon: "ZapOff", desc: "Aracın geç çalışması veya çalışmaması", color: "text-yellow-400" },
 ];
 
@@ -211,17 +211,17 @@ const ServiceRequestForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24 font-sans relative overflow-hidden">
       {/* Background Glows */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-primary-600/5 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="absolute bottom-20 left-0 w-80 h-80 bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-slate-950/80 backdrop-blur-xl border-b border-white/5 p-5 flex justify-between items-center">
+      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5 p-5 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-white/10 hover:bg-white/5 transition-colors"
+            className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5 transition-colors"
           >
             <Icons.ChevronLeft size={20} />
           </button>
@@ -236,15 +236,15 @@ const ServiceRequestForm = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           
           {/* Araç Seçimi */}
-          <div className="glass-card p-6 rounded-3xl border border-white/5 space-y-4">
-            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400">
+          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
               <Icons.Car size={16} className="text-primary-500" />
               Araç Seçimi
             </label>
             <select
               value={selectedVehicleId}
               onChange={(e) => setSelectedVehicleId(e.target.value)}
-              className="w-full bg-slate-900 border border-white/5 rounded-2xl p-4 text-sm font-bold text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+              className="w-full bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-2xl p-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all"
               required
             >
               <option value="">İşlem yapılacak aracı seçin...</option>
@@ -257,8 +257,8 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Belirti Seçici Grid */}
-          <div className="glass-card p-6 rounded-3xl border border-white/5 space-y-4">
-            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400">
+          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
               <Icons.ShieldAlert size={16} className="text-primary-500" />
               Hissedilen Belirtiler (Çoklu Seçim)
             </label>
@@ -273,12 +273,12 @@ const ServiceRequestForm = () => {
                     onClick={() => handleSymptomToggle(sym.id)}
                     className={`p-4 rounded-2xl border text-left flex flex-col justify-between h-28 transition-all relative overflow-hidden group ${
                       isSelected 
-                        ? "bg-slate-900/90 border-primary-500 shadow-lg shadow-primary-950/20" 
-                        : "bg-slate-900/30 border-white/5 hover:border-white/10"
+                        ? "bg-white dark:bg-slate-900/90 border-primary-500 shadow-lg shadow-primary-950/20" 
+                        : "bg-white dark:bg-slate-900/30 border-black/5 dark:border-white/5 hover:border-black/10 dark:border-white/10"
                     }`}
                   >
                     <div className="flex justify-between items-start w-full">
-                      <span className={`p-2 rounded-xl bg-white/5 border border-white/5 ${isSelected ? sym.color : 'text-slate-500 group-hover:text-slate-400'}`}>
+                      <span className={`p-2 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 ${isSelected ? sym.color : 'text-slate-500 group-hover:text-slate-500 dark:text-slate-400'}`}>
                         {getSymptomIconComponent(sym.icon)}
                       </span>
                       {isSelected && (
@@ -286,7 +286,7 @@ const ServiceRequestForm = () => {
                       )}
                     </div>
                     <div>
-                      <p className="text-[10px] font-black text-white uppercase tracking-tight line-clamp-1">{sym.label}</p>
+                      <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight line-clamp-1">{sym.label}</p>
                       <p className="text-[8px] font-medium text-slate-500 uppercase mt-0.5 line-clamp-1">{sym.desc}</p>
                     </div>
                   </button>
@@ -298,14 +298,14 @@ const ServiceRequestForm = () => {
           {/* AI Real-time Ön Teşhis Kartı */}
           <div className="relative group overflow-hidden">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-600 to-indigo-600 rounded-[2rem] blur opacity-15"></div>
-            <div className="relative glass-card border border-white/10 bg-slate-900/90 p-6 rounded-[2rem] space-y-5">
+            <div className="relative glass-card border border-black/10 dark:border-white/10 bg-white dark:bg-slate-900/90 p-6 rounded-[2rem] space-y-5">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                   <div className="bg-primary-600/10 p-2.5 rounded-xl border border-primary-500/20 text-primary-400">
                     <Icons.Sparkles size={16} className="animate-pulse" />
                   </div>
                   <div>
-                    <h3 className="text-xs font-black text-white uppercase tracking-widest">AI Ön Teşhis Motoru</h3>
+                    <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">AI Ön Teşhis Motoru</h3>
                     <p className="text-[8px] text-slate-500 font-bold uppercase mt-0.5">CANLI ANALİZ PANELİ</p>
                   </div>
                 </div>
@@ -322,10 +322,10 @@ const ServiceRequestForm = () => {
               {/* Dynamic Risk Gauge (İbre) & Cost info */}
               {aiDiagnosis.confidence > 0 ? (
                 <div className="space-y-4 animate-in fade-in duration-300">
-                  <div className="bg-slate-950/60 p-4 rounded-2xl border border-white/5 flex items-center justify-between">
+                  <div className="bg-slate-50 dark:bg-slate-950/60 p-4 rounded-2xl border border-black/5 dark:border-white/5 flex items-center justify-between">
                     <div>
                       <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest">Olası Arıza Tespiti</p>
-                      <h4 className="text-sm font-black text-white uppercase tracking-tight mt-1">{aiDiagnosis.diagnosis}</h4>
+                      <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1">{aiDiagnosis.diagnosis}</h4>
                     </div>
                     <div className="text-right">
                       <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest">Risk Seviyesi</p>
@@ -341,18 +341,18 @@ const ServiceRequestForm = () => {
 
                   {/* Cost Prediction Range */}
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-slate-950/40 p-4 rounded-2xl border border-white/5">
+                    <div className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-2xl border border-black/5 dark:border-white/5">
                       <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><Icons.Banknote size={10} className="text-emerald-500" /> Tahmini Alt Limit</p>
                       <p className="text-lg font-black text-emerald-400 mt-1">₺{aiDiagnosis.minCost.toLocaleString('tr-TR')}</p>
                     </div>
-                    <div className="bg-slate-950/40 p-4 rounded-2xl border border-white/5">
+                    <div className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-2xl border border-black/5 dark:border-white/5">
                       <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><Icons.AlertCircle size={10} className="text-red-500" /> Tahmini Üst Limit</p>
                       <p className="text-lg font-black text-red-400 mt-1">₺{aiDiagnosis.maxCost.toLocaleString('tr-TR')}</p>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="text-center py-6 bg-slate-950/40 rounded-2xl border border-dashed border-white/5">
+                <div className="text-center py-6 bg-slate-50 dark:bg-slate-950/40 rounded-2xl border border-dashed border-black/5 dark:border-white/5">
                   <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{aiDiagnosis.diagnosis}</p>
                 </div>
               )}
@@ -360,8 +360,8 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Arıza Kanıt Yükleme Alanı */}
-          <div className="glass-card p-6 rounded-3xl border border-white/5 space-y-4">
-            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400">
+          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
               <Icons.Paperclip size={16} className="text-primary-500" />
               Arıza Kanıtı Yükle (Fotoğraf / Motor Sesi)
             </label>
@@ -370,7 +370,7 @@ const ServiceRequestForm = () => {
               <button 
                 type="button"
                 onClick={() => handleSimulateUpload('image')}
-                className="py-4 bg-slate-900/40 border border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-primary-500/30 transition-all text-slate-400 hover:text-white"
+                className="py-4 bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-primary-500/30 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
                 <Icons.Camera size={18} />
                 <span className="text-[9px] font-black uppercase tracking-widest">FOTOĞRAF EKLE</span>
@@ -378,7 +378,7 @@ const ServiceRequestForm = () => {
               <button 
                 type="button"
                 onClick={() => handleSimulateUpload('audio')}
-                className="py-4 bg-slate-900/40 border border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-primary-500/30 transition-all text-slate-400 hover:text-white"
+                className="py-4 bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-primary-500/30 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
                 <Icons.Mic size={18} />
                 <span className="text-[9px] font-black uppercase tracking-widest">SES KAYDI YÜKLE</span>
@@ -389,12 +389,12 @@ const ServiceRequestForm = () => {
             {mediaFiles.length > 0 && (
               <div className="pt-2 space-y-2">
                 {mediaFiles.map((media) => (
-                  <div key={media.id} className="p-3 bg-slate-950/60 rounded-xl border border-white/5 flex justify-between items-center animate-in slide-in-from-bottom-2 duration-300">
+                  <div key={media.id} className="p-3 bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-black/5 dark:border-white/5 flex justify-between items-center animate-in slide-in-from-bottom-2 duration-300">
                     <div className="flex items-center gap-2">
                       <span className="text-primary-400">
                         {media.type === 'image' ? <Icons.Image size={14} /> : <Icons.Volume2 size={14} />}
                       </span>
-                      <span className="text-[9px] font-bold text-slate-300 truncate max-w-[200px] uppercase tracking-tight">{media.name}</span>
+                      <span className="text-[9px] font-bold text-slate-600 dark:text-slate-300 truncate max-w-[200px] uppercase tracking-tight">{media.name}</span>
                     </div>
                     <button 
                       type="button"
@@ -410,8 +410,8 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Engine Code (Optional) */}
-          <div className="glass-card p-6 rounded-3xl border border-white/5 space-y-4">
-            <label className="text-xs font-black uppercase tracking-widest text-slate-400 block">
+          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+            <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 block">
               Motor Hacmi / Kodu <span className="text-slate-600">(Opsiyonel)</span>
             </label>
             <input
@@ -419,21 +419,21 @@ const ServiceRequestForm = () => {
               value={engineCode}
               onChange={(e) => setEngineCode(e.target.value)}
               placeholder="Örn: 1.6 TDI, 1.5 TSI, 2.0 D"
-              className="w-full bg-slate-900 border border-white/5 rounded-2xl p-4 text-sm font-bold text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+              className="w-full bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-2xl p-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all"
             />
           </div>
 
           {/* Talep Tipi */}
-          <div className="glass-card p-6 rounded-3xl border border-white/5 space-y-4">
-            <label className="text-xs font-black uppercase tracking-widest text-slate-400 block">Talep Tipi</label>
+          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+            <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 block">Talep Tipi</label>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => setDemandType("part")}
                 className={`py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   demandType === "part"
-                    ? "bg-primary-600 text-white shadow-xl shadow-primary-950/40"
-                    : "bg-slate-900/40 border border-white/5 text-slate-400"
+                    ? "bg-primary-600 text-slate-900 dark:text-white shadow-xl shadow-primary-950/40"
+                    : "bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400"
                 }`}
               >
                 Parça Talebi
@@ -443,8 +443,8 @@ const ServiceRequestForm = () => {
                 onClick={() => setDemandType("service")}
                 className={`py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   demandType === "service"
-                    ? "bg-primary-600 text-white shadow-xl shadow-primary-950/40"
-                    : "bg-slate-900/40 border border-white/5 text-slate-400"
+                    ? "bg-primary-600 text-slate-900 dark:text-white shadow-xl shadow-primary-950/40"
+                    : "bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400"
                 }`}
               >
                 Servis Talebi
@@ -453,13 +453,13 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Aciliyet Durumu */}
-          <div className="glass-card p-6 rounded-3xl border border-white/5 space-y-4">
-            <label className="text-xs font-black uppercase tracking-widest text-slate-400 block">Aciliyet Durumu</label>
+          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+            <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 block">Aciliyet Durumu</label>
             <div className="grid grid-cols-3 gap-2">
               {[
                 { id: "immediate", label: "ACİL / SOS", desc: "Aynı Gün", color: "border-red-500 text-red-400" },
                 { id: "pending", label: "PLANLI", desc: "1-3 Gün", color: "border-primary-500 text-primary-400" },
-                { id: "flexible", label: "ESNEK", desc: "Bu Hafta", color: "border-slate-500 text-slate-400" },
+                { id: "flexible", label: "ESNEK", desc: "Bu Hafta", color: "border-slate-500 text-slate-500 dark:text-slate-400" },
               ].map((urg) => {
                 const isSelected = urgency === urg.id;
                 return (
@@ -469,8 +469,8 @@ const ServiceRequestForm = () => {
                     onClick={() => setUrgency(urg.id)}
                     className={`p-3 rounded-2xl border text-center transition-all ${
                       isSelected 
-                        ? `bg-slate-900 border-2 ${urg.color} shadow-lg shadow-black/20` 
-                        : "bg-slate-900/30 border-white/5 text-slate-500"
+                        ? `bg-white dark:bg-slate-900 border-2 ${urg.color} shadow-lg shadow-black/20` 
+                        : "bg-white dark:bg-slate-900/30 border-black/5 dark:border-white/5 text-slate-500"
                     }`}
                   >
                     <p className="text-[9px] font-black uppercase tracking-wider">{urg.label}</p>
@@ -482,8 +482,8 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Açıklama */}
-          <div className="glass-card p-6 rounded-3xl border border-white/5 space-y-4">
-            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400">
+          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
               <Icons.FileText size={16} className="text-primary-500" />
               Talep Açıklaması
             </label>
@@ -496,7 +496,7 @@ const ServiceRequestForm = () => {
                   : "Örn: Periyodik bakım yaptırmak istiyorum. Yağ, hava filtresi ve genel arıza kontrolü yapılacak."
               }
               rows={4}
-              className="w-full bg-slate-900 border border-white/5 rounded-2xl p-4 text-sm font-bold text-white placeholder-slate-600 outline-none focus:ring-2 focus:ring-primary-500 resize-none"
+              className="w-full bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-2xl p-4 text-sm font-bold text-slate-900 dark:text-white placeholder-slate-600 outline-none focus:ring-2 focus:ring-primary-500 resize-none"
               required
             />
             <p className="text-[9px] text-slate-500 uppercase tracking-widest mt-1 font-bold">
@@ -508,10 +508,10 @@ const ServiceRequestForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-primary-600 to-indigo-600 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-xs uppercase tracking-[0.2em] text-white active-scale disabled:opacity-50 shadow-xl shadow-primary-900/20 border border-white/10"
+            className="w-full bg-gradient-to-r from-primary-600 to-indigo-600 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-xs uppercase tracking-[0.2em] text-slate-900 dark:text-white active-scale disabled:opacity-50 shadow-xl shadow-primary-900/20 border border-black/10 dark:border-white/10"
           >
             {loading ? (
-              <Icons.Loader2 className="animate-spin text-white" size={16} />
+              <Icons.Loader2 className="animate-spin text-slate-900 dark:text-white" size={16} />
             ) : (
               <>
                 <Icons.Send size={16} />

@@ -99,9 +99,9 @@ const AISuggestionCard = ({ vehicle }) => {
             {/* Header */}
             <div className="flex items-center gap-2 px-1">
                 <div className="bg-gradient-to-r from-primary-500 to-accent-500 p-1.5 rounded-xl">
-                    <Sparkles size={18} className="text-white" />
+                    <Sparkles size={18} className="text-slate-900 dark:text-white" />
                 </div>
-                <h3 className="font-black text-white italic text-xl tracking-tighter">AI Önerileri</h3>
+                <h3 className="font-black text-slate-900 dark:text-white italic text-xl tracking-tighter">AI Önerileri</h3>
                 <span className="text-[9px] font-black text-primary-400 bg-primary-500/20 px-2 py-0.5 rounded-full uppercase tracking-widest ml-auto">
                     {vehicle.brand} {vehicle.model}
                 </span>
@@ -138,12 +138,12 @@ const AISuggestionCard = ({ vehicle }) => {
                                 {/* Content */}
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 mb-1">
-                                        <h4 className="font-bold text-white text-sm">{suggestion.title}</h4>
-                                        <span className={`text-[8px] font-black px-2 py-0.5 rounded-full text-white ${urgencyBadge[suggestion.urgency].bg}`}>
+                                        <h4 className="font-bold text-slate-900 dark:text-white text-sm">{suggestion.title}</h4>
+                                        <span className={`text-[8px] font-black px-2 py-0.5 rounded-full text-slate-900 dark:text-white ${urgencyBadge[suggestion.urgency].bg}`}>
                                             {urgencyBadge[suggestion.urgency].text}
                                         </span>
                                     </div>
-                                    <p className="text-xs text-slate-400 line-clamp-1">{suggestion.reason}</p>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">{suggestion.reason}</p>
                                     <div className="flex items-center justify-between mt-2">
                                         <span className="text-xs text-primary-400 font-bold">{suggestion.price}</span>
                                         <div className="flex items-center gap-1 text-[10px] text-slate-500 group-hover:text-primary-400 transition-colors">

@@ -74,17 +74,17 @@ const AudioAnalyzer = () => {
   };
 
   return (
-    <div className="glass-card p-6 rounded-3xl border border-white/5">
-      <h3 className="font-black text-xl text-white mb-2 flex items-center gap-2">
+    <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5">
+      <h3 className="font-black text-xl text-slate-900 dark:text-white mb-2 flex items-center gap-2">
         <Icons.Mic className="text-primary-400" /> Sesli Arıza Tespiti
       </h3>
-      <p className="text-xs text-slate-400 mb-6 font-sans">
+      <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 font-sans">
         Motor sesini dinletin, Carvis AI anormal sesleri (vuruntu, sürtünme, kayış sesi)
         analiz etsin.
       </p>
 
       {/* Visualizer Area */}
-      <div className="h-32 bg-slate-900/50 rounded-2xl border border-white/5 mb-6 relative overflow-hidden flex items-center justify-center">
+      <div className="h-32 bg-white dark:bg-slate-900/50 rounded-2xl border border-black/5 dark:border-white/5 mb-6 relative overflow-hidden flex items-center justify-center">
         <canvas
           ref={canvasRef}
           width={300}
@@ -93,7 +93,7 @@ const AudioAnalyzer = () => {
         />
 
         {analyzing && (
-          <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-white dark:bg-slate-900/80 backdrop-blur-sm flex flex-col items-center justify-center">
             <Icons.Loader2 className="animate-spin text-primary-500 mb-2" size={32} />
             <span className="text-xs font-black text-primary-400 animate-pulse uppercase tracking-widest">
               Analiz Ediliyor...
@@ -102,14 +102,14 @@ const AudioAnalyzer = () => {
         )}
 
         {result && !analyzing && (
-          <div className="absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center backdrop-blur-md">
+          <div className="absolute inset-0 bg-white dark:bg-slate-900/90 flex flex-col items-center justify-center backdrop-blur-md">
             {result === "normal" ? (
               <>
                 <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-2">
                   <Icons.Check className="text-green-500" size={24} />
                 </div>
                 <h4 className="font-bold text-green-400">Normal Motor Sesi</h4>
-                <p className="text-xs text-slate-400">Anormal bir rezonans tespit edilmedi.</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Anormal bir rezonans tespit edilmedi.</p>
               </>
             ) : (
               <>
@@ -117,14 +117,14 @@ const AudioAnalyzer = () => {
                   <Icons.AlertCircle className="text-red-500" size={24} />
                 </div>
                 <h4 className="font-bold text-red-500">Düzensiz Rölanti Sesi</h4>
-                <p className="text-xs text-slate-400 font-sans">
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-sans">
                   Ateşleme sistemi kontrol edilmeli.
                 </p>
               </>
             )}
             <button
               onClick={() => setResult(null)}
-              className="mt-3 text-xs text-white underline font-bold uppercase tracking-wider"
+              className="mt-3 text-xs text-slate-900 dark:text-white underline font-bold uppercase tracking-wider"
             >
               Tekrar Dene
             </button>
@@ -144,9 +144,9 @@ const AudioAnalyzer = () => {
           }`}
         >
           {isRecording ? (
-            <Icons.Square size={24} fill="white" className="text-white" />
+            <Icons.Square size={24} fill="white" className="text-slate-900 dark:text-white" />
           ) : (
-            <Icons.Mic size={28} className="text-white" />
+            <Icons.Mic size={28} className="text-slate-900 dark:text-white" />
           )}
         </button>
       </div>

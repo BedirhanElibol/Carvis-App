@@ -110,10 +110,10 @@ const AdminFinance = () => {
   return (
     <div className="space-y-8 p-6 animate-fade-in">
       <div>
-        <h1 className="text-4xl font-black font-sans text-white uppercase tracking-tighter leading-[1.2]">
+        <h1 className="text-4xl font-black font-sans text-slate-900 dark:text-white uppercase tracking-tighter leading-[1.2]">
           Finans & Kasa
         </h1>
-        <p className="text-slate-400 font-sans uppercase text-[10px] font-bold tracking-widest mt-1">
+        <p className="text-slate-500 dark:text-slate-400 font-sans uppercase text-[10px] font-bold tracking-widest mt-1">
           Platform gelirleri ve işlem geçmişi yönetimi.
         </p>
       </div>
@@ -125,13 +125,13 @@ const AdminFinance = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="glass-card p-6 rounded-[2rem] border border-white/5 flex flex-col justify-between h-36 relative overflow-hidden group"
+            className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col justify-between h-36 relative overflow-hidden group"
           >
             <div className={`p-3 rounded-xl ${stat.bg} w-fit`}>
               <stat.icon size={20} className={stat.color} />
             </div>
             <div>
-              <h3 className="text-2xl font-black font-sans text-white tracking-tighter leading-[1.2]">
+              <h3 className="text-2xl font-black font-sans text-slate-900 dark:text-white tracking-tighter leading-[1.2]">
                 {stat.value}
               </h3>
               <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest font-sans">
@@ -145,14 +145,14 @@ const AdminFinance = () => {
         ))}
       </div>
 
-      <div className="glass-card rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl">
-        <div className="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
-          <h3 className="font-black text-white font-sans uppercase tracking-widest text-xs">
+      <div className="glass-card rounded-[2.5rem] border border-black/5 dark:border-white/5 overflow-hidden shadow-2xl">
+        <div className="p-6 border-b border-black/5 dark:border-white/5 flex justify-between items-center bg-black/5 dark:bg-white/5">
+          <h3 className="font-black text-slate-900 dark:text-white font-sans uppercase tracking-widest text-xs">
             Son İşlemler
           </h3>
           <button
             onClick={fetchFinanceData}
-            className="p-2 hover:bg-white/10 rounded-full transition-colors"
+            className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full transition-colors"
           >
             <Icons.RefreshCcw size={16} className={loading ? "animate-spin" : ""} />
           </button>
@@ -160,7 +160,7 @@ const AdminFinance = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-white/5 uppercase text-[10px] font-black tracking-widest text-slate-500">
+              <tr className="border-b border-black/5 dark:border-white/5 uppercase text-[10px] font-black tracking-widest text-slate-500">
                 <th className="p-6">İşlem ID</th>
                 <th className="p-6">Tür</th>
                 <th className="p-6">Açıklama</th>
@@ -174,7 +174,7 @@ const AdminFinance = () => {
                   .fill(0)
                   .map((_, i) => (
                     <tr key={i} className="animate-pulse">
-                      <td colSpan="5" className="p-6 bg-white/5 h-16"></td>
+                      <td colSpan="5" className="p-6 bg-black/5 dark:bg-white/5 h-16"></td>
                     </tr>
                   ))
               ) : transactions.length === 0 ? (
@@ -185,7 +185,7 @@ const AdminFinance = () => {
                 </tr>
               ) : (
                 transactions.map((tx) => (
-                  <tr key={tx.id} className="hover:bg-white/5 transition-colors group">
+                  <tr key={tx.id} className="hover:bg-black/5 dark:bg-white/5 transition-colors group">
                     <td className="p-6 font-mono text-[10px] text-slate-500">
                       #{tx.id.slice(0, 8)}
                     </td>
@@ -202,10 +202,10 @@ const AdminFinance = () => {
                         {tx.type}
                       </span>
                     </td>
-                    <td className="p-6 text-sm text-slate-300 font-medium">
+                    <td className="p-6 text-sm text-slate-600 dark:text-slate-300 font-medium">
                       {tx.description}
                     </td>
-                    <td className="p-6 text-right font-black text-white tracking-tighter">
+                    <td className="p-6 text-right font-black text-slate-900 dark:text-white tracking-tighter">
                       {tx.amount > 0 ? "+" : ""}₺{tx.amount.toLocaleString()}
                     </td>
                     <td className="p-6 text-xs text-slate-500 font-medium">

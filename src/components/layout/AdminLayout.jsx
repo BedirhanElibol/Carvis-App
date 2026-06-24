@@ -61,15 +61,15 @@ const AdminLayout = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white flex">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-white/5 transform transition-transform duration-300 md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 border-r border-black/5 dark:border-white/5 transform transition-transform duration-300 md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="p-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-900/50">
-              <Icons.ShieldAlert size={20} className="text-white" />
+              <Icons.ShieldAlert size={20} className="text-slate-900 dark:text-white" />
             </div>
             <div>
               <h1 className="text-xl font-black tracking-tighter">RAPIDSY</h1>
@@ -80,7 +80,7 @@ const AdminLayout = () => {
           </div>
           <button
             onClick={() => setIsSidebarOpen(false)}
-            className="md:hidden text-slate-400"
+            className="md:hidden text-slate-500 dark:text-slate-400"
           >
             <Icons.X size={24} />
           </button>
@@ -96,7 +96,7 @@ const AdminLayout = () => {
                   navigate(item.path);
                   setIsSidebarOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? "bg-red-600 text-white shadow-lg shadow-red-900/50" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? "bg-red-600 text-slate-900 dark:text-white shadow-lg shadow-red-900/50" : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"}`}
               >
                 <item.icon size={20} />
                 <span className="font-medium text-sm">{item.label}</span>
@@ -117,10 +117,10 @@ const AdminLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 relative bg-slate-950">
+      <main className="flex-1 md:ml-64 relative bg-slate-50 dark:bg-slate-950">
         {/* Header for Mobile */}
-        <div className="md:hidden p-4 border-b border-white/5 flex items-center justify-between bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
-          <button onClick={() => setIsSidebarOpen(true)} className="text-white">
+        <div className="md:hidden p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
+          <button onClick={() => setIsSidebarOpen(true)} className="text-slate-900 dark:text-white">
             <Icons.Menu size={24} />
           </button>
           <span className="font-bold text-red-500">{t.adminPanel}</span>

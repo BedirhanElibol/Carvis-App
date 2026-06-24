@@ -21,10 +21,10 @@ const ValetRequests = () => {
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black tracking-tighter text-white">
+          <h1 className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white">
             Vale Çağrıları
           </h1>
-          <p className="text-slate-400 text-sm">Bekleyen araç talepleri</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">Bekleyen araç talepleri</p>
         </div>
         <div className="bg-primary-500/20 text-primary-400 px-3 py-1 rounded-full text-xs font-black uppercase flex items-center gap-2">
           <div className="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></div>{" "}
@@ -42,7 +42,7 @@ const ValetRequests = () => {
           requests.map((req) => (
             <div
               key={req.id}
-              className="glass-card p-5 rounded-2xl border border-white/5 animate-fade-in"
+              className="glass-card p-5 rounded-2xl border border-black/5 dark:border-white/5 animate-fade-in"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center gap-3">
@@ -56,25 +56,25 @@ const ValetRequests = () => {
                     <Icons.Key size={24} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black text-white">
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white">
                       {req.plate}
                     </h3>
-                    <p className="text-xs text-slate-400 font-bold uppercase">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">
                       {req.type === "pickup" ? "TESLİM ALMA" : "TESLİM ETME"}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="flex items-center gap-1 text-slate-400 text-xs justify-end">
+                  <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs justify-end">
                     <Icons.Clock size={12} /> {req.time}
                   </div>
-                  <div className="flex items-center gap-1 text-slate-400 text-xs justify-end mt-1">
+                  <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs justify-end mt-1">
                     <Icons.MapPin size={12} /> {req.location}
                   </div>
                 </div>
               </div>
 
-              <div className="mb-4 flex items-center gap-2 text-sm text-slate-300 bg-white/5 p-2 rounded-lg">
+              <div className="mb-4 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 bg-black/5 dark:bg-white/5 p-2 rounded-lg">
                 <Icons.Phone size={14} className="text-slate-500" />
                 <span className="font-semibold">{req.owner}</span>
                 <span className="text-slate-500">({req.phone})</span>
@@ -89,7 +89,7 @@ const ValetRequests = () => {
                 </button>
                 <button
                   onClick={() => handleAction(req.id, "accept")}
-                  className="flex-[2] bg-primary-600 hover:bg-primary-500 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary-900/50 transition-all active-scale"
+                  className="flex-[2] bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary-900/50 transition-all active-scale"
                 >
                   <Icons.CheckCircle size={18} /> KABUL ET
                 </button>

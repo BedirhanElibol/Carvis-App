@@ -9,31 +9,31 @@ const Section = ({ icon: Icon, title, children }) => (
         {" "}
         <Icon size={20} className="text-blue-400" />{" "}
       </div>{" "}
-      <h2 className="text-lg font-black text-white uppercase tracking-tight">
+      <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">
         {title}
       </h2>{" "}
     </div>{" "}
-    <div className="text-slate-400 text-sm leading-relaxed space-y-2">
+    <div className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed space-y-2">
       {children}
     </div>{" "}
   </div>
 );
 const PrivacyPolicyScreen = () => {
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white">
       {" "}
       {/* Header */}{" "}
-      <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-b border-white/5 px-5 py-12 text-center">
+      <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-b border-black/5 dark:border-white/5 px-5 py-12 text-center">
         {" "}
         <div className="inline-flex p-4 bg-blue-600/10 rounded-[2rem] border border-blue-500/20 mb-5">
           {" "}
           <Icons.Shield size={36} className="text-blue-400" />{" "}
         </div>{" "}
-        <h1 className="text-3xl font-black uppercase tracking-tighter text-white mb-2">
+        <h1 className="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white mb-2">
           {" "}
           Gizlilik Politikası{" "}
         </h1>{" "}
-        <p className="text-slate-400 text-sm max-w-md mx-auto">
+        <p className="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto">
           {" "}
           Rapidsy — Akıllı Araç Platformu{" "}
         </p>{" "}
@@ -49,27 +49,27 @@ const PrivacyPolicyScreen = () => {
           <ul className="list-disc pl-5 space-y-1 mt-2">
             {" "}
             <li>
-              <strong className="text-white">Hesap Bilgileri:</strong> Ad,
+              <strong className="text-slate-900 dark:text-white">Hesap Bilgileri:</strong> Ad,
               e-posta adresi, profil fotoğrafı (Google/Apple OAuth üzerinden)
             </li>{" "}
             <li>
-              <strong className="text-white">Araç Bilgileri:</strong> Plaka,
+              <strong className="text-slate-900 dark:text-white">Araç Bilgileri:</strong> Plaka,
               marka, model, km bilgisi (sizin eklediğiniz)
             </li>{" "}
             <li>
-              <strong className="text-white">Konum Verisi:</strong> Yakındaki
+              <strong className="text-slate-900 dark:text-white">Konum Verisi:</strong> Yakındaki
               ustaları bulmak için anlık konum (izin vermeniz halinde)
             </li>{" "}
             <li>
-              <strong className="text-white">Sipariş Geçmişi:</strong> Satın
+              <strong className="text-slate-900 dark:text-white">Sipariş Geçmişi:</strong> Satın
               alımlar, teklifler, randevular
             </li>{" "}
             <li>
-              <strong className="text-white">AI Konuşma Geçmişi:</strong> Arıza
+              <strong className="text-slate-900 dark:text-white">AI Konuşma Geçmişi:</strong> Arıza
               tanısı için girdiğiniz metin (oturum süresince)
             </li>{" "}
             <li>
-              <strong className="text-white">Kamera Görüntüsü:</strong> AI'ya
+              <strong className="text-slate-900 dark:text-white">Kamera Görüntüsü:</strong> AI'ya
               fotoğraf ile arıza bildirimi (yalnızca sizin gönderdiğiniz)
             </li>{" "}
           </ul>{" "}
@@ -91,7 +91,7 @@ const PrivacyPolicyScreen = () => {
           </ul>{" "}
           <p className="mt-3">
             {" "}
-            <strong className="text-white">Verilerinizi asla:</strong> üçüncü
+            <strong className="text-slate-900 dark:text-white">Verilerinizi asla:</strong> üçüncü
             taraflara satmaz, reklam ağlarıyla paylaşmaz, izinsiz
             iletmeyiz.{" "}
           </p>{" "}
@@ -151,10 +151,10 @@ const PrivacyPolicyScreen = () => {
             ].map((s) => (
               <div
                 key={s.name}
-                className="bg-white/5 rounded-xl p-4 border border-white/5"
+                className="bg-black/5 dark:bg-white/5 rounded-xl p-4 border border-black/5 dark:border-white/5"
               >
                 {" "}
-                <p className="text-white font-bold text-sm mb-1">
+                <p className="text-slate-900 dark:text-white font-bold text-sm mb-1">
                   {s.name}
                 </p>{" "}
                 <p className="text-xs">{s.desc}</p>{" "}
@@ -211,7 +211,7 @@ const PrivacyPolicyScreen = () => {
             Veri Sorumlusu: Rapidsy Teknoloji A.Ş., Türkiye
           </p>{" "}
         </Section>{" "}
-        <div className="mt-12 py-6 border-t border-white/10 text-center text-slate-600 text-xs">
+        <div className="mt-12 py-6 border-t border-black/10 dark:border-white/10 text-center text-slate-600 text-xs">
           {" "}
           <p>© 2026 Rapidsy. Tüm hakları saklıdır.</p>{" "}
           <p className="mt-1">

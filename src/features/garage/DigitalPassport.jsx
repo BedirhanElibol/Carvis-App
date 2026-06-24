@@ -261,8 +261,8 @@ const DigitalPassport = ({ vehicle }) => {
     <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
       <div className="print-area space-y-6">
         {/* Header - Digital Passport Card */}
-        <div className="bg-gradient-to-br from-primary-600 to-indigo-700 p-8 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden print:bg-none print:border-2 print:border-black print:text-black">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl print:hidden"></div>
+        <div className="bg-gradient-to-br from-primary-600 to-indigo-700 p-8 rounded-[2.5rem] text-slate-900 dark:text-white shadow-2xl relative overflow-hidden print:bg-none print:border-2 print:border-black print:text-black">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-black/10 dark:bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl print:hidden"></div>
           <Icons.ShieldCheck className="absolute bottom-6 right-6 opacity-20 print:text-black print:opacity-10" size={80} />
           
           <div className="relative z-10">
@@ -279,11 +279,11 @@ const DigitalPassport = ({ vehicle }) => {
             </div>
             
             <div className="mt-8 flex gap-4">
-               <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 print:border-black print:bg-none">
+               <div className="bg-black/10 dark:bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-black/10 dark:border-white/10 print:border-black print:bg-none">
                  <p className="text-[8px] font-black uppercase tracking-widest opacity-60 print:opacity-100">Toplam Kayıt</p>
                  <p className="text-xl font-black">{history.length}</p>
                </div>
-               <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 print:border-black print:bg-none">
+               <div className="bg-black/10 dark:bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-black/10 dark:border-white/10 print:border-black print:bg-none">
                  <p className="text-[8px] font-black uppercase tracking-widest opacity-60 print:opacity-100">Güven Puanı</p>
                  <p className="text-xl font-black text-emerald-300 print:text-black">A+</p>
                </div>
@@ -293,39 +293,39 @@ const DigitalPassport = ({ vehicle }) => {
 
         {/* Timeline Records */}
         <div className="relative space-y-8 pl-8 print:pl-4">
-          <div className="absolute left-[15px] top-4 bottom-4 w-0.5 bg-slate-800 border-l border-dashed border-white/10 print:border-black/20"></div>
+          <div className="absolute left-[15px] top-4 bottom-4 w-0.5 bg-slate-100 dark:bg-slate-800 border-l border-dashed border-black/10 dark:border-white/10 print:border-black/20"></div>
           
           {history.length === 0 ? (
-            <div className="text-center py-20 bg-white/5 rounded-[2rem] border border-dashed border-white/10 print:border-black/20">
+            <div className="text-center py-20 bg-black/5 dark:bg-white/5 rounded-[2rem] border border-dashed border-black/10 dark:border-white/10 print:border-black/20">
               <p className="text-xs font-black text-slate-600 uppercase tracking-widest">Henüz kayıtlı servis geçmişi yok</p>
             </div>
           ) : (
             history.map((record) => (
               <div key={record.id} className="relative break-inside-avoid">
                 {/* Timeline dot */}
-                <div className="absolute -left-[23px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-4 border-primary-600 shadow-[0_0_10px_rgba(37,99,235,0.4)] print:border-black print:bg-white print:shadow-none"></div>
+                <div className="absolute -left-[23px] top-1.5 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-4 border-primary-600 shadow-[0_0_10px_rgba(37,99,235,0.4)] print:border-black print:bg-white print:shadow-none"></div>
                 
-                <div className="glass-card p-6 rounded-3xl border border-white/5 hover:border-white/10 transition-all group print:border-black/10">
+                <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-all group print:border-black/10">
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <p className="text-[10px] font-black text-primary-500 uppercase tracking-widest mb-1 print:text-black">
                         {new Date(record.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
                       </p>
-                      <h4 className="text-white font-black text-lg tracking-tight uppercase leading-none print:text-black">Bakım & Onarım İşlemi</h4>
+                      <h4 className="text-slate-900 dark:text-white font-black text-lg tracking-tight uppercase leading-none print:text-black">Bakım & Onarım İşlemi</h4>
                     </div>
-                    <div className="hidden print:block text-[8px] font-bold text-slate-400">ID: {record.id.slice(0,8)}</div>
+                    <div className="hidden print:block text-[8px] font-bold text-slate-500 dark:text-slate-400">ID: {record.id.slice(0,8)}</div>
                   </div>
 
                   {record.service_proofs?.[0] && (
                     <div className="space-y-4">
-                      <div className="p-3 bg-white/5 rounded-xl border border-white/5 italic text-slate-400 text-xs print:bg-slate-50 print:text-black">
+                      <div className="p-3 bg-black/5 dark:bg-white/5 rounded-xl border border-black/5 dark:border-white/5 italic text-slate-500 dark:text-slate-400 text-xs print:bg-slate-50 print:text-black">
                         <span className="not-italic font-black text-[9px] block mb-1 text-primary-400 print:text-black">USTA NOTU:</span>
                         "{record.service_proofs[0].technician_notes || 'Detaylı bakım ve kontroller yapıldı.'}"
                       </div>
                       
                       <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar no-print">
                         {record.service_proofs[0].after_photos?.map((photo, i) => (
-                          <div key={i} className="min-w-[120px] h-20 rounded-xl bg-slate-800 overflow-hidden border border-white/5">
+                          <div key={i} className="min-w-[120px] h-20 rounded-xl bg-slate-100 dark:bg-slate-800 overflow-hidden border border-black/5 dark:border-white/5">
                             <img src={photo} alt="Service" className="w-full h-full object-cover" />
                           </div>
                         ))}
@@ -333,12 +333,12 @@ const DigitalPassport = ({ vehicle }) => {
                     </div>
                   )}
 
-                  <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-center print:border-black/10">
+                  <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex justify-between items-center print:border-black/10">
                      <div className="flex items-center gap-2">
                        <Icons.CheckCircle2 className="text-emerald-500 print:text-black" size={14} />
                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest print:text-black">Carvis Onaylı Kayıt</span>
                      </div>
-                     <span className="text-xs font-black text-white print:text-black">₺{record.total_amount?.toLocaleString('tr-TR')}</span>
+                     <span className="text-xs font-black text-slate-900 dark:text-white print:text-black">₺{record.total_amount?.toLocaleString('tr-TR')}</span>
                   </div>
                 </div>
               </div>
@@ -350,7 +350,7 @@ const DigitalPassport = ({ vehicle }) => {
       <button 
         onClick={handleDownloadPDF}
         disabled={generatingPDF}
-        className="no-print w-full py-5 bg-white/5 border border-white/5 hover:bg-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 active-scale shadow-xl shadow-black/20 disabled:opacity-50"
+        className="no-print w-full py-5 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:bg-black/10 dark:bg-white/10 rounded-2xl text-slate-900 dark:text-white font-black text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 active-scale shadow-xl shadow-black/20 disabled:opacity-50"
       >
         {generatingPDF ? (
           <>

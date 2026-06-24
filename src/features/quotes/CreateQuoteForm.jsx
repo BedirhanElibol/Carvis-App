@@ -95,7 +95,7 @@ const CreateQuoteForm = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
       </div>
     );
@@ -104,10 +104,10 @@ const CreateQuoteForm = () => {
   // Security Check: Restrict to Partner/Admin
   if (currentUser?.role !== "partner" && currentUser?.role !== "admin") {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-5 text-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-5 text-center">
         <Icons.ShieldAlert size={64} className="text-red-500 mb-6 mx-auto animate-pulse" />
-        <h2 className="text-2xl font-black text-white mb-2">Yetkisiz Erişim</h2>
-        <p className="text-slate-400 max-w-md mb-8">Bu form sadece onaylı servisler ve idari yöneticiler içindir.</p>
+        <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">Yetkisiz Erişim</h2>
+        <p className="text-slate-500 dark:text-slate-400 max-w-md mb-8">Bu form sadece onaylı servisler ve idari yöneticiler içindir.</p>
         <button onClick={() => navigate("/application/home")} className="bg-white text-slate-950 font-black px-8 py-3 rounded-xl hover:bg-slate-200 transition-all">Geri Dön</button>
       </div>
     );
@@ -118,9 +118,9 @@ const CreateQuoteForm = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
@@ -130,7 +130,7 @@ const CreateQuoteForm = () => {
           </button>
           <div>
             <h1 className="text-xl font-bold">Teklif Oluştur</h1>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               {serviceRequest.brand} {serviceRequest.model}
             </p>
           </div>
@@ -140,39 +140,39 @@ const CreateQuoteForm = () => {
       {/* Content */}
       <div className="p-5 space-y-4">
         {/* Talep Bilgileri */}
-        <div className="glass-card p-5 rounded-2xl border border-white/10">
+        <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
           <h3 className="text-lg font-bold mb-4">Talep Bilgileri</h3>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-slate-400">Plaka</span>
+              <span className="text-slate-500 dark:text-slate-400">Plaka</span>
               <span className="font-mono font-bold">
                 {serviceRequest.plate}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-400">Araç</span>
+              <span className="text-slate-500 dark:text-slate-400">Araç</span>
               <span className="font-semibold">
                 {serviceRequest.brand} {serviceRequest.model}
               </span>
             </div>
             {serviceRequest.engine_code && (
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">Motor</span>
+                <span className="text-slate-500 dark:text-slate-400">Motor</span>
                 <span className="font-semibold">
                   {serviceRequest.engine_code}
                 </span>
               </div>
             )}
             <div className="flex items-center justify-between">
-              <span className="text-slate-400">Talep Tipi</span>
+              <span className="text-slate-500 dark:text-slate-400">Talep Tipi</span>
               <span className="font-semibold">
                 {serviceRequest.demand_type === "part" ? "Parça" : "Servis"}
               </span>
             </div>
             {serviceRequest.description && (
-              <div className="pt-2 border-t border-white/5">
-                <p className="text-sm text-slate-400 mb-1">Müşteri Notu</p>
-                <p className="text-slate-200">{serviceRequest.description}</p>
+              <div className="pt-2 border-t border-black/5 dark:border-white/5">
+                <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Müşteri Notu</p>
+                <p className="text-slate-700 dark:text-slate-200">{serviceRequest.description}</p>
               </div>
             )}
           </div>
@@ -181,7 +181,7 @@ const CreateQuoteForm = () => {
         {/* Teklif Formu */}
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Fiyat */}
-          <div className="glass-card p-5 rounded-2xl border border-white/10">
+          <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
             <label className="flex items-center gap-2 text-sm font-bold mb-3">
               <Icons.DollarSign size={18} className="text-primary-500" /> Teklif
               Fiyatı (₺)
@@ -194,13 +194,13 @@ const CreateQuoteForm = () => {
                 setFormData({ ...formData, price: e.target.value })
               }
               placeholder="Örn: 450.00"
-              className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white placeholder-slate-500 focus:border-primary-500 focus:outline-none"
+              className="w-full bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white placeholder-slate-500 focus:border-primary-500 focus:outline-none"
               required
             />
           </div>
 
           {/* Teslimat Süresi */}
-          <div className="glass-card p-5 rounded-2xl border border-white/10">
+          <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
             <label className="flex items-center gap-2 text-sm font-bold mb-3">
               <Icons.Clock size={18} className="text-primary-500" /> Tahmini
               Teslimat (Gün)
@@ -215,12 +215,12 @@ const CreateQuoteForm = () => {
                 })
               }
               placeholder="Örn: 2"
-              className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white placeholder-slate-500 focus:border-primary-500 focus:outline-none"
+              className="w-full bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white placeholder-slate-500 focus:border-primary-500 focus:outline-none"
             />
           </div>
 
           {/* Garanti */}
-          <div className="glass-card p-5 rounded-2xl border border-white/10">
+          <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
             <label className="flex items-center gap-2 text-sm font-bold mb-3">
               <Icons.Shield size={18} className="text-primary-500" /> Garanti
               Süresi (Ay)
@@ -230,7 +230,7 @@ const CreateQuoteForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, warranty_months: e.target.value })
               }
-              className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white focus:border-primary-500 focus:outline-none"
+              className="w-full bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none"
             >
               <option value="0">Garantisiz</option>
               <option value="6">6 Ay</option>
@@ -241,7 +241,7 @@ const CreateQuoteForm = () => {
           </div>
 
           {/* Açıklama */}
-          <div className="glass-card p-5 rounded-2xl border border-white/10">
+          <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
             <label className="flex items-center gap-2 text-sm font-bold mb-3">
               <Icons.FileText size={18} className="text-primary-500" /> Teklif
               Açıklaması
@@ -253,7 +253,7 @@ const CreateQuoteForm = () => {
               }
               placeholder="Örn: Bosch marka orijinal fren balatası + disk seti. 2 yıl garanti. Montaj dahil."
               rows={5}
-              className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white placeholder-slate-500 focus:border-primary-500 focus:outline-none resize-none"
+              className="w-full bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white placeholder-slate-500 focus:border-primary-500 focus:outline-none resize-none"
               required
             />
             <p className="text-xs text-slate-500 mt-2">
@@ -264,7 +264,7 @@ const CreateQuoteForm = () => {
 
           {/* Bilgilendirme */}
           <div className="glass-card p-4 rounded-2xl border border-primary-500/30 bg-primary-500/5">
-            <p className="text-sm text-slate-300">
+            <p className="text-sm text-slate-600 dark:text-slate-300">
               <span className="font-bold text-primary-400">💡 İpucu:</span>{" "}
               Detaylı ve net teklifler müşteriler tarafından daha çok tercih
               edilir.
@@ -275,7 +275,7 @@ const CreateQuoteForm = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-primary-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-white active-scale disabled:opacity-50"
+            className="w-full bg-primary-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-slate-900 dark:text-white active-scale disabled:opacity-50"
           >
             {submitting ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>

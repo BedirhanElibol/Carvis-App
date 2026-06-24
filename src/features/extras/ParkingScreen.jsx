@@ -32,16 +32,16 @@ const ParkingScreen = () => {
     : null;
 
   return (
-    <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-950">
+    <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-50 dark:bg-slate-950">
       {/* Header */}
       <div className="flex items-center gap-4 mb-2">
         <button
           onClick={() => navigate(-1)}
-          className="p-2.5 glass-card rounded-xl text-white active-scale border border-white/10"
+          className="p-2.5 glass-card rounded-xl text-slate-900 dark:text-white active-scale border border-black/10 dark:border-white/10"
         >
           <Icons.ArrowLeft size={20} />
         </button>
-        <h3 className="font-black text-2xl text-white flex items-center gap-2">
+        <h3 className="font-black text-2xl text-slate-900 dark:text-white flex items-center gap-2">
           <Icons.ParkingCircle size={28} className="text-blue-500" />
           {t.parkingTitle || "Yakın Otoparklar"}
         </h3>
@@ -56,14 +56,14 @@ const ParkingScreen = () => {
           <p className="text-[10px] text-primary-400 font-black uppercase tracking-widest font-sans">
             MOCK GÖRÜNÜM
           </p>
-          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider font-sans mt-0.5">
+          <p className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider font-sans mt-0.5">
             Bu ekrandaki veriler canlı simülasyon test ortamından alınmaktadır.
           </p>
         </div>
       </div>
 
       {/* Map Preview */}
-      <div className="h-48 glass-card rounded-[2rem] relative overflow-hidden border border-white/10">
+      <div className="h-48 glass-card rounded-[2rem] relative overflow-hidden border border-black/10 dark:border-white/10">
         {mapUrl ? (
           <div
             className="absolute inset-0 bg-cover opacity-40"
@@ -75,15 +75,15 @@ const ParkingScreen = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent"></div>
         <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
           <div>
-            <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest">
               Konumunuz
             </p>
-            <p className="text-white font-bold flex items-center gap-2">
+            <p className="text-slate-900 dark:text-white font-bold flex items-center gap-2">
               <Icons.MapPin size={14} className="text-blue-400" /> Kadıköy,
               İstanbul
             </p>
           </div>
-          <div className="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold text-xs">
+          <div className="bg-blue-600 text-slate-900 dark:text-white px-4 py-2 rounded-xl font-bold text-xs">
             {PARKING_SPOTS.length} Otopark
           </div>
         </div>
@@ -99,7 +99,7 @@ const ParkingScreen = () => {
           {spots.map((p) => (
             <div
               key={p.id}
-              className="glass-card p-4 rounded-2xl border border-white/10 flex justify-between items-center active-scale cursor-pointer group animate-in fade-in slide-in-from-bottom-4"
+              className="glass-card p-4 rounded-2xl border border-black/10 dark:border-white/10 flex justify-between items-center active-scale cursor-pointer group animate-in fade-in slide-in-from-bottom-4"
               onClick={() => showAlert("Navigasyon", `${p.name} için yol tarifi başlatılıyor...`, "success")}
             >
               <div className="flex items-center gap-4">
@@ -114,7 +114,7 @@ const ParkingScreen = () => {
                   />
                 </div>
                 <div>
-                  <h4 className="font-bold text-white">{p.name}</h4>
+                  <h4 className="font-bold text-slate-900 dark:text-white">{p.name}</h4>
                   <div className="flex items-center gap-3 mt-1">
                     <span className="text-[10px] text-slate-500 flex items-center gap-1">
                       <Icons.Clock size={10} /> {p.distance}
@@ -143,7 +143,7 @@ const ParkingScreen = () => {
                   e.stopPropagation();
                   openDirections(p.lat, p.lng);
                 }}
-                className="bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-500 transition shadow-lg shadow-blue-900/50 active-scale"
+                className="bg-blue-600 text-slate-900 dark:text-white p-3 rounded-xl hover:bg-blue-500 transition shadow-lg shadow-blue-900/50 active-scale"
               >
                 <Icons.Navigation size={20} />
               </button>

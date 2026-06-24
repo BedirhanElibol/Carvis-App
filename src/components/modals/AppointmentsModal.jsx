@@ -14,7 +14,7 @@ const AppointmentsModal = ({ show, onClose, t, appointments, onCancel }) => {
             {t.myAppointments}
           </h3>
           <button onClick={onClose}>
-            <Icons.X size={20} className="text-slate-400" />
+            <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
           </button>
         </div>
 
@@ -40,7 +40,7 @@ const AppointmentsModal = ({ show, onClose, t, appointments, onCancel }) => {
                   {appt.shopName} •{" "}
                   <span className="font-bold">{appt.date.split(",")[1]}</span>
                 </p>
-                <p className="text-xs text-slate-400 mt-0.5 font-sans">{appt.car}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-sans">{appt.car}</p>
                 <button
                   onClick={() => onCancel(appt.id)}
                   className="mt-3 text-xs font-bold text-red-500 hover:text-red-700 border border-red-200 px-3 py-1.5 rounded-lg bg-white shadow-sm hover:bg-red-50 transition font-sans"

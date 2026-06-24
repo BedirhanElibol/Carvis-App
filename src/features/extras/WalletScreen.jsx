@@ -18,18 +18,18 @@ const WalletScreen = () => {
     "Müşteri";
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24 relative overflow-hidden animate-fade-in">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24 relative overflow-hidden animate-fade-in">
       {/* Ambient Backgrounds */}
       <div className="absolute top-[-100px] right-[-100px] w-96 h-96 bg-primary-600/20 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="absolute bottom-[-100px] left-[-100px] w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
 
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-slate-950/80 backdrop-blur-xl border-b border-white/5 p-5">
+      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5 p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate("/app/profile")}
-              className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale transition hover:bg-white/10"
+              className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale transition hover:bg-black/10 dark:bg-white/10"
             >
               <Icons.ArrowLeft size={20} />
             </button>
@@ -47,7 +47,7 @@ const WalletScreen = () => {
 
       <div className="p-5 space-y-6 relative z-10">
         {/* RAPIDSY CARD */}
-        <div className="relative w-full h-56 rounded-[2.5rem] p-7 shadow-2xl overflow-hidden group border border-white/5">
+        <div className="relative w-full h-56 rounded-[2.5rem] p-7 shadow-2xl overflow-hidden group border border-black/5 dark:border-white/5">
           {/* Background gradient & texture for card */}
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-black"></div>
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
@@ -57,11 +57,11 @@ const WalletScreen = () => {
           <div className="relative z-10 h-full flex flex-col justify-between">
             <div className="flex justify-between items-start">
               <div>
-                <div className="text-slate-400 font-bold uppercase tracking-widest text-[9px] mb-2 flex items-center gap-1.5 font-sans">
+                <div className="text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-[9px] mb-2 flex items-center gap-1.5 font-sans">
                   <Icons.ShieldCheck size={12} className="text-primary-400" />
                   RAPIDSY GÜVENCESİ
                 </div>
-                <div className="text-white text-4xl font-black font-sans tracking-tighter">
+                <div className="text-slate-900 dark:text-white text-4xl font-black font-sans tracking-tighter">
                   ₺
                   {balance.toLocaleString("tr-TR", {
                     minimumFractionDigits: 2,
@@ -69,7 +69,7 @@ const WalletScreen = () => {
                 </div>
               </div>
               <div className="text-right">
-                <span className="font-black text-xl tracking-tighter text-white/40 group-hover:text-white transition-colors duration-500 font-sans uppercase">
+                <span className="font-black text-xl tracking-tighter text-slate-900 dark:text-white/40 group-hover:text-slate-900 dark:text-white transition-colors duration-500 font-sans uppercase">
                   RAPIDSY<span className="text-primary-500">PAY</span>
                 </span>
               </div>
@@ -80,7 +80,7 @@ const WalletScreen = () => {
                 <p className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mb-1 font-sans">
                   Kart Sahibi
                 </p>
-                <p className="text-sm font-black text-white uppercase tracking-wider font-sans">
+                <p className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider font-sans">
                   {fullName}
                 </p>
               </div>
@@ -105,12 +105,12 @@ const WalletScreen = () => {
         <div className="grid grid-cols-2 gap-4">
           <button
             onClick={() => setShowTopUp(true)}
-            className="glass-card p-6 rounded-[2rem] border border-white/5 flex flex-col items-center justify-center gap-3 hover:bg-primary-600/10 hover:border-primary-500/30 transition-all active-scale group"
+            className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center justify-center gap-3 hover:bg-primary-600/10 hover:border-primary-500/30 transition-all active-scale group"
           >
-            <div className="w-14 h-14 rounded-2xl bg-primary-600 flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform">
+            <div className="w-14 h-14 rounded-2xl bg-primary-600 flex items-center justify-center text-slate-900 dark:text-white shadow-xl group-hover:scale-110 transition-transform">
               <Icons.Plus size={28} />
             </div>
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-sans">
+            <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest font-sans">
               Bakiye Yükle
             </span>
           </button>
@@ -122,12 +122,12 @@ const WalletScreen = () => {
                 "info",
               )
             }
-            className="glass-card p-6 rounded-[2rem] border border-white/5 flex flex-col items-center justify-center gap-3 hover:bg-white/5 transition-all active-scale group"
+            className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center justify-center gap-3 hover:bg-black/5 dark:bg-white/5 transition-all active-scale group"
           >
-            <div className="w-14 h-14 rounded-2xl bg-slate-800 border border-white/10 flex items-center justify-center text-slate-300 shadow-xl group-hover:scale-110 transition-transform">
+            <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-black/10 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 shadow-xl group-hover:scale-110 transition-transform">
               <Icons.LayoutGrid size={24} />
             </div>
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-sans">
+            <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest font-sans">
               Diğer İşlemler
             </span>
           </button>
@@ -136,17 +136,17 @@ const WalletScreen = () => {
         {/* Transaction History */}
         <div className="pt-2">
           <div className="flex items-center justify-between mb-5">
-            <h3 className="text-lg font-black text-white font-sans uppercase tracking-tighter">
+            <h3 className="text-lg font-black text-slate-900 dark:text-white font-sans uppercase tracking-tighter">
               İşlem Gecmişi
             </h3>
-            <div className="p-1 px-3 bg-white/5 rounded-lg border border-white/10 text-[9px] font-black text-slate-400 uppercase tracking-widest font-sans cursor-pointer hover:bg-white/10 transition-colors">
+            <div className="p-1 px-3 bg-black/5 dark:bg-white/5 rounded-lg border border-black/10 dark:border-white/10 text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest font-sans cursor-pointer hover:bg-black/10 dark:bg-white/10 transition-colors">
               Tümü
             </div>
           </div>
 
           <div className="space-y-3">
             {transactions.length === 0 ? (
-              <div className="text-center py-16 glass-card rounded-[2rem] border border-white/5">
+              <div className="text-center py-16 glass-card rounded-[2rem] border border-black/5 dark:border-white/5">
                 <Icons.Inbox
                   size={40}
                   className="mx-auto text-slate-800 mb-3"
@@ -159,7 +159,7 @@ const WalletScreen = () => {
               transactions.map((tx) => (
                 <div
                   key={tx.id}
-                  className="glass-card p-4 rounded-2xl border border-white/5 flex items-center justify-between hover:border-white/10 transition-colors"
+                  className="glass-card p-4 rounded-2xl border border-black/5 dark:border-white/5 flex items-center justify-between hover:border-black/10 dark:border-white/10 transition-colors"
                 >
                   <div className="flex items-center gap-4">
                     <div
@@ -178,7 +178,7 @@ const WalletScreen = () => {
                       )}
                     </div>
                     <div>
-                      <p className="font-black text-sm text-white uppercase tracking-tight font-sans">
+                      <p className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-tight font-sans">
                         {tx.description || tx.type}
                       </p>
                       <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-0.5 font-sans">
@@ -196,7 +196,7 @@ const WalletScreen = () => {
                         ? "text-emerald-400"
                         : tx.type === "block"
                           ? "text-yellow-500"
-                          : "text-white"
+                          : "text-slate-900 dark:text-white"
                     }`}
                   >
                     {tx.amount > 0 ? "+" : ""}₺
@@ -216,15 +216,15 @@ const WalletScreen = () => {
             className="absolute inset-0 bg-black/60 backdrop-blur-md"
             onClick={() => setShowTopUp(false)}
           ></div>
-          <div className="bg-slate-950 w-full sm:w-[400px] rounded-t-[3rem] sm:rounded-3xl border border-white/10 relative z-10 animate-slide-up p-8 shadow-2xl">
-            <div className="w-12 h-1.5 bg-white/10 rounded-full mx-auto mb-6 sm:hidden"></div>
+          <div className="bg-slate-50 dark:bg-slate-950 w-full sm:w-[400px] rounded-t-[3rem] sm:rounded-3xl border border-black/10 dark:border-white/10 relative z-10 animate-slide-up p-8 shadow-2xl">
+            <div className="w-12 h-1.5 bg-black/10 dark:bg-white/10 rounded-full mx-auto mb-6 sm:hidden"></div>
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-black text-white font-sans uppercase tracking-tighter">
+              <h2 className="text-2xl font-black text-slate-900 dark:text-white font-sans uppercase tracking-tighter">
                 Bakiye Yükle
               </h2>
               <button
                 onClick={() => setShowTopUp(false)}
-                className="w-10 h-10 flex items-center justify-center text-slate-500 hover:text-white bg-white/5 rounded-full transition-colors"
+                className="w-10 h-10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-white bg-black/5 dark:bg-white/5 rounded-full transition-colors"
               >
                 <Icons.X size={20} />
               </button>
@@ -242,14 +242,14 @@ const WalletScreen = () => {
                       "success",
                     );
                   }}
-                  className="bg-white/5 hover:bg-primary-600/20 border border-white/5 hover:border-primary-500/50 text-white font-black py-4 rounded-2xl transition-all font-sans text-lg flex items-center justify-between px-6 group"
+                  className="bg-black/5 dark:bg-white/5 hover:bg-primary-600/20 border border-black/5 dark:border-white/5 hover:border-primary-500/50 text-slate-900 dark:text-white font-black py-4 rounded-2xl transition-all font-sans text-lg flex items-center justify-between px-6 group"
                 >
                   <span>+{val.toLocaleString("tr-TR")} ₺</span>
                   <Icons.ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity" />
                 </button>
               ))}
             </div>
-            <div className="flex items-center justify-center pt-6 border-t border-white/5 text-[9px] text-slate-600 font-black uppercase tracking-[0.2em] gap-2 font-sans">
+            <div className="flex items-center justify-center pt-6 border-t border-black/5 dark:border-white/5 text-[9px] text-slate-600 font-black uppercase tracking-[0.2em] gap-2 font-sans">
               <Icons.ShieldCheck size={14} className="text-emerald-500/50" />
               3D Secure & AES-256 Korumalı
             </div>

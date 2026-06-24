@@ -51,17 +51,17 @@ const SettingsModal = ({ show, onClose, t, currentUser, showAlert }) => {
 
   return (
     <div className="fixed inset-0 bg-black/80 z-[60] flex items-center justify-center p-4 backdrop-blur-md">
-      <div className="bg-slate-900 w-full max-w-md rounded-[2.5rem] p-8 animate-in zoom-in-95 duration-200 border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-[2.5rem] p-8 animate-in zoom-in-95 duration-200 border border-black/10 dark:border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
         <div className="flex justify-between items-center mb-8">
-          <h3 className="font-black text-2xl text-white tracking-tighter flex items-center gap-3 font-sans">
+          <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter flex items-center gap-3 font-sans">
             <Icons.Settings size={28} className="text-primary-500" />
             {t.settings}
           </h3>
           <button
             onClick={onClose}
-            className="bg-white/5 p-3 rounded-2xl hover:bg-white/10 border border-white/10 transition-all"
+            className="bg-black/5 dark:bg-white/5 p-3 rounded-2xl hover:bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 transition-all"
           >
-            <Icons.X size={20} className="text-slate-400" />
+            <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
           </button>
         </div>
 
@@ -83,7 +83,7 @@ const SettingsModal = ({ show, onClose, t, currentUser, showAlert }) => {
                   onChange={(e) =>
                     setFormData({ ...formData, full_name: e.target.value })
                   }
-                  className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white focus:border-primary-500 transition-all outline-none font-sans"
+                  className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 dark:text-white focus:border-primary-500 transition-all outline-none font-sans"
                 />
               </div>
             </div>
@@ -102,7 +102,7 @@ const SettingsModal = ({ show, onClose, t, currentUser, showAlert }) => {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white focus:border-primary-500 transition-all outline-none font-sans"
+                  className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl py-4 pl-12 pr-4 text-slate-900 dark:text-white focus:border-primary-500 transition-all outline-none font-sans"
                 />
               </div>
             </div>
@@ -112,7 +112,7 @@ const SettingsModal = ({ show, onClose, t, currentUser, showAlert }) => {
             <button
               onClick={handleSave}
               disabled={loading}
-              className="w-full bg-primary-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl shadow-primary-600/20 active-scale disabled:opacity-50 font-sans"
+              className="w-full bg-primary-600 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl shadow-primary-600/20 active-scale disabled:opacity-50 font-sans"
             >
               <Icons.Save size={18} />
               {loading ? "Yükleniyor..." : "Bilgileri Kaydet"}
@@ -122,7 +122,7 @@ const SettingsModal = ({ show, onClose, t, currentUser, showAlert }) => {
               <button
                 onClick={handleBecomePartner}
                 disabled={loading}
-                className="w-full bg-white/5 text-accent-500 border border-accent-500/20 py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-accent-500/10 transition-all active-scale font-sans"
+                className="w-full bg-black/5 dark:bg-white/5 text-accent-500 border border-accent-500/20 py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-accent-500/10 transition-all active-scale font-sans"
               >
                 <Icons.Briefcase size={18} />
                 Kurumsal Partner Ol
@@ -137,7 +137,7 @@ const SettingsModal = ({ show, onClose, t, currentUser, showAlert }) => {
                 <Icons.CreditCard size={20} className="text-primary-500" />
               </div>
               <div className="text-[10px] leading-relaxed">
-                <p className="text-slate-200 font-black uppercase tracking-widest mb-1 font-sans">
+                <p className="text-slate-700 dark:text-slate-200 font-black uppercase tracking-widest mb-1 font-sans">
                   AI API Status
                 </p>
                 <p className="text-slate-500 font-medium font-sans">

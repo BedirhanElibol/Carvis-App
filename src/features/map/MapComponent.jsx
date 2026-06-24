@@ -44,8 +44,8 @@ const createProviderIcon = (provider) => {
     html: `
       <div class="relative w-12 h-12 flex items-center justify-center animate-in zoom-in duration-500">
         <!-- Marker Shape -->
-        <div class="absolute inset-0 ${style.bg} rounded-full rotate-45 shadow-[0_0_15px_rgba(0,0,0,0.5)] border-2 border-white/20"></div>
-        <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 ${style.bg} rotate-45 border-r-2 border-b-2 border-white/20"></div>
+        <div class="absolute inset-0 ${style.bg} rounded-full rotate-45 shadow-[0_0_15px_rgba(0,0,0,0.5)] border-2 border-black/20 dark:border-white/20"></div>
+        <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 ${style.bg} rotate-45 border-r-2 border-b-2 border-black/20 dark:border-white/20"></div>
         
         <!-- Role Indicator Badge -->
         <div class="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center border-2 border-slate-900 z-10">
@@ -53,7 +53,7 @@ const createProviderIcon = (provider) => {
         </div>
 
         <!-- Provider Avatar -->
-        <div class="relative z-1 w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden border border-white/10">
+        <div class="relative z-1 w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden border border-black/10 dark:border-white/10">
           <img src="${avatar}" 
                class="w-full h-full object-cover" 
                alt="Provider" />
@@ -93,7 +93,7 @@ const MapComponent = ({ userLocation, providers = [], onProviderSelect }) => {
   if (!userLocation) return null;
 
   return (
-    <div className="w-full h-full bg-slate-950 animate-fade-in relative">
+    <div className="w-full h-full bg-slate-50 dark:bg-slate-950 animate-fade-in relative">
       <MapContainer
         center={[userLocation.lat, userLocation.lng]}
         zoom={13}
@@ -132,7 +132,7 @@ const MapComponent = ({ userLocation, providers = [], onProviderSelect }) => {
                 <p className="text-[10px] text-slate-500 mt-0.5">
                   {provider.company_name || "Hızlı Servis"}
                 </p>
-                <button className="mt-2 w-full bg-primary-600 text-white text-[9px] font-black uppercase py-1.5 rounded-lg active-scale transition-all">
+                <button className="mt-2 w-full bg-primary-600 text-slate-900 dark:text-white text-[9px] font-black uppercase py-1.5 rounded-lg active-scale transition-all">
                   Teklif İste
                 </button>
               </div>

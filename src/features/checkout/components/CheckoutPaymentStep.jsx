@@ -19,7 +19,7 @@ const CheckoutPaymentStep = ({
         {" "}
         <button
           onClick={() => setPaymentMethod("card")}
-          className={`flex-1 p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all active-scale ${paymentMethod === "card" ? "bg-primary-600/20 border-primary-500 text-white" : "glass-card border-white/5 text-slate-400"}`}
+          className={`flex-1 p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all active-scale ${paymentMethod === "card" ? "bg-primary-600/20 border-primary-500 text-slate-900 dark:text-white" : "glass-card border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400"}`}
         >
           {" "}
           <Icons.CreditCard size={24} />{" "}
@@ -27,7 +27,7 @@ const CheckoutPaymentStep = ({
         </button>{" "}
         <button
           onClick={() => setPaymentMethod("wallet")}
-          className={`flex-1 p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all active-scale ${paymentMethod === "wallet" ? "bg-primary-600/20 border-primary-500 text-white" : "glass-card border-white/5 text-slate-400"}`}
+          className={`flex-1 p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all active-scale ${paymentMethod === "wallet" ? "bg-primary-600/20 border-primary-500 text-slate-900 dark:text-white" : "glass-card border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400"}`}
         >
           {" "}
           <Icons.Wallet size={24} />{" "}
@@ -35,7 +35,7 @@ const CheckoutPaymentStep = ({
         </button>{" "}
       </div>{" "}
       {/* Visual Card Wrapper */}{" "}
-      <div className="glass-card p-6 rounded-3xl border border-white/5 bg-slate-900/50">
+      <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50">
         {" "}
         {paymentMethod === "card" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
@@ -45,13 +45,13 @@ const CheckoutPaymentStep = ({
               {" "}
               <div>
                 {" "}
-                <label className="text-[10px] font-bold text-slate-400 uppercase ml-1 mb-1 block">
+                <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase ml-1 mb-1 block">
                   Kart Numarası
                 </label>{" "}
                 <div className="relative">
                   {" "}
                   <input
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary-500 font-mono tracking-wide"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm outline-none focus:border-primary-500 font-mono tracking-wide"
                     placeholder="0000 0000 0000 0000"
                     value={cardData.number}
                     onChange={(e) =>
@@ -68,11 +68,11 @@ const CheckoutPaymentStep = ({
                 {" "}
                 <div>
                   {" "}
-                  <label className="text-[10px] font-bold text-slate-400 uppercase ml-1 mb-1 block">
+                  <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase ml-1 mb-1 block">
                     SKT
                   </label>{" "}
                   <input
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary-500 text-center"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm outline-none focus:border-primary-500 text-center"
                     placeholder="AA/YY"
                     value={cardData.expiry}
                     onChange={(e) =>
@@ -82,12 +82,12 @@ const CheckoutPaymentStep = ({
                 </div>{" "}
                 <div>
                   {" "}
-                  <label className="text-[10px] font-bold text-slate-400 uppercase ml-1 mb-1 block">
+                  <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase ml-1 mb-1 block">
                     CVV
                   </label>{" "}
                   <input
                     type="password"
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary-500 text-center"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm outline-none focus:border-primary-500 text-center"
                     placeholder="***"
                     value={cardData.cvv}
                     onChange={(e) =>
@@ -98,11 +98,11 @@ const CheckoutPaymentStep = ({
               </div>{" "}
               <div>
                 {" "}
-                <label className="text-[10px] font-bold text-slate-400 uppercase ml-1 mb-1 block">
+                <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase ml-1 mb-1 block">
                   Kart Sahibi
                 </label>{" "}
                 <input
-                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary-500 uppercase"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm outline-none focus:border-primary-500 uppercase"
                   placeholder="AD SOYAD"
                   value={cardData.holder}
                   onChange={(e) =>
@@ -115,21 +115,21 @@ const CheckoutPaymentStep = ({
               </div>{" "}
             </div>{" "}
             {/* Installment Table */}{" "}
-            <div className="bg-slate-950 rounded-2xl border border-white/10 overflow-hidden">
+            <div className="bg-slate-50 dark:bg-slate-950 rounded-2xl border border-black/10 dark:border-white/10 overflow-hidden">
               {" "}
               <table className="w-full text-left">
                 {" "}
-                <thead className="bg-white/5">
+                <thead className="bg-black/5 dark:bg-white/5">
                   {" "}
                   <tr>
                     {" "}
-                    <th className="p-3 text-[10px] text-slate-400 uppercase font-bold">
+                    <th className="p-3 text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold">
                       Taksit
                     </th>{" "}
-                    <th className="p-3 text-[10px] text-slate-400 uppercase font-bold text-right">
+                    <th className="p-3 text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold text-right">
                       Aylık
                     </th>{" "}
-                    <th className="p-3 text-[10px] text-slate-400 uppercase font-bold text-right">
+                    <th className="p-3 text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold text-right">
                       Toplam
                     </th>{" "}
                   </tr>{" "}
@@ -140,20 +140,20 @@ const CheckoutPaymentStep = ({
                     <tr
                       key={opt.count}
                       onClick={() => setInstallment(opt.count)}
-                      className={`cursor-pointer transition-colors ${installment === opt.count ? "bg-primary-500/10" : "hover:bg-white/5"}`}
+                      className={`cursor-pointer transition-colors ${installment === opt.count ? "bg-primary-500/10" : "hover:bg-black/5 dark:bg-white/5"}`}
                     >
                       {" "}
-                      <td className="p-3 text-xs font-bold text-white flex items-center gap-2">
+                      <td className="p-3 text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
                         {" "}
                         {installment === opt.count && (
                           <div className="w-1.5 h-1.5 rounded-full bg-primary-500"></div>
                         )}{" "}
                         {opt.label}{" "}
                       </td>{" "}
-                      <td className="p-3 text-xs text-slate-300 text-right">
+                      <td className="p-3 text-xs text-slate-600 dark:text-slate-300 text-right">
                         {opt.monthly.toLocaleString()} ₺
                       </td>{" "}
-                      <td className="p-3 text-xs font-bold text-white text-right">
+                      <td className="p-3 text-xs font-bold text-slate-900 dark:text-white text-right">
                         {opt.total.toLocaleString()} ₺
                       </td>{" "}
                     </tr>
@@ -165,14 +165,14 @@ const CheckoutPaymentStep = ({
         ) : (
           <div className="text-center py-8">
             {" "}
-            <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10 shadow-lg">
+            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-black/10 dark:border-white/10 shadow-lg">
               {" "}
               <Icons.Wallet size={32} className="text-primary-400" />{" "}
             </div>{" "}
-            <h3 className="text-white font-bold text-lg mb-2">
+            <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-2">
               Cüzdan Bakiyeniz
             </h3>{" "}
-            <p className="text-3xl font-black text-white tracking-tighter mb-4">
+            <p className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter mb-4">
               ₺{balance.toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
             </p>{" "}
             {balance < total ? (

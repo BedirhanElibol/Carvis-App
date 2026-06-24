@@ -95,7 +95,7 @@ export const QUOTE_STATUS_CONFIG = {
   },
   refunded: {
     icon: Icons.XCircle,
-    color: "text-slate-400",
+    color: "text-slate-500 dark:text-slate-400",
     bg: "bg-slate-500/10",
     border: "border-slate-500/30",
     label: "İade Edildi",
@@ -114,7 +114,7 @@ export const getStatusConfig = (status) => {
   return (
     QUOTE_STATUS_CONFIG[status] || {
       icon: Icons.AlertCircle,
-      color: "text-slate-400",
+      color: "text-slate-500 dark:text-slate-400",
       bg: "bg-slate-500/10",
       border: "border-slate-500/30",
       label: "Bilinmiyor",
@@ -124,9 +124,9 @@ export const getStatusConfig = (status) => {
 
 // Urgency Configuration (for AI suggestions, alerts)
 export const URGENCY_CONFIG = {
-  high: { bg: "bg-red-500", text: "text-white", label: "Acil" },
-  medium: { bg: "bg-amber-500", text: "text-white", label: "Yakında" },
-  low: { bg: "bg-green-500", text: "text-white", label: "Planla" },
+  high: { bg: "bg-red-500", text: "text-slate-900 dark:text-white", label: "Acil" },
+  medium: { bg: "bg-amber-500", text: "text-slate-900 dark:text-white", label: "Yakında" },
+  low: { bg: "bg-green-500", text: "text-slate-900 dark:text-white", label: "Planla" },
 };
 
 // Item Type Configuration (for unified cart)

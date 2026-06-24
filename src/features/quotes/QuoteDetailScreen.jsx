@@ -89,7 +89,7 @@ const QuoteDetailScreen = () => {
       default:
         return {
           icon: Icons.Clock,
-          color: "text-slate-400",
+          color: "text-slate-500 dark:text-slate-400",
           bg: "bg-slate-500/10",
           label: "Bilinmiyor",
         };
@@ -98,7 +98,7 @@ const QuoteDetailScreen = () => {
 
   if (loading || !quote) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
       </div>
     );
@@ -108,9 +108,9 @@ const QuoteDetailScreen = () => {
   const StatusIcon = config.icon;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
@@ -136,7 +136,7 @@ const QuoteDetailScreen = () => {
         <div className="glass-card p-6 rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-transparent">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Toplam Tutar (KDV Dahil)</p>
+              <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Toplam Tutar (KDV Dahil)</p>
               <p className="text-4xl font-black text-primary-400 font-mono">
                 ₺{quote.price.toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
               </p>
@@ -147,27 +147,27 @@ const QuoteDetailScreen = () => {
           </div>
 
           {/* Şeffaf Maliyet Kırılımı Tablosu */}
-          <div className="mt-6 border-t border-white/5 pt-4 space-y-2.5">
+          <div className="mt-6 border-t border-black/5 dark:border-white/5 pt-4 space-y-2.5">
             <div className="flex justify-between items-center text-xs">
-              <span className="text-slate-400 flex items-center gap-1">
+              <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
                 <Icons.Package size={13} className="text-slate-500" /> Yedek Parça Bedeli (%45)
               </span>
-              <span className="text-white font-mono font-bold">
+              <span className="text-slate-900 dark:text-white font-mono font-bold">
                 ₺{(quote.price * 0.45).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
               </span>
             </div>
             
             <div className="flex justify-between items-center text-xs">
-              <span className="text-slate-400 flex items-center gap-1">
+              <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
                 <Icons.Wrench size={13} className="text-slate-500" /> İşçilik & Kalibrasyon (%25)
               </span>
-              <span className="text-white font-mono font-bold">
+              <span className="text-slate-900 dark:text-white font-mono font-bold">
                 ₺{(quote.price * 0.25).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
               </span>
             </div>
 
             <div className="flex justify-between items-center text-xs">
-              <span className="text-slate-400 flex items-center gap-1">
+              <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
                 <Icons.Layers size={13} className="text-slate-500" /> Carvis Hizmet Bedeli (%10)
               </span>
               <span className="text-emerald-400 font-mono font-bold">
@@ -176,22 +176,22 @@ const QuoteDetailScreen = () => {
             </div>
 
             <div className="flex justify-between items-center text-xs">
-              <span className="text-slate-400 flex items-center gap-1">
+              <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
                 <Icons.Percent size={13} className="text-slate-500" /> Devlet KDV Vergisi (%20)
               </span>
-              <span className="text-white font-mono font-bold">
+              <span className="text-slate-900 dark:text-white font-mono font-bold">
                 ₺{(quote.price * 0.20).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
               </span>
             </div>
 
-            <div className="bg-slate-950/60 p-3.5 rounded-xl border border-white/5 text-[9px] text-slate-400 mt-3 leading-relaxed">
-              <span className="font-bold text-white uppercase block mb-1">Müşteri ve Ortak Şeffaflık İlkesi:</span>
+            <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-xl border border-black/5 dark:border-white/5 text-[9px] text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
+              <span className="font-bold text-slate-900 dark:text-white uppercase block mb-1">Müşteri ve Ortak Şeffaflık İlkesi:</span>
               Carvis, şeffaf oto servis modeli gereği tüm parça ve işçilik maliyetlerini açıkça gösterir. %10 Carvis bedeli; usta eğitimleri, yol yardımı sigortası ve 1 Yıl / 20.000 KM parça garantisi için kullanılır.
             </div>
           </div>
 
           {quote.estimated_delivery_days && (
-            <div className="flex items-center gap-2 mt-4 text-slate-300 border-t border-white/5 pt-3 text-xs">
+            <div className="flex items-center gap-2 mt-4 text-slate-600 dark:text-slate-300 border-t border-black/5 dark:border-white/5 pt-3 text-xs">
               <Icons.Truck size={14} className="text-primary-400" />
               <span>
                 Tahmini tamamlanma süresi: <strong>{quote.estimated_delivery_days} iş günü</strong>
@@ -201,11 +201,11 @@ const QuoteDetailScreen = () => {
         </div>
 
         {/* Satıcı Bilgileri */}
-        <div className="glass-card p-5 rounded-2xl border border-white/10">
+        <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
           <h3 className="text-lg font-bold mb-4">Satıcı Bilgileri</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-slate-400">Firma</span>
+              <span className="text-slate-500 dark:text-slate-400">Firma</span>
               <span className="font-semibold">
                 {quote.seller?.company_name ||
                   quote.seller?.full_name ||
@@ -214,7 +214,7 @@ const QuoteDetailScreen = () => {
             </div>
             {quote.seller?.seller_rating > 0 && (
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">Puan</span>
+                <span className="text-slate-500 dark:text-slate-400">Puan</span>
                 <div className="flex items-center gap-1">
                   <Icons.Star
                     size={16}
@@ -228,7 +228,7 @@ const QuoteDetailScreen = () => {
             )}
             {quote.seller?.experience_years && (
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">Deneyim</span>
+                <span className="text-slate-500 dark:text-slate-400">Deneyim</span>
                 <span className="font-semibold">
                   {quote.seller.experience_years} yıl
                 </span>
@@ -265,13 +265,13 @@ const QuoteDetailScreen = () => {
         </div>
 
         {/* Teklif Detayları */}
-        <div className="glass-card p-5 rounded-2xl border border-white/10">
+        <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
           <h3 className="text-lg font-bold mb-4">Teklif Detayları</h3>
           <div className="space-y-3">
             {quote.description && (
               <div>
-                <p className="text-sm text-slate-400 mb-1">Açıklama</p>
-                <p className="text-slate-200">{quote.description}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Açıklama</p>
+                <p className="text-slate-700 dark:text-slate-200">{quote.description}</p>
               </div>
             )}
             {quote.warranty_months > 0 && (
@@ -283,7 +283,7 @@ const QuoteDetailScreen = () => {
               </div>
             )}
             {quote.expires_at && quote.status === "pending" && (
-              <div className="flex items-center gap-2 text-slate-400">
+              <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                 <Icons.Calendar size={16} />
                 <span className="text-sm">
                   Son geçerlilik:{" "}
@@ -296,27 +296,27 @@ const QuoteDetailScreen = () => {
 
         {/* Servis Talebi Bilgileri */}
         {quote.service_request && (
-          <div className="glass-card p-5 rounded-2xl border border-white/10">
+          <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
             <h3 className="text-lg font-bold mb-4">Talep Bilgileri</h3>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">Plaka</span>
+                <span className="text-slate-500 dark:text-slate-400">Plaka</span>
                 <span className="font-mono font-bold">
                   {quote.service_request.plate}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-slate-400">Araç</span>
+                <span className="text-slate-500 dark:text-slate-400">Araç</span>
                 <span className="font-semibold">
                   {quote.service_request.brand} {quote.service_request.model}
                 </span>
               </div>
               {quote.service_request.description && (
                 <div>
-                  <p className="text-sm text-slate-400 mb-1">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">
                     Talep Açıklaması
                   </p>
-                  <p className="text-slate-200">
+                  <p className="text-slate-700 dark:text-slate-200">
                     {quote.service_request.description}
                   </p>
                 </div>
@@ -338,7 +338,7 @@ const QuoteDetailScreen = () => {
             <button
               onClick={handleAccept}
               disabled={actionLoading}
-              className="bg-primary-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-white active-scale disabled:opacity-50"
+              className="bg-primary-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-slate-900 dark:text-white active-scale disabled:opacity-50"
             >
               {actionLoading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
@@ -360,7 +360,7 @@ const QuoteDetailScreen = () => {
                   <p className="font-bold text-green-400">
                     Teklif Kabul Edildi
                   </p>
-                  <p className="text-sm text-slate-300">
+                  <p className="text-sm text-slate-600 dark:text-slate-300">
                     Satıcı ile iletişime geçebilirsiniz.
                   </p>
                 </div>
@@ -368,7 +368,7 @@ const QuoteDetailScreen = () => {
             </div>
             <button
               onClick={() => navigate(`/payment/${quote.id}`)}
-              className="w-full bg-primary-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-white active-scale"
+              className="w-full bg-primary-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-slate-900 dark:text-white active-scale"
             >
               💳 Ödeme Yap
             </button>

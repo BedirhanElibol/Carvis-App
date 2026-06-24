@@ -103,23 +103,23 @@ const CheckoutScreen = () => {
 
   if (step === 4) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 animate-fade-in relative z-50">
-        <div className="absolute top-0 left-0 w-full h-full bg-slate-950 z-[-1]"></div>
-        <div className="glass-card p-12 rounded-[3rem] text-center max-w-lg border border-white/5 shadow-2xl">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-6 animate-fade-in relative z-50">
+        <div className="absolute top-0 left-0 w-full h-full bg-slate-50 dark:bg-slate-950 z-[-1]"></div>
+        <div className="glass-card p-12 rounded-[3rem] text-center max-w-lg border border-black/5 dark:border-white/5 shadow-2xl">
           <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-green-900/50">
-            <Icons.CheckCircle size={48} className="text-white" />
+            <Icons.CheckCircle size={48} className="text-slate-900 dark:text-white" />
           </div>
-          <h1 className="text-3xl font-black text-white mb-2">Siparişiniz Alındı!</h1>
-          <p className="text-slate-400 mb-8">
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">Siparişiniz Alındı!</h1>
+          <p className="text-slate-500 dark:text-slate-400 mb-8">
             Sipariş numaranız:{" "}
-            <span className="text-white font-bold">
+            <span className="text-slate-900 dark:text-white font-bold">
               #CRV-{Math.floor(Math.random() * 10000)}
             </span>
             . Detayları profilinizden takip edebilirsiniz.
           </p>
           <button
             onClick={() => navigate("/")}
-            className="w-full bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-xl font-bold transition-all"
+            className="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white py-4 rounded-xl font-bold transition-all"
           >
             Anasayfaya Dön
           </button>
@@ -129,13 +129,13 @@ const CheckoutScreen = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 pb-32 animate-fade-in relative z-40">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-32 animate-fade-in relative z-40">
       {/* Header / Stepper */}
-      <div className="sticky top-0 bg-slate-950/80 backdrop-blur-xl z-50 border-b border-white/5 p-4">
+      <div className="sticky top-0 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl z-50 border-b border-black/5 dark:border-white/5 p-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <button
             onClick={handleBack}
-            className="p-2 text-slate-400 hover:text-white transition-colors"
+            className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
           >
             <Icons.ArrowLeft size={24} />
           </button>
@@ -147,7 +147,7 @@ const CheckoutScreen = () => {
               label="Sepetim"
             />
             <div
-              className={`w-8 h-px ${step > 1 ? "bg-primary-500" : "bg-slate-800"}`}
+              className={`w-8 h-px ${step > 1 ? "bg-primary-500" : "bg-slate-100 dark:bg-slate-800"}`}
             ></div>
             <StepIndicator
               current={step}
@@ -156,7 +156,7 @@ const CheckoutScreen = () => {
               label="Teslimat"
             />
             <div
-              className={`w-8 h-px ${step > 2 ? "bg-primary-500" : "bg-slate-800"}`}
+              className={`w-8 h-px ${step > 2 ? "bg-primary-500" : "bg-slate-100 dark:bg-slate-800"}`}
             ></div>
             <StepIndicator
               current={step}
@@ -190,14 +190,14 @@ const CheckoutScreen = () => {
 
         {/* RIGHT CONTENT: SUMMARY */}
         <div className="lg:col-span-1">
-          <div className="glass-card p-6 rounded-[2.5rem] border border-white/10 sticky top-24 space-y-6">
-            <h3 className="font-black text-xl text-white">Sipariş Özeti</h3>
+          <div className="glass-card p-6 rounded-[2.5rem] border border-black/10 dark:border-white/10 sticky top-24 space-y-6">
+            <h3 className="font-black text-xl text-slate-900 dark:text-white">Sipariş Özeti</h3>
             <div className="space-y-3">
-              <div className="flex justify-between text-sm text-slate-400">
+              <div className="flex justify-between text-sm text-slate-500 dark:text-slate-400">
                 <span>Ara Toplam</span>
                 <span>{subtotal.toLocaleString()} ₺</span>
               </div>
-              <div className="flex justify-between text-sm text-slate-400">
+              <div className="flex justify-between text-sm text-slate-500 dark:text-slate-400">
                 <span>Kargo</span>
                 <span className="text-green-500">
                   {shipping === 0 ? "Bedava" : `${shipping} ₺`}
@@ -215,8 +215,8 @@ const CheckoutScreen = () => {
                   </span>
                 </div>
               )}
-              <div className="h-px bg-white/10 my-2"></div>
-              <div className="flex justify-between text-lg font-black text-white">
+              <div className="h-px bg-black/10 dark:bg-white/10 my-2"></div>
+              <div className="flex justify-between text-lg font-black text-slate-900 dark:text-white">
                 <span>Toplam</span>
                 <span>{currentTotal.toLocaleString()} ₺</span>
               </div>
@@ -225,14 +225,14 @@ const CheckoutScreen = () => {
             {step < 3 ? (
               <button
                 onClick={handleNext}
-                className="w-full bg-primary-600 hover:bg-primary-500 text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2"
+                className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2"
               >
                 {step === 1 ? "Sepeti Onayla" : "Ödemeye Geç"}
                 <Icons.ChevronRight size={18} />
               </button>
             ) : (
               <div className="space-y-4">
-                <div className="p-3 bg-slate-950/50 rounded-xl border border-white/5 space-y-2">
+                <div className="p-3 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-black/5 dark:border-white/5 space-y-2">
                   <label className="flex gap-2 items-start cursor-pointer">
                     <input type="checkbox" defaultChecked className="mt-1" />
                     <span className="text-[10px] text-slate-500 leading-tight">
@@ -272,7 +272,7 @@ const CheckoutScreen = () => {
                     isProcessingCheckout ||
                     (paymentMethod === "wallet" && balance < currentTotal)
                   }
-                  className={`w-full text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${paymentMethod === "wallet" ? "bg-primary-600 hover:bg-primary-500" : "bg-green-600 hover:bg-green-500"}`}
+                  className={`w-full text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${paymentMethod === "wallet" ? "bg-primary-600 hover:bg-primary-500" : "bg-green-600 hover:bg-green-500"}`}
                 >
                   {isProcessingCheckout ? (
                     <Icons.RefreshCw className="animate-spin" />
@@ -313,10 +313,10 @@ const StepIndicator = ({ current, num, icon: Icon, label }) => {
   const isCurrent = current === num;
   return (
     <div
-      className={`flex items-center gap-2 ${isActive ? "text-white" : "text-slate-600"}`}
+      className={`flex items-center gap-2 ${isActive ? "text-slate-900 dark:text-white" : "text-slate-600"}`}
     >
       <div
-        className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${isActive ? "bg-primary-600 border-primary-500 text-white shadow-lg shadow-primary-900/50" : "bg-transparent border-slate-700"}`}
+        className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${isActive ? "bg-primary-600 border-primary-500 text-slate-900 dark:text-white shadow-lg shadow-primary-900/50" : "bg-transparent border-slate-300 dark:border-slate-700"}`}
       >
         <Icon size={14} />
       </div>

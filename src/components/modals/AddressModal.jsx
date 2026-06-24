@@ -21,7 +21,7 @@ const AddressModal = ({
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-bold text-lg font-sans">{t.selectAddress}</h3>
           <button onClick={onClose}>
-            <Icons.X size={20} className="text-slate-400" />
+            <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
           </button>
         </div>
 
@@ -79,7 +79,7 @@ const AddressModal = ({
                   });
                   setIsAdding(false);
                 }}
-                className="flex-[2] bg-orange-600 text-white py-3 rounded-xl font-bold hover:bg-orange-700 transition shadow-lg shadow-orange-600/50"
+                className="flex-[2] bg-orange-600 text-slate-900 dark:text-white py-3 rounded-xl font-bold hover:bg-orange-700 transition shadow-lg shadow-orange-600/50"
               >
                 <span className="font-sans">{t.save}</span>
               </button>

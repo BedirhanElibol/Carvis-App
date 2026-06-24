@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { TRANSLATIONS } from "../constants/translations";
 
 const UIContext = createContext();
@@ -25,6 +25,27 @@ export const UIProvider = ({ children }) => {
       return "tr";
     }
   });
+
+  // Tema yönetimi
+  const [theme, setTheme] = useState(() => {
+    try {
+      const savedTheme = localStorage.getItem("__SAFE_TOKEN_8__carvis_theme__END_TOKEN_8__");
+      if (savedTheme) return savedTheme;
+      return "dark"; // Default to dark based on original design
+    } catch {
+      return "dark";
+    }
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    localStorage.setItem("__SAFE_TOKEN_8__carvis_theme__END_TOKEN_8__", theme);
+  }, [theme]);
 
   const setLanguage = (langOrUpdater) => {
     setLanguageState((prev) => {
@@ -79,6 +100,10 @@ export const UIProvider = ({ children }) => {
     setLanguage((prev) => (prev === "tr" ? "en" : "tr"));
   };
 
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
   const value = {
     alertState,
     showAlert,
@@ -86,6 +111,8 @@ export const UIProvider = ({ children }) => {
     language,
     setLanguage,
     toggleLanguage,
+    theme,
+    toggleTheme,
     t,
     isLoading,
     setIsLoading,

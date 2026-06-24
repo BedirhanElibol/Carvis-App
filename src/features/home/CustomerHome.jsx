@@ -319,9 +319,9 @@ const CustomerHome = () => {
 
   // 1. Search & Categories Panel
   const searchAndCategoriesPanel = (
-    <div className="bg-[#0a0f24]/80 border border-white/10 rounded-[2.5rem] p-6 shadow-2xl backdrop-blur-md space-y-6">
+    <div className="bg-[#0a0f24]/80 border border-black/10 dark:border-white/10 rounded-[2.5rem] p-6 shadow-2xl backdrop-blur-md space-y-6">
       <div>
-        <h3 className="text-lg font-black tracking-tight text-white uppercase">
+        <h3 className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase">
           Hizmet & Parça Arama
         </h3>
         <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">
@@ -339,17 +339,17 @@ const CustomerHome = () => {
         }}
         className="relative flex items-center"
       >
-        <Icons.Search className="absolute left-4.5 text-slate-400" size={18} />
+        <Icons.Search className="absolute left-4.5 text-slate-500 dark:text-slate-400" size={18} />
         <input
           type="text"
           placeholder="Ne aramıştınız? (Örn: fren balatası, periyodik bakım, oto çekici...)"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-[#030712] border border-white/10 rounded-2xl py-4.5 pl-12 pr-28 text-xs font-bold text-white outline-none focus:ring-2 focus:ring-teal-500 transition-all placeholder:text-slate-500"
+          className="w-full bg-[#030712] border border-black/10 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-28 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 transition-all placeholder:text-slate-500"
         />
         <button
           type="submit"
-          className="absolute right-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-[10px] font-black uppercase tracking-wider text-white shadow-lg active-scale transition-all border-none cursor-pointer"
+          className="absolute right-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-[10px] font-black uppercase tracking-wider text-slate-900 dark:text-white shadow-lg active-scale transition-all border-none cursor-pointer"
         >
           ARA
         </button>
@@ -361,13 +361,13 @@ const CustomerHome = () => {
           <div
             key={idx}
             onClick={() => navigate(cat.route)}
-            className={`bg-[#030712]/40 border border-white/5 ${cat.border} p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 active-scale cursor-pointer group transition-all duration-300 relative overflow-hidden`}
+            className={`bg-[#030712]/40 border border-black/5 dark:border-white/5 ${cat.border} p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 active-scale cursor-pointer group transition-all duration-300 relative overflow-hidden`}
           >
             <div className="absolute inset-0 bg-white/[0.01] group-hover:bg-white/[0.03] transition-colors pointer-events-none"></div>
             <div className={`p-3 rounded-xl ${cat.bg} ${cat.color} group-hover:scale-110 transition-transform shadow-inner`}>
               <cat.icon size={20} />
             </div>
-            <span className="text-[9px] font-black text-slate-400 group-hover:text-white transition-colors uppercase tracking-tight text-center leading-none">
+            <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white transition-colors uppercase tracking-tight text-center leading-none">
               {cat.name}
             </span>
           </div>
@@ -381,7 +381,7 @@ const CustomerHome = () => {
     <div className="space-y-4">
       <div className="flex justify-between items-center px-1">
         <div>
-          <h3 className="text-lg font-black tracking-tight text-white uppercase">
+          <h3 className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase">
             Özel Fırsatlar & Kampanyalar
           </h3>
           <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
@@ -397,20 +397,20 @@ const CustomerHome = () => {
         {featuredDeals.map((deal) => (
           <div 
             key={deal.id}
-            className="bg-[#0a0f24]/80 border border-white/5 rounded-[2.2rem] p-4.5 flex flex-col justify-between hover:border-white/10 transition-all shadow-xl group relative overflow-hidden backdrop-blur-md"
+            className="bg-[#0a0f24]/80 border border-black/5 dark:border-white/5 rounded-[2.2rem] p-4.5 flex flex-col justify-between hover:border-black/10 dark:border-white/10 transition-all shadow-xl group relative overflow-hidden backdrop-blur-md"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-teal-500/5 rounded-full blur-2xl pointer-events-none"></div>
             
-            <div className="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-900 mb-4 border border-white/5">
+            <div className="relative rounded-2xl overflow-hidden aspect-[16/10] bg-white dark:bg-slate-900 mb-4 border border-black/5 dark:border-white/5">
               <img 
                 src={deal.image} 
                 alt={deal.title} 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               />
-              <span className="absolute top-2 left-2 px-2.5 py-1 rounded-lg bg-teal-500/80 backdrop-blur-sm text-[8px] font-black uppercase text-white tracking-widest shadow-md">
+              <span className="absolute top-2 left-2 px-2.5 py-1 rounded-lg bg-teal-500/80 backdrop-blur-sm text-[8px] font-black uppercase text-slate-900 dark:text-white tracking-widest shadow-md">
                 {deal.badge}
               </span>
-              <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm text-[8px] font-bold text-slate-300 flex items-center gap-1">
+              <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm text-[8px] font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1">
                 <Icons.Star size={10} className="text-yellow-400 fill-yellow-400" />
                 {deal.rating} ({deal.reviewsCount})
               </div>
@@ -420,12 +420,12 @@ const CustomerHome = () => {
               <span className="text-[9px] font-black uppercase text-slate-500 tracking-wider block mb-1">
                 {deal.provider}
               </span>
-              <h4 className="text-xs font-black text-white line-clamp-2 leading-snug">
+              <h4 className="text-xs font-black text-slate-900 dark:text-white line-clamp-2 leading-snug">
                 {deal.title}
               </h4>
             </div>
 
-            <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3">
+            <div className="mt-4 flex items-center justify-between border-t border-black/5 dark:border-white/5 pt-3">
               <div>
                 {deal.originalPrice > 0 && (
                   <span className="text-[9px] text-slate-500 line-through font-mono">
@@ -442,7 +442,7 @@ const CustomerHome = () => {
                   showAlert("Fırsat Seçildi", `${deal.title} için teklif talebiniz hazırlandı!`, "success");
                   navigate("/app/mechanics");
                 }}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/10 text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer active:scale-95 flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-900 dark:text-white border border-black/10 dark:border-white/10 text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer active:scale-95 flex items-center gap-1.5"
               >
                 RANDEVU AL <Icons.ChevronRight size={10} />
               </button>
@@ -458,7 +458,7 @@ const CustomerHome = () => {
     <div className="space-y-4">
       <div className="flex justify-between items-center px-1">
         <div>
-          <h3 className="text-lg font-black tracking-tight text-white uppercase">
+          <h3 className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase">
             Yakındaki Popüler Servis & Ustalar
           </h3>
           <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
@@ -474,18 +474,18 @@ const CustomerHome = () => {
         {popularProviders.map((prov) => (
           <div 
             key={prov.id}
-            className="bg-[#0a0f24]/80 border border-white/5 hover:border-white/10 p-5 rounded-[2.2rem] flex flex-col justify-between gap-4 transition-all relative overflow-hidden group shadow-xl backdrop-blur-md"
+            className="bg-[#0a0f24]/80 border border-black/5 dark:border-white/5 hover:border-black/10 dark:border-white/10 p-5 rounded-[2.2rem] flex flex-col justify-between gap-4 transition-all relative overflow-hidden group shadow-xl backdrop-blur-md"
           >
             <div className="flex justify-between items-start">
               <div className="flex gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-center text-teal-400 shadow-inner shrink-0 group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-black/40 border border-black/10 dark:border-white/10 flex items-center justify-center text-teal-400 shadow-inner shrink-0 group-hover:scale-105 transition-transform">
                   <Icons.MapPin size={22} />
                 </div>
                 <div>
-                  <h4 className="text-sm font-black text-white uppercase tracking-tight leading-snug">
+                  <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight leading-snug">
                     {prov.name}
                   </h4>
-                  <p className="text-[10px] text-slate-400 mt-1 leading-snug">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-snug">
                     {prov.specialty}
                   </p>
                   <p className="text-[9px] text-slate-500 font-medium mt-1 truncate max-w-[200px]">
@@ -498,7 +498,7 @@ const CustomerHome = () => {
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-teal-500/10 border border-teal-500/20 text-[9px] font-mono font-black text-teal-400 uppercase tracking-wider">
                   {prov.distance}
                 </span>
-                <div className="flex items-center gap-1 mt-1 justify-end text-[9px] font-bold text-slate-400">
+                <div className="flex items-center gap-1 mt-1 justify-end text-[9px] font-bold text-slate-500 dark:text-slate-400">
                   <Icons.Star size={10} className="text-yellow-400 fill-yellow-400" />
                   {prov.rating}
                 </div>
@@ -509,20 +509,20 @@ const CustomerHome = () => {
               {prov.features.map((feat, fIdx) => (
                 <span 
                   key={fIdx} 
-                  className="text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-white/5 border border-white/5 text-slate-400"
+                  className="text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400"
                 >
                   {feat}
                 </span>
               ))}
             </div>
 
-            <div className="flex items-center gap-2 border-t border-white/5 pt-3">
+            <div className="flex items-center gap-2 border-t border-black/5 dark:border-white/5 pt-3">
               <button
                 onClick={() => {
                   triggerHaptic("selection");
                   navigate("/app/mechanics");
                 }}
-                className="flex-1 py-3.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white text-[9px] font-black uppercase tracking-widest transition-all active-scale cursor-pointer"
+                className="flex-1 py-3.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:bg-white/10 text-slate-900 dark:text-white text-[9px] font-black uppercase tracking-widest transition-all active-scale cursor-pointer"
               >
                 TEKLİF TALEBİ GÖNDER
               </button>
@@ -532,7 +532,7 @@ const CustomerHome = () => {
                   showAlert("Haritada Göster", `${prov.name} konumu haritada açıldı.`, "success");
                   navigate("/app/map");
                 }}
-                className="w-11 h-11 rounded-xl bg-black/40 border border-white/10 hover:bg-white/5 flex items-center justify-center text-slate-400 hover:text-white transition-all active-scale cursor-pointer"
+                className="w-11 h-11 rounded-xl bg-black/40 border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all active-scale cursor-pointer"
                 title="Haritada Göster"
               >
                 <Icons.Navigation size={16} />
@@ -546,27 +546,27 @@ const CustomerHome = () => {
 
   // 4. How Rapidsy Works Stepper
   const howItWorksPanel = (
-    <div className="bg-[#0a0f24]/60 border border-white/5 rounded-[2.5rem] p-6.5 space-y-6 relative overflow-hidden backdrop-blur-md shadow-xl">
+    <div className="bg-[#0a0f24]/60 border border-black/5 dark:border-white/5 rounded-[2.5rem] p-6.5 space-y-6 relative overflow-hidden backdrop-blur-md shadow-xl">
       <div className="text-center max-w-sm mx-auto">
         <span className="text-[9px] font-black uppercase tracking-[0.25em] text-teal-400">NASIL ÇALIŞIR?</span>
-        <h3 className="text-base font-black text-white mt-1 uppercase tracking-tight">3 Adımda Kokpitinizi Yönetin</h3>
+        <h3 className="text-base font-black text-slate-900 dark:text-white mt-1 uppercase tracking-tight">3 Adımda Kokpitinizi Yönetin</h3>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-        <div className="hidden md:block absolute top-7 left-[15%] right-[15%] h-0.5 bg-white/5 pointer-events-none z-0"></div>
+        <div className="hidden md:block absolute top-7 left-[15%] right-[15%] h-0.5 bg-black/5 dark:bg-white/5 pointer-events-none z-0"></div>
         {[
           { step: "01", title: "Arıza & Belirti Bildir", desc: "AI ses teşhisi veya formla arızayı bildirin veya parçanızı seçin.", icon: Icons.Activity, color: "from-teal-500 to-blue-500" },
           { step: "02", title: "Teklifleri Topla", desc: "Onaylı usta ve servislerimiz arasından size en uygun fiyatı karşılaştırın.", icon: Icons.FileText, color: "from-blue-500 to-cyan-500" },
           { step: "03", title: "Randevu Al & Öde", desc: "Rezervasyonu onaylayıp ödemeyi tamamlayın, paranızı koruma altına alalım.", icon: Icons.ShieldCheck, color: "from-cyan-500 to-emerald-500" }
         ].map((item, idx) => (
           <div key={idx} className="flex flex-col items-center text-center relative z-10 space-y-3 group">
-            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform`}>
+            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} text-slate-900 dark:text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform`}>
               <item.icon size={24} />
             </div>
             <div className="space-y-1">
               <span className="text-[9px] font-mono font-black text-teal-400 tracking-widest block uppercase">ADIM {item.step}</span>
-              <h4 className="text-xs font-black text-white uppercase tracking-tight">{item.title}</h4>
-              <p className="text-[10px] text-slate-400 leading-relaxed font-medium max-w-[200px] mx-auto">{item.desc}</p>
+              <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">{item.title}</h4>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium max-w-[200px] mx-auto">{item.desc}</p>
             </div>
           </div>
         ))}
@@ -760,7 +760,7 @@ const CustomerHome = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pb-32 relative selection:bg-teal-500/30">
+    <div className="min-h-screen bg-[#030712] text-slate-900 dark:text-white font-sans pb-32 relative selection:bg-teal-500/30">
       
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.08]">
@@ -778,16 +778,16 @@ const CustomerHome = () => {
       ></div>
 
       {/* TOP COMPACT HEADER */}
-      <div className="px-6 py-4.5 flex items-center justify-between border-b border-white/5 bg-[#0a0f24]/80 backdrop-blur-xl sticky top-0 z-30 shadow-lg shadow-black/20">
+      <div className="px-6 py-4.5 flex items-center justify-between border-b border-black/5 dark:border-white/5 bg-[#0a0f24]/80 backdrop-blur-xl sticky top-0 z-30 shadow-lg shadow-black/20">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shadow-inner">
+          <div className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center shadow-inner">
             <Icons.Layers size={18} className="text-teal-400" />
           </div>
           <div>
             <p className="text-[9px] uppercase tracking-[0.25em] text-slate-500 font-bold leading-none">
               Carvis
             </p>
-            <h2 className="text-sm font-black tracking-tight mt-1 text-white">
+            <h2 className="text-sm font-black tracking-tight mt-1 text-slate-900 dark:text-white">
               KOKPİT PANELİ
             </h2>
           </div>
@@ -802,9 +802,9 @@ const CustomerHome = () => {
                 setShowVehicleSelector(true);
               }
             }}
-            className="px-3.5 py-2 rounded-xl border border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all flex items-center gap-1.5 active-scale cursor-pointer"
+            className="px-3.5 py-2 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-[10px] font-black uppercase tracking-wider hover:bg-black/10 dark:bg-white/10 hover:text-slate-900 dark:text-white transition-all flex items-center gap-1.5 active-scale cursor-pointer"
           >
-            <Icons.RefreshCw size={11} className="text-slate-400" /> ARAÇ DEĞİŞTİR
+            <Icons.RefreshCw size={11} className="text-slate-500 dark:text-slate-400" /> ARAÇ DEĞİŞTİR
           </button>
         )}
       </div>
@@ -842,14 +842,14 @@ const CustomerHome = () => {
               {/* Animated outer circles */}
               <div className="absolute inset-0 border-4 border-dashed border-teal-500/30 rounded-full animate-spin [animation-duration:15s]"></div>
               <div className="absolute inset-4 border-2 border-dotted border-blue-500/40 rounded-full animate-spin [animation-duration:8s] [animation-direction:reverse]"></div>
-              <div className="absolute inset-8 border border-white/10 rounded-full flex items-center justify-center">
+              <div className="absolute inset-8 border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center">
                 <Icons.Cpu size={44} className="text-teal-400 animate-pulse" />
               </div>
               {/* Scanning glowing line */}
               <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-teal-400 to-transparent top-0 animate-scan shadow-[0_0_15px_rgba(20,184,166,0.8)] pointer-events-none"></div>
             </div>
 
-            <h3 className="text-xl font-black text-white uppercase tracking-[0.2em] mb-4">
+            <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-[0.2em] mb-4">
               SİSTEM TARANIYOR
             </h3>
             
@@ -890,29 +890,29 @@ const CustomerHome = () => {
                 {searchAndCategoriesPanel}
                 
                 {/* GUEST MODE ONBOARDING CARD */}
-                <div className="bg-[#0a0f24]/85 border border-white/10 rounded-[2.5rem] p-8 text-center relative overflow-hidden group shadow-2xl backdrop-blur-md">
+                <div className="bg-[#0a0f24]/85 border border-black/10 dark:border-white/10 rounded-[2.5rem] p-8 text-center relative overflow-hidden group shadow-2xl backdrop-blur-md">
                   <div className="absolute top-0 right-0 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none -mr-8 -mt-8"></div>
                   <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl pointer-events-none"></div>
 
-                  <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-teal-500 to-blue-600 text-white flex items-center justify-center mx-auto mb-5 shadow-lg shadow-teal-500/10">
+                  <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-teal-500 to-blue-600 text-slate-900 dark:text-white flex items-center justify-center mx-auto mb-5 shadow-lg shadow-teal-500/10">
                     <Icons.UserCheck size={28} className="animate-pulse-slow" />
                   </div>
                   
                   <h3 className="text-2xl font-black tracking-tighter uppercase mb-2">Carvis'e Hoş Geldiniz</h3>
-                  <p className="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed mb-6 font-medium">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed mb-6 font-medium">
                     Aracınızı eklemek, sağlık durumunu takip etmek, AI belirti teşhisi yapmak ve teklifleri yönetmek için hemen oturum açın veya demo aracıyla özellikleri test edin.
                   </p>
                   
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-sm mx-auto">
                     <button
                       onClick={() => openModal("login")}
-                      className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-white px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest active-scale transition-all shadow-lg shadow-teal-500/15 border-none cursor-pointer"
+                      className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-slate-900 dark:text-white px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest active-scale transition-all shadow-lg shadow-teal-500/15 border-none cursor-pointer"
                     >
                       GİRİŞ YAP / ÜYE OL
                     </button>
                     <button
                       onClick={handleLoadDemoVehicle}
-                      className="w-full bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 hover:text-white px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest active-scale transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                      className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest active-scale transition-all cursor-pointer flex items-center justify-center gap-1.5"
                     >
                       <Icons.Sparkles size={14} className="text-teal-400" />
                       Demo Aracı Dene
@@ -930,7 +930,7 @@ const CustomerHome = () => {
 
             {/* VEHICLE COCKPIT MASTER MODULE */}
             {activeVehicle && (
-              <div className="bg-[#0a0f24]/85 rounded-[2.5rem] p-6 border border-white/10 shadow-2xl relative overflow-hidden backdrop-blur-md">
+              <div className="bg-[#0a0f24]/85 rounded-[2.5rem] p-6 border border-black/10 dark:border-white/10 shadow-2xl relative overflow-hidden backdrop-blur-md">
                 <div className="absolute top-0 right-0 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none -mr-12 -mt-12"></div>
                 
                 <div className="relative z-10">
@@ -941,11 +941,11 @@ const CustomerHome = () => {
                           Önizleme Modu
                         </span>
                       )}
-                      <h1 className="text-3xl font-black tracking-tighter uppercase leading-none text-white">
+                      <h1 className="text-3xl font-black tracking-tighter uppercase leading-none text-slate-900 dark:text-white">
                         {activeVehicle.brand}{" "}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">{activeVehicle.model}</span>
                       </h1>
-                      <p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-1.5">
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono tracking-widest uppercase mt-1.5">
                         {activeVehicle.plate} • {activeVehicle.km?.toLocaleString()} KM
                       </p>
                     </div>
@@ -958,14 +958,14 @@ const CustomerHome = () => {
                           navigate("/app/profile");
                         }
                       }}
-                      className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-all active-scale cursor-pointer"
+                      className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all active-scale cursor-pointer"
                     >
                       <Icons.User size={18} />
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center border-t border-white/5 pt-6">
-                    <div className="flex items-center gap-5 bg-black/30 p-4 rounded-[2rem] border border-white/5 shadow-inner">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center border-t border-black/5 dark:border-white/5 pt-6">
+                    <div className="flex items-center gap-5 bg-black/30 p-4 rounded-[2rem] border border-black/5 dark:border-white/5 shadow-inner">
                       <div className="relative w-20 h-20 shrink-0">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                           <path
@@ -986,7 +986,7 @@ const CustomerHome = () => {
                           />
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
-                          <span className="text-lg font-black text-white leading-none font-mono">
+                          <span className="text-lg font-black text-slate-900 dark:text-white leading-none font-mono">
                             %{activeVehicle.health_score || 96}
                           </span>
                         </div>
@@ -1001,18 +1001,18 @@ const CustomerHome = () => {
                         <p className="text-sm font-black text-teal-400 mt-1 uppercase">
                           Mükemmel Düzeyde
                         </p>
-                        <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                           Tüm kritik motor, elektrik ve fren mekanik sistemleri aktif.
                         </p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-black/30 p-4 rounded-2xl border border-white/5">
+                      <div className="bg-black/30 p-4 rounded-2xl border border-black/5 dark:border-white/5">
                         <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1.5">
                           SON YAĞ DEĞİŞİMİ
                         </p>
-                        <p className="text-xs font-black text-white font-mono leading-none">
+                        <p className="text-xs font-black text-slate-900 dark:text-white font-mono leading-none">
                           {activeVehicle.last_oil_change ? new Date(activeVehicle.last_oil_change).toLocaleDateString("tr-TR") : "Belirtilmedi"}
                         </p>
                         <p className="text-[9px] text-teal-500 mt-2.5 uppercase font-black tracking-wide">
@@ -1025,12 +1025,12 @@ const CustomerHome = () => {
                           triggerHaptic("impact");
                           setShowVehiclePassport(true);
                         }}
-                        className="bg-black/30 p-4 rounded-2xl border border-white/5 text-left hover:bg-white/5 transition-all active-scale group cursor-pointer"
+                        className="bg-black/30 p-4 rounded-2xl border border-black/5 dark:border-white/5 text-left hover:bg-black/5 dark:bg-white/5 transition-all active-scale group cursor-pointer"
                       >
                         <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1.5">
                           DİJİTAL PASAPORT
                         </p>
-                        <p className="text-xs font-black text-white leading-none flex items-center gap-1">
+                        <p className="text-xs font-black text-slate-900 dark:text-white leading-none flex items-center gap-1">
                           GEÇMİŞ <Icons.ChevronRight size={12} className="text-slate-500 group-hover:translate-x-0.5 transition-transform" />
                         </p>
                         <p className="text-[9px] text-teal-500 mt-2.5 uppercase font-black tracking-wide">
@@ -1065,12 +1065,12 @@ const CustomerHome = () => {
                       <span className="text-[8px] font-black uppercase tracking-[0.2em] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/25">
                         AI CANLI TELEMETRİ
                       </span>
-                      <span className="text-[9px] font-black text-amber-400 flex items-center gap-1 group-hover:text-white transition-colors uppercase">
+                      <span className="text-[9px] font-black text-amber-400 flex items-center gap-1 group-hover:text-slate-900 dark:text-white transition-colors uppercase">
                         Teşhisi Başlat <Icons.ChevronRight size={12} />
                       </span>
                     </div>
-                    <h4 className="text-sm font-black text-white uppercase tracking-tight">Akıllı Belirti & Ses Teşhisi</h4>
-                    <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                    <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">Akıllı Belirti & Ses Teşhisi</h4>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                       Aracınızdaki ses, titreme veya arıza ışıklarını yapay zeka ve ses mikseri simülasyonuyla 5 saniyede tarayıp usta tekliflerini şeffafça alın.
                     </p>
                   </div>
@@ -1080,23 +1080,23 @@ const CustomerHome = () => {
 
             {/* CHRONOLOGICAL MAINTENANCE TIMELINE */}
             {activeVehicle && (
-              <div className="bg-[#0a0f24]/85 border border-white/10 rounded-[2.5rem] p-6 space-y-4 backdrop-blur-md shadow-2xl">
+              <div className="bg-[#0a0f24]/85 border border-black/10 dark:border-white/10 rounded-[2.5rem] p-6 space-y-4 backdrop-blur-md shadow-2xl">
                 <div className="flex justify-between items-center mb-2">
-                  <h3 className="font-black text-base uppercase tracking-tight text-white flex items-center gap-2">
-                    <Icons.Calendar size={18} className="text-slate-400" /> Yaklaşan İşler
+                  <h3 className="font-black text-base uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                    <Icons.Calendar size={18} className="text-slate-500 dark:text-slate-400" /> Yaklaşan İşler
                   </h3>
                   <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">
                     TAKVİM DURUMU
                   </span>
                 </div>
 
-                <div className="relative pl-5 border-l border-white/10 space-y-5 py-2">
+                <div className="relative pl-5 border-l border-black/10 dark:border-white/10 space-y-5 py-2">
                   <div className="relative">
                     <div className="absolute -left-[25px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-slate-900"></div>
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-xs font-black text-white uppercase leading-none">TÜVTÜRK Muayenesi</h4>
-                        <p className="text-[10px] text-slate-400 mt-1">Araç muayene bitiş tarihi yaklaşıyor.</p>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase leading-none">TÜVTÜRK Muayenesi</h4>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Araç muayene bitiş tarihi yaklaşıyor.</p>
                       </div>
                       <span className="text-[10px] font-mono font-black text-emerald-400 uppercase">
                         15 HAZ 2026
@@ -1108,8 +1108,8 @@ const CustomerHome = () => {
                     <div className="absolute -left-[25px] top-1 w-2.5 h-2.5 rounded-full bg-amber-500 border-2 border-slate-900"></div>
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-xs font-black text-white uppercase leading-none">Zorunlu Trafik Sigortası</h4>
-                        <p className="text-[10px] text-slate-400 mt-1">Poliçe yenileme dönemi.</p>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase leading-none">Zorunlu Trafik Sigortası</h4>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Poliçe yenileme dönemi.</p>
                       </div>
                       <span className="text-[10px] font-mono font-black text-amber-400 uppercase">
                         30 MAY 2026
@@ -1121,8 +1121,8 @@ const CustomerHome = () => {
                     <div className="absolute -left-[25px] top-1 w-2.5 h-2.5 rounded-full bg-slate-600 border-2 border-slate-900"></div>
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-xs font-black text-white uppercase leading-none">Mevsimlik Lastik Kontrolü</h4>
-                        <p className="text-[10px] text-slate-400 mt-1">Lastik diş derinliği ve basınç analizi.</p>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase leading-none">Mevsimlik Lastik Kontrolü</h4>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Lastik diş derinliği ve basınç analizi.</p>
                       </div>
                       <span className="text-[10px] font-mono font-black text-slate-500 uppercase">
                         12 AĞU 2026
@@ -1139,10 +1139,10 @@ const CustomerHome = () => {
 
             {/* COMPATIBLE SPARE PARTS RECOMMENDED DEALS */}
             {activeVehicle && (
-              <div className="bg-[#0a0f24]/85 border border-white/10 rounded-[2.5rem] p-6 space-y-5 backdrop-blur-md shadow-2xl">
-                <div className="flex justify-between items-center border-b border-white/5 pb-4">
+              <div className="bg-[#0a0f24]/85 border border-black/10 dark:border-white/10 rounded-[2.5rem] p-6 space-y-5 backdrop-blur-md shadow-2xl">
+                <div className="flex justify-between items-center border-b border-black/5 dark:border-white/5 pb-4">
                   <div>
-                    <h3 className="font-black text-base uppercase tracking-tight text-white flex items-center gap-2">
+                    <h3 className="font-black text-base uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
                       <Icons.ShoppingBag size={18} className="text-teal-400" /> Aracınızla Uyumlu Parçalar
                     </h3>
                     <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-0.5">
@@ -1159,16 +1159,16 @@ const CustomerHome = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {compatibleParts.map((part) => (
-                    <div key={part.id} className="bg-black/30 border border-white/5 rounded-2xl p-4 flex flex-col justify-between hover:border-white/10 transition-all shadow-inner group">
-                      <div className="relative rounded-xl overflow-hidden aspect-video bg-slate-900 mb-3 border border-white/5">
+                    <div key={part.id} className="bg-black/30 border border-black/5 dark:border-white/5 rounded-2xl p-4 flex flex-col justify-between hover:border-black/10 dark:border-white/10 transition-all shadow-inner group">
+                      <div className="relative rounded-xl overflow-hidden aspect-video bg-white dark:bg-slate-900 mb-3 border border-black/5 dark:border-white/5">
                         <img src={part.image} alt={part.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        <span className="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-teal-500/80 backdrop-blur-sm text-[8px] font-black uppercase text-white tracking-widest">
+                        <span className="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-teal-500/80 backdrop-blur-sm text-[8px] font-black uppercase text-slate-900 dark:text-white tracking-widest">
                           {part.badge}
                         </span>
                       </div>
                       <div>
                         <span className="text-[8px] font-black uppercase text-slate-500 tracking-wider">{part.brand}</span>
-                        <h4 className="text-xs font-black text-white line-clamp-2 mt-0.5 leading-snug">{part.name}</h4>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white line-clamp-2 mt-0.5 leading-snug">{part.name}</h4>
                       </div>
                       <div className="mt-4 flex items-center justify-between">
                         <div>
@@ -1180,7 +1180,7 @@ const CustomerHome = () => {
                             triggerHaptic("success");
                             showAlert("Sepete Eklendi", `${part.name} sepetinize eklendi.`, "success");
                           }}
-                          className="w-8 h-8 rounded-xl bg-teal-500 hover:bg-teal-400 text-white flex items-center justify-center transition-all cursor-pointer border-none active:scale-90"
+                          className="w-8 h-8 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-900 dark:text-white flex items-center justify-center transition-all cursor-pointer border-none active:scale-90"
                         >
                           <Icons.Plus size={16} />
                         </button>
@@ -1199,7 +1199,7 @@ const CustomerHome = () => {
             {/* ACTIVE FEED: APPOINTMENTS & TENDERS */}
             {(upcomingAppointments.length > 0 || activeQuotes.length > 0) && (
               <div className="space-y-4">
-                <h3 className="font-black text-base uppercase tracking-tight px-1 text-white">
+                <h3 className="font-black text-base uppercase tracking-tight px-1 text-slate-900 dark:text-white">
                   Bugünkü İşleriniz ve Araç Durumunuz
                 </h3>
 
@@ -1214,15 +1214,15 @@ const CustomerHome = () => {
                         navigate("/appointments");
                       }
                     }}
-                    className="bg-[#0a0f24]/85 border border-white/10 p-4.5 rounded-[1.8rem] flex justify-between items-center cursor-pointer active-scale shadow-md"
+                    className="bg-[#0a0f24]/85 border border-black/10 dark:border-white/10 p-4.5 rounded-[1.8rem] flex justify-between items-center cursor-pointer active-scale shadow-md"
                   >
                     <div className="flex items-center gap-3.5">
-                      <div className="bg-black/30 p-2.5 rounded-xl border border-white/10 text-teal-400">
+                      <div className="bg-black/30 p-2.5 rounded-xl border border-black/10 dark:border-white/10 text-teal-400">
                         <Icons.Calendar size={20} />
                       </div>
                       <div>
-                        <h4 className="text-xs font-black text-white uppercase leading-none">{a.service_type}</h4>
-                        <p className="text-[10px] text-slate-400 mt-1.5">{a.company_name} • {new Date(a.appointment_date).toLocaleDateString("tr-TR")}</p>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase leading-none">{a.service_type}</h4>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5">{a.company_name} • {new Date(a.appointment_date).toLocaleDateString("tr-TR")}</p>
                       </div>
                     </div>
                     <Badge type="success">ONAYLANDI</Badge>
@@ -1240,15 +1240,15 @@ const CustomerHome = () => {
                         navigate("/quotes");
                       }
                     }}
-                    className="bg-[#0a0f24]/85 border border-white/10 p-4.5 rounded-[1.8rem] flex justify-between items-center cursor-pointer active-scale shadow-md"
+                    className="bg-[#0a0f24]/85 border border-black/10 dark:border-white/10 p-4.5 rounded-[1.8rem] flex justify-between items-center cursor-pointer active-scale shadow-md"
                   >
                     <div className="flex items-center gap-3.5">
-                      <div className="bg-black/30 p-2.5 rounded-xl border border-white/10 text-orange-400">
+                      <div className="bg-black/30 p-2.5 rounded-xl border border-black/10 dark:border-white/10 text-orange-400">
                         <Icons.FileText size={20} />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h4 className="text-xs font-black text-white uppercase leading-none line-clamp-1">{q.description}</h4>
-                        <p className="text-[10px] text-slate-400 mt-1.5">{q.company_name} • {q.total_amount ? `₺${q.total_amount.toLocaleString()}` : "Teklif Bekliyor"}</p>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase leading-none line-clamp-1">{q.description}</h4>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5">{q.company_name} • {q.total_amount ? `₺${q.total_amount.toLocaleString()}` : "Teklif Bekliyor"}</p>
                       </div>
                     </div>
                     <Badge type="warning">TEKLİF AL</Badge>
@@ -1258,7 +1258,7 @@ const CustomerHome = () => {
             )}
 
             {/* SHELL LIVE FUEL PRICES WIDGET */}
-            <div className="bg-[#0a0f24]/85 border border-white/10 rounded-[2.5rem] p-6 relative overflow-hidden group shadow-2xl backdrop-blur-md">
+            <div className="bg-[#0a0f24]/85 border border-black/10 dark:border-white/10 rounded-[2.5rem] p-6 relative overflow-hidden group shadow-2xl backdrop-blur-md">
               <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
               
               <div className="flex justify-between items-center mb-5">
@@ -1267,7 +1267,7 @@ const CustomerHome = () => {
                     <Icons.Fuel size={18} className="text-amber-400" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-black text-white uppercase tracking-wider leading-none">Canlı Akaryakıt</h4>
+                    <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider leading-none">Canlı Akaryakıt</h4>
                     <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1.5">GÜNCEL YAKIT FİYATLARI</p>
                   </div>
                 </div>
@@ -1276,14 +1276,14 @@ const CustomerHome = () => {
                     triggerHaptic("impact");
                     showAlert("Fiyatlar Güncellendi", "Canlı akaryakıt fiyatları başarıyla güncellendi.", "success");
                   }}
-                  className="text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+                  className="text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 active:scale-95 transition-all cursor-pointer"
                 >
                   GÜNCELLE
                 </button>
               </div>
 
               {/* City Selector */}
-              <div className="grid grid-cols-3 gap-1 bg-black/40 p-1.5 rounded-xl border border-white/5 mb-5">
+              <div className="grid grid-cols-3 gap-1 bg-black/40 p-1.5 rounded-xl border border-black/5 dark:border-white/5 mb-5">
                 {['istanbul', 'ankara', 'izmir'].map((city) => (
                   <button
                     key={city}
@@ -1299,7 +1299,7 @@ const CustomerHome = () => {
                     className={`py-2 text-[11px] font-black uppercase rounded-lg tracking-wider transition-all border-none cursor-pointer ${
                       selectedCity === city
                         ? 'bg-amber-500 text-slate-950 font-black shadow-md'
-                        : 'text-slate-400 hover:text-white bg-transparent'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white bg-transparent'
                     }`}
                   >
                     {city === 'istanbul' ? 'İst' : city === 'ankara' ? 'Ank' : 'İzm'}
@@ -1314,9 +1314,9 @@ const CustomerHome = () => {
                   { label: 'V-Power Motorin', price: fuelPrices[selectedCity].motorin, change: '+0.24 ₺', trend: 'up' },
                   { label: 'AutoGas LPG', price: fuelPrices[selectedCity].lpg, change: '0.00 ₺', trend: 'stable' },
                 ].map((fuel, idx) => (
-                  <div key={idx} className="bg-black/30 p-3.5 rounded-2xl border border-white/5 flex items-center justify-between shadow-inner">
+                  <div key={idx} className="bg-black/30 p-3.5 rounded-2xl border border-black/5 dark:border-white/5 flex items-center justify-between shadow-inner">
                     <div>
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">{fuel.label}</span>
+                      <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider block">{fuel.label}</span>
                       <div className="flex items-center gap-1.5 mt-1">
                         {fuel.trend === 'up' ? (
                           <Icons.TrendingUp size={12} className="text-rose-500 animate-pulse" />
@@ -1333,14 +1333,14 @@ const CustomerHome = () => {
                       </div>
                     </div>
                     <div className="flex items-baseline">
-                      <span className="text-xl font-black text-white font-mono">{fuel.price.toFixed(2)}</span>
-                      <span className="text-xs font-black text-slate-400 font-mono ml-0.5">₺</span>
+                      <span className="text-xl font-black text-slate-900 dark:text-white font-mono">{fuel.price.toFixed(2)}</span>
+                      <span className="text-xs font-black text-slate-500 dark:text-slate-400 font-mono ml-0.5">₺</span>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-5 flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-wider border-t border-white/5 pt-4">
+              <div className="mt-5 flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider border-t border-black/5 dark:border-white/5 pt-4">
                 <span>AKTİF: {lastUpdated}</span>
                 <span 
                   onClick={() => navigate("/app/fuel")}
@@ -1353,22 +1353,22 @@ const CustomerHome = () => {
 
             {/* COST INTELLIGENCE PANEL (Enhanced with circular donut SVG chart) */}
             {activeVehicle && (
-              <div className="bg-[#0a0f24]/85 border border-white/10 rounded-[2.5rem] p-6 backdrop-blur-md shadow-2xl">
-                <div className="flex justify-between items-center mb-5 border-b border-white/5 pb-4">
+              <div className="bg-[#0a0f24]/85 border border-black/10 dark:border-white/10 rounded-[2.5rem] p-6 backdrop-blur-md shadow-2xl">
+                <div className="flex justify-between items-center mb-5 border-b border-black/5 dark:border-white/5 pb-4">
                   <div>
-                    <h3 className="font-black text-base uppercase tracking-tight text-white">
+                    <h3 className="font-black text-base uppercase tracking-tight text-slate-900 dark:text-white">
                       Maliyet Zekası
                     </h3>
                     <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-0.5">
                       AYLIK MASRAF GÖRSELLEŞTİRME
                     </p>
                   </div>
-                  <p className="text-2xl font-black text-white tracking-tighter font-mono">₺4.850</p>
+                  <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter font-mono">₺4.850</p>
                 </div>
 
                 <div className="flex items-center gap-6">
                   {/* Circular SVG Donut Chart */}
-                  <div className="relative w-24 h-24 shrink-0 flex items-center justify-center bg-black/20 rounded-full border border-white/5">
+                  <div className="relative w-24 h-24 shrink-0 flex items-center justify-center bg-black/20 rounded-full border border-black/5 dark:border-white/5">
                     <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                       {/* Donut slice 1: Fuel (66%) */}
                       <circle
@@ -1406,7 +1406,7 @@ const CustomerHome = () => {
                     </svg>
                     <div className="absolute flex flex-col items-center">
                       <span className="text-[8px] font-black text-slate-500 tracking-wider">BU AY</span>
-                      <span className="text-[10px] font-mono font-black text-white">%100</span>
+                      <span className="text-[10px] font-mono font-black text-slate-900 dark:text-white">%100</span>
                     </div>
                   </div>
 
@@ -1414,15 +1414,15 @@ const CustomerHome = () => {
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-500"></span> Akaryakıt</span>
-                      <span className="font-bold text-white font-mono">₺3.200</span>
+                      <span className="font-bold text-slate-900 dark:text-white font-mono">₺3.200</span>
                     </div>
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-500"></span> Servis</span>
-                      <span className="font-bold text-white font-mono">₺1.150</span>
+                      <span className="font-bold text-slate-900 dark:text-white font-mono">₺1.150</span>
                     </div>
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-slate-500"></span> Diğer</span>
-                      <span className="font-bold text-white font-mono">₺500</span>
+                      <span className="font-bold text-slate-900 dark:text-white font-mono">₺500</span>
                     </div>
                   </div>
                 </div>
@@ -1433,7 +1433,7 @@ const CustomerHome = () => {
             {activeVehicle && decisionAlerts.length > 0 && (
               <div className="space-y-3">
                 <div className="flex items-center gap-2 px-1">
-                  <Icons.ShieldAlert size={16} className="text-slate-400" />
+                  <Icons.ShieldAlert size={16} className="text-slate-500 dark:text-slate-400" />
                   <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
                     KOKPİT KARAR DESTEĞİ
                   </h4>
@@ -1443,20 +1443,20 @@ const CustomerHome = () => {
                   <div
                     key={alert.id}
                     onClick={alert.action}
-                    className="bg-[#0a0f24]/85 border border-white/5 hover:border-white/15 p-4.5 rounded-[1.8rem] transition-all cursor-pointer active-scale relative overflow-hidden group shadow-md"
+                    className="bg-[#0a0f24]/85 border border-black/5 dark:border-white/5 hover:border-white/15 p-4.5 rounded-[1.8rem] transition-all cursor-pointer active-scale relative overflow-hidden group shadow-md"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-black/40 border border-white/10 flex items-center justify-center shrink-0 shadow-inner">
+                      <div className="w-10 h-10 rounded-xl bg-black/40 border border-black/10 dark:border-white/10 flex items-center justify-center shrink-0 shadow-inner">
                         <alert.icon size={18} className="text-teal-400 group-hover:scale-110 transition-transform" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-center mb-1">
-                          <h4 className="text-xs font-black text-white uppercase tracking-tight">{alert.title}</h4>
-                          <span className="text-[8px] font-black text-teal-400 uppercase flex items-center gap-1 group-hover:text-white transition-colors">
+                          <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">{alert.title}</h4>
+                          <span className="text-[8px] font-black text-teal-400 uppercase flex items-center gap-1 group-hover:text-slate-900 dark:text-white transition-colors">
                             {alert.actionText} <Icons.ChevronRight size={10} />
                           </span>
                         </div>
-                        <p className="text-[11px] text-slate-400 leading-relaxed font-medium">
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                           {alert.desc}
                         </p>
                       </div>
@@ -1481,12 +1481,12 @@ const CustomerHome = () => {
                   <div
                     key={idx}
                     onClick={() => navigate(item.route)}
-                    className="bg-[#0a0f24]/80 border border-white/5 hover:border-white/15 p-3 rounded-[1.8rem] flex flex-col items-center justify-center gap-2 active-scale cursor-pointer group transition-all"
+                    className="bg-[#0a0f24]/80 border border-black/5 dark:border-white/5 hover:border-white/15 p-3 rounded-[1.8rem] flex flex-col items-center justify-center gap-2 active-scale cursor-pointer group transition-all"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-black/40 border border-white/10 flex items-center justify-center group-hover:bg-[#0f172a] transition-all shadow-inner">
-                      <item.icon size={18} className="text-slate-400 group-hover:text-teal-400 transition-colors" />
+                    <div className="w-10 h-10 rounded-xl bg-black/40 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:bg-[#0f172a] transition-all shadow-inner">
+                      <item.icon size={18} className="text-slate-500 dark:text-slate-400 group-hover:text-teal-400 transition-colors" />
                     </div>
-                    <span className="text-[8px] font-black text-slate-400 group-hover:text-white transition-colors uppercase tracking-tighter leading-none text-center block">
+                    <span className="text-[8px] font-black text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white transition-colors uppercase tracking-tighter leading-none text-center block">
                       {item.label}
                     </span>
                   </div>
@@ -1495,14 +1495,14 @@ const CustomerHome = () => {
             </div>
 
             {/* EXPERT AUDIT ASSURANCE */}
-            <div className="bg-[#0a0f24]/80 border border-white/10 p-5 rounded-[2.5rem] flex items-center justify-between gap-4">
+            <div className="bg-[#0a0f24]/80 border border-black/10 dark:border-white/10 p-5 rounded-[2.5rem] flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-black/30 border border-white/10 rounded-xl text-teal-400 shrink-0">
+                <div className="p-2.5 bg-black/30 border border-black/10 dark:border-white/10 rounded-xl text-teal-400 shrink-0">
                   <Icons.ShieldCheck size={20} />
                 </div>
                 <div>
-                  <h4 className="text-xs font-black text-white uppercase tracking-tight">Doğru Servis Eşleşmesi</h4>
-                  <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">Tüm usta ve servislerimizin belgeleri Carvis tarafından onaylıdır.</p>
+                  <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">Doğru Servis Eşleşmesi</h4>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Tüm usta ve servislerimizin belgeleri Carvis tarafından onaylıdır.</p>
                 </div>
               </div>
               <Icons.CheckCircle className="text-emerald-400 shrink-0" size={18} />
@@ -1519,7 +1519,7 @@ const CustomerHome = () => {
           <div className="relative w-full max-w-md">
             <button
               onClick={() => setShowVehicleSelector(false)}
-              className="absolute -top-12 right-0 text-white hover:text-red-500 transition"
+              className="absolute -top-12 right-0 text-slate-900 dark:text-white hover:text-red-500 transition"
             >
               <Icons.X size={24} />
             </button>

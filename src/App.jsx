@@ -67,7 +67,7 @@ const App = () => {
   const hideGlobalNav = isLanding || isSeller || isPartner || isAdmin;
 
   return (
-    <div className="w-full h-[100dvh] font-sans bg-slate-950 text-white relative selection:bg-orange-500/30 flex flex-col overflow-hidden">
+    <div className="w-full h-[100dvh] font-sans bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white relative selection:bg-orange-500/30 flex flex-col overflow-hidden">
       {/* Background Gradients */}
       <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black"></div>
@@ -266,7 +266,7 @@ const App = () => {
           <div className="relative w-full max-w-md">
             <button
               onClick={() => setShowVehicleSelector(false)}
-              className="absolute -top-12 right-0 text-white hover:text-red-500 transition"
+              className="absolute -top-12 right-0 text-slate-900 dark:text-white hover:text-red-500 transition"
             >
               <Icons.X size={24} />
             </button>

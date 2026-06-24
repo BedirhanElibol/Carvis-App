@@ -111,7 +111,7 @@ const MarketingDashboard = () => {
 
                 <button
                   onClick={toggleCampaign}
-                  className={`w-full flex justify-center items-center gap-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${campaign.is_active ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'}`}
+                  className={`w-full flex justify-center items-center gap-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-slate-900 dark:text-white ${campaign.is_active ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'}`}
                 >
                   {campaign.is_active ? <><StopIcon className="w-5 h-5"/> Kampanyayı Durdur</> : <><PlayIcon className="w-5 h-5"/> Kampanyayı Başlat</>}
                 </button>
@@ -139,7 +139,7 @@ const MarketingDashboard = () => {
                <button
                   onClick={handleScrape}
                   disabled={isScraping}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-slate-900 dark:text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
                 >
                   {isScraping ? 'Taranıyor...' : 'Aramayı Başlat'}
                 </button>

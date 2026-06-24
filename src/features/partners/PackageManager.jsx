@@ -84,14 +84,14 @@ const PackageManager = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center bg-slate-900/50 p-6 rounded-3xl border border-white/5">
+      <div className="flex justify-between items-center bg-white dark:bg-slate-900/50 p-6 rounded-3xl border border-black/5 dark:border-white/5">
         <div>
-          <h3 className="text-xl font-black text-white uppercase tracking-tighter">Servis Paketlerim</h3>
+          <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Servis Paketlerim</h3>
           <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Abonelik bazlı gelir modelleri</p>
         </div>
         <button 
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-lg shadow-primary-900/20"
+          className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-lg shadow-primary-900/20"
         >
           <Icons.Plus size={16} /> Yeni Paket Ekle
         </button>
@@ -103,20 +103,20 @@ const PackageManager = () => {
             <Icons.Loader2 className="animate-spin mx-auto text-primary-500" size={32} />
           </div>
         ) : packages.length === 0 ? (
-          <div className="col-span-full py-20 bg-white/5 rounded-[2.5rem] border border-dashed border-white/10 text-center">
+          <div className="col-span-full py-20 bg-black/5 dark:bg-white/5 rounded-[2.5rem] border border-dashed border-black/10 dark:border-white/10 text-center">
              <Icons.Package size={40} className="mx-auto text-slate-700 mb-4" />
              <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Henüz paketiniz bulunmuyor</p>
           </div>
         ) : (
           packages.map((pkg) => (
-            <div key={pkg.id} className="glass-card p-6 rounded-[2rem] border border-white/5 relative group overflow-hidden">
+            <div key={pkg.id} className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 relative group overflow-hidden">
               <div className={`absolute top-0 left-0 bottom-0 w-1 ${pkg.is_active ? 'bg-primary-500' : 'bg-slate-700'}`}></div>
               
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h4 className="font-black text-white text-lg tracking-tight uppercase leading-none">{pkg.name}</h4>
+                  <h4 className="font-black text-slate-900 dark:text-white text-lg tracking-tight uppercase leading-none">{pkg.name}</h4>
                   <div className="flex items-center gap-2 mt-2">
-                    <span className="px-2 py-0.5 bg-white/5 border border-white/5 rounded-lg text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                    <span className="px-2 py-0.5 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-lg text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                       {pkg.validity_months} Ay Geçerli
                     </span>
                     <span className={`px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest ${pkg.is_active ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'}`}>
@@ -125,15 +125,15 @@ const PackageManager = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-2xl font-black text-white tracking-tighter">₺{pkg.price}</span>
+                  <span className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter">₺{pkg.price}</span>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-400 mb-6 italic">"{pkg.description}"</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 italic">"{pkg.description}"</p>
 
               <div className="space-y-2 mb-6">
                  {pkg.included_services?.map((service, i) => (
-                   <div key={i} className="flex items-center gap-2 text-[10px] font-bold text-slate-300 uppercase tracking-wide">
+                   <div key={i} className="flex items-center gap-2 text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wide">
                      <Icons.Check size={12} className="text-primary-500" /> {service}
                    </div>
                  ))}
@@ -146,7 +146,7 @@ const PackageManager = () => {
                  >
                    {pkg.is_active ? 'DURDUR' : 'YAYINLA'}
                  </button>
-                 <button className="p-3 bg-white/5 border border-white/5 rounded-xl text-slate-500 hover:text-white transition-all">
+                 <button className="p-3 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl text-slate-500 hover:text-slate-900 dark:text-white transition-all">
                     <Icons.Settings size={16} />
                  </button>
               </div>
@@ -158,10 +158,10 @@ const PackageManager = () => {
       {/* Add Package Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-in fade-in">
-          <div className="bg-[#0f172a] w-full max-w-lg rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div className="p-6 border-b border-white/5 flex justify-between items-center">
-              <h3 className="font-black text-white text-xl uppercase tracking-tighter">Yeni Servis Paketi</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-slate-500 hover:text-white transition"><Icons.X size={20} /></button>
+          <div className="bg-[#0f172a] w-full max-w-lg rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="p-6 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
+              <h3 className="font-black text-slate-900 dark:text-white text-xl uppercase tracking-tighter">Yeni Servis Paketi</h3>
+              <button onClick={() => setShowAddModal(false)} className="text-slate-500 hover:text-slate-900 dark:text-white transition"><Icons.X size={20} /></button>
             </div>
             
             <form onSubmit={handleAddPackage} className="p-8 space-y-5 overflow-y-auto custom-scrollbar">
@@ -171,7 +171,7 @@ const PackageManager = () => {
                   required
                   value={newPkg.name}
                   onChange={e => setNewPkg({...newPkg, name: e.target.value})}
-                  className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white font-bold focus:border-primary-500 transition-all outline-none" 
+                  className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl px-5 py-4 text-slate-900 dark:text-white font-bold focus:border-primary-500 transition-all outline-none" 
                   placeholder="Örn: Yıllık Periyodik Bakım Paketi"
                 />
               </div>
@@ -184,7 +184,7 @@ const PackageManager = () => {
                     type="number"
                     value={newPkg.price}
                     onChange={e => setNewPkg({...newPkg, price: e.target.value})}
-                    className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white font-bold focus:border-primary-500 transition-all outline-none" 
+                    className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl px-5 py-4 text-slate-900 dark:text-white font-bold focus:border-primary-500 transition-all outline-none" 
                     placeholder="2500"
                   />
                 </div>
@@ -193,7 +193,7 @@ const PackageManager = () => {
                   <select 
                     value={newPkg.validity_months}
                     onChange={e => setNewPkg({...newPkg, validity_months: e.target.value})}
-                    className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white font-bold focus:border-primary-500 transition-all outline-none appearance-none"
+                    className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl px-5 py-4 text-slate-900 dark:text-white font-bold focus:border-primary-500 transition-all outline-none appearance-none"
                   >
                     <option value="1">1 Ay</option>
                     <option value="3">3 Ay</option>
@@ -210,7 +210,7 @@ const PackageManager = () => {
                   required
                   value={newPkg.description}
                   onChange={e => setNewPkg({...newPkg, description: e.target.value})}
-                  className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white font-bold focus:border-primary-500 transition-all outline-none min-h-[100px]" 
+                  className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl px-5 py-4 text-slate-900 dark:text-white font-bold focus:border-primary-500 transition-all outline-none min-h-[100px]" 
                   placeholder="Paketin avantajlarından kısaca bahsedin..."
                 />
               </div>
@@ -221,14 +221,14 @@ const PackageManager = () => {
                   required
                   value={newPkg.included_services}
                   onChange={e => setNewPkg({...newPkg, included_services: e.target.value})}
-                  className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white font-bold focus:border-primary-500 transition-all outline-none" 
+                  className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl px-5 py-4 text-slate-900 dark:text-white font-bold focus:border-primary-500 transition-all outline-none" 
                   placeholder="Yağ Değişimi, Filtre Kontrolü, Fren Testi..."
                 />
               </div>
 
               <button 
                 type="submit"
-                className="w-full py-5 bg-primary-600 hover:bg-primary-500 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl shadow-primary-900/30 active-scale"
+                className="w-full py-5 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white rounded-[1.5rem] font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl shadow-primary-900/30 active-scale"
               >
                 PAKETİ OLUŞTUR VE YAYINLA
               </button>

@@ -63,11 +63,11 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary-400">
+        <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary-400">
           <Icons.Wrench size={20} />
         </div>
         <div>
-          <h2 className="text-lg font-black text-white uppercase tracking-tight">Teknik Servis Bilgileri</h2>
+          <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Teknik Servis Bilgileri</h2>
           <p className="text-sm text-slate-500 font-sans">Uzmanlık alanları ve marka yetkinlikleri</p>
         </div>
       </div>
@@ -79,20 +79,20 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
             type="text"
             value={mechanicData.shop_name}
             onChange={(e) => handleChange("shop_name", e.target.value)}
-            className="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-4 py-3 text-sm text-white outline-none font-sans"
+            className="w-full bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white outline-none font-sans"
             placeholder="Örn: Maslak Pro Garage"
           />
         </label>
 
         <label className="space-y-2">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Teknisyen Sayısı</span>
-          <div className="flex items-center gap-3 bg-slate-900/80 border border-white/10 rounded-2xl px-4 py-3">
+          <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
             <Icons.Users2 size={18} className="text-primary-400" />
             <input
               type="number"
               value={mechanicData.technician_count}
               onChange={(e) => handleChange("technician_count", Number(e.target.value))}
-              className="w-full bg-transparent text-sm text-white outline-none font-sans"
+              className="w-full bg-transparent text-sm text-slate-900 dark:text-white outline-none font-sans"
               min="1"
             />
           </div>
@@ -104,7 +104,7 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
             className={`w-full p-4 rounded-2xl border-2 transition-all flex items-center justify-between group ${
               mechanicData.is_authorized_service 
                 ? "bg-blue-500/10 border-blue-500/40 text-blue-400" 
-                : "bg-slate-800 border-white/5 text-slate-500 hover:border-white/10"
+                : "bg-slate-100 dark:bg-slate-800 border-black/5 dark:border-white/5 text-slate-500 hover:border-black/10 dark:border-white/10"
             }`}
           >
             <div className="flex items-center gap-2">
@@ -124,8 +124,8 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
                 onClick={() => toggleSpecialty(spec)}
                 className={`px-3 py-2.5 rounded-xl text-[10px] font-bold transition-all border ${
                   mechanicData.specialties.includes(spec)
-                    ? "bg-primary-600 border-primary-500 text-white shadow-lg shadow-primary-900/20"
-                    : "bg-white/5 border-white/5 text-slate-400 hover:border-white/10"
+                    ? "bg-primary-600 border-primary-500 text-slate-900 dark:text-white shadow-lg shadow-primary-900/20"
+                    : "bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:border-black/10 dark:border-white/10"
                 }`}
               >
                 {spec}
@@ -140,7 +140,7 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
             {mechanicData.brands.map((brand) => (
               <span
                 key={brand}
-                className="inline-flex items-center gap-2 bg-slate-800 border border-white/10 px-3 py-1.5 rounded-lg text-xs font-bold text-white uppercase tracking-tighter"
+                className="inline-flex items-center gap-2 bg-slate-100 dark:bg-slate-800 border border-black/10 dark:border-white/10 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-900 dark:text-white uppercase tracking-tighter"
               >
                 {brand}
                 <button onClick={() => removeBrand(brand)} className="text-slate-500 hover:text-red-400">
@@ -155,12 +155,12 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
               value={newBrand}
               onChange={(e) => setNewBrand(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addBrand()}
-              className="flex-1 bg-slate-900/80 border border-white/10 rounded-xl px-4 py-2 text-sm text-white outline-none font-sans"
+              className="flex-1 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-white outline-none font-sans"
               placeholder="Marka ekle (Örn: BMW)"
             />
             <button
               onClick={addBrand}
-              className="bg-primary-600 text-white p-2 rounded-xl active-scale"
+              className="bg-primary-600 text-slate-900 dark:text-white p-2 rounded-xl active-scale"
             >
               <Icons.Plus size={20} />
             </button>

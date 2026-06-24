@@ -44,10 +44,10 @@ const ReviewsModal = ({ isOpen, onClose, targetId, orderId, targetName }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[100] flex items-end md:items-center justify-center p-4">
-      <div className="bg-slate-950 w-full max-w-md rounded-[3rem] border border-white/10 shadow-2xl overflow-hidden animate-slide-up relative">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/90 backdrop-blur-md z-[100] flex items-end md:items-center justify-center p-4">
+      <div className="bg-slate-50 dark:bg-slate-950 w-full max-w-md rounded-[3rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-slide-up relative">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-600 to-accent-600"></div>
-        <button onClick={onClose} className="absolute top-6 right-6 text-slate-500 hover:text-white transition">
+        <button onClick={onClose} className="absolute top-6 right-6 text-slate-500 hover:text-slate-900 dark:text-white transition">
           <Icons.X size={24} />
         </button>
 
@@ -56,7 +56,7 @@ const ReviewsModal = ({ isOpen, onClose, targetId, orderId, targetName }) => {
             <div className="w-16 h-16 bg-primary-600/10 rounded-[1.5rem] flex items-center justify-center mx-auto mb-4 border border-primary-500/10">
               <Icons.Star size={32} className="text-primary-500" />
             </div>
-            <h3 className="text-2xl font-black text-white tracking-tighter uppercase">{targetName}</h3>
+            <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase">{targetName}</h3>
             <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Deneyiminizi Puanlayın</p>
           </div>
 
@@ -65,7 +65,7 @@ const ReviewsModal = ({ isOpen, onClose, targetId, orderId, targetName }) => {
               <button 
                 key={s} 
                 onClick={() => setRating(s)}
-                className={`p-3 rounded-2xl border transition-all active-scale ${s <= rating ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' : 'bg-white/5 border-white/5 text-slate-600'}`}
+                className={`p-3 rounded-2xl border transition-all active-scale ${s <= rating ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' : 'bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 text-slate-600'}`}
               >
                 <Icons.Star size={24} fill={s <= rating ? "currentColor" : "none"} />
               </button>
@@ -78,14 +78,14 @@ const ReviewsModal = ({ isOpen, onClose, targetId, orderId, targetName }) => {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="Hizmet veya ürün hakkında ne düşünüyorsunuz?"
-              className="w-full bg-white/5 border border-white/5 rounded-[1.5rem] p-4 text-sm text-white outline-none focus:border-primary-500/50 transition-all min-h-[120px] resize-none"
+              className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-[1.5rem] p-4 text-sm text-slate-900 dark:text-white outline-none focus:border-primary-500/50 transition-all min-h-[120px] resize-none"
             />
           </div>
 
           <button 
             onClick={handleSubmit}
             disabled={submitting}
-            className="w-full bg-primary-600 hover:bg-primary-500 py-4 rounded-2xl font-black text-xs text-white uppercase tracking-[0.2em] shadow-xl shadow-primary-900/20 active-scale disabled:opacity-50 transition-all"
+            className="w-full bg-primary-600 hover:bg-primary-500 py-4 rounded-2xl font-black text-xs text-slate-900 dark:text-white uppercase tracking-[0.2em] shadow-xl shadow-primary-900/20 active-scale disabled:opacity-50 transition-all"
           >
             {submitting ? "GÖNDERİLİYOR..." : "DEĞERLENDİRMEYİ YAYINLA"}
           </button>

@@ -49,7 +49,7 @@ const ExpertHotline = () => {
   };
 
   return (
-    <div className="p-5 pb-32 space-y-8 animate-fade-in text-white font-sans">
+    <div className="p-5 pb-32 space-y-8 animate-fade-in text-slate-900 dark:text-white font-sans">
       {/* Header */}
       <div className="space-y-2">
         <div className="flex items-center gap-2">
@@ -73,20 +73,20 @@ const ExpertHotline = () => {
             className={`p-5 rounded-[2rem] border transition-all active-scale text-left relative overflow-hidden group ${
               selectedTopic?.id === topic.id 
                 ? "bg-primary-600 border-primary-500 shadow-2xl shadow-primary-900/30" 
-                : "glass-card border-white/5 bg-white/5 hover:border-white/20"
+                : "glass-card border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 hover:border-black/20 dark:border-white/20"
             }`}
           >
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 border transition-colors ${
-              selectedTopic?.id === topic.id ? "bg-white/20 border-white/20" : "bg-white/5 border-white/5"
+              selectedTopic?.id === topic.id ? "bg-black/20 dark:bg-white/20 border-black/20 dark:border-white/20" : "bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5"
             }`}>
-              <topic.icon size={20} className={selectedTopic?.id === topic.id ? "text-white" : "text-primary-400"} />
+              <topic.icon size={20} className={selectedTopic?.id === topic.id ? "text-slate-900 dark:text-white" : "text-primary-400"} />
             </div>
             <h4 className="text-[11px] font-black uppercase tracking-tight mb-1">{topic.label}</h4>
-            <p className={`text-[10px] font-bold ${selectedTopic?.id === topic.id ? "text-white/60" : "text-slate-500"}`}>
+            <p className={`text-[10px] font-bold ${selectedTopic?.id === topic.id ? "text-slate-900 dark:text-white/60" : "text-slate-500"}`}>
               {topic.fee} ₺ / Seans
             </p>
             <div className={`absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform ${
-               selectedTopic?.id === topic.id ? "text-white" : "text-primary-500"
+               selectedTopic?.id === topic.id ? "text-slate-900 dark:text-white" : "text-primary-500"
             }`}>
               <topic.icon size={80} />
             </div>
@@ -102,7 +102,7 @@ const ExpertHotline = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Sorununuzu veya merak ettiklerinizi buraya yazabilirsiniz..."
-            className="w-full bg-slate-950 border border-white/5 rounded-[1.8rem] p-5 text-sm text-white outline-none focus:border-primary-500/50 transition-all min-h-[140px] shadow-inner"
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-black/5 dark:border-white/5 rounded-[1.8rem] p-5 text-sm text-slate-900 dark:text-white outline-none focus:border-primary-500/50 transition-all min-h-[140px] shadow-inner"
           />
         </div>
 
@@ -123,7 +123,7 @@ const ExpertHotline = () => {
         </div>
         <div className="flex-1">
           <h4 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-0.5">Güvenli Danışmanlık</h4>
-          <p className="text-[10px] text-slate-400 font-medium">Uzmanlarımız Rapidsy tarafından doğrulanan 10+ yıl deneyimli baş ustalardır.</p>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Uzmanlarımız Rapidsy tarafından doğrulanan 10+ yıl deneyimli baş ustalardır.</p>
         </div>
       </div>
     </div>

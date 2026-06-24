@@ -129,15 +129,15 @@ const PaymentModal = ({
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       ></div>
-      <div className="relative w-full max-w-lg bg-slate-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
-        <div className="p-5 border-b border-white/10 flex justify-between items-center bg-slate-800/50">
-          <h3 className="font-bold text-white text-lg flex items-center gap-2">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+        <div className="p-5 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-slate-100 dark:bg-slate-800/50">
+          <h3 className="font-bold text-slate-900 dark:text-white text-lg flex items-center gap-2">
             <Icons.CreditCard className="text-primary-500" />
             {type === "topup" ? "Bakiye Yükle" : "Ödeme Yap"}
           </h3>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/10 rounded-full transition text-white"
+            className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full transition text-slate-900 dark:text-white"
           >
             <Icons.X size={20} />
           </button>
@@ -147,13 +147,13 @@ const PaymentModal = ({
           {step === "input" && (
             <div className="space-y-6">
               <div>
-                <label className="block text-slate-400 text-sm font-bold mb-2">
+                <label className="block text-slate-500 dark:text-slate-400 text-sm font-bold mb-2">
                   {type === "topup" ? "Yüklenecek Tutar (?)" : "Ýþlem Tutarý"}
                 </label>
                 <div className="relative">
                   <input
                     type="number"
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-2xl font-black text-white focus:outline-none focus:border-primary-500 transition"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl p-4 text-2xl font-black text-slate-900 dark:text-white focus:outline-none focus:border-primary-500 transition"
                     placeholder="0.00"
                     value={amount}
                     onChange={(event) => setAmount(event.target.value)}
@@ -172,7 +172,7 @@ const PaymentModal = ({
                     <button
                       key={value}
                       onClick={() => setAmount(String(value))}
-                      className="px-4 py-2 bg-white/5 rounded-lg text-sm font-bold text-slate-300 hover:bg-white/10 whitespace-nowrap"
+                      className="px-4 py-2 bg-black/5 dark:bg-white/5 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-black/10 dark:bg-white/10 whitespace-nowrap"
                     >
                       +{value} ?
                     </button>
@@ -194,7 +194,7 @@ const PaymentModal = ({
               <button
                 onClick={handlePaymentStart}
                 disabled={loading || !finalAmount || finalAmount <= 0}
-                className="w-full py-4 bg-primary-600 hover:bg-primary-500 text-white rounded-xl font-bold text-lg shadow-lg shadow-primary-900/50 active-scale disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-4 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white rounded-xl font-bold text-lg shadow-lg shadow-primary-900/50 active-scale disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <Icons.Loader2 className="animate-spin" />
@@ -211,8 +211,8 @@ const PaymentModal = ({
                 size={48}
                 className="text-primary-500 animate-spin mb-4"
               />
-              <p className="text-white font-bold">Ödeme doðrulanýyor...</p>
-              <p className="text-sm text-slate-400 mt-2 text-center">
+              <p className="text-slate-900 dark:text-white font-bold">Ödeme doðrulanýyor...</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 text-center">
                 Ýþlem kaydý ve güvenlik kontrolü tamamlanýyor.
               </p>
             </div>
@@ -224,25 +224,25 @@ const PaymentModal = ({
                 <Icons.CheckCircle2 size={42} className="text-emerald-400" />
               </div>
               <div>
-                <h4 className="text-2xl font-black text-white">
+                <h4 className="text-2xl font-black text-slate-900 dark:text-white">
                   Ýþlem Tamamlandý
                 </h4>
-                <p className="text-sm text-slate-400 mt-2">
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
                   {type === "topup"
                     ? `${formatCurrency(finalAmount)} bakiyenize iþlendi.`
                     : `${formatCurrency(finalAmount)} tutarýndaki ödeme baþarýyla alýndý.`}
                 </p>
               </div>
-              <div className="rounded-2xl bg-white/5 border border-white/10 p-4 text-left space-y-2">
+              <div className="rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-4 text-left space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-500">Ýþlem No</span>
-                  <span className="text-white font-bold">
+                  <span className="text-slate-900 dark:text-white font-bold">
                     {paymentResult?.transactionId || "-"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-500">Ýþlem Tipi</span>
-                  <span className="text-white font-bold">
+                  <span className="text-slate-900 dark:text-white font-bold">
                     {paymentResult?.paymentType || type}
                   </span>
                 </div>
@@ -255,7 +255,7 @@ const PaymentModal = ({
               </div>
               <button
                 onClick={onClose}
-                className="w-full py-3 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold"
+                className="w-full py-3 rounded-xl bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold"
               >
                 Kapat
               </button>

@@ -54,19 +54,19 @@ const RoleCard = ({ title, icon: Icon, color, desc, onClick }) => {
       ></div>
 
       <div className="relative z-10 flex justify-between items-start">
-        <div className={`p-4 rounded-2xl bg-gradient-to-br ${currentTheme.badge} text-white shadow-lg shadow-black/20`}>
+        <div className={`p-4 rounded-2xl bg-gradient-to-br ${currentTheme.badge} text-slate-900 dark:text-white shadow-lg shadow-black/20`}>
           <Icon size={26} />
         </div>
-        <div className={`w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 group-hover:text-white group-hover:bg-white/10 transition-all active:scale-90`}>
+        <div className={`w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white group-hover:bg-black/10 dark:bg-white/10 transition-all active:scale-90`}>
           <Icons.ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
         </div>
       </div>
 
       <div className="relative z-10">
-        <h3 className="text-xl font-black font-sans text-white mb-2 uppercase tracking-tight">
+        <h3 className="text-xl font-black font-sans text-slate-900 dark:text-white mb-2 uppercase tracking-tight">
           {title}
         </h3>
-        <p className="text-xs text-slate-400 font-sans font-medium leading-relaxed">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-sans font-medium leading-relaxed">
           {desc}
         </p>
       </div>
@@ -102,10 +102,10 @@ const PartnerLandingScreen = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shadow-inner"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-md mb-6 shadow-inner"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping"></span>
-            <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">
               RAPIDSY BUSINESS PORTAL
             </span>
           </motion.div>
@@ -114,7 +114,7 @@ const PartnerLandingScreen = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl font-black font-sans text-white mb-6 tracking-tight uppercase"
+            className="text-5xl md:text-6xl font-black font-sans text-slate-900 dark:text-white mb-6 tracking-tight uppercase"
           >
             RAPIDSY{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 tracking-tighter drop-shadow-[0_0_30px_rgba(59,130,246,0.2)]">
@@ -126,7 +126,7 @@ const PartnerLandingScreen = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-sm md:text-base text-slate-400 max-w-2xl mx-auto font-sans leading-relaxed font-medium"
+            className="text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-sans leading-relaxed font-medium"
           >
             İşletmeniz için tasarlanmış profesyonel yönetim paneli. Devam etmek
             için lütfen hizmet türünüzü seçin ve oturum açın.
@@ -183,7 +183,7 @@ const PartnerLandingScreen = () => {
                 navigate("/");
               }
             }}
-            className="text-slate-500 hover:text-white transition-colors text-xs font-black uppercase tracking-widest flex items-center gap-2 mx-auto cursor-pointer"
+            className="text-slate-500 hover:text-slate-900 dark:text-white transition-colors text-xs font-black uppercase tracking-widest flex items-center gap-2 mx-auto cursor-pointer"
           >
             <Icons.ArrowLeft size={14} />
             Uygulamaya Geri Dön

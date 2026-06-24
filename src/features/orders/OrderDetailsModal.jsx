@@ -52,18 +52,18 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
 
   return (
     <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in">
-      <div className="bg-[#0f172a] w-full max-w-lg rounded-3xl border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-[#0f172a] w-full max-w-lg rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-5 border-b border-white/5 flex justify-between items-center bg-slate-950">
+        <div className="p-5 border-b border-black/5 dark:border-white/5 flex justify-between items-center bg-slate-50 dark:bg-slate-950">
           <div>
-            <h3 className="font-black text-white text-lg">Sipariş Detayı</h3>
+            <h3 className="font-black text-slate-900 dark:text-white text-lg">Sipariş Detayı</h3>
             <p className="text-xs text-slate-500">
               #{localOrder.id.slice(0, 8).toUpperCase()}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/10 rounded-full transition text-slate-400 hover:text-white"
+            className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
           >
             <Icons.X size={20} />
           </button>
@@ -80,7 +80,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
               <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest">
                 GÜVENLİ İŞLEM (CARVIS TRUST ENGINE)
               </p>
-              <p className="text-sm text-white font-medium">
+              <p className="text-sm text-slate-900 dark:text-white font-medium">
                 Bu servis işlemi %100 şeffaflık garantisi altındadır.
               </p>
             </div>
@@ -94,14 +94,14 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
                 <h4 className="text-amber-500 font-black text-xs uppercase tracking-widest">ONAYINIZ BEKLENİYOR</h4>
               </div>
               {localOrder.pending_approval_items.filter(i => i.status === 'pending').map(item => (
-                <div key={item.id} className="bg-slate-950/50 p-4 rounded-2xl border border-white/5 flex justify-between items-center">
+                <div key={item.id} className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-black/5 dark:border-white/5 flex justify-between items-center">
                   <div>
-                    <p className="text-white font-black text-xs uppercase">{item.title}</p>
+                    <p className="text-slate-900 dark:text-white font-black text-xs uppercase">{item.title}</p>
                     <p className="text-amber-500 font-mono font-bold text-sm">₺{item.price}</p>
                   </div>
                   <button 
                     onClick={() => handleAcceptApproval(item.id)}
-                    className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active-scale"
+                    className="bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active-scale"
                   >
                     ONAYLA
                   </button>
@@ -115,7 +115,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
 
           {/* Timeline */}
           <div className="space-y-4">
-            <h4 className="text-white font-black text-xs uppercase tracking-widest px-1">
+            <h4 className="text-slate-900 dark:text-white font-black text-xs uppercase tracking-widest px-1">
               İşlem Akışı
             </h4>
             <ServiceTimeline status={localOrder.status} />
@@ -123,7 +123,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
 
           {/* Evidence Photos */}
           <div className="space-y-4">
-            <h4 className="text-white font-black text-xs uppercase tracking-widest px-1">
+            <h4 className="text-slate-900 dark:text-white font-black text-xs uppercase tracking-widest px-1">
               Servis Kanıtları
             </h4>
             <div className="grid grid-cols-2 gap-3">
@@ -131,7 +131,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center">
                   ÖNCE
                 </p>
-                <div className="h-32 bg-slate-900 rounded-2xl border border-white/5 overflow-hidden">
+                <div className="h-32 bg-white dark:bg-slate-900 rounded-2xl border border-black/5 dark:border-white/5 overflow-hidden">
                   {beforePhotos[0] ? (
                     <img
                       src={beforePhotos[0]}
@@ -149,7 +149,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center">
                   SONRA
                 </p>
-                <div className="h-32 bg-slate-900 rounded-2xl border border-white/5 overflow-hidden">
+                <div className="h-32 bg-white dark:bg-slate-900 rounded-2xl border border-black/5 dark:border-white/5 overflow-hidden">
                   {afterPhotos[0] ? (
                     <img
                       src={afterPhotos[0]}
@@ -167,20 +167,20 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
           </div>
 
           {/* Technician Notes */}
-          <div className="bg-slate-900/50 p-5 rounded-3xl border border-white/5">
+          <div className="bg-white dark:bg-slate-900/50 p-5 rounded-3xl border border-black/5 dark:border-white/5">
             <h4 className="text-primary-400 font-black text-[10px] uppercase tracking-widest mb-2">
               Usta Notları
             </h4>
-            <p className="text-sm text-slate-300 italic leading-relaxed">
+            <p className="text-sm text-slate-600 dark:text-slate-300 italic leading-relaxed">
               "{technicianNotes || "Henüz not girilmemiş."}"
             </p>
           </div>
 
           {/* Price Breakdown */}
-          <div className="bg-white/5 p-6 rounded-3xl border border-white/5">
+          <div className="bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-black/5 dark:border-white/5">
              <div className="flex justify-between items-center mb-2">
                <span className="text-xs text-slate-500 uppercase font-black">Sipariş Toplamı</span>
-               <span className="text-xl font-mono font-black text-white">₺{localOrder.total_amount?.toLocaleString('tr-TR')}</span>
+               <span className="text-xl font-mono font-black text-slate-900 dark:text-white">₺{localOrder.total_amount?.toLocaleString('tr-TR')}</span>
              </div>
              <div className="flex justify-between items-center">
                <span className="text-[10px] text-slate-600 uppercase font-bold">Ödeme Durumu</span>

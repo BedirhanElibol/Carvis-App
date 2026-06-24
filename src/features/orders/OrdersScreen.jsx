@@ -77,7 +77,7 @@ const OrdersScreen = () => {
       default:
         return {
           icon: Icons.Clock,
-          color: "text-slate-400",
+          color: "text-slate-500 dark:text-slate-400",
           bg: "bg-slate-500/10",
           label: status,
         };
@@ -85,7 +85,7 @@ const OrdersScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24 font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24 font-sans">
       <OrderDetailsModal
         show={!!selectedOrder}
         order={selectedOrder}
@@ -93,12 +93,12 @@ const OrdersScreen = () => {
       />
 
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate(-1)}
-              className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale transition-all border border-white/5"
+              className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale transition-all border border-black/5 dark:border-white/5"
             >
               <Icons.ArrowLeft size={20} />
             </button>
@@ -116,12 +116,12 @@ const OrdersScreen = () => {
               fetchOrders();
               triggerHaptic("light");
             }}
-            className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale transition-all border border-white/5"
+            className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale transition-all border border-black/5 dark:border-white/5"
           >
             <Icons.RefreshCw
               size={18}
               className={
-                loading ? "animate-spin text-primary-500" : "text-slate-400"
+                loading ? "animate-spin text-primary-500" : "text-slate-500 dark:text-slate-400"
               }
             />
           </button>
@@ -148,7 +148,7 @@ const OrdersScreen = () => {
               <div
                 key={order.id}
                 onClick={() => setSelectedOrder(order)}
-                className="glass-card p-5 rounded-3xl border border-white/5 cursor-pointer hover:border-primary-500/30 transition-all group overflow-hidden relative"
+                className="glass-card p-5 rounded-3xl border border-black/5 dark:border-white/5 cursor-pointer hover:border-primary-500/30 transition-all group overflow-hidden relative"
               >
                 {/* Gradient highlight for active orders */}
                 {(order.status === "diagnosing" ||
@@ -161,27 +161,27 @@ const OrdersScreen = () => {
                       <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase mb-1">
                         Teslimat #{String(order.id).slice(0, 8)}
                       </p>
-                      <p className="font-bold text-lg text-white font-sans">
+                      <p className="font-bold text-lg text-slate-900 dark:text-white font-sans">
                         {order.seller?.company_name ||
                           order.seller?.full_name ||
                           "Servis Sağlayıcı"}
                       </p>
                     </div>
                     <div
-                      className={`flex items-center gap-1.5 ${config.bg} ${config.color} px-3 py-1.5 rounded-xl border border-white/5 text-xs font-bold shadow-lg font-sans`}
+                      className={`flex items-center gap-1.5 ${config.bg} ${config.color} px-3 py-1.5 rounded-xl border border-black/5 dark:border-white/5 text-xs font-bold shadow-lg font-sans`}
                     >
                       <StatusIcon size={14} />
                       {config.label}
                     </div>
                   </div>
                   {order.quote && (
-                    <div className="bg-slate-900/50 p-3 rounded-xl border border-white/5 mb-4">
-                      <p className="text-xs text-slate-400 line-clamp-2">
+                    <div className="bg-white dark:bg-slate-900/50 p-3 rounded-xl border border-black/5 dark:border-white/5 mb-4">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
                         {order.quote.description}
                       </p>
                     </div>
                   )}
-                  <div className="flex items-end justify-between pt-4 border-t border-white/5 mt-2">
+                  <div className="flex items-end justify-between pt-4 border-t border-black/5 dark:border-white/5 mt-2">
                     <div className="flex flex-col gap-2">
                       {order.status === "paid" ? (
                         <button
@@ -197,7 +197,7 @@ const OrdersScreen = () => {
                               fetchOrders();
                             }
                           }}
-                          className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all active-scale shadow-lg shadow-emerald-900/20 border border-emerald-400/20 font-sans"
+                          className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all active-scale shadow-lg shadow-emerald-900/20 border border-emerald-400/20 font-sans"
                         >
                           <Icons.CheckCircle size={14} />
                           Hizmeti Onayla
@@ -207,7 +207,7 @@ const OrdersScreen = () => {
                           <Icons.ShieldCheck size={12} /> İşlem Tamamlandıı
                         </div>
                       ) : (
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider font-sans">
+                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-sans">
                           {order.product_photo && (
                             <img
                               src={order.product_photo}
@@ -223,7 +223,7 @@ const OrdersScreen = () => {
                       <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-0.5 font-sans">
                         Toplam Tutar
                       </p>
-                      <p className="text-2xl font-black text-white tracking-tighter font-sans">
+                      <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter font-sans">
                         ₺
                         {order.total_amount?.toLocaleString("tr-TR", {
                           minimumFractionDigits: 2,

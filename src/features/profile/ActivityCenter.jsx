@@ -48,7 +48,7 @@ const ActivityCenter = () => {
       completed: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
       active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
       won: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
-      lost: "bg-slate-500/10 text-slate-400 border-slate-500/20",
+      lost: "bg-slate-500/10 text-slate-500 dark:text-slate-400 border-slate-500/20",
     };
     return (
       <span className={`px-2 py-0.5 rounded-lg border text-[8px] font-black uppercase tracking-widest ${colors[status] || colors.pending}`}>
@@ -60,12 +60,12 @@ const ActivityCenter = () => {
   return (
     <div className="space-y-8 p-6">
       <div className="text-center">
-        <h2 className="text-3xl font-black tracking-tighter text-white uppercase mb-2">Aktivite Merkezi</h2>
+        <h2 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white uppercase mb-2">Aktivite Merkezi</h2>
         <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">Tüm süreçlerini buradan yönetin</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 bg-slate-900/50 p-1.5 rounded-3xl border border-white/5">
+      <div className="flex gap-2 bg-white dark:bg-slate-900/50 p-1.5 rounded-3xl border border-black/5 dark:border-white/5">
         {[
           { id: "consultations", label: "Danışmanlık", icon: Icons.Users },
           { id: "insurance", label: "Sigorta", icon: Icons.ShieldCheck },
@@ -74,7 +74,7 @@ const ActivityCenter = () => {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-              activeTab === tab.id ? "bg-primary-600 text-white shadow-xl" : "text-slate-500 hover:text-white"
+              activeTab === tab.id ? "bg-primary-600 text-slate-900 dark:text-white shadow-xl" : "text-slate-500 hover:text-slate-900 dark:text-white"
             }`}
           >
             <tab.icon size={14} />
@@ -101,10 +101,10 @@ const ActivityCenter = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: idx * 0.05 }}
-                  className="glass-card p-6 rounded-[2.5rem] border border-white/5 bg-white/5 flex flex-col justify-between hover:border-white/20 transition-all group"
+                  className="glass-card p-6 rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 flex flex-col justify-between hover:border-black/20 dark:border-white/20 transition-all group"
                 >
                   <div className="flex justify-between items-start mb-6">
-                    <div className="p-3 rounded-2xl bg-black/20 border border-white/5 group-hover:scale-110 transition-transform">
+                    <div className="p-3 rounded-2xl bg-black/20 border border-black/5 dark:border-white/5 group-hover:scale-110 transition-transform">
                       {activeTab === 'consultations' ? <Icons.MessageSquare size={20} className="text-primary-400" /> : 
                        <Icons.FileCheck size={20} className="text-emerald-400" />}
                     </div>
@@ -112,7 +112,7 @@ const ActivityCenter = () => {
                   </div>
 
                   <div>
-                    <h4 className="text-white font-black uppercase tracking-tighter text-xl mb-1 truncate">
+                    <h4 className="text-slate-900 dark:text-white font-black uppercase tracking-tighter text-xl mb-1 truncate">
                       {activeTab === 'consultations' ? item.topic : 
                        item.product_type}
                     </h4>
@@ -121,11 +121,11 @@ const ActivityCenter = () => {
                     </p>
                   </div>
 
-                   <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-center">
-                      <span className="text-xs font-black text-white">
+                   <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex justify-between items-center">
+                      <span className="text-xs font-black text-slate-900 dark:text-white">
                         {`Bedel: ₺${item.fee || 0}`}
                       </span>
-                      <button className="text-[9px] font-black text-primary-400 uppercase tracking-[0.3em] hover:text-white transition-colors">
+                      <button className="text-[9px] font-black text-primary-400 uppercase tracking-[0.3em] hover:text-slate-900 dark:text-white transition-colors">
                          DETAYLAR →
                       </button>
                    </div>

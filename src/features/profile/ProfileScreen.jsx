@@ -74,20 +74,20 @@ const ProfileScreen = () => {
       />
 
       <div className="flex justify-between items-center">
-        <h3 className="font-black text-3xl text-white tracking-tighter">
+        <h3 className="font-black text-3xl text-slate-900 dark:text-white tracking-tighter">
           {t.profile}
         </h3>
         <button
           onClick={() => setShowSettings(true)}
-          className="p-3 glass-card rounded-2xl hover:bg-white/10 shadow-2xl transition-all border border-white/10 active-scale"
+          className="p-3 glass-card rounded-2xl hover:bg-black/10 dark:bg-white/10 shadow-2xl transition-all border border-black/10 dark:border-white/10 active-scale"
         >
-          <Icons.Settings size={22} className="text-slate-400" />
+          <Icons.Settings size={22} className="text-slate-500 dark:text-slate-400" />
         </button>
       </div>
 
-      <div className="glass-card p-6 rounded-[2.5rem] border border-white/10 shadow-2xl flex items-center gap-5 relative overflow-hidden group">
+      <div className="glass-card p-6 rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl flex items-center gap-5 relative overflow-hidden group">
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-        <div className="w-20 h-20 bg-gradient-to-tr from-primary-600 to-accent-600 rounded-[2rem] flex items-center justify-center text-white shadow-xl p-0.5 border border-white/20 relative">
+        <div className="w-20 h-20 bg-gradient-to-tr from-primary-600 to-accent-600 rounded-[2rem] flex items-center justify-center text-slate-900 dark:text-white shadow-xl p-0.5 border border-black/20 dark:border-white/20 relative">
           {userPhoto ? (
             <img
               src={userPhoto}
@@ -99,7 +99,7 @@ const ProfileScreen = () => {
           )}
         </div>
         <div>
-          <h4 className="font-black text-xl text-white leading-none mb-1">
+          <h4 className="font-black text-xl text-slate-900 dark:text-white leading-none mb-1">
             {userName}
           </h4>
           <p className="text-xs text-slate-500 font-medium mb-2">
@@ -143,12 +143,12 @@ const ProfileScreen = () => {
               setShowVehicleSelector(true);
             }
           }}
-          className="glass-card p-5 rounded-[2rem] border border-white/5 hover:border-accent-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
+          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-accent-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
         >
           <div className="bg-accent-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-accent-500/10">
             <Icons.Car size={24} className="text-accent-500" />
           </div>
-          <h4 className="font-black text-white text-xs uppercase tracking-widest">
+          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
             {t.myGarage}
           </h4>
           <p className="text-[10px] text-slate-500 mt-1 font-bold">
@@ -158,12 +158,12 @@ const ProfileScreen = () => {
 
         <button
           onClick={() => setShowServiceHistoryModal(true)}
-          className="glass-card p-5 rounded-[2rem] border border-white/5 hover:border-primary-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
+          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-primary-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
         >
           <div className="bg-primary-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-primary-500/10">
             <Icons.ClipboardList size={24} className="text-primary-500" />
           </div>
-          <h4 className="font-black text-white text-xs uppercase tracking-widest">
+          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
             {t.serviceHistory}
           </h4>
           <p className="text-[10px] text-slate-500 mt-1 font-bold">
@@ -173,12 +173,12 @@ const ProfileScreen = () => {
 
         <button
           onClick={() => navigate("/quotes")}
-          className="glass-card p-5 rounded-[2rem] border border-white/5 hover:border-blue-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
+          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-blue-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
         >
           <div className="bg-blue-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-blue-500/10">
             <Icons.Package size={24} className="text-blue-400" />
           </div>
-          <h4 className="font-black text-white text-xs uppercase tracking-widest">
+          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
             {t.myQuotes}
           </h4>
           <p className="text-[10px] text-slate-500 mt-1 font-bold">
@@ -188,12 +188,12 @@ const ProfileScreen = () => {
 
         <button
           onClick={() => navigate("/appointments")}
-          className="glass-card p-5 rounded-[2rem] border border-white/5 hover:border-emerald-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
+          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-emerald-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
         >
           <div className="bg-emerald-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-emerald-500/10">
             <Icons.CalendarDays size={24} className="text-emerald-400" />
           </div>
-          <h4 className="font-black text-white text-xs uppercase tracking-widest">
+          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
             {t.myAppointments}
           </h4>
           <p className="text-[10px] text-slate-500 mt-1 font-bold">Takip Et</p>
@@ -204,12 +204,12 @@ const ProfileScreen = () => {
             navigate("/orders");
             triggerHaptic("light");
           }}
-          className="glass-card p-5 rounded-[2rem] border border-white/5 hover:border-green-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
+          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-green-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
         >
           <div className="bg-green-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-green-500/10">
             <Icons.ShoppingBag size={24} className="text-green-400" />
           </div>
-          <h4 className="font-black text-white text-xs uppercase tracking-widest">
+          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
             {t.myOrders}
           </h4>
           <p className="text-[10px] text-slate-500 mt-1 font-bold">Takip Et</p>
@@ -220,12 +220,12 @@ const ProfileScreen = () => {
             navigate("/app/favorites");
             triggerHaptic("light");
           }}
-          className="glass-card p-5 rounded-[2rem] border border-white/5 hover:border-red-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
+          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-red-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
         >
           <div className="bg-red-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-red-500/10">
             <Icons.Heart size={24} className="text-red-400" />
           </div>
-          <h4 className="font-black text-white text-xs uppercase tracking-widest">
+          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
             Favorilerim
           </h4>
           <p className="text-[10px] text-slate-500 mt-1 font-bold">
@@ -237,7 +237,7 @@ const ProfileScreen = () => {
       <div className="pt-4 px-4 space-y-4">
         <button
           onClick={() => { handleLogout(); navigate("/"); }}
-          className="w-full glass-card border-slate-500/30 text-slate-400 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-white/5 transition-all active-scale shadow-2xl flex items-center justify-center gap-3"
+          className="w-full glass-card border-slate-500/30 text-slate-500 dark:text-slate-400 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-black/5 dark:bg-white/5 transition-all active-scale shadow-2xl flex items-center justify-center gap-3"
         >
           <Icons.LogOut size={20} /> {t.logout}
         </button>
@@ -284,7 +284,7 @@ const ProfileScreen = () => {
           <div className="relative w-full max-w-md">
             <button
               onClick={() => setShowVehicleSelector(false)}
-              className="absolute -top-12 right-0 text-white hover:text-red-500 transition"
+              className="absolute -top-12 right-0 text-slate-900 dark:text-white hover:text-red-500 transition"
             >
               <Icons.X size={24} />
             </button>

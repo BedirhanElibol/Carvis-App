@@ -62,29 +62,29 @@ const TenderScreen = () => {
       default:
         return {
           label: status,
-          color: "text-slate-400",
+          color: "text-slate-500 dark:text-slate-400",
           bg: "bg-slate-500/10 border-slate-500/20",
         };
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24 animate-fade-in relative">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24 animate-fade-in relative">
       {/* Ambient Background */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate("/app/home")}
-              className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-white/5"
+              className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-black/5 dark:border-white/5"
             >
               <Icons.ArrowLeft size={20} />
             </button>
             <div>
               <h1 className="text-xl font-bold font-sans">Açık Taleplerim</h1>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Ustaların teklif verdiği aktif işleriniz
               </p>
             </div>
@@ -92,7 +92,7 @@ const TenderScreen = () => {
           <button
             onClick={fetchRequests}
             disabled={loading}
-            className="text-slate-400 hover:text-white p-2"
+            className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white p-2"
           >
             <Icons.RefreshCw
               size={20}
@@ -109,19 +109,19 @@ const TenderScreen = () => {
               className="animate-spin text-primary-500 mb-4"
               size={32}
             />
-            <p className="text-slate-400 font-medium">
+            <p className="text-slate-500 dark:text-slate-400 font-medium">
               Talepleriniz yükleniyor...
             </p>
           </div>
         ) : requests.length === 0 ? (
           <div className="text-center py-20">
             <Icons.FileText className="mx-auto text-slate-600 mb-4" size={48} />
-            <p className="text-slate-400 font-medium mb-4">
+            <p className="text-slate-500 dark:text-slate-400 font-medium mb-4">
               Henüz oluşturduğunuz bir teknik servis talebi yok.
             </p>
             <button
               onClick={() => navigate("/app/mechanics")}
-              className="bg-primary-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-primary-700 transition font-sans"
+              className="bg-primary-600 text-slate-900 dark:text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-primary-700 transition font-sans"
             >
               Hemen Talep Oluştur
             </button>
@@ -132,11 +132,11 @@ const TenderScreen = () => {
             return (
               <div
                 key={req.id}
-                className="glass-card p-5 rounded-2xl border border-white/5 relative overflow-hidden group"
+                className="glass-card p-5 rounded-2xl border border-black/5 dark:border-white/5 relative overflow-hidden group"
               >
-                <div className="flex justify-between items-start mb-3 border-b border-white/5 pb-3">
+                <div className="flex justify-between items-start mb-3 border-b border-black/5 dark:border-white/5 pb-3">
                   <div className="flex items-center gap-3">
-                    <div className="bg-slate-800 p-2.5 rounded-xl text-primary-400">
+                    <div className="bg-slate-100 dark:bg-slate-800 p-2.5 rounded-xl text-primary-400">
                       {req.demand_type === "part" ? (
                         <Icons.Package size={20} />
                       ) : (
@@ -144,10 +144,10 @@ const TenderScreen = () => {
                       )}
                     </div>
                     <div>
-                      <h3 className="text-white font-bold text-lg leading-tight uppercase tracking-tight font-sans">
+                      <h3 className="text-slate-900 dark:text-white font-bold text-lg leading-tight uppercase tracking-tight font-sans">
                         {req.brand || "Bilinmeyen"} {req.model}
                       </h3>
-                      <p className="text-slate-400 text-xs font-mono mt-0.5">
+                      <p className="text-slate-500 dark:text-slate-400 text-xs font-mono mt-0.5">
                         {req.plate}
                       </p>
                     </div>
@@ -158,7 +158,7 @@ const TenderScreen = () => {
                     <Icons.Clock size={12} /> {statusInfo.label}
                   </div>
                 </div>
-                <div className="text-sm text-slate-300 mb-4 leading-relaxed font-medium">
+                <div className="text-sm text-slate-600 dark:text-slate-300 mb-4 leading-relaxed font-medium">
                   {req.description || "Detay belirtilmedi."}
                 </div>
                 <div className="flex justify-between items-center mt-2">
@@ -167,7 +167,7 @@ const TenderScreen = () => {
                   </span>
                   <button
                     onClick={() => navigate("/quotes")}
-                    className="bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-bold px-4 py-2 rounded-lg transition-all active-scale font-sans"
+                    className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs font-bold px-4 py-2 rounded-lg transition-all active-scale font-sans"
                   >
                     Gelen Teklifleri Gör
                   </button>

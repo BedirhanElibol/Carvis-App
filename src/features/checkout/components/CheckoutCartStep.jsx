@@ -8,19 +8,19 @@ const CheckoutCartStep = () => {
   return (
     <div className="space-y-4 animate-slide-up">
       {" "}
-      <h2 className="text-xl font-bold text-white flex items-center gap-2">
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
         {" "}
         <Icons.ShoppingBag className="text-primary-500" /> Sepetim (
         {cart.length} Ürün){" "}
       </h2>{" "}
       {cart.length === 0 ? (
-        <div className="glass-card p-12 text-center rounded-[2rem] border border-white/5">
+        <div className="glass-card p-12 text-center rounded-[2rem] border border-black/5 dark:border-white/5">
           {" "}
           <Icons.ShoppingBag
             size={48}
             className="mx-auto text-slate-600 mb-4 opacity-50"
           />{" "}
-          <p className="text-slate-400 font-medium">
+          <p className="text-slate-500 dark:text-slate-400 font-medium">
             Sepetinizde ürün bulunmuyor.
           </p>{" "}
           <button
@@ -35,10 +35,10 @@ const CheckoutCartStep = () => {
         cart.map((item, idx) => (
           <div
             key={idx}
-            className="glass-card p-4 rounded-3xl border border-white/5 flex gap-4 items-center"
+            className="glass-card p-4 rounded-3xl border border-black/5 dark:border-white/5 flex gap-4 items-center"
           >
             {" "}
-            <div className="w-24 h-24 bg-slate-900 rounded-2xl overflow-hidden border border-white/5 shrink-0">
+            <div className="w-24 h-24 bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-black/5 dark:border-white/5 shrink-0">
               {" "}
               <img
                 src={
@@ -56,17 +56,17 @@ const CheckoutCartStep = () => {
                 {" "}
                 {item.brand || item.shopName || "Servis"}{" "}
               </p>{" "}
-              <h3 className="text-sm font-bold text-white mb-2 line-clamp-1">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2 line-clamp-1">
                 {item.name}
               </h3>{" "}
-              <div className="flex items-center gap-2 text-[10px] text-slate-400 bg-slate-800/50 w-fit px-2 py-1 rounded-lg">
+              <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/50 w-fit px-2 py-1 rounded-lg">
                 {" "}
                 <Icons.CheckCircle size={10} /> Tahmini Teslimat: Yarın{" "}
               </div>{" "}
             </div>{" "}
             <div className="text-right">
               {" "}
-              <p className="text-lg font-black text-white mb-2">
+              <p className="text-lg font-black text-slate-900 dark:text-white mb-2">
                 {(item.selectedOffer?.price || item.price).toLocaleString()} ₺
               </p>{" "}
               <button

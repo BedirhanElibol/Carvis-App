@@ -47,7 +47,7 @@ const AppointmentScreen = () => {
       default:
         return {
           icon: Icons.AlertCircle,
-          color: "text-slate-400",
+          color: "text-slate-500 dark:text-slate-400",
           bg: "bg-slate-500/10",
           label: "Bilinmiyor",
         };
@@ -62,10 +62,10 @@ const AppointmentScreen = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24">
       {" "}
       {/* Header */}{" "}
-      <div className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
         {" "}
         <div className="flex items-center justify-between">
           {" "}
@@ -81,12 +81,12 @@ const AppointmentScreen = () => {
             <div>
               {" "}
               <h1 className="text-xl font-bold">Randevularım</h1>{" "}
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 {filteredAppointments.length} randevu
               </p>{" "}
             </div>{" "}
           </div>{" "}
-          <Icons.Calendar size={20} className="text-slate-400" />{" "}
+          <Icons.Calendar size={20} className="text-slate-500 dark:text-slate-400" />{" "}
         </div>{" "}
         {/* Filter Tabs */}{" "}
         <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
@@ -100,7 +100,7 @@ const AppointmentScreen = () => {
             <button
               key={option.value}
               onClick={() => setFilter(option.value)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${filter === option.value ? "bg-primary-500 text-white" : "glass-card text-slate-400 hover:text-white"}`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${filter === option.value ? "bg-primary-500 text-slate-900 dark:text-white" : "glass-card text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"}`}
             >
               {" "}
               {option.label}{" "}
@@ -115,16 +115,16 @@ const AppointmentScreen = () => {
           <div className="text-center py-20">
             {" "}
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>{" "}
-            <p className="text-slate-400 mt-4">Randevular yükleniyor...</p>{" "}
+            <p className="text-slate-500 dark:text-slate-400 mt-4">Randevular yükleniyor...</p>{" "}
           </div>
         ) : filteredAppointments.length === 0 ? (
           <div className="text-center py-20">
             {" "}
             <Icons.Calendar
               size={48}
-              className="mx-auto text-slate-300 mb-4"
+              className="mx-auto text-slate-600 dark:text-slate-300 mb-4"
             />{" "}
-            <p className="text-slate-400">Randevu bulunmuyor</p>{" "}
+            <p className="text-slate-500 dark:text-slate-400">Randevu bulunmuyor</p>{" "}
           </div>
         ) : (
           filteredAppointments.map((appointment) => {
@@ -134,7 +134,7 @@ const AppointmentScreen = () => {
             return (
               <div
                 key={appointment.id}
-                className="glass-card p-5 rounded-2xl border border-white/10"
+                className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10"
               >
                 {" "}
                 {/* Header */}{" "}
@@ -148,11 +148,11 @@ const AppointmentScreen = () => {
                       {" "}
                       <StatusIcon size={14} /> {config.label}{" "}
                     </div>{" "}
-                    <h3 className="text-lg font-bold text-white">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                       {" "}
                       {appointment.service_type}{" "}
                     </h3>{" "}
-                    <p className="text-sm text-slate-400">
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
                       {" "}
                       {isSeller
                         ? appointment.customer?.full_name
@@ -164,7 +164,7 @@ const AppointmentScreen = () => {
                 {/* Date & Time */}{" "}
                 <div className="flex items-center gap-4 mb-3 text-sm">
                   {" "}
-                  <div className="flex items-center gap-2 text-slate-300">
+                  <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     {" "}
                     <Icons.Calendar size={16} />{" "}
                     {new Date(appointment.appointment_date).toLocaleDateString(
@@ -172,7 +172,7 @@ const AppointmentScreen = () => {
                       { day: "numeric", month: "long", year: "numeric" },
                     )}{" "}
                   </div>{" "}
-                  <div className="flex items-center gap-2 text-slate-300">
+                  <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     {" "}
                     <Icons.Clock size={16} />{" "}
                     {new Date(appointment.appointment_date).toLocaleTimeString(
@@ -183,7 +183,7 @@ const AppointmentScreen = () => {
                 </div>{" "}
                 {/* Vehicle Info */}{" "}
                 {appointment.vehicle && (
-                  <div className="text-sm text-slate-400 mb-3">
+                  <div className="text-sm text-slate-500 dark:text-slate-400 mb-3">
                     {" "}
                     {appointment.vehicle.brand} {appointment.vehicle.model} -{" "}
                     {appointment.vehicle.plate}{" "}
@@ -191,14 +191,14 @@ const AppointmentScreen = () => {
                 )}{" "}
                 {/* Notes */}{" "}
                 {appointment.notes && (
-                  <p className="text-sm text-slate-300 mb-3 p-3 bg-slate-900 rounded-xl">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 mb-3 p-3 bg-white dark:bg-slate-900 rounded-xl">
                     {" "}
                     {appointment.notes}{" "}
                   </p>
                 )}{" "}
                 {/* Actions (Seller Only) */}{" "}
                 {isSeller && appointment.status === "pending" && (
-                  <div className="grid grid-cols-2 gap-2 pt-3 border-t border-white/5">
+                  <div className="grid grid-cols-2 gap-2 pt-3 border-t border-black/5 dark:border-white/5">
                     {" "}
                     <button
                       onClick={() =>
@@ -213,7 +213,7 @@ const AppointmentScreen = () => {
                       onClick={() =>
                         handleStatusChange(appointment.id, "confirmed")
                       }
-                      className="bg-primary-500 p-2 rounded-xl text-xs font-semibold text-white active-scale"
+                      className="bg-primary-500 p-2 rounded-xl text-xs font-semibold text-slate-900 dark:text-white active-scale"
                     >
                       {" "}
                       Onayla{" "}
@@ -225,7 +225,7 @@ const AppointmentScreen = () => {
                     onClick={() =>
                       handleStatusChange(appointment.id, "completed")
                     }
-                    className="w-full bg-green-500 p-2 rounded-xl text-xs font-semibold text-white active-scale mt-3"
+                    className="w-full bg-green-500 p-2 rounded-xl text-xs font-semibold text-slate-900 dark:text-white active-scale mt-3"
                   >
                     {" "}
                     Tamamlandı Olarak İşaretle{" "}

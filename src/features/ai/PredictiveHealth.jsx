@@ -127,7 +127,7 @@ const PredictiveHealth = ({ vehicle }) => {
   };
 
   return (
-    <div className="glass-card p-6 rounded-3xl border border-white/5 relative overflow-hidden">
+    <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 relative overflow-hidden">
       {/* Background Decoration */}
       <div
         className={`absolute -right-10 -top-10 w-40 h-40 ${getBg(assessment.score)}/10 rounded-full blur-3xl`}
@@ -135,10 +135,10 @@ const PredictiveHealth = ({ vehicle }) => {
 
       <div className="flex items-start justify-between mb-6 relative z-10">
         <div>
-          <h3 className="font-black text-xl text-white flex items-center gap-2 uppercase tracking-tighter">
+          <h3 className="font-black text-xl text-slate-900 dark:text-white flex items-center gap-2 uppercase tracking-tighter">
             <Icons.Activity className="text-primary-400" /> AI Sağlık Skoru
           </h3>
-          <p className="text-xs text-slate-400 mt-1 font-sans">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-sans">
             Rapidsy tahmin motoru araç verilerini analiz etti.
           </p>
         </div>
@@ -153,7 +153,7 @@ const PredictiveHealth = ({ vehicle }) => {
       </div>
 
       {/* Health Bar */}
-      <div className="w-full bg-slate-800 h-3 rounded-full overflow-hidden mb-6">
+      <div className="w-full bg-slate-100 dark:bg-slate-800 h-3 rounded-full overflow-hidden mb-6">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${assessment.score}%` }}
@@ -168,7 +168,7 @@ const PredictiveHealth = ({ vehicle }) => {
           assessment.risks.map((risk, idx) => (
             <div
               key={idx}
-              className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5"
+              className="flex items-start gap-3 p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5"
             >
               {risk.risk === "Kritik" || risk.risk === "Yüksek" ? (
                 <Icons.AlertTriangle size={18} className="text-red-400 shrink-0 mt-0.5" />
@@ -176,10 +176,10 @@ const PredictiveHealth = ({ vehicle }) => {
                 <Icons.TrendingDown size={18} className="text-orange-400 shrink-0 mt-0.5" />
               )}
               <div>
-                <h4 className="text-sm font-black text-white mb-0.5 uppercase tracking-tight">
+                <h4 className="text-sm font-black text-slate-900 dark:text-white mb-0.5 uppercase tracking-tight">
                   {risk.part} ({risk.risk} Risk)
                 </h4>
-                <p className="text-xs text-slate-400 font-sans">
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-sans">
                   {risk.message}
                 </p>
               </div>
@@ -196,7 +196,7 @@ const PredictiveHealth = ({ vehicle }) => {
       </div>
 
       {assessment.score < 50 && (
-        <div className="mt-4 pt-4 border-t border-white/10">
+        <div className="mt-4 pt-4 border-t border-black/10 dark:border-white/10">
           <button className="w-full py-3 bg-red-600/20 hover:bg-red-600/30 text-red-500 border border-red-500/30 rounded-xl font-black text-xs uppercase tracking-[0.2em] transition flex items-center justify-center gap-2 animate-pulse">
             <Icons.Thermometer size={16} /> Acil Bakım Randevusu Al
           </button>

@@ -46,18 +46,18 @@ const AddAddressModal = ({ onClose, onSaved }) => {
     >
       {" "}
       <div
-        className="w-full max-w-lg mx-auto bg-slate-900 border-t border-white/10 rounded-t-[2rem] p-6 space-y-4"
+        className="w-full max-w-lg mx-auto bg-white dark:bg-slate-900 border-t border-black/10 dark:border-white/10 rounded-t-[2rem] p-6 space-y-4"
         onClick={(e) => e.stopPropagation()}
       >
         {" "}
         <div className="flex justify-between items-center">
           {" "}
-          <h3 className="font-bold text-white text-lg">Yeni Adres</h3>{" "}
+          <h3 className="font-bold text-slate-900 dark:text-white text-lg">Yeni Adres</h3>{" "}
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/10 rounded-full transition"
+            className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full transition"
           >
-            <Icons.X size={18} className="text-slate-400" />
+            <Icons.X size={18} className="text-slate-500 dark:text-slate-400" />
           </button>{" "}
         </div>{" "}
         <div className="flex gap-2">
@@ -66,7 +66,7 @@ const AddAddressModal = ({ onClose, onSaved }) => {
             <button
               key={t}
               onClick={() => set("title", t)}
-              className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all ${form.title === t ? "bg-primary-600 text-white" : "bg-white/5 text-slate-400 hover:bg-white/10"}`}
+              className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all ${form.title === t ? "bg-primary-600 text-slate-900 dark:text-white" : "bg-black/5 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:bg-black/10 dark:bg-white/10"}`}
             >
               {" "}
               {t}{" "}
@@ -80,11 +80,11 @@ const AddAddressModal = ({ onClose, onSaved }) => {
         ].map(([label, key, ph]) => (
           <div key={key}>
             {" "}
-            <label className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1 block">
+            <label className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest mb-1 block">
               {label}
             </label>{" "}
             <input
-              className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary-500 transition"
+              className="w-full bg-black/30 border border-black/10 dark:border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary-500 transition"
               placeholder={ph}
               value={form[key]}
               onChange={(e) => set(key, e.target.value)}
@@ -94,7 +94,7 @@ const AddAddressModal = ({ onClose, onSaved }) => {
         <button
           onClick={handleSave}
           disabled={!form.fullAddress || !form.city || saving}
-          className="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-500 text-white py-3.5 rounded-2xl font-black text-sm transition-all disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-3.5 rounded-2xl font-black text-sm transition-all disabled:opacity-50"
         >
           {" "}
           {saving ? (
@@ -143,7 +143,7 @@ const CheckoutAddressStep = () => {
           onSaved={handleAddressSaved}
         />
       )}{" "}
-      <h2 className="text-xl font-bold text-white flex items-center gap-2">
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
         {" "}
         <Icons.MapPin className="text-primary-500" /> Teslimat Adresi{" "}
       </h2>{" "}
@@ -153,12 +153,12 @@ const CheckoutAddressStep = () => {
           <div
             key={addr.id}
             onClick={() => setSelectedAddress(addr)}
-            className={`glass-card p-5 rounded-3xl border cursor-pointer transition-all ${selectedAddress?.id === addr.id ? "border-primary-500 bg-primary-600/10" : "border-white/5 hover:border-white/20"}`}
+            className={`glass-card p-5 rounded-3xl border cursor-pointer transition-all ${selectedAddress?.id === addr.id ? "border-primary-500 bg-primary-600/10" : "border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20"}`}
           >
             {" "}
             <div className="flex justify-between items-start mb-2">
               {" "}
-              <h4 className="font-bold text-white flex items-center gap-2">
+              <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 {" "}
                 {addr.title}{" "}
                 {selectedAddress?.id === addr.id && (
@@ -176,7 +176,7 @@ const CheckoutAddressStep = () => {
                 <Icons.Trash2 size={14} />{" "}
               </button>{" "}
             </div>{" "}
-            <p className="text-xs text-slate-400 leading-relaxed mb-3 h-10 line-clamp-2">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3 h-10 line-clamp-2">
               {addr.fullAddress}
             </p>{" "}
             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
@@ -188,7 +188,7 @@ const CheckoutAddressStep = () => {
         {currentUser && !currentUser.isAnonymous && (
           <button
             onClick={() => setShowAddModal(true)}
-            className="glass-card p-5 rounded-3xl border border-dashed border-white/20 flex flex-col items-center justify-center gap-2 text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+            className="glass-card p-5 rounded-3xl border border-dashed border-black/20 dark:border-white/20 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-black/5 dark:bg-white/5 transition-all"
           >
             {" "}
             <Icons.Plus size={24} />{" "}

@@ -35,20 +35,20 @@ const TopUpModal = ({ isOpen, onClose }) => {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
-          className="relative bg-slate-900 border border-white/10 w-full max-w-md rounded-t-3xl md:rounded-3xl p-6 shadow-2xl"
+          className="relative bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-t-3xl md:rounded-3xl p-6 shadow-2xl"
         >
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 p-2 bg-white/5 rounded-full hover:bg-white/10"
+            className="absolute right-4 top-4 p-2 bg-black/5 dark:bg-white/5 rounded-full hover:bg-black/10 dark:bg-white/10"
           >
-            <Icons.X size={20} className="text-white" />
+            <Icons.X size={20} className="text-slate-900 dark:text-white" />
           </button>
 
-          <h2 className="text-xl font-bold text-white font-sans mb-2 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white font-sans mb-2 flex items-center gap-2">
             <Icons.Wallet size={24} className="text-primary-400" />
             Bakiye Yükle
           </h2>
-          <p className="text-slate-400 text-sm mb-6">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
             Kredi kartınızla anında güvenli bakiye yükleyebilirsiniz.
           </p>
 
@@ -62,7 +62,7 @@ const TopUpModal = ({ isOpen, onClose }) => {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="Örn: 1000"
-                className="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white font-bold text-xl mt-1 focus:border-primary-500 focus:outline-none placeholder-slate-700"
+                className="w-full bg-black/50 border border-black/10 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white font-bold text-xl mt-1 focus:border-primary-500 focus:outline-none placeholder-slate-700"
               />
             </div>
 
@@ -72,7 +72,7 @@ const TopUpModal = ({ isOpen, onClose }) => {
                 <button
                   key={val}
                   onClick={() => setAmount(val.toString())}
-                  className="flex-1 py-2 bg-white/5 border border-white/10 rounded-lg text-white font-bold hover:bg-white/10"
+                  className="flex-1 py-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-lg text-slate-900 dark:text-white font-bold hover:bg-black/10 dark:bg-white/10"
                 >
                   +{val} ₺
                 </button>
@@ -84,10 +84,10 @@ const TopUpModal = ({ isOpen, onClose }) => {
               <label className="text-xs font-bold text-slate-500 uppercase">
                 Kayıtlı Kart
               </label>
-              <div className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-xl mt-1">
-                <Icons.CreditCard className="text-slate-400" />
+              <div className="flex items-center gap-3 p-4 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl mt-1">
+                <Icons.CreditCard className="text-slate-500 dark:text-slate-400" />
                 <div>
-                  <p className="text-white font-bold text-sm">
+                  <p className="text-slate-900 dark:text-white font-bold text-sm">
                     •••• •••• •••• 4242
                   </p>
                   <p className="text-slate-500 text-xs">Garanti BBVA - Bonus</p>
@@ -98,7 +98,7 @@ const TopUpModal = ({ isOpen, onClose }) => {
             <button
               onClick={handleTopUp}
               disabled={isProcessing || !amount || Number(amount) <= 0}
-              className="w-full mt-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold py-4 rounded-xl flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed font-sans"
+              className="w-full mt-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-slate-900 dark:text-white font-bold py-4 rounded-xl flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed font-sans"
             >
               {isProcessing ? (
                 "İşleniyor..."

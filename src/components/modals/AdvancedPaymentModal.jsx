@@ -86,7 +86,7 @@ const AdvancedPaymentModal = ({
   ];
 
   return (
-    <div className="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/90 backdrop-blur-md z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
       <div className="bg-[#fcfcfc] w-full max-w-5xl h-[90vh] md:h-auto md:max-h-[90vh] rounded-xl shadow-2xl overflow-hidden relative flex flex-col md:flex-row text-slate-800">
         {/* Close Button */}
         <button
@@ -145,7 +145,7 @@ const AdvancedPaymentModal = ({
                           <div className="w-4 h-4 bg-primary-600 rounded-full flex items-center justify-center">
                             <Icons.CheckCircle
                               size={10}
-                              className="text-white"
+                              className="text-slate-900 dark:text-white"
                             />
                           </div>
                         )}
@@ -190,7 +190,7 @@ const AdvancedPaymentModal = ({
                           disabled={selectedCardId !== "new"}
                         />
                         <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                          <span className="text-xs font-bold text-slate-400">
+                          <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
                             {getCardBrand(cardData.number)}
                           </span>
                         </div>
@@ -214,7 +214,7 @@ const AdvancedPaymentModal = ({
                       <div>
                         <label className="text-xs font-bold text-slate-600 block mb-1.5 flex items-center gap-1">
                           CVV{" "}
-                          <Icons.Info size={12} className="text-slate-400" />
+                          <Icons.Info size={12} className="text-slate-500 dark:text-slate-400" />
                         </label>
                         <input
                           type="password"
@@ -327,7 +327,7 @@ const AdvancedPaymentModal = ({
                 </h3>
                 <div className="bg-white border border-slate-200 rounded-lg p-3 mb-4 flex items-start gap-3">
                   <div className="w-12 h-12 bg-slate-100 rounded-md flex items-center justify-center shrink-0">
-                    <Package size={20} className="text-slate-400" />
+                    <Package size={20} className="text-slate-500 dark:text-slate-400" />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-slate-800 line-clamp-2">
@@ -410,7 +410,7 @@ const AdvancedPaymentModal = ({
 
               <button
                 onClick={handlePayment}
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white text-sm font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-between px-6 font-sans"
+                className="w-full bg-primary-600 hover:bg-primary-700 text-slate-900 dark:text-white text-sm font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-between px-6 font-sans"
               >
                 <span>Ödemeyi Tamamla</span>
                 <Icons.ChevronRight size={18} />
@@ -450,7 +450,7 @@ const AdvancedPaymentModal = ({
             </p>
             <button
               onClick={onClose}
-              className="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold text-sm"
+              className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-8 py-3 rounded-xl font-bold text-sm"
             >
               Alışverişe Dön
             </button>

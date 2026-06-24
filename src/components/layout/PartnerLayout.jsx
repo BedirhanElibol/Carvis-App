@@ -85,17 +85,17 @@ const PartnerLayout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white flex">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-white/5 transform transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 border-r border-black/5 dark:border-white/5 transform transition-transform duration-300 md:translate-x-0 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="p-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
-              <Icons.Car size={20} className="text-white" />
+              <Icons.Car size={20} className="text-slate-900 dark:text-white" />
             </div>
             <div>
               <h1 className="text-xl font-black tracking-tighter">RAPIDSY</h1>
@@ -106,7 +106,7 @@ const PartnerLayout = () => {
           </div>
           <button
             onClick={() => setIsSidebarOpen(false)}
-            className="md:hidden text-slate-400"
+            className="md:hidden text-slate-500 dark:text-slate-400"
           >
             <Icons.X size={24} />
           </button>
@@ -124,8 +124,8 @@ const PartnerLayout = () => {
                 }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   isActive
-                    ? "bg-primary-600 text-white shadow-lg shadow-primary-900/50"
-                    : "text-slate-400 hover:bg-white/5 hover:text-white"
+                    ? "bg-primary-600 text-slate-900 dark:text-white shadow-lg shadow-primary-900/50"
+                    : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
                 }`}
               >
                 <item.icon size={20} />
@@ -136,7 +136,7 @@ const PartnerLayout = () => {
         </nav>
 
         {/* DEV: Role Switcher */}
-        <div className="px-4 py-4 mt-4 border-t border-white/5">
+        <div className="px-4 py-4 mt-4 border-t border-black/5 dark:border-white/5">
           <p className="text-[10px] text-slate-500 font-bold uppercase mb-2">
             Simüle Modu (Dev)
           </p>
@@ -145,8 +145,8 @@ const PartnerLayout = () => {
               onClick={() => setRole("parking")}
               className={`p-2 rounded-lg text-xs font-bold ${
                 role === "parking"
-                  ? "bg-primary-500 text-white"
-                  : "bg-slate-800 text-slate-400"
+                  ? "bg-primary-500 text-slate-900 dark:text-white"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
               }`}
             >
               Oto
@@ -155,8 +155,8 @@ const PartnerLayout = () => {
               onClick={() => setRole("valet")}
               className={`p-2 rounded-lg text-xs font-bold ${
                 role === "valet"
-                  ? "bg-emerald-500 text-white"
-                  : "bg-slate-800 text-slate-400"
+                  ? "bg-emerald-500 text-slate-900 dark:text-white"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
               }`}
             >
               Vale
@@ -165,8 +165,8 @@ const PartnerLayout = () => {
               onClick={() => setRole("mechanic")}
               className={`p-2 rounded-lg text-xs font-bold ${
                 role === "mechanic"
-                  ? "bg-orange-500 text-white"
-                  : "bg-slate-800 text-slate-400"
+                  ? "bg-orange-500 text-slate-900 dark:text-white"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
               }`}
             >
               Usta
@@ -194,10 +194,10 @@ const PartnerLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 relative bg-slate-950">
+      <main className="flex-1 md:ml-64 relative bg-slate-50 dark:bg-slate-950">
         {/* Header for Mobile */}
-        <div className="md:hidden p-4 border-b border-white/5 flex items-center justify-between bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
-          <button onClick={() => setIsSidebarOpen(true)} className="text-white">
+        <div className="md:hidden p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
+          <button onClick={() => setIsSidebarOpen(true)} className="text-slate-900 dark:text-white">
             <Icons.Menu size={24} />
           </button>
           <span className="font-bold">
@@ -225,7 +225,7 @@ const PartnerLayout = () => {
                 }`}>
                   {currentUser.verification_status === "pending" ? "BAŞVURUNUZ İNCELENİYOR" : "BAŞVURUNUZ REDDEDİLDİ"}
                 </p>
-                <p className="text-[11px] text-slate-400 font-medium">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                   {currentUser.verification_status === "pending" 
                     ? "Belgeleriniz admin ekibimiz tarafından kontrol ediliyor. Bu süreçte bazı özellikler kısıtlı olabilir."
                     : `Red Nedeni: ${currentUser.rejection_reason || "Belgelerdeki eksiklik veya tutarsızlık."}`}

@@ -47,7 +47,7 @@ const KVKKPolicyModal = ({ show, t, onAgree }) => {
           </div>
           <button
             onClick={onAgree}
-            className="w-full bg-primary-600 text-white py-3 rounded-xl font-bold hover:bg-primary-700 transition flex items-center justify-center gap-2 shadow-lg shadow-primary-600/50 font-sans"
+            className="w-full bg-primary-600 text-slate-900 dark:text-white py-3 rounded-xl font-bold hover:bg-primary-700 transition flex items-center justify-center gap-2 shadow-lg shadow-primary-600/50 font-sans"
           >
             <Icons.ClipboardCheck size={18} /> {t.kvkkAgree}
           </button>

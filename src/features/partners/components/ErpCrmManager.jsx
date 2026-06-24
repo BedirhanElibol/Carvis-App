@@ -144,39 +144,39 @@ const ErpCrmManager = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* SaaS ERP Header Dashboard */}
-      <div className="glass-card p-8 rounded-[2rem] border border-white/5 bg-gradient-to-br from-emerald-500/10 to-teal-500/5 relative overflow-hidden">
+      <div className="glass-card p-8 rounded-[2rem] border border-black/5 dark:border-white/5 bg-gradient-to-br from-emerald-500/10 to-teal-500/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-          <Icons.Layers size={180} className="text-white" />
+          <Icons.Layers size={180} className="text-slate-900 dark:text-white" />
         </div>
         <div className="relative z-10 max-w-2xl">
           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/20">
             B2B ERP & CRM Sistemi
           </span>
-          <h2 className="text-3xl font-black tracking-tight text-white uppercase mt-4 mb-2 font-sans">
+          <h2 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase mt-4 mb-2 font-sans">
             Gelişmiş Servis & Stok Yönetimi
           </h2>
-          <p className="text-slate-400 text-sm font-semibold leading-relaxed">
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold leading-relaxed">
             Müşteri randevularınızı takip edin, yedek parça ve yağ envanterinizi yönetin ve tamamlanan siparişler için tek tıkla profesyonel A4 PDF fatura ihraç edin.
           </p>
         </div>
 
         {/* Dynamic ERP Subtabs */}
-        <div className="flex gap-2 mt-8 bg-black/20 p-1 rounded-xl border border-white/5 w-fit">
+        <div className="flex gap-2 mt-8 bg-black/20 p-1 rounded-xl border border-black/5 dark:border-white/5 w-fit">
           <button 
             onClick={() => setActiveSubTab("calendar")}
-            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'calendar' ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'calendar' ? 'bg-emerald-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
           >
             <Icons.Calendar size={12} /> Randevu Takvimi
           </button>
           <button 
             onClick={() => setActiveSubTab("inventory")}
-            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'inventory' ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'inventory' ? 'bg-emerald-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
           >
             <Icons.Archive size={12} /> Stok Envanteri
           </button>
           <button 
             onClick={() => setActiveSubTab("billing")}
-            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'billing' ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'billing' ? 'bg-emerald-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
           >
             <Icons.FileText size={12} /> Fatura & Muhasebe
           </button>
@@ -196,7 +196,7 @@ const ErpCrmManager = () => {
             {calendarSessions.map((session) => (
               <div 
                 key={session.id} 
-                className="glass-card p-6 rounded-3xl border border-white/5 bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col justify-between"
+                className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex justify-between items-center mb-4">
@@ -208,17 +208,17 @@ const ErpCrmManager = () => {
                         ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
                         : session.status === 'in-progress'
                           ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                          : 'bg-white/5 text-slate-400 border border-white/5'
+                          : 'bg-black/5 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-black/5 dark:border-white/5'
                     }`}>
                       {session.status === 'completed' ? 'TAMAMLANDI' : session.status === 'in-progress' ? 'İŞLEMDE' : 'SIRADA'}
                     </span>
                   </div>
 
                   <div className="text-[9px] font-black uppercase tracking-widest text-emerald-400">{session.plate}</div>
-                  <h3 className="text-lg font-black text-white uppercase mt-1 mb-2 font-sans tracking-tight">
+                  <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase mt-1 mb-2 font-sans tracking-tight">
                     {session.client}
                   </h3>
-                  <div className="text-xs font-black text-slate-300 uppercase tracking-wider mb-2">
+                  <div className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">
                     {session.car}
                   </div>
                   <p className="text-slate-500 text-xs font-semibold">
@@ -229,7 +229,7 @@ const ErpCrmManager = () => {
                 {session.status !== 'completed' && (
                   <button 
                     onClick={() => showAlert("Başarılı", "İşlem başarıyla başlatıldı/tamamlandı.", "success")}
-                    className="w-full mt-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                    className="w-full mt-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
                   >
                     GÜNCELLE
                   </button>
@@ -250,23 +250,23 @@ const ErpCrmManager = () => {
           >
             {/* Search and Controls */}
             <div className="flex gap-4">
-              <div className="flex-1 bg-black/20 border border-white/5 rounded-2xl flex items-center px-4">
+              <div className="flex-1 bg-black/20 border border-black/5 dark:border-white/5 rounded-2xl flex items-center px-4">
                 <Icons.Search size={16} className="text-slate-500 mr-2" />
                 <input 
                   type="text" 
                   placeholder="Yedek parça adı veya kodu ile arayın..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent border-0 outline-none text-xs font-semibold text-white w-full py-4 uppercase tracking-wider"
+                  className="bg-transparent border-0 outline-none text-xs font-semibold text-slate-900 dark:text-white w-full py-4 uppercase tracking-wider"
                 />
               </div>
             </div>
 
             {/* Stock List */}
-            <div className="glass-card rounded-[2rem] border border-white/5 bg-slate-900/40 overflow-hidden">
+            <div className="glass-card rounded-[2rem] border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/40 overflow-hidden">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-white/5 bg-black/10 text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                  <tr className="border-b border-black/5 dark:border-white/5 bg-black/10 text-[9px] font-black text-slate-500 uppercase tracking-widest">
                     <th className="p-6">Ürün Detayı</th>
                     <th className="p-6">Kod</th>
                     <th className="p-6">Kategori</th>
@@ -279,10 +279,10 @@ const ErpCrmManager = () => {
                   {filteredStock.map((item) => {
                     const isCritical = item.qty <= item.minQty;
                     return (
-                      <tr key={item.id} className="hover:bg-white/5 transition-all">
-                        <td className="p-6 font-black text-white uppercase tracking-tight text-xs">{item.name}</td>
-                        <td className="p-6 text-xs text-slate-400 font-bold uppercase tracking-wider">{item.code}</td>
-                        <td className="p-6 text-xs text-slate-400 font-bold uppercase">{item.category}</td>
+                      <tr key={item.id} className="hover:bg-black/5 dark:bg-white/5 transition-all">
+                        <td className="p-6 font-black text-slate-900 dark:text-white uppercase tracking-tight text-xs">{item.name}</td>
+                        <td className="p-6 text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">{item.code}</td>
+                        <td className="p-6 text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">{item.category}</td>
                         <td className="p-6">
                           <div className="flex items-center gap-3">
                             <span className={`text-xs font-black ${isCritical ? 'text-red-400' : 'text-emerald-400'}`}>
@@ -295,18 +295,18 @@ const ErpCrmManager = () => {
                             )}
                           </div>
                         </td>
-                        <td className="p-6 text-xs font-black text-white">₺{item.unitPrice.toLocaleString("tr-TR")}</td>
+                        <td className="p-6 text-xs font-black text-slate-900 dark:text-white">₺{item.unitPrice.toLocaleString("tr-TR")}</td>
                         <td className="p-6 text-right">
                           <div className="inline-flex gap-2">
                             <button 
                               onClick={() => handleAdjustStock(item.id, "sub")}
-                              className="p-2 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-lg border border-white/5 transition-all"
+                              className="p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg border border-black/5 dark:border-white/5 transition-all"
                             >
                               <Icons.Minus size={12} />
                             </button>
                             <button 
                               onClick={() => handleAdjustStock(item.id, "add")}
-                              className="p-2 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white rounded-lg border border-white/5 transition-all"
+                              className="p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg border border-black/5 dark:border-white/5 transition-all"
                             >
                               <Icons.Plus size={12} />
                             </button>
@@ -333,7 +333,7 @@ const ErpCrmManager = () => {
             {completedInvoices.map((invoice) => (
               <div 
                 key={invoice.id}
-                className="glass-card p-6 rounded-3xl border border-white/5 bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+                className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
@@ -344,15 +344,15 @@ const ErpCrmManager = () => {
                       <Icons.Clock size={10} /> {invoice.date}
                     </span>
                   </div>
-                  <h3 className="text-xl font-black text-white uppercase font-sans tracking-tight">
+                  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase font-sans tracking-tight">
                     {invoice.client} <span className="text-slate-500 text-xs font-semibold">({invoice.plate})</span>
                   </h3>
-                  <p className="text-slate-400 text-xs font-bold mt-1 uppercase tracking-wide">
+                  <p className="text-slate-500 dark:text-slate-400 text-xs font-bold mt-1 uppercase tracking-wide">
                     {invoice.service}
                   </p>
                   <div className="flex flex-wrap gap-1.5 mt-3">
                     {invoice.partsUsed.map((part, idx) => (
-                      <span key={idx} className="text-[9px] font-black text-slate-500 uppercase tracking-wider bg-black/20 px-2.5 py-1 rounded-lg border border-white/5">
+                      <span key={idx} className="text-[9px] font-black text-slate-500 uppercase tracking-wider bg-black/20 px-2.5 py-1 rounded-lg border border-black/5 dark:border-white/5">
                         {part}
                       </span>
                     ))}
@@ -360,12 +360,12 @@ const ErpCrmManager = () => {
                 </div>
 
                 <div className="flex flex-col md:items-end gap-3 min-w-[200px]">
-                  <div className="text-2xl font-black text-white tracking-tight">
+                  <div className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
                     ₺{invoice.amount.toLocaleString("tr-TR")}
                   </div>
                   <button 
                     onClick={() => handleExportPDF(invoice)}
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.2)] active-scale transition-all"
+                    className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.2)] active-scale transition-all"
                   >
                     <Icons.Download size={12} /> FATURA PDF İNDİR
                   </button>

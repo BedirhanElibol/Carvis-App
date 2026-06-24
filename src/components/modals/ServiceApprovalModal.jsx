@@ -54,15 +54,15 @@ const ServiceApprovalModal = ({ isOpen, onClose, orderId, orderAmount }) => {
           className="glass-card w-full max-w-xl overflow-hidden relative"
         >
           {/* Header */}
-          <div className="p-8 border-b border-white/5 bg-white/5">
+          <div className="p-8 border-b border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5">
              <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-3">
                    <div className="p-3 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
                       <Icons.ShieldCheck size={24} className="text-emerald-400" />
                    </div>
-                   <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Hizmet Onayı</h2>
+                   <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Hizmet Onayı</h2>
                 </div>
-                <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+                <button onClick={onClose} className="text-slate-500 hover:text-slate-900 dark:text-white transition-colors">
                    <Icons.X size={24} />
                 </button>
              </div>
@@ -82,30 +82,30 @@ const ServiceApprovalModal = ({ isOpen, onClose, orderId, orderAmount }) => {
                 <div className="space-y-6">
                    <div className="grid grid-cols-2 gap-4">
                       {proof.photo_urls.map((url, i) => (
-                         <img key={i} src={url} className="w-full h-48 object-cover rounded-2xl border border-white/10" alt="Hizmet Kanıtı" />
+                         <img key={i} src={url} className="w-full h-48 object-cover rounded-2xl border border-black/10 dark:border-white/10" alt="Hizmet Kanıtı" />
                       ))}
                    </div>
-                   <div className="p-6 bg-white/5 rounded-2xl border border-white/5">
+                   <div className="p-6 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5">
                       <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-2">Usta Notu</p>
-                      <p className="text-sm text-slate-300 font-medium leading-relaxed italic">"{proof.description}"</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed italic">"{proof.description}"</p>
                    </div>
                 </div>
              )}
           </div>
 
           {/* Footer */}
-          <div className="p-8 bg-black/40 border-t border-white/5">
+          <div className="p-8 bg-black/40 border-t border-black/5 dark:border-white/5">
              <div className="flex gap-4">
                 <button 
                   onClick={onClose}
-                  className="flex-1 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-white/10 text-slate-400 hover:bg-white/5 transition-all"
+                  className="flex-1 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-black/10 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 transition-all"
                 >
                    Desteğe Başvur
                 </button>
                 <button 
                   onClick={handleApprove}
                   disabled={!proof || isReleasing}
-                  className="flex-[2] py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-white text-black hover:bg-emerald-500 hover:text-white transition-all shadow-2xl disabled:opacity-30 disabled:grayscale active-scale"
+                  className="flex-[2] py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-white text-black hover:bg-emerald-500 hover:text-slate-900 dark:text-white transition-all shadow-2xl disabled:opacity-30 disabled:grayscale active-scale"
                 >
                    {isReleasing ? "İŞLENİYOR..." : "ONAYLA VE ÖDEMEYİ GÖNDER"}
                 </button>

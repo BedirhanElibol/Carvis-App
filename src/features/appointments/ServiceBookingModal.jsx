@@ -85,15 +85,15 @@ const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked 
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-lg bg-slate-900 rounded-t-[2.5rem] sm:rounded-[2.5rem] overflow-hidden border-t sm:border border-white/10 shadow-2xl animate-in slide-in-from-bottom duration-300">
+      <div className="w-full max-w-lg bg-white dark:bg-slate-900 rounded-t-[2.5rem] sm:rounded-[2.5rem] overflow-hidden border-t sm:border border-black/10 dark:border-white/10 shadow-2xl animate-in slide-in-from-bottom duration-300">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-xl font-bold text-white">Randevu Planla</h2>
-              <p className="text-sm text-slate-400">{serviceType}</p>
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Randevu Planla</h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400">{serviceType}</p>
             </div>
-            <button onClick={onClose} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
-              <Icons.X size={20} className="text-slate-400" />
+            <button onClick={onClose} className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center">
+              <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
             </button>
           </div>
 
@@ -107,8 +107,8 @@ const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked 
                   onClick={() => setSelectedDate(date)}
                   className={`flex flex-col items-center min-w-[4.5rem] p-4 rounded-2xl transition-all ${
                     isSameDay(selectedDate, date) 
-                    ? "bg-primary-500 text-white shadow-lg shadow-primary-500/25 scale-105" 
-                    : "bg-white/5 text-slate-400 hover:bg-white/10"
+                    ? "bg-primary-500 text-slate-900 dark:text-white shadow-lg shadow-primary-500/25 scale-105" 
+                    : "bg-black/5 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:bg-black/10 dark:bg-white/10"
                   }`}
                 >
                   <span className="text-[10px] uppercase font-bold opacity-60 mb-1">{format(date, "EEE", { locale: tr })}</span>
@@ -123,7 +123,7 @@ const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked 
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 block">Müsait Saatler</label>
             {loading ? (
               <div className="flex gap-2 animate-pulse">
-                {[1, 2, 3, 4].map(i => <div key={i} className="h-10 w-20 bg-white/5 rounded-xl" />)}
+                {[1, 2, 3, 4].map(i => <div key={i} className="h-10 w-20 bg-black/5 dark:bg-white/5 rounded-xl" />)}
               </div>
             ) : availableTimes.length > 0 ? (
               <div className="grid grid-cols-4 gap-2">
@@ -134,7 +134,7 @@ const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked 
                     className={`p-3 rounded-xl text-sm font-bold transition-all ${
                       selectedTime === time 
                       ? "bg-white text-slate-900 scale-105" 
-                      : "bg-white/5 text-slate-300 hover:bg-white/10"
+                      : "bg-black/5 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:bg-black/10 dark:bg-white/10"
                     }`}
                   >
                     {time}
@@ -152,7 +152,7 @@ const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked 
           <button
             onClick={handleBooking}
             disabled={!selectedTime || bookingLoading}
-            className="w-full py-4 rounded-2xl bg-primary-500 text-white font-bold text-lg shadow-xl shadow-primary-500/20 active-scale disabled:opacity-50 disabled:grayscale transition-all flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-2xl bg-primary-500 text-slate-900 dark:text-white font-bold text-lg shadow-xl shadow-primary-500/20 active-scale disabled:opacity-50 disabled:grayscale transition-all flex items-center justify-center gap-2"
           >
             {bookingLoading ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />

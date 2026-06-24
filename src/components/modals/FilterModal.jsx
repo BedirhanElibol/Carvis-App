@@ -40,8 +40,8 @@ const FilterModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 z-[200] flex items-end sm:items-center justify-center backdrop-blur-md animate-in fade-in duration-300">
-      <div className="bg-slate-900 w-full sm:w-[450px] rounded-t-[3rem] sm:rounded-[3rem] p-8 shadow-[0_20px_100px_rgba(0,0,0,0.8)] animate-in slide-in-from-bottom-full duration-500 border-t sm:border border-white/10 relative overflow-hidden">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 z-[200] flex items-end sm:items-center justify-center backdrop-blur-md animate-in fade-in duration-300">
+      <div className="bg-white dark:bg-slate-900 w-full sm:w-[450px] rounded-t-[3rem] sm:rounded-[3rem] p-8 shadow-[0_20px_100px_rgba(0,0,0,0.8)] animate-in slide-in-from-bottom-full duration-500 border-t sm:border border-black/10 dark:border-white/10 relative overflow-hidden">
         {/* Background Glow */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
 
@@ -51,7 +51,7 @@ const FilterModal = ({
               <Icons.Filter size={24} className="text-primary-500" />
             </div>
             <div>
-              <h3 className="font-black text-2xl text-white tracking-tighter uppercase font-sans">
+              <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter uppercase font-sans">
                 {t.filterTitle}
               </h3>
               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-1 font-sans">
@@ -61,9 +61,9 @@ const FilterModal = ({
           </div>
           <button
             onClick={onClose}
-            className="bg-white/5 p-3 rounded-2xl hover:bg-white/10 transition-all active-scale border border-white/5"
+            className="bg-black/5 dark:bg-white/5 p-3 rounded-2xl hover:bg-black/10 dark:bg-white/10 transition-all active-scale border border-black/5 dark:border-white/5"
           >
-            <Icons.X size={20} className="text-white" />
+            <Icons.X size={20} className="text-slate-900 dark:text-white" />
           </button>
         </div>
 
@@ -84,12 +84,12 @@ const FilterModal = ({
                       model: "",
                     })
                   }
-                  className="w-full bg-slate-950 border border-white/10 rounded-2xl p-4 outline-none text-xs font-bold text-white focus:ring-2 focus:ring-primary-500 transition-all appearance-none cursor-pointer font-sans"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4 outline-none text-xs font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-primary-500 transition-all appearance-none cursor-pointer font-sans"
                 >
                   <option
                     value=""
                     disabled
-                    className="bg-slate-900 text-slate-500"
+                    className="bg-white dark:bg-slate-900 text-slate-500"
                   >
                     MARKA SEÇ
                   </option>
@@ -97,7 +97,7 @@ const FilterModal = ({
                     <option
                       key={b}
                       value={b === "Filtresiz" ? "" : b}
-                      className="bg-slate-900 text-white"
+                      className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
                     >
                       {b}
                     </option>
@@ -115,7 +115,7 @@ const FilterModal = ({
                 onChange={(e) =>
                   setTempFilters({ ...tempFilters, model: e.target.value })
                 }
-                className="w-full bg-slate-950 border border-white/10 rounded-2xl p-4 outline-none text-xs font-bold text-white focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600 font-sans"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4 outline-none text-xs font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600 font-sans"
               />
             </div>
           </div>
@@ -126,7 +126,7 @@ const FilterModal = ({
               {t.price} Aralığı (₺)
             </p>
             <div className="flex gap-4">
-              <div className="flex-1 bg-slate-950 border border-white/10 rounded-2xl p-4 focus-within:ring-2 focus-within:ring-primary-500 transition-all">
+              <div className="flex-1 bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4 focus-within:ring-2 focus-within:ring-primary-500 transition-all">
                 <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">
                   {t.minPrice}
                 </p>
@@ -137,10 +137,10 @@ const FilterModal = ({
                     setTempFilters({ ...tempFilters, min: e.target.value })
                   }
                   placeholder="0"
-                  className="bg-transparent w-full outline-none text-sm font-bold text-white placeholder:text-slate-800"
+                  className="bg-transparent w-full outline-none text-sm font-bold text-slate-900 dark:text-white placeholder:text-slate-800"
                 />
               </div>
-              <div className="flex-1 bg-slate-950 border border-white/10 rounded-2xl p-4 focus-within:ring-2 focus-within:ring-primary-500 transition-all">
+              <div className="flex-1 bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4 focus-within:ring-2 focus-within:ring-primary-500 transition-all">
                 <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">
                   {t.maxPrice}
                 </p>
@@ -151,7 +151,7 @@ const FilterModal = ({
                     setTempFilters({ ...tempFilters, max: e.target.value })
                   }
                   placeholder="99.999"
-                  className="bg-transparent w-full outline-none text-sm font-bold text-white placeholder:text-slate-800"
+                  className="bg-transparent w-full outline-none text-sm font-bold text-slate-900 dark:text-white placeholder:text-slate-800"
                 />
               </div>
             </div>
@@ -165,27 +165,27 @@ const FilterModal = ({
             className={`flex items-center justify-between p-5 rounded-3xl border transition-all cursor-pointer active-scale group ${
               tempFilters.stock
                 ? "bg-primary-600/10 border-primary-500/50"
-                : "bg-white/5 border-white/5 hover:bg-white/10"
+                : "bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 hover:bg-black/10 dark:bg-white/10"
             }`}
           >
             <div className="flex items-center gap-4">
               <div
                 className={`p-2 rounded-xl transition-all ${
                   tempFilters.stock
-                    ? "bg-primary-500 text-white shadow-lg shadow-primary-900/40"
-                    : "bg-slate-800 text-slate-500"
+                    ? "bg-primary-500 text-slate-900 dark:text-white shadow-lg shadow-primary-900/40"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-500"
                 }`}
               >
                 <Icons.CircleCheck size={20} />
               </div>
               <span
-                className={`text-sm font-bold uppercase tracking-tight transition-all ${tempFilters.stock ? "text-white" : "text-slate-400"}`}
+                className={`text-sm font-bold uppercase tracking-tight transition-all ${tempFilters.stock ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-400"}`}
               >
                 {t.onlyInStock}
               </span>
             </div>
             <div
-              className={`w-10 h-5 rounded-full relative transition-all ${tempFilters.stock ? "bg-primary-600" : "bg-slate-800"}`}
+              className={`w-10 h-5 rounded-full relative transition-all ${tempFilters.stock ? "bg-primary-600" : "bg-slate-100 dark:bg-slate-800"}`}
             >
               <div
                 className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${tempFilters.stock ? "left-6 shadow-md" : "left-1"}`}
@@ -197,7 +197,7 @@ const FilterModal = ({
         <div className="flex gap-4 mt-12 relative z-10">
           <button
             onClick={handleClear}
-            className="flex-1 bg-slate-950 text-slate-500 py-5 rounded-[1.8rem] font-black text-[10px] uppercase tracking-[0.2em] border border-white/5 hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all active-scale flex items-center justify-center gap-2 font-sans"
+            className="flex-1 bg-slate-50 dark:bg-slate-950 text-slate-500 py-5 rounded-[1.8rem] font-black text-[10px] uppercase tracking-[0.2em] border border-black/5 dark:border-white/5 hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all active-scale flex items-center justify-center gap-2 font-sans"
           >
             <Icons.Trash2 size={16} /> {t.clear}
           </button>

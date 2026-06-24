@@ -26,11 +26,11 @@ const ParkingProfileForm = ({ data, onUpdate }) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary-400">
+        <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary-400">
           <Icons.SquareParking size={20} />
         </div>
         <div>
-          <h2 className="text-lg font-black text-white uppercase tracking-tight">Otopark İşletme Bilgileri</h2>
+          <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Otopark İşletme Bilgileri</h2>
           <p className="text-sm text-slate-500 font-sans">Kapasite ve tesis özellikleri yönetimi</p>
         </div>
       </div>
@@ -42,20 +42,20 @@ const ParkingProfileForm = ({ data, onUpdate }) => {
             type="text"
             value={parkingData.parking_name}
             onChange={(e) => handleChange("parking_name", e.target.value)}
-            className="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-4 py-3 text-sm text-white outline-none font-sans"
+            className="w-full bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white outline-none font-sans"
             placeholder="Örn: Merkez AVM Kapalı Otopark"
           />
         </label>
 
         <label className="space-y-2">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Saatlik Ücret</span>
-          <div className="flex items-center gap-3 bg-slate-900/80 border border-white/10 rounded-2xl px-4 py-3">
+          <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
             <Icons.Tag size={18} className="text-primary-400" />
             <input
               type="number"
               value={parkingData.price_per_hour}
               onChange={(e) => handleChange("price_per_hour", Number(e.target.value))}
-              className="w-full bg-transparent text-sm text-white outline-none font-sans"
+              className="w-full bg-transparent text-sm text-slate-900 dark:text-white outline-none font-sans"
             />
             <span className="text-xs text-slate-500 font-bold uppercase">TRY</span>
           </div>
@@ -68,7 +68,7 @@ const ParkingProfileForm = ({ data, onUpdate }) => {
               type="number"
               value={parkingData.total_capacity}
               onChange={(e) => handleChange("total_capacity", Number(e.target.value))}
-              className="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-4 py-3 text-sm text-white outline-none font-sans text-center"
+              className="w-full bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white outline-none font-sans text-center"
             />
           </label>
           <label className="space-y-2">
@@ -77,7 +77,7 @@ const ParkingProfileForm = ({ data, onUpdate }) => {
               type="number"
               value={parkingData.occupied_count}
               onChange={(e) => handleChange("occupied_count", Number(e.target.value))}
-              className="w-full bg-slate-900/80 border border-emerald-500/20 text-emerald-400 rounded-2xl px-4 py-3 text-sm outline-none font-sans text-center"
+              className="w-full bg-white dark:bg-slate-900/80 border border-emerald-500/20 text-emerald-400 rounded-2xl px-4 py-3 text-sm outline-none font-sans text-center"
             />
           </label>
         </div>
@@ -97,7 +97,7 @@ const ParkingProfileForm = ({ data, onUpdate }) => {
               className={`p-4 rounded-2xl border transition-all flex flex-col items-center justify-center gap-2 text-center group ${
                 parkingData[item.key]
                   ? "bg-primary-500/10 border-primary-500/40 text-primary-400"
-                  : "bg-slate-800/50 border-white/5 text-slate-500 hover:border-white/10"
+                  : "bg-slate-100 dark:bg-slate-800/50 border-black/5 dark:border-white/5 text-slate-500 hover:border-black/10 dark:border-white/10"
               }`}
             >
               <item.icon size={18} />
@@ -111,7 +111,7 @@ const ParkingProfileForm = ({ data, onUpdate }) => {
           <textarea
             value={parkingData.address_text}
             onChange={(e) => handleChange("address_text", e.target.value)}
-            className="w-full bg-slate-900/80 border border-white/10 rounded-3xl px-6 py-4 text-sm text-white outline-none min-h-[80px] font-sans resize-none"
+            className="w-full bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-3xl px-6 py-4 text-sm text-slate-900 dark:text-white outline-none min-h-[80px] font-sans resize-none"
             placeholder="Sokak, Mahalle ve Kapı No..."
           />
         </label>

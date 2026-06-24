@@ -79,23 +79,23 @@ const PackageStore = () => {
           key={pkg.id}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-card rounded-[2.5rem] border border-white/10 overflow-hidden relative group shadow-2xl"
+          className="glass-card rounded-[2.5rem] border border-black/10 dark:border-white/10 overflow-hidden relative group shadow-2xl"
         >
           {/* Header Image/Gradient */}
           <div className="h-32 bg-gradient-to-br from-primary-600/40 to-accent-600/40 relative">
             <div className="absolute inset-0 backdrop-blur-sm"></div>
             <div className="absolute bottom-4 left-6 flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
-                <Icons.Package size={24} className="text-white" />
+              <div className="w-12 h-12 rounded-2xl bg-black/10 dark:bg-white/10 backdrop-blur-md border border-black/20 dark:border-white/20 flex items-center justify-center">
+                <Icons.Package size={24} className="text-slate-900 dark:text-white" />
               </div>
               <div>
-                <h4 className="font-black text-xl text-white tracking-tight leading-none">{pkg.name}</h4>
-                <p className="text-[10px] text-white/60 font-black uppercase tracking-widest mt-1">
+                <h4 className="font-black text-xl text-slate-900 dark:text-white tracking-tight leading-none">{pkg.name}</h4>
+                <p className="text-[10px] text-slate-900 dark:text-white/60 font-black uppercase tracking-widest mt-1">
                   {pkg.partners?.full_name || "Yetkili Servis"}
                 </p>
               </div>
             </div>
-            <div className="absolute top-4 right-6 bg-slate-950/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+            <div className="absolute top-4 right-6 bg-slate-50 dark:bg-slate-950/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10">
               <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">
                 {pkg.validity_months} AY GEÇERLİ
               </span>
@@ -103,27 +103,27 @@ const PackageStore = () => {
           </div>
 
           <div className="p-6 space-y-4">
-            <p className="text-xs text-slate-400 leading-relaxed font-sans">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
               {pkg.description || "Bu paket ile aracınızın periyodik bakımlarını ve ihtiyaçlarını indirimli fiyatlarla karşılayabilirsiniz."}
             </p>
 
             {/* Included Services Tags */}
             <div className="flex flex-wrap gap-2">
               {Array.isArray(pkg.included_services) ? pkg.included_services.map((svc, i) => (
-                <span key={i} className="text-[9px] font-black bg-white/5 text-slate-400 px-3 py-1.5 rounded-lg border border-white/5 uppercase tracking-tighter">
+                <span key={i} className="text-[9px] font-black bg-black/5 dark:bg-white/5 text-slate-500 dark:text-slate-400 px-3 py-1.5 rounded-lg border border-black/5 dark:border-white/5 uppercase tracking-tighter">
                   ✓ {svc.replace('_', ' ')}
                 </span>
               )) : (
-                 <span className="text-[9px] font-black bg-white/5 text-slate-400 px-3 py-1.5 rounded-lg border border-white/5 uppercase tracking-tighter">
+                 <span className="text-[9px] font-black bg-black/5 dark:bg-white/5 text-slate-500 dark:text-slate-400 px-3 py-1.5 rounded-lg border border-black/5 dark:border-white/5 uppercase tracking-tighter">
                   Tam Bakım Paketi
                 </span>
               )}
             </div>
 
-            <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+            <div className="pt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
               <div>
                 <span className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">FİYAT</span>
-                <span className="text-2xl font-black text-white">{pkg.price} ₺</span>
+                <span className="text-2xl font-black text-slate-900 dark:text-white">{pkg.price} ₺</span>
               </div>
               <button
                 onClick={() => handleBuy(pkg)}
@@ -139,7 +139,7 @@ const PackageStore = () => {
       ))}
 
       {packages.length === 0 && (
-        <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-dashed border-white/10">
+        <div className="text-center py-20 bg-black/5 dark:bg-white/5 rounded-[2.5rem] border border-dashed border-black/10 dark:border-white/10">
           <Icons.Inbox size={40} className="mx-auto text-slate-600 mb-4" />
           <p className="text-sm font-bold text-slate-500">Şu an aktif servis paketi bulunmamaktadır.</p>
         </div>

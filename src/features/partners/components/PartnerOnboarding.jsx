@@ -359,7 +359,7 @@ const PartnerOnboarding = ({ onComplete }) => {
   const currentPlans = planDetails[profession] || planDetails.parking;
 
   return (
-    <div className="glass-card p-10 rounded-[3rem] border border-white/5 bg-slate-900/50 shadow-2xl relative overflow-hidden max-w-4xl mx-auto">
+    <div className="glass-card p-10 rounded-[3rem] border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 shadow-2xl relative overflow-hidden max-w-4xl mx-auto">
       {/* Background decorations */}
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary-600/10 rounded-full blur-[80px] pointer-events-none"></div>
       <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-600/10 rounded-full blur-[80px] pointer-events-none"></div>
@@ -369,11 +369,11 @@ const PartnerOnboarding = ({ onComplete }) => {
         {[1, 2, 3].map((s) => (
           <div key={s} className="flex items-center gap-2">
             <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black transition-all ${
-              step >= s ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'bg-white/5 text-slate-500 border border-white/5'
+              step >= s ? 'bg-primary-600 text-slate-900 dark:text-white shadow-lg shadow-primary-600/20' : 'bg-black/5 dark:bg-white/5 text-slate-500 border border-black/5 dark:border-white/5'
             }`}>
               {s}
             </div>
-            {s < 3 && <div className={`w-12 h-0.5 rounded-full transition-all ${step > s ? 'bg-primary-600' : 'bg-white/5'}`}></div>}
+            {s < 3 && <div className={`w-12 h-0.5 rounded-full transition-all ${step > s ? 'bg-primary-600' : 'bg-black/5 dark:bg-white/5'}`}></div>}
           </div>
         ))}
       </div>
@@ -390,10 +390,10 @@ const PartnerOnboarding = ({ onComplete }) => {
           >
             <div>
               <span className="text-[9px] font-black tracking-widest text-primary-400 uppercase">AŞAMA 1</span>
-              <h2 className="text-3xl font-black text-white uppercase tracking-tight mt-1 mb-2 font-sans">
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1 mb-2 font-sans">
                 Mesleğinizi Seçin
               </h2>
-              <p className="text-slate-400 text-xs font-semibold max-w-md mx-auto leading-relaxed">
+              <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold max-w-md mx-auto leading-relaxed">
                 Carvis ekosisteminde hangi rolde gelir kazanıp hizmet sunmak istediğinizi belirtin.
               </p>
             </div>
@@ -409,14 +409,14 @@ const PartnerOnboarding = ({ onComplete }) => {
                     className={`p-6 rounded-3xl border transition-all text-left flex items-start gap-4 ${prof.border} ${
                       isSelected 
                         ? 'border-primary-500 bg-primary-500/5 shadow-[0_0_15px_rgba(37,99,235,0.05)]' 
-                        : 'border-white/5 bg-slate-950/30'
+                        : 'border-black/5 dark:border-white/5 bg-slate-50 dark:bg-slate-950/30'
                     }`}
                   >
-                    <div className={`p-3 rounded-2xl bg-black/20 text-white border border-white/5`}>
+                    <div className={`p-3 rounded-2xl bg-black/20 text-slate-900 dark:text-white border border-black/5 dark:border-white/5`}>
                       <Icon size={20} />
                     </div>
                     <div>
-                      <h4 className="font-black text-white text-base tracking-tight uppercase font-sans">{prof.title}</h4>
+                      <h4 className="font-black text-slate-900 dark:text-white text-base tracking-tight uppercase font-sans">{prof.title}</h4>
                       <p className="text-slate-500 text-xs font-semibold leading-relaxed mt-1">{prof.desc}</p>
                     </div>
                   </button>
@@ -427,7 +427,7 @@ const PartnerOnboarding = ({ onComplete }) => {
             <div className="pt-6 flex justify-end">
               <button 
                 onClick={handleNext}
-                className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(37,99,235,0.2)] active-scale"
+                className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(37,99,235,0.2)] active-scale"
               >
                 DEVAM ET
               </button>
@@ -446,10 +446,10 @@ const PartnerOnboarding = ({ onComplete }) => {
           >
             <div>
               <span className="text-[9px] font-black tracking-widest text-primary-400 uppercase">AŞAMA 2</span>
-              <h2 className="text-3xl font-black text-white uppercase tracking-tight mt-1 mb-2 font-sans">
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1 mb-2 font-sans">
                 İşletme Bilgileri
               </h2>
-              <p className="text-slate-400 text-xs font-semibold max-w-md mx-auto leading-relaxed">
+              <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold max-w-md mx-auto leading-relaxed">
                 Hizmetlerinizin yayına alınması için resmi ve iletişim bilgilerinizi giriniz.
               </p>
             </div>
@@ -457,42 +457,42 @@ const PartnerOnboarding = ({ onComplete }) => {
             <div className="space-y-4 text-left max-w-md mx-auto">
               <div>
                 <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-2">İşletme veya Ünvan Adı</label>
-                <div className="bg-black/20 border border-white/5 rounded-2xl flex items-center px-4">
+                <div className="bg-black/20 border border-black/5 dark:border-white/5 rounded-2xl flex items-center px-4">
                   <Icons.Briefcase size={16} className="text-slate-500 mr-2" />
                   <input 
                     type="text" 
                     placeholder="Örn: Garaj Otomotiv Ltd. Şti."
                     value={businessName}
                     onChange={(e) => setBusinessName(e.target.value)}
-                    className="bg-transparent border-0 outline-none text-xs font-bold text-white w-full py-4 uppercase tracking-wider"
+                    className="bg-transparent border-0 outline-none text-xs font-bold text-slate-900 dark:text-white w-full py-4 uppercase tracking-wider"
                   />
                 </div>
               </div>
 
               <div>
                 <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-2">Telefon Numarası</label>
-                <div className="bg-black/20 border border-white/5 rounded-2xl flex items-center px-4">
+                <div className="bg-black/20 border border-black/5 dark:border-white/5 rounded-2xl flex items-center px-4">
                   <Icons.Phone size={16} className="text-slate-500 mr-2" />
                   <input 
                     type="text" 
                     placeholder="Örn: 0555 123 4567"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="bg-transparent border-0 outline-none text-xs font-bold text-white w-full py-4 uppercase tracking-wider"
+                    className="bg-transparent border-0 outline-none text-xs font-bold text-slate-900 dark:text-white w-full py-4 uppercase tracking-wider"
                   />
                 </div>
               </div>
 
               <div>
                 <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-2">Ek Hizmet Açıklaması</label>
-                <div className="bg-black/20 border border-white/5 rounded-2xl flex items-center px-4">
+                <div className="bg-black/20 border border-black/5 dark:border-white/5 rounded-2xl flex items-center px-4">
                   <Icons.FileText size={16} className="text-slate-500 mr-2" />
                   <textarea 
                     placeholder="Sunduğunuz marka ve uzmanlık servisleri hakkında kısa açıklama..."
                     value={details}
                     onChange={(e) => setDetails(e.target.value)}
                     rows={3}
-                    className="bg-transparent border-0 outline-none text-xs font-bold text-white w-full py-4 uppercase tracking-wider resize-none"
+                    className="bg-transparent border-0 outline-none text-xs font-bold text-slate-900 dark:text-white w-full py-4 uppercase tracking-wider resize-none"
                   />
                 </div>
               </div>
@@ -501,13 +501,13 @@ const PartnerOnboarding = ({ onComplete }) => {
             <div className="pt-6 flex justify-between">
               <button 
                 onClick={handleBack}
-                className="px-8 py-3 bg-white/5 border border-white/5 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                className="px-8 py-3 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
               >
                 GERİ DÖN
               </button>
               <button 
                 onClick={handleNext}
-                className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(37,99,235,0.2)] active-scale"
+                className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(37,99,235,0.2)] active-scale"
               >
                 DEVAM ET
               </button>
@@ -526,7 +526,7 @@ const PartnerOnboarding = ({ onComplete }) => {
           >
             <div>
               <span className="text-[9px] font-black tracking-widest text-primary-400 uppercase">AŞAMA 3</span>
-              <h2 className="text-3xl font-black text-white uppercase tracking-tight mt-1 mb-2 font-sans">
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1 mb-2 font-sans">
                 Üyelik Planları & Güven Ağı
               </h2>
               <p className="text-amber-400 font-extrabold text-xs bg-amber-500/10 border border-amber-500/20 px-6 py-3 rounded-2xl max-w-2xl mx-auto leading-relaxed mt-3">
@@ -535,7 +535,7 @@ const PartnerOnboarding = ({ onComplete }) => {
             </div>
 
             {/* Interactive Tab Switcher for Plan Preview */}
-            <div className="flex justify-center gap-2 bg-black/20 p-1.5 rounded-2xl border border-white/5 w-fit mx-auto">
+            <div className="flex justify-center gap-2 bg-black/20 p-1.5 rounded-2xl border border-black/5 dark:border-white/5 w-fit mx-auto">
               {["free", "pro", "premium"].map((tab) => (
                 <button
                   key={tab}
@@ -543,8 +543,8 @@ const PartnerOnboarding = ({ onComplete }) => {
                   onClick={() => setSelectedPlanTab(tab)}
                   className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                     selectedPlanTab === tab
-                      ? "bg-primary-600 text-white shadow-lg shadow-primary-600/15"
-                      : "text-slate-500 hover:text-white"
+                      ? "bg-primary-600 text-slate-900 dark:text-white shadow-lg shadow-primary-600/15"
+                      : "text-slate-500 hover:text-slate-900 dark:text-white"
                   }`}
                 >
                   {tab === "free" ? "Free Tier" : tab === "pro" ? "Pro Plan" : "Premium"}
@@ -553,30 +553,30 @@ const PartnerOnboarding = ({ onComplete }) => {
             </div>
 
             {/* Plan Display Card */}
-            <div className="bg-slate-950 border border-white/5 rounded-3xl p-6 text-left max-w-xl mx-auto relative overflow-hidden transition-all duration-300">
+            <div className="bg-slate-50 dark:bg-slate-950 border border-black/5 dark:border-white/5 rounded-3xl p-6 text-left max-w-xl mx-auto relative overflow-hidden transition-all duration-300">
               <div className="absolute top-6 right-6 px-3 py-1 rounded-xl bg-primary-600/15 border border-primary-500/20 text-primary-400 text-[8px] font-black uppercase tracking-widest">
                 {selectedPlanTab === "free" ? "Başlangıç" : selectedPlanTab === "pro" ? "Hacimli İşler" : "Zirve & Liderlik"}
               </div>
               <span className="text-[9px] font-black tracking-widest text-slate-500 uppercase">ÖNİZLEME</span>
-              <h4 className="text-xl font-black text-white uppercase mt-1 mb-2 font-sans">
+              <h4 className="text-xl font-black text-slate-900 dark:text-white uppercase mt-1 mb-2 font-sans">
                 {currentPlans[selectedPlanTab].title}
               </h4>
-              <p className="text-slate-400 text-xs font-semibold leading-relaxed mb-4">
+              <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold leading-relaxed mb-4">
                 {currentPlans[selectedPlanTab].desc}
               </p>
               
-              <div className="flex flex-wrap gap-4 mb-6 pb-4 border-b border-white/5">
-                <div className="bg-white/5 border border-white/5 px-4 py-2 rounded-2xl">
+              <div className="flex flex-wrap gap-4 mb-6 pb-4 border-b border-black/5 dark:border-white/5">
+                <div className="bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 px-4 py-2 rounded-2xl">
                   <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Sabit Ücret</div>
-                  <div className="text-lg font-black text-white">{currentPlans[selectedPlanTab].price}</div>
+                  <div className="text-lg font-black text-slate-900 dark:text-white">{currentPlans[selectedPlanTab].price}</div>
                 </div>
-                <div className="bg-white/5 border border-white/5 px-4 py-2 rounded-2xl">
+                <div className="bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 px-4 py-2 rounded-2xl">
                   <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Komisyon Oranı</div>
                   <div className="text-lg font-black text-emerald-400">{currentPlans[selectedPlanTab].commission}</div>
                 </div>
               </div>
 
-              <ul className="space-y-2.5 text-xs text-slate-300 font-bold">
+              <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300 font-bold">
                 {currentPlans[selectedPlanTab].features.map((feat, idx) => (
                   <li key={idx} className="flex items-center gap-2">
                     <Icons.Check size={14} className="text-primary-500" />
@@ -593,7 +593,7 @@ const PartnerOnboarding = ({ onComplete }) => {
             </div>
 
             {/* Terms and Conditions / Trust Network Agreement */}
-            <div className="space-y-4 max-w-xl mx-auto bg-black/20 border border-white/5 rounded-3xl p-6 text-left">
+            <div className="space-y-4 max-w-xl mx-auto bg-black/20 border border-black/5 dark:border-white/5 rounded-3xl p-6 text-left">
               <h5 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
                 <Icons.ShieldAlert size={14} className="text-primary-500" /> Güvenlik ve Katılım Koşulları
               </h5>
@@ -604,10 +604,10 @@ const PartnerOnboarding = ({ onComplete }) => {
                   type="checkbox" 
                   checked={acceptedTerms}
                   onChange={(e) => setAcceptedTerms(e.target.checked)}
-                  className="mt-1 w-4 h-4 rounded border-white/10 bg-slate-950 text-primary-600 focus:ring-primary-500/20"
+                  className="mt-1 w-4 h-4 rounded border-black/10 dark:border-white/10 bg-slate-50 dark:bg-slate-950 text-primary-600 focus:ring-primary-500/20"
                 />
                 <div>
-                  <p className="text-xs font-bold text-slate-200 group-hover:text-white transition-colors">
+                  <p className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:text-white transition-colors">
                     Carvis B2B Güven Ağı Katılım Koşulları'nı okudum ve taahhüt ederim.
                   </p>
                   <p className="text-[10px] font-semibold text-slate-500 leading-relaxed mt-0.5">
@@ -624,10 +624,10 @@ const PartnerOnboarding = ({ onComplete }) => {
                   type="checkbox" 
                   checked={acceptedTrust}
                   onChange={(e) => setAcceptedTrust(e.target.checked)}
-                  className="mt-1 w-4 h-4 rounded border-white/10 bg-slate-950 text-primary-600 focus:ring-primary-500/20"
+                  className="mt-1 w-4 h-4 rounded border-black/10 dark:border-white/10 bg-slate-50 dark:bg-slate-950 text-primary-600 focus:ring-primary-500/20"
                 />
                 <div>
-                  <p className="text-xs font-bold text-slate-200 group-hover:text-white transition-colors">
+                  <p className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:text-white transition-colors">
                     Carvis B2B Hizmet Kalitesi ve Sigorta Taahhüdünü onaylıyorum.
                   </p>
                   <p className="text-[10px] font-semibold text-slate-500 leading-relaxed mt-0.5">
@@ -642,10 +642,10 @@ const PartnerOnboarding = ({ onComplete }) => {
                   type="checkbox" 
                   checked={acceptedBank}
                   onChange={(e) => setAcceptedBank(e.target.checked)}
-                  className="mt-1 w-4 h-4 rounded border-white/10 bg-slate-950 text-primary-600 focus:ring-primary-500/20"
+                  className="mt-1 w-4 h-4 rounded border-black/10 dark:border-white/10 bg-slate-50 dark:bg-slate-950 text-primary-600 focus:ring-primary-500/20"
                 />
                 <div>
-                  <p className="text-xs font-bold text-slate-200 group-hover:text-white transition-colors">
+                  <p className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:text-white transition-colors">
                     Hakediş ve Banka Hesap Bilgilerinin Doğruluğunu taahhüt ederim.
                   </p>
                   <p className="text-[10px] font-semibold text-slate-500 leading-relaxed mt-0.5">
@@ -659,17 +659,17 @@ const PartnerOnboarding = ({ onComplete }) => {
               <button 
                 onClick={handleBack}
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-white/5 border border-white/5 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                className="px-8 py-3 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
               >
                 GERİ DÖN
               </button>
               <button 
                 onClick={handleSubmit}
                 disabled={isSubmitting || !acceptedTerms || !acceptedTrust || !acceptedBank}
-                className={`px-8 py-3 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center gap-2 ${
+                className={`px-8 py-3 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center gap-2 ${
                   (acceptedTerms && acceptedTrust && acceptedBank) 
                     ? "bg-emerald-600 hover:bg-emerald-500 shadow-emerald-600/20"
-                    : "bg-slate-800 text-slate-500 cursor-not-allowed opacity-50"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-500 cursor-not-allowed opacity-50"
                 }`}
               >
                 {isSubmitting ? (

@@ -52,12 +52,12 @@ const PaymentModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-slate-900 w-full max-w-md rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden relative">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/90 backdrop-blur-md z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden relative">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
         >
           <Icons.X size={18} />
         </button>
@@ -68,8 +68,8 @@ const PaymentModal = ({
               <div className="w-16 h-16 bg-primary-600/20 rounded-2xl flex items-center justify-center mx-auto mb-4 text-primary-500 border border-primary-500/20">
                 <Icons.CreditCard size={32} />
               </div>
-              <h2 className="text-xl font-bold text-white mb-1 font-sans">{title}</h2>
-              <p className="text-3xl font-black text-white font-sans">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1 font-sans">{title}</h2>
+              <p className="text-3xl font-black text-slate-900 dark:text-white font-sans">
                 {amount?.toLocaleString()} ₺
               </p>
             </div>
@@ -81,7 +81,7 @@ const PaymentModal = ({
                 </label>
                 <input
                   required
-                  className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary-500 transition-colors uppercase font-sans"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm outline-none focus:border-primary-500 transition-colors uppercase font-sans"
                   placeholder="AD SOYAD"
                   value={cardData.holder}
                   onChange={(e) =>
@@ -101,7 +101,7 @@ const PaymentModal = ({
                   <input
                     required
                     maxLength={19}
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary-500 transition-colors font-mono"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm outline-none focus:border-primary-500 transition-colors font-mono"
                     placeholder="0000 0000 0000 0000"
                     value={cardData.number}
                     onChange={(e) =>
@@ -112,8 +112,8 @@ const PaymentModal = ({
                     }
                   />
                   <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
-                    <div className="w-6 h-4 bg-white/10 rounded-sm"></div>
-                    <div className="w-6 h-4 bg-white/10 rounded-sm"></div>
+                    <div className="w-6 h-4 bg-black/10 dark:bg-white/10 rounded-sm"></div>
+                    <div className="w-6 h-4 bg-black/10 dark:bg-white/10 rounded-sm"></div>
                   </div>
                 </div>
               </div>
@@ -126,7 +126,7 @@ const PaymentModal = ({
                   <input
                     required
                     maxLength={5}
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary-500 transition-colors text-center"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm outline-none focus:border-primary-500 transition-colors text-center"
                     placeholder="AA/YY"
                     value={cardData.expiry}
                     onChange={(e) => {
@@ -145,7 +145,7 @@ const PaymentModal = ({
                     required
                     type="password"
                     maxLength={3}
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary-500 transition-colors text-center"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm outline-none focus:border-primary-500 transition-colors text-center"
                     placeholder="***"
                     value={cardData.cvv}
                     onChange={(e) =>
@@ -161,7 +161,7 @@ const PaymentModal = ({
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-primary-600 hover:bg-primary-500 text-white font-bold py-4 rounded-xl shadow-xl shadow-primary-900/50 active-scale flex items-center justify-center gap-2 transition-all font-sans"
+                  className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl shadow-primary-900/50 active-scale flex items-center justify-center gap-2 transition-all font-sans"
                 >
                   <Icons.ShieldCheck size={18} /> Güvenli Öde
                 </button>
@@ -175,17 +175,17 @@ const PaymentModal = ({
 
         {step === "processing" && (
           <div className="p-12 flex flex-col items-center text-center">
-            <div className="w-20 h-20 bg-slate-950 rounded-full flex items-center justify-center mb-6 relative">
+            <div className="w-20 h-20 bg-slate-50 dark:bg-slate-950 rounded-full flex items-center justify-center mb-6 relative">
               <Icons.Loader2
                 size={40}
                 className="text-primary-500 animate-spin"
               />
               <div className="absolute inset-0 border-4 border-primary-500/20 rounded-full"></div>
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
               Ödeme İşleniyor
             </h3>
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
               Lütfen bekleyiniz, bankanızla iletişim kuruluyor...
             </p>
           </div>
@@ -194,12 +194,12 @@ const PaymentModal = ({
         {step === "success" && (
           <div className="p-12 flex flex-col items-center text-center">
             <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-xl shadow-green-900/50 animate-in zoom-in">
-              <Icons.CheckCircle size={40} className="text-white" />
+              <Icons.CheckCircle size={40} className="text-slate-900 dark:text-white" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2 font-sans">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 font-sans">
               Ödeme Başarılı!
             </h3>
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
               İşleminiz onaylandı. Teşekkür ederiz.
             </p>
           </div>

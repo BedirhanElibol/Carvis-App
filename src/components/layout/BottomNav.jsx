@@ -37,7 +37,7 @@ export const BottomNav = () => {
         <div className="relative">
           {/* Premium Glow Effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-500/20 to-transparent blur-3xl pointer-events-none"></div>
-          <div className="relative glass-panel bg-slate-950/80 backdrop-blur-3xl border border-white/10 px-4 py-3 flex justify-between items-center rounded-[2rem] shadow-2xl ring-1 ring-white/5">
+          <div className="relative glass-panel bg-slate-50 dark:bg-slate-950/80 backdrop-blur-3xl border border-black/10 dark:border-white/10 px-4 py-3 flex justify-between items-center rounded-[2rem] shadow-2xl ring-1 ring-white/5">
             {tabs.map((tab) => {
               const isActive = location.pathname.startsWith(tab.id);
               return (
@@ -52,7 +52,7 @@ export const BottomNav = () => {
                       "p-3 rounded-2xl transition-all duration-300 relative",
                       isActive
                         ? "text-primary-400 bg-primary-500/10 shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)] scale-110"
-                        : "text-slate-500 hover:text-slate-300 hover:bg-white/5",
+                        : "text-slate-500 hover:text-slate-600 dark:text-slate-300 hover:bg-black/5 dark:bg-white/5",
                     )}
                   >
                     <tab.icon
@@ -66,7 +66,7 @@ export const BottomNav = () => {
 
                     {/* Unread Badge */}
                     {tab.badge > 0 && (
-                      <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center bg-red-500 text-[10px] font-bold text-white rounded-full ring-2 ring-slate-950 animate-bounce">
+                      <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center bg-red-500 text-[10px] font-bold text-slate-900 dark:text-white rounded-full ring-2 ring-slate-950 animate-bounce">
                         {tab.badge > 9 ? "9+" : tab.badge}
                       </span>
                     )}

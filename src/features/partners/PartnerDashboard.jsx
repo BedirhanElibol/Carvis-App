@@ -59,7 +59,7 @@ const PartnerDashboard = () => {
     // Dynamic Stats based on Role
     const [stats, setStats] = useState([
         { label: 'Günlük Ciro', value: '...', icon: TrendingUp, color: `text-${currentTheme.color}-500`, bg: `bg-${currentTheme.color}-500/10` },
-        { label: 'Aktif İşlemler', value: '...', icon: Activity, color: 'text-white', bg: 'bg-white/10' },
+        { label: 'Aktif İşlemler', value: '...', icon: Activity, color: 'text-slate-900 dark:text-white', bg: 'bg-black/10 dark:bg-white/10' },
         { label: 'Müşteri Memnuniyeti', value: '5.0', icon: Star, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
         { label: 'Toplam Ziyaret', value: '...', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
     ]);
@@ -92,8 +92,8 @@ const PartnerDashboard = () => {
                         label: 'Toplam İşlem',
                         value: count.toString(),
                         icon: Activity,
-                        color: 'text-white',
-                        bg: 'bg-white/10'
+                        color: 'text-slate-900 dark:text-white',
+                        bg: 'bg-black/10 dark:bg-white/10'
                     },
                     { label: 'Müşteri Memnuniyeti', value: '5.0', icon: Star, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
                     { label: 'Profil Görüntüleme', value: (count * 3 + 12).toString(), icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
@@ -165,10 +165,10 @@ const PartnerDashboard = () => {
                                 {currentTheme.title}
                             </span>
                         </div>
-                        <h1 className="text-4xl font-black font-outfit text-white tracking-tight">
+                        <h1 className="text-4xl font-black font-outfit text-slate-900 dark:text-white tracking-tight">
                             Hoş Geldiniz, {currentUser?.user_metadata?.full_name || 'İş Ortağımız'}
                         </h1>
-                        <p className="text-slate-400 mt-2 font-inter max-w-xl">
+                        <p className="text-slate-500 dark:text-slate-400 mt-2 font-inter max-w-xl">
                             İşletmenizin performans özeti ve anlık bildirimler aşağıdadır.
                         </p>
                     </div>
@@ -179,36 +179,36 @@ const PartnerDashboard = () => {
 
             {/* Quick Actions (POS) */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="glass-card p-6 rounded-2xl border border-white/5 md:col-span-2">
-                    <h3 className="font-bold text-white mb-4 flex items-center gap-2">
+                <div className="glass-card p-6 rounded-2xl border border-black/5 dark:border-white/5 md:col-span-2">
+                    <h3 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                         <CreditCard className="text-green-400" /> Hızlı Tahsilat (POS)
                     </h3>
                     <div className="flex flex-wrap gap-3">
                         {activeRole === 'mechanic' && (
                             <>
-                                <button onClick={() => handleCreateInvoice(4500, 'Periyodik Bakım')} className="px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-white font-bold border border-white/10 active-scale transition">
+                                <button onClick={() => handleCreateInvoice(4500, 'Periyodik Bakım')} className="px-4 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 rounded-xl text-slate-900 dark:text-white font-bold border border-black/10 dark:border-white/10 active-scale transition">
                                     Periyodik Bakım (4.500 ₺)
                                 </button>
-                                <button onClick={() => handleCreateInvoice(1200, 'Yağ Değişimi')} className="px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-white font-bold border border-white/10 active-scale transition">
+                                <button onClick={() => handleCreateInvoice(1200, 'Yağ Değişimi')} className="px-4 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 rounded-xl text-slate-900 dark:text-white font-bold border border-black/10 dark:border-white/10 active-scale transition">
                                     Yağ Değişimi (1.200 ₺)
                                 </button>
-                                <button onClick={() => handleCreateInvoice(750, 'Arıza Tespit')} className="px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-white font-bold border border-white/10 active-scale transition">
+                                <button onClick={() => handleCreateInvoice(750, 'Arıza Tespit')} className="px-4 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 rounded-xl text-slate-900 dark:text-white font-bold border border-black/10 dark:border-white/10 active-scale transition">
                                     Arıza Tespit (750 ₺)
                                 </button>
                             </>
                         )}
                         {activeRole === 'valet' && (
                             <>
-                                <button onClick={() => handleCreateInvoice(250, 'Standart Vale')} className="px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-white font-bold border border-white/10 active-scale transition">
+                                <button onClick={() => handleCreateInvoice(250, 'Standart Vale')} className="px-4 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 rounded-xl text-slate-900 dark:text-white font-bold border border-black/10 dark:border-white/10 active-scale transition">
                                     Standart Vale (250 ₺)
                                 </button>
-                                <button onClick={() => handleCreateInvoice(500, 'VIP Vale')} className="px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-white font-bold border border-white/10 active-scale transition">
+                                <button onClick={() => handleCreateInvoice(500, 'VIP Vale')} className="px-4 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 rounded-xl text-slate-900 dark:text-white font-bold border border-black/10 dark:border-white/10 active-scale transition">
                                     VIP Vale (500 ₺)
                                 </button>
                             </>
                         )}
                         {activeRole === 'parking' && (
-                            <button onClick={() => handleCreateInvoice(150, 'Günlük Otopark')} className="px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-white font-bold border border-white/10 active-scale transition">
+                            <button onClick={() => handleCreateInvoice(150, 'Günlük Otopark')} className="px-4 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 rounded-xl text-slate-900 dark:text-white font-bold border border-black/10 dark:border-white/10 active-scale transition">
                                 Günlük Otopark (150 ₺)
                             </button>
                         )}
@@ -219,9 +219,9 @@ const PartnerDashboard = () => {
                     </div>
                 </div>
 
-                <div className="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-center items-center text-center">
+                <div className="glass-card p-6 rounded-2xl border border-black/5 dark:border-white/5 flex flex-col justify-center items-center text-center">
                     <Receipt size={40} className="text-slate-600 mb-2" />
-                    <h4 className="text-white font-bold">Son Fatura</h4>
+                    <h4 className="text-slate-900 dark:text-white font-bold">Son Fatura</h4>
                     <p className="text-slate-500 text-sm mt-1">Henüz fatura kesilmedi.</p>
                 </div>
             </div>
@@ -234,7 +234,7 @@ const PartnerDashboard = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="glass-card p-6 rounded-2xl border border-white/5 hover:border-white/20 transition-all duration-300 flex flex-col justify-between h-40"
+                        className="glass-card p-6 rounded-2xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20 transition-all duration-300 flex flex-col justify-between h-40"
                     >
                         <div className="flex justify-between items-start">
                             <div className={`p-3 rounded-xl ${stat.bg}`}>
@@ -243,7 +243,7 @@ const PartnerDashboard = () => {
                             {index === 0 && <span className="text-green-400 text-xs font-bold">+12%</span>}
                         </div>
                         <div>
-                            <h3 className="text-3xl font-black font-outfit text-white mb-1">{stat.value}</h3>
+                            <h3 className="text-3xl font-black font-outfit text-slate-900 dark:text-white mb-1">{stat.value}</h3>
                             <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">{stat.label}</p>
                         </div>
                     </motion.div>
@@ -252,9 +252,9 @@ const PartnerDashboard = () => {
 
 
             {/* Active Process Management (Transparent Eye) */}
-            <div className="glass-card p-6 rounded-3xl border border-white/5 bg-slate-900/50">
+            <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50">
                 <div className="flex justify-between items-center mb-4">
-                    <h3 className="font-bold text-white flex items-center gap-2">
+                    <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                         <Activity className="text-primary-400" />
                         Aktif İşlem Yönetimi
                     </h3>
@@ -265,13 +265,13 @@ const PartnerDashboard = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Mock Active Order Card */}
-                    <div className="bg-slate-950 p-4 rounded-2xl border border-white/5">
+                    <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-black/5 dark:border-white/5">
                         <div className="flex justify-between mb-4">
                             <div>
-                                <h4 className="font-bold text-white text-sm">34 SR 1905 - VW Passat</h4>
+                                <h4 className="font-bold text-slate-900 dark:text-white text-sm">34 SR 1905 - VW Passat</h4>
                                 <p className="text-xs text-slate-500">Periyodik Bakım • Müşteri: Ahmet Y.</p>
                             </div>
-                            <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300">
+                            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">
                                 AY
                             </div>
                         </div>
@@ -285,7 +285,7 @@ const PartnerDashboard = () => {
                         />
                     </div>
 
-                    <div className="bg-slate-950 p-4 rounded-2xl border border-white/5 flex flex-col justify-center items-center text-center opacity-50">
+                    <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-black/5 dark:border-white/5 flex flex-col justify-center items-center text-center opacity-50">
                         <Wrench size={32} className="text-slate-700 mb-2" />
                         <p className="text-sm font-bold text-slate-500">Başka aktif işlem yok</p>
                     </div>
@@ -293,7 +293,7 @@ const PartnerDashboard = () => {
             </div>
 
             {/* Recent Activity Section */}
-            <div className="glass-card p-8 rounded-3xl border border-white/5">
+            <div className="glass-card p-8 rounded-3xl border border-black/5 dark:border-white/5">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-bold font-outfit">Son Hareketler</h2>
                     <button className={`text-sm font-bold uppercase hover:underline ${currentTheme.text}`}>
@@ -306,20 +306,20 @@ const PartnerDashboard = () => {
                         <motion.div
                             key={i}
                             whileHover={{ x: 5 }}
-                            className="flex items-center justify-between border-b border-white/5 pb-4 last:border-0 last:pb-0"
+                            className="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-4 last:border-0 last:pb-0"
                         >
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-xs font-bold text-slate-400 border border-white/10">
+                                <div className="w-12 h-12 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-400 border border-black/10 dark:border-white/10">
                                     {activeRole === 'valet' ? '34VL' : activeRole === 'mechanic' ? '34SR' : '34PK'}
                                 </div>
                                 <div>
-                                    <p className="font-bold text-white text-sm">
+                                    <p className="font-bold text-slate-900 dark:text-white text-sm">
                                         {activeRole === 'valet' ? 'Araç Teslim Alındı' : activeRole === 'mechanic' ? 'Periyodik Bakım' : 'Giriş İşlemi'}
                                     </p>
                                     <p className="text-xs text-slate-500">Bugün • 14:{30 + i * 5}</p>
                                 </div>
                             </div>
-                            <span className="text-white font-mono text-sm font-bold bg-white/5 px-3 py-1 rounded-lg">
+                            <span className="text-slate-900 dark:text-white font-mono text-sm font-bold bg-black/5 dark:bg-white/5 px-3 py-1 rounded-lg">
                                 {activeRole === 'valet' ? 'Bekliyor' : 'Tamamlandı'}
                             </span>
                         </motion.div>

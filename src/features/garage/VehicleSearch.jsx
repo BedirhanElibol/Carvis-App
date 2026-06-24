@@ -126,7 +126,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
       case "lpg":
         return "bg-amber-500/10 text-amber-400 border-amber-500/20";
       default:
-        return "bg-slate-500/10 text-slate-400 border-slate-500/20";
+        return "bg-slate-500/10 text-slate-500 dark:text-slate-400 border-slate-500/20";
     }
   };
 
@@ -135,12 +135,12 @@ const VehicleSearch = ({ onVehicleFound }) => {
   const selectedModelData = selectedSeriesData?.models.find(m => m.name === selection.model);
 
   return (
-    <div className="glass-card rounded-[2.5rem] p-8 border border-white/10 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-500">
+    <div className="glass-card rounded-[2.5rem] p-8 border border-black/10 dark:border-white/10 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-500">
       {/* Design elements */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
 
       {scanning && (
-        <div className="absolute inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex flex-col items-center justify-center gap-6 animate-in fade-in">
+        <div className="absolute inset-0 z-50 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-md flex flex-col items-center justify-center gap-6 animate-in fade-in">
           <div className="relative w-48 h-32 border-2 border-primary-500/50 rounded-2xl overflow-hidden">
             <div className="absolute inset-0 bg-primary-500/5 flex items-center justify-center">
               <Icons.Hash
@@ -154,7 +154,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-500 animate-pulse mb-1">
               TARAMA YAPILIYOR: %{ocrProgress}
             </p>
-            <p className="text-xs font-bold text-white uppercase">
+            <p className="text-xs font-bold text-slate-900 dark:text-white uppercase">
               Görüntü İşleniyor...
             </p>
           </div>
@@ -167,7 +167,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
             <Icons.Car size={24} className="text-primary-500" />
           </div>
           <div>
-            <h2 className="text-xl font-black tracking-tighter uppercase text-white">
+            <h2 className="text-xl font-black tracking-tighter uppercase text-slate-900 dark:text-white">
               ARACINIZI TANIMLAYIN
             </h2>
             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
@@ -177,12 +177,12 @@ const VehicleSearch = ({ onVehicleFound }) => {
         </div>
 
         {/* Mode Selector */}
-        <div className="flex p-1 bg-slate-950/50 rounded-2xl border border-white/5 mb-6">
+        <div className="flex p-1 bg-slate-50 dark:bg-slate-950/50 rounded-2xl border border-black/5 dark:border-white/5 mb-6">
           <button
             onClick={() => setSearchMode("manual")}
             className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
               searchMode === "manual"
-                ? "bg-slate-800 text-white shadow-lg"
+                ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-lg"
                 : "text-slate-500"
             }`}
           >
@@ -192,7 +192,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
             onClick={() => setSearchMode("vin")}
             className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
               searchMode === "vin"
-                ? "bg-slate-800 text-white shadow-lg"
+                ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-lg"
                 : "text-slate-500"
             }`}
           >
@@ -213,7 +213,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                 placeholder="17 haneli Şase No giriniz..."
                 value={vin}
                 onChange={(e) => setVin(e.target.value.toUpperCase())}
-                className="w-full bg-slate-950 border border-white/10 rounded-2xl p-5 pl-12 text-sm font-bold text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-5 pl-12 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
               />
               <button
                 onClick={() => fileInputRef.current.click()}
@@ -237,8 +237,8 @@ const VehicleSearch = ({ onVehicleFound }) => {
                 size={20}
                 className="text-primary-500 shrink-0"
               />
-              <p className="text-[10px] text-slate-400 font-medium leading-relaxed">
-                <span className="text-white font-black uppercase">
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                <span className="text-slate-900 dark:text-white font-black uppercase">
                   Rapidsy Uyarı:
                 </span>{" "}
                 Şase numarası, aracınızın tam parça katalog kodlarını (TecDoc
@@ -249,7 +249,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
             <button
               onClick={handleVinSearch}
               disabled={vin.length < 17 || loading}
-              className="w-full bg-primary-600 hover:bg-primary-500 disabled:opacity-30 text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active-scale shadow-lg shadow-primary-900/40 flex items-center justify-center gap-3"
+              className="w-full bg-primary-600 hover:bg-primary-500 disabled:opacity-30 text-slate-900 dark:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active-scale shadow-lg shadow-primary-900/40 flex items-center justify-center gap-3"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -262,7 +262,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
           <div className="space-y-4">
             {/* Steps Navigation / Breadcrumbs */}
             {step !== "brand" && (
-              <div className="flex items-center justify-between pb-3 border-b border-white/5 mb-2 animate-in fade-in">
+              <div className="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5 mb-2 animate-in fade-in">
                 <button
                   onClick={() => {
                     if (step === "series") setStep("brand");
@@ -270,7 +270,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                     else if (step === "trim") setStep("model");
                     else if (step === "final") setStep("trim");
                   }}
-                  className="flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
+                  className="flex items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   <Icons.ChevronLeft size={16} />
                   <span className="text-[9px] font-black uppercase tracking-widest">Geri</span>
@@ -295,7 +295,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                     placeholder="Marka Ara... (Örn: Fiat, BMW)"
                     value={brandSearch}
                     onChange={(e) => setBrandSearch(e.target.value)}
-                    className="w-full bg-slate-950 border border-white/10 rounded-2xl p-4 pl-11 text-xs font-bold text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4 pl-11 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
                   />
                 </div>
 
@@ -309,12 +309,12 @@ const VehicleSearch = ({ onVehicleFound }) => {
                         setSelection({ ...selection, brand: car.brand, series: "", model: "", trim: "" });
                         setStep("series");
                       }}
-                      className="p-3.5 rounded-2xl bg-slate-950/40 border border-white/5 hover:border-primary-500/50 hover:bg-slate-900/50 transition-all text-center flex flex-col items-center justify-center gap-1.5 active-scale group"
+                      className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-center flex flex-col items-center justify-center gap-1.5 active-scale group"
                     >
-                      <div className="w-8 h-8 rounded-full bg-white/5 group-hover:bg-primary-500/10 flex items-center justify-center font-black text-xs text-slate-400 group-hover:text-primary-400 transition-colors uppercase">
+                      <div className="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 group-hover:bg-primary-500/10 flex items-center justify-center font-black text-xs text-slate-500 dark:text-slate-400 group-hover:text-primary-400 transition-colors uppercase">
                         {car.brand.substring(0, 2)}
                       </div>
-                      <span className="text-[10px] font-black uppercase text-slate-300 group-hover:text-white transition-colors tracking-tight truncate w-full">
+                      <span className="text-[10px] font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors tracking-tight truncate w-full">
                         {car.brand}
                       </span>
                     </button>
@@ -333,7 +333,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                     placeholder="Seri Ara... (Örn: Egea, 3 Serisi)"
                     value={seriesSearch}
                     onChange={(e) => setSeriesSearch(e.target.value)}
-                    className="w-full bg-slate-950 border border-white/10 rounded-2xl p-4 pl-11 text-xs font-bold text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4 pl-11 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
                   />
                 </div>
 
@@ -347,9 +347,9 @@ const VehicleSearch = ({ onVehicleFound }) => {
                         setSelection({ ...selection, series: ser.name, model: "", trim: "" });
                         setStep("model");
                       }}
-                      className="p-4 rounded-2xl bg-slate-950/40 border border-white/5 hover:border-primary-500/50 hover:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
+                      className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
                     >
-                      <span className="text-xs font-black uppercase text-slate-300 group-hover:text-white transition-colors">
+                      <span className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors">
                         {ser.name}
                       </span>
                       <Icons.ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
@@ -371,10 +371,10 @@ const VehicleSearch = ({ onVehicleFound }) => {
                         setSelection({ ...selection, model: mod.name, fuel: mod.fuel, trim: "" });
                         setStep("trim");
                       }}
-                      className="w-full p-4 rounded-2xl bg-slate-950/40 border border-white/5 hover:border-primary-500/50 hover:bg-slate-900/50 transition-all flex items-center justify-between group text-left active-scale"
+                      className="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all flex items-center justify-between group text-left active-scale"
                     >
                       <div>
-                        <p className="text-xs font-black uppercase text-slate-300 group-hover:text-white transition-colors">
+                        <p className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors">
                           {mod.name}
                         </p>
                       </div>
@@ -402,9 +402,9 @@ const VehicleSearch = ({ onVehicleFound }) => {
                         setSelection({ ...selection, trim: trm });
                         setStep("final");
                       }}
-                      className="p-4 rounded-2xl bg-slate-950/40 border border-white/5 hover:border-primary-500/50 hover:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
+                      className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
                     >
-                      <span className="text-xs font-black uppercase text-slate-300 group-hover:text-white transition-colors truncate">
+                      <span className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors truncate">
                         {trm}
                       </span>
                       <Icons.ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors shrink-0" />
@@ -416,9 +416,9 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       setSelection({ ...selection, trim: "Standart" });
                       setStep("final");
                     }}
-                    className="p-4 rounded-2xl bg-slate-950/20 border border-dashed border-white/10 hover:border-primary-500/50 hover:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
+                    className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/20 border border-dashed border-black/10 dark:border-white/10 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
                   >
-                    <span className="text-xs font-bold uppercase text-slate-500 group-hover:text-white transition-colors">
+                    <span className="text-xs font-bold uppercase text-slate-500 group-hover:text-slate-900 dark:text-white transition-colors">
                       Standart / Diğer
                     </span>
                     <Icons.ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
@@ -437,14 +437,14 @@ const VehicleSearch = ({ onVehicleFound }) => {
                   </div>
                   <div className="space-y-1 w-full">
                     <p className="text-[9px] font-black uppercase tracking-[0.2em] text-primary-500">Seçilen Araç Karakteri</p>
-                    <h4 className="text-base font-black uppercase text-white tracking-tight leading-snug">
+                    <h4 className="text-base font-black uppercase text-slate-900 dark:text-white tracking-tight leading-snug">
                       {selection.brand} {selection.series}
                     </h4>
-                    <p className="text-xs font-bold text-slate-400 uppercase">
+                    <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
                       {selection.model} • <span className="text-primary-400">{selection.trim}</span>
                     </p>
                     <div className="flex gap-2 pt-1.5">
-                      <span className="bg-slate-900 px-2.5 py-0.5 rounded-full text-[8px] font-black text-slate-400 uppercase tracking-widest border border-white/5">
+                      <span className="bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-full text-[8px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest border border-black/5 dark:border-white/5">
                         {selection.fuel}
                       </span>
                     </div>
@@ -465,7 +465,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                         max={new Date().getFullYear() + 1}
                         value={selection.year}
                         onChange={(e) => setSelection({ ...selection, year: e.target.value })}
-                        className="w-full bg-slate-950 border border-white/10 rounded-2xl p-4.5 pl-11 text-xs font-bold text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4.5 pl-11 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
                       />
                     </div>
                   </div>
@@ -481,7 +481,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                         placeholder="Örn: 95000"
                         value={selection.km}
                         onChange={(e) => setSelection({ ...selection, km: e.target.value })}
-                        className="w-full bg-slate-950 border border-white/10 rounded-2xl p-4.5 pl-11 text-xs font-bold text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4.5 pl-11 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
                       />
                     </div>
                   </div>
@@ -501,7 +501,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
         )}
 
         <div className="mt-8 flex items-center justify-center gap-4 text-slate-600">
-          <button className="flex items-center gap-1.5 hover:text-white transition-colors">
+          <button className="flex items-center gap-1.5 hover:text-slate-900 dark:text-white transition-colors">
             <Icons.HelpCircle size={14} />
             <span className="text-[9px] font-black uppercase tracking-widest leading-none">
               Şase No Nerede Yazar?

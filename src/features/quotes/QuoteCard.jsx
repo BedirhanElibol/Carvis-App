@@ -42,7 +42,7 @@ const QuoteCard = ({ quote }) => {
       default:
         return {
           icon: Icons.Clock,
-          color: "text-slate-400",
+          color: "text-slate-500 dark:text-slate-400",
           bg: "bg-slate-500/10",
           border: "border-slate-500/30",
           label: "Bilinmiyor",
@@ -56,7 +56,7 @@ const QuoteCard = ({ quote }) => {
   return (
     <div
       onClick={() => navigate(`/quotes/${quote.id}`)}
-      className={`glass-card p-5 rounded-2xl border ${config.border} cursor-pointer active-scale transition-all hover:bg-white/5`}
+      className={`glass-card p-5 rounded-2xl border ${config.border} cursor-pointer active-scale transition-all hover:bg-black/5 dark:bg-white/5`}
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
@@ -70,7 +70,7 @@ const QuoteCard = ({ quote }) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-bold text-white">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">
               {quote.seller?.company_name ||
                 quote.seller?.full_name ||
                 "Satıcı"}
@@ -90,7 +90,7 @@ const QuoteCard = ({ quote }) => {
           {quote.seller?.seller_rating > 0 && (
             <div className="flex items-center gap-1 mt-1">
               <span className="text-yellow-400 text-sm">★</span>
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-slate-500 dark:text-slate-400">
                 {quote.seller.seller_rating.toFixed(1)}
               </span>
             </div>
@@ -110,13 +110,13 @@ const QuoteCard = ({ quote }) => {
 
       {/* Description */}
       {quote.description && (
-        <p className="text-sm text-slate-300 mb-3 line-clamp-2">
+        <p className="text-sm text-slate-600 dark:text-slate-300 mb-3 line-clamp-2">
           {quote.description}
         </p>
       )}
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-3 border-t border-white/5">
+      <div className="flex items-center justify-between pt-3 border-t border-black/5 dark:border-white/5">
         <div className="text-xs text-slate-500">
           {new Date(quote.created_at).toLocaleDateString("tr-TR", {
             day: "numeric",

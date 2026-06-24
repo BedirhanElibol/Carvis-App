@@ -13,7 +13,7 @@ const OrdersModal = ({ show, onClose, t, orders }) => {
             <Icons.Package size={22} className="text-orange-600" /> {t.myOrders}
           </h3>
           <button onClick={onClose}>
-            <Icons.X size={20} className="text-slate-400" />
+            <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
           </button>
         </div>
 

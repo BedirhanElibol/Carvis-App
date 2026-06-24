@@ -51,26 +51,26 @@ const PaymentScreen = () => {
 
   if (!quote) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-20">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-20">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-white/5"
+            className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-black/5 dark:border-white/5"
           >
             <Icons.ArrowLeft size={20} />
           </button>
           <div>
             <h1 className="text-xl font-bold font-sans">Ödeme</h1>
-            <p className="text-xs text-slate-400">Güvenli ödeme</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Güvenli ödeme</p>
           </div>
         </div>
       </div>
@@ -78,11 +78,11 @@ const PaymentScreen = () => {
       {/* Content */}
       <div className="p-5 space-y-4">
         {/* Sipariş Özeti */}
-        <div className="glass-card p-5 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-2xl">
+        <div className="glass-card p-5 rounded-3xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 backdrop-blur-2xl">
           <h3 className="text-lg font-bold mb-4 font-sans">Sipariş Özeti</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-slate-400 text-xs uppercase tracking-widest font-bold">
+              <span className="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest font-bold">
                 Satıcı
               </span>
               <span className="font-semibold text-sm">
@@ -90,7 +90,7 @@ const PaymentScreen = () => {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-400 text-xs uppercase tracking-widest font-bold">
+              <span className="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest font-bold">
                 Ürün/Hizmet
               </span>
               <span className="font-semibold text-sm truncate max-w-[150px]">
@@ -99,7 +99,7 @@ const PaymentScreen = () => {
             </div>
             {quote.warranty_months > 0 && (
               <div className="flex items-center justify-between">
-                <span className="text-slate-400 text-xs uppercase tracking-widest font-bold">
+                <span className="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest font-bold">
                   Garanti
                 </span>
                 <span className="font-semibold text-sm">
@@ -107,7 +107,7 @@ const PaymentScreen = () => {
                 </span>
               </div>
             )}
-            <div className="pt-4 mt-2 border-t border-white/10">
+            <div className="pt-4 mt-2 border-t border-black/10 dark:border-white/10">
               <div className="flex items-center justify-between">
                 <span className="text-lg font-bold font-sans">Toplam</span>
                 <span className="text-2xl font-black text-primary-400">
@@ -129,7 +129,7 @@ const PaymentScreen = () => {
               <p className="font-bold text-green-400 text-sm mb-1 uppercase tracking-tight">
                 Güvenli Ödeme
               </p>
-              <p className="text-[11px] text-slate-400 leading-tight">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
                 Ödemeniz PayTR güvencesi altında 256-bit SSL şifreleme ile
                 korunmaktadır.
               </p>
@@ -142,7 +142,7 @@ const PaymentScreen = () => {
           <button
             onClick={handlePayment}
             disabled={loading}
-            className="w-full bg-primary-600 hover:bg-primary-500 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-sm uppercase tracking-widest text-white shadow-xl shadow-primary-600/20 active-scale disabled:opacity-50 transition-all font-sans"
+            className="w-full bg-primary-600 hover:bg-primary-500 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-sm uppercase tracking-widest text-slate-900 dark:text-white shadow-xl shadow-primary-600/20 active-scale disabled:opacity-50 transition-all font-sans"
           >
             {loading ? (
               <Icons.Loader2 className="animate-spin" size={20} />
@@ -161,7 +161,7 @@ const PaymentScreen = () => {
             <h3 className="text-xl font-bold text-green-400 mb-2 font-sans">
               Ödeme Başarılı!
             </h3>
-            <p className="text-sm text-slate-300">
+            <p className="text-sm text-slate-600 dark:text-slate-300">
               Siparişiniz oluşturuldu. Siparişler sayfasına
               yönlendiriliyorsunuz...
             </p>
@@ -170,7 +170,7 @@ const PaymentScreen = () => {
 
         {/* Bilgilendirme */}
         <div className="glass-card p-4 rounded-2xl border border-primary-500/30 bg-primary-500/5">
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
             <span className="font-black text-primary-400 uppercase tracking-widest mr-1">
               💡 Not:
             </span>

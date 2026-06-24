@@ -63,18 +63,18 @@ const CartDrawer = () => {
   return (
     <>
       <div className="fixed inset-0 bg-black/80 z-[80] flex items-end sm:items-center justify-center backdrop-blur-md animate-in fade-in duration-200">
-        <div className="bg-slate-900 w-full sm:w-[420px] h-[85vh] sm:h-auto sm:max-h-[90vh] rounded-t-[2.5rem] sm:rounded-[2.5rem] p-6 flex flex-col shadow-2xl animate-in slide-in-from-bottom-full duration-300 border border-white/10">
+        <div className="bg-white dark:bg-slate-900 w-full sm:w-[420px] h-[85vh] sm:h-auto sm:max-h-[90vh] rounded-t-[2.5rem] sm:rounded-[2.5rem] p-6 flex flex-col shadow-2xl animate-in slide-in-from-bottom-full duration-300 border border-black/10 dark:border-white/10">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
-            <h3 className="font-black text-xl text-white flex items-center gap-2 font-sans">
+            <h3 className="font-black text-xl text-slate-900 dark:text-white flex items-center gap-2 font-sans">
               <Icons.ShoppingBag className="text-primary-500" /> Sepetim (
               {cart.length})
             </h3>
             <button
               onClick={toggleCart}
-              className="glass-card p-2 rounded-full hover:bg-white/10 border border-white/10"
+              className="glass-card p-2 rounded-full hover:bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10"
             >
-              <Icons.X size={20} className="text-slate-400" />
+              <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
             </button>
           </div>
 
@@ -108,14 +108,14 @@ const CartDrawer = () => {
               cart.map((item, index) => (
                 <div
                   key={item.uniqueId || index}
-                  className="flex gap-3 items-start glass-card p-3 rounded-2xl border border-white/10 group"
+                  className="flex gap-3 items-start glass-card p-3 rounded-2xl border border-black/10 dark:border-white/10 group"
                 >
                   {/* Item Image/Icon */}
                   <div
                     className={`w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 ${
                       item.itemType === "service"
                         ? "bg-accent-500/20"
-                        : "bg-slate-800"
+                        : "bg-slate-100 dark:bg-slate-800"
                     }`}
                   >
                     {item.itemType === "service" ? (
@@ -133,7 +133,7 @@ const CartDrawer = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
-                        <h4 className="font-bold text-sm text-white line-clamp-1 font-sans">
+                        <h4 className="font-bold text-sm text-slate-900 dark:text-white line-clamp-1 font-sans">
                           {item.name}
                         </h4>
                         <p className="text-xs text-slate-500 line-clamp-1">
@@ -195,7 +195,7 @@ const CartDrawer = () => {
                   </div>
                   <div className="text-left">
                     <p
-                      className={`text-xs font-bold font-sans ${addressError ? "text-red-400" : "text-white"}`}
+                      className={`text-xs font-bold font-sans ${addressError ? "text-red-400" : "text-slate-900 dark:text-white"}`}
                     >
                       {t.selectAddress || "Teslimat Adresi"}
                     </p>
@@ -221,18 +221,18 @@ const CartDrawer = () => {
           )}
 
           {/* Totals & Checkout */}
-          <div className="border-t border-white/10 pt-4 mt-auto">
+          <div className="border-t border-black/10 dark:border-white/10 pt-4 mt-auto">
             {/* Breakdown */}
             {cart.length > 0 && (partsCount > 0 || servicesCount > 0) && (
               <div className="space-y-1 mb-3 text-sm">
                 {partsCount > 0 && (
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-slate-500 dark:text-slate-400">
                     <span>Parçalar ({partsCount})</span>
                     <span>{partsTotal.toLocaleString()} ₺</span>
                   </div>
                 )}
                 {servicesCount > 0 && (
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-slate-500 dark:text-slate-400">
                     <span>Servisler ({servicesCount})</span>
                     <span>{servicesTotal.toLocaleString()} ₺</span>
                   </div>
@@ -240,8 +240,8 @@ const CartDrawer = () => {
               </div>
             )}
             <div className="flex justify-between items-center mb-4">
-              <span className="text-slate-400 font-medium font-sans">Toplam Tutar</span>
-              <span className="font-black text-2xl text-white font-sans">
+              <span className="text-slate-500 dark:text-slate-400 font-medium font-sans">Toplam Tutar</span>
+              <span className="font-black text-2xl text-slate-900 dark:text-white font-sans">
                 {total.toLocaleString()} ₺
               </span>
             </div>
@@ -249,7 +249,7 @@ const CartDrawer = () => {
               <button
                 onClick={handleCheckout}
                 disabled={cart.length === 0 || isProcessingCheckout}
-                className={`w-full text-white py-4 rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl active-scale font-sans ${
+                className={`w-full text-slate-900 dark:text-white py-4 rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl active-scale font-sans ${
                   !selectedAddress && cart.length > 0
                     ? "bg-slate-500 hover:bg-slate-400 opacity-80"
                     : "bg-primary-600 hover:bg-primary-500 shadow-primary-900/50 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -268,7 +268,7 @@ const CartDrawer = () => {
               </button>
 
               {!selectedAddress && cart.length > 0 && (
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-red-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap shadow-xl before:content-[''] before:absolute before:-bottom-1 before:left-1/2 before:-translate-x-1/2 before:w-2 before:h-2 before:bg-red-500 before:rotate-45">
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-red-500 text-slate-900 dark:text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap shadow-xl before:content-[''] before:absolute before:-bottom-1 before:left-1/2 before:-translate-x-1/2 before:w-2 before:h-2 before:bg-red-500 before:rotate-45">
                   Lütfen önce teslimat adresi seçin
                 </div>
               )}

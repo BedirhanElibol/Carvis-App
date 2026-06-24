@@ -69,15 +69,15 @@ const ReviewSection = () => {
   return (
     <div className="space-y-5">
       {/* Summary Header */}
-      <div className="glass-card p-5 rounded-[2rem] border border-white/5">
+      <div className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-black text-white uppercase text-sm tracking-tight flex items-center gap-2">
+          <h3 className="font-black text-slate-900 dark:text-white uppercase text-sm tracking-tight flex items-center gap-2">
             <Icons.MessageSquare size={16} className="text-primary-500" />{" "}
             Değerlendirmeler
           </h3>
           <button
             onClick={() => setShowWriteReview(!showWriteReview)}
-            className="bg-primary-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest active:scale-95 transition-all"
+            className="bg-primary-600 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest active:scale-95 transition-all"
           >
             Yorum Yaz
           </button>
@@ -85,7 +85,7 @@ const ReviewSection = () => {
         <div className="flex gap-6">
           {/* Average Rating */}
           <div className="text-center">
-            <p className="text-4xl font-black text-white">
+            <p className="text-4xl font-black text-slate-900 dark:text-white">
               {avgRating.toFixed(1)}
             </p>
             <StarRating rating={avgRating} readOnly size={14} />
@@ -100,7 +100,7 @@ const ReviewSection = () => {
                 <span className="text-[10px] font-bold text-slate-500 w-3">
                   {star}
                 </span>
-                <div className="flex-1 bg-slate-800 rounded-full h-2 overflow-hidden">
+                <div className="flex-1 bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                   <div
                     className="h-full bg-amber-400 rounded-full transition-all duration-500"
                     style={{ width: `${pct}%` }}
@@ -118,7 +118,7 @@ const ReviewSection = () => {
       {/* Write Review Form */}
       {showWriteReview && (
         <div className="glass-card p-5 rounded-[2rem] border border-primary-500/20 animate-in slide-in-from-top-3 space-y-4">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+          <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
             Puanınız
           </p>
           <StarRating rating={newRating} onRate={setNewRating} size={28} />
@@ -127,16 +127,16 @@ const ReviewSection = () => {
             value={newText}
             onChange={(e) => setNewText(e.target.value)}
             rows={3}
-            className="w-full bg-slate-950 border border-white/10 rounded-2xl p-4 text-sm text-white outline-none focus:border-primary-500 transition-all placeholder:text-slate-700 resize-none"
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4 text-sm text-slate-900 dark:text-white outline-none focus:border-primary-500 transition-all placeholder:text-slate-700 resize-none"
           />
           <div className="flex gap-3">
-            <button className="flex items-center gap-2 bg-slate-800 text-slate-400 px-4 py-2.5 rounded-xl text-[10px] font-bold">
+            <button className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-4 py-2.5 rounded-xl text-[10px] font-bold">
               <Icons.Camera size={14} /> Fotoğraf Ekle
             </button>
             <button
               onClick={handleSubmitReview}
               disabled={!newRating || !newText.trim()}
-              className="flex-1 flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-500 disabled:opacity-30 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
+              className="flex-1 flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-500 disabled:opacity-30 text-slate-900 dark:text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
             >
               <Icons.Send size={14} /> Gönder
             </button>
@@ -149,16 +149,16 @@ const ReviewSection = () => {
         {reviews.map((review) => (
           <div
             key={review.id}
-            className="glass-card p-4 rounded-2xl border border-white/5 space-y-2.5"
+            className="glass-card p-4 rounded-2xl border border-black/5 dark:border-white/5 space-y-2.5"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                   <Icons.User size={14} className="text-slate-500" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-white">
+                    <span className="text-xs font-bold text-slate-900 dark:text-white">
                       {review.user}
                     </span>
                     {review.verified && (
@@ -174,7 +174,7 @@ const ReviewSection = () => {
               </div>
               <StarRating rating={review.rating} readOnly size={12} />
             </div>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               {review.text}
             </p>
             <button className="flex items-center gap-1.5 text-slate-600 hover:text-primary-400 transition-colors">

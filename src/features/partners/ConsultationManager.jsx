@@ -69,16 +69,16 @@ const ConsultationManager = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex gap-2 bg-slate-900/50 p-1.5 rounded-2xl border border-white/5">
+      <div className="flex gap-2 bg-white dark:bg-slate-900/50 p-1.5 rounded-2xl border border-black/5 dark:border-white/5">
         <button 
           onClick={() => setActiveTab("pool")}
-          className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'pool' ? 'bg-primary-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
+          className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'pool' ? 'bg-primary-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
         >
           Bekleyen Havuz
         </button>
         <button 
           onClick={() => setActiveTab("my_consultations")}
-          className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'my_consultations' ? 'bg-primary-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
+          className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'my_consultations' ? 'bg-primary-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
         >
           Benim Taleplerim
         </button>
@@ -93,10 +93,10 @@ const ConsultationManager = () => {
           </div>
         ) : (
           consultations.map(c => (
-            <div key={c.id} className="glass-card p-6 rounded-[2rem] border border-white/5 bg-white/5 relative overflow-hidden group">
+            <div key={c.id} className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 relative overflow-hidden group">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h4 className="font-black text-white text-lg tracking-tighter uppercase mb-1">{c.topic}</h4>
+                  <h4 className="font-black text-slate-900 dark:text-white text-lg tracking-tighter uppercase mb-1">{c.topic}</h4>
                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed line-clamp-2">
                     {c.description || "Açıklama yok"}
                   </p>
@@ -108,17 +108,17 @@ const ConsultationManager = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/5 flex gap-3">
+              <div className="pt-4 border-t border-black/5 dark:border-white/5 flex gap-3">
                 {activeTab === 'pool' ? (
                   <button 
                     onClick={() => claimConsultation(c.id)}
-                    className="w-full bg-white text-slate-950 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest active-scale hover:bg-primary-600 hover:text-white transition-all shadow-xl"
+                    className="w-full bg-white text-slate-950 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest active-scale hover:bg-primary-600 hover:text-slate-900 dark:text-white transition-all shadow-xl"
                   >
                     DANIŞMANLIĞI ÜSTLEN
                   </button>
                 ) : (
                   <>
-                    <button className="flex-1 bg-primary-600 text-white py-3 rounded-xl text-[10px] font-black uppercase tracking-widest active-scale transition-all">
+                    <button className="flex-1 bg-primary-600 text-slate-900 dark:text-white py-3 rounded-xl text-[10px] font-black uppercase tracking-widest active-scale transition-all">
                        MESAJLAŞMAYA GİT
                     </button>
                     {c.status !== 'completed' && (

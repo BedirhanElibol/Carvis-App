@@ -32,7 +32,7 @@ const NotificationScreen = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-black tracking-tighter text-white flex items-center gap-3">
+          <h1 className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white flex items-center gap-3">
             <div className="p-2 bg-primary-600/20 rounded-xl">
               <Icons.Bell className="text-primary-500" />
             </div>
@@ -43,18 +43,18 @@ const NotificationScreen = () => {
               </Badge>
             )}
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             Siparişler, teklifler ve sistem uyarıları.
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex p-1 bg-slate-900 rounded-xl border border-white/10">
+          <div className="flex p-1 bg-white dark:bg-slate-900 rounded-xl border border-black/10 dark:border-white/10">
             <button
               onClick={() => setFilter("all")}
               className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 filter === "all"
-                  ? "bg-primary-600 text-white shadow-lg"
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-primary-600 text-slate-900 dark:text-white shadow-lg"
+                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               }`}
             >
               Tümü
@@ -63,8 +63,8 @@ const NotificationScreen = () => {
               onClick={() => setFilter("unread")}
               className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 filter === "unread"
-                  ? "bg-primary-600 text-white shadow-lg"
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-primary-600 text-slate-900 dark:text-white shadow-lg"
+                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               }`}
             >
               Okunmamış
@@ -73,7 +73,7 @@ const NotificationScreen = () => {
           <button
             onClick={markAllAsRead}
             disabled={unreadCount === 0}
-            className="p-2.5 glass-card rounded-xl text-primary-400 hover:text-white hover:bg-primary-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-2.5 glass-card rounded-xl text-primary-400 hover:text-slate-900 dark:text-white hover:bg-primary-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             title="Tümünü Okundu İşaretle"
           >
             <Icons.Check size={20} />
@@ -89,7 +89,7 @@ const NotificationScreen = () => {
               key={notif.id}
               className={`glass-card p-4 rounded-2xl border transition-all group relative overflow-hidden ${
                 notif.is_read
-                  ? "border-white/5 opacity-80 hover:opacity-100"
+                  ? "border-black/5 dark:border-white/5 opacity-80 hover:opacity-100"
                   : "border-primary-500/30 bg-primary-500/5"
               }`}
             >
@@ -98,8 +98,8 @@ const NotificationScreen = () => {
               ></div>
               <div className="flex gap-4">
                 <div
-                  className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/5 ${
-                    notif.is_read ? "bg-slate-900" : "bg-slate-800"
+                  className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-black/5 dark:border-white/5 ${
+                    notif.is_read ? "bg-white dark:bg-slate-900" : "bg-slate-100 dark:bg-slate-800"
                   }`}
                 >
                   {getIcon(notif.type)}
@@ -107,7 +107,7 @@ const NotificationScreen = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-start gap-2">
                     <h3
-                      className={`font-bold text-sm truncate pr-6 ${notif.is_read ? "text-slate-300" : "text-white"}`}
+                      className={`font-bold text-sm truncate pr-6 ${notif.is_read ? "text-slate-600 dark:text-slate-300" : "text-slate-900 dark:text-white"}`}
                     >
                       {notif.title}
                     </h3>
@@ -119,7 +119,7 @@ const NotificationScreen = () => {
                       })}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                     {notif.message}
                   </p>
                 </div>
@@ -129,7 +129,7 @@ const NotificationScreen = () => {
                 {!notif.is_read && (
                   <button
                     onClick={() => markAsRead(notif.id)}
-                    className="p-1.5 bg-slate-800 hover:bg-primary-600 rounded-lg text-slate-400 hover:text-white transition-colors"
+                    className="p-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-primary-600 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                     title="Okundu işaretle"
                   >
                     <Icons.Check size={14} />
@@ -137,7 +137,7 @@ const NotificationScreen = () => {
                 )}
                 <button
                   onClick={() => deleteNotification(notif.id)}
-                  className="p-1.5 bg-slate-800 hover:bg-red-600 rounded-lg text-slate-400 hover:text-white transition-colors"
+                  className="p-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-red-600 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                   title="Sil"
                 >
                   <Icons.Trash2 size={14} />
@@ -147,10 +147,10 @@ const NotificationScreen = () => {
           ))
         ) : (
           <div className="text-center py-20">
-            <div className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/5 animate-pulse">
+            <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4 border border-black/5 dark:border-white/5 animate-pulse">
               <Icons.Bell size={32} className="text-slate-600" />
             </div>
-            <h3 className="text-lg font-bold text-slate-300">Bildirim Yok</h3>
+            <h3 className="text-lg font-bold text-slate-600 dark:text-slate-300">Bildirim Yok</h3>
             <p className="text-xs text-slate-500 mt-1">
               Şu an için gösterilecek yeni bir bildiriminiz bulunmuyor.
             </p>

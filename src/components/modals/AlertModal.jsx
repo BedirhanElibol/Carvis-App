@@ -33,7 +33,7 @@ const AlertModal = ({ show, onClose, title, message, type }) => {
           <p className="text-slate-600 mb-6 font-sans">{message}</p>
           <button
             onClick={onClose}
-            className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition shadow-lg font-sans"
+            className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white py-3 rounded-xl font-bold hover:bg-slate-100 dark:bg-slate-800 transition shadow-lg font-sans"
           >
             Tamam
           </button>

@@ -39,7 +39,7 @@ const CampaignsScreen = () => {
   if (!t) return null;
 
   return (
-    <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-950 relative overflow-hidden">
+    <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
       {/* Glow Effect */}
       <div className="absolute top-0 left-1/4 w-1/2 h-64 bg-primary-600/10 blur-[120px] pointer-events-none"></div>
 
@@ -47,12 +47,12 @@ const CampaignsScreen = () => {
       <div className="flex items-center gap-4 relative z-10">
         <button
           onClick={() => navigate(-1)}
-          className="p-3 glass-card rounded-2xl text-white active-scale border border-white/10"
+          className="p-3 glass-card rounded-2xl text-slate-900 dark:text-white active-scale border border-black/10 dark:border-white/10"
         >
           <Icons.ArrowLeft size={20} />
         </button>
         <div>
-          <h3 className="font-black text-2xl text-white tracking-tighter uppercase">
+          <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter uppercase">
             {activeTab === "coupons" ? "FIRSATLAR" : "SERVİS PAKETLERİ"}
           </h3>
           <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mt-0.5">
@@ -62,13 +62,13 @@ const CampaignsScreen = () => {
       </div>
 
       {/* Modern Tabs */}
-      <div className="flex p-1.5 bg-slate-900/50 rounded-[1.5rem] border border-white/5 relative z-10">
+      <div className="flex p-1.5 bg-white dark:bg-slate-900/50 rounded-[1.5rem] border border-black/5 dark:border-white/5 relative z-10">
         <button
           onClick={() => setActiveTab("coupons")}
           className={`flex-1 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${
             activeTab === "coupons"
-              ? "bg-orange-600 text-white shadow-lg shadow-orange-900/40"
-              : "text-slate-500 hover:text-slate-400"
+              ? "bg-orange-600 text-slate-900 dark:text-white shadow-lg shadow-orange-900/40"
+              : "text-slate-500 hover:text-slate-500 dark:text-slate-400"
           }`}
         >
           <Icons.Ticket size={14} /> Kuponlar
@@ -77,8 +77,8 @@ const CampaignsScreen = () => {
           onClick={() => setActiveTab("packages")}
           className={`flex-1 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${
             activeTab === "packages"
-              ? "bg-primary-600 text-white shadow-lg shadow-primary-900/40"
-              : "text-slate-500 hover:text-slate-400"
+              ? "bg-primary-600 text-slate-900 dark:text-white shadow-lg shadow-primary-900/40"
+              : "text-slate-500 hover:text-slate-500 dark:text-slate-400"
           }`}
         >
           <Icons.Package size={14} /> Paketler
@@ -95,7 +95,7 @@ const CampaignsScreen = () => {
                 <Icons.Loader2 className="animate-spin mx-auto text-orange-500" size={40} />
               </div>
             ) : coupons.length === 0 ? (
-              <div className="text-center py-20 bg-white/5 rounded-[2.5rem] border border-dashed border-white/10">
+              <div className="text-center py-20 bg-black/5 dark:bg-white/5 rounded-[2.5rem] border border-dashed border-black/10 dark:border-white/10">
                 <Icons.Ticket size={40} className="mx-auto text-slate-600 mb-4" />
                 <p className="text-sm font-bold text-slate-500">Aktif kupon bulunamadı.</p>
               </div>
@@ -103,13 +103,13 @@ const CampaignsScreen = () => {
               coupons.map((coupon) => (
                 <div
                   key={coupon.id}
-                  className="glass-card rounded-[2rem] border border-white/10 shadow-xl overflow-hidden relative group"
+                  className="glass-card rounded-[2rem] border border-black/10 dark:border-white/10 shadow-xl overflow-hidden relative group"
                 >
                   <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-orange-500 to-red-600"></div>
                   <div className="p-6 pl-8">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="font-black text-lg text-white leading-tight">
+                        <h4 className="font-black text-lg text-slate-900 dark:text-white leading-tight">
                           {coupon.description}
                         </h4>
                         <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-2">
@@ -128,7 +128,7 @@ const CampaignsScreen = () => {
                       </div>
                     </div>
 
-                    <div className="mt-6 flex gap-3 items-center bg-slate-950/50 p-4 rounded-2xl border border-dashed border-white/10">
+                    <div className="mt-6 flex gap-3 items-center bg-slate-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-dashed border-black/10 dark:border-white/10">
                       <code className="font-mono font-black text-orange-400 text-xl flex-1 text-center tracking-[0.3em]">
                         {coupon.code}
                       </code>

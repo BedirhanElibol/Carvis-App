@@ -13,7 +13,7 @@ const CurrencyTicker = () => {
     loadRates();
   }, [fetchExchangeRate]);
   return (
-    <div className="glass-card p-4 rounded-2xl border border-white/5 flex items-center justify-between gap-4">
+    <div className="glass-card p-4 rounded-2xl border border-black/5 dark:border-white/5 flex items-center justify-between gap-4">
       {" "}
       <div className="flex items-center gap-2">
         {" "}
@@ -26,12 +26,12 @@ const CurrencyTicker = () => {
           <p className="text-[10px] text-slate-500 font-black uppercase">
             USD/TRY
           </p>{" "}
-          <p className="text-white font-bold">
+          <p className="text-slate-900 dark:text-white font-bold">
             {rates.usd ? `₺${rates.usd.rate.toFixed(2)}` : "..."}
           </p>{" "}
         </div>{" "}
       </div>{" "}
-      <div className="w-[1px] h-8 bg-white/10"></div>{" "}
+      <div className="w-[1px] h-8 bg-black/10 dark:bg-white/10"></div>{" "}
       <div className="flex items-center gap-2">
         {" "}
         <div className="bg-blue-500/10 p-2 rounded-lg text-blue-400">
@@ -43,7 +43,7 @@ const CurrencyTicker = () => {
           <p className="text-[10px] text-slate-500 font-black uppercase">
             EUR/TRY
           </p>{" "}
-          <p className="text-white font-bold">
+          <p className="text-slate-900 dark:text-white font-bold">
             {rates.eur ? `₺${rates.eur.rate.toFixed(2)}` : "..."}
           </p>{" "}
         </div>{" "}

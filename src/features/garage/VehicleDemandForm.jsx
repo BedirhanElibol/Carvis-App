@@ -17,7 +17,7 @@ const VehicleDemandForm = ({
   return (
     <div className="w-full max-w-md mx-auto p-6 bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 animate-slide-up">
       {/* Seçili Araç Özeti */}
-      <div className="bg-blue-600 p-4 rounded-2xl mb-6 text-white shadow-lg shadow-blue-200">
+      <div className="bg-blue-600 p-4 rounded-2xl mb-6 text-slate-900 dark:text-white shadow-lg shadow-blue-200">
         <p className="text-[10px] font-black uppercase tracking-widest opacity-80">
           Seçili Araç
         </p>
@@ -46,7 +46,7 @@ const VehicleDemandForm = ({
         >
           <Icons.Package
             className={
-              demandType === "part" ? "text-blue-600" : "text-slate-400"
+              demandType === "part" ? "text-blue-600" : "text-slate-500 dark:text-slate-400"
             }
           />
           <span className="text-xs font-black uppercase">Yedek Parça</span>
@@ -62,7 +62,7 @@ const VehicleDemandForm = ({
         >
           <Icons.Wrench
             className={
-              demandType === "service" ? "text-blue-600" : "text-slate-400"
+              demandType === "service" ? "text-blue-600" : "text-slate-500 dark:text-slate-400"
             }
           />
           <span className="text-xs font-black uppercase">Usta / Servis</span>
@@ -71,7 +71,7 @@ const VehicleDemandForm = ({
 
       {/* Detay Açıklama */}
       <div className="mb-6">
-        <label className="text-[10px] font-black text-slate-400 uppercase ml-2 mb-1 block">
+        <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase ml-2 mb-1 block">
           Talebinizi Açıklayın
         </label>
         <textarea
@@ -90,7 +90,7 @@ const VehicleDemandForm = ({
       {/* Gönder Butonu */}
       <button
         onClick={() => onSubmit({ demandType, description })}
-        className="w-full bg-slate-900 text-white p-5 rounded-2xl font-black text-lg tracking-widest uppercase shadow-xl hover:bg-blue-600 transition-all flex items-center justify-center space-x-3 active:scale-95"
+        className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-5 rounded-2xl font-black text-lg tracking-widest uppercase shadow-xl hover:bg-blue-600 transition-all flex items-center justify-center space-x-3 active:scale-95"
       >
         <Icons.Send size={20} />
         <span>Talebi Gönder</span>

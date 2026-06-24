@@ -23,10 +23,10 @@ const ParkingCapacity = () => {
     <div className="max-w-xl mx-auto space-y-6 pt-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black tracking-tighter text-white font-sans uppercase">
+          <h1 className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white font-sans uppercase">
             Otopark Yönetimi
           </h1>
-          <p className="text-slate-400 text-sm font-sans">
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-sans">
             Kapasite ve fiyat ayarları
           </p>
         </div>
@@ -38,16 +38,16 @@ const ParkingCapacity = () => {
       </div>
 
       {/* Occupancy Card */}
-      <div className="glass-card p-6 rounded-3xl border border-white/5 relative overflow-hidden">
+      <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 relative overflow-hidden">
         <div
           className="absolute top-0 left-0 bottom-0 bg-primary-600/10 transition-all duration-1000"
           style={{ width: `${occupancyPercent}%` }}
         ></div>
         <div className="relative z-10 text-center py-6">
-          <p className="text-sm text-slate-400 font-bold uppercase tracking-widest mb-2 font-sans">
+          <p className="text-sm text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest mb-2 font-sans">
             DOLULUK ORANI
           </p>
-          <p className="text-6xl font-black text-white font-sans">
+          <p className="text-6xl font-black text-slate-900 dark:text-white font-sans">
             {occupancyPercent}%
           </p>
           <p className="text-sm text-slate-500 mt-2 font-sans">
@@ -57,9 +57,9 @@ const ParkingCapacity = () => {
       </div>
 
       {/* Controls */}
-      <div className="glass-card p-6 rounded-3xl border border-white/5 space-y-6">
+      <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-6">
         <div>
-          <label className="block text-sm font-bold text-slate-400 mb-4 uppercase tracking-wider font-sans">
+          <label className="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-4 uppercase tracking-wider font-sans">
             Anlık Doluluk ({occupancy})
           </label>
           <input
@@ -68,7 +68,7 @@ const ParkingCapacity = () => {
             max={capacity}
             value={occupancy}
             onChange={(e) => setOccupancy(Number(e.target.value))}
-            className="w-full h-2 bg-slate-800 rounded-full appearance-none cursor-pointer accent-primary-500 hover:accent-primary-400 transition-all"
+            className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full appearance-none cursor-pointer accent-primary-500 hover:accent-primary-400 transition-all"
           />
         </div>
 
@@ -81,7 +81,7 @@ const ParkingCapacity = () => {
               type="number"
               value={capacity}
               onChange={(e) => setCapacity(Number(e.target.value))}
-              className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white font-mono focus:border-primary-500 focus:outline-none transition-colors"
+              className="w-full bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white font-mono focus:border-primary-500 focus:outline-none transition-colors"
             />
           </div>
           <div>
@@ -92,7 +92,7 @@ const ParkingCapacity = () => {
               type="number"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-              className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white font-mono focus:border-primary-500 focus:outline-none transition-colors"
+              className="w-full bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl p-3 text-slate-900 dark:text-white font-mono focus:border-primary-500 focus:outline-none transition-colors"
             />
           </div>
         </div>
@@ -112,7 +112,7 @@ const ParkingCapacity = () => {
           <button
             onClick={handleSave}
             disabled={loading}
-            className="flex-[2] bg-primary-600 hover:bg-primary-500 text-white p-4 rounded-xl font-black flex items-center justify-center gap-2 shadow-lg shadow-primary-900/50 active-scale disabled:opacity-50 transition-all font-sans"
+            className="flex-[2] bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white p-4 rounded-xl font-black flex items-center justify-center gap-2 shadow-lg shadow-primary-900/50 active-scale disabled:opacity-50 transition-all font-sans"
           >
             <Icons.Save size={20} />
             {loading ? "KAYDEDİLİYOR..." : "GÜNCELLE"}

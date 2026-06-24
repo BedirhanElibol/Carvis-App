@@ -27,16 +27,16 @@ const FuelScreen = () => {
   if (!t) return null;
 
   return (
-    <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-950 animate-fade-in">
+    <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-50 dark:bg-slate-950 animate-fade-in">
       {/* Header */}
       <div className="flex items-center gap-4 mb-2">
         <button
           onClick={() => navigate(-1)}
-          className="p-2.5 glass-card rounded-xl text-white active-scale border border-white/10 hover:bg-white/5"
+          className="p-2.5 glass-card rounded-xl text-slate-900 dark:text-white active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5"
         >
           <Icons.ArrowLeft size={20} />
         </button>
-        <h3 className="font-black text-2xl text-white">
+        <h3 className="font-black text-2xl text-slate-900 dark:text-white">
           {t.fuelTitle || "Yakıt İstasyonları"}
         </h3>
       </div>
@@ -50,19 +50,19 @@ const FuelScreen = () => {
           <p className="text-[10px] text-primary-400 font-black uppercase tracking-widest font-sans">
             MOCK GÖRÜNÜM
           </p>
-          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider font-sans mt-0.5">
+          <p className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider font-sans mt-0.5">
             Bu ekrandaki veriler canlı simülasyon test ortamından alınmaktadır.
           </p>
         </div>
       </div>
 
       {/* SmartPay Card */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 rounded-3xl shadow-2xl relative overflow-hidden group hover:shadow-red-600/50 transition duration-500">
+      <div className="bg-gradient-to-r from-red-600 to-red-700 text-slate-900 dark:text-white p-6 rounded-3xl shadow-2xl relative overflow-hidden group hover:shadow-red-600/50 transition duration-500">
         <Icons.Fuel
           size={120}
-          className="absolute -right-6 -bottom-6 text-white/20 group-hover:text-white/30 transition"
+          className="absolute -right-6 -bottom-6 text-slate-900 dark:text-white/20 group-hover:text-slate-900 dark:text-white/30 transition"
         />
-        <p className="font-bold text-white/80">{t.payInCar}</p>
+        <p className="font-bold text-slate-900 dark:text-white/80">{t.payInCar}</p>
         <h2 className="text-3xl font-black mt-1">SmartPay</h2>
         <button
           onClick={handleSmartPay}
@@ -72,7 +72,7 @@ const FuelScreen = () => {
         </button>
       </div>
 
-      <h4 className="font-bold text-slate-300 tracking-wider text-sm uppercase">{t.nearbyStations}</h4>
+      <h4 className="font-bold text-slate-600 dark:text-slate-300 tracking-wider text-sm uppercase">{t.nearbyStations}</h4>
 
       {/* List */}
       {loading ? (
@@ -86,7 +86,7 @@ const FuelScreen = () => {
             return (
               <ModernCard
                 key={s.id}
-                className="flex justify-between items-center border-white/5 bg-slate-900 shadow-xl hover:shadow-2xl hover:border-red-600/50 transition-all cursor-pointer animate-in fade-in slide-in-from-bottom-4"
+                className="flex justify-between items-center border-black/5 dark:border-white/5 bg-white dark:bg-slate-900 shadow-xl hover:shadow-2xl hover:border-red-600/50 transition-all cursor-pointer animate-in fade-in slide-in-from-bottom-4"
                 style={animationStyle}
                 onClick={() => showAlert("İstasyon Seçildi", `${s.name} istasyonuna yol tarifi başlatılıyor...`, "success")}
               >
@@ -95,7 +95,7 @@ const FuelScreen = () => {
                     <Icons.Droplet size={20} className="text-red-500" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white tracking-tight">{s.name}</h4>
+                    <h4 className="font-bold text-slate-900 dark:text-white tracking-tight">{s.name}</h4>
                     <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500 mt-1">
                       {s.distance} • {s.type}
                     </p>

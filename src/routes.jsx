@@ -98,7 +98,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
 
   if (loading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-slate-950">
+      <div className="h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
         <Icons.Loader2 className="animate-spin text-primary-500" size={32} />
       </div>
     );
@@ -141,7 +141,7 @@ export const AppRoutes = () => {
   return (
     <Suspense
       fallback={
-        <div className="h-screen w-full flex items-center justify-center bg-slate-950">
+        <div className="h-screen w-full flex items-center justify-center bg-slate-50 dark:bg-slate-950">
           <Icons.Loader2 className="animate-spin text-primary-600" size={32} />
         </div>
       }

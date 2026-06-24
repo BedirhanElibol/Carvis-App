@@ -91,18 +91,18 @@ const PartnerApplications = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-black text-white">Partner Başvuruları</h2>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white">Partner Başvuruları</h2>
           <p className="text-slate-500 text-sm">Gelen kurumsal iş ortağı taleplerini inceleyin ve yönetin.</p>
         </div>
-        <div className="flex bg-slate-900 p-1 rounded-xl border border-white/5">
+        <div className="flex bg-white dark:bg-slate-900 p-1 rounded-xl border border-black/5 dark:border-white/5">
           {["pending", "approved", "rejected", "all"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 activeTab === tab 
-                ? "bg-red-600 text-white shadow-lg shadow-red-900/50" 
-                : "text-slate-400 hover:text-white"
+                ? "bg-red-600 text-slate-900 dark:text-white shadow-lg shadow-red-900/50" 
+                : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               }`}
             >
               {tab === "pending" ? "Bekleyen" : tab === "approved" ? "Onaylı" : tab === "rejected" ? "Reddedilen" : "Tümü"}
@@ -117,9 +117,9 @@ const PartnerApplications = () => {
             <Icons.Loader2 className="animate-spin text-red-500" size={40} />
           </div>
         ) : filteredApps.length === 0 ? (
-          <div className="bg-slate-900 border border-white/5 rounded-2xl p-12 text-center">
+          <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-2xl p-12 text-center">
             <Icons.Layers className="mx-auto text-slate-700 mb-4" size={48} />
-            <h3 className="text-white font-bold">Kayıt Bulunamadı</h3>
+            <h3 className="text-slate-900 dark:text-white font-bold">Kayıt Bulunamadı</h3>
             <p className="text-slate-500 text-sm">Bu kategoride henüz bir başvuru yok.</p>
           </div>
         ) : (
@@ -128,16 +128,16 @@ const PartnerApplications = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               key={app.id}
-              className="bg-slate-900/50 border border-white/5 hover:border-white/10 p-6 rounded-2xl transition-all cursor-pointer group"
+              className="bg-white dark:bg-slate-900/50 border border-black/5 dark:border-white/5 hover:border-black/10 dark:border-white/10 p-6 rounded-2xl transition-all cursor-pointer group"
               onClick={() => setSelectedApp(app)}
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform">
                     <Icons.Briefcase size={24} />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-white">{app.company_name}</h4>
+                    <h4 className="text-lg font-bold text-slate-900 dark:text-white">{app.company_name}</h4>
                     <div className="flex items-center gap-3 mt-1">
                       <span className="text-xs text-slate-500 flex items-center gap-1">
                         <Icons.Clock size={12} /> {new Date(app.created_at).toLocaleDateString("tr-TR")}
@@ -146,7 +146,7 @@ const PartnerApplications = () => {
                     </div>
                   </div>
                 </div>
-                <Icons.ChevronRight className="text-slate-600 group-hover:text-white" size={20} />
+                <Icons.ChevronRight className="text-slate-600 group-hover:text-slate-900 dark:text-white" size={20} />
               </div>
             </motion.div>
           ))
@@ -168,19 +168,19 @@ const PartnerApplications = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="w-full max-w-4xl bg-slate-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl relative"
+              className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl relative"
             >
-              <div className="p-8 border-b border-white/5 flex items-center justify-between">
+              <div className="p-8 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-2xl bg-red-600/20 flex items-center justify-center text-red-500">
                     <Icons.ShieldCheck size={24} />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-black text-white">{selectedApp.company_name}</h3>
+                    <h3 className="text-2xl font-black text-slate-900 dark:text-white">{selectedApp.company_name}</h3>
                     <p className="text-slate-500 text-sm">Başvuru Detayları ve Evrak İnceleme</p>
                   </div>
                 </div>
-                <button onClick={() => setSelectedApp(null)} className="text-slate-500 hover:text-white">
+                <button onClick={() => setSelectedApp(null)} className="text-slate-500 hover:text-slate-900 dark:text-white">
                   <Icons.X size={32} />
                 </button>
               </div>
@@ -190,40 +190,40 @@ const PartnerApplications = () => {
                 <div className="space-y-6">
                   <div className="space-y-4">
                     <h5 className="text-xs font-black text-slate-500 uppercase tracking-widest">Ticari Bilgiler</h5>
-                    <div className="bg-black/20 p-4 rounded-xl space-y-3 border border-white/5">
+                    <div className="bg-black/20 p-4 rounded-xl space-y-3 border border-black/5 dark:border-white/5">
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-500">Vergi No:</span>
-                        <span className="text-white font-mono">{selectedApp.tax_number || "Girilmedi"}</span>
+                        <span className="text-slate-900 dark:text-white font-mono">{selectedApp.tax_number || "Girilmedi"}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-500">Vergi Dairesi:</span>
-                        <span className="text-white">{selectedApp.tax_office || "Girilmedi"}</span>
+                        <span className="text-slate-900 dark:text-white">{selectedApp.tax_office || "Girilmedi"}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-500">MERSİS:</span>
-                        <span className="text-white font-mono">{selectedApp.mersis_number || "Girilmedi"}</span>
+                        <span className="text-slate-900 dark:text-white font-mono">{selectedApp.mersis_number || "Girilmedi"}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-500">Ticaret Sicil No:</span>
-                        <span className="text-white">{selectedApp.trade_registry_number || "Girilmedi"}</span>
+                        <span className="text-slate-900 dark:text-white">{selectedApp.trade_registry_number || "Girilmedi"}</span>
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-4">
                     <h5 className="text-xs font-black text-slate-500 uppercase tracking-widest">İletişim & Finans</h5>
-                    <div className="bg-black/20 p-4 rounded-xl space-y-3 border border-white/5">
+                    <div className="bg-black/20 p-4 rounded-xl space-y-3 border border-black/5 dark:border-white/5">
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-500">KEP Adresi:</span>
-                        <span className="text-white font-mono">{selectedApp.kep_address || "Girilmedi"}</span>
+                        <span className="text-slate-900 dark:text-white font-mono">{selectedApp.kep_address || "Girilmedi"}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-500">IBAN:</span>
-                        <span className="text-white font-mono">{selectedApp.iban_number || "Girilmedi"}</span>
+                        <span className="text-slate-900 dark:text-white font-mono">{selectedApp.iban_number || "Girilmedi"}</span>
                       </div>
                       <div className="space-y-2">
                         <span className="text-slate-500 text-xs block">İşyeri Adresi:</span>
-                        <p className="text-white text-sm bg-black/40 p-3 rounded-lg border border-white/5">
+                        <p className="text-slate-900 dark:text-white text-sm bg-black/40 p-3 rounded-lg border border-black/5 dark:border-white/5">
                           {selectedApp.office_address || "Adres bilgisi yok."}
                         </p>
                       </div>
@@ -236,9 +236,9 @@ const PartnerApplications = () => {
                   <h5 className="text-xs font-black text-slate-500 uppercase tracking-widest">Yüklenen Belgeler</h5>
                   <div className="grid grid-cols-2 gap-4">
                     {["Vergi Levhası", "İmza Sirküleri", "Sicil Gazetesi", "Faaliyet Belgesi"].map((doc) => (
-                      <div key={doc} className="group aspect-video bg-black/40 border border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-slate-800 hover:border-red-500/50 transition-all cursor-pointer relative overflow-hidden">
+                      <div key={doc} className="group aspect-video bg-black/40 border border-black/5 dark:border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-slate-100 dark:bg-slate-800 hover:border-red-500/50 transition-all cursor-pointer relative overflow-hidden">
                         <Icons.FileText size={24} className="text-slate-600 group-hover:text-red-500" />
-                        <span className="text-[10px] font-bold text-slate-500 group-hover:text-white uppercase tracking-tight">{doc}</span>
+                        <span className="text-[10px] font-bold text-slate-500 group-hover:text-slate-900 dark:text-white uppercase tracking-tight">{doc}</span>
                         <div className="absolute inset-0 bg-red-600/0 group-hover:bg-red-600/10 transition-all" />
                       </div>
                     ))}
@@ -253,7 +253,7 @@ const PartnerApplications = () => {
               </div>
 
               {/* Actions Footer */}
-              <div className="p-8 bg-black/40 border-t border-white/5 flex gap-4">
+              <div className="p-8 bg-black/40 border-t border-black/5 dark:border-white/5 flex gap-4">
                 {selectedApp.status === "pending" && (
                   <>
                     <button
@@ -267,7 +267,7 @@ const PartnerApplications = () => {
                     <button
                       disabled={actionLoading}
                       onClick={() => handleStatusUpdate(selectedApp.id, selectedApp.user_id, "rejected")}
-                      className="flex-1 py-4 bg-slate-800 hover:bg-rose-900/50 text-white font-black rounded-2xl border border-white/5 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                      className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 hover:bg-rose-900/50 text-slate-900 dark:text-white font-black rounded-2xl border border-black/5 dark:border-white/5 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                     >
                       {actionLoading ? <Icons.Loader2 className="animate-spin" /> : <Icons.X size={20} />}
                       REDDET

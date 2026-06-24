@@ -164,17 +164,17 @@ const PartnerSettingsScreen = () => {
 
   return (
     <div className="space-y-8 pb-24">
-      <section className="glass-card rounded-[2.5rem] border border-white/5 p-8 relative overflow-hidden">
+      <section className="glass-card rounded-[2.5rem] border border-black/5 dark:border-white/5 p-8 relative overflow-hidden">
         <div className="absolute top-[-60px] right-[-60px] w-48 h-48 bg-primary-500/15 rounded-full blur-3xl" />
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
             <p className="text-[10px] text-primary-400 uppercase tracking-[0.35em] font-black mb-3">
               Partner Settings
             </p>
-            <h1 className="text-3xl font-black tracking-tighter text-white mb-3">
+            <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white mb-3">
               Operasyon ayarlarını tek merkezden yönet
             </h1>
-            <p className="text-sm text-slate-400 max-w-2xl leading-relaxed">
+            <p className="text-sm text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
               Hizmet görünürlüğü, teklif akışı, ödeme hesabı ve çalışma
               tercihlerini düzenleyerek partner panelini aktif kullanım için
               tamamla.
@@ -184,7 +184,7 @@ const PartnerSettingsScreen = () => {
             <p className="text-[10px] uppercase tracking-[0.25em] text-primary-300 font-black mb-2">
               Hazırlık Seviyesi
             </p>
-            <p className="text-4xl font-black text-white">%{completionRate}</p>
+            <p className="text-4xl font-black text-slate-900 dark:text-white">%{completionRate}</p>
             <p className="text-xs text-primary-200 mt-2">
               Temel operasyon tercihleri yapılandırıldı.
             </p>
@@ -193,13 +193,13 @@ const PartnerSettingsScreen = () => {
       </section>
 
       <section className="grid grid-cols-1 xl:grid-cols-[1.2fr_0.8fr] gap-6">
-        <div className="glass-card rounded-[2rem] border border-white/5 p-6 space-y-5">
+        <div className="glass-card rounded-[2rem] border border-black/5 dark:border-white/5 p-6 space-y-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary-400">
+            <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary-400">
               <Icons.Building2 size={20} />
             </div>
             <div>
-              <h2 className="text-lg font-black text-white">İşletme Profili</h2>
+              <h2 className="text-lg font-black text-slate-900 dark:text-white">İşletme Profili</h2>
               <p className="text-sm text-slate-500">
                 Müşterilere görünen temel operasyon bilgileri
               </p>
@@ -219,7 +219,7 @@ const PartnerSettingsScreen = () => {
                     businessName: event.target.value,
                   }))
                 }
-                className="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-4 py-3 text-sm text-white outline-none"
+                className="w-full bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white outline-none"
               />
             </label>
             <label className="space-y-2">
@@ -234,14 +234,14 @@ const PartnerSettingsScreen = () => {
                     contactPhone: event.target.value,
                   }))
                 }
-                className="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-4 py-3 text-sm text-white outline-none"
+                className="w-full bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white outline-none"
               />
             </label>
             <label className="space-y-2">
               <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">
                 Hizmet Yarıçapı
               </span>
-              <div className="flex items-center gap-3 bg-slate-900/80 border border-white/10 rounded-2xl px-4 py-3">
+              <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
                 <Icons.MapPinned size={18} className="text-primary-400" />
                 <input
                   type="number"
@@ -254,7 +254,7 @@ const PartnerSettingsScreen = () => {
                       serviceRadius: Number(event.target.value),
                     }))
                   }
-                  className="w-full bg-transparent text-sm text-white outline-none"
+                  className="w-full bg-transparent text-sm text-slate-900 dark:text-white outline-none"
                 />
                 <span className="text-xs text-slate-500 font-bold">km</span>
               </div>
@@ -271,7 +271,7 @@ const PartnerSettingsScreen = () => {
                     payoutIban: event.target.value,
                   }))
                 }
-                className="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-4 py-3 text-sm text-white outline-none"
+                className="w-full bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white outline-none"
               />
             </label>
           </div>
@@ -279,18 +279,18 @@ const PartnerSettingsScreen = () => {
 
         {/* Specialized Profile Form Section */}
         {renderSpecializedForm() && (
-          <div className="glass-card rounded-[2rem] border border-white/5 p-8 space-y-6">
+          <div className="glass-card rounded-[2rem] border border-black/5 dark:border-white/5 p-8 space-y-6">
             {renderSpecializedForm()}
           </div>
         )}
 
-        <div className="glass-card rounded-[2rem] border border-white/5 p-6 space-y-4">
+        <div className="glass-card rounded-[2rem] border border-black/5 dark:border-white/5 p-6 space-y-4">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400">
+            <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-emerald-400">
               <Icons.ShieldCheck size={20} />
             </div>
             <div>
-              <h2 className="text-lg font-black text-white">
+              <h2 className="text-lg font-black text-slate-900 dark:text-white">
                 Operasyon Tercihleri
               </h2>
               <p className="text-sm text-slate-500">
@@ -325,11 +325,11 @@ const PartnerSettingsScreen = () => {
               key={key}
               type="button"
               onClick={() => updatePreference(key)}
-              className="w-full text-left rounded-2xl border border-white/5 bg-white/5 px-4 py-4 hover:border-white/10 transition-all"
+              className="w-full text-left rounded-2xl border border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 px-4 py-4 hover:border-black/10 dark:border-white/10 transition-all"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-sm font-black text-white mb-1">{title}</p>
+                  <p className="text-sm font-black text-slate-900 dark:text-white mb-1">{title}</p>
                   <p className="text-xs text-slate-500 leading-relaxed">
                     {description}
                   </p>
@@ -345,15 +345,15 @@ const PartnerSettingsScreen = () => {
         </div>
       </section>
 
-      <section className="glass-card rounded-[2rem] border border-white/5 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <section className="glass-card rounded-[2rem] border border-black/5 dark:border-white/5 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <p className="text-[10px] uppercase tracking-[0.25em] text-slate-500 font-black mb-2">
             Kaydetmeden önce
           </p>
-          <h3 className="text-lg font-black text-white">
+          <h3 className="text-lg font-black text-slate-900 dark:text-white">
             Operasyon verilerini güncel tut
           </h3>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Servis yarıçapı ve IBAN alanları ödeme ve eşleşme akışlarını
             doğrudan etkiler.
           </p>
@@ -361,7 +361,7 @@ const PartnerSettingsScreen = () => {
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="px-8 py-4 rounded-2xl bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-black uppercase tracking-[0.25em] transition-all active-scale min-w-[200px] flex items-center justify-center gap-3"
+          className="px-8 py-4 rounded-2xl bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 dark:text-white font-black uppercase tracking-[0.25em] transition-all active-scale min-w-[200px] flex items-center justify-center gap-3"
         >
           {isSaving ? (
             <>

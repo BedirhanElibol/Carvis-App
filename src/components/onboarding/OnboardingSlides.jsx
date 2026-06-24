@@ -45,7 +45,7 @@ const OnboardingSlides = ({ onComplete }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-slate-950 flex flex-col justify-center items-center p-8 overflow-hidden">
+    <div className="fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 flex flex-col justify-center items-center p-8 overflow-hidden">
       {/* Skip Button */}
       <button
         onClick={onComplete}
@@ -65,9 +65,9 @@ const OnboardingSlides = ({ onComplete }) => {
             className="flex flex-col items-center text-center"
           >
             <div
-              className={`w-32 h-32 rounded-[2.5rem] bg-gradient-to-b ${slides[current].bg} flex items-center justify-center mb-12 border border-white/5 shadow-2xl relative`}
+              className={`w-32 h-32 rounded-[2.5rem] bg-gradient-to-b ${slides[current].bg} flex items-center justify-center mb-12 border border-black/5 dark:border-white/5 shadow-2xl relative`}
             >
-              <div className="absolute inset-0 bg-white/5 blur-xl rounded-full"></div>
+              <div className="absolute inset-0 bg-black/5 dark:bg-white/5 blur-xl rounded-full"></div>
               {(() => {
                 const Icon = slides[current].icon;
                 return (
@@ -78,7 +78,7 @@ const OnboardingSlides = ({ onComplete }) => {
                 );
               })()}
             </div>
-            <h2 className="text-4xl font-black tracking-tighter text-white mb-2 uppercase">
+            <h2 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white mb-2 uppercase">
               {slides[current].title}
             </h2>
             <p
@@ -86,7 +86,7 @@ const OnboardingSlides = ({ onComplete }) => {
             >
               {slides[current].subtitle}
             </p>
-            <p className="text-slate-400 text-sm leading-relaxed mb-12 max-w-[280px]">
+            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-12 max-w-[280px]">
               {slides[current].description}
             </p>
           </motion.div>
@@ -98,7 +98,7 @@ const OnboardingSlides = ({ onComplete }) => {
             <div
               key={i}
               className={`h-1 rounded-full transition-all duration-500 ${
-                i === current ? "w-8 bg-primary-500" : "w-2 bg-slate-800"
+                i === current ? "w-8 bg-primary-500" : "w-2 bg-slate-100 dark:bg-slate-800"
               }`}
             />
           ))}

@@ -35,7 +35,7 @@ const NotificationModal = ({ show, onClose, t }) => {
               <div>
                 <h4 className="text-sm font-bold text-slate-800 font-sans">{n.title}</h4>
                 <p className="text-xs text-slate-500 font-sans">{n.message}</p>
-                <span className="text-[10px] text-slate-300">{n.time}</span>
+                <span className="text-[10px] text-slate-600 dark:text-slate-300">{n.time}</span>
               </div>
             </div>
           ))}

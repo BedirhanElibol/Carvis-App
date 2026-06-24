@@ -5,7 +5,7 @@ import ReviewsModal from "./modals/ReviewsModal";
 import { useUI } from "../context/UIContext";
 
 export const Skeleton = ({ className, variant = "rect" }) => {
-  const baseClass = "animate-pulse bg-slate-800/50";
+  const baseClass = "animate-pulse bg-slate-100 dark:bg-slate-800/50";
   const variants = {
     rect: "rounded-2xl",
     circle: "rounded-full",
@@ -28,16 +28,16 @@ export const SpecialistCard = ({ specialist }) => {
   const isVerified = specialist.is_verified || specialist.verified || true;
 
   return (
-    <div className="glass-card p-6 rounded-[2.5rem] border border-white/10 shadow-2xl mb-5 mx-1 relative overflow-hidden group hover:border-primary-500/30 transition-all active-scale-[0.98]">
+    <div className="glass-card p-6 rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl mb-5 mx-1 relative overflow-hidden group hover:border-primary-500/30 transition-all active-scale-[0.98]">
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full blur-3xl group-hover:bg-primary-600/10 transition-colors"></div>
       
       <div className="flex justify-between items-start mb-6 relative z-10">
         <div className="flex gap-4 items-center">
-          <div className="w-14 h-14 bg-gradient-to-tr from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center border border-white/5 shadow-xl">
+          <div className="w-14 h-14 bg-gradient-to-tr from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center border border-black/5 dark:border-white/5 shadow-xl">
              <Icons.Wrench size={24} className="text-primary-400" />
           </div>
           <div>
-            <h3 className="font-black text-white text-xl tracking-tighter leading-tight">{name}</h3>
+            <h3 className="font-black text-slate-900 dark:text-white text-xl tracking-tighter leading-tight">{name}</h3>
             <div className="flex items-center gap-2 mt-1">
               <StarRating rating={rating} count={reviewCount} size={10} />
             </div>
@@ -49,18 +49,18 @@ export const SpecialistCard = ({ specialist }) => {
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-6 relative z-10">
-        <div className="bg-white/5 rounded-2xl p-3 border border-white/5">
+        <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-3 border border-black/5 dark:border-white/5">
           <p className="text-[9px] text-slate-500 font-black uppercase mb-1 tracking-widest">{t.experience}</p>
           <p className="text-xs font-black text-primary-400 uppercase">{t.experienceYears}</p>
         </div>
-        <div className="bg-white/5 rounded-2xl p-3 border border-white/5">
+        <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-3 border border-black/5 dark:border-white/5">
           <p className="text-[9px] text-slate-500 font-black uppercase mb-1 tracking-widest">{t.location}</p>
-          <p className="text-xs font-black text-slate-300 uppercase">ANKARA / OSTİM</p>
+          <p className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase">ANKARA / OSTİM</p>
         </div>
       </div>
 
       <div className="flex gap-3 relative z-10">
-        <button className="flex-1 bg-primary-600 hover:bg-primary-500 text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-primary-900/20">
+        <button className="flex-1 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-primary-900/20">
           {t.requestQuote}
         </button>
         <button 
@@ -68,11 +68,11 @@ export const SpecialistCard = ({ specialist }) => {
             e.stopPropagation();
             setShowReview(true);
           }}
-          className="p-4 glass-card border border-white/10 rounded-2xl text-slate-400 hover:text-white transition-all active-scale"
+          className="p-4 glass-card border border-black/10 dark:border-white/10 rounded-2xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all active-scale"
         >
           <Icons.Star size={18} />
         </button>
-        <button className="p-4 glass-card border border-white/10 rounded-2xl text-slate-400 hover:text-white transition-all active-scale">
+        <button className="p-4 glass-card border border-black/10 dark:border-white/10 rounded-2xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all active-scale">
           <Icons.MessageSquare size={18} />
         </button>
       </div>
@@ -118,7 +118,7 @@ export const RapidsyLogoIcon = ({ className }) => (
 export const ModernCard = ({ children, className, onClick }) => (
   <div
     onClick={onClick}
-    className={`glass-card border border-white/10 p-5 rounded-3xl shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 cursor-pointer ${className}`}
+    className={`glass-card border border-black/10 dark:border-white/10 p-5 rounded-3xl shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 cursor-pointer ${className}`}
   >
     {children}
   </div>
@@ -136,15 +136,15 @@ export const ActionButton = ({
     accent:
       "bg-gradient-to-br from-accent-500 to-accent-700 shadow-accent-900/30",
     red: "bg-gradient-to-br from-red-500 to-red-700 shadow-red-900/30",
-    slate: "glass-card hover:bg-white/10 shadow-lg border border-white/10",
+    slate: "glass-card hover:bg-black/10 dark:bg-white/10 shadow-lg border border-black/10 dark:border-white/10",
   };
   return (
     <button
       onClick={onClick}
-      className={`${colors[color]} text-white p-5 rounded-[2rem] shadow-xl flex flex-col items-center justify-center gap-2 flex-1 hover:scale-[1.03] active:scale-95 transition-all duration-300`}
+      className={`${colors[color]} text-slate-900 dark:text-white p-5 rounded-[2rem] shadow-xl flex flex-col items-center justify-center gap-2 flex-1 hover:scale-[1.03] active:scale-95 transition-all duration-300`}
     >
-      <div className="p-2 bg-white/10 rounded-xl">
-        <Icon size={22} className="text-white" />
+      <div className="p-2 bg-black/10 dark:bg-white/10 rounded-xl">
+        <Icon size={22} className="text-slate-900 dark:text-white" />
       </div>
       <span className="font-black text-[10px] tracking-widest uppercase">
         {label}
@@ -159,7 +159,7 @@ export const Badge = ({ children, type, className }) => {
     warning: "bg-amber-500/20 text-amber-400 border-amber-500/30",
     info: "bg-primary-500/20 text-primary-400 border-primary-500/30",
     danger: "bg-red-500/20 text-red-400 border-red-500/30",
-    neutral: "bg-slate-500/20 text-slate-400 border-slate-500/30",
+    neutral: "bg-slate-500/20 text-slate-500 dark:text-slate-400 border-slate-500/30",
     verified: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
   };
   return (
