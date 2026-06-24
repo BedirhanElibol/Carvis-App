@@ -156,7 +156,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-2xl bg-white dark:bg-slate-900 border-2 border-black/10 dark:border-white/10 rounded-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[85vh]">
+      <div className="w-full max-w-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[85vh]">
         {/* Telemetry background pulse */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-500/40 to-transparent" />
 
@@ -216,10 +216,10 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                       <button
                         key={symptom.id}
                         onClick={() => handleSelectSymptom(symptom)}
-                        className="p-4 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-amber-500/30 transition-all flex items-center justify-between gap-4 text-left active-scale group"
+                        className="p-4 rounded-xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-amber-500/30 transition-all flex items-center justify-between gap-4 text-left active-scale group"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 text-slate-500 dark:text-slate-400 group-hover:text-amber-400 transition-colors">
+                          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 group-hover:text-amber-400 transition-colors">
                             <SymptomIcon size={20} />
                           </div>
                           <div>
@@ -336,7 +336,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
 
                 {/* Technical Stats Details Table */}
                 <div className="bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-black/5 dark:border-white/5 overflow-hidden">
-                  <div className="px-4 py-3 bg-black/5 dark:bg-white/5 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
+                  <div className="px-4 py-3 bg-white dark:bg-white/5 shadow-sm border-b border-black/5 dark:border-white/5 flex justify-between items-center">
                     <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">TEKNİK ANALİZ RAPORU</span>
                     <span className="text-[9px] font-black text-emerald-400 uppercase tracking-wider flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> MİSAFİR GÜVENLİĞİ: ONAYLI
@@ -379,7 +379,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <button 
                     onClick={() => setStep(1)}
-                    className="p-4 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all active-scale"
+                    className="p-4 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all active-scale"
                   >
                     YENİDEN TEST ET
                   </button>

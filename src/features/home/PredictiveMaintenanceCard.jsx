@@ -118,7 +118,7 @@ const PredictiveMaintenanceCard = ({
           </button>
           <button
             onClick={onShowHistory}
-            className="px-5 py-3.5 glass-card border border-black/10 dark:border-white/10 text-slate-900 dark:text-white rounded-2xl font-black text-xs tracking-tighter hover:bg-black/5 dark:bg-white/5 transition-all active-scale-95 uppercase"
+            className="px-5 py-3.5 glass-card border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-2xl font-black text-xs tracking-tighter hover:bg-white dark:bg-white/5 shadow-sm transition-all active-scale-95 uppercase"
           >
             Geçmiş
           </button>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import logo from "../../assets/logo.png";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
+import { getFuelPrices } from "../../services/externalApis";
 
 const CITIES = [
   "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin", "Aydın", "Balıkesir", "Bartın", "Batman", "Bayburt", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Düzce", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Iğdır", "Isparta", "İstanbul", "İzmir", "Kahramanmaraş", "Karabük", "Karaman", "Kars", "Kastamonu", "Kayseri", "Kırıkkale", "Kırklareli", "Kırşehir", "Kilis", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Mardin", "Mersin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Osmaniye", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Şanlıurfa", "Şırnak", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat", "Zonguldak"
@@ -19,6 +20,44 @@ const LandingScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchLocation, setSearchLocation] = useState("all");
   const [hoveredPin, setHoveredPin] = useState(null);
+
+  // Fuel Prices State
+  const [fuelPrices, setFuelPrices] = useState(null);
+  const [fuelCity, setFuelCity] = useState("istanbul");
+  const [fuelLastUpdated, setFuelLastUpdated] = useState("");
+  const [isLoadingFuel, setIsLoadingFuel] = useState(true);
+
+  // Fetch Fuel Prices
+  useEffect(() => {
+    let isMounted = true;
+    const fetchFuel = async () => {
+      setIsLoadingFuel(true);
+      try {
+        const updateTime = new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
+        const data = await getFuelPrices(fuelCity);
+        
+        if (isMounted && data && data.results) {
+          setFuelPrices({
+            benzin: data.results[0].price,
+            motorin: data.results[1].price,
+            lpg: data.results[2].price
+          });
+          setFuelLastUpdated(updateTime);
+        }
+      } catch (err) {
+        console.error("Akaryakıt güncellenemedi:", err);
+      } finally {
+        if (isMounted) setIsLoadingFuel(false);
+      }
+    };
+    fetchFuel();
+    
+    const interval = setInterval(fetchFuel, 30 * 60 * 1000);
+    return () => { 
+      isMounted = false; 
+      clearInterval(interval);
+    };
+  }, [fuelCity]);
 
   const handleGuestEntry = (query = "", city = "istanbul") => {
     loginAsGuest();
@@ -59,7 +98,7 @@ const LandingScreen = () => {
 
       {/* Floating Glass Navbar */}
       <nav className="fixed top-4 left-4 right-4 z-50 max-w-7xl mx-auto">
-        <div className="w-full bg-white/75 dark:bg-[#0a0f1d]/75 backdrop-blur-xl border border-black/10 dark:border-white/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-2xl shadow-black/50 dark:shadow-black/50">
+        <div className="w-full bg-white/75 dark:bg-[#0a0f1d]/75 backdrop-blur-xl border border-slate-200 dark:border-white/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-2xl shadow-black/50 dark:shadow-black/50">
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
             <img
               src={logo}
@@ -72,7 +111,7 @@ const LandingScreen = () => {
             {/* Language Toggle */}
             <button
               onClick={toggleLanguage}
-              className="w-10 h-10 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center hover:bg-black/10 dark:bg-white/10 active:scale-95 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
+              className="w-10 h-10 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm flex items-center justify-center hover:bg-slate-50 dark:hover:bg-white/10 active:scale-95 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
             >
               <Icons.Globe size={18} />
               <span className="absolute bottom-1.5 text-[6px] font-black tracking-widest text-teal-400">
@@ -83,7 +122,7 @@ const LandingScreen = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="w-10 h-10 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center hover:bg-black/10 dark:bg-white/10 active:scale-95 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
+              className="w-10 h-10 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm flex items-center justify-center hover:bg-slate-50 dark:hover:bg-white/10 active:scale-95 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               title={theme === "dark" ? "Aydınlık Mod" : "Karanlık Mod"}
             >
               {theme === "dark" ? (
@@ -96,7 +135,7 @@ const LandingScreen = () => {
             {/* Seller/Partner Page link */}
             <button
               onClick={() => navigate("/partner-login")}
-              className="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 active:scale-95 transition-all"
+              className="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/10 active:scale-95 transition-all"
             >
               <Icons.Store size={14} className="text-orange-400" />
               {t.becomePartner || "Partner Girişi"}
@@ -123,7 +162,7 @@ const LandingScreen = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-md mb-6 shadow-inner"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-md mb-6 shadow-sm"
           >
             <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
             <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">
@@ -161,7 +200,7 @@ const LandingScreen = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="w-full max-w-4xl mx-auto px-2 md:px-0 mb-10"
           >
-            <div className="bg-white/90 dark:bg-[#0a0f24]/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-3xl p-3 md:p-4 shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-3 relative z-20">
+            <div className="bg-white/90 dark:bg-[#0a0f24]/90 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-3xl p-3 md:p-4 shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-3 relative z-20">
               
               {/* Search Query Input */}
               <div className="flex-1 relative group">
@@ -171,7 +210,7 @@ const LandingScreen = () => {
                   placeholder="Hangi hizmeti arıyorsunuz? (Örn: Periyodik Bakım)" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-[#030712] border border-black/10 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 transition-all placeholder:text-slate-500"
+                  className="w-full bg-slate-50 dark:bg-[#030712] border border-slate-200 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 transition-all placeholder:text-slate-500"
                 />
               </div>
 
@@ -181,7 +220,7 @@ const LandingScreen = () => {
                 <select 
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-[#030712] border border-black/10 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-10 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 transition-all appearance-none cursor-pointer"
+                  className="w-full bg-slate-50 dark:bg-[#030712] border border-slate-200 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-10 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 transition-all appearance-none cursor-pointer"
                 >
                   <option value="all">Tüm Şehirler</option>
                   {CITIES.map(city => (
@@ -214,12 +253,65 @@ const LandingScreen = () => {
                 <button 
                   key={idx}
                   onClick={() => handleGuestEntry(cat.name, searchLocation)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 border border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20 transition-all cursor-pointer group"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-white/10 shadow-sm border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all cursor-pointer group"
                 >
                   <cat.icon size={12} className={cat.color} />
                   <span className="text-[10px] md:text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white">{cat.name}</span>
                 </button>
               ))}
+            </div>
+          </motion.div>
+
+          {/* LIVE FUEL PRICES WIDGET ON LANDING */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="w-full max-w-4xl mx-auto px-2 md:px-0 mb-10 mt-2"
+          >
+            <div className="bg-white/80 dark:bg-[#0a0f24]/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl p-4 shadow-[0_0_30px_rgba(0,0,0,0.05)] dark:shadow-[0_0_30px_rgba(0,0,0,0.3)] flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
+                  <Icons.Droplets size={20} className="text-blue-500" />
+                </div>
+                <div className="text-left">
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-black text-sm uppercase tracking-tight text-slate-900 dark:text-white">Canlı Akaryakıt</h4>
+                    <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      <span className="text-[8px] font-black uppercase tracking-widest text-emerald-500">Live</span>
+                    </div>
+                  </div>
+                  <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">Güncelleme: {isLoadingFuel ? "Yükleniyor..." : fuelLastUpdated}</p>
+                </div>
+              </div>
+
+              <div className="flex flex-1 w-full md:w-auto gap-2 md:gap-4 justify-between md:justify-end items-center">
+                <div className="flex flex-col items-center">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Kurşunsuz 95</span>
+                  <span className="text-sm md:text-base font-black text-slate-900 dark:text-white font-mono">{isLoadingFuel ? "---" : fuelPrices?.benzin} <span className="text-[9px] text-slate-500">₺/L</span></span>
+                </div>
+                <div className="w-px h-8 bg-black/10 dark:bg-white/10"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Motorin</span>
+                  <span className="text-sm md:text-base font-black text-slate-900 dark:text-white font-mono">{isLoadingFuel ? "---" : fuelPrices?.motorin} <span className="text-[9px] text-slate-500">₺/L</span></span>
+                </div>
+                <div className="w-px h-8 bg-black/10 dark:bg-white/10"></div>
+                <div className="flex flex-col items-center">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Otogaz (LPG)</span>
+                  <span className="text-sm md:text-base font-black text-slate-900 dark:text-white font-mono">{isLoadingFuel ? "---" : fuelPrices?.lpg} <span className="text-[9px] text-slate-500">₺/L</span></span>
+                </div>
+                
+                <select
+                  value={fuelCity}
+                  onChange={(e) => setFuelCity(e.target.value)}
+                  className="ml-1 md:ml-4 bg-slate-100 dark:bg-[#030712] border border-black/5 dark:border-white/5 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-wider rounded-xl px-2 py-1.5 outline-none cursor-pointer hover:border-black/20 transition-colors"
+                >
+                  <option value="istanbul">İSTANBUL</option>
+                  <option value="ankara">ANKARA</option>
+                  <option value="izmir">İZMİR</option>
+                </select>
+              </div>
             </div>
           </motion.div>
         </section>
@@ -257,7 +349,7 @@ const LandingScreen = () => {
                       <h4 className="text-slate-900 dark:text-white font-black uppercase tracking-tight text-sm group-hover:text-orange-400 transition-colors">{prov.name}</h4>
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mt-1">{prov.type}</span>
                     </div>
-                    <div className="flex items-center gap-1 text-[10px] font-bold text-slate-600 dark:text-slate-300 bg-black/5 dark:bg-white/5 px-2 py-1 rounded-lg border border-black/5 dark:border-white/5">
+                    <div className="flex items-center gap-1 text-[10px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-white/5 shadow-sm px-2 py-1 rounded-lg border border-black/5 dark:border-white/5">
                       <Icons.Star size={10} className="text-yellow-400 fill-yellow-400" />
                       {prov.rating}
                     </div>
@@ -273,7 +365,7 @@ const LandingScreen = () => {
             </div>
 
             {/* Right Column: Interactive SVG Map */}
-            <div className="flex-1 bg-slate-50 dark:bg-[#050814] border border-black/10 dark:border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex items-center justify-center p-4">
+            <div className="flex-1 bg-slate-50 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex items-center justify-center p-4">
               {/* Map background grid/texture */}
               <div 
                 className="absolute inset-0 opacity-[0.05]"
@@ -333,11 +425,11 @@ const LandingScreen = () => {
                 { step: "03", title: "Güvenle Randevu Al", desc: "Teklifleri karşılaştırın, size en uygun olanı seçip güvenli ödeme ile randevunuzu kesinleştirin.", icon: Icons.CalendarCheck, color: "from-cyan-500 to-emerald-500" }
               ].map((item, idx) => (
                 <div key={idx} className="flex flex-col items-center text-center relative z-10 group">
-                  <div className={`w-20 h-20 rounded-[2rem] bg-gradient-to-br ${item.color} text-slate-900 dark:text-white flex items-center justify-center shadow-2xl group-hover:-translate-y-2 transition-transform duration-300 mb-6 border border-black/10 dark:border-white/10`}>
+                  <div className={`w-20 h-20 rounded-[2rem] bg-gradient-to-br ${item.color} text-slate-900 dark:text-white flex items-center justify-center shadow-2xl group-hover:-translate-y-2 transition-transform duration-300 mb-6 border border-slate-200 dark:border-white/10`}>
                     <item.icon size={32} />
                   </div>
                   <div className="space-y-3">
-                    <span className="inline-block px-3 py-1 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[9px] font-mono font-black text-slate-600 dark:text-slate-300 tracking-widest uppercase">ADIM {item.step}</span>
+                    <span className="inline-block px-3 py-1 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm text-[9px] font-mono font-black text-slate-600 dark:text-slate-300 tracking-widest uppercase">ADIM {item.step}</span>
                     <h4 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">{item.title}</h4>
                     <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium max-w-[260px] mx-auto">{item.desc}</p>
                   </div>
@@ -480,7 +572,7 @@ const LandingScreen = () => {
 
         {/* BOTTOM BUSINESS PORTAL CTA */}
         <section className="w-full max-w-7xl mx-auto px-6 mb-28 text-center relative">
-          <div className="max-w-4xl mx-auto bg-gradient-to-b from-white to-slate-50 dark:from-[#090e21] dark:to-[#040713] border border-black/10 dark:border-white/10 rounded-[3rem] p-10 md:p-16 relative overflow-hidden shadow-2xl">
+          <div className="max-w-4xl mx-auto bg-gradient-to-b from-white to-slate-50 dark:from-[#090e21] dark:to-[#040713] border border-slate-200 dark:border-white/10 rounded-[3rem] p-10 md:p-16 relative overflow-hidden shadow-2xl">
             {/* Background elements */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none"></div>
 

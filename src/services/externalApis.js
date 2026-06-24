@@ -133,39 +133,78 @@ export const decodeVin = async (vin) => {
 // MOCK DATA removed as per production hardening requirements.
 
 export const getFuelPrices = async (cityInput = "istanbul") => {
-  const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://gieclpczrozblvauxjhf.supabase.co";
-  
-  // Normalize city name for the API (lowercase, first part of "City, District")
   const city = cityInput.toLowerCase().split(",")[0].trim().replace("i̇", "i");
   
+  // Opet uses province codes. Here's a quick mapping for major cities
+  const PROVINCE_CODES = {
+    "adana": "01", "ankara": "06", "antalya": "07", "bursa": "16",
+    "istanbul": "34", "izmir": "35", "kocaeli": "41"
+  };
+  
+  const provinceCode = PROVINCE_CODES[city] || "34";
+  
   try {
-    const response = await fetch(`${SUPABASE_URL}/functions/v1/fuel-prices?city=${city}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-
-    if (!response.ok) throw new Error("Edge Function Error");
+    // We use the Vite proxy /api/opet which maps to https://api.opet.com.tr
+    // This avoids CORS issues completely.
+    const url = `/api/opet/fuelprices/prices?provinceCode=${provinceCode}&nocache=${Date.now()}`;
+    
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Opet API Error");
     
     const data = await response.json();
     
-    // Map the edge function results to the format expected by the UI
-    // The UI expects an array of { name: string, price: number }
-    return {
-      results: data.results,
-      source: data.source,
-      last_updated: data.updatedAt || new Date().toISOString(),
-    };
-  } catch (error) {
-    console.error("Fuel Price Edge Function Error, using fallback:", error);
+    if (!Array.isArray(data) || data.length === 0) {
+      throw new Error("No data returned from Opet API");
+    }
+
+    // Opet returns an array of districts. Find a representative one:
+    const targetDistrict = data.find((d) => 
+      d.districtName === "ALTINDAĞ" || 
+      d.districtName === "KADIKÖY" || 
+      d.districtName === "MERKEZ" || 
+      d.districtName === "KONAK"
+    ) || data[0];
+
+    if (!targetDistrict || !targetDistrict.prices) {
+      throw new Error("No prices found in the selected district");
+    }
+
+    const benzinObj = targetDistrict.prices.find((p) => p.productShortName === "KURS");
+    const motorinObj = targetDistrict.prices.find((p) => p.productShortName === "MT_ULT");
+
+    if (!benzinObj || !motorinObj) {
+      throw new Error("Missing fuel types");
+    }
+
+    const benzin = benzinObj.amount;
+    const motorin = motorinObj.amount;
+    
+    // Calculate LPG price using city-specific ratio as Opet API doesn't always provide LPG
+    let lpgRatio = 0.538;
+    if (provinceCode === "34" || provinceCode === "01") lpgRatio = 0.5386;
+    else if (provinceCode === "06") lpgRatio = 0.5388;
+    else if (provinceCode === "35") lpgRatio = 0.5278;
+    
+    const lpg = Math.round((benzin * lpgRatio) * 100) / 100;
+
     return {
       results: [
-        { name: "Kurşunsuz 95 (Benzin)", price: 43.77 },
-        { name: "Motorin (Dizel)", price: 44.89 },
-        { name: "Otogaz (LPG)", price: 23.50 },
+        { name: "Kurşunsuz 95 (Benzin)", price: benzin },
+        { name: "Motorin (Dizel)", price: motorin },
+        { name: "Otogaz (LPG)", price: lpg }
       ],
-      source: "local-fallback",
+      source: "opet",
+      last_updated: new Date().toISOString(),
+    };
+  } catch (error) {
+    console.error("Live Fuel Price Error, using fallback:", error);
+    return {
+      results: [
+        { name: "Kurşunsuz 95 (Benzin)", price: 44.82 },
+        { name: "Motorin (Dizel)", price: 44.59 },
+        { name: "Otogaz (LPG)", price: 24.14 },
+      ],
+      source: "fallback",
       last_updated: new Date().toISOString(),
     };
   }

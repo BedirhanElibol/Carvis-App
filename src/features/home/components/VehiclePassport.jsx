@@ -37,7 +37,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
         {/* Top Header Background Pattern */}
         <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-indigo-500/10 via-slate-900/0 to-slate-900 pointer-events-none" />
 
@@ -75,7 +75,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 <span className="font-mono text-slate-600 dark:text-slate-300 font-bold">{vehicle.chassis_no || "WBA3A5C5XFK000000"}</span>
                 <button 
                   onClick={handleCopyChassis}
-                  className="p-1 hover:bg-black/5 dark:bg-white/5 rounded text-indigo-400 hover:text-slate-900 dark:text-white transition-all active-scale"
+                  className="p-1 hover:bg-white dark:bg-white/5 shadow-sm rounded text-indigo-400 hover:text-slate-900 dark:text-white transition-all active-scale"
                   title="Kopyala"
                 >
                   {copied ? <Icons.Check size={14} className="text-emerald-400" /> : <Icons.Copy size={14} />}
@@ -166,7 +166,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                     ].map((spec, i) => {
                       const SpecIcon = spec.icon;
                       return (
-                        <div key={i} className="p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col justify-between">
+                        <div key={i} className="p-5 rounded-2xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 flex flex-col justify-between">
                           <SpecIcon className="text-indigo-400 mb-4" size={20} />
                           <div>
                             <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider block">{spec.label}</span>
@@ -216,7 +216,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                           <EventIcon size={12} />
                         </div>
                         {/* Event Card */}
-                        <div className="p-6 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-indigo-500/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-indigo-500/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                           <div>
                             <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">{item.date}</span>
                             <h4 className="text-base font-black text-slate-900 dark:text-white mt-1 uppercase tracking-tight">{item.type}</h4>
@@ -224,7 +224,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                           </div>
                           <div className="flex items-center gap-4">
                             <span className="text-base font-black text-slate-900 dark:text-white">{item.price}</span>
-                            <button className="px-4 py-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 rounded-xl text-xs font-black uppercase tracking-wider transition-all">
+                            <button className="px-4 py-2 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 rounded-xl text-xs font-black uppercase tracking-wider transition-all">
                               Faturayı Gör
                             </button>
                           </div>
@@ -253,7 +253,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {mockDocuments.map((doc, i) => (
-                    <div key={i} className="p-6 rounded-3xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-indigo-500/20 transition-all flex items-center justify-between gap-4">
+                    <div key={i} className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-indigo-500/20 transition-all flex items-center justify-between gap-4">
                       <div className="flex items-center gap-4">
                         <div className="p-3 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
                           <Icons.File size={20} />
@@ -265,10 +265,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <button className="w-10 h-10 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale">
+                        <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale">
                           <Icons.Download size={16} />
                         </button>
-                        <button className="w-10 h-10 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale">
+                        <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale">
                           <Icons.Eye size={16} />
                         </button>
                       </div>
@@ -290,7 +290,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Progress Items */}
-                  <div className="space-y-5 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-3xl p-6">
+                  <div className="space-y-5 bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 rounded-3xl p-6">
                     {[
                       { name: "Kalan Motor Yağ Ömrü", val: mockAnalytics.oilLife, color: "bg-indigo-500" },
                       { name: "Kalan Fren Balata Kalınlığı", val: mockAnalytics.brakeLife, color: "bg-orange-500" },
@@ -302,7 +302,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                           <span className="text-slate-500 dark:text-slate-400">{item.name}</span>
                           <span className="text-slate-900 dark:text-white">%{item.val}</span>
                         </div>
-                        <div className="w-full h-2 rounded-full bg-black/5 dark:bg-white/5 overflow-hidden">
+                        <div className="w-full h-2 rounded-full bg-white dark:bg-white/5 shadow-sm overflow-hidden">
                           <div className={`h-full ${item.color} rounded-full`} style={{ width: `${item.val}%` }} />
                         </div>
                       </div>
