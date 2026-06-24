@@ -60,7 +60,7 @@ const LandingScreen = () => {
             <img
               src={logo}
               alt="Rapidsy Logo"
-              className="h-10 md:h-14 w-auto max-w-[200px] md:max-w-[280px] object-contain transition-transform duration-500 scale-110 origin-left"
+              className="h-12 md:h-16 w-auto max-w-[250px] md:max-w-[320px] object-contain transition-transform duration-500 scale-[1.35] origin-left -ml-2 md:-ml-4"
             />
           </div>
 
@@ -412,7 +412,7 @@ const LandingScreen = () => {
         <footer className="w-full border-t border-black/5 dark:border-white/5 py-12 bg-slate-100 dark:bg-[#02050c]">
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="Rapidsy Logo" className="h-10 md:h-12 w-auto max-w-[200px] object-contain scale-110 origin-left" />
+              <img src={logo} alt="Rapidsy Logo" className="h-12 md:h-14 w-auto max-w-[250px] object-contain scale-[1.35] origin-left -ml-2 md:-ml-3" />
               <span className="text-slate-400 text-sm font-medium ml-2">© 2026</span>
             </div>
             
