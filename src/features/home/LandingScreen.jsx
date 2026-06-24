@@ -7,7 +7,7 @@ import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 
 const LandingScreen = () => {
-  const { t, openModal, language, toggleLanguage } = useUI();
+  const { t, openModal, language, toggleLanguage, theme, toggleTheme } = useUI();
   const { currentUser, loginAsGuest } = useAuth();
   const navigate = useNavigate();
 
@@ -77,6 +77,19 @@ const LandingScreen = () => {
               <span className="absolute bottom-1.5 text-[6px] font-black tracking-widest text-teal-400">
                 {language?.toUpperCase()}
               </span>
+            </button>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="w-10 h-10 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center hover:bg-black/10 dark:bg-white/10 active:scale-95 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
+              title={theme === "dark" ? "Aydınlık Mod" : "Karanlık Mod"}
+            >
+              {theme === "dark" ? (
+                <Icons.Sun size={18} className="text-amber-400" />
+              ) : (
+                <Icons.Moon size={18} className="text-slate-600 dark:text-slate-400" />
+              )}
             </button>
 
             {/* Seller/Partner Page link */}
