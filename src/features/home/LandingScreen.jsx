@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as Icons from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { RapidsyLogoIcon } from "../../components/Core";
+import logo from "../../assets/logo.png";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 
@@ -57,7 +57,11 @@ const LandingScreen = () => {
       <nav className="fixed top-4 left-4 right-4 z-50 max-w-7xl mx-auto">
         <div className="w-full bg-white/75 dark:bg-[#0a0f1d]/75 backdrop-blur-xl border border-black/10 dark:border-white/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-2xl shadow-black/50 dark:shadow-black/50">
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
-            <RapidsyLogoIcon className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-[0_0_15px_rgba(45,212,191,0.4)] transition-transform duration-500 group-hover:rotate-12" />
+            <img
+              src={logo}
+              alt="Rapidsy Logo"
+              className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-[0_0_15px_rgba(45,212,191,0.4)] transition-transform duration-500 group-hover:rotate-12"
+            />
             <span className="text-slate-900 dark:text-white text-lg md:text-xl font-black tracking-[0.15em] font-sans uppercase">
               RAPIDSY
             </span>
@@ -411,7 +415,7 @@ const LandingScreen = () => {
         <footer className="w-full border-t border-black/5 dark:border-white/5 py-12 bg-slate-100 dark:bg-[#02050c]">
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <RapidsyLogoIcon className="w-8 h-8 object-contain" />
+              <img src={logo} alt="Rapidsy Logo" className="w-8 h-8 object-contain" />
               <span className="text-slate-900 dark:text-white text-sm font-black tracking-widest uppercase">RAPIDSY © 2026</span>
             </div>
             

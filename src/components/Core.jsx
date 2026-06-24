@@ -1,6 +1,6 @@
 import React from "react";
 import * as Icons from "lucide-react";
-
+import logo from "../assets/logo.png";
 import ReviewsModal from "./modals/ReviewsModal";
 import { useUI } from "../context/UIContext";
 
@@ -179,7 +179,11 @@ export const Badge = ({ children, type, className }) => {
 
 export const RapidsyLogo = ({ className = "w-64 h-auto" }) => (
   <div className="flex items-center gap-2 group cursor-pointer font-sans uppercase">
-    <RapidsyLogoIcon className="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(45,212,191,0.4)] transition-transform duration-500 group-hover:rotate-12" />
+    <img
+      src={logo}
+      alt="Rapidsy Logo"
+      className="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(45,212,191,0.4)] transition-transform duration-500 group-hover:rotate-12"
+    />
     <span className="text-slate-900 dark:text-white text-2xl font-black tracking-[0.15em] font-sans uppercase">
       RAPIDSY
     </span>
