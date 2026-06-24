@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as Icons from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import logo from "../../assets/logo.png";
+
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 
@@ -56,14 +56,10 @@ const LandingScreen = () => {
       {/* Floating Glass Navbar */}
       <nav className="fixed top-4 left-4 right-4 z-50 max-w-7xl mx-auto">
         <div className="w-full bg-white/75 dark:bg-[#0a0f1d]/75 backdrop-blur-xl border border-black/10 dark:border-white/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-2xl shadow-black/50 dark:shadow-black/50">
-          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
-            <img
-              src={logo}
-              alt="Rapidsy Logo"
-              className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-[0_0_15px_rgba(45,212,191,0.4)] transition-transform duration-500 group-hover:rotate-12"
-            />
-            <span className="text-slate-900 dark:text-white text-lg md:text-xl font-black tracking-[0.15em] font-sans uppercase">
-              RAPIDSY
+          <div className="flex items-center cursor-pointer group" onClick={() => navigate("/")}>
+            <span className="text-lg md:text-xl font-black tracking-tight font-sans select-none">
+              <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">R</span>
+              <span className="text-slate-800 dark:text-white">APIDSY</span>
             </span>
           </div>
 
@@ -414,9 +410,13 @@ const LandingScreen = () => {
         {/* FOOTER */}
         <footer className="w-full border-t border-black/5 dark:border-white/5 py-12 bg-slate-100 dark:bg-[#02050c]">
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <img src={logo} alt="Rapidsy Logo" className="w-8 h-8 object-contain" />
-              <span className="text-slate-900 dark:text-white text-sm font-black tracking-widest uppercase">RAPIDSY © 2026</span>
+            <div className="flex items-center gap-1">
+              <span className="text-sm font-black tracking-tight font-sans select-none">
+                <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">R</span>
+                <span className="text-slate-800 dark:text-white">APIDSY</span>
+              </span>
+              <span className="text-slate-400 text-sm font-medium ml-2">© 2026</span>
+            </div>
             </div>
             
             <div className="flex items-center gap-6 text-xs text-slate-500 font-medium">
