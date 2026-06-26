@@ -40,6 +40,23 @@ export const callRealGeminiAPI = async (
   return "Şu an bağlantıda küçük bir aksaklık oldu. Ancak genel olarak söyleyebilirim ki, belirttiğiniz durum için en yakın oto servisimize uğrayarak bilgisayarlı arıza tespiti yaptırmanızı öneririm.";
 };
 
+const MOCK_DAMAGE_SCENARIOS = [
+  {
+    type: "Kaporta ve Tampon Deformasyonu",
+    severity: "Orta",
+    parts: ["Ön Tampon", "Plakalık", "Sis Farı Çerçevesi"],
+    costRange: [4500, 8000],
+    comment: "Darbenin açısı şasiye zarar vermemiş görünüyor, ancak plastik aksamın değişimi estetik açıdan gerekli."
+  },
+  {
+    type: "Farlar ve Aydınlatma Hasarı",
+    severity: "Yüksek",
+    parts: ["Sol LED Far Grubu", "Tampon Braketi"],
+    costRange: [12000, 18000],
+    comment: "LED Far grubu pahalı bir parça. Elektronik kontrol ünitesinin (ECU) ıslanmamış olması kritik."
+  }
+];
+
 /**
  * Analyze Vehicle Damage (Vision-like Inference)
  * For production, this should connect to Gemini 1.5 Pro Vision.
@@ -49,25 +66,8 @@ export const analyzeVehicleDamage = async (imageUrl, _vehicleInfo = {}) => {
   // Simulating server-side AI reasoning delay
   await new Promise(r => setTimeout(r, 2000));
 
-  const damageScenarios = [
-    {
-      type: "Kaporta ve Tampon Deformasyonu",
-      severity: "Orta",
-      parts: ["Ön Tampon", "Plakalık", "Sis Farı Çerçevesi"],
-      costRange: [4500, 8000],
-      comment: "Darbenin açısı şasiye zarar vermemiş görünüyor, ancak plastik aksamın değişimi estetik açıdan gerekli."
-    },
-    {
-      type: "Farlar ve Aydınlatma Hasarı",
-      severity: "Yüksek",
-      parts: ["Sol LED Far Grubu", "Tampon Braketi"],
-      costRange: [12000, 18000],
-      comment: "LED Far grubu pahalı bir parça. Elektronik kontrol ünitesinin (ECU) ıslanmamış olması kritik."
-    }
-  ];
-
   // Randomly pick a scenario for now, but in a real app, this is where GEMINI VISION handles the image.
-  const scenario = damageScenarios[Math.floor(Math.random() * damageScenarios.length)];
+  const scenario = MOCK_DAMAGE_SCENARIOS[Math.floor(Math.random() * MOCK_DAMAGE_SCENARIOS.length)];
   
   return {
     damageType: scenario.type,
