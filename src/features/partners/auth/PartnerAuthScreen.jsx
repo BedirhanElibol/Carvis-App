@@ -144,7 +144,7 @@ const PartnerAuthScreen = () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
-        options: { redirectTo: `${window.location.origin}/partner/dashboard?role=${role}` },
+        options: { redirectTo: `${window.location.origin}/partner/dashboard` },
       });
       if (error) throw error;
     } catch (err) {
