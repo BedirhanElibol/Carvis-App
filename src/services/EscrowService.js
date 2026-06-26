@@ -1,5 +1,13 @@
 import { supabase } from "../supabaseClient";
 
+export const calculateEscrowFee = (amount) => {
+  // %1.5 komisyon, minimum 50 TL, maksimum 1000 TL
+  const fee = amount * 0.015;
+  if (fee < 50) return 50;
+  if (fee > 1000) return 1000;
+  return fee;
+};
+
 /**
  * RAPIDSY CORPORATE ESCROW SERVICE
  * Manages blocked payments and proof-of-service verification.
