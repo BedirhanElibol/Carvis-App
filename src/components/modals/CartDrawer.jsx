@@ -22,20 +22,22 @@ const CartDrawer = () => {
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [addressError, setAddressError] = useState(false);
 
-  // Calculate totals - handle both parts and services
-  const partsTotal = cart
-    .filter((item) => item.itemType === "part")
-    .reduce((sum, item) => sum + (item.selectedOffer?.price || 0), 0);
-
-  const servicesTotal = cart
-    .filter((item) => item.itemType === "service")
-    .reduce((sum, item) => sum + (item.price || 0), 0);
+  // Calculate totals - handle both parts and services in a single pass
+  const { partsTotal, servicesTotal, partsCount, servicesCount } = cart.reduce(
+    (acc, item) => {
+      if (item.itemType === "part") {
+        acc.partsTotal += item.selectedOffer?.price || 0;
+        acc.partsCount += 1;
+      } else if (item.itemType === "service") {
+        acc.servicesTotal += item.price || 0;
+        acc.servicesCount += 1;
+      }
+      return acc;
+    },
+    { partsTotal: 0, servicesTotal: 0, partsCount: 0, servicesCount: 0 }
+  );
 
   const total = partsTotal + servicesTotal;
-  const partsCount = cart.filter((item) => item.itemType === "part").length;
-  const servicesCount = cart.filter(
-    (item) => item.itemType === "service",
-  ).length;
 
   const handleAddAddress = (newAddr) => {
     const addrWithId = { ...newAddr, id: Date.now() };
