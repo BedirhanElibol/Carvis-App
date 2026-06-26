@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { supabase } from "../supabaseClient";
 
 /**
@@ -122,27 +123,31 @@ export const softDelete = async (table, id) => {
 };
 
 /**
- * Create a subscription with auto-cleanup
+ * Custom hook to create a subscription with auto-cleanup
  * @param {string} table - Table name
  * @param {string} event - Event type ('INSERT' | 'UPDATE' | 'DELETE' | '*')
  * @param {Function} callback - Callback function
  * @param {Object} filter - Optional filter
- * @returns {Function} Cleanup function
  */
-export const subscribeToTable = (table, event, callback, filter = {}) => {
-  const channel = supabase
-    .channel(`${table}_changes`)
-    .on(
-      "postgres_changes",
-      { event, schema: "public", table, ...filter },
-      (payload) => callback(payload),
-    )
-    .subscribe();
+export const useSubscribeToTable = (table, event, callback, filter = {}) => {
+  const filterString = JSON.stringify(filter);
 
-  // Return cleanup function
-  return () => {
-    supabase.removeChannel(channel);
-  };
+  useEffect(() => {
+    const channel = supabase
+      .channel(`${table}_changes`)
+      .on(
+        "postgres_changes",
+        { event, schema: "public", table, ...filter },
+        (payload) => callback(payload),
+      )
+      .subscribe();
+
+    // Return cleanup function
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [table, event, callback, filterString]);
 };
 
 /**
