@@ -152,34 +152,34 @@ export const getPartnerRecentActivity = async (sellerId, limit = 5) => {
   try {
     if (!sellerId) return { success: false, error: "Seller ID is required" };
 
-    // 1. Fetch Orders
-    const { data: orders, error: orderError } = await supabase
-      .from("orders")
-      .select("id, total_amount, status, created_at, customer_id")
-      .eq("seller_id", sellerId)
-      .order("created_at", { ascending: false })
-      .limit(limit);
+    // Fetch Orders, Quotes, and Consultations concurrently
+    const [
+      { data: orders, error: orderError },
+      { data: quotes, error: quoteError },
+      { data: consultations, error: consError }
+    ] = await Promise.all([
+      supabase
+        .from("orders")
+        .select("id, total_amount, status, created_at, customer_id")
+        .eq("seller_id", sellerId)
+        .order("created_at", { ascending: false })
+        .limit(limit),
+      supabase
+        .from("quotes")
+        .select("id, price, status, created_at, customer_id")
+        .eq("seller_id", sellerId)
+        .order("created_at", { ascending: false })
+        .limit(limit),
+      supabase
+        .from("consultations")
+        .select("id, fee, status, created_at, user_id, topic")
+        .eq("expert_id", sellerId)
+        .order("created_at", { ascending: false })
+        .limit(limit)
+    ]);
 
     if (orderError) throw orderError;
-
-    // 2. Fetch Quotes
-    const { data: quotes, error: quoteError } = await supabase
-      .from("quotes")
-      .select("id, price, status, created_at, customer_id")
-      .eq("seller_id", sellerId)
-      .order("created_at", { ascending: false })
-      .limit(limit);
-
     if (quoteError) throw quoteError;
-
-    // 3. Fetch Consultations
-    const { data: consultations, error: consError } = await supabase
-      .from("consultations")
-      .select("id, fee, status, created_at, user_id, topic")
-      .eq("expert_id", sellerId)
-      .order("created_at", { ascending: false })
-      .limit(limit);
-
     if (consError) throw consError;
 
     // Combine and sort
