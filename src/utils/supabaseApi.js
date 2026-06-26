@@ -204,52 +204,49 @@ export const getPartnerDashboardStats = async (sellerId) => {
   try {
     if (!sellerId) return { success: false, error: "Seller ID is required" };
 
-    // 1. Total Sales & Order Count
-    const { data: orders, error: orderError } = await supabase
-      .from("orders")
-      .select("total_amount, status")
-      .eq("seller_id", sellerId);
+    const [
+      { data: orders, error: orderError },
+      { count: productCount, error: productError },
+      { data: consultationStats, error: consStatsError },
+      { count: quoteCount, error: quoteError },
+      { data: walletData, error: walletError },
+    ] = await Promise.all([
+      supabase
+        .from("orders")
+        .select("total_amount, status")
+        .eq("seller_id", sellerId),
+      supabase
+        .from("products")
+        .select("*", { count: "exact", head: true })
+        .eq("seller_id", sellerId),
+      supabase
+        .from("consultations")
+        .select("fee")
+        .eq("expert_id", sellerId)
+        .in("status", ["completed", "paid"]),
+      supabase
+        .from("quotes")
+        .select("*", { count: "exact", head: true })
+        .eq("seller_id", sellerId)
+        .eq("status", "pending"),
+      supabase
+        .from("wallets")
+        .select("pending_balance, balance")
+        .eq("user_id", sellerId)
+        .maybeSingle(),
+    ]);
 
     if (orderError) throw orderError;
-
-    // 2. Product Count
-    const { count: productCount, error: productError } = await supabase
-      .from("products")
-      .select("*", { count: "exact", head: true })
-      .eq("seller_id", sellerId);
-
     if (productError) throw productError;
-
-    // 3. Consultation Income (Missing query added)
-    const { data: consultationStats, error: consStatsError } = await supabase
-      .from("consultations")
-      .select("fee")
-      .eq("expert_id", sellerId)
-      .in("status", ["completed", "paid"]);
-
     if (consStatsError) throw consStatsError;
-
-    // 4. Fetch Quotes Count
-    const { count: quoteCount, error: quoteError } = await supabase
-      .from("quotes")
-      .select("*", { count: "exact", head: true })
-      .eq("seller_id", sellerId)
-      .eq("status", "pending");
-
     if (quoteError) throw quoteError;
+    if (walletError) throw walletError;
 
     const totalSales = orders
       .filter((o) => o.status === "paid" || o.status === "completed")
       .reduce((sum, o) => sum + (o.total_amount || 0), 0);
 
     const totalConsultationIncome = consultationStats.reduce((sum, c) => sum + (c.fee || 0), 0);
-
-    // 5. Fetch Wallet Balance
-    const { data: walletData } = await supabase
-      .from("wallets")
-      .select("pending_balance, balance")
-      .eq("user_id", sellerId)
-      .maybeSingle();
 
     return {
       success: true,
