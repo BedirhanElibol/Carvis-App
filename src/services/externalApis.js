@@ -115,6 +115,12 @@ export const decodeVin = async (vin) => {
     const getVal = (variable) =>
       data.Results.find((r) => r.Variable === variable)?.Value;
 
+    const errorCode = getVal("Error Code");
+    if (errorCode && errorCode !== "0" && errorCode !== "0 - Successful") {
+      const errorText = getVal("Error Text") || getVal("Additional Error Text") || "VIN Decode Failed";
+      throw new Error(errorText);
+    }
+
     return {
       brand: getVal("Make"),
       model: getVal("Model"),

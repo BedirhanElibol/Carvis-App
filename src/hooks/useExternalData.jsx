@@ -14,6 +14,7 @@ export const useExternalData = () => {
     setError(null);
     try {
       const data = await decodeVin(vin);
+      if (!data) throw new Error("No data returned for VIN");
       return data;
     } catch (err) {
       setError(err.message || "VIN Decode Failed");
