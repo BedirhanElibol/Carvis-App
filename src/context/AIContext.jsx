@@ -41,35 +41,35 @@ export const AIProvider = ({ children }) => {
     setMessages((prev) => [...prev, userMessage]);
     setIsTyping(true);
 
-    let botContext = "";
-    const lowerText = text.toLowerCase();
-    
-    // Simple Keyword based Intent Detection (Robust pop)
-    const words = text.trim().split(/\s+/);
-    const searchKeyword = words.length > 0 ? words[words.length - 1] : "";
-
-    if (searchKeyword && (lowerText.includes("balata") || lowerText.includes("yağ") || lowerText.includes("akü") || lowerText.includes("parça"))) {
-      const { data: partData } = await supabase.from("products").select("name, brand, price").ilike("name", `%${searchKeyword}%`).limit(3);
-      if (partData?.length > 0) {
-        botContext = `\nVEREBİLECEĞİN GERÇEK ÜRÜN ÖNERİLERİ (Kullanıcıya bunlardan bahset): ${partData.map(p => `${p.brand} ${p.name} (${p.price} TL)`).join(", ")}`;
-      }
-    } else if (lowerText.includes("usta") || lowerText.includes("servis") || lowerText.includes("tamir")) {
-      const { data: shopData } = await supabase.from("mechanic_shops").select("shop_name, specialties, rating").limit(3);
-      if (shopData?.length > 0) {
-        botContext = `\nVEREBİLECEĞİN GERÇEK SERVİS ÖNERİLERİ: ${shopData.map(s => `${s.shop_name} (${s.specialties?.[0] || "Genel Bakım"}, Puan: ${s.rating || "Yeni"})`).join(", ")}`;
-      }
-    }
-
-    const vehicleContext = currentVehicle ? `Araç: ${currentVehicle.brand} ${currentVehicle.model}` : "";
-    const finalVehicleContext = vehicleContext + botContext;
-
-    // Chat history for context (last 5 messages)
-    const history = messages
-      .slice(-5)
-      .map((m) => `${m.sender === "user" ? "Kullanıcı" : "Asistan"}: ${m.text}`)
-      .join("\n");
-
     try {
+      let botContext = "";
+      const lowerText = text.toLowerCase();
+
+      // Simple Keyword based Intent Detection (Robust pop)
+      const words = text.trim().split(/\s+/);
+      const searchKeyword = words.length > 0 ? words[words.length - 1] : "";
+
+      if (searchKeyword && (lowerText.includes("balata") || lowerText.includes("yağ") || lowerText.includes("akü") || lowerText.includes("parça"))) {
+        const { data: partData } = await supabase.from("products").select("name, brand, price").ilike("name", `%${searchKeyword}%`).limit(3);
+        if (partData?.length > 0) {
+          botContext = `\nVEREBİLECEĞİN GERÇEK ÜRÜN ÖNERİLERİ (Kullanıcıya bunlardan bahset): ${partData.map(p => `${p.brand} ${p.name} (${p.price} TL)`).join(", ")}`;
+        }
+      } else if (lowerText.includes("usta") || lowerText.includes("servis") || lowerText.includes("tamir")) {
+        const { data: shopData } = await supabase.from("mechanic_shops").select("shop_name, specialties, rating").limit(3);
+        if (shopData?.length > 0) {
+          botContext = `\nVEREBİLECEĞİN GERÇEK SERVİS ÖNERİLERİ: ${shopData.map(s => `${s.shop_name} (${s.specialties?.[0] || "Genel Bakım"}, Puan: ${s.rating || "Yeni"})`).join(", ")}`;
+        }
+      }
+
+      const vehicleContext = currentVehicle ? `Araç: ${currentVehicle.brand} ${currentVehicle.model}` : "";
+      const finalVehicleContext = vehicleContext + botContext;
+
+      // Chat history for context (last 5 messages)
+      const history = messages
+        .slice(-5)
+        .map((m) => `${m.sender === "user" ? "Kullanıcı" : "Asistan"}: ${m.text}`)
+        .join("\n");
+
       const response = await callRealGeminiAPI(text, finalVehicleContext, history);
       const botMessage = {
         id: Date.now() + 1,
