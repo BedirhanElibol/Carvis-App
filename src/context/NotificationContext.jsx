@@ -136,7 +136,6 @@ export const NotificationProvider = ({ children }) => {
           filter: `user_id=eq.${currentUser.id}`,
         },
         (payload) => {
-          console.log("New notification:", payload);
           // Yeni bildirimi listeye ekle
           setNotifications((prev) => [payload.new, ...prev]);
           setUnreadCount((prev) => prev + 1);
