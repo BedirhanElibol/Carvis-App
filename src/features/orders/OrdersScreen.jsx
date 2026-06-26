@@ -84,6 +84,52 @@ const OrdersScreen = () => {
     }
   };
 
+  const renderOrderAction = (order) => {
+    if (order.status === "paid") {
+      return (
+        <button
+          onClick={async (e) => {
+            e.stopPropagation();
+            triggerHaptic("heavy");
+            const { data, error } = await supabase.rpc('rpc_confirm_order_delivery', { p_order_id: order.id });
+            if (error) {
+              console.error(error);
+              showAlert("Hata", error.message, "error");
+            } else if (data && data.success) {
+              showAlert("Başarılı", data.message, "success");
+              fetchOrders();
+            }
+          }}
+          className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all active-scale shadow-lg shadow-emerald-900/20 border border-emerald-400/20 font-sans"
+        >
+          <Icons.CheckCircle size={14} />
+          Hizmeti Onayla
+        </button>
+      );
+    }
+
+    if (order.status === "completed") {
+      return (
+        <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20 uppercase tracking-wider font-sans">
+          <Icons.ShieldCheck size={12} /> İşlem Tamamlandıı
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-sans">
+        {order.product_photo && (
+          <img
+            src={order.product_photo}
+            alt="Ürün"
+            className="w-16 h-16 rounded-xl object-cover"
+          />
+        )}
+        İşlem Bekleniyor
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24 font-sans">
       <OrderDetailsModal
@@ -183,41 +229,7 @@ const OrdersScreen = () => {
                   )}
                   <div className="flex items-end justify-between pt-4 border-t border-black/5 dark:border-white/5 mt-2">
                     <div className="flex flex-col gap-2">
-                      {order.status === "paid" ? (
-                        <button
-                          onClick={async (e) => {
-                            e.stopPropagation();
-                            triggerHaptic("heavy");
-                            const { data, error } = await supabase.rpc('rpc_confirm_order_delivery', { p_order_id: order.id });
-                            if (error) {
-                              console.error(error);
-                              showAlert("Hata", error.message, "error");
-                            } else if (data && data.success) {
-                              showAlert("Başarılı", data.message, "success");
-                              fetchOrders();
-                            }
-                          }}
-                          className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all active-scale shadow-lg shadow-emerald-900/20 border border-emerald-400/20 font-sans"
-                        >
-                          <Icons.CheckCircle size={14} />
-                          Hizmeti Onayla
-                        </button>
-                      ) : order.status === "completed" ? (
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20 uppercase tracking-wider font-sans">
-                          <Icons.ShieldCheck size={12} /> İşlem Tamamlandıı
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-sans">
-                          {order.product_photo && (
-                            <img
-                              src={order.product_photo}
-                              alt="Ürün"
-                              className="w-16 h-16 rounded-xl object-cover"
-                            />
-                          )}
-                          İşlem Bekleniyor
-                        </div>
-                      )}
+                      {renderOrderAction(order)}
                     </div>
                     <div className="text-right">
                       <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-0.5 font-sans">
