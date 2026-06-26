@@ -148,15 +148,16 @@ const SellerRegistrationModal = ({
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Oturum açılamadı.");
 
-      const uploadedFiles = {};
-      for (const [docId, file] of Object.entries(formData.files)) {
-        if (!file) continue;
-        const fileExt = file.name.split(".").pop();
-        const filePath = `${user.id}/${docId}_${Date.now()}.${fileExt}`;
-        const { error: uploadError } = await supabase.storage.from("partner-documents").upload(filePath, file);
-        if (uploadError) throw uploadError;
-        uploadedFiles[docId] = filePath;
-      }
+      const uploadPromises = Object.entries(formData.files)
+        .filter(([, file]) => file)
+        .map(async ([docId, file]) => {
+          const fileExt = file.name.split(".").pop();
+          const filePath = `${user.id}/${docId}_${Date.now()}.${fileExt}`;
+          const { error: uploadError } = await supabase.storage.from("partner-documents").upload(filePath, file);
+          if (uploadError) throw uploadError;
+          return [docId, filePath];
+        });
+      const uploadedFiles = Object.fromEntries(await Promise.all(uploadPromises));
 
       // Remove direct role escalation. 
       // Update profile with pending status and applied role.
