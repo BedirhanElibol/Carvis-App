@@ -3,6 +3,7 @@ import * as Icons from "lucide-react";
 
 import ReviewsModal from "./modals/ReviewsModal";
 import { useUI } from "../context/UIContext";
+import logo from "../assets/rapidsylogo_white.png";
 
 export const Skeleton = ({ className, variant = "rect" }) => {
   const baseClass = "animate-pulse bg-slate-100 dark:bg-slate-800/50";
@@ -177,7 +178,7 @@ export const Badge = ({ children, type, className }) => {
   );
 };
 
-export const RapidsyLogo = ({ className = "w-64 h-auto" }) => (
+export const RapidsyLogo = ({ _className = "w-64 h-auto" }) => (
   <div className="flex items-center gap-2 group cursor-pointer font-sans uppercase">
     <img
       src={logo}
