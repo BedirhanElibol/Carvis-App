@@ -52,7 +52,7 @@ export const AIService = {
       return { success: true, data: JSON.parse(cleanJson) };
     } catch {
       const response = getLocalResponse(userText);
-      const risk = (userText.includes("fren") || userText.includes("yağ") || userText.includes("motor")) ? "high" : "medium";
+      const risk = (userText.toLowerCase().includes("fren") || userText.toLowerCase().includes("yağ") || userText.toLowerCase().includes("motor")) ? "high" : "medium";
       return { 
         success: true, 
         data: {
@@ -60,7 +60,7 @@ export const AIService = {
           description: response,
           urgency: risk,
           estimatedCost: "Teklif Alınız",
-          suggestedPartKeyword: userText.includes("fren") ? "balata" : (userText.includes("yağ") ? "yağ" : null)
+          suggestedPartKeyword: userText.toLowerCase().includes("fren") ? "balata" : (userText.toLowerCase().includes("yağ") ? "yağ" : null)
         }
       };
     }
