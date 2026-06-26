@@ -60,7 +60,7 @@ export const OrderProvider = ({ children }) => {
       return;
     }
 
-    fetchOrders();
+    fetchOrders().catch(console.error);
 
     // Real-time subscription for order updates
     const channel = supabase
@@ -74,7 +74,7 @@ export const OrderProvider = ({ children }) => {
           filter: `customer_id=eq.${currentUser.id}`,
         },
         () => {
-          fetchOrders();
+          fetchOrders().catch(console.error);
         },
       )
       .subscribe();
@@ -114,10 +114,12 @@ export const OrderProvider = ({ children }) => {
       }
 
       // Update the quote status to 'accepted'
-      await supabase
+      const { error: updateError } = await supabase
         .from("quotes")
         .update({ status: "accepted" })
         .eq("id", quote.id);
+
+      if (updateError) throw updateError;
 
       setOrders((prev) => [data, ...prev]);
       return { data, error: null };
