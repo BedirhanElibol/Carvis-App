@@ -79,6 +79,8 @@ export const OrderProvider = ({ children }) => {
       )
       .subscribe();
 
+    // 🧹 Code Health Improvement: Adding a cleanup return function to the useEffect
+    // that calls removeChannel to prevent memory leaks from dangling subscriptions.
     return () => {
       supabase.removeChannel(channel);
     };
