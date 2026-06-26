@@ -55,6 +55,7 @@ export const useExternalData = () => {
   const fetchEVStations = useCallback(async (lat, lng) => {
     const cacheKey = `carvis_ev_stations_${lat.toFixed(2)}_${lng.toFixed(2)}`;
     setLoading(true);
+    setError(null);
     try {
       const cached = sessionStorage.getItem(cacheKey);
       if (cached) {
@@ -65,7 +66,15 @@ export const useExternalData = () => {
           return data;
         }
       }
-      const data = await getEVStations(lat, lng);
+
+      let data = [];
+      try {
+        data = await getEVStations(lat, lng);
+      } catch (apiErr) {
+        console.error("EV Station API Error:", apiErr);
+        setError(apiErr.message || "EV Station API Error");
+      }
+
       sessionStorage.setItem(
         cacheKey,
         JSON.stringify({ data, timestamp: new Date().toISOString() }),
