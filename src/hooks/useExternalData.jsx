@@ -25,9 +25,11 @@ export const useExternalData = () => {
 
   const fetchFuelPrices = useCallback(async (city = "istanbul") => {
     setLoading(true);
+    setError(null);
     const cacheKey = `carvis_fuel_prices_${city.toLowerCase().split(",")[0].trim()}`;
+
+    // Check LocalStorage cache first
     try {
-      // Check LocalStorage cache first
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
         const { data, timestamp } = JSON.parse(cached);
@@ -37,19 +39,34 @@ export const useExternalData = () => {
           return data;
         }
       }
-      const data = await getFuelPrices(city);
-      // Cache it
-      localStorage.setItem(
-        cacheKey,
-        JSON.stringify({ data, timestamp: new Date().toISOString() }),
-      );
-      return data;
     } catch (err) {
-      console.error(err);
-      return null;
-    } finally {
-      setLoading(false);
+      console.warn("Fuel Prices Cache Read Error:", err);
     }
+
+    let data = null;
+    try {
+      data = await getFuelPrices(city);
+    } catch (err) {
+      console.error("Fuel Prices API Error:", err);
+      setError(err.message || "Failed to fetch fuel prices");
+      setLoading(false);
+      return null;
+    }
+
+    if (data) {
+      // Cache it
+      try {
+        localStorage.setItem(
+          cacheKey,
+          JSON.stringify({ data, timestamp: new Date().toISOString() }),
+        );
+      } catch (err) {
+        console.warn("Fuel Prices Cache Write Error:", err);
+      }
+    }
+
+    setLoading(false);
+    return data;
   }, []);
 
   const fetchEVStations = useCallback(async (lat, lng) => {
