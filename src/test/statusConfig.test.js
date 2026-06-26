@@ -31,6 +31,36 @@ describe("statusConfig", () => {
       expect(result.color).toContain("green");
     });
 
+    it("should return correct config for tender_open status", () => {
+      const result = getStatusConfig("tender_open");
+      expect(result.label).toBe("İhaleye Açık");
+      expect(result.color).toContain("orange");
+    });
+
+    it("should return correct config for rejected status", () => {
+      const result = getStatusConfig("rejected");
+      expect(result.label).toBe("Reddedildi");
+      expect(result.color).toContain("red");
+    });
+
+    it("should return correct config for expired status", () => {
+      const result = getStatusConfig("expired");
+      expect(result.label).toBe("Süresi Doldu");
+      expect(result.color).toContain("slate");
+    });
+
+    it("should return correct config for completed status", () => {
+      const result = getStatusConfig("completed");
+      expect(result.label).toBe("Tamamlandı");
+      expect(result.color).toContain("green");
+    });
+
+    it("should return correct config for cancelled status", () => {
+      const result = getStatusConfig("cancelled");
+      expect(result.label).toBe("İptal Edildi");
+      expect(result.color).toContain("red");
+    });
+
     it("should return fallback for unknown status", () => {
       // Arrange
       const status = "unknown_status_xyz";
