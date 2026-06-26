@@ -193,7 +193,7 @@ export const getPartnerRecentActivity = async (sellerId, limit = 5) => {
     return { success: true, data: activity };
   } catch (error) {
     console.error("Recent Activity Error:", error);
-    return { success: false, error: error.message };
+    return [];
   }
 };
 
