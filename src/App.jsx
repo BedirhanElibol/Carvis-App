@@ -7,6 +7,7 @@ import { AppRoutes } from "./routes";
 import AppHeader from "./components/layout/AppHeader";
 import { BottomNav } from "./components/layout/BottomNav";
 import AuthLoginModal from "./components/modals/AuthLoginModal";
+import { useGeolocation } from "./hooks/useGeolocation";
 import RegisterModal from "./components/modals/RegisterModal";
 import SellerRegistrationModal from "./components/modals/SellerRegistrationModal";
 import LocationSelectModal from "./components/modals/LocationSelectModal";
@@ -40,6 +41,7 @@ const App = () => {
     useGarage();
   const { requestNotificationPermission } = useNotification();
   const location = useLocation();
+  const { fetchLocationWithGeocode } = useGeolocation();
 
   // Bildirim izni iste (uygulama açıldığında)
   useEffect(() => {
@@ -156,67 +158,53 @@ const App = () => {
         t={t}
         currentLocation={selectedLocation}
         handleGetGPSLocation={async () => {
-          if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(
-              async (pos) => {
-                try {
-                  const { latitude, longitude } = pos.coords;
-                  const response = await fetch(
-                    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=tr`,
-                  );
-                  const data = await response.json();
-                  const city = data.principalSubdivision || data.city;
-                  const district = data.locality || data.district;
-
-                  if (city && district) {
-                    setSelectedLocation(`${city}, ${district}`);
-                    showAlert(
-                      "Konum Güncellendi",
-                      `GPS üzerinden tespit edildi: ${city}, ${district}`,
-                      "success",
-                    );
-                  } else {
-                    setSelectedLocation(
-                      `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`,
-                    );
-                    showAlert(
-                      "Konum Alındı",
-                      "Koordinatlarınız başarıyla alındı.",
-                      "success",
-                    );
-                  }
-                  closeModal("location");
-                } catch (error) {
-                  console.error("Geocoding error:", error);
-                  showAlert(
-                    "Hata",
-                    "Konum bilgisi çözümlenemedi, lütfen manuel seçin.",
-                    "error",
-                  );
-                }
-              },
-              (err) => {
-                if (err.code === 1) {
-                  showAlert(
-                    "İzin Reddedildi",
-                    "Lütfen tarayıcı ayarlarından konum izni verin.",
-                    "warning",
-                  );
-                } else {
-                  showAlert(
-                    "Hata",
-                    "Konum alınırken bir sorun oluştu.",
-                    "error",
-                  );
-                }
-              },
-            );
-          } else {
-            showAlert(
-              "Desteklenmiyor",
-              "Tarayıcınız konum özelliğini desteklemiyor.",
-              "error",
-            );
+          try {
+            const { latitude, longitude, city, district } = await fetchLocationWithGeocode();
+            if (city && district) {
+              setSelectedLocation(`${city}, ${district}`);
+              showAlert(
+                "Konum Güncellendi",
+                `GPS üzerinden tespit edildi: ${city}, ${district}`,
+                "success",
+              );
+            } else {
+              setSelectedLocation(
+                `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`,
+              );
+              showAlert(
+                "Konum Alındı",
+                "Koordinatlarınız başarıyla alındı ama adres çözümlenemedi.",
+                "success",
+              );
+            }
+            closeModal("location");
+          } catch (error) {
+            console.error("Location error:", error);
+            if (error.message === "UNSUPPORTED") {
+              showAlert(
+                "Desteklenmiyor",
+                "Tarayıcınız konum özelliğini desteklemiyor.",
+                "error",
+              );
+            } else if (error.message === "PERMISSION_DENIED") {
+              showAlert(
+                "İzin Reddedildi",
+                "Lütfen tarayıcı ayarlarından konum izni verin.",
+                "warning",
+              );
+            } else if (error.message === "GEOCODING_FAILED") {
+              showAlert(
+                "Hata",
+                "Konum bilgisi çözümlenemedi, lütfen manuel seçin.",
+                "error",
+              );
+            } else {
+              showAlert(
+                "Hata",
+                "Konum alınırken bir sorun oluştu.",
+                "error",
+              );
+            }
           }
         }}
         handleManualLocationSelect={(city, district) => {
