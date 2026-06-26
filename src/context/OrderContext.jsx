@@ -114,10 +114,12 @@ export const OrderProvider = ({ children }) => {
       }
 
       // Update the quote status to 'accepted'
-      await supabase
+      const { error: quoteError } = await supabase
         .from("quotes")
         .update({ status: "accepted" })
         .eq("id", quote.id);
+
+      if (quoteError) throw quoteError;
 
       setOrders((prev) => [data, ...prev]);
       return { data, error: null };
