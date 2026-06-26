@@ -291,7 +291,37 @@ export const getWeather = async (lat, lng, cityName = null) => {
   }
 };
 
-// --- 5. Currency (Open ER-API) - CORS Friendly ---
+// --- 5. Route Calculation (OSRM) ---
+export const calculateRoute = async (startCoords, endCoords) => {
+  try {
+    // OSRM (Open Source Routing Machine) public API kullanarak rota hesaplama
+    // Koordinatlar format: lon,lat
+    const startStr = `${startCoords.lng},${startCoords.lat}`;
+    const endStr = `${endCoords.lng},${endCoords.lat}`;
+    const url = `https://router.project-osrm.org/route/v1/driving/${startStr};${endStr}?overview=false`;
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`OSRM API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (data.code !== "Ok" || !data.routes || data.routes.length === 0) {
+      throw new Error("No route found");
+    }
+
+    const route = data.routes[0];
+    return {
+      distance: route.distance, // meters
+      duration: route.duration, // seconds
+    };
+  } catch (error) {
+    console.error("Calculate Route Error:", error);
+    throw error;
+  }
+};
+
+// --- 6. Currency (Open ER-API) - CORS Friendly ---
 export const getExchangeRates = async (base = "USD", target = "TRY") => {
   try {
     const controller = new AbortController();
