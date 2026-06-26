@@ -3,6 +3,7 @@ import * as Icons from "lucide-react";
 
 import ReviewsModal from "./modals/ReviewsModal";
 import { useUI } from "../context/UIContext";
+import logo from "../assets/logo.png";
 
 export const Skeleton = ({ className, variant = "rect" }) => {
   const baseClass = "animate-pulse bg-slate-100 dark:bg-slate-800/50";
