@@ -49,14 +49,26 @@ export const AIProvider = ({ children }) => {
     const searchKeyword = words.length > 0 ? words[words.length - 1] : "";
 
     if (searchKeyword && (lowerText.includes("balata") || lowerText.includes("yağ") || lowerText.includes("akü") || lowerText.includes("parça"))) {
-      const { data: partData } = await supabase.from("products").select("name, brand, price").ilike("name", `%${searchKeyword}%`).limit(3);
-      if (partData?.length > 0) {
-        botContext = `\nVEREBİLECEĞİN GERÇEK ÜRÜN ÖNERİLERİ (Kullanıcıya bunlardan bahset): ${partData.map(p => `${p.brand} ${p.name} (${p.price} TL)`).join(", ")}`;
+      try {
+        const { data: partData, error: partError } = await supabase.from("products").select("name, brand, price").ilike("name", `%${searchKeyword}%`).limit(3);
+        if (partError) {
+          console.error("Supabase products fetch error:", partError);
+        } else if (partData?.length > 0) {
+          botContext = `\nVEREBİLECEĞİN GERÇEK ÜRÜN ÖNERİLERİ (Kullanıcıya bunlardan bahset): ${partData.map(p => `${p.brand} ${p.name} (${p.price} TL)`).join(", ")}`;
+        }
+      } catch (error) {
+        console.error("Exception fetching products:", error);
       }
     } else if (lowerText.includes("usta") || lowerText.includes("servis") || lowerText.includes("tamir")) {
-      const { data: shopData } = await supabase.from("mechanic_shops").select("shop_name, specialties, rating").limit(3);
-      if (shopData?.length > 0) {
-        botContext = `\nVEREBİLECEĞİN GERÇEK SERVİS ÖNERİLERİ: ${shopData.map(s => `${s.shop_name} (${s.specialties?.[0] || "Genel Bakım"}, Puan: ${s.rating || "Yeni"})`).join(", ")}`;
+      try {
+        const { data: shopData, error: shopError } = await supabase.from("mechanic_shops").select("shop_name, specialties, rating").limit(3);
+        if (shopError) {
+          console.error("Supabase mechanic_shops fetch error:", shopError);
+        } else if (shopData?.length > 0) {
+          botContext = `\nVEREBİLECEĞİN GERÇEK SERVİS ÖNERİLERİ: ${shopData.map(s => `${s.shop_name} (${s.specialties?.[0] || "Genel Bakım"}, Puan: ${s.rating || "Yeni"})`).join(", ")}`;
+        }
+      } catch (error) {
+        console.error("Exception fetching mechanic shops:", error);
       }
     }
 
