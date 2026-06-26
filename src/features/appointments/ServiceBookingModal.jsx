@@ -6,7 +6,8 @@ import * as Icons from "lucide-react";
 import { format, addDays, isSameDay } from "date-fns";
 import { tr } from "date-fns/locale";
 
-const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked }) => {
+const ServiceBookingModal = (props) => {
+  const { isOpen, onClose, sellerId, serviceType, onBooked } = props;
   const { currentUser } = useAuth();
   const { showAlert } = useUI();
   const { fetchSlots, checkAvailability, createAppointment } = useAppointment();
