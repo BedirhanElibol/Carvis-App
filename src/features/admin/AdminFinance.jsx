@@ -23,23 +23,26 @@ const AdminFinance = () => {
   const fetchFinanceData = useCallback(async () => {
     setLoading(true);
     try {
-      // Fetch recent transactions
-      const { data: txData, error: txError } = await supabase
-        .from("wallet_transactions")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(50);
+      // Fetch recent transactions and orders in parallel for performance
+      const [
+        { data: txData, error: txError },
+        { data: orderData, error: orderError }
+      ] = await Promise.all([
+        supabase
+          .from("wallet_transactions")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .limit(50),
+        supabase
+          .from("orders")
+          .select("total_amount, commission_rate, created_at, status")
+          .in("status", ["paid", "completed"])
+      ]);
 
       if (txError) throw txError;
-      setTransactions(txData || []);
-
-      // Fetch orders for revenue calculation
-      const { data: orderData, error: orderError } = await supabase
-        .from("orders")
-        .select("total_amount, commission_rate, created_at, status")
-        .in("status", ["paid", "completed"]);
-
       if (orderError) throw orderError;
+
+      setTransactions(txData || []);
 
       const now = new Date();
       const today = new Date(now.setHours(0, 0, 0, 0));

@@ -103,8 +103,8 @@ const CustomerHome = () => {
   const [selectedCity, setSelectedCity] = useState("istanbul");
   
   // Scanning simulator states
-  const [isScanning, setIsScanning] = useState(false);
-  const [scanStep, setScanStep] = useState(0);
+  const [isScanning, _setIsScanning] = useState(false);
+  const [scanStep, _setScanStep] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Extract initial state from router location (e.g. from LandingScreen search)
