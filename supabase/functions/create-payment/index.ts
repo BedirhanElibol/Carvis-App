@@ -4,14 +4,51 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4'
 // @ts-ignore
 import { encodeBase64 } from "https://deno.land/std@0.168.0/encoding/base64.ts"
+// @ts-ignore
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts"
 
 // @ts-ignore
 declare const Deno: any;
 
 const corsHeaders = {
-    'Access-Control-Allow-Origin': Deno.env.get('ALLOWED_ORIGIN') ?? '*',
+    'Access-Control-Allow-Origin': Deno.env.get('ALLOWED_ORIGIN') ?? 'http://localhost:5173',
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Content-Security-Policy': "default-src 'none'",
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY'
 }
+
+const rateLimitMap = new Map<string, { count: number, resetTime: number }>();
+const MAX_REQUESTS = 5;
+const WINDOW_MS = 60 * 1000; // 1 minute
+
+function checkRateLimit(ip: string): boolean {
+    const now = Date.now();
+    const record = rateLimitMap.get(ip);
+
+    if (!record) {
+        rateLimitMap.set(ip, { count: 1, resetTime: now + WINDOW_MS });
+        return true;
+    }
+
+    if (now > record.resetTime) {
+        rateLimitMap.set(ip, { count: 1, resetTime: now + WINDOW_MS });
+        return true;
+    }
+
+    if (record.count >= MAX_REQUESTS) {
+        return false;
+    }
+
+    record.count++;
+    return true;
+}
+
+const paymentRequestSchema = z.object({
+    orderId: z.string().nullable().optional(),
+    amount: z.number().or(z.string().transform(Number)).optional()
+});
 
 // HMAC-SHA256 helper
 async function hmacSHA256(key: string, message: string): Promise<string> {
@@ -37,9 +74,26 @@ serve(async (req: Request) => {
     }
 
     try {
+        const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "unknown";
+        if (!checkRateLimit(ip)) {
+            return new Response(JSON.stringify({ error: "Too many requests" }), {
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                status: 429
+            });
+        }
+
         const body = await req.json()
-        const orderId = body?.orderId ?? null
-        const requestedAmount = Number(body?.amount ?? 0)
+
+        const validationResult = paymentRequestSchema.safeParse(body);
+        if (!validationResult.success) {
+            return new Response(JSON.stringify({ error: "Invalid input" }), {
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                status: 400
+            });
+        }
+
+        const orderId = validationResult.data.orderId ?? null
+        const requestedAmount = validationResult.data.amount ?? 0
 
         // Initialize Supabase Client
         const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
@@ -198,7 +252,7 @@ serve(async (req: Request) => {
     } catch (error: any) {
         console.error('Payment Error:', error)
         return new Response(
-            JSON.stringify({ success: false, error: error.message }),
+            JSON.stringify({ success: false, error: 'An error occurred during payment initialization.' }),
             {
                 headers: { ...corsHeaders, 'Content-Type': 'application/json' },
                 status: 400,

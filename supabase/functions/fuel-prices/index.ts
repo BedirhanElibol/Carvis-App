@@ -1,11 +1,47 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+// @ts-ignore
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": Deno.env.get('ALLOWED_ORIGIN') ?? 'http://localhost:5173',
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Content-Type": "application/json",
+  'Content-Security-Policy': "default-src 'none'",
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY'
 };
+
+const rateLimitMap = new Map<string, { count: number, resetTime: number }>();
+const MAX_REQUESTS = 10;
+const WINDOW_MS = 60 * 1000; // 1 minute
+
+function checkRateLimit(ip: string): boolean {
+    const now = Date.now();
+    const record = rateLimitMap.get(ip);
+
+    if (!record) {
+        rateLimitMap.set(ip, { count: 1, resetTime: now + WINDOW_MS });
+        return true;
+    }
+
+    if (now > record.resetTime) {
+        rateLimitMap.set(ip, { count: 1, resetTime: now + WINDOW_MS });
+        return true;
+    }
+
+    if (record.count >= MAX_REQUESTS) {
+        return false;
+    }
+
+    record.count++;
+    return true;
+}
+
+const cityQuerySchema = z.object({
+  city: z.string().optional()
+});
 
 const PROVINCE_CODES: Record<string, string> = {
   "adana": "01", "adiyaman": "02", "afyonkarahisar": "03", "afyon": "03", "agri": "04", "amasya": "05", "ankara": "06", "antalya": "07", "artvin": "08", "aydin": "09",
@@ -85,8 +121,30 @@ async function fetchPOPrices(provinceCode: string) {
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: CORS_HEADERS });
 
+  const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "unknown";
+  if (!checkRateLimit(ip)) {
+      return new Response(JSON.stringify({ error: "Too many requests" }), {
+          headers: CORS_HEADERS,
+          status: 429
+      });
+  }
+
   const url = new URL(req.url);
-  const city = url.searchParams.get("city")?.toLowerCase() || "istanbul";
+  const cityParam = url.searchParams.get("city") || "istanbul";
+
+  const validationResult = cityQuerySchema.safeParse({ city: cityParam });
+  if (!validationResult.success) {
+      return new Response(JSON.stringify({ error: "Invalid input" }), {
+          headers: CORS_HEADERS,
+          status: 400
+      });
+  }
+
+  let city = validationResult.data.city?.toLowerCase() || "istanbul";
+
+  // Sanitize city input (allow Turkish characters and spaces)
+  city = city.replace(/[^a-zçğıiöşü ]/g, "").trim();
+
   const provinceCode = PROVINCE_CODES[city] || "34";
 
   // Aggregator Strategy: Try multiple sources to guarantee daily fresh data

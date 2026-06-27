@@ -4,6 +4,32 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4'
 import { encodeBase64 } from "https://deno.land/std@0.224.0/encoding/base64.ts"
 
+const rateLimitMap = new Map<string, { count: number, resetTime: number }>();
+const MAX_REQUESTS = 20; // Allow more requests for webhooks to handle burst traffic
+const WINDOW_MS = 60 * 1000; // 1 minute
+
+function checkRateLimit(ip: string): boolean {
+    const now = Date.now();
+    const record = rateLimitMap.get(ip);
+
+    if (!record) {
+        rateLimitMap.set(ip, { count: 1, resetTime: now + WINDOW_MS });
+        return true;
+    }
+
+    if (now > record.resetTime) {
+        rateLimitMap.set(ip, { count: 1, resetTime: now + WINDOW_MS });
+        return true;
+    }
+
+    if (record.count >= MAX_REQUESTS) {
+        return false;
+    }
+
+    record.count++;
+    return true;
+}
+
 // HMAC-SHA256 helper
 async function hmacSHA256(key: string, message: string): Promise<string> {
     const encoder = new TextEncoder();
@@ -24,6 +50,14 @@ async function hmacSHA256(key: string, message: string): Promise<string> {
 
 Deno.serve(async (req) => {
     try {
+        const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || "unknown";
+        if (!checkRateLimit(ip)) {
+            // Return 200 OK to prevent PayTR from retrying if it's a legitimate flood,
+            // but log it as a potential attack.
+            console.error(`Rate limit exceeded for IP: ${ip}`);
+            return new Response('OK', { status: 200 })
+        }
+
         // SECURITY: Only accept POST requests
         if (req.method !== 'POST') {
             return new Response('Method not allowed', { status: 405 })
