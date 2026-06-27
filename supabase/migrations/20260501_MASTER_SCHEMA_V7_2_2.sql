@@ -2165,4 +2165,49 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+-- =========================================================
+-- CARVIS SYSTEM REINFORCEMENTS (REAL DATA & FORM CONTROLS)
+-- =========================================================
+
+-- 1. VALET BOOKINGS TABLE
+CREATE TABLE IF NOT EXISTS public.valet_bookings (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    valet_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    pickup_point TEXT NOT NULL,
+    note TEXT,
+    package_id TEXT NOT NULL,
+    price DECIMAL(12,2) NOT NULL,
+    status TEXT DEFAULT 'pending', -- 'pending', 'accepted', 'picked_up', 'parked', 'completed', 'cancelled'
+    verification_code TEXT,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 2. PARKING PROFILES ADD COLUMN: is_open
+ALTER TABLE public.parking_profiles ADD COLUMN IF NOT EXISTS is_open BOOLEAN DEFAULT true;
+
+-- 3. QUOTES ADD COLUMNS: accepted_at, estimated_delivery_days
+ALTER TABLE public.quotes ADD COLUMN IF NOT EXISTS accepted_at TIMESTAMPTZ;
+ALTER TABLE public.quotes ADD COLUMN IF NOT EXISTS estimated_delivery_days INTEGER;
+
+-- 4. VALET BOOKINGS RLS RULES
+ALTER TABLE public.valet_bookings ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can manage own valet bookings" ON public.valet_bookings;
+CREATE POLICY "Users can manage own valet bookings" ON public.valet_bookings
+FOR ALL USING (auth.uid() = customer_id OR auth.uid() = valet_id);
+
+DROP POLICY IF EXISTS "Valets can view pending bookings" ON public.valet_bookings;
+CREATE POLICY "Valets can view pending bookings" ON public.valet_bookings
+FOR SELECT USING (
+  EXISTS (
+    SELECT 1 FROM public.profiles 
+    WHERE id = auth.uid() AND (role::text IN ('valet', 'partner', 'admin'))
+  ) 
+  AND status = 'pending'
+);
+
+
+
 

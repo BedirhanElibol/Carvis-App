@@ -41,39 +41,40 @@ export const callRealGeminiAPI = async (
 };
 
 /**
- * Analyze Vehicle Damage (Vision-like Inference)
- * For production, this should connect to Gemini 1.5 Pro Vision.
- * Currently uses structured reasoning based on provided context.
+ * Analyze Vehicle Damage (Vision-based Inference)
+ * Calls Supabase Edge Function for AI-powered damage analysis.
+ * Falls back to a descriptive message if the function is not deployed.
  */
-export const analyzeVehicleDamage = async (imageUrl, _vehicleInfo = {}) => {
-  // Simulating server-side AI reasoning delay
-  await new Promise(r => setTimeout(r, 2000));
+export const analyzeVehicleDamage = async (_imageUrl, vehicleInfo = {}) => {
+  try {
+    const { data, error } = await supabase.functions.invoke('ai-damage-analysis', {
+      body: {
+        imageUrl: _imageUrl,
+        vehicleInfo,
+      },
+    });
 
-  const damageScenarios = [
-    {
-      type: "Kaporta ve Tampon Deformasyonu",
-      severity: "Orta",
-      parts: ["Ön Tampon", "Plakalık", "Sis Farı Çerçevesi"],
-      costRange: [4500, 8000],
-      comment: "Darbenin açısı şasiye zarar vermemiş görünüyor, ancak plastik aksamın değişimi estetik açıdan gerekli."
-    },
-    {
-      type: "Farlar ve Aydınlatma Hasarı",
-      severity: "Yüksek",
-      parts: ["Sol LED Far Grubu", "Tampon Braketi"],
-      costRange: [12000, 18000],
-      comment: "LED Far grubu pahalı bir parça. Elektronik kontrol ünitesinin (ECU) ıslanmamış olması kritik."
+    if (error) throw error;
+
+    if (data?.damageType) {
+      return {
+        damageType: data.damageType,
+        severity: data.severity,
+        estimatedCost: data.estimatedCost,
+        partsToReplace: data.partsToReplace || [],
+        aiComment: data.aiComment,
+      };
     }
-  ];
+  } catch (err) {
+    console.error("AI Damage Analysis error:", err);
+  }
 
-  // Randomly pick a scenario for now, but in a real app, this is where GEMINI VISION handles the image.
-  const scenario = damageScenarios[Math.floor(Math.random() * damageScenarios.length)];
-  
   return {
-    damageType: scenario.type,
-    severity: scenario.severity,
-    estimatedCost: `${scenario.costRange[0].toLocaleString()} ₺ - ${scenario.costRange[1].toLocaleString()} ₺`,
-    partsToReplace: scenario.parts,
-    aiComment: scenario.comment
+    damageType: "Analiz Edilemedi",
+    severity: "Bilinmiyor",
+    estimatedCost: "Belirlenemedi",
+    partsToReplace: [],
+    aiComment:
+      "Hasar analizi şu an yapılamıyor. Lütfen fotoğrafı servis talebi oluştururken ekleyin, ustalarımız detaylı inceleme yapacaktır.",
   };
 };

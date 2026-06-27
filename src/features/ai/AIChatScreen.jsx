@@ -3,7 +3,6 @@ import * as Icons from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useAI } from "../../context/AIContext";
 import { useGarage } from "../../context/GarageContext";
-import { AI_SUGGESTIONS } from "../../constants/mockData";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "../../components/Core";
 import AudioAnalyzer from "./AudioAnalyzer";
@@ -116,6 +115,13 @@ const DamageAnalysisCard = ({ data, vehicleInfo }) => {
     </div>
   );
 };
+
+const AI_SUGGESTIONS = [
+  "Lastik basıncı kaç olmalı?",
+  "Arıza lambası yandı",
+  "Periyodik bakım ne zaman?",
+  "Frenden ses geliyor",
+];
 
 const AIChatScreen = () => {
   const navigate = useNavigate();

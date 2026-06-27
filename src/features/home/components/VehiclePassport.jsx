@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useUI } from "../../../context/UIContext";
 
 const VehiclePassport = ({ vehicle, onClose }) => {
+  const { t } = useUI();
   const [activeTab, setActiveTab] = useState("overview"); // overview, timeline, documents, analytics
   const [copied, setCopied] = useState(false);
 
@@ -76,7 +78,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 <button 
                   onClick={handleCopyChassis}
                   className="p-1 hover:bg-white dark:bg-white/5 shadow-sm rounded text-indigo-400 hover:text-slate-900 dark:text-white transition-all active-scale"
-                  title="Kopyala"
+                  title={t.copy}
                 >
                   {copied ? <Icons.Check size={14} className="text-emerald-400" /> : <Icons.Copy size={14} />}
                 </button>
@@ -88,10 +90,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         {/* Tab Selector */}
         <div className="px-8 border-b border-black/5 dark:border-white/5 flex gap-2 overflow-x-auto relative z-10 scrollbar-none">
           {[
-            { id: "overview", label: "Genel Durum", icon: Icons.Compass },
-            { id: "timeline", label: "Hafıza & Zaman Tüneli", icon: Icons.History },
-            { id: "documents", label: "Belge Kasası", icon: Icons.FileLock2 },
-            { id: "analytics", label: "AI Teşhis Öngörüsü", icon: Icons.Brain }
+            { id: "overview", label: t.generalStatus, icon: Icons.Compass },
+            { id: "timeline", label: t.memoryTimeline, icon: Icons.History },
+            { id: "documents", label: t.documentVault, icon: Icons.FileLock2 },
+            { id: "analytics", label: t.aiDiagForesight, icon: Icons.Brain }
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -125,7 +127,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               >
                 {/* Health Overview Ring */}
                 <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20 flex flex-col items-center justify-center text-center">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6">Genel Sağlık Puanı</h4>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6">{t.generalHealthScore}</h4>
                   <div className="relative w-36 h-36 flex items-center justify-center">
                     <svg className="absolute w-full h-full -rotate-90">
                       <circle cx="72" cy="72" r="62" stroke="rgba(255,255,255,0.05)" strokeWidth="12" fill="transparent" />
@@ -144,7 +146,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                     </svg>
                     <div className="text-center z-10">
                       <span className="text-3xl font-black text-slate-900 dark:text-white">%96</span>
-                      <p className="text-[9px] font-black text-emerald-400 uppercase tracking-widest mt-1">Kusursuz</p>
+                      <p className="text-[9px] font-black text-emerald-400 uppercase tracking-widest mt-1">{t.perfect}</p>
                     </div>
                   </div>
                   <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed mt-6">
@@ -157,12 +159,12 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   {/* Detailed Specs Grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {[
-                      { label: "Kilometre", val: `${vehicle.mileage || "84.200"} km`, icon: Icons.Gauge },
-                      { label: "Son Bakım", val: "12.04.2026", icon: Icons.Wrench },
-                      { label: "Muayene Tarihi", val: "15.06.2027", icon: Icons.CalendarCheck },
-                      { label: "Kasko Durumu", val: "Aktif", icon: Icons.ShieldCheck },
-                      { label: "Yedek Anahtar", val: "Mevcut", icon: Icons.Key },
-                      { label: "Motor Gücü", val: "190 HP", icon: Icons.Workflow }
+                      { label: t.mileage, val: `${vehicle.mileage || "84.200"} km`, icon: Icons.Gauge },
+                      { label: t.lastMaintenance, val: "12.04.2026", icon: Icons.Wrench },
+                      { label: t.inspectionDate, val: "15.06.2027", icon: Icons.CalendarCheck },
+                      { label: t.insuranceStatus, val: t.active, icon: Icons.ShieldCheck },
+                      { label: t.spareKey, val: t.available, icon: Icons.Key },
+                      { label: t.enginePower, val: "190 HP", icon: Icons.Workflow }
                     ].map((spec, i) => {
                       const SpecIcon = spec.icon;
                       return (
@@ -181,7 +183,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   <div className="p-6 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 flex gap-4">
                     <Icons.Lightbulb className="text-indigo-400 flex-shrink-0" size={24} />
                     <div>
-                      <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Carvis Dijital Öneri</h4>
+                      <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">{t.carvisDigitalAdvice}</h4>
                       <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
                         Aracınızın kasko bitiş tarihi yaklaşmaktadır. Kasko & Trafik Sigortası sekmesinden Carvis özel partner tekliflerini şimdiden %30 indirimle alabilirsiniz.
                       </p>
@@ -200,7 +202,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 className="space-y-6"
               >
                 <div className="flex items-center justify-between">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">KRONOLOJİK ARŞİV</h4>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.chronologicalArchive}</h4>
                   <span className="text-xs font-bold text-indigo-400 flex items-center gap-1">
                     <Icons.Lock size={12} /> Blokzincir Tabanlı Korumalı Veritabanı
                   </span>
@@ -245,7 +247,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 className="space-y-6"
               >
                 <div className="flex items-center justify-between">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">DİJİTAL BELGELERİM</h4>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.myDigitalDocs}</h4>
                   <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(99,102,241,0.2)] flex items-center gap-2">
                     <Icons.Plus size={14} /> Yeni Belge Yükle
                   </button>
@@ -286,16 +288,16 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 exit={{ opacity: 0, y: -10 }}
                 className="space-y-6"
               >
-                <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">AI TAHMİNSEK PARÇA AŞINMALARI</h4>
+                <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.aiPredictiveWear}</h4>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Progress Items */}
                   <div className="space-y-5 bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 rounded-3xl p-6">
                     {[
-                      { name: "Kalan Motor Yağ Ömrü", val: mockAnalytics.oilLife, color: "bg-indigo-500" },
-                      { name: "Kalan Fren Balata Kalınlığı", val: mockAnalytics.brakeLife, color: "bg-orange-500" },
-                      { name: "Lastik Diş Aşınma Durumu", val: mockAnalytics.tireWear, color: "bg-emerald-500" },
-                      { name: "Akü Sağlık Durumu (SoH)", val: mockAnalytics.batteryHealth, color: "bg-cyan-500" }
+                      { name: t.remOilLife, val: mockAnalytics.oilLife, color: "bg-indigo-500" },
+                      { name: t.remBrakePad, val: mockAnalytics.brakeLife, color: "bg-orange-500" },
+                      { name: t.tireWearStatus, val: mockAnalytics.tireWear, color: "bg-emerald-500" },
+                      { name: t.batteryHealthStatus, val: mockAnalytics.batteryHealth, color: "bg-cyan-500" }
                     ].map((item, idx) => (
                       <div key={idx} className="space-y-2">
                         <div className="flex justify-between text-xs font-black uppercase tracking-tight">
@@ -314,7 +316,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                     <div className="p-6 rounded-3xl bg-orange-500/10 border border-orange-500/20 flex gap-4">
                       <Icons.AlertTriangle className="text-orange-400 flex-shrink-0" size={24} />
                       <div>
-                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Aşınma Alarmı: Fren Balatası</h4>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">{t.wearAlarmBrake}</h4>
                         <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
                           Fren balatası kalan ömrü %40'a inmiştir. Güvenliğiniz için sonraki 2.500 km içinde yetkili bir Carvis partneri ile fren disk & balata kontrolü randevusu planlamanızı öneririz.
                         </p>
@@ -324,7 +326,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                     <div className="p-6 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex gap-4">
                       <Icons.Sparkles className="text-emerald-400 flex-shrink-0" size={24} />
                       <div>
-                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Kusursuz Akü Seviyesi</h4>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">{t.perfectBatteryLevel}</h4>
                         <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
                           Akünüzün marş akımı (SoH) %92 düzeyindedir. Kış aylarında herhangi bir sorun çıkarmayacağı AI algoritmalarımızla doğrulanmıştır.
                         </p>

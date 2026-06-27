@@ -165,11 +165,11 @@ const PartnerAuthScreen = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">E-Posta Adresi</label>
-                <input name="email" type="email" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.email} onChange={handleChange} />
+                <input name="email" type="email" required className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.email} onChange={handleChange} />
               </div>
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Şifre</label>
-                <input name="password" type="password" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.password} onChange={handleChange} />
+                <input name="password" type="password" required className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.password} onChange={handleChange} />
               </div>
             </div>
           </motion.div>
@@ -184,21 +184,21 @@ const PartnerAuthScreen = () => {
             <div className="grid grid-cols-1 gap-4">
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Ticari Ünvan / Şirket Adı</label>
-                <input name="companyName" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.companyName} onChange={handleChange} />
+                <input name="companyName" required className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.companyName} onChange={handleChange} />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Vergi Numarası</label>
-                  <input name="taxNumber" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.taxNumber} onChange={handleChange} />
+                  <input name="taxNumber" className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.taxNumber} onChange={handleChange} />
                 </div>
                 <div>
                   <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Vergi Dairesi</label>
-                  <input name="taxOffice" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.taxOffice} onChange={handleChange} />
+                  <input name="taxOffice" className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.taxOffice} onChange={handleChange} />
                 </div>
               </div>
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">MERSİS Numarası</label>
-                <input name="mersisNumber" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" placeholder="16 haneli" value={formData.mersisNumber} onChange={handleChange} />
+                <input name="mersisNumber" className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" placeholder="16 haneli" value={formData.mersisNumber} onChange={handleChange} />
               </div>
             </div>
           </motion.div>
@@ -213,15 +213,15 @@ const PartnerAuthScreen = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">IBAN Numarası</label>
-                <input name="ibanNumber" placeholder="TR..." className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.ibanNumber} onChange={handleChange} />
+                <input name="ibanNumber" placeholder="TR..." className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.ibanNumber} onChange={handleChange} />
               </div>
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">KEP Adresi (Kayıtlı E-Posta)</label>
-                <input name="kepAddress" placeholder="hs01.kep.tr" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.kepAddress} onChange={handleChange} />
+                <input name="kepAddress" placeholder="hs01.kep.tr" className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none" value={formData.kepAddress} onChange={handleChange} />
               </div>
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1">Resmi İşyeri Adresi</label>
-                <textarea name="officeAddress" rows="2" className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none resize-none" value={formData.officeAddress} onChange={handleChange} />
+                <textarea name="officeAddress" rows="2" className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-lg p-3 text-slate-900 dark:text-white focus:border-primary-500 outline-none resize-none" value={formData.officeAddress} onChange={handleChange} />
               </div>
             </div>
           </motion.div>
@@ -277,11 +277,11 @@ const PartnerAuthScreen = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1 uppercase tracking-widest font-bold">E-Posta</label>
-                <input name="email" type="email" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white focus:border-primary-500 outline-none transition-all" value={formData.email} onChange={handleChange} />
+                <input name="email" type="email" required className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white focus:border-primary-500 outline-none transition-all" value={formData.email} onChange={handleChange} />
               </div>
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 text-xs mb-1 uppercase tracking-widest font-bold">Şifre</label>
-                <input name="password" type="password" required className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white focus:border-primary-500 outline-none transition-all" value={formData.password} onChange={handleChange} />
+                <input name="password" type="password" required className="w-full bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white focus:border-primary-500 outline-none transition-all" value={formData.password} onChange={handleChange} />
               </div>
             </div>
           ) : renderStep()}

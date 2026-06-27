@@ -69,7 +69,7 @@ const PartnerDashboard = () => {
 
         const fetchPartnerStats = async () => {
             // 1. Get Revenue & Count (orders where seller_id = current user)
-            // For 'daily', we would filter by date, but for now getting total for demo impact
+            // Fetch completed orders revenue and count
             const { data: orders, error } = await supabase
                 .from('orders')
                 .select('total_amount')
@@ -95,8 +95,8 @@ const PartnerDashboard = () => {
                         color: 'text-slate-900 dark:text-white',
                         bg: 'bg-black/10 dark:bg-white/10'
                     },
-                    { label: 'Müşteri Memnuniyeti', value: '5.0', icon: Star, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
-                    { label: 'Profil Görüntüleme', value: (count * 3 + 12).toString(), icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+                    { label: 'Müşteri Memnuniyeti', value: '—', icon: Star, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
+                    { label: 'Profil Görüntüleme', value: '—', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
                 ]);
             }
         };
@@ -124,7 +124,7 @@ const PartnerDashboard = () => {
             const { error } = await supabase.from('orders').insert([
                 {
                     seller_id: currentUser.id,
-                    customer_id: currentUser.id, // Self-sale for POS demo (or dummy customer)
+                    customer_id: currentUser.id,
                     total_amount: selectedInvoice.amount,
                     status: 'completed',
                     commission_rate: 0.1,
@@ -264,31 +264,9 @@ const PartnerDashboard = () => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Mock Active Order Card */}
-                    <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-black/5 dark:border-white/5">
-                        <div className="flex justify-between mb-4">
-                            <div>
-                                <h4 className="font-bold text-slate-900 dark:text-white text-sm">34 SR 1905 - VW Passat</h4>
-                                <p className="text-xs text-slate-500">Periyodik Bakım • Müşteri: Ahmet Y.</p>
-                            </div>
-                            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">
-                                AY
-                            </div>
-                        </div>
+                    {/* Active Orders from DB */}
+                    <ActiveOrderCard currentUser={currentUser} showAlert={showAlert} />
 
-                        {/* Process Manager Integration */}
-                        <ProcessManager
-                            currentStatus="repairing" // Mock initial status
-                            onUpdateStatus={(newStatus) => {
-                                showAlert("Durum Güncellendi", `İşlem durumu: ${newStatus}`, "success");
-                            }}
-                        />
-                    </div>
-
-                    <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-black/5 dark:border-white/5 flex flex-col justify-center items-center text-center opacity-50">
-                        <Wrench size={32} className="text-slate-700 mb-2" />
-                        <p className="text-sm font-bold text-slate-500">Başka aktif işlem yok</p>
-                    </div>
                 </div>
             </div>
 
@@ -301,30 +279,8 @@ const PartnerDashboard = () => {
                     </button>
                 </div>
 
-                <div className="space-y-4">
-                    {[1, 2, 3].map((i) => (
-                        <motion.div
-                            key={i}
-                            whileHover={{ x: 5 }}
-                            className="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-4 last:border-0 last:pb-0"
-                        >
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-400 border border-black/10 dark:border-white/10">
-                                    {activeRole === 'valet' ? '34VL' : activeRole === 'mechanic' ? '34SR' : '34PK'}
-                                </div>
-                                <div>
-                                    <p className="font-bold text-slate-900 dark:text-white text-sm">
-                                        {activeRole === 'valet' ? 'Araç Teslim Alındı' : activeRole === 'mechanic' ? 'Periyodik Bakım' : 'Giriş İşlemi'}
-                                    </p>
-                                    <p className="text-xs text-slate-500">Bugün • 14:{30 + i * 5}</p>
-                                </div>
-                            </div>
-                            <span className="text-slate-900 dark:text-white font-mono text-sm font-bold bg-black/5 dark:bg-white/5 px-3 py-1 rounded-lg">
-                                {activeRole === 'valet' ? 'Bekliyor' : 'Tamamlandı'}
-                            </span>
-                        </motion.div>
-                    ))}
-                </div>
+                <RecentActivityList currentUser={currentUser} activeRole={activeRole} />
+
             </div>
         </div >
     );

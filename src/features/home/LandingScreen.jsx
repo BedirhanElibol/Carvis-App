@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import logo from "../../assets/logo.png";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
-import { getFuelPrices } from "../../services/externalApis";
+import { getFuelPrices, getNearbyProviders, getCityMetadata } from "../../services/externalApis";
+import LocationMap from "../../components/ui/LocationMap";
 
 const CITIES = [
   "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin", "Aydın", "Balıkesir", "Bartın", "Batman", "Bayburt", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Düzce", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Iğdır", "Isparta", "İstanbul", "İzmir", "Kahramanmaraş", "Karabük", "Karaman", "Kars", "Kastamonu", "Kayseri", "Kırıkkale", "Kırklareli", "Kırşehir", "Kilis", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Mardin", "Mersin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Osmaniye", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Şanlıurfa", "Şırnak", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat", "Zonguldak"
@@ -26,6 +27,33 @@ const LandingScreen = () => {
   const [fuelCity, setFuelCity] = useState("istanbul");
   const [fuelLastUpdated, setFuelLastUpdated] = useState("");
   const [isLoadingFuel, setIsLoadingFuel] = useState(true);
+
+  // Fetch Fuel Prices
+  const [nearbyProviders, setNearbyProviders] = useState([]);
+  const [isLoadingProviders, setIsLoadingProviders] = useState(false);
+  const [mapCenter, setMapCenter] = useState({ lat: 41.0082, lng: 28.9784 });
+
+  // Fetch Providers
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProviders = async () => {
+      setIsLoadingProviders(true);
+      const cityMeta = getCityMetadata(fuelCity);
+      setMapCenter({ lat: cityMeta.lat, lng: cityMeta.lng });
+      try {
+        const data = await getNearbyProviders(cityMeta.lat, cityMeta.lng, 8000); // 8km radius
+        if (isMounted) {
+          setNearbyProviders(data.slice(0, 10)); // Top 10
+        }
+      } catch (err) {
+        console.error("Providers fetch error:", err);
+      } finally {
+        if (isMounted) setIsLoadingProviders(false);
+      }
+    };
+    fetchProviders();
+    return () => { isMounted = false; };
+  }, [fuelCity]);
 
   // Fetch Fuel Prices
   useEffect(() => {
@@ -59,7 +87,7 @@ const LandingScreen = () => {
     };
   }, [fuelCity]);
 
-  const handleGuestEntry = (query = "", city = "istanbul") => {
+  const _handleGuestEntry = (query = "", city = "istanbul") => {
     loginAsGuest();
     navigate("/application/home", { state: { searchQuery: query, selectedCity: city } });
   };
@@ -78,7 +106,7 @@ const LandingScreen = () => {
 
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white overflow-x-hidden font-sans relative selection:bg-teal-500/30">
+    <div className="min-h-screen w-full bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white overflow-x-clip font-sans relative selection:bg-teal-500/30">
       
       {/* Dynamic Glow Backgrounds */}
       <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] pointer-events-none overflow-hidden z-0">
@@ -123,7 +151,7 @@ const LandingScreen = () => {
             <button
               onClick={toggleTheme}
               className="w-10 h-10 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm flex items-center justify-center hover:bg-slate-50 dark:hover:bg-white/10 active:scale-95 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
-              title={theme === "dark" ? "Aydınlık Mod" : "Karanlık Mod"}
+              title={theme === "dark" ? t.lightMode : t.darkMode}
             >
               {theme === "dark" ? (
                 <Icons.Sun size={18} className="text-amber-400" />
@@ -166,7 +194,7 @@ const LandingScreen = () => {
           >
             <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
             <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">
-              ⚡ TÜRKİYE'NİN İLK YENİ NESİL OTO PLATFORMU
+              ⚡ {t.landingHeroTag}
             </span>
           </motion.div>
 
@@ -176,12 +204,8 @@ const LandingScreen = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-7xl font-black tracking-tight uppercase max-w-4xl leading-[1.05] mb-6"
-          >
-            TÜRKİYE'NİN AKILLI <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-blue-500 to-orange-400 drop-shadow-[0_0_30px_rgba(20,184,166,0.2)]">
-              OTO ASİSTANI
-            </span>
-          </motion.h1>
+            dangerouslySetInnerHTML={{ __html: t.landingHeroTitle }}
+          />
 
           {/* Subtitle */}
           <motion.p 
@@ -190,7 +214,7 @@ const LandingScreen = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-slate-500 dark:text-slate-400 font-medium text-center max-w-2xl text-base md:text-xl tracking-tight leading-relaxed mb-8"
           >
-            Teklif toplama, parça tedariği, akıllı arıza tespiti ve usta randevuları artık tek çatı altında. Rapidsy ile aracınızı cebinizden kolayca yönetin.
+            {t.landingHeroDesc}
           </motion.p>
 
           {/* Hero Search Panel (Mindbody Inspired) */}
@@ -207,7 +231,7 @@ const LandingScreen = () => {
                 <Icons.Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 group-focus-within:text-teal-400 transition-colors" size={20} />
                 <input 
                   type="text" 
-                  placeholder="Hangi hizmeti arıyorsunuz? (Örn: Periyodik Bakım)" 
+                  placeholder={t.landingSearchPlaceholder} 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-slate-50 dark:bg-[#030712] border border-slate-200 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 transition-all placeholder:text-slate-500"
@@ -220,9 +244,9 @@ const LandingScreen = () => {
                 <select 
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-[#030712] border border-slate-200 dark:border-white/10 rounded-2xl py-4.5 pl-12 pr-10 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 transition-all appearance-none cursor-pointer"
+                  className="w-full bg-slate-50 dark:bg-[#030712] border-none py-4.5 pl-11 pr-4 text-sm font-bold text-slate-900 dark:text-white outline-none cursor-pointer appearance-none"
                 >
-                  <option value="all">Tüm Şehirler</option>
+                  <option value="all">{t.allTurkey}</option>
                   {CITIES.map(city => (
                     <option key={city} value={city.toLowerCase()}>{city}</option>
                   ))}
@@ -231,32 +255,32 @@ const LandingScreen = () => {
               </div>
 
               {/* Search Button */}
-              <button
-                onClick={() => handleGuestEntry(searchQuery, searchLocation)}
-                className="w-full md:w-auto px-8 py-4.5 rounded-2xl bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-slate-900 dark:text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-teal-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border-none shrink-0 group"
+              <button 
+                onClick={() => navigate("/application/home")}
+                className="w-full md:w-auto bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 rounded-2xl px-8 py-4.5 font-black uppercase tracking-widest text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 group whitespace-nowrap"
               >
-                HİZMET BUL
-                <Icons.ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                {t.searchButton}
+                <Icons.ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
 
             </div>
 
             {/* Quick Categories below search */}
             <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mt-6">
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-500 mr-2">POPÜLER:</span>
+              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-500 mr-2">{t.popularLabel}</span>
               {[
-                { name: "Oto Servis", icon: Icons.Wrench, color: "text-teal-400" },
-                { name: "Vale Hizmeti", icon: Icons.Key, color: "text-amber-400" },
-                { name: "Parça Marketi", icon: Icons.Package, color: "text-emerald-400" },
-                { name: "Yol Yardım", icon: Icons.AlertTriangle, color: "text-rose-400" }
+                { title: t.smartDiagnosis, icon: Icons.Cpu, color: "from-blue-400 to-indigo-500", onClick: () => navigate("/application/home") },
+                { title: t.autoSpareParts, icon: Icons.Box, color: "from-orange-400 to-red-500", onClick: () => navigate("/application/parts") },
+                { title: t.expertMechanic, icon: Icons.Wrench, color: "from-teal-400 to-emerald-500", onClick: () => navigate("/application/mechanics") },
+                { title: t.buyBoxInfo, icon: Icons.TrendingUp, color: "from-pink-400 to-rose-500", onClick: () => navigate("/application/home") }
               ].map((cat, idx) => (
                 <button 
                   key={idx}
-                  onClick={() => handleGuestEntry(cat.name, searchLocation)}
+                  onClick={cat.onClick}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-white/10 shadow-sm border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all cursor-pointer group"
                 >
                   <cat.icon size={12} className={cat.color} />
-                  <span className="text-[10px] md:text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white">{cat.name}</span>
+                  <span className="text-[10px] md:text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white">{cat.title}</span>
                 </button>
               ))}
             </div>
@@ -276,29 +300,29 @@ const LandingScreen = () => {
                 </div>
                 <div className="text-left">
                   <div className="flex items-center gap-2">
-                    <h4 className="font-black text-sm uppercase tracking-tight text-slate-900 dark:text-white">Canlı Akaryakıt</h4>
+                    <h4 className="font-black text-sm uppercase tracking-tight text-slate-900 dark:text-white">{t.liveFuel}</h4>
                     <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                      <span className="text-[8px] font-black uppercase tracking-widest text-emerald-500">Live</span>
+                      <span className="text-[8px] font-black uppercase tracking-widest text-emerald-500">{t.live}</span>
                     </div>
                   </div>
-                  <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">Güncelleme: {isLoadingFuel ? "Yükleniyor..." : fuelLastUpdated}</p>
+                  <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">{t.lastUpdate}: {isLoadingFuel ? t.loading : fuelLastUpdated}</p>
                 </div>
               </div>
 
               <div className="flex flex-1 w-full md:w-auto gap-2 md:gap-4 justify-between md:justify-end items-center">
                 <div className="flex flex-col items-center">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Kurşunsuz 95</span>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">{t.unleaded95}</span>
                   <span className="text-sm md:text-base font-black text-slate-900 dark:text-white font-mono">{isLoadingFuel ? "---" : fuelPrices?.benzin} <span className="text-[9px] text-slate-500">₺/L</span></span>
                 </div>
                 <div className="w-px h-8 bg-black/10 dark:bg-white/10"></div>
                 <div className="flex flex-col items-center">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Motorin</span>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">{t.diesel}</span>
                   <span className="text-sm md:text-base font-black text-slate-900 dark:text-white font-mono">{isLoadingFuel ? "---" : fuelPrices?.motorin} <span className="text-[9px] text-slate-500">₺/L</span></span>
                 </div>
                 <div className="w-px h-8 bg-black/10 dark:bg-white/10"></div>
                 <div className="flex flex-col items-center">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Otogaz (LPG)</span>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">{t.lpg}</span>
                   <span className="text-sm md:text-base font-black text-slate-900 dark:text-white font-mono">{isLoadingFuel ? "---" : fuelPrices?.lpg} <span className="text-[9px] text-slate-500">₺/L</span></span>
                 </div>
                 
@@ -319,92 +343,64 @@ const LandingScreen = () => {
         {/* INTERACTIVE MAP PREVIEW (Nearby Providers with Hover Pins) */}
         <section className="w-full max-w-7xl mx-auto px-6 mb-24 relative">
           <div className="text-center mb-12">
-            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-orange-400">RAPIDSY AĞI</span>
+            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-orange-400">{t.rapidsyNetwork}</span>
             <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tight uppercase">
-              ÇEVRENİZDEKİ NOKTALAR
+              {t.nearbyPoints}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
-              Rapidsy sadece uygulamanızda değil, şehrinizin her yerinde. Onaylı servis noktaları her zaman yakınınızda.
+              {t.nearbyPointsDesc}
             </p>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-6 h-[600px] w-full">
             {/* Left Column: Provider Cards */}
             <div className="w-full lg:w-[400px] flex flex-col gap-4 overflow-y-auto pr-2 custom-scrollbar">
-              {[
-                { id: "pin-1", name: "Maslak Pro Servis", type: "Oto Servis", dist: "1.2 km", rating: 4.9 },
-                { id: "pin-2", name: "Borusan Oto Maslak", type: "Yetkili Servis", dist: "2.4 km", rating: 4.8 },
-                { id: "pin-3", name: "Ostim Yıldız Otomotiv", type: "Oto Servis", dist: "3.1 km", rating: 4.8 },
-                { id: "pin-4", name: "Express Vale", type: "Vale Hizmeti", dist: "0.5 km", rating: 5.0 },
-              ].map((prov, i) => (
-                <div 
-                  key={i}
-                  onMouseEnter={() => setHoveredPin(prov.id)}
-                  onMouseLeave={() => setHoveredPin(null)}
-                  onClick={() => openModal("login", "customer")}
-                  className={`bg-white/80 dark:bg-[#0a0f24]/80 border ${hoveredPin === prov.id ? 'border-orange-500/50 bg-black/10 dark:bg-white/10' : 'border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20'} p-5 rounded-3xl transition-all cursor-pointer group flex flex-col gap-3 shadow-xl backdrop-blur-md`}
-                >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h4 className="text-slate-900 dark:text-white font-black uppercase tracking-tight text-sm group-hover:text-orange-400 transition-colors">{prov.name}</h4>
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mt-1">{prov.type}</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-[10px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-white/5 shadow-sm px-2 py-1 rounded-lg border border-black/5 dark:border-white/5">
-                      <Icons.Star size={10} className="text-yellow-400 fill-yellow-400" />
-                      {prov.rating}
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center mt-2">
-                    <span className="text-[10px] font-black text-teal-400 uppercase tracking-widest">{prov.dist}</span>
-                    <button className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white flex items-center gap-1 transition-colors">
-                      İNCELE <Icons.ChevronRight size={10} />
-                    </button>
-                  </div>
+              {isLoadingProviders ? (
+                <div className="flex justify-center items-center h-full text-slate-500">
+                  <Icons.Loader2 className="animate-spin w-8 h-8" />
                 </div>
-              ))}
+              ) : nearbyProviders.length === 0 ? (
+                <div className="flex justify-center items-center h-full text-slate-500 text-sm font-bold">
+                  {t.noServiceFound}
+                </div>
+              ) : (
+                nearbyProviders.map((prov) => (
+                  <div 
+                    key={prov.id}
+                    onMouseEnter={() => setHoveredPin(prov.id)}
+                    onMouseLeave={() => setHoveredPin(null)}
+                    onClick={() => openModal("login", "customer")}
+                    className={`bg-white/80 dark:bg-[#0a0f24]/80 border ${hoveredPin === prov.id ? 'border-orange-500/50 bg-black/10 dark:bg-white/10' : 'border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20'} p-5 rounded-3xl transition-all cursor-pointer group flex flex-col gap-3 shadow-xl backdrop-blur-md`}
+                  >
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="text-slate-900 dark:text-white font-black uppercase tracking-tight text-sm group-hover:text-orange-400 transition-colors">{prov.name}</h4>
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mt-1">{prov.type}</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-white/5 shadow-sm px-2 py-1 rounded-lg border border-black/5 dark:border-white/5">
+                        <Icons.Star size={10} className="text-yellow-400 fill-yellow-400" />
+                        {prov.rating}
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center mt-2">
+                      <span className="text-[10px] font-black text-teal-400 uppercase tracking-widest">{prov.distance}</span>
+                      <button className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white flex items-center gap-1 transition-colors">
+                        {t.inspectBtn} <Icons.ChevronRight size={10} />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
 
-            {/* Right Column: Interactive SVG Map */}
-            <div className="flex-1 bg-slate-50 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex items-center justify-center p-4">
-              {/* Map background grid/texture */}
-              <div 
-                className="absolute inset-0 opacity-[0.05]"
-                style={{
-                  backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-                  backgroundSize: "40px 40px"
-                }}
-              ></div>
-              
-              {/* Simulated Map Paths */}
-              <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 100 0 Q 150 150 300 200 T 500 400" stroke="white" strokeWidth="2" fill="none" />
-                <path d="M 0 300 Q 200 250 400 300 T 800 150" stroke="white" strokeWidth="4" fill="none" />
-                <path d="M 400 0 L 400 600" stroke="white" strokeWidth="1" strokeDasharray="5,5" fill="none" />
-              </svg>
-
-              {/* Central pulsing user location */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-teal-500 rounded-full shadow-[0_0_20px_rgba(20,184,166,0.8)] z-10">
-                <div className="absolute inset-0 w-full h-full rounded-full bg-teal-400 animate-ping opacity-75"></div>
-              </div>
-              <span className="absolute top-[calc(50%+12px)] left-1/2 -translate-x-1/2 text-[9px] font-black text-teal-400 uppercase tracking-widest mt-2">KONUMUNUZ</span>
-
-              {/* Pins overlay */}
-              {[
-                { id: "pin-1", top: "25%", left: "30%", color: "bg-orange-500" },
-                { id: "pin-2", top: "35%", left: "60%", color: "bg-blue-500" },
-                { id: "pin-3", top: "70%", left: "45%", color: "bg-emerald-500" },
-                { id: "pin-4", top: "60%", left: "75%", color: "bg-amber-500" },
-              ].map((pin, i) => (
-                <div 
-                  key={i}
-                  className={`absolute w-6 h-6 rounded-full ${pin.color} border-2 border-white dark:border-[#050814] shadow-[0_0_15px_rgba(0,0,0,0.2)] dark:shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-all duration-300 flex items-center justify-center cursor-pointer z-20 ${hoveredPin === pin.id ? 'scale-150 z-30 ring-4 ring-black/10 dark:ring-white/20' : 'scale-100 hover:scale-125'}`}
-                  style={{ top: pin.top, left: pin.left }}
-                  onMouseEnter={() => setHoveredPin(pin.id)}
-                  onMouseLeave={() => setHoveredPin(null)}
-                >
-                  <Icons.MapPin size={12} className="text-slate-900 dark:text-white" />
-                </div>
-              ))}
+            {/* Right Column: Interactive Map Component */}
+            <div className="flex-1 bg-slate-50 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex items-center justify-center p-2">
+              <LocationMap 
+                center={mapCenter} 
+                markers={nearbyProviders} 
+                hoveredPin={hoveredPin} 
+                zoom={13} 
+              />
             </div>
           </div>
         </section>
@@ -413,23 +409,23 @@ const LandingScreen = () => {
         <section className="w-full max-w-7xl mx-auto px-6 mb-28">
           <div className="bg-white/60 dark:bg-[#0a0f24]/60 border border-black/5 dark:border-white/5 rounded-[3rem] p-10 md:p-16 space-y-12 relative overflow-hidden backdrop-blur-xl shadow-2xl">
             <div className="text-center max-w-2xl mx-auto">
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400">NASIL ÇALIŞIR?</span>
-              <h3 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-3 uppercase tracking-tight">3 Adımda Kolayca Yönetin</h3>
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400">{t.howItWorks}</span>
+              <h3 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-3 uppercase tracking-tight">{t.howItWorks3Steps}</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mt-12">
               <div className="hidden md:block absolute top-10 left-[15%] right-[15%] h-0.5 bg-black/10 dark:bg-white/10 pointer-events-none z-0"></div>
               {[
-                { step: "01", title: "İhtiyacını Belirt", desc: "Arama kutusundan hızlıca aracınızın ihtiyacını belirtin.", icon: Icons.Search, color: "from-teal-500 to-blue-500" },
-                { step: "02", title: "Teklifleri İncele", desc: "Bulunduğunuz konuma en yakın onaylı servislerden anında fiyat ve teklif alın.", icon: Icons.List, color: "from-blue-500 to-cyan-500" },
-                { step: "03", title: "Güvenle Randevu Al", desc: "Teklifleri karşılaştırın, size en uygun olanı seçip güvenli ödeme ile randevunuzu kesinleştirin.", icon: Icons.CalendarCheck, color: "from-cyan-500 to-emerald-500" }
+                { step: "01", title: t.step1Title, desc: t.step1Desc, icon: Icons.Search, color: "from-teal-500 to-blue-500" },
+                { step: "02", title: t.step2Title, desc: t.step2Desc, icon: Icons.FileText, color: "from-orange-500 to-red-500" },
+                { step: "03", title: t.step3Title, desc: t.step3Desc, icon: Icons.CheckCircle, color: "from-blue-500 to-indigo-500" }
               ].map((item, idx) => (
                 <div key={idx} className="flex flex-col items-center text-center relative z-10 group">
                   <div className={`w-20 h-20 rounded-[2rem] bg-gradient-to-br ${item.color} text-slate-900 dark:text-white flex items-center justify-center shadow-2xl group-hover:-translate-y-2 transition-transform duration-300 mb-6 border border-slate-200 dark:border-white/10`}>
                     <item.icon size={32} />
                   </div>
                   <div className="space-y-3">
-                    <span className="inline-block px-3 py-1 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm text-[9px] font-mono font-black text-slate-600 dark:text-slate-300 tracking-widest uppercase">ADIM {item.step}</span>
+                    <span className="inline-block px-3 py-1 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm text-[9px] font-mono font-black text-slate-600 dark:text-slate-300 tracking-widest uppercase">{t.stepLabel} {item.step}</span>
                     <h4 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">{item.title}</h4>
                     <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium max-w-[260px] mx-auto">{item.desc}</p>
                   </div>
@@ -442,76 +438,68 @@ const LandingScreen = () => {
         {/* APP FEATURES (ÖZELLİKLER) */}
         <section className="w-full max-w-7xl mx-auto px-6 mb-28">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-blue-500">UYGULAMA ÖZELLİKLERİ</span>
+            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-blue-500">{t.appFeatures}</span>
             <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tight uppercase">
-              Carvis İle Neler Yapabilirsiniz?
+              {t.whatCanYouDoWithCarvis}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
-              Aracınızın tüm ihtiyaçlarını dijitalleştirin. Garaj yönetiminden parça siparişine kadar her şey parmaklarınızın ucunda.
+              {t.everythingDesc}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                title: "Dijital Garaj",
-                desc: "Birden fazla aracınızı ekleyin, km, muayene ve poliçe bitiş tarihlerini tek ekrandan yönetin.",
                 icon: Icons.Car,
+                title: t.smartGarage,
+                desc: t.smartGarageDesc,
                 color: "text-blue-500",
                 bg: "bg-blue-500/10",
                 border: "group-hover:border-blue-500/50"
               },
               {
-                title: "Bakım Takibi",
-                desc: "Periyodik bakımlarınızı ve yağ değişimlerini kilometre bazlı olarak akıllıca takip edin.",
-                icon: Icons.Wrench,
-                color: "text-teal-500",
-                bg: "bg-teal-500/10",
-                border: "group-hover:border-teal-500/50"
-              },
-              {
-                title: "Yakıt & Gider Takibi",
-                desc: "Tüm akaryakıt alımlarınızı, masraflarınızı kaydedin ve aylık maliyet analizi raporları alın.",
+                title: t.fuelAndExpenseTracking,
+                desc: t.fuelAndExpenseTrackingDesc,
                 icon: Icons.Fuel,
                 color: "text-indigo-500",
                 bg: "bg-indigo-500/10",
                 border: "group-hover:border-indigo-500/50"
               },
               {
-                title: "Teklif Toplama",
-                desc: "Arıza veya bakım ihtiyaçlarınız için onaylı servislerden anında rekabetçi teklifler alın.",
+                title: t.collectQuotesTitle,
+                desc: t.collectQuotesDesc2,
                 icon: Icons.FileText,
                 color: "text-amber-500",
                 bg: "bg-amber-500/10",
                 border: "group-hover:border-amber-500/50"
               },
               {
-                title: "Parça Marketi",
-                desc: "Aracınıza %100 uyumlu orijinal ve yan sanayi yedek parçaları güvenle sipariş verin.",
-                icon: Icons.Package,
-                color: "text-rose-500",
-                bg: "bg-rose-500/10",
-                border: "group-hover:border-rose-500/50"
-              },
-              {
-                title: "Yol Yardım & Vale",
-                desc: "Acil durumlarda çekici çağırın veya aracınızın bakımını sizin yerinize yapacak vale talep edin.",
-                icon: Icons.MapPin,
+                icon: Icons.Box,
+                title: t.fastParts,
+                desc: t.fastPartsDesc,
                 color: "text-orange-500",
                 bg: "bg-orange-500/10",
                 border: "group-hover:border-orange-500/50"
               },
               {
-                title: "Güvenli Ödeme",
-                desc: "Hizmet tamamlanana kadar paranız havuzda güvende kalır, sürpriz maliyetlerle karşılaşmazsınız.",
+                icon: Icons.ShieldAlert,
+                title: t.sosValet,
+                desc: t.sosValetDesc,
+                color: "text-red-500",
+                bg: "bg-red-500/10",
+                border: "group-hover:border-red-500/50"
+              },
+              {
+                title: t.securePayment,
+                desc: t.securePaymentDesc,
                 icon: Icons.ShieldCheck,
                 color: "text-emerald-500",
                 bg: "bg-emerald-500/10",
                 border: "group-hover:border-emerald-500/50"
               },
               {
-                title: "Randevu Takvimi",
-                desc: "Servis randevularınızı takvime ekleyin, zamanınızı yönetin ve bildirimlerle hiçbirini kaçırmayın.",
+                title: t.appointmentCalendar,
+                desc: t.appointmentCalendarDesc,
                 icon: Icons.Calendar,
                 color: "text-cyan-500",
                 bg: "bg-cyan-500/10",
@@ -578,13 +566,13 @@ const LandingScreen = () => {
 
             <div className="relative z-10 flex flex-col items-center">
               <span className="text-orange-400 text-xs font-black uppercase tracking-widest mb-4">
-                İŞLETMENİZ İÇİN RAPIDSY
+                {t.rapidsyForBusiness}
               </span>
               <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 uppercase tracking-tight">
-                OTO SERVİSİNİZİ VE MAĞAZANIZI DİJİTALLEŞTİRİN
+                {t.digitizeYourShop}
               </h2>
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base max-w-2xl leading-relaxed mb-8">
-                Parça satıcısı, vale firması, otopark işletmecisi veya usta olun; Rapidsy Business ile işlerinizi, tekliflerinizi ve faturalarınızı tek tıkla yönetmeye başlayın.
+                {t.businessPortalDesc}
               </p>
               
               <button
@@ -592,7 +580,7 @@ const LandingScreen = () => {
                 className="group px-8 py-4.5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-slate-900 dark:text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-orange-500/20 active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer border-none"
               >
                 <Icons.Store size={18} className="text-orange-100 group-hover:rotate-6 transition-transform" />
-                İşletmenizi Kaydedin
+                {t.registerBusiness}
               </button>
             </div>
           </div>
@@ -607,9 +595,9 @@ const LandingScreen = () => {
             </div>
             
             <div className="flex items-center gap-6 text-xs text-slate-500 font-medium">
-              <a href="/privacy-policy" className="hover:text-slate-900 dark:text-white transition-colors">Gizlilik Politikası</a>
+              <a href="/privacy-policy" className="hover:text-slate-900 dark:text-white transition-colors">{t.privacy}</a>
               <span>•</span>
-              <a href="#" onClick={(e) => { e.preventDefault(); openModal("kvkk"); }} className="hover:text-slate-900 dark:text-white transition-colors">KVKK Metni</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); openModal("kvkk"); }} className="hover:text-slate-900 dark:text-white transition-colors">{t.kvkkText}</a>
               <span>•</span>
               <span className="text-slate-600">v2.5.0-premium</span>
             </div>

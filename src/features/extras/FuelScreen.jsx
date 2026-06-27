@@ -1,112 +1,297 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import * as Icons from "lucide-react";
-import { ModernCard } from "../../components/Core";
-import { FUEL_STATIONS } from "../../constants/mockData";
 import { useUI } from "../../context/UIContext";
+import { useAuth } from "../../context/AuthContext";
+import { useGarage } from "../../context/GarageContext";
+import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { tr } from "date-fns/locale";
 
 const FuelScreen = () => {
   const { t, showAlert } = useUI();
+  const { currentUser } = useAuth();
+  const { currentVehicle: activeVehicle } = useGarage();
   const navigate = useNavigate();
+  
   const [loading, setLoading] = useState(true);
-  const [stations, setStations] = useState([]);
+  const [logs, setLogs] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const [formData, setFormData] = useState({
+    liters: "",
+    price_per_liter: "",
+    total_cost: "",
+    odometer: activeVehicle?.mileage || "",
+    fuel_type: activeVehicle?.fuel_type || "Benzin",
+    station_name: "",
+    notes: ""
+  });
+
+  const fetchLogs = useCallback(async () => {
+    if (!currentUser?.id || !activeVehicle?.id) return;
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("fuel_logs")
+        .select("*")
+        .eq("user_id", currentUser.id)
+        .eq("vehicle_id", activeVehicle.id)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        if (error.code !== "42P01") { // ignore relation does not exist
+          console.error("Error fetching fuel logs:", error);
+        }
+        setLogs([]);
+      } else {
+        setLogs(data || []);
+      }
+    } catch (error) {
+      console.error("Catch error:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentUser?.id, activeVehicle?.id]);
 
   useEffect(() => {
-    // Simulate API fetch
-    const timer = setTimeout(() => {
-      setStations(FUEL_STATIONS);
-      setLoading(false);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, []);
+    fetchLogs();
+  }, [fetchLogs]);
 
-  const handleSmartPay = () => {
-    showAlert("Bilgi", "SmartPay özelliği çok yakında aktif olacak.", "info");
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const newFormData = { ...formData, [name]: value };
+    
+    // Auto calculate
+    if (name === "liters" || name === "price_per_liter") {
+      const liters = parseFloat(name === "liters" ? value : formData.liters) || 0;
+      const price = parseFloat(name === "price_per_liter" ? value : formData.price_per_liter) || 0;
+      if (liters > 0 && price > 0) {
+        newFormData.total_cost = (liters * price).toFixed(2);
+      }
+    } else if (name === "total_cost" && parseFloat(value) > 0 && parseFloat(formData.liters) > 0) {
+       newFormData.price_per_liter = (parseFloat(value) / parseFloat(formData.liters)).toFixed(2);
+    }
+
+    setFormData(newFormData);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!currentUser?.id || !activeVehicle?.id) {
+      showAlert("Hata", "Kullanıcı veya araç bilgisi bulunamadı.", "error");
+      return;
+    }
+
+    if (!formData.liters || !formData.price_per_liter || !formData.total_cost || !formData.odometer) {
+      showAlert("Hata", "Lütfen zorunlu alanları doldurun.", "error");
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      const { error } = await supabase.from("fuel_logs").insert([
+        {
+          user_id: currentUser.id,
+          vehicle_id: activeVehicle.id,
+          liters: parseFloat(formData.liters),
+          price_per_liter: parseFloat(formData.price_per_liter),
+          total_cost: parseFloat(formData.total_cost),
+          odometer: parseInt(formData.odometer),
+          fuel_type: formData.fuel_type,
+          station_name: formData.station_name,
+          notes: formData.notes
+        }
+      ]);
+
+      if (error) throw error;
+
+      showAlert("Başarılı", "Yakıt kaydı başarıyla eklendi.", "success");
+      setShowAddModal(false);
+      setFormData({
+        liters: "",
+        price_per_liter: "",
+        total_cost: "",
+        odometer: activeVehicle?.mileage || "",
+        fuel_type: activeVehicle?.fuel_type || "Benzin",
+        station_name: "",
+        notes: ""
+      });
+      fetchLogs();
+    } catch (error) {
+      console.error("Insert error:", error);
+      if (error.code === "42P01") {
+         showAlert("Hata", "Veritabanı tablosu henüz oluşturulmamış (fuel_logs). Lütfen migration'ı çalıştırın.", "error");
+      } else {
+         showAlert("Hata", "Yakıt kaydı eklenirken bir sorun oluştu.", "error");
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const deleteLog = async (id) => {
+    if (!window.confirm("Bu kaydı silmek istediğinize emin misiniz?")) return;
+    try {
+      const { error } = await supabase.from("fuel_logs").delete().eq("id", id);
+      if (error) throw error;
+      fetchLogs();
+      showAlert("Silindi", "Kayıt silindi.", "success");
+    } catch (_err) {
+      showAlert("Hata", "Silinirken bir hata oluştu.", "error");
+    }
   };
 
   if (!t) return null;
 
   return (
-    <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-50 dark:bg-slate-950 animate-fade-in">
+    <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-50 dark:bg-slate-950">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-2">
-        <button
-          onClick={() => navigate(-1)}
-          className="p-2.5 glass-card rounded-xl text-slate-900 dark:text-white active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5"
-        >
-          <Icons.ArrowLeft size={20} />
-        </button>
-        <h3 className="font-black text-2xl text-slate-900 dark:text-white">
-          {t.fuelTitle || "Yakıt İstasyonları"}
-        </h3>
-      </div>
-
-      {/* Simulation Banner */}
-      <div className="glass-card border border-primary-500/20 bg-primary-500/5 p-4 rounded-2xl flex items-center gap-3">
-        <div className="bg-primary-500/10 p-2 rounded-lg text-primary-400">
-          <Icons.Info size={16} />
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2.5 glass-card rounded-xl text-slate-900 dark:text-white active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5"
+          >
+            <Icons.ArrowLeft size={20} />
+          </button>
+          <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter uppercase">
+            YAKIT TAKİBİ
+          </h3>
         </div>
-        <div>
-          <p className="text-[10px] text-primary-400 font-black uppercase tracking-widest font-sans">
-            MOCK GÖRÜNÜM
-          </p>
-          <p className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider font-sans mt-0.5">
-            Bu ekrandaki veriler canlı simülasyon test ortamından alınmaktadır.
-          </p>
-        </div>
-      </div>
-
-      {/* SmartPay Card */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-slate-900 dark:text-white p-6 rounded-3xl shadow-2xl relative overflow-hidden group hover:shadow-red-600/50 transition duration-500">
-        <Icons.Fuel
-          size={120}
-          className="absolute -right-6 -bottom-6 text-slate-900 dark:text-white/20 group-hover:text-slate-900 dark:text-white/30 transition"
-        />
-        <p className="font-bold text-slate-900 dark:text-white/80">{t.payInCar}</p>
-        <h2 className="text-3xl font-black mt-1">SmartPay</h2>
         <button
-          onClick={handleSmartPay}
-          className="mt-6 bg-white text-red-600 px-6 py-3 rounded-xl font-bold shadow-md hover:bg-red-50 transition active-scale flex items-center gap-2"
+          onClick={() => setShowAddModal(true)}
+          className="bg-primary-600 text-slate-900 dark:text-white p-2.5 rounded-xl shadow-lg shadow-primary-900/20 hover:bg-primary-500 active-scale transition-colors"
         >
-          <Icons.CreditCard size={18} /> {t.pay}
+          <Icons.Plus size={20} />
         </button>
       </div>
 
-      <h4 className="font-bold text-slate-600 dark:text-slate-300 tracking-wider text-sm uppercase">{t.nearbyStations}</h4>
-
-      {/* List */}
-      {loading ? (
-        <div className="flex justify-center items-center py-10">
-          <Icons.RefreshCw className="animate-spin text-red-500" size={32} />
+      {!activeVehicle ? (
+        <div className="glass-card border border-amber-500/20 bg-amber-500/5 p-6 rounded-2xl flex flex-col items-center justify-center gap-3 text-center">
+          <Icons.Car className="text-amber-500" size={32} />
+          <p className="text-sm font-bold text-amber-600 dark:text-amber-400">Yakıt takibi yapabilmek için önce bir araç seçmeli veya eklemelisiniz.</p>
         </div>
       ) : (
-        <div className="space-y-4">
-          {stations.map((s, idx) => {
-            const animationStyle = { animationDelay: `${idx * 100}ms` };
-            return (
-              <ModernCard
-                key={s.id}
-                className="flex justify-between items-center border-black/5 dark:border-white/5 bg-white dark:bg-slate-900 shadow-xl hover:shadow-2xl hover:border-red-600/50 transition-all cursor-pointer animate-in fade-in slide-in-from-bottom-4"
-                style={animationStyle}
-                onClick={() => showAlert("İstasyon Seçildi", `${s.name} istasyonuna yol tarifi başlatılıyor...`, "success")}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-red-500/20 p-2.5 rounded-xl border border-red-500/20">
-                    <Icons.Droplet size={20} className="text-red-500" />
+        <>
+          {/* List */}
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <Icons.Loader2 className="animate-spin text-primary-500" size={32} />
+            </div>
+          ) : logs.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 opacity-60">
+              <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-[2.5rem] flex items-center justify-center border border-black/5 dark:border-white/5 shadow-2xl mb-4">
+                <Icons.Fuel size={32} className="text-slate-500" />
+              </div>
+              <p className="text-sm font-black uppercase tracking-[0.1em] text-slate-500">
+                Henüz yakıt kaydı bulunmuyor
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {logs.map((log) => (
+                <div key={log.id} className="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-black/5 dark:border-white/5 shadow-lg relative group overflow-hidden">
+                  <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                     <button onClick={() => deleteLog(log.id)} className="text-red-500 hover:text-red-600 bg-red-50 dark:bg-red-500/10 p-2 rounded-xl">
+                        <Icons.Trash2 size={16} />
+                     </button>
                   </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 dark:text-white tracking-tight">{s.name}</h4>
-                    <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500 mt-1">
-                      {s.distance} • {s.type}
-                    </p>
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="bg-primary-500/10 p-3 rounded-2xl border border-primary-500/20">
+                      <Icons.Fuel size={24} className="text-primary-500" />
+                    </div>
+                    <div>
+                      <h4 className="font-black text-lg text-slate-900 dark:text-white uppercase">
+                        {log.station_name || "İstasyon Belirtilmedi"}
+                      </h4>
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                        {format(new Date(log.created_at), "dd MMM yyyy, HH:mm", { locale: tr })}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl text-center">
+                       <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Litre</p>
+                       <p className="font-bold text-slate-900 dark:text-white">{log.liters} L</p>
+                    </div>
+                    <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl text-center">
+                       <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Tutar</p>
+                       <p className="font-bold text-primary-500">{log.total_cost} ₺</p>
+                    </div>
+                    <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl text-center">
+                       <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Kilometre</p>
+                       <p className="font-bold text-slate-900 dark:text-white">{log.odometer} km</p>
+                    </div>
                   </div>
                 </div>
-                <span className="font-black text-red-400 text-lg">
-                  {s.price} ₺
-                </span>
-              </ModernCard>
-            );
-          })}
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Add Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-[2.5rem] p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button 
+              onClick={() => setShowAddModal(false)}
+              className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 bg-slate-100 dark:bg-slate-800 p-2 rounded-full"
+            >
+              <Icons.X size={20} />
+            </button>
+            <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-6">Yeni Yakıt Kaydı</h3>
+            
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Alınan Litre *</label>
+                  <input type="number" step="0.01" required name="liters" value={formData.liters} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-slate-800 border border-black/5 dark:border-white/5 rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none transition-colors" placeholder="0.00" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Litre Fiyatı (₺) *</label>
+                  <input type="number" step="0.01" required name="price_per_liter" value={formData.price_per_liter} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-slate-800 border border-black/5 dark:border-white/5 rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none transition-colors" placeholder="0.00" />
+                </div>
+              </div>
+              
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Toplam Tutar (₺) *</label>
+                <input type="number" step="0.01" required name="total_cost" value={formData.total_cost} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-slate-800 border border-black/5 dark:border-white/5 rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none transition-colors" placeholder="0.00" />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Araç Kilometresi *</label>
+                <input type="number" required name="odometer" value={formData.odometer} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-slate-800 border border-black/5 dark:border-white/5 rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none transition-colors" placeholder="Örn: 45000" />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Yakıt Tipi</label>
+                  <input type="text" name="fuel_type" value={formData.fuel_type} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-slate-800 border border-black/5 dark:border-white/5 rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none transition-colors" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">İstasyon</label>
+                  <input type="text" name="station_name" value={formData.station_name} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-slate-800 border border-black/5 dark:border-white/5 rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none transition-colors" placeholder="Örn: Shell" />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Notlar (İsteğe Bağlı)</label>
+                <textarea name="notes" value={formData.notes} onChange={handleInputChange} rows="2" className="w-full bg-slate-50 dark:bg-slate-800 border border-black/5 dark:border-white/5 rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none transition-colors custom-scrollbar" placeholder="Kısa bir not ekleyin..." />
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={submitting}
+                className="w-full bg-primary-600 text-slate-900 dark:text-white rounded-2xl py-4 font-black uppercase tracking-wider mt-4 shadow-lg shadow-primary-900/20 active-scale disabled:opacity-50"
+              >
+                {submitting ? "Kaydediliyor..." : "Kaydet"}
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </div>

@@ -94,7 +94,7 @@ const MessageListScreen = () => {
                         conv.user?.full_name ||
                         "İsimsiz Kullanıcı"}
                     </h3>
-                    {conv.lastMessage && (
+                    {conv.lastMessage?.created_at && (
                       <span className="text-[10px] text-slate-500 whitespace-nowrap">
                         {formatDistanceToNow(
                           new Date(conv.lastMessage.created_at),

@@ -64,7 +64,13 @@ export default defineConfig({
       '/api/opet': {
         target: 'https://api.opet.com.tr',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/opet/, '/api')
+        rewrite: (path) => path.replace(/^\/api\/opet/, '/api'),
+        configure: (proxy) => {
+          proxy.on('proxyReq', (proxyReq) => {
+            proxyReq.setHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)');
+            proxyReq.setHeader('Accept', 'application/json');
+          });
+        }
       }
     },
     headers: {

@@ -2,31 +2,32 @@ import React, { useState } from "react";
  
 import { motion, AnimatePresence } from "framer-motion";
 import * as Icons from "lucide-react";
+import { useUI } from "../../context/UIContext";
 
-const slides = [
+const getSlides = (t) => [
   {
     title: "Master Match",
-    subtitle: "HİÇBİR ŞEYİ ŞANSA ASLA BIRAKMAYIN",
+    subtitle: t.masterMatchSub,
     description:
-      "Yapay zeka motorunuzu tarar, doğru parçayı bulur ve yüzde yüz uyumu garantiler.",
+      t.masterMatchDesc,
     icon: Icons.Zap,
     color: "text-yellow-400",
     bg: "from-yellow-500/20 to-transparent",
   },
   {
     title: "BuyBox Marketplace",
-    subtitle: "EN İYİ TEKLİFİ ANINDA YAKALAYIN",
+    subtitle: t.buyBoxSub,
     description:
-      "Yüzlerce saticidan gelen fiyatlari anlik karsilastirin, en kaliteli ürünü en uygun fiyata alin.",
+      t.buyBoxDesc,
     icon: Icons.ShoppingBag,
     color: "text-primary-400",
     bg: "from-primary-500/20 to-transparent",
   },
   {
-    title: "Şeffaf Tamir",
-    subtitle: "ARACINIZ EMİN ELLERDE",
+    title: t.transparentRepair,
+    subtitle: t.transparentRepairSub,
     description:
-      "Servis randevularinizi takip edin, onarim aşamalarini canli izleyin ve güvenle ödeyin.",
+      t.transparentRepairDesc,
     icon: Icons.ShieldCheck,
     color: "text-emerald-400",
     bg: "from-emerald-500/20 to-transparent",
@@ -34,10 +35,11 @@ const slides = [
 ];
 
 const OnboardingSlides = ({ onComplete }) => {
+  const { t } = useUI();
   const [current, setCurrent] = useState(0);
 
   const next = () => {
-    if (current === slides.length - 1) {
+    if (current === getSlides(t).length - 1) {
       onComplete();
     } else {
       setCurrent((prev) => prev + 1);
@@ -65,36 +67,36 @@ const OnboardingSlides = ({ onComplete }) => {
             className="flex flex-col items-center text-center"
           >
             <div
-              className={`w-32 h-32 rounded-[2.5rem] bg-gradient-to-b ${slides[current].bg} flex items-center justify-center mb-12 border border-black/5 dark:border-white/5 shadow-2xl relative`}
+              className={`w-32 h-32 rounded-[2.5rem] bg-gradient-to-b ${getSlides(t)[current].bg} flex items-center justify-center mb-12 border border-black/5 dark:border-white/5 shadow-2xl relative`}
             >
               <div className="absolute inset-0 bg-black/5 dark:bg-white/5 blur-xl rounded-full"></div>
               {(() => {
-                const Icon = slides[current].icon;
+                const Icon = getSlides(t)[current].icon;
                 return (
                   <Icon
                     size={56}
-                    className={`${slides[current].color} relative z-10`}
+                    className={`${getSlides(t)[current].color} relative z-10`}
                   />
                 );
               })()}
             </div>
             <h2 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white mb-2 uppercase">
-              {slides[current].title}
+              {getSlides(t)[current].title}
             </h2>
             <p
-              className={`text-[10px] font-black uppercase tracking-[0.2em] mb-6 ${slides[current].color}`}
+              className={`text-[10px] font-black uppercase tracking-[0.2em] mb-6 ${getSlides(t)[current].color}`}
             >
-              {slides[current].subtitle}
+              {getSlides(t)[current].subtitle}
             </p>
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-12 max-w-[280px]">
-              {slides[current].description}
+              {getSlides(t)[current].description}
             </p>
           </motion.div>
         </AnimatePresence>
 
         {/* Progress Indicators */}
         <div className="flex justify-center gap-2 mb-12">
-          {slides.map((_, i) => (
+          {getSlides(t).map((_, i) => (
             <div
               key={i}
               className={`h-1 rounded-full transition-all duration-500 ${
@@ -109,7 +111,7 @@ const OnboardingSlides = ({ onComplete }) => {
           onClick={next}
           className="w-full py-5 bg-white text-black rounded-3xl font-black text-xl tracking-tighter transition-all active:scale-95 hover:shadow-2xl hover:shadow-white/10 flex items-center justify-center gap-2 uppercase"
         >
-          {current === slides.length - 1 ? "BAŞLAYALIM!" : "DEVAM ET"}
+          {current === getSlides(t).length - 1 ? t.letsStart : t.continueBtn}
           <Icons.ChevronRight size={24} />
         </button>
       </div>

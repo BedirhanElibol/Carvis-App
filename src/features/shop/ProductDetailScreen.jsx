@@ -26,7 +26,7 @@ const ProductDetailScreen = () => {
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        const found = products.find(p => p.id === parseInt(id));
+        const found = products.find(p => p.id === id);
         setProduct(found);
     }, [id, products]);
 

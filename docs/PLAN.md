@@ -1,62 +1,27 @@
-# Carvis App - Revizyon ve İyileştirme Planı
+# Plan: System Health & Codebase Status Audit
 
-Bu belge, kullanıcının talepleri doğrultusunda uygulamanın "gerçekçi, sade ve
-sorunsuz" bir yapıya kavuşturulması için yapılacak değişiklikleri içerir.
+## 1. Goal
+Evaluate the complete health of the Carvis application, ensuring that:
+- Codebase style guidelines are met (no ESLint errors or warnings).
+- Security policies are respected (no vulnerabilities or secrets checked-in).
+- Database migrations and schemas are in sync.
+- The UI components compile and follow correct UX patterns.
+- The active development server is running healthy.
 
-## 1. Tema ve Renk Düzenlemeleri (Frontend Specialist)
+## 2. Agent Roles & Strategy
 
-- **Sorun:** Yazılar arka plan renklerinden dolayı okunmuyor ve Aydınlık Mod
-  (Light Mode) çalışmıyor.
-- **Çözüm:**
-  - `tailwind.config.js` ve global CSS dosyaları kontrol edilecek.
-  - HTML tag'ine `dark` class'ının doğru eklenip çıkarıldığından emin olunacak
-    (`UIContext.jsx`).
-  - Metinlerin arka planla olan kontrastı artırılacak.
-  - Her sayfa düzenindeki dark ve aydınlık yapabilen buton kontrol edilecek her
-    sayfa için doğru çalıştığı onaylanacak tıpkı anasayfaki gibi.
+### Phase 1: Planning & Discovery
+*   **project-planner**: Coordinate the system status audit and summarize the checklist results.
+*   **explorer-agent**: Check project configurations, Git state, and inspect active build/development configurations.
 
-## 2. Simülasyon ,Demo ve "AI" İbarelerinin Kaldırılması (Frontend & Backend Specialist)
-
-- **Sorun:** Araç girilmeden sahte veriler gösteriliyor ve her yerde AI ibaresi
-  var.
-- **Çözüm:**
-  - "Demo" veya "Mock" olarak gösterilen tüm araç sağlığı, lastik durumu vb.
-    sahte veriler kaldırılacak. Araç eklenmediyse "Lütfen aracınızı ekleyin"
-    şeklinde boş durum (empty state) gösterilecek.
-  - Uygulama genelindeki "Yapay Zeka", "AI", "Akıllı" gibi pazarlama ibareleri
-    arayüzden temizlenecek.
-
-## 3. Canlı Akaryakıt Fiyatları Widget'ının (Frontend Specialist)
-
-- **Sorun:** Güncelliğini yitirme ihtimali olan "Canlı Akaryakıt" gösterge
-  paneli uygulamayı basit (oyuncak) gösteriyor.
-- **Çözüm:**
-  - İlgili widget (bileşen) ana sayfadan (`CustomerHome.jsx`) ve ilgili dosyalar
-    düzenlenecek ücretsiz ve güncel kalacak her gün 1 kez güncellenecek.
-
-## 4. Yakıt Takip Sisteminin Entegrasyonu (Database Architect & Backend Specialist)
-
-- **Sorun:** Kullanıcılar kendi aldıkları yakıtları kaydedemiyor.
-- **Çözüm:**
-  - "Yakıt Takip Sistemi" (Kullanıcının aldığı litre, ödediği tutar, kilometre
-    bilgisini girebildiği ve geçmişini görebildiği) sayfa aktif edilecek
-    (`FuelScreen.jsx`).
-  - Gerekirse Supabase üzerinde `fuel_logs` (veya benzeri) tablo yapısı
-    doğrulanacak/oluşturulacak.
-
-## 5. Mesajlaşma Ekranı Çökme (Crash) Hatasının Çözümü (Test Engineer & Debugger)
-
-- **Sorun:** Mesajlar bölümüne girildiğinde uygulama çöküyor.
-- **Çözüm:**
-  - `MessageScreen.jsx`, `MessageListScreen.jsx` ve `MessageContext.jsx`
-    dosyalarındaki veri çekme veya undefined state hataları (cannot read
-    properties of null vb.) tespit edilecek.
-  - Çökmeyi engelleyecek hata yakalama (Error Boundary / try-catch / optional
-    chaining) mekanizmaları kurulacak.
+### Phase 2: Execution & Verification (Pending Approval)
+*   **test-engineer**: Execute lint, security, schema, and UX validation scripts.
+*   **devops-engineer**: Check background dev server status and build compilation verification.
 
 ---
 
-## ⏳ Onay Bekleniyor
-
-Kullanıcıdan bu plan için onay alındıktan sonra, **Phase 2 (Implementation)**
-aşamasına geçilecek ve paralel ajanlar çalıştırılacaktır.
+## 3. Verification Commands
+We will execute the project's master audit script to verify all core components:
+```powershell
+python .agent/scripts/checklist.py .
+```

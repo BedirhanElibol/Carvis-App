@@ -21,6 +21,7 @@ const PROVINCE_CODES: Record<string, string> = {
 async function fetchOpetPrices(provinceCode: string) {
   try {
     const res = await fetch(`https://api.opet.com.tr/api/fuelprices/prices?provinceCode=${provinceCode}`, {
+      headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/115.0.0.0 Safari/537.36", "Accept": "application/json" },
       signal: AbortSignal.timeout(5000)
     });
     if (!res.ok) return null;

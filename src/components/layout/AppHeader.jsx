@@ -71,7 +71,7 @@ const AppHeader = () => {
         <button
           onClick={toggleTheme}
           className="w-10 h-10 glass-card text-slate-900 dark:text-white rounded-xl flex items-center justify-center relative active-scale border border-black/5 dark:border-white/5"
-          title={theme === "dark" ? "Aydınlık Mod" : "Karanlık Mod"}
+          title={theme === "dark" ? t.lightMode : t.darkMode}
         >
           {theme === "dark" ? (
             <Icons.Sun size={18} className="text-amber-400" />
@@ -118,7 +118,7 @@ const AppHeader = () => {
           <button
             onClick={() => navigate("/admin")}
             className="w-10 h-10 bg-rose-600 text-slate-900 dark:text-white rounded-xl shadow-lg flex items-center justify-center active-scale transition-all border border-rose-400"
-            title="Yönetim Paneli"
+            title={t.adminPanel || "Yönetim Paneli"}
           >
             <div className="animate-pulse-slow">
               <Icons.ShieldAlert size={20} />

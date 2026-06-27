@@ -141,7 +141,7 @@ const AuthLoginModal = ({
                 <label className="text-xs font-bold text-slate-600 dark:text-slate-300 ml-1 font-sans">
                   {t.email}
                 </label>
-                <div className="bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
+                <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
                   <Icons.Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                   <input
                     type="email"
@@ -170,7 +170,7 @@ const AuthLoginModal = ({
                     Şifremi Unuttum
                   </button>
                 </div>
-                <div className="bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
+                <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
                   <Icons.Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                   <input
                     type="password"
@@ -291,7 +291,7 @@ const AuthLoginModal = ({
                 <label className="text-xs font-bold text-slate-600 dark:text-slate-300 ml-1 font-sans">
                   E-posta Adresi
                 </label>
-                <div className="bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
+                <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
                   <Icons.Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                   <input
                     type="email"

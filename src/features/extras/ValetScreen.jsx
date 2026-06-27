@@ -1,7 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Icons from "lucide-react";
 import { useUI } from "../../context/UIContext";
+import { useAuth } from "../../context/AuthContext";
+import { supabase } from "../../supabaseClient";
 
 const SERVICE_PACKAGES = [
   {
@@ -40,10 +42,12 @@ const STATUS_STEPS = [
 const ValetScreen = () => {
   const navigate = useNavigate();
   const { selectedLocation, showAlert } = useUI();
+  const { currentUser } = useAuth();
   const [selectedPackage, setSelectedPackage] = useState(SERVICE_PACKAGES[0]);
   const [pickupPoint, setPickupPoint] = useState(selectedLocation);
   const [note, setNote] = useState("");
   const [activeRequest, setActiveRequest] = useState(null);
+  const [loadingRequest, setLoadingRequest] = useState(false);
 
   const packageSummary = useMemo(
     () => ({
@@ -54,7 +58,81 @@ const ValetScreen = () => {
     [selectedPackage],
   );
 
-  const handleRequest = () => {
+  const getActiveStepIndex = (status) => {
+    switch (status) {
+      case "pending": return 0;
+      case "accepted": return 1;
+      case "picked_up": return 2;
+      case "parked": return 3;
+      case "completed": return 3;
+      default: return 0;
+    }
+  };
+
+  const fetchActiveRequest = useCallback(async () => {
+    if (!currentUser?.id) return;
+    try {
+      const { data, error } = await supabase
+        .from("valet_bookings")
+        .select("*, valet:profiles!valet_bookings_valet_id_fkey(full_name, phone_number)")
+        .eq("customer_id", currentUser.id)
+        .not("status", "in", '("completed","cancelled")')
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+      if (!error && data && data.length > 0) {
+        const req = data[0];
+        setActiveRequest({
+          id: req.id,
+          createdAt: new Date(req.created_at),
+          pickupPoint: req.pickup_point,
+          note: req.note,
+          package: SERVICE_PACKAGES.find(p => p.id === req.package_id) || SERVICE_PACKAGES[0],
+          code: req.verification_code || "----",
+          driver: req.valet?.full_name || "Atanıyor...",
+          phone: req.valet?.phone_number || "---",
+          plate: "Carvis Güvenceli",
+          status: req.status
+        });
+      } else {
+        setActiveRequest(null);
+      }
+    } catch (err) {
+      console.error("Fetch active request error:", err);
+    }
+  }, [currentUser?.id]);
+
+  useEffect(() => {
+    if (!currentUser?.id) return;
+
+    fetchActiveRequest();
+
+    const channel = supabase
+      .channel(`valet_customer_${currentUser.id}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "valet_bookings",
+          filter: `customer_id=eq.${currentUser.id}`,
+        },
+        () => {
+          fetchActiveRequest();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [currentUser, fetchActiveRequest]);
+
+  const handleRequest = async () => {
+    if (!currentUser) {
+      showAlert("Giriş Gerekli", "Vale çağırmak için lütfen giriş yapın.", "warning");
+      return;
+    }
     if (!pickupPoint || !pickupPoint.trim()) {
       showAlert(
         "Konum Gerekli",
@@ -64,29 +142,69 @@ const ValetScreen = () => {
       return;
     }
 
-    const createdAt = new Date();
-    setActiveRequest({
-      id: `VAL-${createdAt.getTime().toString().slice(-6)}`,
-      createdAt,
-      pickupPoint,
-      note: note.trim(),
-      package: selectedPackage,
-      code: String(1000 + Math.floor(Math.random() * 9000)),
-      driver: "Mert K.",
-      phone: "0850 555 02 27",
-      plate: "34 CVS 27",
-    });
+    const code = String(1000 + Math.floor(Math.random() * 9000));
+    setLoadingRequest(true);
 
-    showAlert(
-      "Vale Yönlendirildi",
-      `${selectedPackage.title} talebiniz alındı. ${selectedPackage.eta} içinde ulaşacak.`,
-      "success",
-    );
+    try {
+      const { data, error } = await supabase
+        .from("valet_bookings")
+        .insert([
+          {
+            customer_id: currentUser.id,
+            pickup_point: pickupPoint,
+            note: note.trim(),
+            package_id: selectedPackage.id,
+            price: packageSummary.total,
+            verification_code: code,
+            status: "pending"
+          }
+        ])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setActiveRequest({
+        id: data.id,
+        createdAt: new Date(data.created_at),
+        pickupPoint: data.pickup_point,
+        note: data.note,
+        package: selectedPackage,
+        code: data.verification_code,
+        driver: "Atanıyor...",
+        phone: "---",
+        plate: "---",
+        status: "pending"
+      });
+
+      showAlert(
+        "Vale Yönlendirildi",
+        `${selectedPackage.title} talebiniz alındı. En kısa sürede bir vale atanacaktır.`,
+        "success",
+      );
+    } catch (err) {
+      console.error("Create valet booking error:", err);
+      showAlert("Hata", "Vale talebi oluşturulamadı.", "error");
+    } finally {
+      setLoadingRequest(false);
+    }
   };
 
-  const handleCancel = () => {
-    setActiveRequest(null);
-    showAlert("Talep İptal Edildi", "Vale çağrınız iptal edildi.", "info");
+  const handleCancel = async () => {
+    if (!activeRequest) return;
+    try {
+      const { error } = await supabase
+        .from("valet_bookings")
+        .update({ status: "cancelled" })
+        .eq("id", activeRequest.id);
+
+      if (error) throw error;
+      setActiveRequest(null);
+      showAlert("Talep İptal Edildi", "Vale çağrınız iptal edildi.", "info");
+    } catch (err) {
+      console.error("Cancel valet request error:", err);
+      showAlert("Hata", "Talep iptal edilemedi.", "error");
+    }
   };
 
   return (
@@ -254,9 +372,10 @@ const ValetScreen = () => {
           </div>
           <button
             onClick={handleRequest}
-            className="w-full rounded-2xl bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-black py-4 uppercase tracking-[0.25em] transition-all active-scale shadow-xl shadow-primary-950/30"
+            disabled={loadingRequest}
+            className="w-full rounded-2xl bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-black py-4 uppercase tracking-[0.25em] transition-all active-scale shadow-xl shadow-primary-950/30 disabled:opacity-50"
           >
-            Vale Çağır
+            {loadingRequest ? "Çağırılıyor..." : "Vale Çağır"}
           </button>
         </section>
 
@@ -293,8 +412,8 @@ const ValetScreen = () => {
                 <div
                   key={step}
                   className={`rounded-2xl border px-4 py-4 ${
-                    index < 2
-                      ? "bg-primary-500/10 border-primary-500/20 text-slate-900 dark:text-white"
+                    index <= getActiveStepIndex(activeRequest.status)
+                      ? "bg-primary-500/10 border-primary-500/20 text-slate-900 dark:text-white shadow-md shadow-primary-950/20"
                       : "bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 text-slate-500"
                   }`}
                 >

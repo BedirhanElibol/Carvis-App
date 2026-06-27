@@ -14,7 +14,7 @@ const QuoteDetailScreen = () => {
   const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
-    const foundQuote = quotes.find((q) => q.id === parseInt(id));
+    const foundQuote = quotes.find((q) => q.id === id);
     setQuote(foundQuote);
   }, [id, quotes]);
 

@@ -1,20 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Icons from "lucide-react";
 import { useUI } from "../../../context/UIContext";
+import { useAuth } from "../../../context/AuthContext";
+import { supabase } from "../../../supabaseClient";
 
 const ParkingCapacity = () => {
   const { showAlert } = useUI();
+  const { currentUser } = useAuth();
+  
   const [capacity, setCapacity] = useState(100);
   const [occupancy, setOccupancy] = useState(45);
   const [isOpen, setIsOpen] = useState(true);
   const [price, setPrice] = useState(50);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!currentUser?.id) return;
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from("parking_profiles")
+          .select("*")
+          .eq("id", currentUser.id)
+          .single();
+        if (!error && data) {
+          setCapacity(data.total_capacity ?? 100);
+          setOccupancy(data.occupied_count ?? 0);
+          setPrice(data.price_per_hour ?? 0);
+          setIsOpen(data.is_open ?? true);
+        }
+      } catch (err) {
+        console.error("Load parking profile error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProfile();
+  }, [currentUser]);
+
   const handleSave = async () => {
+    if (!currentUser?.id) return;
     setLoading(true);
-    // Real updates would involve Supabase here
-    setLoading(false);
-    showAlert("Başarılı", "Otopark durumu güncellendi.", "success");
+    try {
+      const { error } = await supabase
+        .from("parking_profiles")
+        .update({
+          total_capacity: capacity,
+          occupied_count: occupancy,
+          price_per_hour: price,
+          is_open: isOpen,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", currentUser.id);
+
+      if (error) throw error;
+      showAlert("Başarılı", "Otopark durumu güncellendi.", "success");
+    } catch (err) {
+      console.error("Save parking error:", err);
+      showAlert("Hata", "Otopark durumu güncellenemedi.", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const occupancyPercent = Math.round((occupancy / capacity) * 100);

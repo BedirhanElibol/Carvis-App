@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGarage } from "../../context/GarageContext";
 import { useAuth } from "../../context/AuthContext";
@@ -34,6 +34,8 @@ const ServiceRequestForm = () => {
   const [mediaFiles, setMediaFiles] = useState([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const fileInputRef = useRef(null);
+  const [pendingUploadType, setPendingUploadType] = useState(null);
 
   // Auto-calculated state variables based on symptoms & description
   const [aiDiagnosis, setAiDiagnosis] = useState({
@@ -55,7 +57,7 @@ const ServiceRequestForm = () => {
     );
   };
 
-  // Perform dynamic real-time AI diagnosis mock calculation based on state
+  // Client-side AI pre-analysis based on selected symptoms (real-time UX feedback)
   useEffect(() => {
     if (selectedSymptoms.length === 0 && !description.trim()) {
       setAiDiagnosis({
@@ -123,19 +125,44 @@ const ServiceRequestForm = () => {
     return () => clearTimeout(timer);
   }, [selectedSymptoms, description]);
 
-  const handleSimulateUpload = (type) => {
-    let mockUrl = "";
-    if (type === 'image') {
-      mockUrl = "https://images.unsplash.com/photo-1623136859341-37d402127278?w=500";
-    } else {
-      mockUrl = "https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg";
+  const handleUploadClick = (type) => {
+    setPendingUploadType(type);
+    if (fileInputRef.current) {
+      fileInputRef.current.accept = type === 'image' ? 'image/*' : 'audio/*';
+      fileInputRef.current.click();
     }
+  };
 
-    setMediaFiles(prev => [
-      ...prev,
-      { id: Date.now(), type, url: mockUrl, name: type === 'image' ? 'ariza_kaniti.jpg' : 'motor_sesi_kaydi.wav' }
-    ]);
-    showAlert("Yüklendi", `${type === 'image' ? 'Fotoğraf' : 'Ses dosyası'} sisteme başarıyla yüklendi.`, "success");
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !pendingUploadType) return;
+
+    const fileExt = file.name.split('.').pop();
+    const filePath = `${currentUser.id}/${Date.now()}.${fileExt}`;
+
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from('service-proofs')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: urlData } = supabase.storage
+        .from('service-proofs')
+        .getPublicUrl(filePath);
+
+      setMediaFiles(prev => [
+        ...prev,
+        { id: Date.now(), type: pendingUploadType, url: urlData.publicUrl, name: file.name }
+      ]);
+      showAlert("Yüklendi", `${pendingUploadType === 'image' ? 'Fotoğraf' : 'Ses dosyası'} sisteme başarıyla yüklendi.`, "success");
+    } catch (err) {
+      console.error('Upload error:', err);
+      showAlert("Hata", "Dosya yüklenirken bir sorun oluştu.", "error");
+    } finally {
+      setPendingUploadType(null);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const handleRemoveMedia = (id) => {
@@ -366,10 +393,12 @@ const ServiceRequestForm = () => {
               Arıza Kanıtı Yükle (Fotoğraf / Motor Sesi)
             </label>
 
+            <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" />
+
             <div className="grid grid-cols-2 gap-3">
               <button 
                 type="button"
-                onClick={() => handleSimulateUpload('image')}
+                onClick={() => handleUploadClick('image')}
                 className="py-4 bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-primary-500/30 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
                 <Icons.Camera size={18} />
@@ -377,7 +406,7 @@ const ServiceRequestForm = () => {
               </button>
               <button 
                 type="button"
-                onClick={() => handleSimulateUpload('audio')}
+                onClick={() => handleUploadClick('audio')}
                 className="py-4 bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-primary-500/30 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
                 <Icons.Mic size={18} />

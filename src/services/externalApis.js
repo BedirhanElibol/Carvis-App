@@ -95,7 +95,7 @@ const TURKEY_CITIES = {
 };
 
 // Helper to get city data safely
-const getCityMetadata = (cityName) => {
+export const getCityMetadata = (cityName) => {
   if (!cityName) return TURKEY_CITIES["istanbul"];
   const normalized = cityName.toLowerCase().split(",")[0].trim().replace("i̇", "i");
   return TURKEY_CITIES[normalized] || TURKEY_CITIES["istanbul"];
@@ -200,9 +200,9 @@ export const getFuelPrices = async (cityInput = "istanbul") => {
     console.error("Live Fuel Price Error, using fallback:", error);
     return {
       results: [
-        { name: "Kurşunsuz 95 (Benzin)", price: 44.82 },
-        { name: "Motorin (Dizel)", price: 44.59 },
-        { name: "Otogaz (LPG)", price: 24.14 },
+        { name: "Kurşunsuz 95 (Benzin)", price: 62.04 },
+        { name: "Motorin (Dizel)", price: 64.33 },
+        { name: "Otogaz (LPG)", price: 33.41 },
       ],
       source: "fallback",
       last_updated: new Date().toISOString(),
@@ -326,5 +326,73 @@ export const getExchangeRates = async (base = "USD", target = "TRY") => {
       rate: fallbacks[`${base}_${target}`] || 1,
       date: new Date().toISOString().split("T")[0],
     };
+  }
+};
+
+// --- 6. Nearby Providers (Overpass API - OpenStreetMap) ---
+export const getNearbyProviders = async (lat, lng, radius = 5000) => {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+    // Overpass QL query: find car repair shops and car washes within `radius` meters of (lat, lng)
+    const query = `
+      [out:json];
+      (
+        node["shop"="car_repair"](around:${radius},${lat},${lng});
+        node["amenity"="car_wash"](around:${radius},${lat},${lng});
+      );
+      out 10;
+    `;
+
+    const response = await fetch("https://overpass-api.de/api/interpreter", {
+      method: "POST",
+      body: `data=${encodeURIComponent(query)}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept": "application/json"
+      },
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) throw new Error("Overpass API Error");
+    
+    const data = await response.json();
+    if (!data.elements || data.elements.length === 0) return [];
+
+    // Process and normalize the elements
+    return data.elements.map(el => {
+      const type = el.tags?.shop === "car_repair" ? "Oto Servis" : "Oto Yıkama";
+      
+      // Calculate a pseudo-rating and distance just for UX completeness since OSM lacks reviews
+      // Distance calculation (Haversine formula approximation)
+      const R = 6371; // km
+      const dLat = (el.lat - lat) * Math.PI / 180;
+      const dLon = (el.lon - lng) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat * Math.PI / 180) * Math.cos(el.lat * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      const dist = R * c;
+
+      return {
+        id: `osm-${el.id}`,
+        name: el.tags?.name || (type === "Oto Servis" ? "Özel Servis Noktası" : "Oto Yıkama Merkezi"),
+        type: type,
+        rating: null,
+        distance: `${dist.toFixed(1)} km`,
+        distNum: dist,
+        lat: el.lat,
+        lng: el.lon,
+        address: el.tags?.["addr:street"] ? `${el.tags?.["addr:street"]} ${el.tags?.["addr:city"] || ""}` : "Adres bilgisi mevcut değil",
+        features: type === "Oto Servis" ? ["Bakım", "Onarım"] : ["İç Dış Yıkama"]
+      };
+    }).sort((a, b) => a.distNum - b.distNum);
+
+  } catch (error) {
+    console.error("Overpass API Error:", error);
+    return [];
   }
 };

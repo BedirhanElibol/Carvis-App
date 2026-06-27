@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { triggerHaptic } from "../../../utils/haptics";
+import { useUI } from "../../../context/UIContext";
 
 const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
+  const { t } = useUI();
   const [step, setStep] = useState(1); // 1: Select Symptom, 2: Microphone Telemetry, 3: AI Diagnostic Report
   const [selectedSymptom, setSelectedSymptom] = useState(null);
   const [recordingTime, setRecordingTime] = useState(5);
@@ -18,47 +20,47 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
   const symptoms = [
     {
       id: "engine_knock",
-      label: "Motor Vuruntusu / Ses",
+      label: t.engineKnock,
       icon: Icons.Volume2,
-      desc: "Motordan gelen metalik tıklama, vuruntu veya sürtünme sesleri.",
-      danger: "Yüksek",
-      possibleFault: "Silindir Yatak Aşınması veya Subap Ayarı Bozukluğu",
+      desc: t.engineKnockDesc,
+      danger: t.high,
+      possibleFault: t.engineKnockFault,
       estimatedCostRange: "₺8,000 - ₺22,000",
-      repairTime: "6-12 Saat",
-      recommendation: "Motor vuruntusu yatak sarmaya yol açabilir. Aracı stop edip usta çağırmanız tavsiye edilir."
+      repairTime: t.engineKnockTime,
+      recommendation: t.engineKnockRec
     },
     {
       id: "vibration",
-      label: "Direksiyon / Kasa Titremesi",
+      label: t.vibration,
       icon: Icons.Activity,
-      desc: "Yüksek hızlarda direksiyonda veya frene basınca kasada oluşan titreme.",
-      danger: "Orta",
-      possibleFault: "Fren Disk Eğriliği veya Ön Düzen (Rot-Balans) Bozukluğu",
+      desc: t.vibrationDesc,
+      danger: t.medium,
+      possibleFault: t.vibrationFault,
       estimatedCostRange: "₺2,500 - ₺5,500",
-      repairTime: "2-3 Saat",
-      recommendation: "Fren disklerinizin tornalanması veya değişmesi gerekebilir. Sürüş konforu ve güvenlik için usta incelemelidir."
+      repairTime: t.vibrationTime,
+      recommendation: t.vibrationRec
     },
     {
       id: "oil_leak",
-      label: "Yağ / Sıvı Kaçağı",
+      label: t.oilLeak,
       icon: Icons.Droplet,
-      desc: "Aracın altında biriken yağ sızıntıları veya motor bölümünde ıslaklık.",
-      danger: "Yüksek",
-      possibleFault: "Karter Contası veya Üst Kapak Conta Sızıntısı",
+      desc: t.oilLeakDesc,
+      danger: t.high,
+      possibleFault: t.oilLeakFault,
       estimatedCostRange: "₺3,000 - ₺7,500",
-      repairTime: "3-5 Saat",
-      recommendation: "Yağsız kalan motor kilitlenebilir. Yağ seviyenizi çubuktan kontrol edin ve acil servis teklifi alın."
+      repairTime: t.oilLeakTime,
+      recommendation: t.oilLeakRec
     },
     {
       id: "brake_squeal",
-      label: "Fren Ötmesi / Sürtünmesi",
+      label: t.brakeSqueal,
       icon: Icons.ShieldAlert,
-      desc: "Frene basıldığında gelen tiz ıslık sesi veya metal sürtünme gürültüsü.",
-      danger: "Orta",
-      possibleFault: "Fren Balatası Aşınması (Limit Altı Kalınlık)",
+      desc: t.brakeSquealDesc,
+      danger: t.medium,
+      possibleFault: t.brakeSquealFault,
       estimatedCostRange: "₺1,800 - ₺3,600",
-      repairTime: "1-2 Saat",
-      recommendation: "Fren balatalarınızın bitmesi disklere zarar verir. Hemen şeffaf usta teklifi almanızı öneririz."
+      repairTime: t.brakeSquealTime,
+      recommendation: t.brakeSquealRec
     }
   ];
 
@@ -110,10 +112,10 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
         setRecordingTime((prev) => prev - 1);
         // Telemetry signals output
         const signals = [
-          `FREKANS GENLİĞİ: ${(2000 + Math.random() * 4500).toFixed(0)} Hz`,
-          `REZONANS: %${(65 + Math.random() * 30).toFixed(1)}`,
-          `GÜRÜLTÜ ORANI: ${(3.2 + Math.random() * 8.4).toFixed(2)} dB`,
-          `HARMONİK SAPMA: DETECTED`
+          `${t.freqAmp}: ${(2000 + Math.random() * 4500).toFixed(0)} Hz`,
+          `${t.resonance}: %${(65 + Math.random() * 30).toFixed(1)}`,
+          `${t.noiseRatio}: ${(3.2 + Math.random() * 8.4).toFixed(2)} dB`,
+          `${t.harmonicDev}: DETECTED`
         ];
         setTelemetrySignal(signals);
         triggerHaptic("impact");
@@ -131,7 +133,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
       }, 2000);
     }
     return () => clearTimeout(timer);
-  }, [isRecording, recordingTime]);
+  }, [isRecording, recordingTime, t]);
 
   if (!show) return null;
 
@@ -229,7 +231,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                         </div>
                         <div className="flex items-center gap-3">
                           <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded ${
-                            symptom.danger === "Yüksek" ? "bg-red-500/10 text-red-400 border border-red-500/20" : "bg-orange-500/10 text-orange-400 border border-orange-500/20"
+                            symptom.danger === t.high ? "bg-red-500/10 text-red-400 border border-red-500/20" : "bg-orange-500/10 text-orange-400 border border-orange-500/20"
                           }`}>
                             {symptom.danger} Risk
                           </span>
@@ -289,7 +291,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                           </div>
                         ))
                       ) : (
-                        <p className="text-slate-600 italic">Ses verisi akışı bekleniyor...</p>
+                        <p className="text-slate-600 italic">{t.waitingAudioStream}</p>
                       )}
                     </div>
                   </>
@@ -298,7 +300,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                 {isCompiling && (
                   <div className="text-center space-y-4 py-8">
                     <Icons.Loader2 className="animate-spin text-amber-500 mx-auto" size={44} />
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">AI TEŞHİS RAPORU DERLENİYOR</h3>
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">{t.aiDiagReportCompiling}</h3>
                     <p className="text-xs text-slate-500 max-w-xs mx-auto leading-relaxed">
                       Sinyal harmonik rezonans analizi tamamlandı. Tahribat derinlik ve parça masraf veritabanı sorgulanıyor...
                     </p>
@@ -337,7 +339,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                 {/* Technical Stats Details Table */}
                 <div className="bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-black/5 dark:border-white/5 overflow-hidden">
                   <div className="px-4 py-3 bg-white dark:bg-white/5 shadow-sm border-b border-black/5 dark:border-white/5 flex justify-between items-center">
-                    <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">TEKNİK ANALİZ RAPORU</span>
+                    <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.techAnalysisReport}</span>
                     <span className="text-[9px] font-black text-emerald-400 uppercase tracking-wider flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> MİSAFİR GÜVENLİĞİ: ONAYLI
                     </span>
@@ -345,31 +347,31 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                   
                   <div className="p-4 space-y-3">
                     <div className="flex justify-between items-center text-xs">
-                      <span className="text-slate-500 dark:text-slate-400 font-bold">Ön Teşhis Hasar Tipi</span>
+                      <span className="text-slate-500 dark:text-slate-400 font-bold">{t.preDiagDamageType}</span>
                       <span className="text-slate-900 dark:text-white font-black uppercase tracking-tight">{selectedSymptom.label}</span>
                     </div>
                     <div className="flex justify-between items-center text-xs">
-                      <span className="text-slate-500 dark:text-slate-400 font-bold">Risk Derecesi</span>
+                      <span className="text-slate-500 dark:text-slate-400 font-bold">{t.riskLevel}</span>
                       <span className={`font-black uppercase tracking-tight px-2 py-0.5 rounded ${
-                        selectedSymptom.danger === "Yüksek" ? "bg-red-500/10 text-red-400" : "bg-orange-500/10 text-orange-400"
-                      }`}>{selectedSymptom.danger} RİSK</span>
+                        selectedSymptom.danger === t.high ? "bg-red-500/10 text-red-400" : "bg-orange-500/10 text-orange-400"
+                      }`}>{selectedSymptom.danger} {t.risk}</span>
                     </div>
                     <div className="flex justify-between items-center text-xs">
-                      <span className="text-slate-500 dark:text-slate-400 font-bold">Tahmini Servis Süresi</span>
+                      <span className="text-slate-500 dark:text-slate-400 font-bold">{t.estimatedServiceTime}</span>
                       <span className="text-slate-900 dark:text-white font-black">{selectedSymptom.repairTime}</span>
                     </div>
                     
                     {/* Cost Breakdown Visual */}
                     <div className="border-t border-black/5 dark:border-white/5 pt-3 mt-2 flex justify-between items-center">
                       <div>
-                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">ÖNGÖRÜLEN TOPLAM MALİYET</span>
+                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">{t.estTotalCost}</span>
                         <span className="text-2xl font-black text-emerald-400 tracking-tighter mt-1 block">
                           {selectedSymptom.estimatedCostRange}
                         </span>
                       </div>
                       <div className="text-right">
-                        <span className="text-[8px] text-slate-500 font-bold block">İşçilik + Parça KDV Dahil</span>
-                        <span className="text-[9px] text-slate-500 dark:text-slate-400 font-bold block mt-1">Carvis Marketplace Güvenceli</span>
+                        <span className="text-[8px] text-slate-500 font-bold block">{t.laborAndPartsIncVAT}</span>
+                        <span className="text-[9px] text-slate-500 dark:text-slate-400 font-bold block mt-1">{t.carvisMarketplaceGuaranteed}</span>
                       </div>
                     </div>
                   </div>

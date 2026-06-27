@@ -39,7 +39,7 @@ const MessageScreen = () => {
   };
 
   const otherUser =
-    messages.length > 0
+    (messages || []).length > 0
       ? messages[0]?.sender_id === currentUser?.id
         ? messages[0]?.receiver
         : messages[0]?.sender
@@ -117,12 +117,14 @@ const MessageScreen = () => {
             </p>
           </div>
         ) : (
-          messages.map((message, index) => {
+          (messages || []).map((message, index) => {
             const isOwn = message.sender_id === currentUser?.id;
+            const prevMessage = index > 0 ? messages[index - 1] : null;
             const showDate =
               index === 0 ||
-              new Date(messages[index - 1].created_at).toDateString() !==
-                new Date(message.created_at).toDateString();
+              (prevMessage?.created_at && message?.created_at &&
+                new Date(prevMessage.created_at).toDateString() !==
+                new Date(message.created_at).toDateString());
             return (
               <div key={message.id} className="space-y-4">
                 {showDate && (

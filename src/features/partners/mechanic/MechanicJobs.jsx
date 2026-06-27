@@ -11,6 +11,11 @@ const MechanicJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [activeTab, setActiveTab] = useState("tender"); // 'tender' | 'my_jobs'
   const [loading, setLoading] = useState(true);
+  const [showBidModal, setShowBidModal] = useState(false);
+  const [selectedJobForBid, setSelectedJobForBid] = useState(null);
+  const [bidPrice, setBidPrice] = useState("");
+  const [bidNote, setBidNote] = useState("");
+  const [bidDeliveryDays, setBidDeliveryDays] = useState("2");
 
   const fetchJobs = useCallback(async () => {
     if (!currentUser) {
@@ -34,6 +39,7 @@ const MechanicJobs = () => {
           car: `${r.brand || "Bilinmeyen"} ${r.model || ""}`,
           plate: r.plate || "------",
           customerName: "Gizli Müşteri",
+          customerId: r.user_id,
           issue: r.demand_type || r.description || "Genel Kontrol",
           time: new Date(r.created_at).toLocaleTimeString([], {
             hour: "2-digit",
@@ -93,40 +99,70 @@ const MechanicJobs = () => {
     fetchJobs();
   }, [fetchJobs]);
 
+  const openBidModal = (job) => {
+    setSelectedJobForBid(job);
+    setBidPrice("");
+    setBidNote("");
+    setBidDeliveryDays("2");
+    setShowBidModal(true);
+  };
+
+  const handlePlaceBid = async () => {
+    if (!selectedJobForBid || !bidPrice) {
+      showAlert("Hata", "Lütfen teklif tutarı girin.", "warning");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { error: quoteError } = await supabase.from("quotes").insert([
+        {
+          service_request_id: selectedJobForBid.dbId,
+          seller_id: currentUser.id,
+          customer_id: selectedJobForBid.customerId,
+          price: parseFloat(bidPrice),
+          description: bidNote.trim() || `${selectedJobForBid.car} için usta teklifi`,
+          warranty_months: 12,
+          estimated_delivery_days: parseInt(bidDeliveryDays) || 2,
+          status: "pending",
+        },
+      ]);
+
+      if (quoteError) throw quoteError;
+
+      await supabase
+        .from("service_requests")
+        .update({ status: "tender_open" })
+        .eq("id", selectedJobForBid.dbId);
+
+      showAlert("Başarılı", "Teklifiniz iletildi, müşteri onayı bekleniyor.", "success");
+      setShowBidModal(false);
+      fetchJobs();
+    } catch (err) {
+      console.error("Place bid error:", err);
+      showAlert("Hata", "Teklif verilirken bir hata oluştu.", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleStatus = async (id, newStatus) => {
     const jobToUpdate = jobs.find((j) => j.id === id);
-    // Optimistic UI Update
     setJobs((prev) =>
       prev.map((job) => (job.id === id ? { ...job, status: newStatus } : job)),
     );
 
     if (jobToUpdate && jobToUpdate.isDb) {
       try {
-        if (jobToUpdate.type === "request" && newStatus === "claimed") {
-          // Havuzdan iş alındı. Bir Quote oluşturmamız lazım.
-          await supabase.from("quotes").insert([
-            {
-              service_request_id: jobToUpdate.dbId,
-              seller_id: currentUser.id,
-              customer_id: currentUser.id, // Normalde SR'dan gelir ama mock
-              price: 1000,
-              status: "accepted", // UI mapped
-            },
-          ]);
-          await supabase
-            .from("service_requests")
-            .update({ status: "claimed" })
-            .eq("id", jobToUpdate.dbId);
-        } else if (jobToUpdate.type === "quote") {
-          // Sadece Quote'u güncelle
+        if (jobToUpdate.type === "quote") {
           const mappedStatus =
-            newStatus === "completed" ? "pending" : "accepted"; // Mock mapping to avoid enum errors
+            newStatus === "completed" ? "completed" : "accepted";
           await supabase
             .from("quotes")
             .update({ status: mappedStatus })
             .eq("id", jobToUpdate.dbId);
         }
-        fetchJobs(); // Yeniden çek
+        fetchJobs();
       } catch (e) {
         console.error("Status Update Error", e);
       }
@@ -248,19 +284,19 @@ const MechanicJobs = () => {
                       </p>
                     </div>
                     <div className="text-right">
-                      <div className="text-green-400 font-bold flex items-center gap-1 justify-end">
-                        <Icons.Banknote size={16} /> ₺{job.price}
+                      <div className="text-yellow-400 font-bold flex items-center gap-1 justify-end">
+                        Açık İhale
                       </div>
                       <div className="text-xs text-slate-500 mt-1">
-                        Tahmini Kazanç
+                        Teklif Usulü
                       </div>
                     </div>
                   </div>
                   <button
-                    onClick={() => handleStatus(job.id, "claimed")}
-                    className="w-full relative z-10 bg-primary-600/20 hover:bg-primary-600 text-primary-400 hover:text-slate-900 dark:text-white border border-primary-500/20 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active-scale"
+                    onClick={() => openBidModal(job)}
+                    className="w-full relative z-10 bg-primary-600/20 hover:bg-primary-600 text-primary-400 hover:text-slate-900 dark:text-white border border-primary-500/20 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active-scale font-sans"
                   >
-                    TALEBİ ÜSTLEN VEYA BİLGİ İSTE
+                    TEKLİF VER / İNCELE
                   </button>
                 </div>
               ))
@@ -338,6 +374,99 @@ const MechanicJobs = () => {
           </div>
         )}
       </div>
+
+      {/* Bid Modal */}
+      {showBidModal && selectedJobForBid && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-fade-in">
+          <div className="glass-card w-full max-w-lg p-6 rounded-[2.5rem] border border-black/10 dark:border-white/10 space-y-6 animate-in scale-in duration-200">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 bg-primary-500/10 text-primary-400 rounded-xl border border-primary-500/20">
+                  <Icons.Wrench size={20} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900 dark:text-white uppercase tracking-tight text-sm font-sans">
+                    TEKLİF VER (İHALE)
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5 font-sans">
+                    {selectedJobForBid.car}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowBidModal(false)}
+                className="p-2 text-slate-400 hover:text-slate-200 rounded-lg active-scale"
+              >
+                <Icons.X size={20} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest font-sans">
+                  Teklif Tutarı (TL)
+                </label>
+                <div className="mt-2 flex items-center gap-3 bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3">
+                  <Icons.Banknote size={18} className="text-primary-400" />
+                  <input
+                    type="number"
+                    value={bidPrice}
+                    onChange={(e) => setBidPrice(e.target.value)}
+                    placeholder="Örn: 2500"
+                    className="w-full bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-600 font-mono"
+                  />
+                  <span className="text-xs text-slate-500 font-bold font-sans">TL</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest font-sans">
+                  Tahmini İş Süresi (İş Günü)
+                </label>
+                <div className="mt-2 flex items-center gap-3 bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3">
+                  <Icons.Clock size={18} className="text-primary-400" />
+                  <input
+                    type="number"
+                    value={bidDeliveryDays}
+                    onChange={(e) => setBidDeliveryDays(e.target.value)}
+                    placeholder="Örn: 2"
+                    className="w-full bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-600 font-mono"
+                  />
+                  <span className="text-xs text-slate-500 font-bold font-sans">GÜN</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest font-sans">
+                  Açıklama / Yapılacak İşlemler
+                </label>
+                <textarea
+                  value={bidNote}
+                  onChange={(e) => setBidNote(e.target.value)}
+                  rows={3}
+                  placeholder="Kullanılacak parça kalitesi, garanti durumu ve işçilik detaylarını yazın..."
+                  className="mt-2 w-full bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-600 outline-none resize-none font-sans"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => setShowBidModal(false)}
+                className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active-scale border border-black/10 dark:border-white/10 font-sans"
+              >
+                İPTAL
+              </button>
+              <button
+                onClick={handlePlaceBid}
+                className="bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active-scale shadow-xl shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans"
+              >
+                TEKLİF GÖNDER
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
