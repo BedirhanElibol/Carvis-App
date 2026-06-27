@@ -152,7 +152,7 @@ const SellerRegistrationModal = ({
       for (const [docId, file] of Object.entries(formData.files)) {
         if (!file) continue;
         const fileExt = file.name.split(".").pop();
-        const filePath = `${user.id}/${docId}_${Date.now()}.${fileExt}`;
+        const filePath = `${user.id}/${docId}_${crypto.randomUUID()}.${fileExt}`;
         const { error: uploadError } = await supabase.storage.from("partner-documents").upload(filePath, file);
         if (uploadError) throw uploadError;
         uploadedFiles[docId] = filePath;
