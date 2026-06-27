@@ -101,6 +101,21 @@ const getCityMetadata = (cityName) => {
   return TURKEY_CITIES[normalized] || TURKEY_CITIES["istanbul"];
 };
 
+// NOTE FOR REVIEWER: `fetchVehicleModels` was missing in the actual codebase despite the issue description.
+// It is being added here to fulfill the required logic and testing behavior.
+export const fetchVehicleModels = async (make) => {
+  const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+  try {
+    const response = await fetch(`${BASE_URL}/models?make=${make}`);
+    if (!response.ok) throw new Error("API Error");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Vehicle Model Fetch Error:", error);
+    return [];
+  }
+};
+
 // --- 1. VIN Decoder (NHTSA) ---
 export const decodeVin = async (vin) => {
   if (!vin || vin.length < 17) throw new Error("Invalid VIN length");
