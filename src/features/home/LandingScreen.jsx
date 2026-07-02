@@ -102,13 +102,13 @@ const LandingScreen = () => {
 
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white overflow-x-clip font-sans relative selection:bg-teal-500/30 dark:selection:bg-emerald-500/30">
+    <div className="min-h-screen w-full bg-[#FAFCFC] dark:bg-slate-950 text-slate-800 dark:text-white overflow-x-clip font-sans relative selection:bg-emerald-500/20 dark:selection:bg-emerald-500/30">
       
       {/* Dynamic Glow Backgrounds */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[5%] right-[10%] w-[450px] h-[450px] bg-blue-600/10 dark:bg-emerald-500/10 rounded-full blur-[120px] animate-pulse-slow"></div>
-        <div className="absolute bottom-[15%] left-[5%] w-[400px] h-[400px] bg-teal-500/10 dark:bg-emerald-400/5 rounded-full blur-[130px] animate-liquid"></div>
-        <div className="absolute top-[40%] left-[25%] w-[550px] h-[550px] bg-orange-500/5 dark:bg-orange-500/10 rounded-full blur-[140px] animate-pulse"></div>
+        <div className="absolute top-[5%] right-[10%] w-[450px] h-[450px] bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-[120px] animate-pulse-slow"></div>
+        <div className="absolute bottom-[15%] left-[5%] w-[400px] h-[400px] bg-teal-400/5 dark:bg-emerald-400/5 rounded-full blur-[130px] animate-liquid"></div>
+        <div className="absolute top-[40%] left-[25%] w-[550px] h-[550px] bg-amber-400/5 dark:bg-orange-500/10 rounded-full blur-[140px] animate-pulse"></div>
       </div>
 
       {/* Grid Pattern overlay */}
@@ -122,7 +122,7 @@ const LandingScreen = () => {
 
       {/* Floating Glass Navbar */}
       <nav className="fixed top-4 left-4 right-4 z-50 max-w-7xl mx-auto">
-        <div className="w-full bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-emerald-500/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-2xl shadow-black/50 dark:shadow-[0_10px_40px_-10px_rgba(16,185,129,0.1)]">
+        <div className="w-full bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-100 dark:border-emerald-500/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-[0_20px_50px_rgba(16,185,129,0.05)] dark:shadow-[0_10px_40px_-10px_rgba(16,185,129,0.1)]">
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
             <img
               src={logo}
@@ -167,7 +167,7 @@ const LandingScreen = () => {
                     navigate("/application/home");
                   }
                 }}
-                className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 dark:from-emerald-500 dark:to-emerald-700 dark:hover:from-emerald-400 dark:hover:to-emerald-600 text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white shadow-lg shadow-teal-500/20 dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all"
+                className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 dark:from-emerald-500 dark:to-emerald-700 dark:hover:from-emerald-400 dark:hover:to-emerald-600 text-xs font-black uppercase tracking-[0.15em] text-white shadow-lg shadow-emerald-500/20 dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all"
               >
                 {currentUser.role === "admin"
                   ? (t.adminPanel || "Yönetici Paneli")
@@ -189,7 +189,7 @@ const LandingScreen = () => {
                 {/* Login button */}
                 <button
                   onClick={() => openModal("login", "customer")}
-                  className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 dark:from-emerald-500 dark:to-emerald-700 dark:hover:from-emerald-400 dark:hover:to-emerald-600 text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white shadow-lg shadow-teal-500/20 dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all"
+                  className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 dark:from-emerald-500 dark:to-emerald-700 dark:hover:from-emerald-400 dark:hover:to-emerald-600 text-xs font-black uppercase tracking-[0.15em] text-white shadow-lg shadow-emerald-500/20 dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all"
                 >
                   {t.loginTitle || "Giriş Yap"}
                 </button>
@@ -209,10 +209,10 @@ const LandingScreen = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-emerald-500/10 border border-slate-200 dark:border-emerald-500/30 backdrop-blur-md mb-6 shadow-sm dark:shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-emerald-500/10 border border-slate-100 dark:border-emerald-500/30 backdrop-blur-md mb-6 shadow-sm dark:shadow-[0_0_15px_rgba(16,185,129,0.15)]"
           >
             <span className="w-2 h-2 rounded-full bg-teal-400 dark:bg-emerald-400 animate-ping"></span>
-            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600 dark:text-emerald-300">
+            <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-300">
               ⚡ {t.landingHeroTag}
             </span>
           </motion.div>
@@ -243,27 +243,27 @@ const LandingScreen = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="w-full max-w-4xl mx-auto px-2 md:px-0 mb-10"
           >
-            <div className="bg-white/90 dark:bg-[#0a0f24]/90 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-3xl p-3 md:p-4 shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-3 relative z-20">
+            <div className="bg-white/90 dark:bg-[#0a0f24]/90 backdrop-blur-2xl border border-slate-100 dark:border-white/10 rounded-3xl p-3 md:p-4 shadow-[0_30px_60px_-15px_rgba(16,185,129,0.08)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-3 relative z-20">
               
               {/* Search Query Input */}
               <div className="flex-1 relative group">
-                <Icons.Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-emerald-500/50 group-focus-within:text-teal-400 dark:group-focus-within:text-emerald-400 transition-colors" size={20} />
+                <Icons.Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-emerald-500/50 group-focus-within:text-teal-400 dark:group-focus-within:text-emerald-400 transition-colors" size={20} />
                 <input 
                   type="text" 
                   placeholder={t.landingSearchPlaceholder} 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 rounded-2xl py-4.5 pl-12 pr-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-emerald-500 transition-all placeholder:text-slate-500 dark:placeholder:text-slate-600"
+                  className="w-full bg-[#FAFCFC] dark:bg-black/40 border border-slate-100 dark:border-white/5 rounded-2xl py-4.5 pl-12 pr-4 text-sm font-bold text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-400/50 dark:focus:ring-emerald-500 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
                 />
               </div>
 
               {/* Location Selector */}
               <div className="w-full md:w-[240px] relative group">
-                <Icons.MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-emerald-500/50 group-focus-within:text-orange-400 dark:group-focus-within:text-emerald-400 transition-colors" size={20} />
+                <Icons.MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-emerald-500/50 group-focus-within:text-teal-400 dark:group-focus-within:text-emerald-400 transition-colors" size={20} />
                 <select 
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-black/40 border-none py-4.5 pl-11 pr-4 text-sm font-bold text-slate-900 dark:text-white outline-none cursor-pointer appearance-none focus:ring-2 focus:ring-transparent dark:focus:ring-emerald-500 transition-all rounded-2xl"
+                  className="w-full bg-[#FAFCFC] dark:bg-black/40 border-none py-4.5 pl-11 pr-4 text-sm font-bold text-slate-800 dark:text-white outline-none cursor-pointer appearance-none focus:ring-2 focus:ring-transparent dark:focus:ring-emerald-500 transition-all rounded-2xl"
                 >
                   <option value="all">{t.allTurkey}</option>
                   {CITIES.map(city => (
@@ -276,7 +276,7 @@ const LandingScreen = () => {
               {/* Search Button */}
               <button 
                 onClick={() => navigate("/application/home")}
-                className="w-full md:w-auto bg-slate-900 dark:bg-emerald-500 text-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-emerald-400 rounded-2xl px-8 py-4.5 font-black uppercase tracking-widest text-sm shadow-xl dark:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 transition-all flex items-center justify-center gap-2 group whitespace-nowrap border-none"
+                className="w-full md:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-500 dark:to-emerald-600 text-white dark:text-slate-950 hover:from-emerald-400 hover:to-teal-400 dark:hover:from-emerald-400 dark:hover:to-emerald-500 rounded-2xl px-8 py-4.5 font-black uppercase tracking-[0.15em] text-sm shadow-[0_10px_30px_rgba(16,185,129,0.3)] dark:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 transition-all flex items-center justify-center gap-2 group whitespace-nowrap border-none"
               >
                 {t.searchButton}
                 <Icons.ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -288,18 +288,18 @@ const LandingScreen = () => {
             <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mt-6">
               <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-500 mr-2">{t.popularLabel}</span>
               {[
-                { title: t.smartDiagnosis, icon: Icons.Fuel, color: "from-blue-400 to-indigo-500 dark:from-emerald-400 dark:to-teal-500", onClick: () => navigate("/application/home") },
-                { title: t.autoSpareParts, icon: Icons.Box, color: "from-orange-400 to-red-500 dark:from-amber-400 dark:to-orange-500", onClick: () => navigate("/application/parts") },
+                { title: t.smartDiagnosis, icon: Icons.Fuel, color: "from-emerald-400 to-teal-500 dark:from-emerald-400 dark:to-teal-500", onClick: () => navigate("/application/home") },
+                { title: t.autoSpareParts, icon: Icons.Box, color: "from-amber-400 to-orange-500 dark:from-amber-400 dark:to-orange-500", onClick: () => navigate("/application/parts") },
                 { title: t.expertMechanic, icon: Icons.Wrench, color: "from-teal-400 to-emerald-500 dark:from-emerald-500 dark:to-green-500", onClick: () => navigate("/application/mechanics") },
-                { title: t.buyBoxInfo, icon: Icons.TrendingUp, color: "from-pink-400 to-rose-500 dark:from-purple-400 dark:to-pink-500", onClick: () => navigate("/application/home") }
+                { title: t.buyBoxInfo, icon: Icons.TrendingUp, color: "from-blue-400 to-indigo-500 dark:from-purple-400 dark:to-pink-500", onClick: () => navigate("/application/home") }
               ].map((cat, idx) => (
                 <button 
                   key={idx}
                   onClick={cat.onClick}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-black/30 hover:bg-slate-50 dark:hover:bg-emerald-500/10 shadow-sm border border-slate-200 dark:border-emerald-500/20 hover:border-slate-300 dark:hover:border-emerald-500/50 transition-all cursor-pointer group"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-black/30 hover:bg-slate-50 dark:hover:bg-emerald-500/10 shadow-sm border border-slate-100 dark:border-emerald-500/20 hover:border-emerald-200 dark:hover:border-emerald-500/50 transition-all cursor-pointer group"
                 >
                   <cat.icon size={12} className={cat.color} />
-                  <span className="text-[10px] md:text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-emerald-300">{cat.title}</span>
+                  <span className="text-[10px] md:text-xs font-bold text-slate-500 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-emerald-300">{cat.title}</span>
                 </button>
               ))}
             </div>
@@ -312,11 +312,11 @@ const LandingScreen = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="w-full max-w-4xl mx-auto px-2 md:px-0 mb-10 mt-2"
           >
-            <div className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-emerald-500/10 rounded-3xl p-5 shadow-[0_0_30px_rgba(0,0,0,0.05)] dark:shadow-[0_0_30px_rgba(16,185,129,0.05)] flex flex-col gap-4">
+            <div className="bg-white/90 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-100 dark:border-emerald-500/10 rounded-3xl p-5 shadow-[0_20px_40px_rgba(16,185,129,0.03)] dark:shadow-[0_0_30px_rgba(16,185,129,0.05)] flex flex-col gap-4">
               <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
-                    <Icons.Droplets size={20} className="text-blue-500" />
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
+                    <Icons.Droplets size={20} className="text-emerald-500" />
                   </div>
                   <div className="text-left">
                     <div className="flex items-center gap-2">
@@ -422,7 +422,7 @@ const LandingScreen = () => {
             <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-teal-500">
               {language === "tr" ? "BENZERSİZ TEKNOLOJİ" : "UNIQUE TECHNOLOGY"}
             </span>
-            <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tight uppercase">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-800 dark:text-white mt-2 tracking-tight uppercase">
               {language === "tr" ? "ARACINIZIN TÜM YAŞAM DÖNGÜSÜ TEK BİR PANELDE" : "EVERYTHING ABOUT YOUR VEHICLE IN ONE PANEL"}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mt-4 text-sm md:text-base font-semibold leading-relaxed">
