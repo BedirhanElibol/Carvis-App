@@ -388,10 +388,16 @@ const ServiceRequestForm = () => {
 
           {/* Arıza Kanıt Yükleme Alanı */}
           <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
-            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
-              <Icons.Paperclip size={16} className="text-primary-500" />
-              Arıza Kanıtı Yükle (Fotoğraf / Motor Sesi)
-            </label>
+            <div className="flex justify-between items-center">
+              <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                <Icons.Paperclip size={16} className="text-primary-500" />
+                Medya Kanıtı Yükle
+              </label>
+              <span className="text-[8px] font-black uppercase bg-primary-500/10 text-primary-500 px-2 py-1 rounded-md">BETA</span>
+            </div>
+            <p className="text-[9px] font-medium text-slate-500">
+              * Motor sesi analizi (AI) şu an test aşamasındadır. Kesin arıza tespiti için lütfen servisinize danışınız.
+            </p>
 
             <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" />
 

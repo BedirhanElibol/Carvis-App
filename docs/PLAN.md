@@ -1,27 +1,27 @@
-# Plan: System Health & Codebase Status Audit
+# Sürüş Modu ve EDS/Radar Bildirim Sistemi (Drive Mode & Proximity Alerts)
 
-## 1. Goal
-Evaluate the complete health of the Carvis application, ensuring that:
-- Codebase style guidelines are met (no ESLint errors or warnings).
-- Security policies are respected (no vulnerabilities or secrets checked-in).
-- Database migrations and schemas are in sync.
-- The UI components compile and follow correct UX patterns.
-- The active development server is running healthy.
+Müşterinin seyir halindeyken EDS, Radar ve Kasis gibi noktaları fark edebilmesi için statik harita tek başına yetersizdir. GPS tabanlı bir "Sürüş Modu" (Drive Mode) ve bir **Erken Uyarı Sistemi** tasarlanmalıdır.
 
-## 2. Agent Roles & Strategy
+## Yaratılacak Katmanlar (Orchestration Plan)
 
-### Phase 1: Planning & Discovery
-*   **project-planner**: Coordinate the system status audit and summarize the checklist results.
-*   **explorer-agent**: Check project configurations, Git state, and inspect active build/development configurations.
+### 1. Drive Mode UI (Frontend Specialist)
+- **Seyir Modu Butonu:** Harita üzerinde "Sürüşü Başlat" butonu. Tıklandığında harita dinamik olarak kullanıcının `userLocation` verisine kilitlenir.
+- **Head-Up Display (HUD) Overlay:** Ekranda anlık hız (GPS bazlı hesaplanabilir), sonraki EDS/Kasis'e kalan mesafe ve EDS tipi (Örn: "Hız Koridoru - 82 km/s") gösterilir.
 
-### Phase 2: Execution & Verification (Pending Approval)
-*   **test-engineer**: Execute lint, security, schema, and UX validation scripts.
-*   **devops-engineer**: Check background dev server status and build compilation verification.
+### 2. Proximity & Geofencing (Backend / Logic Specialist)
+- **Haversine Distance Calculator:** Her GPS `userLocation` güncellemesinde, çevredeki EDS noktalarına olan kuş uçuşu (veya tahmini rota) mesafesi hesaplanır.
+- **Uyarı Eşikleri (Thresholds):**
+  - **1 KM Kala:** Bilgi (Mavi/Sarı görsel uyarı)
+  - **500 Metre Kala:** Kritik Uyarı (Kırmızı yanıp sönen HUD paneli)
+- **Ortalama Hız Hesaplama:** Hız koridoru başlangıcından geçildiğinde bir zamanlayıcı başlar, anlık ortalama hız hesaplanarak sürücü uyarılır.
+
+### 3. Audio / Visual Alerts (UX & Accessibility)
+- Sürücü haritaya bakmıyorken bile fark edebilmesi için **Sesli Asistan (TTS veya basit zil/uyarı sesleri)** entegrasyonu.
+- Ekranın kenarlarında parlayan acil durum çerçeveleri (Red/Orange glow).
 
 ---
 
-## 3. Verification Commands
-We will execute the project's master audit script to verify all core components:
-```powershell
-python .agent/scripts/checklist.py .
-```
+## User Review Required
+Lütfen aşağıdaki sorulara karar verelim:
+1. Sesli uyarılar (Örn: "500 metre sonra hız koridoru") tarayıcının Web Speech API'si ile (robotik ses) mi okunsun, yoksa standart bir "BİP BİP" alarm sesi mi kullanalım?
+2. Sürüş modu arayüzü tam ekran (Full-screen navigasyon stili) mu olsun, yoksa şu anki haritanın üzerine binen bir widget/panel olarak mı kalsın?

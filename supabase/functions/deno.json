@@ -7,6 +7,7 @@
     },
     "imports": {
         "std/": "https://deno.land/std@0.224.0/",
-        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2",
+        "@supabase/functions-js/": "jsr:@supabase/functions-js@^2.4.3/"
     }
 }

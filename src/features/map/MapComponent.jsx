@@ -84,7 +84,50 @@ const RecenterMap = ({ center }) => {
  * MapComponent
  * Displays a Leaflet map with user location and nearby service providers.
  */
-const MapComponent = ({ userLocation, providers = [], onProviderSelect }) => {
+/**
+ * createAlertIcon Utility
+ * Creates a custom Leaflet icon for road alerts (radars, speed bumps, accidents, etc.)
+ */
+const createAlertIcon = (type) => {
+  let bgClass = "bg-rose-600";
+  let symbol = "R"; // Radar/EDS
+  let pulse = "";
+  
+  if (type === "eds") {
+    bgClass = "bg-rose-700 ring-rose-500/50";
+    symbol = "EDS";
+    pulse = "animate-pulse";
+  } else if (type === "radar") {
+    bgClass = "bg-rose-500 ring-rose-400/50";
+    symbol = "RAD";
+    pulse = "animate-pulse";
+  } else if (type === "bump") {
+    bgClass = "bg-amber-500 ring-amber-400/50";
+    symbol = "KSS"; // Kasis
+  } else if (type === "fuel") {
+    bgClass = "bg-emerald-600 ring-emerald-500/50";
+    symbol = "AKR"; // Akaryakıt
+  } else if (type === "accident") {
+    bgClass = "bg-orange-500 ring-orange-400/50";
+    symbol = "KZA"; // Kaza
+  }
+
+  return L.divIcon({
+    className: "custom-alert-marker",
+    html: `
+      <div class="relative w-10 h-10 flex items-center justify-center ${pulse}">
+        <div class="absolute inset-0 ${bgClass} rounded-full rotate-45 shadow-[0_0_10px_rgba(0,0,0,0.3)] border border-white/20"></div>
+        <div class="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-2 h-2 ${bgClass} rotate-45 border-r border-b border-white/20"></div>
+        <span class="relative z-10 text-[9px] font-black text-white tracking-tighter uppercase">${symbol}</span>
+      </div>
+    `,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40],
+  });
+};
+
+const MapComponent = ({ userLocation, providers = [], roadAlerts = [], onProviderSelect }) => {
   // CartoDB Dark Matter tiles for premium dark mode aesthetic
   const titleUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
   const attribution =
@@ -139,6 +182,45 @@ const MapComponent = ({ userLocation, providers = [], onProviderSelect }) => {
             </Popup>
           </Marker>
         ))}
+
+        {/* Road Alert Markers */}
+        {roadAlerts.map((alert) => {
+          if (!alert.lat || !alert.lng) return null;
+          return (
+            <Marker
+              key={alert.id}
+              position={[Number(alert.lat), Number(alert.lng)]}
+              icon={createAlertIcon(alert.type)}
+            >
+              <Popup className="custom-leaflet-popup">
+                <div className="p-1.5 min-w-[160px] text-left">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <span className={`w-2.5 h-2.5 rounded-full ${
+                      alert.type === 'eds' || alert.type === 'radar' ? 'bg-rose-500 animate-pulse' :
+                      alert.type === 'bump' ? 'bg-amber-500' :
+                      alert.type === 'fuel' ? 'bg-emerald-500' : 'bg-orange-500'
+                    }`}></span>
+                    <h4 className="font-black text-slate-900 uppercase text-[10px] tracking-wider leading-none">
+                      {alert.title}
+                    </h4>
+                  </div>
+                  <p className="text-[10px] font-bold text-slate-700 dark:text-slate-200 mt-1 leading-normal">
+                    {alert.message}
+                  </p>
+                  {alert.location && (
+                    <p className="text-[8px] text-slate-500 dark:text-slate-400 font-mono mt-1 uppercase">
+                      📍 {alert.location}
+                    </p>
+                  )}
+                  <div className="flex justify-between items-center mt-2.5 pt-2 border-t border-black/5 dark:border-white/5 text-[8px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
+                    <span>Paylaşan: {alert.reporter || "Sürücü"}</span>
+                    <span className="text-teal-600 dark:text-teal-400 font-black">▲ {alert.votes || 1} Oy</span>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
 
       {/* Premium Overlay Gradient */}

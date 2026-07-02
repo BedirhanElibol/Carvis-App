@@ -14,8 +14,13 @@ L.Icon.Default.mergeOptions({
 
 // Custom Icon generator for different provider types
 const createCustomIcon = (type, isHovered) => {
-  const colorClass = type === "Oto Yıkama" ? "bg-blue-500" : "bg-orange-500";
-  const ringClass = isHovered ? "ring-4 ring-orange-500/50 scale-125" : "ring-2 ring-white dark:ring-slate-900";
+  let colorClass = "bg-orange-500";
+  if (type === "Oto Yıkama") colorClass = "bg-blue-500";
+  else if (type === "EDS") colorClass = "bg-red-600 animate-pulse";
+  
+  const ringClass = isHovered 
+    ? (type === "EDS" ? "ring-4 ring-red-500/50 scale-125" : "ring-4 ring-orange-500/50 scale-125") 
+    : "ring-2 ring-white dark:ring-slate-900";
   
   return L.divIcon({
     className: "custom-leaflet-marker",
@@ -105,17 +110,19 @@ const LocationMap = ({
           >
             <Popup className="custom-popup">
               <div className="p-1 min-w-[150px]">
-                <div className="text-xs font-black uppercase tracking-widest text-orange-500 mb-1">{marker.type}</div>
+                <div className={`text-xs font-black uppercase tracking-widest ${marker.type === "EDS" ? "text-red-500" : "text-orange-500"} mb-1`}>{marker.type}</div>
                 <div className="font-bold text-slate-900 mb-2">{marker.name}</div>
                 <div className="flex items-center gap-4 text-xs text-slate-500">
                   <div className="flex items-center gap-1">
                     <Navigation className="w-3 h-3" />
-                    <span>{marker.distance}</span>
+                    <span>{marker.distance || "Resmi EDS"}</span>
                   </div>
-                  <div className="flex items-center gap-1 text-yellow-500 font-medium">
-                    <Star className="w-3 h-3 fill-current" />
-                    <span>{marker.rating}</span>
-                  </div>
+                  {marker.rating && (
+                    <div className="flex items-center gap-1 text-yellow-500 font-medium">
+                      <Star className="w-3 h-3 fill-current" />
+                      <span>{marker.rating}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </Popup>

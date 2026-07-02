@@ -7,10 +7,32 @@ import { useUI } from "../../context/UIContext";
 const OrderDetailsModal = ({ show, onClose, order }) => {
   const { showAlert } = useUI();
   const [localOrder, setLocalOrder] = useState(order);
+  const [isReturning, setIsReturning] = useState(false);
 
   useEffect(() => {
     setLocalOrder(order);
   }, [order]);
+
+  const handleReturnRequest = async () => {
+    if(!window.confirm("Bu siparişi iptal/iade etmek istediğinize emin misiniz?")) return;
+    setIsReturning(true);
+    try {
+      const { data, error } = await supabase
+        .from("orders")
+        .update({ status: 'return_requested' })
+        .eq("id", localOrder.id)
+        .select()
+        .single();
+      if (error) throw error;
+      setLocalOrder(data);
+      showAlert("Başarılı", "İptal/İade talebiniz satıcıya iletildi.", "success");
+    } catch (error) {
+      console.error("Return request error:", error);
+      showAlert("Hata", "İade talebi oluşturulamadı.", "error");
+    } finally {
+      setIsReturning(false);
+    }
+  };
 
   const handleAcceptApproval = async (itemId) => {
     try {
@@ -187,6 +209,38 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
                <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">EMANET ALTINDA</span>
              </div>
           </div>
+
+          {/* Tracking & Returns */}
+          {(localOrder.quote?.tracking_number || localOrder.status === 'completed' || localOrder.status === 'repairing' || localOrder.status === 'paid' || localOrder.status === 'return_requested') && (
+             <div className="bg-slate-100 dark:bg-slate-900/80 p-5 rounded-3xl border border-black/5 dark:border-white/5 flex flex-col gap-3">
+               {localOrder.quote?.tracking_number && (
+                 <div className="flex items-center justify-between">
+                   <div className="flex items-center gap-2 text-primary-500">
+                     <Icons.Truck size={20} />
+                     <span className="text-[10px] font-black uppercase tracking-widest">Kargo Takip No:</span>
+                   </div>
+                   <span className="text-sm font-mono font-bold text-slate-900 dark:text-white bg-black/5 dark:bg-white/5 px-3 py-1 rounded-lg">
+                     {localOrder.quote.tracking_number}
+                   </span>
+                 </div>
+               )}
+               
+               {localOrder.status !== 'return_requested' && localOrder.status !== 'refunded' && localOrder.status !== 'cancelled' && (
+                 <button
+                   onClick={handleReturnRequest}
+                   disabled={isReturning}
+                   className="w-full mt-2 border border-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-all py-3 rounded-2xl font-black text-xs uppercase tracking-widest disabled:opacity-50"
+                 >
+                   {isReturning ? "İşleniyor..." : "İPTAL / İADE TALEP ET"}
+                 </button>
+               )}
+               {localOrder.status === 'return_requested' && (
+                 <div className="mt-2 text-center text-orange-500 text-[10px] font-black uppercase tracking-widest bg-orange-500/10 py-2 rounded-xl">
+                   İade talebiniz inceleniyor...
+                 </div>
+               )}
+             </div>
+          )}
         </div>
       </div>
     </div>

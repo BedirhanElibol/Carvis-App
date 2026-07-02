@@ -252,7 +252,7 @@ const ProfileScreen = () => {
         )}
 
         <p className="text-center text-[10px] font-black text-slate-700 tracking-[0.3em] uppercase pt-10 opacity-30">
-          Rapidsy v1.0 - Premium Edition
+          Carvis v1.0 - Premium Edition
         </p>
       </div>
 

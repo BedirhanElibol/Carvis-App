@@ -9,6 +9,7 @@ import ValetProfileForm from "./components/ValetProfileForm";
 import ParkingProfileForm from "./components/ParkingProfileForm";
 import MechanicProfileForm from "./components/MechanicProfileForm";
 import ProductProfileForm from "./components/ProductProfileForm";
+import CarwashProfileForm from "./components/CarwashProfileForm";
 
 const PartnerSettingsScreen = () => {
   const { currentUser } = useAuth();
@@ -48,6 +49,9 @@ const PartnerSettingsScreen = () => {
           break;
         case "parts":
           tableName = "parts_profiles";
+          break;
+        case "carwash":
+          tableName = "carwash_profiles";
           break;
         default:
           return;
@@ -119,6 +123,7 @@ const PartnerSettingsScreen = () => {
             filterField = "seller_id";
             break;
           case "parts": tableName = "parts_profiles"; break;
+          case "carwash": tableName = "carwash_profiles"; break;
           default: break;
         }
 
@@ -158,6 +163,7 @@ const PartnerSettingsScreen = () => {
       case "parking": return <ParkingProfileForm {...props} />;
       case "mechanic": return <MechanicProfileForm {...props} />;
       case "parts": return <ProductProfileForm {...props} />;
+      case "carwash": return <CarwashProfileForm {...props} />;
       default: return null;
     }
   };

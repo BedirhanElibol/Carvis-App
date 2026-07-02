@@ -26,8 +26,8 @@ const KVKKPolicyModal = ({ show, t, onAgree }) => {
                 bilgileriniz (plaka, km, marka/model), konum verileriniz.
               </li>
               <li>
-                Amaç: Hizmetlerin sunulması (parça satışı, usta randevusu, yapay
-                zeka desteği), sipariş takibi ve araç bakım hatırlatmaları.
+                Amaç: Hizmetlerin sunulması (parça satışı, usta randevusu,
+                gider takibi), sipariş takibi ve araç bakım hatırlatmaları.
               </li>
               <li>
                 Aktarım: Siparişlerinizi tamamlamak amacıyla partner

@@ -7,6 +7,26 @@ const CORS_HEADERS = {
   "Content-Type": "application/json",
 };
 
+interface FuelPriceResult {
+  name: string;
+  price: number;
+}
+
+interface OpetPrice {
+  productShortName: string;
+  amount: number;
+}
+
+interface OpetDistrict {
+  districtName: string;
+  prices: OpetPrice[];
+}
+
+interface POPrice {
+  productName: string;
+  amount: number;
+}
+
 const PROVINCE_CODES: Record<string, string> = {
   "adana": "01", "adiyaman": "02", "afyonkarahisar": "03", "afyon": "03", "agri": "04", "amasya": "05", "ankara": "06", "antalya": "07", "artvin": "08", "aydin": "09",
   "balikesir": "10", "bilecik": "11", "bingol": "12", "bitlis": "13", "bolu": "14", "burdur": "15", "bursa": "16", "canakkale": "17", "cankiri": "18", "corum": "19",
@@ -18,18 +38,18 @@ const PROVINCE_CODES: Record<string, string> = {
   "karaman": "70", "kirikkale": "71", "batman": "72", "sirnak": "73", "bartin": "74", "ardahan": "75", "igdir": "76", "yalova": "77", "karabuk": "78", "kilis": "79", "osmaniye": "80", "duzce": "81"
 };
 
-async function fetchOpetPrices(provinceCode: string) {
+async function fetchOpetPrices(provinceCode: string): Promise<FuelPriceResult[] | null> {
   try {
     const res = await fetch(`https://api.opet.com.tr/api/fuelprices/prices?provinceCode=${provinceCode}`, {
       headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/115.0.0.0 Safari/537.36", "Accept": "application/json" },
       signal: AbortSignal.timeout(5000)
     });
     if (!res.ok) return null;
-    const data = await res.json();
+    const data = await res.json() as OpetDistrict[];
     if (!Array.isArray(data) || data.length === 0) return null;
 
     // Opet returns an array of districts. Find a representative one:
-    const targetDistrict = data.find((d: any) => 
+    const targetDistrict = data.find((d: OpetDistrict) => 
       d.districtName === "ALTINDAĞ" || 
       d.districtName === "KADIKÖY" || 
       d.districtName === "MERKEZ" || 
@@ -38,8 +58,8 @@ async function fetchOpetPrices(provinceCode: string) {
 
     if (!targetDistrict || !targetDistrict.prices) return null;
 
-    const benzinObj = targetDistrict.prices.find((p: any) => p.productShortName === "KURS");
-    const motorinObj = targetDistrict.prices.find((p: any) => p.productShortName === "MT_ULT");
+    const benzinObj = targetDistrict.prices.find((p: OpetPrice) => p.productShortName === "KURS");
+    const motorinObj = targetDistrict.prices.find((p: OpetPrice) => p.productShortName === "MT_ULT");
 
     if (!benzinObj || !motorinObj) return null;
 
@@ -65,17 +85,17 @@ async function fetchOpetPrices(provinceCode: string) {
   }
 }
 
-async function fetchPOPrices(provinceCode: string) {
+async function fetchPOPrices(provinceCode: string): Promise<FuelPriceResult[] | null> {
   try {
     const res = await fetch(`https://www.petrolofisi.com.tr/api/fuelprices/prices?provinceCode=${provinceCode}`, {
       signal: AbortSignal.timeout(5000)
     });
     if (!res.ok) return null;
-    const data = await res.json();
-    const results = [];
-    const b = data.find((f: any) => f.productName.includes("95"));
-    const m = data.find((f: any) => f.productName.includes("V/Max Diesel"));
-    const l = data.find((f: any) => f.productName.includes("POgaz"));
+    const data = await res.json() as POPrice[];
+    const results: FuelPriceResult[] = [];
+    const b = data.find((f: POPrice) => f.productName.includes("95"));
+    const m = data.find((f: POPrice) => f.productName.includes("V/Max Diesel"));
+    const l = data.find((f: POPrice) => f.productName.includes("POgaz"));
     if (b) results.push({ name: "Kurşunsuz 95 (Benzin)", price: b.amount });
     if (m) results.push({ name: "Motorin (Dizel)", price: m.amount });
     if (l) results.push({ name: "Otogaz (LPG)", price: l.amount });

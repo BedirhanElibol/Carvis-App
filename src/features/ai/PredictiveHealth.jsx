@@ -136,10 +136,10 @@ const PredictiveHealth = ({ vehicle }) => {
       <div className="flex items-start justify-between mb-6 relative z-10">
         <div>
           <h3 className="font-black text-xl text-slate-900 dark:text-white flex items-center gap-2 uppercase tracking-tighter">
-            <Icons.Activity className="text-primary-400" /> AI Sağlık Skoru
+            <Icons.Activity className="text-primary-400" /> Tahmini Sistem Skoru
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-sans">
-            Rapidsy tahmin motoru araç verilerini analiz etti.
+            Girdiğiniz veriler baz alınarak hesaplanan tahmini skordur.
           </p>
         </div>
         <div className="text-right">

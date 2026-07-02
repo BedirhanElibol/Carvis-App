@@ -1557,20 +1557,9 @@ ON public.transactions FOR SELECT USING (
 );
 
 
--- Seed Data for Insurance Products
-INSERT INTO public.insurance_products (provider_name, provider_logo, product_type, base_price)
-VALUES 
-('Allianz Sigorta', '🛡️', 'kasko', 4500.00),
-('Axa Sigorta', '🚗', 'traffic_insurance', 2200.00),
-('Anadolu Sigorta', '🔒', 'extended_warranty', 3100.00)
-ON CONFLICT DO NOTHING;
+-- Seed Data for Insurance Products (Removed for production)
 
--- Seed Data for Auctions
-INSERT INTO public.auctions (product_name, current_highest_bid, end_time, image_url, status)
-VALUES 
-('Premium OBD2 Teşhis Cihazı (AI Destekli)', 1200.00, now() + interval '3 days', 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=2672&auto=format&fit=crop', 'active'),
-('Michelin Pilot Sport 4 Lastik Takımı (Sıfır)', 8500.00, now() + interval '5 days', 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?q=80&w=2672&auto=format&fit=crop', 'active')
-ON CONFLICT DO NOTHING;
+-- Seed Data for Auctions (Removed for production)
 
 
 -- =========================================================================
@@ -1902,7 +1891,7 @@ DECLARE
     v_mechanic_id UUID;
 BEGIN
     -- 1. Validate profession
-    IF p_profession NOT IN ('valet', 'parking', 'mechanic', 'parts') THEN
+    IF p_profession NOT IN ('valet', 'parking', 'mechanic', 'parts', 'carwash') THEN
         RETURN jsonb_build_object('success', false, 'message', 'Geçersiz meslek seçimi.');
     END IF;
 
@@ -1922,23 +1911,27 @@ BEGIN
     -- 3. Insert specialized B2B profiles with exact schema columns
     IF p_profession = 'valet' THEN
         INSERT INTO public.valet_profiles (id, base_price, service_radius_km, experience_years, is_active_now)
-        VALUES (p_user_id, 0.00, 15, 3, true)
-        ON CONFLICT (id) DO UPDATE SET is_active_now = true;
+        VALUES (p_user_id, 0.00, 0, 0, false)
+        ON CONFLICT (id) DO UPDATE SET is_active_now = false;
 
     ELSIF p_profession = 'parking' THEN
         INSERT INTO public.parking_profiles (id, parking_name, total_capacity, occupied_count, price_per_hour, is_indoor, has_security, has_valet)
-        VALUES (p_user_id, p_business_name, 50, 0, 30.00, true, true, false)
+        VALUES (p_user_id, p_business_name, 0, 0, 0.00, false, false, false)
         ON CONFLICT (id) DO UPDATE SET parking_name = EXCLUDED.parking_name;
 
     ELSIF p_profession = 'mechanic' THEN
         v_mechanic_id := crypto.randomUUID();
         INSERT INTO public.mechanic_shops (seller_id, shop_name, is_active, specialties, brands)
-        VALUES (p_user_id, p_business_name, true, ARRAY['Periyodik Bakım', 'Fren Sistemleri'], ARRAY['BMW', 'Audi', 'Volkswagen', 'Mercedes']);
+        VALUES (p_user_id, p_business_name, false, ARRAY[]::text[], ARRAY[]::text[]);
 
     ELSIF p_profession = 'parts' THEN
         INSERT INTO public.parts_profiles (id, business_name, delivery_radius_km, store_type)
-        VALUES (p_user_id, p_business_name, 50, 'retail')
+        VALUES (p_user_id, p_business_name, 0, 'retail')
         ON CONFLICT (id) DO UPDATE SET business_name = EXCLUDED.business_name;
+        
+    ELSIF p_profession = 'carwash' THEN
+        -- Carwash settings are kept inside business_details JSONB on profiles table
+        NULL;
     END IF;
 
     -- 4. Get Initial Free Plan ID
@@ -2050,66 +2043,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 -- SETUP: Supabase Storage Buckets & Policies
 -- =========================================================
 
--- 1. REVIEWER AUTH USER & GARAJA ÖN HAZIRLIK SEED
-DO $$
-DECLARE
-  v_user_id UUID := '00000000-0000-0000-0000-000000000001'; -- Sabit test UUID
-BEGIN
-  -- Eğer reviewer@rapidsy.app kullanıcısı yoksa auth tablosuna ekle
-  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'reviewer@rapidsy.app') THEN
-    INSERT INTO auth.users (
-      id,
-      instance_id,
-      email,
-      encrypted_password,
-      email_confirmed_at,
-      raw_app_meta_data,
-      raw_user_meta_data,
-      created_at,
-      updated_at,
-      role,
-      confirmation_token,
-      is_super_admin
-    ) VALUES (
-      v_user_id,
-      '00000000-0000-0000-0000-000000000000',
-      'reviewer@rapidsy.app',
-      -- 'RapidsyTest2026!' şifresinin Blowfish hash'i
-      crypt('RapidsyTest2026!', gen_salt('bf')),
-      now(),
-      '{"provider":"email","providers":["email"]}'::jsonb,
-      '{"full_name":"Reviewer Account","role":"customer"}'::jsonb,
-      now(),
-      now(),
-      'authenticated',
-      '',
-      false
-    );
-    
-    -- Triggere takılmamak veya asenkron gecikmeyi önlemek için public.profiles tablosuna manuel ekle
-    INSERT INTO public.profiles (id, email, full_name, role, application_status)
-    VALUES (v_user_id, 'reviewer@rapidsy.app', 'Reviewer Account', 'customer', 'none')
-    ON CONFLICT (id) DO UPDATE 
-    SET full_name = 'Reviewer Account', role = 'customer';
-
-    -- İnceleme ekibinin garajında hazır görebileceği test aracı ekle
-    INSERT INTO public.vehicles (
-      id, user_id, brand, model, plate, km, year, color, health_score, reminder_enabled
-    )
-    VALUES (
-      '00000000-0000-0000-0000-000000000002',
-      v_user_id,
-      'Fiat',
-      'Egea 1.3 Multijet',
-      '34REV2026',
-      '45000',
-      2022,
-      'Beyaz',
-      98,
-      true
-    ) ON CONFLICT (plate) DO NOTHING;
-  END IF;
-END $$;
+-- 1. REVIEWER AUTH USER & GARAJA ÖN HAZIRLIK SEED (Removed for production)
 
 
 -- 2. SUPABASE STORAGE BUCKETS TANIMLARI
@@ -2208,6 +2142,83 @@ FOR SELECT USING (
   AND status = 'pending'
 );
 
+-- =========================================================
+-- 10. ROAD ALERTS & RADARS (CROWDSOURCED & KGM OFFICIAL)
+-- =========================================================
+CREATE TABLE IF NOT EXISTS public.road_alerts (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    created_at TIMESTAMPTZ DEFAULT now(),
+    type TEXT NOT NULL,
+    title TEXT NOT NULL,
+    message TEXT NOT NULL,
+    location TEXT NOT NULL,
+    reporter TEXT NOT NULL,
+    votes INTEGER DEFAULT 0,
+    voted_users UUID[] DEFAULT '{}'::UUID[],
+    user_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    city TEXT DEFAULT 'istanbul',
+    lat NUMERIC(9,6),
+    lng NUMERIC(9,6)
+);
 
+ALTER TABLE public.road_alerts ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Anyone can select road alerts" ON public.road_alerts;
+CREATE POLICY "Anyone can select road alerts" ON public.road_alerts
+FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Authenticated users can insert road alerts" ON public.road_alerts;
+CREATE POLICY "Authenticated users can insert road alerts" ON public.road_alerts
+FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Anyone can update road alerts for voting" ON public.road_alerts;
+CREATE POLICY "Anyone can update road alerts for voting" ON public.road_alerts
+FOR UPDATE USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Users can delete their own alerts" ON public.road_alerts;
+CREATE POLICY "Users can delete their own alerts" ON public.road_alerts
+FOR DELETE USING (auth.uid() = user_id);
+
+-- Seed Initial Official EGM EDS points to public.road_alerts safely (Removed for production)
+
+-- =====================================================
+-- MAINTENANCE RECORDS TABLE (User-Tracked Part Changes)
+-- Users log their own part changes with KM and date.
+-- System calculates remaining time/km for next change.
+-- =====================================================
+CREATE TABLE IF NOT EXISTS public.maintenance_records (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  vehicle_id UUID NOT NULL REFERENCES public.vehicles(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  part_name TEXT NOT NULL,                       -- e.g. "Motor Yağı & Filtre", "Fren Balatası (Ön)"
+  changed_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  changed_km INTEGER NOT NULL DEFAULT 0,
+  next_km_interval INTEGER NOT NULL DEFAULT 15000,   -- km until next change
+  next_date_interval_months INTEGER NOT NULL DEFAULT 12, -- months until next change
+  notes TEXT,                                    -- e.g. "Castrol Edge 5W-30 kullanıldı"
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Index for fast vehicle-based queries
+CREATE INDEX IF NOT EXISTS idx_maintenance_records_vehicle_id ON public.maintenance_records(vehicle_id);
+CREATE INDEX IF NOT EXISTS idx_maintenance_records_user_id ON public.maintenance_records(user_id);
+
+-- Enable RLS
+ALTER TABLE public.maintenance_records ENABLE ROW LEVEL SECURITY;
+
+-- Users can view their own maintenance records
+CREATE POLICY "Users can view own maintenance records" ON public.maintenance_records
+  FOR SELECT USING (auth.uid() = user_id);
+
+-- Users can insert their own maintenance records
+CREATE POLICY "Users can insert own maintenance records" ON public.maintenance_records
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+-- Users can update their own maintenance records
+CREATE POLICY "Users can update own maintenance records" ON public.maintenance_records
+  FOR UPDATE USING (auth.uid() = user_id);
+
+-- Users can delete their own maintenance records
+CREATE POLICY "Users can delete own maintenance records" ON public.maintenance_records
+  FOR DELETE USING (auth.uid() = user_id);

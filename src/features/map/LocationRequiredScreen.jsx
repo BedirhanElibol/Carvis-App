@@ -45,7 +45,7 @@ const LocationRequiredScreen = ({ onRetry }) => {
         </h1>
 
         <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-10 text-sm">
-          Rapidsy piyasa fiyatlarını, yakındaki yedek parçacıları ve acil yol
+          Carvis piyasa fiyatlarını, yakındaki yedek parçacıları ve acil yol
           yardım ekiplerini bulmak için gerçek konumunuza ihtiyaç duyar. <br />
           <br />
           <span className="text-slate-700 dark:text-slate-200 font-bold">
@@ -76,7 +76,7 @@ const LocationRequiredScreen = ({ onRetry }) => {
         <div className="mt-12 flex items-center gap-3 opacity-20">
           <div className="w-1.5 h-1.5 bg-primary-500 rounded-full"></div>
           <span className="text-[9px] font-black text-slate-900 dark:text-white uppercase tracking-[0.4em]">
-            Rapidsy Global Privacy
+            Carvis Global Privacy
           </span>
           <div className="w-1.5 h-1.5 bg-primary-500 rounded-full"></div>
         </div>

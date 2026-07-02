@@ -132,3 +132,5 @@ export const CAR_DATA = [
   { brand: "Togg", models: ["T10X"] },
   { brand: "Tesla", models: ["Model Y", "Model 3", "Model S", "Model X"] },
 ];
+
+export const OEM_CATALOG = [];

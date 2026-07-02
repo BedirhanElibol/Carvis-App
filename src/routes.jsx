@@ -14,6 +14,7 @@ const MechanicsScreen = lazy(
 const MapScreen = lazy(() => import("./features/map/MapScreen"));
 const ProfileScreen = lazy(() => import("./features/profile/ProfileScreen"));
 const AIChatScreen = lazy(() => import("./features/ai/AIChatScreen"));
+const CarwashScreen = lazy(() => import("./features/services/CarwashScreen"));
 const OrdersScreen = lazy(() => import("./features/orders/OrdersScreen"));
 const PaymentScreen = lazy(() => import("./features/orders/PaymentScreen"));
 const QuotesScreen = lazy(() => import("./features/quotes/QuotesScreen"));
@@ -154,7 +155,7 @@ export const AppRoutes = () => {
             <>
               <SEO
                 title="Oto Servis & Bakım Asistanı"
-                description="Rapidsy ile en iyi ustaları bulun, bakım takibi yapın."
+                description="Carvis ile en iyi ustaları bulun, bakım takibi yapın."
               />
               <LandingScreen />
             </>
@@ -176,7 +177,7 @@ export const AppRoutes = () => {
             <>
               <SEO
                 title="Gizlilik Politikası"
-                description="Rapidsy veri gizliliği ve KVKK politikası."
+                description="Carvis veri gizliliği ve KVKK politikası."
               />
               <PrivacyPolicyScreen />
             </>
@@ -242,6 +243,14 @@ export const AppRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={["customer", "admin"]}>
               <MechanicsScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/app/carwash"
+          element={
+            <ProtectedRoute allowedRoles={["customer", "admin"]}>
+              <CarwashScreen />
             </ProtectedRoute>
           }
         />

@@ -14,6 +14,7 @@ export const SellerProvider = ({ children }) => {
   const [proTab, setProTab] = useState("dashboard");
   const [sellerProducts, setSellerProducts] = useState([]);
   const [sellerOrders, setSellerOrders] = useState([]);
+  const [sellerAppointments, setSellerAppointments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [addingProduct, setAddingProduct] = useState(false);
 
@@ -21,7 +22,7 @@ export const SellerProvider = ({ children }) => {
     if (!currentUser?.id) return;
     setLoading(true);
     try {
-      const [ordersResult, productsResult] = await Promise.all([
+      const [ordersResult, productsResult, appointmentsResult] = await Promise.all([
         supabase
           .from("orders")
           .select("*")
@@ -32,10 +33,16 @@ export const SellerProvider = ({ children }) => {
           .select("*")
           .eq("seller_id", currentUser.id)
           .order("created_at", { ascending: false }),
+        supabase
+          .from("appointments")
+          .select("*, customer:profiles!appointments_user_id_fkey(full_name, phone_number)")
+          .eq("seller_id", currentUser.id)
+          .order("appointment_date", { ascending: true }),
       ]);
 
       if (!ordersResult.error) setSellerOrders(ordersResult.data || []);
       if (!productsResult.error) setSellerProducts(productsResult.data || []);
+      if (!appointmentsResult.error) setSellerAppointments(appointmentsResult.data || []);
     } catch (error) {
       console.error("Seller data fetch error:", error);
     } finally {
@@ -104,6 +111,25 @@ export const SellerProvider = ({ children }) => {
     }
   };
 
+  const updateProduct = async (productId, updates) => {
+    try {
+      const { data, error } = await supabase
+        .from("products")
+        .update(updates)
+        .eq("id", productId)
+        .select()
+        .single();
+      if (error) throw error;
+      setSellerProducts((prev) => prev.map((p) => (p.id === productId ? data : p)));
+      showAlert("Güncellendi", "Ürün detayları güncellendi.", "success");
+      return true;
+    } catch (err) {
+      console.error("Update product error:", err);
+      showAlert("Hata", "Ürün güncellenirken bir hata oluştu.", "error");
+      return false;
+    }
+  };
+
   const submitQuote = async (serviceRequestId, quoteData) => {
     if (!currentUser) return false;
     try {
@@ -158,18 +184,90 @@ export const SellerProvider = ({ children }) => {
     }
   };
 
+  const uploadInvoice = async (orderId, file, currentQuote) => {
+    if (!currentUser) return false;
+    try {
+      showAlert("Bilgi", "Fatura yükleniyor, lütfen bekleyin...", "info");
+      const extension = file.name.split(".").pop() || "pdf";
+      const filePath = `invoices/${orderId}/${Date.now()}.${extension}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from("service-proofs")
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabase.storage
+        .from("service-proofs")
+        .getPublicUrl(filePath);
+
+      const newQuote = {
+        ...(currentQuote || {}),
+        official_invoice_url: publicUrlData.publicUrl
+      };
+
+      const { error: updateError } = await supabase
+        .from("orders")
+        .update({ quote: newQuote })
+        .eq("id", orderId);
+
+      if (updateError) throw updateError;
+
+      setSellerOrders((prev) =>
+        prev.map((o) => (o.id === orderId ? { ...o, quote: newQuote } : o)),
+      );
+      
+      showAlert("Başarılı", "Resmi fatura sisteme kaydedildi.", "success");
+      return true;
+    } catch (error) {
+      console.error("Upload invoice error:", error);
+      showAlert("Hata", "Fatura yüklenirken bir sorun oluştu.", "error");
+      return false;
+    }
+  };
+
+  const updateOrderTracking = async (orderId, currentQuote, trackingNo) => {
+    try {
+      const newQuote = {
+        ...(currentQuote || {}),
+        tracking_number: trackingNo
+      };
+      
+      const { error } = await supabase
+        .from("orders")
+        .update({ quote: newQuote })
+        .eq("id", orderId);
+
+      if (error) throw error;
+
+      setSellerOrders((prev) =>
+        prev.map((o) => (o.id === orderId ? { ...o, quote: newQuote } : o)),
+      );
+      showAlert("Başarılı", "Kargo takip numarası eklendi.", "success");
+      return true;
+    } catch (error) {
+      console.error("Update tracking error:", error);
+      showAlert("Hata", "Kargo kodu eklenirken sorun oluştu.", "error");
+      return false;
+    }
+  };
+
   const value = {
     proTab,
     setProTab,
     sellerProducts,
     sellerOrders,
+    sellerAppointments,
     loading,
     addingProduct,
     addProduct,
+    updateProduct,
     deleteProduct,
     submitQuote,
     fetchSellerData,
     updateOrderStatus,
+    uploadInvoice,
+    updateOrderTracking,
   };
 
   return (

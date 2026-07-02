@@ -24,8 +24,8 @@ export const SpecialistCard = ({ specialist }) => {
     specialist.name ||
     specialist.shop || t.anonymousShop;
     
-  const rating = specialist.rating_avg || 4.8;
-  const reviewCount = specialist.review_count || Math.floor(Math.random() * 100) + 12;
+  const rating = specialist.rating_avg || 0;
+  const reviewCount = specialist.review_count || 0;
   const isVerified = specialist.is_verified || specialist.verified || true;
 
   return (
@@ -62,7 +62,7 @@ export const SpecialistCard = ({ specialist }) => {
 
       <div className="flex gap-3 relative z-10">
         <button className="flex-1 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-primary-900/20">
-          {t.requestQuote}
+          {specialist.price ? `Hemen Çağır - ${specialist.price}` : t.requestQuote}
         </button>
         <button 
           onClick={(e) => {

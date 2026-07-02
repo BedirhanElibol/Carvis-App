@@ -137,7 +137,7 @@ const PartnerLandingScreen = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
         >
           <RoleCard
             title="Otopark"
@@ -166,6 +166,13 @@ const PartnerLandingScreen = () => {
             icon={Icons.Package}
             color="emerald"
             onClick={() => navigate("/partner-login/parts")}
+          />
+          <RoleCard
+            title="Seyyar Yıkama"
+            desc="Mobil yıkama randevuları, lokasyon bazlı talepler ve hizmet paketleri yönetimi."
+            icon={Icons.Droplet}
+            color="cyan"
+            onClick={() => navigate("/partner-login/carwash")}
           />
         </motion.div>
 

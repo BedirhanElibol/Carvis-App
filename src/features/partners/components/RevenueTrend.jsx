@@ -3,15 +3,15 @@ import * as Icons from "lucide-react";
 import { motion } from "framer-motion";
 
 const RevenueTrend = ({ color = "primary" }) => {
-  // Mock Week Data
+  // Week data will be fetched dynamically
   const data = [
-    { day: "Pzt", value: 45, label: "₺4,500" },
-    { day: "Sal", value: 72, label: "₺7,200" },
-    { day: "Çar", value: 58, label: "₺5,800" },
-    { day: "Per", value: 85, label: "₺8,500" },
-    { day: "Cum", value: 92, label: "₺9,200" },
-    { day: "Cmt", value: 110, label: "₺11,000" },
-    { day: "Paz", value: 65, label: "₺6,500" },
+    { day: "Pzt", value: 0, label: "₺0" },
+    { day: "Sal", value: 0, label: "₺0" },
+    { day: "Çar", value: 0, label: "₺0" },
+    { day: "Per", value: 0, label: "₺0" },
+    { day: "Cum", value: 0, label: "₺0" },
+    { day: "Cmt", value: 0, label: "₺0" },
+    { day: "Paz", value: 0, label: "₺0" },
   ];
 
   const colorConfig = {
@@ -41,9 +41,9 @@ const RevenueTrend = ({ color = "primary" }) => {
               Gelir Analizi
             </span>
             <div className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center gap-1">
-              <Icons.ArrowUpRight size={10} className="text-emerald-500" />
+              <Icons.Minus size={10} className="text-emerald-500" />
               <span className="text-[9px] font-black text-emerald-500">
-                +18%
+                0%
               </span>
             </div>
           </div>
@@ -92,7 +92,7 @@ const RevenueTrend = ({ color = "primary" }) => {
           Tahmini Aylık Büyüme
         </p>
         <p className="text-[10px] font-black text-primary-400 uppercase tracking-widest">
-          ~₺52,400
+          ~₺0
         </p>
       </div>
     </div>

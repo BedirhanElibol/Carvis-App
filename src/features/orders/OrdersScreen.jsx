@@ -8,12 +8,15 @@ import OrderDetailsModal from "./OrderDetailsModal";
 import EmptyState from "../../components/shared/EmptyState";
 import { SkeletonList } from "../../components/ui/SkeletonCard";
 import { triggerHaptic } from "../../utils/haptics";
+import ReviewModal from "../../components/reviews/ReviewModal";
+import LiveOrderStatus from "./LiveOrderStatus";
 
 const OrdersScreen = () => {
   const navigate = useNavigate();
   const { orders, loading, fetchOrders } = useOrder();
   const { showAlert } = useUI();
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [reviewOrder, setReviewOrder] = useState(null);
 
   const getStatusConfig = (status) => {
     switch (status) {
@@ -91,6 +94,12 @@ const OrdersScreen = () => {
         order={selectedOrder}
         onClose={() => setSelectedOrder(null)}
       />
+      <ReviewModal 
+        isOpen={!!reviewOrder}
+        order={reviewOrder}
+        onClose={() => setReviewOrder(null)}
+        onSuccess={() => fetchOrders()}
+      />
 
       {/* Header */}
       <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
@@ -130,6 +139,13 @@ const OrdersScreen = () => {
 
       {/* Content */}
       <div className="p-5 space-y-4">
+        {/* Render LiveOrderStatus for active orders */}
+        {!loading && orders.filter(o => o.status !== 'completed' && o.status !== 'cancelled').map(activeOrder => (
+            <div key={`live-${activeOrder.id}`} className="mb-6">
+                <LiveOrderStatus order={activeOrder} />
+            </div>
+        ))}
+
         {loading ? (
           <SkeletonList count={3} />
         ) : orders.length === 0 ? (
@@ -203,8 +219,19 @@ const OrdersScreen = () => {
                           Hizmeti Onayla
                         </button>
                       ) : order.status === "completed" ? (
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20 uppercase tracking-wider font-sans">
-                          <Icons.ShieldCheck size={12} /> İşlem Tamamlandıı
+                        <div className="flex flex-col gap-2">
+                            <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20 uppercase tracking-wider font-sans">
+                              <Icons.ShieldCheck size={12} /> İşlem Tamamlandı
+                            </div>
+                            {!order.rating && (
+                                <button 
+                                    onClick={(e) => { e.stopPropagation(); setReviewOrder(order); }}
+                                    className="flex items-center gap-1 px-3 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-yellow-950 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-yellow-500/20 active-scale border border-yellow-500/20"
+                                >
+                                    <Icons.Star size={12} />
+                                    Değerlendir
+                                </button>
+                            )}
                         </div>
                       ) : (
                         <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-sans">

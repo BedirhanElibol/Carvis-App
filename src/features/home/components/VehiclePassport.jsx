@@ -1,52 +1,166 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../../context/UIContext";
+import { useAuth } from "../../../context/AuthContext";
+import { supabase } from "../../../supabaseClient";
 
 const VehiclePassport = ({ vehicle, onClose }) => {
-  const { t } = useUI();
-  const [activeTab, setActiveTab] = useState("overview"); // overview, timeline, documents, analytics
+  const { t, showAlert } = useUI();
+  const { currentUser } = useAuth();
+  const [activeTab, setActiveTab] = useState("overview");
   const [copied, setCopied] = useState(false);
+
+  // Maintenance tracker state
+  const [maintenanceRecords, setMaintenanceRecords] = useState([]);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newRecord, setNewRecord] = useState({
+    part_name: "",
+    changed_date: new Date().toISOString().split("T")[0],
+    changed_km: vehicle?.km || 0,
+    next_km_interval: 15000,
+    next_date_interval_months: 12,
+    notes: ""
+  });
+
+  // Default maintenance items users can track
+  const maintenancePresets = [
+    { name: "Motor Yağı & Filtre", icon: Icons.Droplets, interval_km: 10000, interval_months: 12, color: "text-amber-500" },
+    { name: "Fren Balatası (Ön)", icon: Icons.ShieldAlert, interval_km: 40000, interval_months: 36, color: "text-rose-500" },
+    { name: "Fren Balatası (Arka)", icon: Icons.ShieldAlert, interval_km: 50000, interval_months: 48, color: "text-rose-400" },
+    { name: "Hava Filtresi", icon: Icons.Wind, interval_km: 20000, interval_months: 24, color: "text-blue-500" },
+    { name: "Polen Filtresi", icon: Icons.Flower2, interval_km: 15000, interval_months: 12, color: "text-emerald-500" },
+    { name: "Lastik Değişimi", icon: Icons.Disc, interval_km: 40000, interval_months: 48, color: "text-slate-500" },
+    { name: "Akü", icon: Icons.Zap, interval_km: 80000, interval_months: 48, color: "text-cyan-500" },
+    { name: "Triger Kayışı/Zinciri", icon: Icons.RotateCw, interval_km: 90000, interval_months: 72, color: "text-orange-500" },
+    { name: "Antifriz", icon: Icons.Thermometer, interval_km: 40000, interval_months: 24, color: "text-sky-500" },
+    { name: "Buji", icon: Icons.Sparkles, interval_km: 30000, interval_months: 36, color: "text-yellow-500" }
+  ];
+
+  // Load saved records from Supabase
+  useEffect(() => {
+    if (!vehicle?.id || !currentUser) return;
+    const fetchRecords = async () => {
+      const { data, error } = await supabase
+        .from("maintenance_records")
+        .select("*")
+        .eq("vehicle_id", vehicle.id)
+        .order("changed_date", { ascending: false });
+      if (!error && data) {
+        setMaintenanceRecords(data);
+      }
+    };
+    fetchRecords();
+  }, [vehicle?.id, currentUser]);
 
   if (!vehicle) return null;
 
   const handleCopyChassis = () => {
-    navigator.clipboard.writeText(vehicle.chassis_no || "WBA3A5C5XFK000000");
+    navigator.clipboard.writeText(vehicle.chassis_no || vehicle.chassis_number || "");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Mock data for high fidelity presentation
-  const mockServiceHistory = [
-    { date: "12.04.2026", type: "Periyodik Bakım", partner: "Ayan Oto Servis", price: "4,250 ₺", mileage: "84,200 km", icon: Icons.Wrench },
-    { date: "05.12.2025", type: "Fren Disk & Balata Değişimi", partner: "Güven Fren", price: "2,800 ₺", mileage: "78,900 km", icon: Icons.ShieldAlert },
-    { date: "18.08.2025", type: "Akü Değişimi (Varta 72Ah)", partner: "Elektrikçi Hasan", price: "1,950 ₺", mileage: "72,100 km", icon: Icons.Zap },
-    { date: "22.04.2025", type: "Mevsimlik Lastik Rotasyonu", partner: "Michelin Bayi", price: "600 ₺", mileage: "67,400 km", icon: Icons.Compass }
-  ];
+  const handleAddRecord = async (e) => {
+    e.preventDefault();
+    if (!newRecord.part_name.trim()) return;
 
-  const mockDocuments = [
-    { name: "TÜVTÜRK Muayene Raporu.pdf", date: "15.04.2026", size: "1.2 MB", category: "Muayene" },
-    { name: "Kasko Sigorta Poliçesi - Allianz.pdf", date: "10.01.2026", size: "2.4 MB", category: "Sigorta" },
-    { name: "Periyodik Bakım Faturası.pdf", date: "12.04.2026", size: "850 KB", category: "Fatura" }
-  ];
+    if (!currentUser) {
+      showAlert("Giriş Gerekli", "Bakım kaydı eklemek için giriş yapmalısınız.", "warning");
+      return;
+    }
 
-  const mockAnalytics = {
-    oilLife: 74, // %
-    brakeLife: 40, // %
-    tireWear: 82, // %
-    batteryHealth: 92 // %
+    const payload = {
+      vehicle_id: vehicle.id,
+      user_id: currentUser.id,
+      part_name: newRecord.part_name,
+      changed_date: newRecord.changed_date,
+      changed_km: parseInt(newRecord.changed_km) || 0,
+      next_km_interval: parseInt(newRecord.next_km_interval) || 15000,
+      next_date_interval_months: parseInt(newRecord.next_date_interval_months) || 12,
+      notes: newRecord.notes
+    };
+
+    const { data, error } = await supabase
+      .from("maintenance_records")
+      .insert([payload])
+      .select();
+
+    if (error) {
+      console.error("Maintenance record insert error:", error);
+      // Fallback: add locally
+      const localRecord = { ...payload, id: `local-${Date.now()}`, created_at: new Date().toISOString() };
+      setMaintenanceRecords(prev => [localRecord, ...prev]);
+      showAlert("Kayıt Eklendi", "Bakım kaydınız yerel olarak eklendi.", "success");
+    } else if (data && data[0]) {
+      setMaintenanceRecords(prev => [data[0], ...prev]);
+      showAlert("Kayıt Eklendi", `${newRecord.part_name} bakım kaydı başarıyla eklendi.`, "success");
+    }
+
+    setNewRecord({
+      part_name: "",
+      changed_date: new Date().toISOString().split("T")[0],
+      changed_km: vehicle?.km || 0,
+      next_km_interval: 15000,
+      next_date_interval_months: 12,
+      notes: ""
+    });
+    setShowAddForm(false);
+  };
+
+  const handleDeleteRecord = async (recordId) => {
+    if (typeof recordId === "string" && recordId.startsWith("local-")) {
+      setMaintenanceRecords(prev => prev.filter(r => r.id !== recordId));
+      return;
+    }
+    const { error } = await supabase.from("maintenance_records").delete().eq("id", recordId);
+    if (!error) {
+      setMaintenanceRecords(prev => prev.filter(r => r.id !== recordId));
+    }
+  };
+
+  // Calculate remaining km / date for a maintenance record
+  const getMaintenanceStatus = (record) => {
+    const currentKm = vehicle.km || 0;
+    const kmSinceChange = currentKm - (record.changed_km || 0);
+    const nextKm = record.next_km_interval || 15000;
+    const kmRemaining = nextKm - kmSinceChange;
+
+    const changedDate = new Date(record.changed_date);
+    const nextDateMs = changedDate.getTime() + (record.next_date_interval_months || 12) * 30.44 * 24 * 60 * 60 * 1000;
+    const daysRemaining = Math.ceil((nextDateMs - Date.now()) / (24 * 60 * 60 * 1000));
+
+    let status = "ok"; // ok, warning, overdue
+    if (kmRemaining <= 0 || daysRemaining <= 0) status = "overdue";
+    else if (kmRemaining < 2000 || daysRemaining < 30) status = "warning";
+
+    return { kmSinceChange, kmRemaining, daysRemaining, status };
+  };
+
+  const mockServiceHistory = [];
+
+  const mockDocuments = [];
+
+  const handlePresetSelect = (preset) => {
+    setNewRecord(prev => ({
+      ...prev,
+      part_name: preset.name,
+      next_km_interval: preset.interval_km,
+      next_date_interval_months: preset.interval_months
+    }));
+    setShowAddForm(true);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
       <div className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
         {/* Top Header Background Pattern */}
-        <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-indigo-500/10 via-slate-900/0 to-slate-900 pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-teal-500/10 via-slate-900/0 to-slate-900 pointer-events-none" />
 
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 text-slate-900 dark:text-white flex items-center justify-center border border-black/5 dark:border-white/5 active-scale transition-all"
+          className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 text-slate-900 dark:text-white flex items-center justify-center border border-black/5 dark:border-white/5 active-scale transition-all cursor-pointer"
         >
           <Icons.X size={20} />
         </button>
@@ -54,12 +168,12 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         {/* Header Section */}
         <div className="p-8 pb-4 relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
-            <div className="p-4 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+            <div className="p-4 rounded-3xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
               <Icons.FileText size={32} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">
                   Carvis Araç Pasaportu
                 </span>
                 <span className="text-[10px] font-black uppercase tracking-[0.25em] text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
@@ -73,15 +187,19 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 <span className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-2 py-0.5 rounded text-[10px] border border-slate-300 dark:border-slate-700 font-mono font-black uppercase">
                   {vehicle.plate || "34 CVS 202"}
                 </span>
-                • Şase: 
-                <span className="font-mono text-slate-600 dark:text-slate-300 font-bold">{vehicle.chassis_no || "WBA3A5C5XFK000000"}</span>
-                <button 
-                  onClick={handleCopyChassis}
-                  className="p-1 hover:bg-white dark:bg-white/5 shadow-sm rounded text-indigo-400 hover:text-slate-900 dark:text-white transition-all active-scale"
-                  title={t.copy}
-                >
-                  {copied ? <Icons.Check size={14} className="text-emerald-400" /> : <Icons.Copy size={14} />}
-                </button>
+                {(vehicle.chassis_no || vehicle.chassis_number) && (
+                  <>
+                    • Şase: 
+                    <span className="font-mono text-slate-600 dark:text-slate-300 font-bold">{vehicle.chassis_no || vehicle.chassis_number}</span>
+                    <button 
+                      onClick={handleCopyChassis}
+                      className="p-1 hover:bg-white dark:bg-white/5 shadow-sm rounded text-teal-400 hover:text-slate-900 dark:text-white transition-all active-scale cursor-pointer border-none bg-transparent"
+                      title={t.copy}
+                    >
+                      {copied ? <Icons.Check size={14} className="text-emerald-400" /> : <Icons.Copy size={14} />}
+                    </button>
+                  </>
+                )}
               </p>
             </div>
           </div>
@@ -90,10 +208,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         {/* Tab Selector */}
         <div className="px-8 border-b border-black/5 dark:border-white/5 flex gap-2 overflow-x-auto relative z-10 scrollbar-none">
           {[
-            { id: "overview", label: t.generalStatus, icon: Icons.Compass },
-            { id: "timeline", label: t.memoryTimeline, icon: Icons.History },
-            { id: "documents", label: t.documentVault, icon: Icons.FileLock2 },
-            { id: "analytics", label: t.aiDiagForesight, icon: Icons.Brain }
+            { id: "overview", label: t.generalStatus || "Genel Durum", icon: Icons.Compass },
+            { id: "timeline", label: t.memoryTimeline || "Hafıza Zaman Çizelgesi", icon: Icons.History },
+            { id: "documents", label: t.documentVault || "Belge Kasası", icon: Icons.FileLock2 },
+            { id: "maintenance", label: "Bakım Takibi", icon: Icons.Wrench }
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -101,9 +219,9 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`py-4 px-4 text-xs font-black uppercase tracking-widest border-b-2 flex items-center gap-2 transition-all ${
+                className={`py-4 px-4 text-xs font-black uppercase tracking-widest border-b-2 flex items-center gap-2 transition-all bg-transparent cursor-pointer ${
                   isActive 
-                    ? "border-indigo-500 text-slate-900 dark:text-white" 
+                    ? "border-teal-500 text-slate-900 dark:text-white" 
                     : "border-transparent text-slate-500 hover:text-slate-600 dark:text-slate-300"
                 }`}
               >
@@ -125,32 +243,20 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 exit={{ opacity: 0, y: -10 }}
                 className="grid grid-cols-1 md:grid-cols-3 gap-6"
               >
-                {/* Health Overview Ring */}
+                {/* Vehicle Summary Card (replaces fake health score ring) */}
                 <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20 flex flex-col items-center justify-center text-center">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6">{t.generalHealthScore}</h4>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6">Araç Özeti</h4>
                   <div className="relative w-36 h-36 flex items-center justify-center">
-                    <svg className="absolute w-full h-full -rotate-90">
-                      <circle cx="72" cy="72" r="62" stroke="rgba(255,255,255,0.05)" strokeWidth="12" fill="transparent" />
-                      <circle 
-                        cx="72" 
-                        cy="72" 
-                        r="62" 
-                        stroke="rgb(99, 102, 241)" 
-                        strokeWidth="12" 
-                        fill="transparent" 
-                        strokeDasharray={2 * Math.PI * 62}
-                        strokeDashoffset={(2 * Math.PI * 62) * (1 - 0.96)}
-                        strokeLinecap="round"
-                        className="transition-all duration-1000 ease-out"
-                      />
-                    </svg>
-                    <div className="text-center z-10">
-                      <span className="text-3xl font-black text-slate-900 dark:text-white">%96</span>
-                      <p className="text-[9px] font-black text-emerald-400 uppercase tracking-widest mt-1">{t.perfect}</p>
+                    <div className="w-28 h-28 rounded-full bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-500/30 flex items-center justify-center">
+                      <Icons.Car size={40} className="text-teal-400" />
                     </div>
                   </div>
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed mt-6">
-                    Mekanik, elektrik ve yasal tüm bakımlarınız Carvis standartlarına uygundur.
+                  <div className="mt-4 space-y-1">
+                    <p className="text-lg font-black text-slate-900 dark:text-white">{vehicle.km?.toLocaleString() || "—"} km</p>
+                    <p className="text-[9px] font-black text-teal-400 uppercase tracking-widest">Güncel Kilometre</p>
+                  </div>
+                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed mt-4">
+                    Bakım takibinizi "Bakım Takibi" sekmesinden güncelleyebilirsiniz.
                   </p>
                 </div>
 
@@ -159,17 +265,17 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   {/* Detailed Specs Grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {[
-                      { label: t.mileage, val: `${vehicle.mileage || "84.200"} km`, icon: Icons.Gauge },
-                      { label: t.lastMaintenance, val: "12.04.2026", icon: Icons.Wrench },
-                      { label: t.inspectionDate, val: "15.06.2027", icon: Icons.CalendarCheck },
-                      { label: t.insuranceStatus, val: t.active, icon: Icons.ShieldCheck },
-                      { label: t.spareKey, val: t.available, icon: Icons.Key },
-                      { label: t.enginePower, val: "190 HP", icon: Icons.Workflow }
+                      { label: t.mileage || "Kilometre", val: `${vehicle.km?.toLocaleString() || "—"} km`, icon: Icons.Gauge },
+                      { label: t.lastMaintenance || "Son Bakım", val: vehicle.last_oil_change ? new Date(vehicle.last_oil_change).toLocaleDateString("tr-TR") : "Belirtilmedi", icon: Icons.Wrench },
+                      { label: "Model Yılı", val: vehicle.year || "—", icon: Icons.CalendarCheck },
+                      { label: "Motor Kodu", val: vehicle.engine_code || "—", icon: Icons.Workflow },
+                      { label: t.spareKey || "Yedek Anahtar", val: t.available || "Mevcut", icon: Icons.Key },
+                      { label: "Plaka", val: vehicle.plate || "—", icon: Icons.CreditCard }
                     ].map((spec, i) => {
                       const SpecIcon = spec.icon;
                       return (
                         <div key={i} className="p-5 rounded-2xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 flex flex-col justify-between">
-                          <SpecIcon className="text-indigo-400 mb-4" size={20} />
+                          <SpecIcon className="text-teal-400 mb-4" size={20} />
                           <div>
                             <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider block">{spec.label}</span>
                             <span className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1 block">{spec.val}</span>
@@ -179,13 +285,13 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                     })}
                   </div>
 
-                  {/* Smart Advice Panel */}
-                  <div className="p-6 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 flex gap-4">
-                    <Icons.Lightbulb className="text-indigo-400 flex-shrink-0" size={24} />
+                  {/* Info Panel */}
+                  <div className="p-6 rounded-3xl bg-teal-500/10 border border-teal-500/20 flex gap-4">
+                    <Icons.Lightbulb className="text-teal-400 flex-shrink-0" size={24} />
                     <div>
-                      <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">{t.carvisDigitalAdvice}</h4>
+                      <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Bakım Hatırlatması</h4>
                       <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Aracınızın kasko bitiş tarihi yaklaşmaktadır. Kasko & Trafik Sigortası sekmesinden Carvis özel partner tekliflerini şimdiden %30 indirimle alabilirsiniz.
+                        Bakım Takibi sekmesinde parça değişim tarihlerinizi ve km bilgilerinizi kaydedin. Carvis sizi zamanı geldiğinde uyaracaktır.
                       </p>
                     </div>
                   </div>
@@ -202,38 +308,37 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 className="space-y-6"
               >
                 <div className="flex items-center justify-between">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.chronologicalArchive}</h4>
-                  <span className="text-xs font-bold text-indigo-400 flex items-center gap-1">
-                    <Icons.Lock size={12} /> Blokzincir Tabanlı Korumalı Veritabanı
-                  </span>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.chronologicalArchive || "Kronolojik Arşiv"}</h4>
                 </div>
 
                 <div className="relative pl-8 border-l-2 border-slate-200 dark:border-slate-800 space-y-8 py-2">
-                  {mockServiceHistory.map((item, index) => {
-                    const EventIcon = item.icon;
-                    return (
-                      <div key={index} className="relative group">
-                        {/* Bullet Circle */}
-                        <div className="absolute -left-[41px] top-1 w-6 h-6 rounded-full bg-white dark:bg-slate-900 border-2 border-indigo-500 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-all shadow-lg">
-                          <EventIcon size={12} />
-                        </div>
-                        {/* Event Card */}
-                        <div className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-indigo-500/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                          <div>
-                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">{item.date}</span>
-                            <h4 className="text-base font-black text-slate-900 dark:text-white mt-1 uppercase tracking-tight">{item.type}</h4>
-                            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">{item.partner} • {item.mileage}</p>
+                  {mockServiceHistory.length > 0 ? (
+                    mockServiceHistory.map((item, index) => {
+                      const EventIcon = item.icon;
+                      return (
+                        <div key={index} className="relative group">
+                          <div className="absolute -left-[41px] top-1 w-6 h-6 rounded-full bg-white dark:bg-slate-900 border-2 border-teal-500 flex items-center justify-center text-teal-400 group-hover:scale-110 transition-all shadow-lg">
+                            <EventIcon size={12} />
                           </div>
-                          <div className="flex items-center gap-4">
-                            <span className="text-base font-black text-slate-900 dark:text-white">{item.price}</span>
-                            <button className="px-4 py-2 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 rounded-xl text-xs font-black uppercase tracking-wider transition-all">
-                              Faturayı Gör
-                            </button>
+                          <div className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">{item.date}</span>
+                              <h4 className="text-base font-black text-slate-900 dark:text-white mt-1 uppercase tracking-tight">{item.type}</h4>
+                              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">{item.partner} • {item.mileage}</p>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <span className="text-base font-black text-slate-900 dark:text-white">{item.price}</span>
+                              <button className="px-4 py-2 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 rounded-xl text-xs font-black uppercase tracking-wider transition-all border border-black/5 dark:border-white/5 cursor-pointer">
+                                Faturayı Gör
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })
+                  ) : (
+                    <div className="text-center py-8 text-slate-500 text-xs font-bold uppercase tracking-widest">Henüz servis geçmişi yok.</div>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -247,92 +352,218 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 className="space-y-6"
               >
                 <div className="flex items-center justify-between">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.myDigitalDocs}</h4>
-                  <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(99,102,241,0.2)] flex items-center gap-2">
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.myDigitalDocs || "Dijital Belgelerim"}</h4>
+                  <button className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.2)] flex items-center gap-2 border-none cursor-pointer">
                     <Icons.Plus size={14} /> Yeni Belge Yükle
                   </button>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {mockDocuments.map((doc, i) => (
-                    <div key={i} className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-indigo-500/20 transition-all flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-4">
-                        <div className="p-3 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
-                          <Icons.File size={20} />
+                  {mockDocuments.length > 0 ? (
+                    mockDocuments.map((doc, i) => (
+                      <div key={i} className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/20 transition-all flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                          <div className="p-3 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
+                            <Icons.File size={20} />
+                          </div>
+                          <div>
+                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">{doc.category}</span>
+                            <h4 className="text-sm font-black text-slate-900 dark:text-white mt-0.5 uppercase tracking-tight">{doc.name}</h4>
+                            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mt-0.5">{doc.date} • {doc.size}</p>
+                          </div>
                         </div>
-                        <div>
-                          <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">{doc.category}</span>
-                          <h4 className="text-sm font-black text-slate-900 dark:text-white mt-0.5 uppercase tracking-tight">{doc.name}</h4>
-                          <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mt-0.5">{doc.date} • {doc.size}</p>
+                        <div className="flex gap-2">
+                          <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale border border-black/5 dark:border-white/5 cursor-pointer">
+                            <Icons.Download size={16} />
+                          </button>
+                          <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale border border-black/5 dark:border-white/5 cursor-pointer">
+                            <Icons.Eye size={16} />
+                          </button>
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale">
-                          <Icons.Download size={16} />
-                        </button>
-                        <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale">
-                          <Icons.Eye size={16} />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <div className="col-span-full text-center py-8 text-slate-500 text-xs font-bold uppercase tracking-widest">Henüz belge yok.</div>
+                  )}
                 </div>
               </motion.div>
             )}
 
-            {activeTab === "analytics" && (
+            {activeTab === "maintenance" && (
               <motion.div
-                key="analytics"
+                key="maintenance"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 className="space-y-6"
               >
-                <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.aiPredictiveWear}</h4>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Progress Items */}
-                  <div className="space-y-5 bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 rounded-3xl p-6">
-                    {[
-                      { name: t.remOilLife, val: mockAnalytics.oilLife, color: "bg-indigo-500" },
-                      { name: t.remBrakePad, val: mockAnalytics.brakeLife, color: "bg-orange-500" },
-                      { name: t.tireWearStatus, val: mockAnalytics.tireWear, color: "bg-emerald-500" },
-                      { name: t.batteryHealthStatus, val: mockAnalytics.batteryHealth, color: "bg-cyan-500" }
-                    ].map((item, idx) => (
-                      <div key={idx} className="space-y-2">
-                        <div className="flex justify-between text-xs font-black uppercase tracking-tight">
-                          <span className="text-slate-500 dark:text-slate-400">{item.name}</span>
-                          <span className="text-slate-900 dark:text-white">%{item.val}</span>
-                        </div>
-                        <div className="w-full h-2 rounded-full bg-white dark:bg-white/5 shadow-sm overflow-hidden">
-                          <div className={`h-full ${item.color} rounded-full`} style={{ width: `${item.val}%` }} />
-                        </div>
-                      </div>
-                    ))}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">Bakım Takip Kayıtları</h4>
+                    <p className="text-[9px] text-slate-500 mt-1">Parça değişikliklerinizi kaydedin, Carvis size zamanını hatırlatsın.</p>
                   </div>
+                  <button 
+                    onClick={() => setShowAddForm(!showAddForm)}
+                    className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.2)] flex items-center gap-2 border-none cursor-pointer"
+                  >
+                    <Icons.Plus size={14} /> Bakım Kaydı Ekle
+                  </button>
+                </div>
 
-                  {/* Diagnostic warnings */}
+                {/* Quick preset selection */}
+                {showAddForm && (
                   <div className="space-y-4">
-                    <div className="p-6 rounded-3xl bg-orange-500/10 border border-orange-500/20 flex gap-4">
-                      <Icons.AlertTriangle className="text-orange-400 flex-shrink-0" size={24} />
-                      <div>
-                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">{t.wearAlarmBrake}</h4>
-                        <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
-                          Fren balatası kalan ömrü %40'a inmiştir. Güvenliğiniz için sonraki 2.500 km içinde yetkili bir Carvis partneri ile fren disk & balata kontrolü randevusu planlamanızı öneririz.
-                        </p>
-                      </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                      {maintenancePresets.map((preset, idx) => {
+                        const PresetIcon = preset.icon;
+                        const isSelected = newRecord.part_name === preset.name;
+                        return (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => handlePresetSelect(preset)}
+                            className={`flex flex-col items-center p-3 rounded-2xl border transition-all cursor-pointer text-center ${
+                              isSelected
+                                ? "bg-teal-500/10 border-teal-500/30"
+                                : "bg-white dark:bg-white/5 border-black/5 dark:border-white/5 hover:border-teal-500/20"
+                            }`}
+                          >
+                            <PresetIcon size={18} className={preset.color + " mb-1"} />
+                            <span className="text-[8px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 leading-tight">{preset.name}</span>
+                          </button>
+                        );
+                      })}
                     </div>
 
-                    <div className="p-6 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex gap-4">
-                      <Icons.Sparkles className="text-emerald-400 flex-shrink-0" size={24} />
-                      <div>
-                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">{t.perfectBatteryLevel}</h4>
-                        <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
-                          Akünüzün marş akımı (SoH) %92 düzeyindedir. Kış aylarında herhangi bir sorun çıkarmayacağı AI algoritmalarımızla doğrulanmıştır.
-                        </p>
+                    {/* Add form */}
+                    <form onSubmit={handleAddRecord} className="bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-3xl p-6 space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Parça / İşlem</label>
+                          <input
+                            type="text"
+                            value={newRecord.part_name}
+                            onChange={(e) => setNewRecord(prev => ({ ...prev, part_name: e.target.value }))}
+                            placeholder="Örn: Motor Yağı & Filtre"
+                            required
+                            className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Değişim Tarihi</label>
+                          <input
+                            type="date"
+                            value={newRecord.changed_date}
+                            onChange={(e) => setNewRecord(prev => ({ ...prev, changed_date: e.target.value }))}
+                            className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Değişim KM</label>
+                          <input
+                            type="number"
+                            value={newRecord.changed_km}
+                            onChange={(e) => setNewRecord(prev => ({ ...prev, changed_km: e.target.value }))}
+                            className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Sonraki Değişim Aralığı (KM)</label>
+                          <input
+                            type="number"
+                            value={newRecord.next_km_interval}
+                            onChange={(e) => setNewRecord(prev => ({ ...prev, next_km_interval: e.target.value }))}
+                            className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
+                          />
+                        </div>
                       </div>
-                    </div>
+                      <div>
+                        <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Not (Opsiyonel)</label>
+                        <input
+                          type="text"
+                          value={newRecord.notes}
+                          onChange={(e) => setNewRecord(prev => ({ ...prev, notes: e.target.value }))}
+                          placeholder="Örn: Castrol Edge 5W-30 kullanıldı"
+                          className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
+                        />
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setShowAddForm(false)}
+                          className="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 dark:hover:text-white bg-transparent border border-black/10 dark:border-white/10 rounded-xl cursor-pointer transition-all"
+                        >
+                          İptal
+                        </button>
+                        <button
+                          type="submit"
+                          className="px-5 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl border-none cursor-pointer transition-all flex items-center gap-1.5"
+                        >
+                          <Icons.Save size={12} /> Kaydet
+                        </button>
+                      </div>
+                    </form>
                   </div>
+                )}
+
+                {/* Records list */}
+                <div className="space-y-3">
+                  {maintenanceRecords.length === 0 && !showAddForm && (
+                    <div className="text-center py-12">
+                      <Icons.Wrench size={40} className="mx-auto text-slate-600 dark:text-slate-500 mb-4" />
+                      <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase mb-2">Henüz Bakım Kaydınız Yok</h4>
+                      <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                        "Bakım Kaydı Ekle" butonuna basarak parça değişikliklerinizi kaydedin. Carvis size sonraki değişim zamanını hatırlatsın.
+                      </p>
+                    </div>
+                  )}
+
+                  {maintenanceRecords.map((record) => {
+                    const s = getMaintenanceStatus(record);
+                    const preset = maintenancePresets.find(p => p.name === record.part_name);
+                    const RecordIcon = preset?.icon || Icons.Wrench;
+                    const iconColor = preset?.color || "text-slate-500";
+                    
+                    return (
+                      <div key={record.id} className="p-5 rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 flex items-center justify-between gap-4 group hover:border-teal-500/20 transition-all">
+                        <div className="flex items-center gap-4">
+                          <div className={`p-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5`}>
+                            <RecordIcon size={20} className={iconColor} />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">{record.part_name}</h4>
+                            <p className="text-[10px] text-slate-500 font-bold mt-0.5">
+                              Değişim: {new Date(record.changed_date).toLocaleDateString("tr-TR")} • {(record.changed_km || 0).toLocaleString()} km'de
+                            </p>
+                            {record.notes && (
+                              <p className="text-[9px] text-slate-400 mt-0.5 italic">{record.notes}</p>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center gap-3">
+                          <div className="text-right">
+                            <span className={`text-[10px] font-black uppercase tracking-wider ${
+                              s.status === "overdue" ? "text-red-500" : s.status === "warning" ? "text-amber-500" : "text-emerald-500"
+                            }`}>
+                              {s.status === "overdue" ? "SÜRESİ GEÇTİ" : s.status === "warning" ? "YAKINLAŞIYOR" : "SORUNSUZ"}
+                            </span>
+                            <p className="text-[9px] text-slate-500 font-bold mt-0.5">
+                              {s.kmRemaining > 0 ? `${s.kmRemaining.toLocaleString()} km kaldı` : `${Math.abs(s.kmRemaining).toLocaleString()} km geçti`}
+                              {" • "}
+                              {s.daysRemaining > 0 ? `${s.daysRemaining} gün kaldı` : `${Math.abs(s.daysRemaining)} gün geçti`}
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => handleDeleteRecord(record.id)}
+                            className="w-8 h-8 rounded-xl bg-transparent hover:bg-red-500/10 text-slate-400 hover:text-red-500 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 border-none cursor-pointer"
+                          >
+                            <Icons.Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </motion.div>
             )}

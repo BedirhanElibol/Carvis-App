@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import * as Icons from "lucide-react";
 import { useSeller } from "../../../context/SellerContext";
+import ProductCatalogModal from "./ProductCatalogModal";
+import SellerProductEditModal from "./SellerProductEditModal";
 
 const SellerProducts = () => {
   const { sellerProducts, addProduct, deleteProduct, addingProduct } = useSeller();
   const [showModal, setShowModal] = useState(false);
+  const [showCatalog, setShowCatalog] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
   const [newProduct, setNewProduct] = useState({
     name: "",
     brand: "",
@@ -43,6 +47,19 @@ const SellerProducts = () => {
     }
   };
 
+  const handleCatalogSelect = (product) => {
+    setNewProduct({
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      stock: 10, // default
+      category: product.category,
+      description: product.description,
+      image_url: product.image_url
+    });
+    setShowModal(true);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -54,12 +71,20 @@ const SellerProducts = () => {
             Satıştaki ürünlerinizi yönetin
           </p>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white px-5 py-3 rounded-xl font-bold text-sm shadow-xl active-scale flex items-center gap-2"
-        >
-          <Icons.Plus size={18} /> YENİ İLAN EKLE
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setShowCatalog(true)}
+            className="bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-slate-900 dark:text-white px-5 py-3 rounded-xl font-bold text-sm border border-black/10 dark:border-white/10 active-scale flex items-center gap-2 transition-colors"
+          >
+            <Icons.BookOpen size={18} className="text-primary-500" /> KATALOGDAN SEÇ
+          </button>
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white px-5 py-3 rounded-xl font-bold text-sm shadow-xl active-scale flex items-center gap-2"
+          >
+            <Icons.Plus size={18} /> YENİ İLAN
+          </button>
+        </div>
       </div>
 
       {/* Stats */}
@@ -147,7 +172,10 @@ const SellerProducts = () => {
               <p className="font-black text-lg text-slate-900 dark:text-white">{product.price} ₺</p>
             </div>
             <div className="flex items-center gap-2 mt-4 pt-4 border-t border-black/5 dark:border-white/5">
-              <button className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2">
+              <button 
+                onClick={() => setEditingProduct(product)}
+                className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2"
+              >
                 <Icons.Edit2 size={14} /> DÜZENLE
               </button>
               <button
@@ -292,6 +320,18 @@ const SellerProducts = () => {
           </div>
         </div>
       )}
+
+      <ProductCatalogModal 
+        isOpen={showCatalog} 
+        onClose={() => setShowCatalog(false)} 
+        onSelect={handleCatalogSelect} 
+      />
+
+      <SellerProductEditModal 
+        isOpen={!!editingProduct} 
+        onClose={() => setEditingProduct(null)} 
+        product={editingProduct} 
+      />
     </div>
   );
 };

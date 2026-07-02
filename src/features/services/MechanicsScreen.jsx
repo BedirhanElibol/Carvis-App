@@ -246,7 +246,7 @@ const MechanicsScreen = () => {
             <EmptyState
               icon={Icons.Wrench}
               title="Servis Bulunamadı"
-              subtitle="Bölgenizde henüz Rapidsy onaylı servis bulunmuyor. İhale sistemini kullanarak teklif toplayabilirsiniz."
+              subtitle="Bölgenizde henüz Carvis onaylı servis bulunmuyor. İhale sistemini kullanarak teklif toplayabilirsiniz."
               actionLabel="İhale Sistemini Aç"
               onAction={() => navigate("/app/tender")}
             />

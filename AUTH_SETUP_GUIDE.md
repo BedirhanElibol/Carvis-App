@@ -35,5 +35,15 @@ Sistem artık **gerçek doğrulama** modundadır.
 - Kullanıcı e-postasındaki linke tıklayana kadar platformda hassas işlemler (bakiye yükleme, sipariş verme) yapamaz.
 - Bu ayarı değiştirmek istersen: Supabase Dashboard -> Auth -> Providers -> Email -> **Confirm email** seçeneğini kontrol et.
 
+## 🔗 Adım 5: Yönlendirme (Redirect) URL Ayarları
+
+Eğer sosyal girişten (Google/Apple) sonra tarayıcınız `localhost:3000` veya benzeri çalışmayan bir adrese yönleniyor ve `ERR_CONNECTION_REFUSED` hatası alıyorsanız, Supabase dashboardunda izin verilen yönlendirme adresleri eksiktir:
+
+1. [Supabase Dashboard -> URL Configuration](https://supabase.com/dashboard/project/gieclpczrozblvauxjhf/auth/url-configuration) sayfasına gidin.
+2. **Redirect URLs** alanına şu adresleri ekleyin:
+   - `http://localhost:5173/**`
+   - `http://localhost:5173/application/home`
+3. Kaydedin.
+
 ---
-**Not:** Bu ayarları yaptıktan sonra hata devam ederse sayfayı yenilemen yeterli olacaktır.
+**Not:** Bu ayarları yaptıktan sonra hata devam ederse sayfayı yenilemeniz yeterli olacaktır.

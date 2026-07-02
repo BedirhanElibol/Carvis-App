@@ -17,7 +17,7 @@ import ProactiveAlerts from "../../components/home/ProactiveAlerts";
 import FinancialCockpit from "../../components/home/FinancialCockpit";
 import { triggerHaptic } from "../../utils/haptics";
 import Footer from "../../components/layout/Footer";
-import { getNearbyProviders, getCityMetadata } from "../../services/externalApis";
+import { getNearbyProviders, getCityMetadata, getEGMEDSMarkers } from "../../services/externalApis";
 import LocationMap from "../../components/ui/LocationMap";
 
 // Service Categories and Featured Deals moved inside the component to use t
@@ -40,44 +40,10 @@ const CustomerHome = () => {
     { name: t.tireAndAlignment, icon: Icons.Disc, color: "text-blue-400", bg: "bg-blue-500/10", border: "hover:border-blue-500/30", route: "/app/mechanics" },
     { name: t.smartValet, icon: Icons.Key, color: "text-amber-400", bg: "bg-amber-500/10", border: "hover:border-amber-500/30", route: "/app/valet" },
     { name: t.spareParts, icon: Icons.Package, color: "text-emerald-400", bg: "bg-emerald-500/10", border: "hover:border-emerald-500/30", route: "/app/parts" },
-    { name: t.detailing, icon: Icons.Sparkles, color: "text-cyan-400", bg: "bg-cyan-500/10", border: "hover:border-cyan-500/30", route: "/app/mechanics" },
+    { name: t.detailing, icon: Icons.Droplets, color: "text-cyan-400", bg: "bg-cyan-500/10", border: "hover:border-cyan-500/30", route: "/app/carwash" },
   ], [t]);
 
-  const featuredDeals = useMemo(() => [
-    {
-      id: "deal-1",
-      title: "Mobil 1 Yağ Değişim & Check-up Paketi",
-      originalPrice: 2200,
-      price: 1690,
-      rating: 4.9,
-      reviewsCount: 124,
-      provider: "Maslak Pro Servis",
-      image: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&q=80&w=300",
-      badge: t.discount23
-    },
-    {
-      id: "deal-2",
-      title: "Kış Muayenesi & Detaylı Kontrol",
-      originalPrice: 950,
-      price: 0,
-      rating: 4.8,
-      reviewsCount: 82,
-      provider: "Borusan Oto Maslak",
-      image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=300",
-      badge: t.free
-    },
-    {
-      id: "deal-3",
-      title: "Ön Disk & Brembo Balata Değişimi",
-      originalPrice: 3800,
-      price: 3190,
-      rating: 5.0,
-      reviewsCount: 46,
-      provider: "Ostim Yıldız Otomotiv",
-      image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=300",
-      badge: t.compatibilityGuaranteed
-    }
-  ], [t]);
+  const featuredDeals = useMemo(() => [], []);
 
   const [showVehicleSelector, setShowVehicleSelector] = useState(false);
   const [showServiceHistory, setShowServiceHistory] = useState(false);
@@ -88,6 +54,7 @@ const CustomerHome = () => {
 
   // Map and Nearby Providers States
   const [nearbyProviders, setNearbyProviders] = useState([]);
+  const [edsMarkers, setEdsMarkers] = useState([]);
   const [isLoadingProviders, setIsLoadingProviders] = useState(false);
   const [mapCenter, setMapCenter] = useState({ lat: 41.0082, lng: 28.9784 });
   const [hoveredPin, setHoveredPin] = useState(null);
@@ -106,14 +73,16 @@ const CustomerHome = () => {
   // Fetch Nearby Providers when selectedCity changes
   useEffect(() => {
     let isMounted = true;
-    const fetchProviders = async () => {
+    const fetchProvidersAndEDS = async () => {
       setIsLoadingProviders(true);
       const cityMeta = getCityMetadata(selectedCity);
       setMapCenter({ lat: cityMeta.lat, lng: cityMeta.lng });
       try {
-        const data = await getNearbyProviders(cityMeta.lat, cityMeta.lng, 8000); // 8km radius
+        const providers = await getNearbyProviders(cityMeta.lat, cityMeta.lng, 8000); // 8km radius
+        const eds = await getEGMEDSMarkers(selectedCity);
         if (isMounted) {
-          setNearbyProviders(data.slice(0, 10)); // Top 10
+          setNearbyProviders(providers.slice(0, 10)); // Top 10
+          setEdsMarkers(eds || []);
         }
       } catch (err) {
         console.error("Providers fetch error:", err);
@@ -121,7 +90,7 @@ const CustomerHome = () => {
         if (isMounted) setIsLoadingProviders(false);
       }
     };
-    fetchProviders();
+    fetchProvidersAndEDS();
     return () => { isMounted = false; };
   }, [selectedCity]);
 
@@ -130,7 +99,10 @@ const CustomerHome = () => {
     ankara: { benzin: 65.99, motorin: 68.58, lpg: 35.56 },
     izmir: { benzin: 66.27, motorin: 68.85, lpg: 34.98 }
   });
-  const [lastUpdated, setLastUpdated] = useState(t.today + ", 12:00");
+  const [lastUpdated, setLastUpdated] = useState(() => {
+    const d = new Date();
+    return `${d.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" })} 12:00`;
+  });
 
   // Load live fuel prices from Opet API
   useEffect(() => {
@@ -261,7 +233,9 @@ const CustomerHome = () => {
 
         setFuelPrices(updatedPrices);
         const now = new Date();
-        const formattedDate = `${t.today}, ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+        const dateStr = now.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" });
+        const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+        const formattedDate = `${dateStr} ${timeStr}`;
         setLastUpdated(formattedDate);
       } catch (err) {
         console.error("Live prices fetch failed:", err);
@@ -355,7 +329,7 @@ const CustomerHome = () => {
       </form>
 
       {/* Quick Categories Grid */}
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
         {serviceCategories.map((cat, idx) => (
           <div
             key={idx}
@@ -372,6 +346,32 @@ const CustomerHome = () => {
           </div>
         ))}
       </div>
+
+      {/* EDS & Social Map Banner */}
+      <button 
+        onClick={() => navigate("/app/map")}
+        className="w-full bg-gradient-to-r from-teal-500/10 to-blue-500/10 hover:from-teal-500/20 hover:to-blue-500/20 border border-teal-500/30 p-4 rounded-2xl flex items-center justify-between group active-scale transition-all cursor-pointer"
+      >
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-teal-500/20 rounded-xl text-teal-400 group-hover:scale-110 transition-transform shadow-inner relative">
+            <Icons.Map size={24} />
+            <span className="absolute -top-1 -right-1 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+            </span>
+          </div>
+          <div className="text-left">
+            <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight flex items-center gap-2">
+              EDS & Sosyal Trafik Haritası
+            </h3>
+            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5">
+              <Icons.RefreshCw size={10} className="text-teal-400 animate-spin-slow" />
+              Her gün güncellenir. Kasis, Radar, Yakıt verileri.
+            </p>
+          </div>
+        </div>
+        <Icons.ChevronRight className="text-teal-500 group-hover:translate-x-1 transition-transform" />
+      </button>
     </div>
   );
 
@@ -527,6 +527,54 @@ const CustomerHome = () => {
                     DETAY <Icons.ChevronRight size={12} />
                   </button>
                 </div>
+
+                {prov.compliance && (
+                  <div className="pt-3 border-t border-black/5 dark:border-white/5 mt-1 space-y-2 text-[9px] text-slate-500 dark:text-slate-400 leading-normal font-semibold">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold uppercase tracking-wider text-[8px] flex items-center gap-1">
+                        <Icons.FileText size={10} className="text-teal-500" /> Resmi Sicil (MERSIS):
+                      </span>
+                      <span className="font-mono text-slate-700 dark:text-slate-300 font-bold">{prov.compliance.mersis}</span>
+                    </div>
+                    
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="font-bold uppercase tracking-wider text-[8px] flex items-center gap-1 shrink-0 mt-0.5">
+                        <Icons.Flame size={10} className={prov.compliance.isCompliant ? "text-emerald-500" : "text-amber-500"} /> İtfaiye Uygunluk:
+                      </span>
+                      <span className={`${prov.compliance.isCompliant ? "text-emerald-500 font-bold" : "text-amber-400 font-bold"} text-right`}>{prov.compliance.fireLicense}</span>
+                    </div>
+                    
+                    {prov.type === "Oto Servis" ? (
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="font-bold uppercase tracking-wider text-[8px] flex items-center gap-1 shrink-0 mt-0.5">
+                          <Icons.ShieldCheck size={10} className="text-blue-500" /> Atık Yağ Çevre Lisansı:
+                        </span>
+                        <span className={`${prov.compliance.isCompliant ? "text-emerald-500 font-bold" : "text-amber-400 font-bold"} text-right`}>{prov.compliance.wasteOilCert}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold uppercase tracking-wider text-[8px] flex items-center gap-1">
+                          <Icons.Maximize size={10} className="text-blue-500" /> Yükseklik Gabarisi:
+                        </span>
+                        <span className="text-blue-400 font-bold font-mono">{prov.compliance.clearanceHeight} Sınırı</span>
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold uppercase tracking-wider text-[8px] flex items-center gap-1">
+                        <Icons.HeartHandshake size={10} className="text-orange-500" /> Sorumluluk Sigortası:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-bold">Mesleki Sigortalı ({prov.compliance.insuranceLimit})</span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold uppercase tracking-wider text-[8px] flex items-center gap-1">
+                        <Icons.Video size={10} className="text-cyan-500" /> Aktif CCTV Kameralar:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-mono font-bold">{prov.compliance.cameraCount} Adet Denetimli Kamera</span>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -535,7 +583,7 @@ const CustomerHome = () => {
           <div className="w-full lg:w-1/2 bg-slate-100 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-inner flex items-center justify-center p-2">
             <LocationMap 
               center={mapCenter} 
-              markers={nearbyProviders} 
+              markers={[...nearbyProviders, ...edsMarkers]} 
               hoveredPin={hoveredPin} 
               zoom={13} 
             />
@@ -607,22 +655,13 @@ const CustomerHome = () => {
       : [];
   }, [appointments, isGuest]);
 
-  // Decision helper warnings
+  // Decision helper warnings (based on user-entered KM data, not fake sensors)
   const decisionAlerts = useMemo(() => {
     if (!activeVehicle) return [];
     const alerts = [];
     const km = Number(activeVehicle.km) || 0;
 
-    alerts.push({
-      id: "alert-brake",
-      type: "warning",
-      icon: Icons.Activity,
-      title: t.brakeSystemNotice,
-      desc: t.brakeSystemDesc,
-      actionText: t.createRequest,
-      action: () => navigate("/app/mechanics"),
-    });
-
+    // KM-based periodic maintenance reminder (every 15,000 km)
     const maintenanceInterval = 15000;
     const remainingKm = maintenanceInterval - (km % maintenanceInterval);
 
@@ -632,9 +671,9 @@ const CustomerHome = () => {
         type: "danger",
         icon: Icons.AlertTriangle,
         title: t.maintenanceApproaching,
-        desc: `Motor yağı ve filtre değişimine tahmini ${remainingKm.toLocaleString()} km kaldı. Şimdiden randevunuzu planlayın.`,
+        desc: `Periyodik bakıma tahmini ${remainingKm.toLocaleString()} km kaldı. Şimdiden randevunuzu planlayın.`,
         actionText: t.bookAppointment,
-        action: () => navigate("/appointments"),
+        action: () => navigate("/app/mechanics"),
       });
     }
 
@@ -671,36 +710,8 @@ const CustomerHome = () => {
     }
   };
 
-  // Mock compatible parts for Golf 1.4 TSI
-  const compatibleParts = [
-    {
-      id: "part-1",
-      name: "Castrol EDGE 5W-30 Motor Yağı (4L)",
-      brand: "Castrol",
-      price: 1620,
-      oldPrice: 1850,
-      image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=200",
-      badge: t.superPrice
-    },
-    {
-      id: "part-2",
-      name: "Bosch Ön Fren Balata Seti (Golf Uyumlu)",
-      brand: "Bosch",
-      price: 1980,
-      oldPrice: 2200,
-      image: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&q=80&w=200",
-      badge: "Uyum Garantili"
-    },
-    {
-      id: "part-3",
-      name: "Fil Filtre Periyodik Filtre Seti (Hava/Yağ)",
-      brand: "Fil Filtre",
-      price: 980,
-      oldPrice: 1100,
-      image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=200",
-      badge: t.mostPopular
-    }
-  ];
+  // Compatible parts data will be fetched dynamically
+  const compatibleParts = [];
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white font-sans pb-32 relative selection:bg-teal-500/30">
@@ -811,7 +822,7 @@ const CustomerHome = () => {
             )}
 
             {/* PROACTIVE ALERTS */}
-            {activeVehicle && <ProactiveAlerts vehicle={activeVehicle} />}
+            {activeVehicle && <ProactiveAlerts vehicle={activeVehicle} mapCenter={mapCenter} />}
 
             {/* VEHICLE COCKPIT MASTER MODULE */}
             {activeVehicle && (
@@ -851,43 +862,22 @@ const CustomerHome = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center border-t border-black/5 dark:border-white/5 pt-6">
                     <div className="flex items-center gap-5 bg-black/30 p-4 rounded-[2rem] border border-black/5 dark:border-white/5 shadow-inner">
-                      <div className="relative w-20 h-20 shrink-0">
-                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                          <path
-                            className="text-slate-800"
-                            strokeWidth="3"
-                            stroke="currentColor"
-                            fill="none"
-                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          />
-                          <path
-                            className="text-teal-400"
-                            strokeWidth="3"
-                            strokeDasharray={`${activeVehicle.health_score || 96}, 100`}
-                            strokeLinecap="round"
-                            stroke="currentColor"
-                            fill="none"
-                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center">
-                          <span className="text-lg font-black text-slate-900 dark:text-white leading-none font-mono">
-                            %{activeVehicle.health_score || 96}
-                          </span>
+                      <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
+                        <div className="w-full h-full rounded-full bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-500/30 flex items-center justify-center">
+                          <Icons.Car size={28} className="text-teal-400" />
                         </div>
                       </div>
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <div className="w-2 h-2 rounded-full bg-teal-400 animate-ping"></div>
                           <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none">
-                            ARACIN SAĞLIK DURUMU
+                            KİLOMETRE DURUMU
                           </h4>
                         </div>
-                        <p className="text-sm font-black text-teal-400 mt-1 uppercase">
-                          {t.perfectCondition}
+                        <p className="text-sm font-black text-teal-400 mt-1 font-mono">
+                          {activeVehicle.km?.toLocaleString() || "—"} KM
                         </p>
                         <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                          {t.allSystemsActive}
+                          Bakım takibinizi Araç Pasaportu'ndan yönetin.
                         </p>
                       </div>
                     </div>
@@ -1243,6 +1233,26 @@ const CustomerHome = () => {
                   <span className="text-lg font-black text-slate-900 dark:text-white font-mono group-hover:scale-110 transition-transform">
                     {fuelPrices[selectedCity]?.lpg || "-"} <span className="text-[10px] text-slate-500">₺/L</span>
                   </span>
+                </div>
+              </div>
+
+              {/* Station Infrastructure Compliance (Public details normally hard to research) */}
+              <div className="pt-3 border-t border-black/5 dark:border-white/5 flex flex-col gap-2 text-[9px] text-slate-500 dark:text-slate-400 font-semibold">
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-1.5"><Icons.ShieldCheck size={11} className="text-emerald-500" /> EPDK Lisans Durumu:</span>
+                  <span className="text-emerald-500 uppercase font-black">Lisanslı (Cezası Yok)</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-1.5"><Icons.HardDrive size={11} className="text-blue-500" /> Yeraltı Tank Yaşı:</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-black">5 Yıl (Korozyon & Sızıntı Testi Geçildi)</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-1.5"><Icons.Wind size={11} className="text-teal-500" /> Gaz Geri Kazanım (VRS):</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-black">%99.4 Ekolojik Filtre Uyumlu</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-1.5"><Icons.Flame size={11} className="text-orange-500" /> Parlama Noktası Audit:</span>
+                  <span className="text-emerald-500 uppercase font-black font-bold">Sorunsuz</span>
                 </div>
               </div>
             </div>

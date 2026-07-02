@@ -2,33 +2,17 @@ import React, { useState } from "react";
 import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../../context/UIContext";
+import { useSeller } from "../../../context/SellerContext";
 import { jsPDF } from "jspdf";
 
-const initialStockData = [
-  { id: "p1", name: "0W-30 Motor Yağı (1L)", code: "OIL-0W30", category: "Yağlar", qty: 24, minQty: 10, unitPrice: 380 },
-  { id: "p2", name: "Brembo Ön Fren Balatası", code: "BRK-BRE-F", category: "Frenler", qty: 6, minQty: 8, unitPrice: 1850 },
-  { id: "p3", name: "Bosch Karbonlu Polen Filtresi", code: "FIL-BOS-P", category: "Filtreler", qty: 12, minQty: 5, unitPrice: 420 },
-  { id: "p4", name: "Varta 12V AGM Akü (74Ah)", code: "BAT-VAR-74", category: "Elektrik", qty: 4, minQty: 3, unitPrice: 4100 },
-];
 
-const completedInvoices = [
-  { id: "INV-2026-104", client: "Ahmet Yılmaz", plate: "34 ABC 123", service: "Periyodik Bakım + Akü Değişimi", date: "2026-05-15", amount: 7300, partsUsed: ["0W-30 Motor Yağı (x4)", "Bosch Polen Filtresi", "Varta 12V AGM Akü"] },
-  { id: "INV-2026-103", client: "Zeynep Kaya", plate: "06 DEF 456", service: "Ön Fren Balatası Değişimi", date: "2026-05-14", amount: 2600, partsUsed: ["Brembo Ön Fren Balatası"] },
-  { id: "INV-2026-102", client: "Burak Demir", plate: "35 GHI 789", service: "Genel Teşhis ve Yağ Servisi", date: "2026-05-10", amount: 1950, partsUsed: ["0W-30 Motor Yağı (x4)"] },
-];
-
-const calendarSessions = [
-  { id: "s1", client: "Mehmet Çelik", plate: "34 KRL 88", car: "BMW 320i (2020)", service: "Fren Hidrolik & Balata Değişimi", time: "09:30", status: "completed" },
-  { id: "s2", client: "Esra Aslan", plate: "34 ESR 99", car: "Audi A4 (2018)", service: "Yıllık Periyodik Bakım", time: "11:00", status: "in-progress" },
-  { id: "s3", client: "Murat Şahin", plate: "06 MST 34", car: "Volkswagen Golf (2021)", service: "Yağ & Polen Filtre Yenileme", time: "14:30", status: "pending" },
-  { id: "s4", client: "Caner Usta", plate: "35 CNR 12", car: "Mercedes C200 (2019)", service: "AI Destekli Motor Teşhisi", time: "16:00", status: "pending" },
-];
 
 const ErpCrmManager = () => {
   const { showAlert } = useUI();
-  const [stock, setStock] = useState(initialStockData);
+  const { sellerOrders, sellerProducts, updateOrderStatus, updateProduct, uploadInvoice, updateOrderTracking } = useSeller();
   const [activeSubTab, setActiveSubTab] = useState("calendar"); // 'calendar', 'inventory', 'billing'
   const [searchQuery, setSearchQuery] = useState("");
+  const [trackingInput, setTrackingInput] = useState({});
 
   const handleExportPDF = (invoice) => {
     try {
@@ -122,24 +106,32 @@ const ErpCrmManager = () => {
     }
   };
 
-  const handleAdjustStock = (itemId, action) => {
-    setStock(prev => prev.map(item => {
-      if (item.id === itemId) {
-        const adjustment = action === "add" ? 1 : -1;
-        const newQty = Math.max(0, item.qty + adjustment);
-        if (newQty < item.minQty) {
-          showAlert("Kritik Stok Uyarısı", `${item.name} kritik stok seviyesinin altına düştü!`, "warning");
-        }
-        return { ...item, qty: newQty };
-      }
-      return item;
-    }));
+  const handleAdjustStock = async (itemId, action, currentQty, name, minQty = 5) => {
+    const adjustment = action === "add" ? 1 : -1;
+    const newQty = Math.max(0, currentQty + adjustment);
+    if (newQty < minQty) {
+      showAlert("Kritik Stok Uyarısı", `${name} kritik stok seviyesinin altına düştü!`, "warning");
+    }
+    await updateProduct(itemId, { stock: newQty });
   };
 
-  const filteredStock = stock.filter(item => 
+  const filteredStock = sellerProducts.filter(item => 
     item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    item.code.toLowerCase().includes(searchQuery.toLowerCase())
+    (item.category || "").toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const completedInvoices = sellerOrders
+    .filter(o => o.status === 'completed')
+    .map(o => ({
+      id: o.id.split('-')[0].toUpperCase(),
+      client: o.customer?.full_name || "Müşteri",
+      plate: "-", 
+      service: o.quote?.description || "Hizmet Bedeli",
+      date: new Date(o.created_at).toLocaleDateString('tr-TR'),
+      amount: o.total_amount || 0,
+      partsUsed: ["İşçilik ve Hizmet"],
+      originalOrder: o
+    }));
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -191,51 +183,120 @@ const ErpCrmManager = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="grid grid-cols-1 md:grid-cols-4 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {calendarSessions.map((session) => (
-              <div 
-                key={session.id} 
-                className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-[10px] font-black tracking-widest text-slate-500 uppercase flex items-center gap-1">
-                      <Icons.Clock size={10} /> {session.time}
-                    </span>
-                    <span className={`px-3 py-1 rounded-xl text-[8px] font-black uppercase tracking-widest ${
-                      session.status === 'completed' 
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                        : session.status === 'in-progress'
-                          ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                          : 'bg-black/5 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-black/5 dark:border-white/5'
-                    }`}>
-                      {session.status === 'completed' ? 'TAMAMLANDI' : session.status === 'in-progress' ? 'İŞLEMDE' : 'SIRADA'}
-                    </span>
-                  </div>
+            {sellerOrders
+              ?.filter(o => o.status !== 'completed' && o.status !== 'cancelled')
+              .map((order) => {
+                const getStatusText = (status) => {
+                    switch(status) {
+                        case 'pending': return 'ONAY BEKLİYOR';
+                        case 'accepted': return 'ONAYLANDI';
+                        case 'diagnosing': return 'TEŞHİS/EKS.';
+                        case 'repairing': return 'İŞLEMDE';
+                        case 'quality_check': return 'KONTROLDE';
+                        case 'return_requested': return 'İADE TALEBİ';
+                        case 'refunded': return 'İADE EDİLDİ';
+                        default: return 'SIRADA';
+                    }
+                };
+                const getStatusColor = (status) => {
+                    if (status === 'repairing' || status === 'diagnosing') return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                    if (status === 'quality_check') return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+                    if (status === 'return_requested') return 'bg-orange-500/10 text-orange-400 border-orange-500/20 animate-pulse';
+                    if (status === 'refunded') return 'bg-red-500/10 text-red-500 border-red-500/20';
+                    return 'bg-black/5 dark:bg-white/5 text-slate-500 dark:text-slate-400 border-black/5 dark:border-white/5';
+                };
 
-                  <div className="text-[9px] font-black uppercase tracking-widest text-emerald-400">{session.plate}</div>
-                  <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase mt-1 mb-2 font-sans tracking-tight">
-                    {session.client}
-                  </h3>
-                  <div className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">
-                    {session.car}
-                  </div>
-                  <p className="text-slate-500 text-xs font-semibold">
-                    {session.service}
-                  </p>
-                </div>
-
-                {session.status !== 'completed' && (
-                  <button 
-                    onClick={() => showAlert("Başarılı", "İşlem başarıyla başlatıldı/tamamlandı.", "success")}
-                    className="w-full mt-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                return (
+                  <div 
+                    key={order.id} 
+                    className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col justify-between"
                   >
-                    GÜNCELLE
-                  </button>
-                )}
-              </div>
-            ))}
+                    <div>
+                      <div className="flex justify-between items-center mb-4">
+                        <span className="text-[10px] font-black tracking-widest text-slate-500 uppercase flex items-center gap-1">
+                          <Icons.Clock size={10} /> {new Date(order.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'})}
+                        </span>
+                        <span className={`px-3 py-1 rounded-xl text-[8px] font-black uppercase tracking-widest border ${getStatusColor(order.status)}`}>
+                          {getStatusText(order.status)}
+                        </span>
+                      </div>
+
+                      <div className="text-[9px] font-black uppercase tracking-widest text-emerald-400">Sipariş: #{order.id?.split('-')[0]}</div>
+                      <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase mt-1 mb-2 font-sans tracking-tight">
+                        {order.customer?.full_name || 'Müşteri'}
+                      </h3>
+                      <div className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">
+                        ₺{order.total_amount?.toLocaleString('tr-TR')}
+                      </div>
+                      <p className="text-slate-500 text-xs font-semibold line-clamp-2 mb-4">
+                        {order.quote?.description || 'Hizmet Talebi'}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex flex-col gap-2">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Durum Güncelle (CRM)</label>
+                      <select 
+                        value={order.status}
+                        onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                        className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/5 dark:border-white/5 rounded-xl px-3 py-2 text-xs font-bold text-slate-900 dark:text-white outline-none focus:border-primary-500 cursor-pointer"
+                        disabled={order.status === 'return_requested' || order.status === 'refunded'}
+                      >
+                        <option value="pending">Onay Bekliyor</option>
+                        <option value="accepted">Talep Onaylandı</option>
+                        <option value="diagnosing">Teşhis/İnceleme Başladı</option>
+                        <option value="repairing">İşlem Yapılıyor / Kargoya Verildi</option>
+                        <option value="quality_check">Son Kontroller (Hazır)</option>
+                        <option value="completed">Teslim Edildi (Tamamla)</option>
+                      </select>
+
+                      {order.status === 'return_requested' && (
+                        <button
+                          onClick={() => updateOrderStatus(order.id, 'refunded')}
+                          className="w-full mt-2 bg-orange-500 text-white text-xs font-bold py-2 rounded-xl"
+                        >
+                          İADEYİ ONAYLA (PARA İADESİ YAP)
+                        </button>
+                      )}
+
+                      {!order.quote?.tracking_number && order.status !== 'return_requested' && order.status !== 'refunded' && (
+                        <div className="mt-2 flex gap-2">
+                          <input 
+                            type="text" 
+                            placeholder="Kargo Takip No..." 
+                            value={trackingInput[order.id] || ""}
+                            onChange={(e) => setTrackingInput(prev => ({...prev, [order.id]: e.target.value}))}
+                            className="flex-1 bg-slate-50 dark:bg-slate-950/50 border border-black/5 dark:border-white/5 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white outline-none focus:border-primary-500"
+                          />
+                          <button 
+                            onClick={() => {
+                              if (trackingInput[order.id]) {
+                                updateOrderTracking(order.id, order.quote, trackingInput[order.id]);
+                              }
+                            }}
+                            className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white px-3 py-2 rounded-xl text-[10px] font-black uppercase"
+                          >
+                            KAYDET
+                          </button>
+                        </div>
+                      )}
+                      {order.quote?.tracking_number && (
+                         <div className="mt-2 text-xs font-bold text-emerald-500">
+                           Kargo No: {order.quote.tracking_number}
+                         </div>
+                      )}
+                    </div>
+                  </div>
+                );
+            })}
+            
+            {sellerOrders?.filter(o => o.status !== 'completed' && o.status !== 'cancelled').length === 0 && (
+                <div className="col-span-full py-12 flex flex-col items-center justify-center text-slate-500">
+                    <Icons.CheckCircle2 size={48} className="mb-4 text-emerald-500/50" />
+                    <p className="font-bold text-sm uppercase tracking-widest">Bekleyen İşlem Yok</p>
+                </div>
+            )}
           </motion.div>
         )}
 
@@ -277,16 +338,16 @@ const ErpCrmManager = () => {
                 </thead>
                 <tbody className="divide-y divide-white/5">
                   {filteredStock.map((item) => {
-                    const isCritical = item.qty <= item.minQty;
+                    const isCritical = item.stock <= 5;
                     return (
                       <tr key={item.id} className="hover:bg-black/5 dark:bg-white/5 transition-all">
                         <td className="p-6 font-black text-slate-900 dark:text-white uppercase tracking-tight text-xs">{item.name}</td>
-                        <td className="p-6 text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">{item.code}</td>
+                        <td className="p-6 text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">{item.id.split('-')[0]}</td>
                         <td className="p-6 text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">{item.category}</td>
                         <td className="p-6">
                           <div className="flex items-center gap-3">
                             <span className={`text-xs font-black ${isCritical ? 'text-red-400' : 'text-emerald-400'}`}>
-                              {item.qty} Adet
+                              {item.stock} Adet
                             </span>
                             {isCritical && (
                               <span className="text-[8px] font-black uppercase text-red-500 bg-red-500/10 border border-red-500/20 px-2.5 py-0.5 rounded-full">
@@ -295,17 +356,17 @@ const ErpCrmManager = () => {
                             )}
                           </div>
                         </td>
-                        <td className="p-6 text-xs font-black text-slate-900 dark:text-white">₺{item.unitPrice.toLocaleString("tr-TR")}</td>
+                        <td className="p-6 text-xs font-black text-slate-900 dark:text-white">₺{item.price?.toLocaleString("tr-TR")}</td>
                         <td className="p-6 text-right">
                           <div className="inline-flex gap-2">
                             <button 
-                              onClick={() => handleAdjustStock(item.id, "sub")}
+                              onClick={() => handleAdjustStock(item.id, "sub", item.stock, item.name)}
                               className="p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg border border-black/5 dark:border-white/5 transition-all"
                             >
                               <Icons.Minus size={12} />
                             </button>
                             <button 
-                              onClick={() => handleAdjustStock(item.id, "add")}
+                              onClick={() => handleAdjustStock(item.id, "add", item.stock, item.name)}
                               className="p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg border border-black/5 dark:border-white/5 transition-all"
                             >
                               <Icons.Plus size={12} />
@@ -363,11 +424,36 @@ const ErpCrmManager = () => {
                   <div className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
                     ₺{invoice.amount.toLocaleString("tr-TR")}
                   </div>
+                  
+                  {invoice.originalOrder?.quote?.official_invoice_url ? (
+                    <a 
+                      href={invoice.originalOrder.quote.official_invoice_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-emerald-600/20 text-emerald-500 border border-emerald-500/20 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                    >
+                      <Icons.CheckCircle size={12} /> YÜKLENDİ (GÖRÜNTÜLE)
+                    </a>
+                  ) : (
+                    <label className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.2)] active-scale transition-all cursor-pointer">
+                      <Icons.Upload size={12} /> RESMİ FATURA YÜKLE
+                      <input 
+                        type="file" 
+                        accept="image/*,.pdf" 
+                        className="hidden" 
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) uploadInvoice(invoice.originalOrder.id, file, invoice.originalOrder.quote);
+                        }} 
+                      />
+                    </label>
+                  )}
+
                   <button 
                     onClick={() => handleExportPDF(invoice)}
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.2)] active-scale transition-all"
+                    className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black uppercase tracking-widest rounded-xl active-scale transition-all"
                   >
-                    <Icons.Download size={12} /> FATURA PDF İNDİR
+                    <Icons.Download size={12} /> SİSTEM FİŞİ İNDİR
                   </button>
                 </div>
               </div>

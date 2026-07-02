@@ -68,6 +68,13 @@ const DOCUMENT_REQUIREMENTS = {
       { id: "insurance", label: "Sigorta Poliçesi", required: true },
     ],
   },
+  carwash: {
+    label: "Seyyar Araba Yıkamacı",
+    docs: [
+      { id: "tax_plate", label: "Vergi Levhası / TC Kimlik", required: true },
+      { id: "activity_cert", label: "Faaliyet / Ustalık Belgesi", required: false },
+    ],
+  },
 };
 
 const SellerRegistrationModal = ({
@@ -323,6 +330,22 @@ const SellerRegistrationModal = ({
             <div className="col-span-1">
               <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">Sigorta Teminat Tutarı (₺)</label>
               <input type="text" placeholder="Örn: 1.000.000" value={formData.business_details.insurance_limit} onChange={(e) => setFormData({...formData, business_details: {...formData.business_details, insurance_limit: e.target.value}})} className="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl outline-none focus:border-orange-500 transition-all font-bold text-sm" />
+            </div>
+          </>
+        )}
+
+        {formData.category === "carwash" && (
+          <>
+            <div className="col-span-1">
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">Günlük Araç Yıkama Kapasitesi</label>
+              <input type="number" placeholder="Örn: 10" value={formData.business_details.capacity} onChange={(e) => setFormData({...formData, business_details: {...formData.business_details, capacity: e.target.value}})} className="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl outline-none focus:border-orange-500 transition-all font-bold text-sm" />
+            </div>
+            <div className="col-span-1">
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">Kendi Aracınızla Mı Geliyorsunuz?</label>
+              <select onChange={(e) => setFormData({...formData, business_details: {...formData.business_details, vehicle: e.target.value}})} className="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl outline-none focus:border-orange-500 transition-all font-bold text-sm">
+                <option value="yes">Evet (Mobil Hizmet)</option>
+                <option value="no">Hayır (Sadece Personel)</option>
+              </select>
             </div>
           </>
         )}

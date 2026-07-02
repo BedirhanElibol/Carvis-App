@@ -58,6 +58,15 @@ const PartnerOnboarding = ({ onComplete }) => {
       gradient: "from-emerald-500/10 to-teal-500/5",
       border: "hover:border-emerald-500/30",
     },
+    {
+      id: "carwash",
+      title: "Seyyar Yıkama",
+      icon: Icons.Droplet,
+      desc: "Mobil yıkama araçlarınızla müşterilerin kapısına giderek hizmet verin.",
+      color: "cyan",
+      gradient: "from-cyan-500/10 to-blue-500/5",
+      border: "hover:border-cyan-500/30",
+    },
   ];
 
   const planDetails = {
@@ -202,10 +211,47 @@ const PartnerOnboarding = ({ onComplete }) => {
         price: "350 TL / ay",
         commission: "%6 Satış Komisyonu",
         features: [
-          "Sınırsız Ürün & Stok Listeleme",
-          "Arama Sonuçlarında Sponsorlu Ürün Listeleme",
-          "Carvis Trust Orijinal/Sertifikalı Rozeti",
-          "Detaylı Kategori ve Rakip Analiz Raporları",
+          "Haritada En Üst Sıralarda Listelenme",
+          "Bölgesel Reklam & Harita Sponsorluğu",
+          "Carvis Trust B2B Güven Rozeti",
+          "7/24 Öncelikli Operasyon Desteği",
+        ]
+      }
+    },
+    carwash: {
+      free: {
+        title: "ÜCRETSİZ BAŞLANGIÇ",
+        desc: "Profilinizi oluşturun, bölgenizdeki yıkama taleplerine anında yanıt verin.",
+        price: "0 TL / ay",
+        commission: "%15 Hizmet Komisyonu",
+        features: [
+          "Profil & Harita Kaydı",
+          "Aylık Sınırlı Rezervasyon Kabulü",
+          "Standart Bildirim Sistemi",
+        ]
+      },
+      pro: {
+        title: "PRO YIKAMACI",
+        desc: "Sınırsız randevu alımı ve gelişmiş tarife planlamaları ile müşteri ağınızı genişletin.",
+        price: "150 TL / ay",
+        commission: "%10 Hizmet Komisyonu",
+        features: [
+          "Sınırsız Randevu Alımı",
+          "Özel Bölgesel Hedefleme & Fiyatlama",
+          "Müşteri Sadakat & Yorum Yönetimi",
+          "Aylık Detaylı Gelir Raporları",
+        ]
+      },
+      premium: {
+        title: "PREMIUM MOBİL YIKAMA",
+        desc: "Bölgenizdeki en güvenilir premium seyyar yıkamacı olarak 1. sırada yer alın.",
+        price: "350 TL / ay",
+        commission: "%6 Hizmet Komisyonu",
+        features: [
+          "Carvis Trust Hijyen & Güven Rozeti",
+          "Arama ve Haritada 1. Sıra Garantisi",
+          "Özel Kurumsal Anlaşmalı İş Yönlendirmeleri",
+          "Gelişmiş CRM ve Müşteri Paneli",
         ]
       }
     }
@@ -305,6 +351,18 @@ const PartnerOnboarding = ({ onComplete }) => {
                 business_name: businessName,
                 delivery_radius_km: 50,
                 store_type: "retail"
+              };
+              break;
+            case "carwash":
+              tableName = "carwash_profiles";
+              payload = {
+                id: currentUser.id,
+                seller_id: currentUser.id,
+                company_name: businessName,
+                service_radius_km: 10,
+                has_own_water_tank: true,
+                has_generator: true,
+                is_eco_friendly: true
               };
               break;
             default:

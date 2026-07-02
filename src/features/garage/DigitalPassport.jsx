@@ -5,8 +5,43 @@ import { useUI } from "../../context/UIContext";
 import { useGarage } from "../../context/GarageContext";
 import { jsPDF } from "jspdf";
 
+const MOCK_RECALLS_AND_BULLETINS = {
+  Fiat: {
+    recalls: [
+      { id: "RC-FIAT-2025-01", component: "Elektrik Soket Bağlantısı", severity: "medium", desc: "Fiat Egea modellerinde gövde kontrol ünitesi soketinin gevşeme riski. Ücretsiz soket değişimi kampanyası aktiftir.", status: "Kayıt Temiz (Geri Çağırma Yapıldı)" },
+    ],
+    bulletins: [
+      { id: "TSB-FIAT-128", title: "1.3 MultiJet EGR Kurum Temizliği", desc: "Düşük devir kullanımlarında EGR valfinde kurum birikmesi sorunu için yeni ECU yazılım güncellemesi mevcuttur." }
+    ]
+  },
+  Renault: {
+    recalls: [
+      { id: "RC-REN-2024-08", component: "Fren Hidrolik Hortumu", severity: "high", desc: "Clio V ve Captur modellerinde fren hortumu montaj açısı sapması. Aşınma riski nedeniyle ücretsiz hortum değişimi.", status: "Geri Çağırma Açık (Servis Randevusu Alınmalı)" }
+    ],
+    bulletins: [
+      { id: "TSB-REN-045", title: "1.3 TCe Egzoz Manifoldu Titreşimi", desc: "Soğuk çalıştırmada manifold sacından gelen zırıltı sesi için conta revizyonu ve tork katsayısı değişimi bülteni." }
+    ]
+  },
+  BMW: {
+    recalls: [
+      { id: "RC-BMW-2025-03", component: "EGR Soğutucusu", severity: "critical", desc: "N47/N57 dizel motorlarda EGR soğutucusu sızıntı ve yangın riski. Ücretsiz EGR manifoldu değişimi kampanyası.", status: "Kayıt Temiz (EGR Ünitesi Yenilendi)" }
+    ],
+    bulletins: [
+      { id: "TSB-BMW-328", title: "ZF 8HP Şanzıman Yağ Değişimi", desc: "Şanzıman kararsız vites geçişleri için şanzıman yağı ve karter filtresi yenileme prosedürü bülteni." }
+    ]
+  },
+  Volkswagen: {
+    recalls: [
+      { id: "RC-VW-2024-11", component: "DSG Akümülatör Pistonu", severity: "high", desc: "7 ileri kuru kavrama DSG şanzımanlarda basınç kaybı riski. Güçlendirilmiş tüp montaj kampanyası.", status: "Geri Çağırma Açık (Usta randevusu planlayın)" }
+    ],
+    bulletins: [
+      { id: "TSB-VW-882", title: "1.5 TSI Silindir Kapatma (ACT) Sarsıntısı", desc: "Silindir kapatma geçişlerinde sarsıntı hissi için motor kontrol ünitesi (DME) yazılım güncellemesi bülteni." }
+    ]
+  }
+};
+
 const DigitalPassport = ({ vehicle }) => {
-  const { showAlert } = useUI();
+  const { t = {}, showAlert } = useUI();
   const { expenses = [], addReport } = useGarage();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -290,6 +325,86 @@ const DigitalPassport = ({ vehicle }) => {
             </div>
           </div>
         </div>
+
+        {/* MANUFACTURER RECALLS & TECHNICAL SERVICE BULLETINS */}
+        {vehicle && (
+          <div className="bg-white/80 dark:bg-[#0a0f24]/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 shadow-xl space-y-4 no-print">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center shrink-0">
+                <Icons.AlertTriangle size={20} className="text-orange-500" />
+              </div>
+              <div className="text-left">
+                <h3 className="font-black text-sm uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                  {t.manufacturerRecalls || "Üretici Geri Çağırma & TSB Sorgusu"}
+                  <span className="text-[8px] bg-slate-200 dark:bg-white/10 text-slate-500 px-2 py-0.5 rounded-full ml-2 uppercase tracking-widest border border-black/5 dark:border-white/5">DEMO</span>
+                </h3>
+                <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
+                  Örnek Veri: Kamuya Açık Güvenlik Kontrolleri & Kronik Arıza Bültenleri
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Left Column: Recall Campaigns */}
+              <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-4 border border-black/5 dark:border-white/5 space-y-3">
+                <div className="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-2">
+                  <span className="text-[10px] font-black text-slate-950 dark:text-white uppercase tracking-wider">Aktif Güvenlik Kampanyaları</span>
+                  <span className="text-[8px] font-black bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-full uppercase">VIN SORGUSU</span>
+                </div>
+                {MOCK_RECALLS_AND_BULLETINS[vehicle.brand]?.recalls ? (
+                  MOCK_RECALLS_AND_BULLETINS[vehicle.brand].recalls.map((recall) => (
+                    <div key={recall.id} className="space-y-1">
+                      <div className="flex justify-between items-center text-[10px] font-bold">
+                        <span className="text-slate-900 dark:text-white font-black">{recall.component}</span>
+                        <span className={`text-[8px] font-black px-1.5 py-0.5 rounded uppercase ${recall.severity === 'high' || recall.severity === 'critical' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                          {recall.severity === 'critical' ? 'Kritik Risk' : recall.severity === 'high' ? 'Yüksek Risk' : 'Orta Risk'}
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed font-semibold">{recall.desc}</p>
+                      <div className="flex items-center gap-1.5 text-[8px] font-black uppercase tracking-wider text-teal-400 bg-teal-500/10 px-2 py-1 rounded-lg w-fit mt-1">
+                        <Icons.CheckCircle size={10} /> {recall.status}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-6 text-center text-slate-500">
+                    <Icons.CheckCircle size={24} className="text-emerald-500 mb-2" />
+                    <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Geri Çağırma Kampanyası Yok</p>
+                    <p className="text-[9px] font-semibold mt-1 max-w-[200px]">Bu araç markası için yayınlanmış aktif bir güvenlik uyarısı bulunmamaktadır.</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column: TSB Bulletins */}
+              <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-4 border border-black/5 dark:border-white/5 space-y-3">
+                <div className="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-2">
+                  <span className="text-[10px] font-black text-slate-950 dark:text-white uppercase tracking-wider">Teknik Servis Bültenleri (TSB)</span>
+                  <span className="text-[8px] font-black bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full uppercase">KRONİK KONTROLLER</span>
+                </div>
+                {MOCK_RECALLS_AND_BULLETINS[vehicle.brand]?.bulletins ? (
+                  MOCK_RECALLS_AND_BULLETINS[vehicle.brand].bulletins.map((tsb) => (
+                    <div key={tsb.id} className="space-y-1">
+                      <div className="flex justify-between items-center text-[10px] font-bold">
+                        <span className="text-slate-900 dark:text-white font-black">{tsb.title}</span>
+                        <span className="text-[8px] font-mono text-slate-500 font-bold">{tsb.id}</span>
+                      </div>
+                      <p className="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed font-semibold">{tsb.desc}</p>
+                      <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest block mt-1">
+                        * Bu bülten yetkili ve özel servislere rehberlik amaçlı kamuya sunulmuştur.
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-6 text-center text-slate-500">
+                    <Icons.Info size={24} className="text-blue-500 mb-2" />
+                    <p className="text-[10px] font-black uppercase tracking-widest text-blue-500">Aktif TSB Mevcut Değil</p>
+                    <p className="text-[9px] font-semibold mt-1 max-w-[200px]">Bu marka/model için tanımlanmış spesifik bir servis bülteni bulunmamaktadır.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Timeline Records */}
         <div className="relative space-y-8 pl-8 print:pl-4">
