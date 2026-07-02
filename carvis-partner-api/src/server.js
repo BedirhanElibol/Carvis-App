@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import rateLimit from 'express-rate-limit';
 import jobsRouter from './routes/jobs.js';
 
 dotenv.config();
@@ -15,6 +16,14 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+
+// Rate Limiter: Max 100 requests per windowMs (15 minutes)
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: { success: false, message: 'Too many requests from this IP, please try again later.' }
+});
+app.use(limiter);
 
 // Routes
 app.use('/api/v1/jobs', jobsRouter);
