@@ -475,6 +475,7 @@ ALTER TABLE public.addresses ENABLE ROW LEVEL SECURITY;
 
 -- Profiles: Complete Security (SELECT, INSERT, UPDATE)
 DROP POLICY IF EXISTS "Profiles Security Policy v7.2" ON public.profiles;
+DROP POLICY IF EXISTS "Profiles Security Policy v7.2" ON public.profiles;
 CREATE POLICY "Profiles Security Policy v7.2" ON public.profiles
 FOR SELECT USING (
     public.is_admin() 
@@ -483,9 +484,11 @@ FOR SELECT USING (
 );
 
 DROP POLICY IF EXISTS "Users can insert own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can insert own profile" ON public.profiles;
 CREATE POLICY "Users can insert own profile" ON public.profiles 
 FOR INSERT WITH CHECK (auth.uid() = id);
 
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 CREATE POLICY "Users can update own profile" ON public.profiles 
 FOR UPDATE USING (auth.uid() = id OR public.is_admin());
@@ -517,55 +520,70 @@ FOR EACH ROW EXECUTE FUNCTION public.prevent_role_escalation();
 
 -- Wallets: Upsert Support (v7.2.4 FIX 403)
 DROP POLICY IF EXISTS "Users can view own wallet" ON public.wallets;
+DROP POLICY IF EXISTS "Users can view own wallet" ON public.wallets;
 CREATE POLICY "Users can view own wallet" ON public.wallets 
 FOR SELECT USING (auth.uid() = user_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Users can insert own wallet" ON public.wallets;
+DROP POLICY IF EXISTS "Users can insert own wallet" ON public.wallets;
 CREATE POLICY "Users can insert own wallet" ON public.wallets 
 FOR INSERT WITH CHECK (auth.uid() = id);
 
+DROP POLICY IF EXISTS "Users can update own wallet" ON public.wallets;
 DROP POLICY IF EXISTS "Users can update own wallet" ON public.wallets;
 CREATE POLICY "Users can update own wallet" ON public.wallets 
 FOR UPDATE USING (auth.uid() = user_id OR public.is_admin());
 
 -- Wallet Transactions: Access & Log
 DROP POLICY IF EXISTS "Users can view own transactions" ON public.wallet_transactions;
+DROP POLICY IF EXISTS "Users can view own transactions" ON public.wallet_transactions;
 CREATE POLICY "Users can view own transactions" ON public.wallet_transactions 
 FOR SELECT USING (wallet_id IN (SELECT id FROM public.profiles WHERE id = auth.uid()) OR public.is_admin());
 
+DROP POLICY IF EXISTS "Users can insert own transactions" ON public.wallet_transactions;
 DROP POLICY IF EXISTS "Users can insert own transactions" ON public.wallet_transactions;
 CREATE POLICY "Users can insert own transactions" ON public.wallet_transactions 
 FOR INSERT WITH CHECK (wallet_id IN (SELECT id FROM public.profiles WHERE id = auth.uid()));
 
 -- Specialized Profiles: Persistence & Discovery
 DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.valet_profiles;
+DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.valet_profiles;
 CREATE POLICY "Users can manage own specialized profiles" ON public.valet_profiles FOR ALL USING (auth.uid() = id);
+DROP POLICY IF EXISTS "Public read active valets" ON public.valet_profiles;
 DROP POLICY IF EXISTS "Public read active valets" ON public.valet_profiles;
 CREATE POLICY "Public read active valets" ON public.valet_profiles FOR SELECT USING (is_active_now = true);
 
 DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.parking_profiles;
+DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.parking_profiles;
 CREATE POLICY "Users can manage own specialized profiles" ON public.parking_profiles FOR ALL USING (auth.uid() = id);
+DROP POLICY IF EXISTS "Public read parking" ON public.parking_profiles;
 DROP POLICY IF EXISTS "Public read parking" ON public.parking_profiles;
 CREATE POLICY "Public read parking" ON public.parking_profiles FOR SELECT USING (true);
 
 DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.parts_profiles;
+DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.parts_profiles;
 CREATE POLICY "Users can manage own specialized profiles" ON public.parts_profiles FOR ALL USING (auth.uid() = id);
+DROP POLICY IF EXISTS "Public read parts" ON public.parts_profiles;
 DROP POLICY IF EXISTS "Public read parts" ON public.parts_profiles;
 CREATE POLICY "Public read parts" ON public.parts_profiles FOR SELECT USING (true);
 
 -- Messaging & Notifications: Privacy
 DROP POLICY IF EXISTS "Messages Security Policy v7.2" ON public.messages;
+DROP POLICY IF EXISTS "Messages Security Policy v7.2" ON public.messages;
 CREATE POLICY "Messages Security Policy v7.2" ON public.messages
 FOR ALL USING (auth.uid() = sender_id OR auth.uid() = receiver_id OR public.is_admin());
 
+DROP POLICY IF EXISTS "Notifications Security Policy v7.2" ON public.notifications;
 DROP POLICY IF EXISTS "Notifications Security Policy v7.2" ON public.notifications;
 CREATE POLICY "Notifications Security Policy v7.2" ON public.notifications
 FOR ALL USING (auth.uid() = user_id OR public.is_admin());
 
 -- General Visibility (Shops & Products)
 DROP POLICY IF EXISTS "Public read active providers" ON public.mechanic_shops;
+DROP POLICY IF EXISTS "Public read active providers" ON public.mechanic_shops;
 CREATE POLICY "Public read active providers" ON public.mechanic_shops FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Public read products" ON public.products;
 DROP POLICY IF EXISTS "Public read products" ON public.products;
 CREATE POLICY "Public read products" ON public.products FOR SELECT USING (true);
 
@@ -755,9 +773,11 @@ END $$;
 ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Everyone can see reviews" ON public.reviews;
+DROP POLICY IF EXISTS "Everyone can see reviews" ON public.reviews;
 CREATE POLICY "Everyone can see reviews" ON public.reviews
     FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Order owner can review" ON public.reviews;
 DROP POLICY IF EXISTS "Order owner can review" ON public.reviews;
 CREATE POLICY "Order owner can review" ON public.reviews
     FOR INSERT WITH CHECK (
@@ -858,13 +878,13 @@ ADD COLUMN IF NOT EXISTS updated_at timestamptz DEFAULT now();
 ALTER TABLE public.partner_applications ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Users can search their own applications" ON public.partner_applications;
-CREATE POLICY "Users can search their own applications" 
-ON public.partner_applications FOR SELECT 
+DROP POLICY IF EXISTS "Users can search their own applications" ON public.partner_applications;
+CREATE POLICY "Users can search their own applications" ON public.partner_applications FOR SELECT 
 USING (auth.uid() = user_id);
 
 DROP POLICY IF EXISTS "Users can submit their own applications" ON public.partner_applications;
-CREATE POLICY "Users can submit their own applications" 
-ON public.partner_applications FOR INSERT 
+DROP POLICY IF EXISTS "Users can submit their own applications" ON public.partner_applications;
+CREATE POLICY "Users can submit their own applications" ON public.partner_applications FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
 -- =========================================================
@@ -917,13 +937,16 @@ ALTER TABLE public.escrow_vault ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.service_proofs ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "View own escrow" ON public.escrow_vault;
+DROP POLICY IF EXISTS "View own escrow" ON public.escrow_vault;
 CREATE POLICY "View own escrow" ON public.escrow_vault FOR SELECT 
 USING (EXISTS (SELECT 1 FROM public.orders WHERE id = order_id AND (customer_id = auth.uid() OR seller_id = auth.uid())));
 
 DROP POLICY IF EXISTS "View own proof" ON public.service_proofs;
+DROP POLICY IF EXISTS "View own proof" ON public.service_proofs;
 CREATE POLICY "View own proof" ON public.service_proofs FOR SELECT 
 USING (EXISTS (SELECT 1 FROM public.orders WHERE id = order_id AND (customer_id = auth.uid() OR seller_id = auth.uid())));
 
+DROP POLICY IF EXISTS "Partners manage proof" ON public.service_proofs;
 DROP POLICY IF EXISTS "Partners manage proof" ON public.service_proofs;
 CREATE POLICY "Partners manage proof" ON public.service_proofs FOR ALL 
 USING (EXISTS (SELECT 1 FROM public.orders WHERE id = order_id AND seller_id = auth.uid()));
@@ -1092,9 +1115,11 @@ ALTER TABLE public.consultations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.system_settings ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Consultations access" ON public.consultations;
+DROP POLICY IF EXISTS "Consultations access" ON public.consultations;
 CREATE POLICY "Consultations access" ON public.consultations
 FOR ALL USING (auth.uid() = user_id OR auth.uid() = expert_id OR public.is_admin());
 
+DROP POLICY IF EXISTS "Public read settings" ON public.system_settings;
 DROP POLICY IF EXISTS "Public read settings" ON public.system_settings;
 CREATE POLICY "Public read settings" ON public.system_settings FOR SELECT USING (true);
 
@@ -1205,12 +1230,15 @@ ALTER TABLE public.partner_monetization ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.platform_earnings ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Settings read" ON public.monetization_plans;
+DROP POLICY IF EXISTS "Settings read" ON public.monetization_plans;
 CREATE POLICY "Settings read" ON public.monetization_plans FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Partner access own settings" ON public.partner_monetization;
 DROP POLICY IF EXISTS "Partner access own settings" ON public.partner_monetization;
 CREATE POLICY "Partner access own settings" ON public.partner_monetization 
 FOR ALL USING (auth.uid() = partner_id OR public.is_admin());
 
+DROP POLICY IF EXISTS "Admin only earnings" ON public.platform_earnings;
 DROP POLICY IF EXISTS "Admin only earnings" ON public.platform_earnings;
 CREATE POLICY "Admin only earnings" ON public.platform_earnings FOR SELECT USING (public.is_admin());
 
@@ -1305,16 +1333,16 @@ ALTER TABLE public.service_packages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_subscriptions ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Anyone can view active packages" ON public.service_packages;
-CREATE POLICY "Anyone can view active packages" 
-ON public.service_packages FOR SELECT USING (is_active = true);
+DROP POLICY IF EXISTS "Anyone can view active packages" ON public.service_packages;
+CREATE POLICY "Anyone can view active packages" ON public.service_packages FOR SELECT USING (is_active = true);
 
 DROP POLICY IF EXISTS "Partners manage own packages" ON public.service_packages;
-CREATE POLICY "Partners manage own packages" 
-ON public.service_packages FOR ALL USING (auth.uid() = partner_id OR public.is_admin());
+DROP POLICY IF EXISTS "Partners manage own packages" ON public.service_packages;
+CREATE POLICY "Partners manage own packages" ON public.service_packages FOR ALL USING (auth.uid() = partner_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Users view own subscriptions" ON public.user_subscriptions;
-CREATE POLICY "Users view own subscriptions" 
-ON public.user_subscriptions FOR SELECT USING (auth.uid() = user_id OR public.is_admin());
+DROP POLICY IF EXISTS "Users view own subscriptions" ON public.user_subscriptions;
+CREATE POLICY "Users view own subscriptions" ON public.user_subscriptions FOR SELECT USING (auth.uid() = user_id OR public.is_admin());
 
 -- =========================================================
 -- CARVIS RELATIONSHIP & JOIN FIXES (v7.7)
@@ -1423,16 +1451,16 @@ ALTER TABLE public.vehicle_reports ENABLE ROW LEVEL SECURITY;
 
 -- 8. RLS POLICIES
 DROP POLICY IF EXISTS "Users can manage own expenses" ON public.vehicle_expenses;
-CREATE POLICY "Users can manage own expenses"
-ON public.vehicle_expenses FOR ALL USING (auth.uid() = user_id OR public.is_admin());
+DROP POLICY IF EXISTS "Users can manage own expenses" ON public.vehicle_expenses;
+CREATE POLICY "Users can manage own expenses" ON public.vehicle_expenses FOR ALL USING (auth.uid() = user_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Users can manage own documents" ON public.vehicle_documents;
-CREATE POLICY "Users can manage own documents"
-ON public.vehicle_documents FOR ALL USING (auth.uid() = user_id OR public.is_admin());
+DROP POLICY IF EXISTS "Users can manage own documents" ON public.vehicle_documents;
+CREATE POLICY "Users can manage own documents" ON public.vehicle_documents FOR ALL USING (auth.uid() = user_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Users can manage own reports" ON public.vehicle_reports;
-CREATE POLICY "Users can manage own reports"
-ON public.vehicle_reports FOR ALL USING (auth.uid() = user_id OR public.is_admin());
+DROP POLICY IF EXISTS "Users can manage own reports" ON public.vehicle_reports;
+CREATE POLICY "Users can manage own reports" ON public.vehicle_reports FOR ALL USING (auth.uid() = user_id OR public.is_admin());
 
 -- =========================================================
 -- 9. PLATFORM ECONOMY & B2B SaaS ENHANCEMENTS
@@ -1525,32 +1553,32 @@ ALTER TABLE public.insurance_applications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.transactions ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Anyone can view active appointment slots" ON public.appointment_slots;
-CREATE POLICY "Anyone can view active appointment slots"
-ON public.appointment_slots FOR SELECT USING (is_active = true);
+DROP POLICY IF EXISTS "Anyone can view active appointment slots" ON public.appointment_slots;
+CREATE POLICY "Anyone can view active appointment slots" ON public.appointment_slots FOR SELECT USING (is_active = true);
 
 DROP POLICY IF EXISTS "Sellers can manage own appointment slots" ON public.appointment_slots;
-CREATE POLICY "Sellers can manage own appointment slots"
-ON public.appointment_slots FOR ALL USING (auth.uid() = seller_id OR public.is_admin());
+DROP POLICY IF EXISTS "Sellers can manage own appointment slots" ON public.appointment_slots;
+CREATE POLICY "Sellers can manage own appointment slots" ON public.appointment_slots FOR ALL USING (auth.uid() = seller_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Anyone can view insurance products" ON public.insurance_products;
-CREATE POLICY "Anyone can view insurance products"
-ON public.insurance_products FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Anyone can view insurance products" ON public.insurance_products;
+CREATE POLICY "Anyone can view insurance products" ON public.insurance_products FOR SELECT USING (true);
 
 DROP POLICY IF EXISTS "Only admin can manage insurance products" ON public.insurance_products;
-CREATE POLICY "Only admin can manage insurance products"
-ON public.insurance_products FOR ALL USING (public.is_admin());
+DROP POLICY IF EXISTS "Only admin can manage insurance products" ON public.insurance_products;
+CREATE POLICY "Only admin can manage insurance products" ON public.insurance_products FOR ALL USING (public.is_admin());
 
 DROP POLICY IF EXISTS "Users can view own insurance applications" ON public.insurance_applications;
-CREATE POLICY "Users can view own insurance applications"
-ON public.insurance_applications FOR SELECT USING (auth.uid() = user_id OR public.is_admin());
+DROP POLICY IF EXISTS "Users can view own insurance applications" ON public.insurance_applications;
+CREATE POLICY "Users can view own insurance applications" ON public.insurance_applications FOR SELECT USING (auth.uid() = user_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Users can insert own insurance applications" ON public.insurance_applications;
-CREATE POLICY "Users can insert own insurance applications"
-ON public.insurance_applications FOR INSERT WITH CHECK (auth.uid() = user_id);
+DROP POLICY IF EXISTS "Users can insert own insurance applications" ON public.insurance_applications;
+CREATE POLICY "Users can insert own insurance applications" ON public.insurance_applications FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 DROP POLICY IF EXISTS "Users can view own transactions" ON public.transactions;
-CREATE POLICY "Users can view own transactions"
-ON public.transactions FOR SELECT USING (
+DROP POLICY IF EXISTS "Users can view own transactions" ON public.transactions;
+CREATE POLICY "Users can view own transactions" ON public.transactions FOR SELECT USING (
     auth.uid() = (SELECT customer_id FROM public.orders WHERE id = order_id) OR
     auth.uid() = (SELECT seller_id FROM public.orders WHERE id = order_id) OR
     public.is_admin()
@@ -1632,17 +1660,22 @@ ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
 
 -- Yeni Tablolar İçin RLS Politikaları
 DROP POLICY IF EXISTS "Everyone can view commission rules" ON public.commission_rules;
+DROP POLICY IF EXISTS "Everyone can view commission rules" ON public.commission_rules;
 CREATE POLICY "Everyone can view commission rules" ON public.commission_rules FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Admins can modify commission rules" ON public.commission_rules;
 DROP POLICY IF EXISTS "Admins can modify commission rules" ON public.commission_rules;
 CREATE POLICY "Admins can modify commission rules" ON public.commission_rules FOR ALL USING (public.is_admin());
 
 DROP POLICY IF EXISTS "Partners can view own payouts" ON public.payouts;
+DROP POLICY IF EXISTS "Partners can view own payouts" ON public.payouts;
 CREATE POLICY "Partners can view own payouts" ON public.payouts FOR SELECT USING (auth.uid() = partner_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Only admin can modify payouts" ON public.payouts;
+DROP POLICY IF EXISTS "Only admin can modify payouts" ON public.payouts;
 CREATE POLICY "Only admin can modify payouts" ON public.payouts FOR ALL USING (public.is_admin());
 
+DROP POLICY IF EXISTS "Involved users can view gig disputes" ON public.gig_disputes;
 DROP POLICY IF EXISTS "Involved users can view gig disputes" ON public.gig_disputes;
 CREATE POLICY "Involved users can view gig disputes" ON public.gig_disputes FOR SELECT USING (
     auth.uid() = reporter_id OR 
@@ -1652,14 +1685,18 @@ CREATE POLICY "Involved users can view gig disputes" ON public.gig_disputes FOR 
 );
 
 DROP POLICY IF EXISTS "Involved users can insert disputes" ON public.gig_disputes;
+DROP POLICY IF EXISTS "Involved users can insert disputes" ON public.gig_disputes;
 CREATE POLICY "Involved users can insert disputes" ON public.gig_disputes FOR INSERT WITH CHECK (auth.uid() = reporter_id);
 
+DROP POLICY IF EXISTS "Everyone can read partner metrics" ON public.partner_metrics;
 DROP POLICY IF EXISTS "Everyone can read partner metrics" ON public.partner_metrics;
 CREATE POLICY "Everyone can read partner metrics" ON public.partner_metrics FOR SELECT USING (true);
 
 DROP POLICY IF EXISTS "Partners and admins can manage metrics" ON public.partner_metrics;
+DROP POLICY IF EXISTS "Partners and admins can manage metrics" ON public.partner_metrics;
 CREATE POLICY "Partners and admins can manage metrics" ON public.partner_metrics FOR ALL USING (auth.uid() = partner_id OR public.is_admin());
 
+DROP POLICY IF EXISTS "Admins can read audit logs" ON public.audit_logs;
 DROP POLICY IF EXISTS "Admins can read audit logs" ON public.audit_logs;
 CREATE POLICY "Admins can read audit logs" ON public.audit_logs FOR SELECT USING (public.is_admin());
 
@@ -2063,23 +2100,23 @@ ON CONFLICT (id) DO NOTHING;
 
 -- 3.1 Belge Kasası ve Kaza Raporları RLS: Sadece dosya sahibi okuyabilir ve yükleyebilir
 DROP POLICY IF EXISTS "Users can manage own documents" ON storage.objects;
-CREATE POLICY "Users can manage own documents"
-ON storage.objects
+DROP POLICY IF EXISTS "Users can manage own documents" ON storage.objects;
+CREATE POLICY "Users can manage own documents" ON storage.objects
 FOR ALL
 USING (bucket_id IN ('vehicle-documents', 'accident-reports') AND auth.uid() = owner)
 WITH CHECK (bucket_id IN ('vehicle-documents', 'accident-reports') AND auth.uid() = owner);
 
 -- 3.2 Servis Kanıtları (Proofs) RLS: Siparişle ilişkili müşteri veya satıcı görebilir, sadece satıcı yükleyebilir
 DROP POLICY IF EXISTS "Authenticated users upload proofs" ON storage.objects;
-CREATE POLICY "Authenticated users upload proofs"
-ON storage.objects
+DROP POLICY IF EXISTS "Authenticated users upload proofs" ON storage.objects;
+CREATE POLICY "Authenticated users upload proofs" ON storage.objects
 FOR INSERT
 TO authenticated
 WITH CHECK (bucket_id = 'service-proofs');
 
 DROP POLICY IF EXISTS "Users view relevant service proofs" ON storage.objects;
-CREATE POLICY "Users view relevant service proofs"
-ON storage.objects
+DROP POLICY IF EXISTS "Users view relevant service proofs" ON storage.objects;
+CREATE POLICY "Users view relevant service proofs" ON storage.objects
 FOR SELECT
 TO authenticated
 USING (bucket_id = 'service-proofs');
@@ -2129,9 +2166,11 @@ ALTER TABLE public.quotes ADD COLUMN IF NOT EXISTS estimated_delivery_days INTEG
 ALTER TABLE public.valet_bookings ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Users can manage own valet bookings" ON public.valet_bookings;
+DROP POLICY IF EXISTS "Users can manage own valet bookings" ON public.valet_bookings;
 CREATE POLICY "Users can manage own valet bookings" ON public.valet_bookings
 FOR ALL USING (auth.uid() = customer_id OR auth.uid() = valet_id);
 
+DROP POLICY IF EXISTS "Valets can view pending bookings" ON public.valet_bookings;
 DROP POLICY IF EXISTS "Valets can view pending bookings" ON public.valet_bookings;
 CREATE POLICY "Valets can view pending bookings" ON public.valet_bookings
 FOR SELECT USING (
@@ -2164,17 +2203,21 @@ CREATE TABLE IF NOT EXISTS public.road_alerts (
 ALTER TABLE public.road_alerts ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Anyone can select road alerts" ON public.road_alerts;
+DROP POLICY IF EXISTS "Anyone can select road alerts" ON public.road_alerts;
 CREATE POLICY "Anyone can select road alerts" ON public.road_alerts
 FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Authenticated users can insert road alerts" ON public.road_alerts;
 DROP POLICY IF EXISTS "Authenticated users can insert road alerts" ON public.road_alerts;
 CREATE POLICY "Authenticated users can insert road alerts" ON public.road_alerts
 FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 DROP POLICY IF EXISTS "Anyone can update road alerts for voting" ON public.road_alerts;
+DROP POLICY IF EXISTS "Anyone can update road alerts for voting" ON public.road_alerts;
 CREATE POLICY "Anyone can update road alerts for voting" ON public.road_alerts
 FOR UPDATE USING (true) WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Users can delete their own alerts" ON public.road_alerts;
 DROP POLICY IF EXISTS "Users can delete their own alerts" ON public.road_alerts;
 CREATE POLICY "Users can delete their own alerts" ON public.road_alerts
 FOR DELETE USING (auth.uid() = user_id);
@@ -2208,18 +2251,22 @@ CREATE INDEX IF NOT EXISTS idx_maintenance_records_user_id ON public.maintenance
 ALTER TABLE public.maintenance_records ENABLE ROW LEVEL SECURITY;
 
 -- Users can view their own maintenance records
+DROP POLICY IF EXISTS "Users can view own maintenance records" ON public.maintenance_records;
 CREATE POLICY "Users can view own maintenance records" ON public.maintenance_records
   FOR SELECT USING (auth.uid() = user_id);
 
 -- Users can insert their own maintenance records
+DROP POLICY IF EXISTS "Users can insert own maintenance records" ON public.maintenance_records;
 CREATE POLICY "Users can insert own maintenance records" ON public.maintenance_records
   FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 -- Users can update their own maintenance records
+DROP POLICY IF EXISTS "Users can update own maintenance records" ON public.maintenance_records;
 CREATE POLICY "Users can update own maintenance records" ON public.maintenance_records
   FOR UPDATE USING (auth.uid() = user_id);
 
 -- Users can delete their own maintenance records
+DROP POLICY IF EXISTS "Users can delete own maintenance records" ON public.maintenance_records;
 CREATE POLICY "Users can delete own maintenance records" ON public.maintenance_records
   FOR DELETE USING (auth.uid() = user_id);
 
@@ -2241,20 +2288,20 @@ CREATE TABLE IF NOT EXISTS diagnostics (
 ALTER TABLE diagnostics ENABLE ROW LEVEL SECURITY;
 
 -- Policy 1: Authenticated users can insert
-CREATE POLICY "Allow authenticated users to insert diagnostics" 
-ON diagnostics FOR INSERT 
+DROP POLICY IF EXISTS "Allow authenticated users to insert diagnostics" ON diagnostics;
+CREATE POLICY "Allow authenticated users to insert diagnostics" ON diagnostics FOR INSERT 
 TO authenticated 
 WITH CHECK (true);
 
 -- Policy 2: Users can only view their own diagnostics
-CREATE POLICY "Allow users to view own diagnostics" 
-ON diagnostics FOR SELECT 
+DROP POLICY IF EXISTS "Allow users to view own diagnostics" ON diagnostics;
+CREATE POLICY "Allow users to view own diagnostics" ON diagnostics FOR SELECT 
 TO authenticated 
 USING (user_id = auth.uid()::text);
 
 -- Policy 3: Service role can do everything
-CREATE POLICY "Service role can do everything"
-ON diagnostics FOR ALL
+DROP POLICY IF EXISTS "Service role can do everything" ON diagnostics;
+CREATE POLICY "Service role can do everything" ON diagnostics FOR ALL
 TO service_role
 USING (true)
 WITH CHECK (true);
