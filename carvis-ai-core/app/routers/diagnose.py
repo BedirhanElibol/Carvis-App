@@ -3,8 +3,22 @@ from app.schemas.ai_schemas import DiagnosisRequest, DiagnosisResponse
 from app.database import db
 import uuid
 import random
+from functools import lru_cache
 
 router = APIRouter(prefix="/api/v1", tags=["Diagnostics"])
+
+@lru_cache(maxsize=1000)
+def analyze_issue(description: str):
+    # Mock AI Logic
+    issues = [
+        {"issue": "Akü Bitmesi", "severity": "Medium", "action": "Takviye Aracı Gönder"},
+        {"issue": "Motor Harareti", "severity": "High", "action": "Çekici Yönlendir"},
+        {"issue": "Lastik Patlaması", "severity": "Low", "action": "Mobil Lastikçi Gönder"},
+        {"issue": "Şanzıman Arızası", "severity": "High", "action": "Çekici Yönlendir"}
+    ]
+    prediction = random.choice(issues)
+    confidence = round(random.uniform(0.75, 0.99), 2)
+    return prediction, confidence
 
 @router.post("/diagnose", response_model=DiagnosisResponse)
 async def diagnose_vehicle(request: DiagnosisRequest):
@@ -13,16 +27,7 @@ async def diagnose_vehicle(request: DiagnosisRequest):
     In the future, this can be integrated with OpenAI GPT-4 Vision.
     """
     
-    # Mock AI Logic
-    issues = [
-        {"issue": "Akü Bitmesi", "severity": "Medium", "action": "Takviye Aracı Gönder"},
-        {"issue": "Motor Harareti", "severity": "High", "action": "Çekici Yönlendir"},
-        {"issue": "Lastik Patlaması", "severity": "Low", "action": "Mobil Lastikçi Gönder"},
-        {"issue": "Şanzıman Arızası", "severity": "High", "action": "Çekici Yönlendir"}
-    ]
-    
-    prediction = random.choice(issues)
-    confidence = round(random.uniform(0.75, 0.99), 2)
+    prediction, confidence = analyze_issue(request.description)
     diag_id = str(uuid.uuid4())
 
     response_data = DiagnosisResponse(
