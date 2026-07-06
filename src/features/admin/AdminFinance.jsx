@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import * as Icons from "lucide-react";
+import { Activity, Clock, Percent, RefreshCcw, TrendingUp } from "lucide-react";
  
 import { motion } from "framer-motion";
 import { supabase } from "../../supabaseClient";
@@ -80,28 +80,28 @@ const AdminFinance = () => {
     {
       label: "Toplam Hacim",
       value: `₺${stats.totalRevenue.toLocaleString()}`,
-      icon: Icons.Activity,
+      icon: Activity,
       color: "text-blue-400",
       bg: "bg-blue-500/10",
     },
     {
       label: "Bugünkü Ciro",
       value: `₺${stats.todayRevenue.toLocaleString()}`,
-      icon: Icons.TrendingUp,
-      color: "text-emerald-400",
+      icon: TrendingUp,
+      color: "text-teal-400",
       bg: "bg-emerald-500/10",
     },
     {
       label: "Platform Komisyonu",
       value: `₺${stats.commissionEarned.toLocaleString()}`,
-      icon: Icons.Percent,
-      color: "text-emerald-400",
+      icon: Percent,
+      color: "text-teal-400",
       bg: "bg-emerald-500/10",
     },
     {
       label: "Bekleyen Ödemeler",
       value: `₺${stats.pendingPayouts.toLocaleString()}`,
-      icon: Icons.Clock,
+      icon: Clock,
       color: "text-amber-400",
       bg: "bg-amber-500/10",
     },
@@ -154,7 +154,7 @@ const AdminFinance = () => {
             onClick={fetchFinanceData}
             className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full transition-colors"
           >
-            <Icons.RefreshCcw size={16} className={loading ? "animate-spin" : ""} />
+            <RefreshCcw size={16} className={loading ? "animate-spin" : ""} />
           </button>
         </div>
         <div className="overflow-x-auto">

@@ -1,27 +1,35 @@
-# Sürüş Modu ve EDS/Radar Bildirim Sistemi (Drive Mode & Proximity Alerts)
+# Performans Optimizasyonu ve Takılma (Stutter/Freeze) Çözüm Planı
 
-Müşterinin seyir halindeyken EDS, Radar ve Kasis gibi noktaları fark edebilmesi için statik harita tek başına yetersizdir. GPS tabanlı bir "Sürüş Modu" (Drive Mode) ve bir **Erken Uyarı Sistemi** tasarlanmalıdır.
+Uygulamadaki takılma ve yavaşlamaların (özellikle `CustomerHome.jsx` sayfasında) temel nedenleri:
+1. **Devasa Component Boyutu (1384 satır):** Tüm arayüz (arama, harita, kampanyalar, yakıt fiyatları) tek bir component içinde.
+2. **Gereksiz Re-render'lar:** Haritadaki bir pin'in üzerine gelindiğinde (`hoveredPin` state değişimi) veya arama kutusuna yazı yazıldığında tüm sayfa (ve harita/diğer ağır bileşenler) baştan render ediliyor.
+3. **Ağır Effect'ler:** Yakıt fiyatları için yazılan karmaşık `setInterval` ve proxy zinciri doğrudan UI thread'i ve state'i meşgul ediyor.
 
-## Yaratılacak Katmanlar (Orchestration Plan)
+## Proposed Changes
 
-### 1. Drive Mode UI (Frontend Specialist)
-- **Seyir Modu Butonu:** Harita üzerinde "Sürüşü Başlat" butonu. Tıklandığında harita dinamik olarak kullanıcının `userLocation` verisine kilitlenir.
-- **Head-Up Display (HUD) Overlay:** Ekranda anlık hız (GPS bazlı hesaplanabilir), sonraki EDS/Kasis'e kalan mesafe ve EDS tipi (Örn: "Hız Koridoru - 82 km/s") gösterilir.
+### src/features/home/
+#### [MODIFY] CustomerHome.jsx
+- Component içi devasa JSX blokları (`searchAndCategoriesPanel`, `featuredDealsPanel`, `popularProvidersPanel`, vb.) ayrı bileşenlere taşınacak.
+- State'ler (`searchQuery`, `hoveredPin`, `fuelPrices`) ilgili alt bileşenlere veya custom hook'lara dağıtılacak. Böylece biri değiştiğinde hepsi render edilmeyecek.
 
-### 2. Proximity & Geofencing (Backend / Logic Specialist)
-- **Haversine Distance Calculator:** Her GPS `userLocation` güncellemesinde, çevredeki EDS noktalarına olan kuş uçuşu (veya tahmini rota) mesafesi hesaplanır.
-- **Uyarı Eşikleri (Thresholds):**
-  - **1 KM Kala:** Bilgi (Mavi/Sarı görsel uyarı)
-  - **500 Metre Kala:** Kritik Uyarı (Kırmızı yanıp sönen HUD paneli)
-- **Ortalama Hız Hesaplama:** Hız koridoru başlangıcından geçildiğinde bir zamanlayıcı başlar, anlık ortalama hız hesaplanarak sürücü uyarılır.
+#### [NEW] components/SearchAndCategoriesPanel.jsx
+- Arama kutusu ve kategorileri içerecek. Sadece arama state'i değiştiğinde kendisi güncellenecek. `React.memo` ile sarılacak.
 
-### 3. Audio / Visual Alerts (UX & Accessibility)
-- Sürücü haritaya bakmıyorken bile fark edebilmesi için **Sesli Asistan (TTS veya basit zil/uyarı sesleri)** entegrasyonu.
-- Ekranın kenarlarında parlayan acil durum çerçeveleri (Red/Orange glow).
+#### [NEW] components/PopularProvidersPanel.jsx
+- Harita ve servis noktası listesi buraya taşınacak.
+- `hoveredPin` state'i sadece bu bileşeni etkileyecek, tüm sayfayı dondurmayacak.
 
----
+#### [NEW] components/FeaturedDealsPanel.jsx
+- Fırsatlar ve kampanyalar kısmı. `React.memo` ile optimize edilecek.
 
-## User Review Required
-Lütfen aşağıdaki sorulara karar verelim:
-1. Sesli uyarılar (Örn: "500 metre sonra hız koridoru") tarayıcının Web Speech API'si ile (robotik ses) mi okunsun, yoksa standart bir "BİP BİP" alarm sesi mi kullanalım?
-2. Sürüş modu arayüzü tam ekran (Full-screen navigasyon stili) mu olsun, yoksa şu anki haritanın üzerine binen bir widget/panel olarak mı kalsın?
+#### [NEW] components/HowItWorksPanel.jsx
+- Statik bilgi paneli. Gereksiz renderları önlemek için `React.memo` kullanılacak.
+
+### src/hooks/
+#### [NEW] useFuelPrices.js
+- `CustomerHome` içindeki 100+ satırlık yakıt fiyatı çekme ve proxy (yedekleme) mantığı bağımsız bir hook'a taşınacak.
+- Effect temizlikleri (cleanup) ve interval yönetimi daha stabil hale getirilecek.
+
+## Verification Plan
+- `CustomerHome` sayfasında haritadaki pinler üzerinde mouse ile gezinildiğinde (hover) sayfanın geri kalanının donup donmadığı test edilecek.
+- Arama kutusuna hızlıca yazı yazıldığında klavye gecikmesi (input lag) olup olmadığı kontrol edilecek.

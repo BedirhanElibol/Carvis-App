@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import * as Icons from "lucide-react";
+import { DollarSign, Euro } from "lucide-react";
 import { useExternalData } from "../../hooks/useExternalData";
 const CurrencyTicker = () => {
   const { fetchExchangeRate } = useExternalData();
@@ -19,7 +19,7 @@ const CurrencyTicker = () => {
         {" "}
         <div className="bg-green-500/10 p-2 rounded-lg text-green-400">
           {" "}
-          <Icons.DollarSign size={16} />{" "}
+          <DollarSign size={16} />{" "}
         </div>{" "}
         <div>
           {" "}
@@ -36,7 +36,7 @@ const CurrencyTicker = () => {
         {" "}
         <div className="bg-blue-500/10 p-2 rounded-lg text-blue-400">
           {" "}
-          <Icons.Euro size={16} />{" "}
+          <Euro size={16} />{" "}
         </div>{" "}
         <div>
           {" "}

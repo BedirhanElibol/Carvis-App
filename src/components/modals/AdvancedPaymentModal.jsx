@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { CheckCircle, ChevronRight, CreditCard, Info, Loader2, X } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 
 const AdvancedPaymentModal = ({
@@ -93,7 +93,7 @@ const AdvancedPaymentModal = ({
           onClick={onClose}
           className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors"
         >
-          <Icons.X size={18} />
+          <X size={18} />
         </button>
 
         {step === "payment" ? (
@@ -101,7 +101,7 @@ const AdvancedPaymentModal = ({
             {/* LEFT COLUMN: Payment Methods */}
             <div className="flex-1 p-6 md:p-8 overflow-y-auto bg-white">
               <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2 font-sans">
-                <Icons.CreditCard className="text-primary-600" /> Ödeme
+                <CreditCard className="text-primary-600" /> Ödeme
                 Seçenekleri
               </h2>
 
@@ -143,7 +143,7 @@ const AdvancedPaymentModal = ({
                         </span>
                         {selectedCardId === card.id && (
                           <div className="w-4 h-4 bg-primary-600 rounded-full flex items-center justify-center">
-                            <Icons.CheckCircle
+                            <CheckCircle
                               size={10}
                               className="text-slate-900 dark:text-white"
                             />
@@ -172,7 +172,7 @@ const AdvancedPaymentModal = ({
                 <div className="bg-slate-50 border border-slate-200 p-6 rounded-xl relative overflow-hidden">
                   {/* Card Visual (Simple) */}
                   <div className="absolute top-0 right-0 p-4 opacity-10">
-                    <Icons.CreditCard size={120} />
+                    <CreditCard size={120} />
                   </div>
                   <div className="relative z-10 space-y-4">
                     <div>
@@ -214,7 +214,7 @@ const AdvancedPaymentModal = ({
                       <div>
                         <label className="text-xs font-bold text-slate-600 block mb-1.5 flex items-center gap-1">
                           CVV{" "}
-                          <Icons.Info size={12} className="text-slate-500 dark:text-slate-400" />
+                          <Info size={12} className="text-slate-500 dark:text-slate-400" />
                         </label>
                         <input
                           type="password"
@@ -413,7 +413,7 @@ const AdvancedPaymentModal = ({
                 className="w-full bg-primary-600 hover:bg-primary-700 text-slate-900 dark:text-white text-sm font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-between px-6 font-sans"
               >
                 <span>Ödemeyi Tamamla</span>
-                <Icons.ChevronRight size={18} />
+                <ChevronRight size={18} />
               </button>
 
               <div className="flex justify-center gap-2 mt-4 opacity-50 grayscale hover:grayscale-0 transition-all">
@@ -423,7 +423,7 @@ const AdvancedPaymentModal = ({
           </>
         ) : step === "processing" ? (
           <div className="flex-1 flex flex-col items-center justify-center p-12 bg-white min-h-[400px]">
-            <Icons.Loader2
+            <Loader2
               size={48}
               className="text-primary-600 animate-spin mb-4"
             />
@@ -437,7 +437,7 @@ const AdvancedPaymentModal = ({
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center p-12 bg-white min-h-[400px]">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6 animate-in zoom-in">
-              <Icons.CheckCircle size={40} className="text-green-600" />
+              <CheckCircle size={40} className="text-green-600" />
             </div>
             <h3 className="text-2xl font-black text-slate-800 mb-2 font-sans">
               Teşekkürler!

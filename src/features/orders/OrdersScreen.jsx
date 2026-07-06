@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle, Clock, RefreshCw, ShieldCheck, ShoppingBag, Star, Wrench, XCircle } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
 import { useOrder } from "../../context/OrderContext";
@@ -22,35 +22,35 @@ const OrdersScreen = () => {
     switch (status) {
       case "pending":
         return {
-          icon: Icons.Clock,
+          icon: Clock,
           color: "text-yellow-400",
           bg: "bg-yellow-500/10",
           label: "Beklemede",
         };
       case "paid":
         return {
-          icon: Icons.CheckCircle,
+          icon: CheckCircle,
           color: "text-green-400",
           bg: "bg-green-500/10",
           label: "ÖÖdendi",
         };
       case "completed":
         return {
-          icon: Icons.CheckCircle,
-          color: "text-emerald-400",
+          icon: CheckCircle,
+          color: "text-teal-400",
           bg: "bg-emerald-500/10",
           label: "Tamamlandıı",
         };
       case "cancelled":
         return {
-          icon: Icons.XCircle,
+          icon: XCircle,
           color: "text-red-400",
           bg: "bg-red-500/10",
           label: "İİptal Edildi",
         };
       case "refunded":
         return {
-          icon: Icons.XCircle,
+          icon: XCircle,
           color: "text-orange-400",
           bg: "bg-orange-500/10",
           label: "İİade Edildi",
@@ -58,28 +58,28 @@ const OrdersScreen = () => {
       // New Transparent Eye Statuses
       case "diagnosing":
         return {
-          icon: Icons.Wrench,
-          color: "text-emerald-400",
+          icon: Wrench,
+          color: "text-teal-400",
           bg: "bg-emerald-500/10",
           label: "Teşhis Ediliyor",
         };
       case "repairing":
         return {
-          icon: Icons.Wrench,
+          icon: Wrench,
           color: "text-blue-400",
           bg: "bg-blue-500/10",
           label: "Onarılıyor",
         };
       case "quality_check":
         return {
-          icon: Icons.CheckCircle,
+          icon: CheckCircle,
           color: "text-cyan-400",
           bg: "bg-cyan-500/10",
           label: "Son Kontroller",
         };
       default:
         return {
-          icon: Icons.Clock,
+          icon: Clock,
           color: "text-slate-500 dark:text-slate-400",
           bg: "bg-slate-500/10",
           label: status,
@@ -109,7 +109,7 @@ const OrdersScreen = () => {
               onClick={() => navigate(-1)}
               className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale transition-all border border-black/5 dark:border-white/5"
             >
-              <Icons.ArrowLeft size={20} />
+              <ArrowLeft size={20} />
             </button>
             <div>
               <h1 className="text-xl font-bold font-sans uppercase tracking-tighter">
@@ -127,7 +127,7 @@ const OrdersScreen = () => {
             }}
             className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale transition-all border border-black/5 dark:border-white/5"
           >
-            <Icons.RefreshCw
+            <RefreshCw
               size={18}
               className={
                 loading ? "animate-spin text-primary-500" : "text-slate-500 dark:text-slate-400"
@@ -150,7 +150,7 @@ const OrdersScreen = () => {
           <SkeletonList count={3} />
         ) : orders.length === 0 ? (
           <EmptyState
-            icon={Icons.ShoppingBag}
+            icon={ShoppingBag}
             title="Henüz Siparişşiniz Yok"
             subtitle="Teklifleri kabul ettiğinizde veya marketplace üzerinden ürün aldığınızda siparişleriniz burada listelenir."
             actionLabel="Alışverişe Başla"
@@ -213,22 +213,22 @@ const OrdersScreen = () => {
                               fetchOrders();
                             }
                           }}
-                          className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all active-scale shadow-lg shadow-emerald-900/20 border border-emerald-400/20 font-sans"
+                          className="flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all active-scale shadow-lg shadow-emerald-900/20 border border-teal-400/20 font-sans"
                         >
-                          <Icons.CheckCircle size={14} />
+                          <CheckCircle size={14} />
                           Hizmeti Onayla
                         </button>
                       ) : order.status === "completed" ? (
                         <div className="flex flex-col gap-2">
-                            <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20 uppercase tracking-wider font-sans">
-                              <Icons.ShieldCheck size={12} /> İşlem Tamamlandı
+                            <div className="flex items-center gap-1.5 text-[10px] font-bold text-teal-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20 uppercase tracking-wider font-sans">
+                              <ShieldCheck size={12} /> İşlem Tamamlandı
                             </div>
                             {!order.rating && (
                                 <button 
                                     onClick={(e) => { e.stopPropagation(); setReviewOrder(order); }}
                                     className="flex items-center gap-1 px-3 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-yellow-950 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-yellow-500/20 active-scale border border-yellow-500/20"
                                 >
-                                    <Icons.Star size={12} />
+                                    <Star size={12} />
                                     Değerlendir
                                 </button>
                             )}
@@ -260,7 +260,7 @@ const OrdersScreen = () => {
                   </div>
                   <div className="mt-4 flex items-center justify-between text-[10px] text-primary-400 font-bold uppercase tracking-widest group-hover:text-primary-300 transition-colors font-sans">
                     <span>Detaylı İzleme İçin Tıklayın</span>
-                    <Icons.ArrowRight size={14} />
+                    <ArrowRight size={14} />
                   </div>
                 </div>
               </div>

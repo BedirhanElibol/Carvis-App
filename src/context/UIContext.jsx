@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useMemo } from "react";
 import { TRANSLATIONS } from "../constants/translations";
 
 const UIContext = createContext();
@@ -104,7 +104,8 @@ export const UIProvider = ({ children }) => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
-  const value = {
+  const value = useMemo(() => ({
+
     alertState,
     showAlert,
     closeAlert,
@@ -122,7 +123,8 @@ export const UIProvider = ({ children }) => {
     loginIntent,
     selectedLocation,
     setSelectedLocation,
-  };
+  
+  }), [alertState, showAlert, closeAlert, language, toggleLanguage, theme, toggleTheme, t, isLoading, modals, openModal, closeModal, loginIntent, selectedLocation]);
 
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
 };

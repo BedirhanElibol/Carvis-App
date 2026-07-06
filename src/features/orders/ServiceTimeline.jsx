@@ -1,36 +1,36 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { Camera, Check, CheckCircle2, Clock, Wrench } from "lucide-react";
 import { motion } from "framer-motion";  
 
 const steps = [
   {
     id: "pending",
     label: "Talep Alındı",
-    icon: Icons.Clock,
+    icon: Clock,
     desc: "Servis talebiniz ulaştı.",
   },
   {
     id: "diagnosing",
     label: "Teşhis & Ekspertiz",
-    icon: Icons.Wrench,
+    icon: Wrench,
     desc: "Usta aracı inceliyor.",
   },
   {
     id: "repairing",
     label: "İşlem Başladı",
-    icon: Icons.Wrench,
+    icon: Wrench,
     desc: "Parça değişimi/onarım yapılıyor.",
   },
   {
     id: "quality_check",
     label: "Son Kontroller",
-    icon: Icons.CheckCircle2,
+    icon: CheckCircle2,
     desc: "Test sürüşü ve kalite kontrol.",
   },
   {
     id: "completed",
     label: "Teslime Hazır",
-    icon: Icons.Check,
+    icon: Check,
     desc: "Aracınızı teslim alabilirsiniz.",
   },
 ];
@@ -83,7 +83,7 @@ const ServiceTimeline = ({ status, evidencePhotos = [] }) => {
                     isActive
                       ? "text-primary-400"
                       : isCompleted
-                        ? "text-emerald-400"
+                        ? "text-teal-400"
                         : "text-slate-500"
                   }`}
                 >
@@ -102,7 +102,7 @@ const ServiceTimeline = ({ status, evidencePhotos = [] }) => {
                   >
                     <div className="bg-white dark:bg-slate-900 p-2 rounded-xl border border-black/10 dark:border-white/10 inline-block">
                       <div className="flex items-center gap-2 mb-2">
-                        <Icons.Camera size={12} className="text-primary-400" />
+                        <Camera size={12} className="text-primary-400" />
                         <span className="text-[10px] font-black text-slate-600 dark:text-slate-300">
                           CANLI GÖRÜNTÜ
                         </span>

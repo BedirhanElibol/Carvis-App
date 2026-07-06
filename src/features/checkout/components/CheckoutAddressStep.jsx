@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { CheckCircle, MapPin, Plus, Save, Trash2, X } from "lucide-react";
 import { useShop } from "../../../context/ShopContext";
 import { useAuth } from "../../../context/AuthContext";
 import { supabase } from "../../../supabaseClient";
@@ -57,7 +57,7 @@ const AddAddressModal = ({ onClose, onSaved }) => {
             onClick={onClose}
             className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full transition"
           >
-            <Icons.X size={18} className="text-slate-500 dark:text-slate-400" />
+            <X size={18} className="text-slate-500 dark:text-slate-400" />
           </button>{" "}
         </div>{" "}
         <div className="flex gap-2">
@@ -101,7 +101,7 @@ const AddAddressModal = ({ onClose, onSaved }) => {
             <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
           ) : (
             <>
-              <Icons.Save size={16} /> Kaydet
+              <Save size={16} /> Kaydet
             </>
           )}{" "}
         </button>{" "}
@@ -145,7 +145,7 @@ const CheckoutAddressStep = () => {
       )}{" "}
       <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
         {" "}
-        <Icons.MapPin className="text-primary-500" /> Teslimat Adresi{" "}
+        <MapPin className="text-primary-500" /> Teslimat Adresi{" "}
       </h2>{" "}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {" "}
@@ -162,7 +162,7 @@ const CheckoutAddressStep = () => {
                 {" "}
                 {addr.title}{" "}
                 {selectedAddress?.id === addr.id && (
-                  <Icons.CheckCircle size={16} className="text-primary-500" />
+                  <CheckCircle size={16} className="text-primary-500" />
                 )}{" "}
               </h4>{" "}
               <button
@@ -173,7 +173,7 @@ const CheckoutAddressStep = () => {
                 className="text-slate-500 hover:text-red-400 transition"
               >
                 {" "}
-                <Icons.Trash2 size={14} />{" "}
+                <Trash2 size={14} />{" "}
               </button>{" "}
             </div>{" "}
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3 h-10 line-clamp-2">
@@ -191,7 +191,7 @@ const CheckoutAddressStep = () => {
             className="glass-card p-5 rounded-3xl border border-dashed border-black/20 dark:border-white/20 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-black/5 dark:bg-white/5 transition-all"
           >
             {" "}
-            <Icons.Plus size={24} />{" "}
+            <Plus size={24} />{" "}
             <span className="text-xs font-bold">Yeni Adres Ekle</span>{" "}
           </button>
         )}{" "}
@@ -199,7 +199,7 @@ const CheckoutAddressStep = () => {
       {addresses.length === 0 && (
         <div className="text-center py-8 text-slate-500">
           {" "}
-          <Icons.MapPin size={32} className="mx-auto mb-2 opacity-30" />{" "}
+          <MapPin size={32} className="mx-auto mb-2 opacity-30" />{" "}
           <p className="text-sm">
             Henüz kayıtlı adresiniz yok.
             <br />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import * as Icons from "lucide-react";
+import { ArrowLeft, Car, Fuel, Loader2, Plus, Trash2, X } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 import { useGarage } from "../../context/GarageContext";
@@ -154,7 +154,7 @@ const FuelScreen = () => {
             onClick={() => navigate(-1)}
             className="p-2.5 glass-card rounded-xl text-slate-900 dark:text-white active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5"
           >
-            <Icons.ArrowLeft size={20} />
+            <ArrowLeft size={20} />
           </button>
           <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter uppercase">
             YAKIT TAKİBİ
@@ -164,13 +164,13 @@ const FuelScreen = () => {
           onClick={() => setShowAddModal(true)}
           className="bg-primary-600 text-slate-900 dark:text-white p-2.5 rounded-xl shadow-lg shadow-primary-900/20 hover:bg-primary-500 active-scale transition-colors"
         >
-          <Icons.Plus size={20} />
+          <Plus size={20} />
         </button>
       </div>
 
       {!activeVehicle ? (
         <div className="glass-card border border-amber-500/20 bg-amber-500/5 p-6 rounded-2xl flex flex-col items-center justify-center gap-3 text-center">
-          <Icons.Car className="text-amber-500" size={32} />
+          <Car className="text-amber-500" size={32} />
           <p className="text-sm font-bold text-amber-600 dark:text-amber-400">Yakıt takibi yapabilmek için önce bir araç seçmeli veya eklemelisiniz.</p>
         </div>
       ) : (
@@ -178,12 +178,12 @@ const FuelScreen = () => {
           {/* List */}
           {loading ? (
             <div className="flex justify-center items-center py-20">
-              <Icons.Loader2 className="animate-spin text-primary-500" size={32} />
+              <Loader2 className="animate-spin text-primary-500" size={32} />
             </div>
           ) : logs.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 opacity-60">
               <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-[2.5rem] flex items-center justify-center border border-black/5 dark:border-white/5 shadow-2xl mb-4">
-                <Icons.Fuel size={32} className="text-slate-500" />
+                <Fuel size={32} className="text-slate-500" />
               </div>
               <p className="text-sm font-black uppercase tracking-[0.1em] text-slate-500">
                 Henüz yakıt kaydı bulunmuyor
@@ -195,12 +195,12 @@ const FuelScreen = () => {
                 <div key={log.id} className="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-black/5 dark:border-white/5 shadow-lg relative group overflow-hidden">
                   <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
                      <button onClick={() => deleteLog(log.id)} className="text-red-500 hover:text-red-600 bg-red-50 dark:bg-red-500/10 p-2 rounded-xl">
-                        <Icons.Trash2 size={16} />
+                        <Trash2 size={16} />
                      </button>
                   </div>
                   <div className="flex items-center gap-4 mb-4">
                     <div className="bg-primary-500/10 p-3 rounded-2xl border border-primary-500/20">
-                      <Icons.Fuel size={24} className="text-primary-500" />
+                      <Fuel size={24} className="text-primary-500" />
                     </div>
                     <div>
                       <h4 className="font-black text-lg text-slate-900 dark:text-white uppercase">
@@ -241,7 +241,7 @@ const FuelScreen = () => {
               onClick={() => setShowAddModal(false)}
               className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 bg-slate-100 dark:bg-slate-800 p-2 rounded-full"
             >
-              <Icons.X size={20} />
+              <X size={20} />
             </button>
             <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-6">Yeni Yakıt Kaydı</h3>
             

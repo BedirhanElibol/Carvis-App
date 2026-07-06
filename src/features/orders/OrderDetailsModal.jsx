@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { BellRing, Image, ShieldCheck, Truck, X } from "lucide-react";
 import ServiceTimeline from "./ServiceTimeline";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
@@ -87,7 +87,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
             onClick={onClose}
             className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
           >
-            <Icons.X size={20} />
+            <X size={20} />
           </button>
         </div>
 
@@ -96,7 +96,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
           {/* Status Badge */}
           <div className="bg-primary-900/20 border border-primary-500/20 p-4 rounded-2xl flex items-center gap-3">
             <div className="bg-primary-500/20 p-2.5 rounded-xl">
-              <Icons.ShieldCheck className="text-primary-400" size={24} />
+              <ShieldCheck className="text-primary-400" size={24} />
             </div>
             <div>
               <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest">
@@ -112,7 +112,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
           {localOrder.pending_approval_items?.filter(i => i.status === 'pending').length > 0 && (
             <div className="bg-amber-500/10 border border-amber-500/20 p-6 rounded-[2rem] space-y-4">
               <div className="flex items-center gap-2 mb-2">
-                <Icons.BellRing size={18} className="text-amber-500 animate-bounce" />
+                <BellRing size={18} className="text-amber-500 animate-bounce" />
                 <h4 className="text-amber-500 font-black text-xs uppercase tracking-widest">ONAYINIZ BEKLENİYOR</h4>
               </div>
               {localOrder.pending_approval_items.filter(i => i.status === 'pending').map(item => (
@@ -162,7 +162,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-slate-700">
-                      <Icons.Image size={24} />
+                      <Image size={24} />
                     </div>
                   )}
                 </div>
@@ -180,7 +180,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-slate-700">
-                      <Icons.Image size={24} />
+                      <Image size={24} />
                     </div>
                   )}
                 </div>
@@ -216,7 +216,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
                {localOrder.quote?.tracking_number && (
                  <div className="flex items-center justify-between">
                    <div className="flex items-center gap-2 text-primary-500">
-                     <Icons.Truck size={20} />
+                     <Truck size={20} />
                      <span className="text-[10px] font-black uppercase tracking-widest">Kargo Takip No:</span>
                    </div>
                    <span className="text-sm font-mono font-bold text-slate-900 dark:text-white bg-black/5 dark:bg-white/5 px-3 py-1 rounded-lg">

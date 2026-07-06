@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import * as Icons from "lucide-react";
+import { AlertCircle, Banknote, CheckCircle, Clock, EyeOff, RefreshCw, ShieldCheck, Wrench, X } from "lucide-react";
 import { useUI } from "../../../context/UIContext";
 import { useAuth } from "../../../context/AuthContext";
 import { supabase } from "../../../supabaseClient";
@@ -204,7 +204,7 @@ const MechanicJobs = () => {
           disabled={loading}
           className="p-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white rounded-xl transition-all disabled:opacity-50"
         >
-          <Icons.RefreshCw
+          <RefreshCw
             size={20}
             className={loading ? "animate-spin" : ""}
           />
@@ -242,7 +242,7 @@ const MechanicJobs = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <h2 className="text-xs font-bold text-slate-500 uppercase mb-3 flex items-center gap-2">
-                <Icons.ShieldCheck size={14} /> GİZLİLİK MODU AKTİF - SADECE
+                <ShieldCheck size={14} /> GİZLİLİK MODU AKTİF - SADECE
                 ARAÇ DEĞERLERİ GÖSTERİLİR
               </h2>
             </div>
@@ -257,7 +257,7 @@ const MechanicJobs = () => {
                   className="glass-card p-5 rounded-2xl border border-black/5 dark:border-white/5 hover:border-primary-500/30 transition-all flex flex-col justify-between group relative overflow-hidden"
                 >
                   <div className="absolute top-0 right-0 p-4 opacity-5">
-                    <Icons.EyeOff size={100} />
+                    <EyeOff size={100} />
                   </div>
                   <div className="relative z-10 flex justify-between items-start mb-4">
                     <div>
@@ -279,7 +279,7 @@ const MechanicJobs = () => {
                         {job.car}
                       </h3>
                       <p className="text-slate-500 dark:text-slate-400 font-medium flex items-center gap-2 text-sm mt-1">
-                        <Icons.AlertCircle size={14} /> {job.issue} •{" "}
+                        <AlertCircle size={14} /> {job.issue} •{" "}
                         {job.distance} Uzakta
                       </p>
                     </div>
@@ -322,7 +322,7 @@ const MechanicJobs = () => {
                   className="glass-card p-6 rounded-2xl border border-green-500/30 bg-green-500/5 relative overflow-hidden"
                 >
                   <div className="absolute top-0 right-0 p-4 opacity-10">
-                    <Icons.Wrench size={100} />
+                    <Wrench size={100} />
                   </div>
                   <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
@@ -345,7 +345,7 @@ const MechanicJobs = () => {
                           </strong>
                         </span>
                         <span className="flex items-center gap-2">
-                          <Icons.AlertCircle size={14} /> {job.issue}
+                          <AlertCircle size={14} /> {job.issue}
                         </span>
                       </div>
                     </div>
@@ -362,7 +362,7 @@ const MechanicJobs = () => {
                           onClick={() => handleStatus(job.id, "completed")}
                           className="w-full md:w-auto bg-green-500 hover:bg-green-400 text-slate-900 dark:text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 transition-all active-scale"
                         >
-                          <Icons.CheckCircle size={18} /> İŞİ BİTİR (₺
+                          <CheckCircle size={18} /> İŞİ BİTİR (₺
                           {job.price} AL)
                         </button>
                       )}
@@ -382,7 +382,7 @@ const MechanicJobs = () => {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="p-2.5 bg-primary-500/10 text-primary-400 rounded-xl border border-primary-500/20">
-                  <Icons.Wrench size={20} />
+                  <Wrench size={20} />
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 dark:text-white uppercase tracking-tight text-sm font-sans">
@@ -397,7 +397,7 @@ const MechanicJobs = () => {
                 onClick={() => setShowBidModal(false)}
                 className="p-2 text-slate-400 hover:text-slate-200 rounded-lg active-scale"
               >
-                <Icons.X size={20} />
+                <X size={20} />
               </button>
             </div>
 
@@ -407,7 +407,7 @@ const MechanicJobs = () => {
                   Teklif Tutarı (TL)
                 </label>
                 <div className="mt-2 flex items-center gap-3 bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3">
-                  <Icons.Banknote size={18} className="text-primary-400" />
+                  <Banknote size={18} className="text-primary-400" />
                   <input
                     type="number"
                     value={bidPrice}
@@ -424,7 +424,7 @@ const MechanicJobs = () => {
                   Tahmini İş Süresi (İş Günü)
                 </label>
                 <div className="mt-2 flex items-center gap-3 bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3">
-                  <Icons.Clock size={18} className="text-primary-400" />
+                  <Clock size={18} className="text-primary-400" />
                   <input
                     type="number"
                     value={bidDeliveryDays}

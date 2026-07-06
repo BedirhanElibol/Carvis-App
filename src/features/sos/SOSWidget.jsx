@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { AlertTriangle, Loader2, Truck } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
 
@@ -57,7 +57,7 @@ const SOSWidget = ({ userId, currentVehicle }) => {
       <div className="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-[2rem] animate-pulse">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-emerald-500 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-emerald-900/40">
-            <Icons.Truck size={24} />
+            <Truck size={24} />
           </div>
           <div>
             <h4 className="text-slate-900 dark:text-white font-black uppercase text-xs tracking-widest">Yardım Yolda</h4>
@@ -75,7 +75,7 @@ const SOSWidget = ({ userId, currentVehicle }) => {
       <div className="relative z-10 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-red-600 flex items-center justify-center text-slate-900 dark:text-white shadow-xl shadow-red-900/40 group-hover:scale-110 transition-transform duration-500">
-            <Icons.AlertTriangle size={24} className="animate-pulse" />
+            <AlertTriangle size={24} className="animate-pulse" />
           </div>
           <div>
             <h4 className="text-slate-900 dark:text-white font-black uppercase text-sm tracking-tight">Yolda mı kaldın?</h4>
@@ -88,7 +88,7 @@ const SOSWidget = ({ userId, currentVehicle }) => {
           disabled={loading}
           className="bg-white text-red-600 px-6 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-red-50 transition-all active-scale disabled:opacity-50"
         >
-          {loading ? <Icons.Loader2 className="animate-spin" size={16} /> : "YARDIM ÇAĞIR"}
+          {loading ? <Loader2 className="animate-spin" size={16} /> : "YARDIM ÇAĞIR"}
         </button>
       </div>
     </div>

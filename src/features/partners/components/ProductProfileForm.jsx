@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Inbox, MinusCircle, Package, Truck } from "lucide-react";
 
 const ProductProfileForm = ({ data, onUpdate }) => {
   const [sellerData, setSellerData] = useState({
@@ -42,7 +42,7 @@ const ProductProfileForm = ({ data, onUpdate }) => {
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary-400">
-          <Icons.Package size={20} />
+          <Package size={20} />
         </div>
         <div>
           <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Yedek Parça Mağaza Bilgileri</h2>
@@ -54,7 +54,7 @@ const ProductProfileForm = ({ data, onUpdate }) => {
         <label className="space-y-2">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Teslimat Yarıçapı</span>
           <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
-            <Icons.Truck size={18} className="text-primary-400" />
+            <Truck size={18} className="text-primary-400" />
             <input
               type="number"
               value={sellerData.delivery_radius_km}
@@ -81,7 +81,7 @@ const ProductProfileForm = ({ data, onUpdate }) => {
         <label className="space-y-2">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Minimum Sipariş</span>
           <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
-            <Icons.MinusCircle size={18} className="text-primary-400" />
+            <MinusCircle size={18} className="text-primary-400" />
             <input
               type="number"
               value={sellerData.min_order_amount}
@@ -107,7 +107,7 @@ const ProductProfileForm = ({ data, onUpdate }) => {
                     handleChange("working_days", updated);
                   }}
                   className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${
-                    isSelected ? "bg-emerald-500/10 border-emerald-500/40 text-emerald-400 shadow-lg shadow-emerald-900/10" : "bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 text-slate-500"
+                    isSelected ? "bg-emerald-500/10 border-emerald-500/40 text-teal-400 shadow-lg shadow-emerald-900/10" : "bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 text-slate-500"
                   }`}
                 >
                   {labels[day]}
@@ -157,7 +157,7 @@ const ProductProfileForm = ({ data, onUpdate }) => {
               : "bg-slate-100 dark:bg-slate-800/50 border-black/5 dark:border-white/5 text-slate-500"
           }`}
         >
-          <Icons.Inbox size={20} />
+          <Inbox size={20} />
           <div className="text-left">
             <p className="text-xs font-black uppercase tracking-wider">Depodan Doğrudan Satış</p>
             <p className="text-[10px] opacity-70 font-sans">Mağaza olmadan sadece depo üzerinden sevkiyat yapıyorum.</p>

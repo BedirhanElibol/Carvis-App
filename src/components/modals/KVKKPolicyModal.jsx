@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { ClipboardCheck, Gavel } from "lucide-react";
 
 const KVKKPolicyModal = ({ show, t, onAgree }) => {
   if (!show || !t) return null;
@@ -9,7 +9,7 @@ const KVKKPolicyModal = ({ show, t, onAgree }) => {
       <div className="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
         <div className="flex flex-col items-center text-center">
           <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-primary-100 text-primary-600 shadow-xl">
-            <Icons.Gavel size={32} />
+            <Gavel size={32} />
           </div>
           <h3 className="font-black text-xl text-slate-900 mb-2 font-sans">
             {t.kvkkTitle}
@@ -49,7 +49,7 @@ const KVKKPolicyModal = ({ show, t, onAgree }) => {
             onClick={onAgree}
             className="w-full bg-primary-600 text-slate-900 dark:text-white py-3 rounded-xl font-bold hover:bg-primary-700 transition flex items-center justify-center gap-2 shadow-lg shadow-primary-600/50 font-sans"
           >
-            <Icons.ClipboardCheck size={18} /> {t.kvkkAgree}
+            <ClipboardCheck size={18} /> {t.kvkkAgree}
           </button>
         </div>
       </div>

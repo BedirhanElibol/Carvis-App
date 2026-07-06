@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { CheckCircle, ShoppingBag, Trash2 } from "lucide-react";
 import { useShop } from "../../../context/ShopContext";
 const CheckoutCartStep = () => {
   const navigate = useNavigate();
@@ -10,13 +10,13 @@ const CheckoutCartStep = () => {
       {" "}
       <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
         {" "}
-        <Icons.ShoppingBag className="text-primary-500" /> Sepetim (
+        <ShoppingBag className="text-primary-500" /> Sepetim (
         {cart.length} Ürün){" "}
       </h2>{" "}
       {cart.length === 0 ? (
         <div className="glass-card p-12 text-center rounded-[2rem] border border-black/5 dark:border-white/5">
           {" "}
-          <Icons.ShoppingBag
+          <ShoppingBag
             size={48}
             className="mx-auto text-slate-600 mb-4 opacity-50"
           />{" "}
@@ -61,7 +61,7 @@ const CheckoutCartStep = () => {
               </h3>{" "}
               <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/50 w-fit px-2 py-1 rounded-lg">
                 {" "}
-                <Icons.CheckCircle size={10} /> Tahmini Teslimat: Yarın{" "}
+                <CheckCircle size={10} /> Tahmini Teslimat: Yarın{" "}
               </div>{" "}
             </div>{" "}
             <div className="text-right">
@@ -74,7 +74,7 @@ const CheckoutCartStep = () => {
                 className="w-8 h-8 flex items-center justify-center bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500/20 transition-colors ml-auto"
               >
                 {" "}
-                <Icons.Trash2 size={14} />{" "}
+                <Trash2 size={14} />{" "}
               </button>{" "}
             </div>{" "}
           </div>

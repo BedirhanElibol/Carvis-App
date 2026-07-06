@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { ChevronRight, CircleCheck, Filter, Trash2, X } from "lucide-react";
 
 const FilterModal = ({
   show,
@@ -48,7 +48,7 @@ const FilterModal = ({
         <div className="flex justify-between items-center mb-10 relative z-10">
           <div className="flex items-center gap-3">
             <div className="bg-primary-500/20 p-2.5 rounded-2xl shadow-inner">
-              <Icons.Filter size={24} className="text-primary-500" />
+              <Filter size={24} className="text-primary-500" />
             </div>
             <div>
               <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter uppercase font-sans">
@@ -63,7 +63,7 @@ const FilterModal = ({
             onClick={onClose}
             className="bg-black/5 dark:bg-white/5 p-3 rounded-2xl hover:bg-black/10 dark:bg-white/10 transition-all active-scale border border-black/5 dark:border-white/5"
           >
-            <Icons.X size={20} className="text-slate-900 dark:text-white" />
+            <X size={20} className="text-slate-900 dark:text-white" />
           </button>
         </div>
 
@@ -103,7 +103,7 @@ const FilterModal = ({
                     </option>
                   ))}
                 </select>
-                <Icons.ChevronRight
+                <ChevronRight
                   size={14}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 rotate-90 pointer-events-none"
                 />
@@ -176,7 +176,7 @@ const FilterModal = ({
                     : "bg-slate-100 dark:bg-slate-800 text-slate-500"
                 }`}
               >
-                <Icons.CircleCheck size={20} />
+                <CircleCheck size={20} />
               </div>
               <span
                 className={`text-sm font-bold uppercase tracking-tight transition-all ${tempFilters.stock ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-400"}`}
@@ -199,13 +199,13 @@ const FilterModal = ({
             onClick={handleClear}
             className="flex-1 bg-slate-50 dark:bg-slate-950 text-slate-500 py-5 rounded-[1.8rem] font-black text-[10px] uppercase tracking-[0.2em] border border-black/5 dark:border-white/5 hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all active-scale flex items-center justify-center gap-2 font-sans"
           >
-            <Icons.Trash2 size={16} /> {t.clear}
+            <Trash2 size={16} /> {t.clear}
           </button>
           <button
             onClick={handleApply}
             className="flex-[2] bg-white text-slate-950 py-5 rounded-[1.8rem] font-black text-[10px] uppercase tracking-[0.2em] hover:bg-slate-100 transition-all active-scale shadow-2xl flex items-center justify-center gap-2 font-sans"
           >
-            <Icons.CircleCheck size={16} /> {t.apply}
+            <CircleCheck size={16} /> {t.apply}
           </button>
         </div>
       </div>

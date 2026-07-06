@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import * as Icons from "lucide-react";
+import { Fuel, TrendingUp } from "lucide-react";
 import { useExternalData } from "../../hooks/useExternalData";
 import { useUI } from "../../context/UIContext";
 
@@ -63,7 +63,7 @@ const MarketPulse = () => {
 
       <div className="flex justify-between items-center mb-8 relative z-10">
         <h3 className="font-black text-slate-900 dark:text-white flex items-center gap-3 font-sans uppercase tracking-widest text-xs">
-          <Icons.Fuel size={20} className="text-orange-500" /> Piyasa Nabzı
+          <Fuel size={20} className="text-orange-500" /> Piyasa Nabzı
         </h3>
         <span className="text-[10px] bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 px-3 py-1 rounded-full font-black uppercase tracking-widest font-sans border border-black/10 dark:border-white/10">
           {selectedLocation.split(",")[0]}
@@ -93,8 +93,8 @@ const MarketPulse = () => {
               <p className="font-black text-slate-900 dark:text-white text-2xl tracking-tighter font-sans">
                 ₺{Number(item.price).toFixed(2)}
               </p>
-              <p className="text-[9px] text-emerald-400 font-black uppercase tracking-widest flex items-center gap-1 font-sans">
-                <Icons.TrendingUp size={10} /> Güncel
+              <p className="text-[9px] text-teal-400 font-black uppercase tracking-widest flex items-center gap-1 font-sans">
+                <TrendingUp size={10} /> Güncel
               </p>
             </div>
           </div>

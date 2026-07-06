@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { Minus, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 const RevenueTrend = ({ color = "primary" }) => {
@@ -15,7 +15,7 @@ const RevenueTrend = ({ color = "primary" }) => {
   ];
 
   const colorConfig = {
-    primary: "from-primary-500 to-emerald-600",
+    primary: "from-primary-500 to-teal-500",
     cyan: "from-cyan-500 to-blue-600",
     amber: "from-amber-500 to-orange-600",
     orange: "from-orange-500 to-red-600",
@@ -41,7 +41,7 @@ const RevenueTrend = ({ color = "primary" }) => {
               Gelir Analizi
             </span>
             <div className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center gap-1">
-              <Icons.Minus size={10} className="text-emerald-500" />
+              <Minus size={10} className="text-emerald-500" />
               <span className="text-[9px] font-black text-emerald-500">
                 0%
               </span>
@@ -51,7 +51,7 @@ const RevenueTrend = ({ color = "primary" }) => {
         <div
           className={`p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400`}
         >
-          <Icons.TrendingUp size={18} />
+          <TrendingUp size={18} />
         </div>
       </div>
 

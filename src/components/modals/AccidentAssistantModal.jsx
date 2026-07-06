@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { AlertTriangle, ArrowLeft, ArrowRight, Camera, CheckCircle2, FileText, ShieldCheck, Sparkles, X } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useAI } from "../../context/AIContext";
 
@@ -14,10 +14,10 @@ const AccidentAssistantModal = ({ show, onClose }) => {
   });
 
   const steps = [
-    { id: 1, title: "Fotoğraflar", icon: Icons.Camera },
-    { id: 2, title: "Bilgiler", icon: Icons.FileText },
-    { id: 3, title: "AI Analiz", icon: Icons.Sparkles },
-    { id: 4, title: "Özet", icon: Icons.ShieldCheck },
+    { id: 1, title: "Fotoğraflar", icon: Camera },
+    { id: 2, title: "Bilgiler", icon: FileText },
+    { id: 3, title: "AI Analiz", icon: Sparkles },
+    { id: 4, title: "Özet", icon: ShieldCheck },
   ];
 
   if (!show) return null;
@@ -43,7 +43,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
         <div className="bg-gradient-to-r from-slate-800 to-slate-900 p-6 flex items-center justify-between border-b border-black/5 dark:border-white/5">
           <div className="flex items-center gap-3">
             <div className="bg-primary-500/20 p-2 rounded-xl text-primary-400">
-              <Icons.ShieldCheck size={24} />
+              <ShieldCheck size={24} />
             </div>
             <div>
               <h2 className="text-xl font-black tracking-tighter text-slate-900 dark:text-white uppercase font-sans">
@@ -58,7 +58,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
             onClick={onClose}
             className="p-2 hover:bg-black/5 dark:bg-white/5 rounded-full transition-colors text-slate-500"
           >
-            <Icons.X size={24} />
+            <X size={24} />
           </button>
         </div>
 
@@ -101,7 +101,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
           {step === 1 && (
             <div className="space-y-6 animate-in slide-in-from-right-4 duration-500">
               <div className="bg-primary-500/5 border border-primary-500/20 p-4 rounded-3xl flex items-start gap-4">
-                <Icons.AlertTriangle
+                <AlertTriangle
                   size={24}
                   className="text-primary-400 shrink-0 mt-1"
                 />
@@ -115,7 +115,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
               </div>
               <button className="w-full aspect-video bg-black/5 dark:bg-white/5 border-2 border-dashed border-black/10 dark:border-white/10 rounded-[2.5rem] flex flex-col items-center justify-center gap-4 hover:border-primary-500/40 hover:bg-primary-500/5 transition-all active-scale group">
                 <div className="bg-slate-100 dark:bg-slate-800 p-5 rounded-3xl group-hover:scale-110 transition-transform">
-                  <Icons.Camera
+                  <Camera
                     size={40}
                     className="text-slate-500 group-hover:text-primary-400"
                   />
@@ -169,7 +169,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
               <div className="relative">
                 <div className="absolute inset-0 bg-primary-500/20 blur-3xl animate-pulse"></div>
                 <div className="bg-slate-100 dark:bg-slate-800 w-24 h-24 rounded-full flex items-center justify-center border border-primary-500/50 relative">
-                  <Icons.Sparkles
+                  <Sparkles
                     size={48}
                     className="text-primary-400 animate-spin-slow"
                   />
@@ -199,7 +199,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
             <div className="space-y-6 animate-in zoom-in-95 duration-500">
               <div className="text-center">
                 <div className="bg-green-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-500/40">
-                  <Icons.CheckCircle2 size={32} className="text-green-400" />
+                  <CheckCircle2 size={32} className="text-green-400" />
                 </div>
                 <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter font-sans">
                   DOSYA HAZIR
@@ -246,14 +246,14 @@ const AccidentAssistantModal = ({ show, onClose }) => {
                 onClick={prevStep}
                 className="px-6 py-4 rounded-2xl border border-black/10 dark:border-white/10 text-slate-900 dark:text-white active-scale transition-colors"
               >
-                <Icons.ArrowLeft size={20} />
+                <ArrowLeft size={20} />
               </button>
             )}
             <button
               onClick={nextStep}
-              className="flex-1 bg-gradient-to-r from-slate-700 to-slate-800 text-slate-900 dark:text-white p-4 rounded-2xl flex items-center justify-center gap-3 font-black text-xs uppercase tracking-widest shadow-xl active-scale font-sans"
+              className="flex-1 bg-gradient-to-r from-slate-700 to-blue-600 text-slate-900 dark:text-white p-4 rounded-2xl flex items-center justify-center gap-3 font-black text-xs uppercase tracking-widest shadow-xl active-scale font-sans"
             >
-              İleri <Icons.ArrowRight size={20} />
+              İleri <ArrowRight size={20} />
             </button>
           </div>
         )}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { ChevronLeft, Droplets, Loader2 } from "lucide-react";
 import { SpecialistCard } from "../../components/Core";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
@@ -77,7 +77,7 @@ const CarwashScreen = () => {
             onClick={() => setShowDemandForm(false)}
             className="p-2.5 glass-card rounded-xl text-slate-500 dark:text-slate-400 active-scale border border-black/10 dark:border-white/10"
           >
-            <Icons.ChevronLeft size={20} />
+            <ChevronLeft size={20} />
           </button>
           <div>
             <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter uppercase">
@@ -129,7 +129,7 @@ const CarwashScreen = () => {
         />
         {submitting && (
           <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950/50 backdrop-blur-sm z-50 flex items-center justify-center rounded-3xl">
-            <Icons.Loader2 className="animate-spin text-cyan-500" size={48} />
+            <Loader2 className="animate-spin text-cyan-500" size={48} />
           </div>
         )}
       </div>
@@ -171,7 +171,7 @@ const CarwashScreen = () => {
         onClick={() => setShowDemandForm(true)}
         className="w-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-black uppercase tracking-widest transition-all active-scale mb-6"
       >
-        <Icons.Droplets size={20} /> Açık Talep Oluştur
+        <Droplets size={20} /> Açık Talep Oluştur
       </button>
 
       {isMapView ? (
@@ -184,7 +184,7 @@ const CarwashScreen = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
           <div className="relative z-10 glass-card p-8 rounded-[2.5rem] text-center shadow-2xl backdrop-blur-2xl border border-black/10 dark:border-white/10 animate-slide-up">
             <div className="w-16 h-16 bg-cyan-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-cyan-500/20">
-              <Icons.Droplets size={32} className="text-cyan-500" />
+              <Droplets size={32} className="text-cyan-500" />
             </div>
             <p className="font-black text-slate-900 dark:text-white text-xl tracking-tighter mb-1">RADAR AKTİF</p>
             <p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-[0.2em]">Bölgenizdeki Yıkamacılar Taranıyor...</p>
@@ -205,7 +205,7 @@ const CarwashScreen = () => {
             ))
           ) : (
             <EmptyState
-              icon={Icons.Droplets}
+              icon={Droplets}
               title="Yıkamacı Bulunamadı"
               subtitle="Bölgenizde aktif seyyar yıkamacı bulunamadı. Talep oluşturarak onlara ulaşabilirsiniz."
               actionLabel="Talep Oluştur"

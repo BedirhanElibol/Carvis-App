@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { supabase } from "../../supabaseClient";
-import * as Icons from "lucide-react";
+import { BadgeCheck, Banknote, Eye, Loader2, Search, UserX } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { updateUserStatus } from "../../utils/supabaseApi";
  
@@ -85,7 +85,7 @@ const UserManagement = () => {
       case "mechanic":
         return "bg-orange-500/20 text-orange-400 border-orange-500/20";
       case "valet":
-        return "bg-emerald-500/20 text-emerald-400 border-emerald-500/20";
+        return "bg-emerald-500/20 text-teal-400 border-emerald-500/20";
       default:
         return "bg-slate-500/20 text-slate-500 dark:text-slate-400 border-slate-500/20";
     }
@@ -104,7 +104,7 @@ const UserManagement = () => {
         </div>
         <div className="relative w-full md:w-64">
           <label htmlFor="user-search" className="sr-only">Kullanıcı Ara</label>
-          <Icons.Search
+          <Search
             className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
             size={18}
           />
@@ -142,7 +142,7 @@ const UserManagement = () => {
               {loading ? (
                 <tr>
                   <td colSpan="4" className="p-8 text-center text-slate-500">
-                    <Icons.Loader2 className="animate-spin inline mr-2" /> Yükleniyor...
+                    <Loader2 className="animate-spin inline mr-2" /> Yükleniyor...
                   </td>
                 </tr>
               ) : filteredUsers.length === 0 ? (
@@ -182,7 +182,7 @@ const UserManagement = () => {
                     <td className="p-4">
                       <div className="flex items-center justify-center gap-2">
                         {processingId === user.id ? (
-                          <Icons.Loader2 className="animate-spin text-slate-500" size={18} />
+                          <Loader2 className="animate-spin text-slate-500" size={18} />
                         ) : (
                           <div className="flex items-center gap-2">
                             <label htmlFor={`role-select-${user.id}`} className="sr-only">Rol Değiştir</label>
@@ -202,7 +202,7 @@ const UserManagement = () => {
                               onClick={() => setSelectedUser(user)}
                               className="bg-slate-100 dark:bg-slate-800 hover:bg-primary-600 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white p-1.5 rounded-lg transition-all active-scale border border-black/5 dark:border-white/5"
                             >
-                              <Icons.Eye size={16} />
+                              <Eye size={16} />
                             </button>
                           </div>
                         )}
@@ -233,7 +233,7 @@ const UserManagement = () => {
               <div className="flex items-start justify-between mb-6">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <Icons.BadgeCheck className="text-primary-500" size={16} />
+                    <BadgeCheck className="text-primary-500" size={16} />
                     <span className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                       {selectedUser.role || "Müşteri"}
                     </span>
@@ -247,12 +247,12 @@ const UserManagement = () => {
                   onClick={() => setSelectedUser(null)}
                   className="text-slate-500 hover:text-slate-900 dark:text-white bg-black/5 dark:bg-white/5 p-2 rounded-full transition-colors"
                 >
-                  <Icons.UserX size={20} />
+                  <UserX size={20} />
                 </button>
               </div>
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-slate-100 dark:bg-slate-800/50 p-4 rounded-2xl border border-black/5 dark:border-white/5 relative overflow-hidden">
-                  <Icons.Banknote className="absolute -bottom-4 -right-4 text-slate-900 dark:text-white/5" size={80} />
+                  <Banknote className="absolute -bottom-4 -right-4 text-slate-900 dark:text-white/5" size={80} />
                   <div className="relative z-10">
                     <div className="text-slate-500 dark:text-slate-400 text-[10px] mb-1 font-black uppercase tracking-widest">
                       Mevcut Bakiye

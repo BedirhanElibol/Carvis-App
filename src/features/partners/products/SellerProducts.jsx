@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { BookOpen, DollarSign, Edit2, Filter, Image, Loader2, Package, Plus, Save, Search, Trash2, X } from "lucide-react";
 import { useSeller } from "../../../context/SellerContext";
 import ProductCatalogModal from "./ProductCatalogModal";
 import SellerProductEditModal from "./SellerProductEditModal";
@@ -76,13 +76,13 @@ const SellerProducts = () => {
             onClick={() => setShowCatalog(true)}
             className="bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-slate-900 dark:text-white px-5 py-3 rounded-xl font-bold text-sm border border-black/10 dark:border-white/10 active-scale flex items-center gap-2 transition-colors"
           >
-            <Icons.BookOpen size={18} className="text-primary-500" /> KATALOGDAN SEÇ
+            <BookOpen size={18} className="text-primary-500" /> KATALOGDAN SEÇ
           </button>
           <button
             onClick={() => setShowModal(true)}
             className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white px-5 py-3 rounded-xl font-bold text-sm shadow-xl active-scale flex items-center gap-2"
           >
-            <Icons.Plus size={18} /> YENİ İLAN
+            <Plus size={18} /> YENİ İLAN
           </button>
         </div>
       </div>
@@ -127,7 +127,7 @@ const SellerProducts = () => {
       {/* Search & Filter */}
       <div className="flex gap-4">
         <div className="flex-1 glass-card px-4 py-3 rounded-xl border border-black/5 dark:border-white/5 flex items-center gap-3">
-          <Icons.Search size={18} className="text-slate-500" />
+          <Search size={18} className="text-slate-500" />
           <input
             type="text"
             placeholder="Ürün adı, marka veya kategori ara..."
@@ -135,7 +135,7 @@ const SellerProducts = () => {
           />
         </div>
         <button className="glass-card w-12 flex items-center justify-center rounded-xl border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
-          <Icons.Filter size={18} />
+          <Filter size={18} />
         </button>
       </div>
 
@@ -154,7 +154,7 @@ const SellerProducts = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <Icons.Package size={40} className="text-slate-700" />
+                <Package size={40} className="text-slate-700" />
               )}
               <div className="absolute top-2 right-2 bg-slate-50 dark:bg-slate-950/80 backdrop-blur px-2 py-1 rounded-lg text-xs font-bold text-slate-900 dark:text-white border border-black/10 dark:border-white/10">
                 {product.stock} Adet
@@ -176,13 +176,13 @@ const SellerProducts = () => {
                 onClick={() => setEditingProduct(product)}
                 className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2"
               >
-                <Icons.Edit2 size={14} /> DÜZENLE
+                <Edit2 size={14} /> DÜZENLE
               </button>
               <button
                 onClick={() => handleDelete(product.id)}
                 className="w-10 h-9 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg flex items-center justify-center transition-colors"
               >
-                <Icons.Trash2 size={16} />
+                <Trash2 size={16} />
               </button>
             </div>
           </div>
@@ -195,14 +195,14 @@ const SellerProducts = () => {
           <div className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-in zoom-in-95">
             <div className="p-6 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-black/5 dark:bg-white/5">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Icons.Package className="text-primary-500" /> Yeni İlan Oluştur
+                <Package className="text-primary-500" /> Yeni İlan Oluştur
               </h2>
               <button
                 onClick={() => !addingProduct && setShowModal(false)}
                 className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white disabled:opacity-50"
                 disabled={addingProduct}
               >
-                <Icons.X size={24} />
+                <X size={24} />
               </button>
             </div>
             <form onSubmit={handleAddProduct} className="p-6 space-y-4">
@@ -260,7 +260,7 @@ const SellerProducts = () => {
                     Fiyat (₺)
                   </label>
                   <div className="relative">
-                    <Icons.DollarSign
+                    <DollarSign
                       size={14}
                       className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
                     />
@@ -295,7 +295,7 @@ const SellerProducts = () => {
                 </div>
               </div>
               <div className="border border-dashed border-black/20 dark:border-white/20 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 hover:bg-black/5 dark:bg-white/5 transition-colors cursor-pointer group">
-                <Icons.Image
+                <Image
                   size={32}
                   className="mb-2 group-hover:text-primary-500 transition-colors"
                 />
@@ -308,11 +308,11 @@ const SellerProducts = () => {
               >
                 {addingProduct ? (
                   <>
-                    <Icons.Loader2 size={18} className="animate-spin" /> YAYINLANIYOR...
+                    <Loader2 size={18} className="animate-spin" /> YAYINLANIYOR...
                   </>
                 ) : (
                   <>
-                    <Icons.Save size={18} /> İLANI YAYINLA
+                    <Save size={18} /> İLANI YAYINLA
                   </>
                 )}
               </button>

@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { Bell, ChevronRight, Database, Lock, Mail, MapPin, Shield, Trash2 } from "lucide-react";
 
 const Section = ({ icon: Icon, title, children }) => (
   <div className="mb-10">
@@ -23,7 +23,7 @@ const PrivacyPolicyScreen = () => {
       {/* Header */}
       <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-b border-black/5 dark:border-white/5 px-5 py-12 text-center">
         <div className="inline-flex p-4 bg-blue-600/10 rounded-[2rem] border border-blue-500/20 mb-5">
-          <Icons.Shield size={36} className="text-blue-400" />
+          <Shield size={36} className="text-blue-400" />
         </div>
         <h1 className="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white mb-2">
           Gizlilik Politikası
@@ -37,7 +37,7 @@ const PrivacyPolicyScreen = () => {
       </div>
 
       <div className="max-w-2xl mx-auto px-5 py-10">
-        <Section icon={Icons.Database} title="Topladığımız Veriler">
+        <Section icon={Database} title="Topladığımız Veriler">
           <p>Carvis, aşağıdaki kişisel verileri toplar ve işler:</p>
           <ul className="list-disc pl-5 space-y-1 mt-2">
             <li>
@@ -59,7 +59,7 @@ const PrivacyPolicyScreen = () => {
           </ul>
         </Section>
 
-        <Section icon={Icons.Lock} title="Verileriniz Nasıl Kullanılır">
+        <Section icon={Lock} title="Verileriniz Nasıl Kullanılır">
           <ul className="list-disc pl-5 space-y-1">
             <li>Servis ve ürün siparişlerinizin yönetimi</li>
             <li>
@@ -75,7 +75,7 @@ const PrivacyPolicyScreen = () => {
           </p>
         </Section>
 
-        <Section icon={Icons.MapPin} title="Konum Verisi">
+        <Section icon={MapPin} title="Konum Verisi">
           <p>
             Carvis, yakındaki usta ve yol yardım servislerini göstermek için
             cihazınızın konumuna erişim talep eder. Bu veriye yalnızca
@@ -86,7 +86,7 @@ const PrivacyPolicyScreen = () => {
           </p>
         </Section>
 
-        <Section icon={Icons.Bell} title="Bildirimler">
+        <Section icon={Bell} title="Bildirimler">
           <p>
             Push bildirimleri; sipariş durumu, teklif kabul/red ve randevu
             hatırlatmaları için kullanılır. iOS cihazınızda bildirim iznini
@@ -94,7 +94,7 @@ const PrivacyPolicyScreen = () => {
           </p>
         </Section>
 
-        <Section icon={Icons.Database} title="Üçüncü Taraf Servisler">
+        <Section icon={Database} title="Üçüncü Taraf Servisler">
           <div className="space-y-3">
             {[
               {
@@ -122,14 +122,14 @@ const PrivacyPolicyScreen = () => {
                   rel="noopener noreferrer"
                   className="text-xs text-blue-400 hover:underline mt-1 inline-flex items-center gap-1"
                 >
-                  Gizlilik politikası <Icons.ChevronRight size={12} />
+                  Gizlilik politikası <ChevronRight size={12} />
                 </a>
               </div>
             ))}
           </div>
         </Section>
 
-        <Section icon={Icons.Trash2} title="Veri Silme ve KVKK Hakları">
+        <Section icon={Trash2} title="Veri Silme ve KVKK Hakları">
           <p>6698 sayılı KVKK kapsamında aşağıdaki haklara sahipsiniz:</p>
           <ul className="list-disc pl-5 space-y-1 mt-2">
             <li>Verilerinize erişim talep etme</li>
@@ -151,7 +151,7 @@ const PrivacyPolicyScreen = () => {
           </p>
         </Section>
 
-        <Section icon={Icons.Mail} title="İletişim">
+        <Section icon={Mail} title="İletişim">
           <p>
             Gizlilikle ilgili sorularınız için:{" "}
             <a

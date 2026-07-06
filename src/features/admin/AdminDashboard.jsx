@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { Activity, Database, Package, Server, TrendingUp, Users } from "lucide-react";
  
 import { motion } from "framer-motion";
 import { supabase } from "../../supabaseClient";
@@ -13,28 +13,28 @@ const AdminDashboard = () => {
     {
       label: "Toplam Kullanıcı",
       value: "...",
-      icon: Icons.Users,
+      icon: Users,
       color: "text-blue-400",
       bg: "bg-blue-500/10",
     },
     {
       label: "Aktif Partner",
       value: "...",
-      icon: Icons.Database,
-      color: "text-emerald-400",
+      icon: Database,
+      color: "text-teal-400",
       bg: "bg-emerald-500/10",
     },
     {
       label: "Toplam Ciro",
       value: "...",
-      icon: Icons.TrendingUp,
+      icon: TrendingUp,
       color: "text-green-400",
       bg: "bg-green-500/10",
     },
     {
       label: "Bekleyen Sipariş",
       value: "...",
-      icon: Icons.Package,
+      icon: Package,
       color: "text-amber-400",
       bg: "bg-amber-500/10",
     },
@@ -49,28 +49,28 @@ const AdminDashboard = () => {
           {
             label: "Toplam Kullanıcı",
             value: (safeData.userCount || 0).toString(),
-            icon: Icons.Users,
+            icon: Users,
             color: "text-blue-400",
             bg: "bg-blue-500/10",
           },
           {
             label: "Aktif Shoplar",
             value: (safeData.shopCount || 0).toString(),
-            icon: Icons.Database,
-            color: "text-emerald-400",
+            icon: Database,
+            color: "text-teal-400",
             bg: "bg-emerald-500/10",
           },
           {
             label: "Toplam Ciro",
             value: `₺${(safeData.totalVolume || 0).toLocaleString("tr-TR", { maximumFractionDigits: 0 })}`,
-            icon: Icons.TrendingUp,
+            icon: TrendingUp,
             color: "text-green-400",
             bg: "bg-green-500/10",
           },
           {
             label: "Toplam Sipariş",
             value: (safeData.orderCount || 0).toString(),
-            icon: Icons.Package,
+            icon: Package,
             color: "text-amber-400",
             bg: "bg-amber-500/10",
           },
@@ -146,7 +146,7 @@ const AdminDashboard = () => {
                 })()}
               </div>
               {index === 2 && (
-                <span className="bg-emerald-500/10 text-emerald-400 text-[9px] font-black px-2 py-1 rounded-lg uppercase tracking-widest font-sans">
+                <span className="bg-emerald-500/10 text-teal-400 text-[9px] font-black px-2 py-1 rounded-lg uppercase tracking-widest font-sans">
                   +8.4%
                 </span>
               )}
@@ -167,7 +167,7 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="glass-card p-8 rounded-[2.5rem] border border-black/5 dark:border-white/5 shadow-2xl">
           <h3 className="font-black text-slate-900 dark:text-white mb-6 flex items-center gap-3 font-sans uppercase tracking-widest text-xs">
-            <Icons.Server size={20} className="text-slate-500 dark:text-slate-400" /> Sunucu Performansı
+            <Server size={20} className="text-slate-500 dark:text-slate-400" /> Sunucu Performansı
           </h3>
           <div className="space-y-6">
             <div className="space-y-2">
@@ -175,7 +175,7 @@ const AdminDashboard = () => {
                 <span className="text-slate-500 dark:text-slate-400 font-sans">
                   Veritabanı Bağlantıları
                 </span>
-                <span className="text-emerald-400 font-sans">Aktif: {stats[0].value !== "..." ? Math.floor(Math.random() * 5 + 10) : "..."}</span>
+                <span className="text-teal-400 font-sans">Aktif: {stats[0].value !== "..." ? Math.floor(Math.random() * 5 + 10) : "..."}</span>
               </div>
               <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                 <div 
@@ -216,7 +216,7 @@ const AdminDashboard = () => {
 
         <div className="glass-card p-8 rounded-[2.5rem] border border-black/5 dark:border-white/5 flex flex-col justify-center items-center text-center shadow-2xl bg-gradient-to-br from-slate-900 to-black">
           <div className="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center mb-6 relative border border-emerald-500/20">
-            <Icons.Activity size={40} className="text-emerald-500" />
+            <Activity size={40} className="text-emerald-500" />
             <span className="absolute top-0 right-0 w-4 h-4 bg-emerald-500 rounded-full animate-ping"></span>
           </div>
           <h3 className="text-2xl font-black text-slate-900 dark:text-white font-sans uppercase tracking-tighter leading-[1.2]">

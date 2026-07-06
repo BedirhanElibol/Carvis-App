@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react"; /** * Common Empty State component for the marketplace */
+ /** * Common Empty State component for the marketplace */
 const EmptyState = ({ icon: Icon, title, subtitle, actionLabel, onAction }) => {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-6 text-center animate-in fade-in zoom-in duration-500">

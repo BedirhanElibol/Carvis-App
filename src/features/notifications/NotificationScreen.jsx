@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNotification } from "../../context/NotificationContext";
-import * as Icons from "lucide-react";
+import { AlertTriangle, Bell, Check, CheckCircle2, Clock, Info, Trash2, X } from "lucide-react";
 import { Badge } from "../../components/Core";
 import { formatDistanceToNow } from "date-fns";
 import { tr } from "date-fns/locale";
@@ -17,13 +17,13 @@ const NotificationScreen = () => {
   const getIcon = (type) => {
     switch (type) {
       case "success":
-        return <Icons.CheckCircle2 size={20} className="text-green-500" />;
+        return <CheckCircle2 size={20} className="text-green-500" />;
       case "warning":
-        return <Icons.AlertTriangle size={20} className="text-amber-500" />;
+        return <AlertTriangle size={20} className="text-amber-500" />;
       case "error":
-        return <Icons.X size={20} className="text-red-500" />;
+        return <X size={20} className="text-red-500" />;
       default:
-        return <Icons.Info size={20} className="text-primary-500" />;
+        return <Info size={20} className="text-primary-500" />;
     }
   };
 
@@ -34,7 +34,7 @@ const NotificationScreen = () => {
         <div>
           <h1 className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white flex items-center gap-3">
             <div className="p-2 bg-primary-600/20 rounded-xl">
-              <Icons.Bell className="text-primary-500" />
+              <Bell className="text-primary-500" />
             </div>
             Bildirimler
             {unreadCount > 0 && (
@@ -76,7 +76,7 @@ const NotificationScreen = () => {
             className="p-2.5 glass-card rounded-xl text-primary-400 hover:text-slate-900 dark:text-white hover:bg-primary-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             title="Tümünü Okundu İşaretle"
           >
-            <Icons.Check size={20} />
+            <Check size={20} />
           </button>
         </div>
       </div>
@@ -112,7 +112,7 @@ const NotificationScreen = () => {
                       {notif.title}
                     </h3>
                     <span className="text-[10px] text-slate-500 flex items-center gap-1 flex-shrink-0">
-                      <Icons.Clock size={10} />
+                      <Clock size={10} />
                       {formatDistanceToNow(new Date(notif.created_at), {
                         addSuffix: true,
                         locale: tr,
@@ -132,7 +132,7 @@ const NotificationScreen = () => {
                     className="p-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-primary-600 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                     title="Okundu işaretle"
                   >
-                    <Icons.Check size={14} />
+                    <Check size={14} />
                   </button>
                 )}
                 <button
@@ -140,7 +140,7 @@ const NotificationScreen = () => {
                   className="p-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-red-600 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                   title="Sil"
                 >
-                  <Icons.Trash2 size={14} />
+                  <Trash2 size={14} />
                 </button>
               </div>
             </div>
@@ -148,7 +148,7 @@ const NotificationScreen = () => {
         ) : (
           <div className="text-center py-20">
             <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4 border border-black/5 dark:border-white/5 animate-pulse">
-              <Icons.Bell size={32} className="text-slate-600" />
+              <Bell size={32} className="text-slate-600" />
             </div>
             <h3 className="text-lg font-bold text-slate-600 dark:text-slate-300">Bildirim Yok</h3>
             <p className="text-xs text-slate-500 mt-1">

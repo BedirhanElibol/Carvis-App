@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Archive, Calendar, CheckCircle, CheckCircle2, Clock, Download, FileText, Layers, Minus, Plus, Search, Upload } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../../context/UIContext";
 import { useSeller } from "../../../context/SellerContext";
-import { jsPDF } from "jspdf";
-
 
 
 const ErpCrmManager = () => {
@@ -14,10 +12,11 @@ const ErpCrmManager = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [trackingInput, setTrackingInput] = useState({});
 
-  const handleExportPDF = (invoice) => {
+  const handleExportPDF = async (invoice) => {
     try {
       showAlert("Bilgi", "Fatura PDF dosyası hazırlanıyor...", "info");
       
+      const { jsPDF } = await import("jspdf");
       const doc = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -138,10 +137,10 @@ const ErpCrmManager = () => {
       {/* SaaS ERP Header Dashboard */}
       <div className="glass-card p-8 rounded-[2rem] border border-black/5 dark:border-white/5 bg-gradient-to-br from-emerald-500/10 to-teal-500/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-          <Icons.Layers size={180} className="text-slate-900 dark:text-white" />
+          <Layers size={180} className="text-slate-900 dark:text-white" />
         </div>
         <div className="relative z-10 max-w-2xl">
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/20">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-400 bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/20">
             B2B ERP & CRM Sistemi
           </span>
           <h2 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase mt-4 mb-2 font-sans">
@@ -156,21 +155,21 @@ const ErpCrmManager = () => {
         <div className="flex gap-2 mt-8 bg-black/20 p-1 rounded-xl border border-black/5 dark:border-white/5 w-fit">
           <button 
             onClick={() => setActiveSubTab("calendar")}
-            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'calendar' ? 'bg-emerald-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'calendar' ? 'bg-teal-500 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
           >
-            <Icons.Calendar size={12} /> Randevu Takvimi
+            <Calendar size={12} /> Randevu Takvimi
           </button>
           <button 
             onClick={() => setActiveSubTab("inventory")}
-            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'inventory' ? 'bg-emerald-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'inventory' ? 'bg-teal-500 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
           >
-            <Icons.Archive size={12} /> Stok Envanteri
+            <Archive size={12} /> Stok Envanteri
           </button>
           <button 
             onClick={() => setActiveSubTab("billing")}
-            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'billing' ? 'bg-emerald-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
+            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-2 ${activeSubTab === 'billing' ? 'bg-teal-500 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}
           >
-            <Icons.FileText size={12} /> Fatura & Muhasebe
+            <FileText size={12} /> Fatura & Muhasebe
           </button>
         </div>
       </div>
@@ -216,14 +215,14 @@ const ErpCrmManager = () => {
                     <div>
                       <div className="flex justify-between items-center mb-4">
                         <span className="text-[10px] font-black tracking-widest text-slate-500 uppercase flex items-center gap-1">
-                          <Icons.Clock size={10} /> {new Date(order.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'})}
+                          <Clock size={10} /> {new Date(order.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'})}
                         </span>
                         <span className={`px-3 py-1 rounded-xl text-[8px] font-black uppercase tracking-widest border ${getStatusColor(order.status)}`}>
                           {getStatusText(order.status)}
                         </span>
                       </div>
 
-                      <div className="text-[9px] font-black uppercase tracking-widest text-emerald-400">Sipariş: #{order.id?.split('-')[0]}</div>
+                      <div className="text-[9px] font-black uppercase tracking-widest text-teal-400">Sipariş: #{order.id?.split('-')[0]}</div>
                       <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase mt-1 mb-2 font-sans tracking-tight">
                         {order.customer?.full_name || 'Müşteri'}
                       </h3>
@@ -293,7 +292,7 @@ const ErpCrmManager = () => {
             
             {sellerOrders?.filter(o => o.status !== 'completed' && o.status !== 'cancelled').length === 0 && (
                 <div className="col-span-full py-12 flex flex-col items-center justify-center text-slate-500">
-                    <Icons.CheckCircle2 size={48} className="mb-4 text-emerald-500/50" />
+                    <CheckCircle2 size={48} className="mb-4 text-emerald-500/50" />
                     <p className="font-bold text-sm uppercase tracking-widest">Bekleyen İşlem Yok</p>
                 </div>
             )}
@@ -312,7 +311,7 @@ const ErpCrmManager = () => {
             {/* Search and Controls */}
             <div className="flex gap-4">
               <div className="flex-1 bg-black/20 border border-black/5 dark:border-white/5 rounded-2xl flex items-center px-4">
-                <Icons.Search size={16} className="text-slate-500 mr-2" />
+                <Search size={16} className="text-slate-500 mr-2" />
                 <input 
                   type="text" 
                   placeholder="Yedek parça adı veya kodu ile arayın..."
@@ -346,7 +345,7 @@ const ErpCrmManager = () => {
                         <td className="p-6 text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">{item.category}</td>
                         <td className="p-6">
                           <div className="flex items-center gap-3">
-                            <span className={`text-xs font-black ${isCritical ? 'text-red-400' : 'text-emerald-400'}`}>
+                            <span className={`text-xs font-black ${isCritical ? 'text-red-400' : 'text-teal-400'}`}>
                               {item.stock} Adet
                             </span>
                             {isCritical && (
@@ -363,13 +362,13 @@ const ErpCrmManager = () => {
                               onClick={() => handleAdjustStock(item.id, "sub", item.stock, item.name)}
                               className="p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg border border-black/5 dark:border-white/5 transition-all"
                             >
-                              <Icons.Minus size={12} />
+                              <Minus size={12} />
                             </button>
                             <button 
                               onClick={() => handleAdjustStock(item.id, "add", item.stock, item.name)}
                               className="p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg border border-black/5 dark:border-white/5 transition-all"
                             >
-                              <Icons.Plus size={12} />
+                              <Plus size={12} />
                             </button>
                           </div>
                         </td>
@@ -398,11 +397,11 @@ const ErpCrmManager = () => {
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-xl">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-teal-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-xl">
                       {invoice.id}
                     </span>
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1">
-                      <Icons.Clock size={10} /> {invoice.date}
+                      <Clock size={10} /> {invoice.date}
                     </span>
                   </div>
                   <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase font-sans tracking-tight">
@@ -430,13 +429,13 @@ const ErpCrmManager = () => {
                       href={invoice.originalOrder.quote.official_invoice_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-emerald-600/20 text-emerald-500 border border-emerald-500/20 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                      className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-teal-500/20 text-emerald-500 border border-emerald-500/20 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
                     >
-                      <Icons.CheckCircle size={12} /> YÜKLENDİ (GÖRÜNTÜLE)
+                      <CheckCircle size={12} /> YÜKLENDİ (GÖRÜNTÜLE)
                     </a>
                   ) : (
                     <label className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.2)] active-scale transition-all cursor-pointer">
-                      <Icons.Upload size={12} /> RESMİ FATURA YÜKLE
+                      <Upload size={12} /> RESMİ FATURA YÜKLE
                       <input 
                         type="file" 
                         accept="image/*,.pdf" 
@@ -453,7 +452,7 @@ const ErpCrmManager = () => {
                     onClick={() => handleExportPDF(invoice)}
                     className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black uppercase tracking-widest rounded-xl active-scale transition-all"
                   >
-                    <Icons.Download size={12} /> SİSTEM FİŞİ İNDİR
+                    <Download size={12} /> SİSTEM FİŞİ İNDİR
                   </button>
                 </div>
               </div>

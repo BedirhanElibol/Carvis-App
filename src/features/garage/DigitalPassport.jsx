@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { AlertTriangle, CheckCircle, CheckCircle2, Download, Info, Loader2, ShieldCheck } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
 import { useGarage } from "../../context/GarageContext";
-import { jsPDF } from "jspdf";
-
 const MOCK_RECALLS_AND_BULLETINS = {
   Fiat: {
     recalls: [
@@ -105,6 +103,7 @@ const DigitalPassport = ({ vehicle }) => {
 
     try {
       // 1. Initialize jsPDF
+      const { jsPDF } = await import("jspdf");
       const doc = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -290,7 +289,7 @@ const DigitalPassport = ({ vehicle }) => {
     }
   };
 
-  if (loading) return <div className="p-10 text-center"><Icons.Loader2 className="animate-spin mx-auto text-primary-500" /></div>;
+  if (loading) return <div className="p-10 text-center"><Loader2 className="animate-spin mx-auto text-primary-500" /></div>;
 
   return (
     <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
@@ -298,7 +297,7 @@ const DigitalPassport = ({ vehicle }) => {
         {/* Header - Digital Passport Card */}
         <div className="bg-gradient-to-br from-primary-600 to-indigo-700 p-8 rounded-[2.5rem] text-slate-900 dark:text-white shadow-2xl relative overflow-hidden print:bg-none print:border-2 print:border-black print:text-black">
           <div className="absolute top-0 right-0 w-32 h-32 bg-black/10 dark:bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl print:hidden"></div>
-          <Icons.ShieldCheck className="absolute bottom-6 right-6 opacity-20 print:text-black print:opacity-10" size={80} />
+          <ShieldCheck className="absolute bottom-6 right-6 opacity-20 print:text-black print:opacity-10" size={80} />
           
           <div className="relative z-10">
             <div className="flex justify-between items-start">
@@ -331,7 +330,7 @@ const DigitalPassport = ({ vehicle }) => {
           <div className="bg-white/80 dark:bg-[#0a0f24]/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 shadow-xl space-y-4 no-print">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center shrink-0">
-                <Icons.AlertTriangle size={20} className="text-orange-500" />
+                <AlertTriangle size={20} className="text-orange-500" />
               </div>
               <div className="text-left">
                 <h3 className="font-black text-sm uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
@@ -362,13 +361,13 @@ const DigitalPassport = ({ vehicle }) => {
                       </div>
                       <p className="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed font-semibold">{recall.desc}</p>
                       <div className="flex items-center gap-1.5 text-[8px] font-black uppercase tracking-wider text-teal-400 bg-teal-500/10 px-2 py-1 rounded-lg w-fit mt-1">
-                        <Icons.CheckCircle size={10} /> {recall.status}
+                        <CheckCircle size={10} /> {recall.status}
                       </div>
                     </div>
                   ))
                 ) : (
                   <div className="flex flex-col items-center justify-center py-6 text-center text-slate-500">
-                    <Icons.CheckCircle size={24} className="text-emerald-500 mb-2" />
+                    <CheckCircle size={24} className="text-emerald-500 mb-2" />
                     <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Geri Çağırma Kampanyası Yok</p>
                     <p className="text-[9px] font-semibold mt-1 max-w-[200px]">Bu araç markası için yayınlanmış aktif bir güvenlik uyarısı bulunmamaktadır.</p>
                   </div>
@@ -396,7 +395,7 @@ const DigitalPassport = ({ vehicle }) => {
                   ))
                 ) : (
                   <div className="flex flex-col items-center justify-center py-6 text-center text-slate-500">
-                    <Icons.Info size={24} className="text-blue-500 mb-2" />
+                    <Info size={24} className="text-blue-500 mb-2" />
                     <p className="text-[10px] font-black uppercase tracking-widest text-blue-500">Aktif TSB Mevcut Değil</p>
                     <p className="text-[9px] font-semibold mt-1 max-w-[200px]">Bu marka/model için tanımlanmış spesifik bir servis bülteni bulunmamaktadır.</p>
                   </div>
@@ -450,7 +449,7 @@ const DigitalPassport = ({ vehicle }) => {
 
                   <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex justify-between items-center print:border-black/10">
                      <div className="flex items-center gap-2">
-                       <Icons.CheckCircle2 className="text-emerald-500 print:text-black" size={14} />
+                       <CheckCircle2 className="text-emerald-500 print:text-black" size={14} />
                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest print:text-black">Carvis Onaylı Kayıt</span>
                      </div>
                      <span className="text-xs font-black text-slate-900 dark:text-white print:text-black">₺{record.total_amount?.toLocaleString('tr-TR')}</span>
@@ -469,11 +468,11 @@ const DigitalPassport = ({ vehicle }) => {
       >
         {generatingPDF ? (
           <>
-            <Icons.Loader2 className="animate-spin" size={18} /> RAPOR HAZIRLANIYOR...
+            <Loader2 className="animate-spin" size={18} /> RAPOR HAZIRLANIYOR...
           </>
         ) : (
           <>
-            <Icons.Download size={18} /> KARNEYİ PDF OLARAK İNDİR
+            <Download size={18} /> KARNEYİ PDF OLARAK İNDİR
           </>
         )}
       </button>

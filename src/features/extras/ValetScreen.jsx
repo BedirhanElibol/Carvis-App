@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { ArrowLeft, BadgeCheck, MapPin } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../supabaseClient";
@@ -216,7 +216,7 @@ const ValetScreen = () => {
               onClick={() => navigate(-1)}
               className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-black/10 dark:border-white/10"
             >
-              <Icons.ArrowLeft size={20} />
+              <ArrowLeft size={20} />
             </button>
             <div>
               <p className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-black">
@@ -257,7 +257,7 @@ const ValetScreen = () => {
               <p className="text-[10px] uppercase tracking-[0.25em] text-slate-500 font-black mb-2">
                 Toplam Tutar
               </p>
-              <p className="text-lg font-black text-emerald-400">
+              <p className="text-lg font-black text-teal-400">
                 ₺{packageSummary.total.toLocaleString("tr-TR")}
               </p>
             </div>
@@ -293,7 +293,7 @@ const ValetScreen = () => {
                           {pkg.title}
                         </span>
                         {isActive && (
-                          <Icons.BadgeCheck
+                          <BadgeCheck
                             size={16}
                             className="text-primary-400"
                           />
@@ -325,7 +325,7 @@ const ValetScreen = () => {
               Teslim Noktası
             </label>
             <div className="mt-2 flex items-center gap-3 bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3">
-              <Icons.MapPin size={18} className="text-primary-400" />
+              <MapPin size={18} className="text-primary-400" />
               <input
                 value={pickupPoint || ""}
                 onChange={(event) => setPickupPoint(event.target.value)}
@@ -362,7 +362,7 @@ const ValetScreen = () => {
               </p>
             </div>
             <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3">
-              <p className="text-emerald-400 uppercase font-black tracking-widest mb-1">
+              <p className="text-teal-400 uppercase font-black tracking-widest mb-1">
                 Toplam
               </p>
               <p className="text-emerald-300 font-bold">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { MapPin, PlusCircle, X } from "lucide-react";
 
 const AddressModal = ({
   show,
@@ -21,7 +21,7 @@ const AddressModal = ({
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-bold text-lg font-sans">{t.selectAddress}</h3>
           <button onClick={onClose}>
-            <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
+            <X size={20} className="text-slate-500 dark:text-slate-400" />
           </button>
         </div>
 
@@ -34,7 +34,7 @@ const AddressModal = ({
                 className="p-4 rounded-2xl border border-slate-100 hover:border-orange-600 hover:bg-orange-50 cursor-pointer transition shadow-md"
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <Icons.MapPin size={16} className="text-orange-600" />
+                  <MapPin size={16} className="text-orange-600" />
                   <span className="font-bold text-slate-900 font-sans">{addr.title}</span>
                 </div>
                 <p className="text-xs text-slate-500 pl-6 font-sans">
@@ -46,7 +46,7 @@ const AddressModal = ({
               onClick={() => setIsAdding(true)}
               className="w-full border-2 border-dashed border-orange-400 text-orange-600 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-orange-50 hover:border-orange-500 transition shadow-inner"
             >
-              <Icons.PlusCircle size={18} />
+              <PlusCircle size={18} />
               <span className="font-sans">{t.addNewAddress}</span>
             </button>
           </div>

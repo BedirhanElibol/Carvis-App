@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { ChevronLeft, Clock, Loader2, MapPin, ShieldCheck, SlidersHorizontal, Star, Wrench } from "lucide-react";
 import VehicleDemandForm from "../garage/VehicleDemandForm";
 import { SpecialistCard } from "../../components/Core";
 import { useUI } from "../../context/UIContext";
@@ -76,7 +76,7 @@ const MechanicsScreen = () => {
             onClick={() => setSpecialFlow(null)}
             className="p-2.5 glass-card rounded-xl text-slate-500 dark:text-slate-400 active-scale border border-black/10 dark:border-white/10"
           >
-            <Icons.ChevronLeft size={20} />
+            <ChevronLeft size={20} />
           </button>
           <div>
             <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter">
@@ -129,7 +129,7 @@ const MechanicsScreen = () => {
         />
         {submitting && (
           <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950/50 backdrop-blur-sm z-50 flex items-center justify-center rounded-3xl">
-            <Icons.Loader2
+            <Loader2
               className="animate-spin text-primary-500"
               size={48}
             />
@@ -180,16 +180,16 @@ const MechanicsScreen = () => {
       {!isMapView && (
         <div className="flex gap-2 overflow-x-auto no-scrollbar py-2 px-1">
           <button aria-label="Yakınlık (En Yakın)" className="flex items-center gap-1.5 px-4 py-2 bg-primary-500/10 border border-primary-500/20 text-primary-400 rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
-            <Icons.MapPin size={12} /> Yakınlık (En Yakın)
+            <MapPin size={12} /> Yakınlık (En Yakın)
           </button>
           <button aria-label="Puan (4.5+)" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
-            <Icons.Star size={12} /> Puan (4.5+)
+            <Star size={12} /> Puan (4.5+)
           </button>
           <button aria-label="Açık/Kapalı" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
-            <Icons.Clock size={12} /> Açık/Kapalı
+            <Clock size={12} /> Açık/Kapalı
           </button>
           <button aria-label="Hizmet Tipi" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
-            <Icons.SlidersHorizontal size={12} /> Hizmet Tipi
+            <SlidersHorizontal size={12} /> Hizmet Tipi
           </button>
         </div>
       )}
@@ -206,7 +206,7 @@ const MechanicsScreen = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
           <div className="relative z-10 glass-card p-8 rounded-[2.5rem] text-center shadow-2xl backdrop-blur-2xl border border-black/10 dark:border-white/10 animate-slide-up">
             <div className="w-16 h-16 bg-accent-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-accent-500/20">
-              <Icons.MapPin size={32} className="text-accent-500" />
+              <MapPin size={32} className="text-accent-500" />
             </div>
             <p className="font-black text-slate-900 dark:text-white text-xl tracking-tighter mb-1">
               RADAR AKTİF
@@ -231,7 +231,7 @@ const MechanicsScreen = () => {
                 >
                   {isBrandSpecialist && (
                     <div className="absolute -top-2 left-6 z-10 bg-accent-600 text-slate-900 dark:text-white text-[8px] font-black px-3 py-1 rounded-full shadow-lg border border-accent-400/20 uppercase tracking-widest flex items-center gap-1.5">
-                      <Icons.ShieldCheck size={10} /> {currentVehicle.brand}{" "}
+                      <ShieldCheck size={10} /> {currentVehicle.brand}{" "}
                       UZMANI
                     </div>
                   )}
@@ -244,7 +244,7 @@ const MechanicsScreen = () => {
             })
           ) : (
             <EmptyState
-              icon={Icons.Wrench}
+              icon={Wrench}
               title="Servis Bulunamadı"
               subtitle="Bölgenizde henüz Carvis onaylı servis bulunmuyor. İhale sistemini kullanarak teklif toplayabilirsiniz."
               actionLabel="İhale Sistemini Aç"

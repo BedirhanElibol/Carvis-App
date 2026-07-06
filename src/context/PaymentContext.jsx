@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback , useMemo } from "react";
 import { supabase } from "../supabaseClient";
 import { useAuth } from "./AuthContext";
 import { useUI } from "./UIContext";
@@ -213,7 +213,8 @@ export const PaymentProvider = ({ children }) => {
       .reduce((sum, o) => sum + (o.total_amount || 0), 0),
   };
 
-  const value = {
+  const value = useMemo(() => ({
+
     orders,
     wallet,
     transactions,
@@ -225,7 +226,8 @@ export const PaymentProvider = ({ children }) => {
     fetchOrders,
     fetchWallet,
     fetchTransactions,
-  };
+  
+  }), [orders, wallet, transactions, loading, sellerBalance, createOrder, initiatePayment, updateOrderStatus, fetchOrders, fetchWallet, fetchTransactions]);
 
   return <PaymentContext.Provider value={value}>{children}</PaymentContext.Provider>;
 };

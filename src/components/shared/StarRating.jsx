@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Star } from "lucide-react";
 import { triggerHaptic } from "../../utils/haptics";
 const StarRating = ({
   rating = 0,
@@ -32,7 +32,7 @@ const StarRating = ({
             className={`transition-all duration-150 ${readOnly ? "cursor-default" : "cursor-pointer active:scale-125"}`}
           >
             {" "}
-            <Icons.Star
+            <Star
               size={size}
               className={`transition-colors ${star <= displayRating ? "fill-amber-400 text-amber-400" : "fill-transparent text-slate-600"}`}
             />{" "}

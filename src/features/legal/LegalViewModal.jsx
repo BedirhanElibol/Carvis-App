@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { ShieldCheck, X } from "lucide-react";
 import { LEGAL_TEXTS } from "./legalTexts";
 
 /**
@@ -23,7 +23,7 @@ const LegalViewModal = ({ type, isOpen, onClose }) => {
         <div className="p-6 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-black/5 dark:bg-white/5">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-primary-600/20 flex items-center justify-center text-primary-500">
-              <Icons.ShieldCheck size={20} />
+              <ShieldCheck size={20} />
             </div>
             <h3 className="font-black text-xl text-slate-900 dark:text-white">{doc.title}</h3>
           </div>
@@ -31,7 +31,7 @@ const LegalViewModal = ({ type, isOpen, onClose }) => {
             onClick={onClose}
             className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full transition-colors text-slate-500 dark:text-slate-400"
           >
-            <Icons.X size={24} />
+            <X size={24} />
           </button>
         </div>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle, Clock, XCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const QuoteCard = ({ quote }) => {
@@ -9,7 +9,7 @@ const QuoteCard = ({ quote }) => {
     switch (status) {
       case "pending":
         return {
-          icon: Icons.Clock,
+          icon: Clock,
           color: "text-yellow-400",
           bg: "bg-yellow-500/10",
           border: "border-yellow-500/30",
@@ -17,7 +17,7 @@ const QuoteCard = ({ quote }) => {
         };
       case "accepted":
         return {
-          icon: Icons.CheckCircle,
+          icon: CheckCircle,
           color: "text-green-400",
           bg: "bg-green-500/10",
           border: "border-green-500/30",
@@ -25,7 +25,7 @@ const QuoteCard = ({ quote }) => {
         };
       case "rejected":
         return {
-          icon: Icons.XCircle,
+          icon: XCircle,
           color: "text-red-400",
           bg: "bg-red-500/10",
           border: "border-red-500/30",
@@ -33,7 +33,7 @@ const QuoteCard = ({ quote }) => {
         };
       case "expired":
         return {
-          icon: Icons.AlertCircle,
+          icon: AlertCircle,
           color: "text-slate-500",
           bg: "bg-slate-500/10",
           border: "border-slate-500/30",
@@ -41,7 +41,7 @@ const QuoteCard = ({ quote }) => {
         };
       default:
         return {
-          icon: Icons.Clock,
+          icon: Clock,
           color: "text-slate-500 dark:text-slate-400",
           bg: "bg-slate-500/10",
           border: "border-slate-500/30",
@@ -80,7 +80,7 @@ const QuoteCard = ({ quote }) => {
                 className="flex items-center gap-1 bg-primary-500/10 text-primary-400 px-1.5 py-0.5 rounded-md border border-primary-500/20"
                 title="Doğrulanmış Satıcı"
               >
-                <Icons.CheckCircle size={10} className="fill-current" />
+                <CheckCircle size={10} className="fill-current" />
                 <span className="text-[9px] font-black uppercase tracking-tighter">
                   Resmi
                 </span>
@@ -126,7 +126,7 @@ const QuoteCard = ({ quote }) => {
           })}
         </div>
         <div className="flex items-center gap-1 text-primary-400 text-sm font-semibold">
-          Detaylar <Icons.ArrowRight size={16} />
+          Detaylar <ArrowRight size={16} />
         </div>
       </div>
     </div>

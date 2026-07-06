@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { DollarSign, Edit2, Loader2, Package, Save, X } from "lucide-react";
 import { useSeller } from "../../../context/SellerContext";
 
 const SellerProductEditModal = ({ isOpen, onClose, product }) => {
@@ -42,14 +42,14 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
       <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-in zoom-in-95">
         <div className="p-6 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-black/5 dark:bg-white/5">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Icons.Edit2 className="text-primary-500" size={20} /> İlanı Düzenle
+            <Edit2 className="text-primary-500" size={20} /> İlanı Düzenle
           </h2>
           <button
             onClick={() => !isUpdating && onClose()}
             className="text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-50"
             disabled={isUpdating}
           >
-            <Icons.X size={24} />
+            <X size={24} />
           </button>
         </div>
 
@@ -58,7 +58,7 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
             {product.image_url ? (
               <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
             ) : (
-              <Icons.Package size={24} className="text-slate-500" />
+              <Package size={24} className="text-slate-500" />
             )}
           </div>
           <div>
@@ -75,7 +75,7 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
                 Fiyat (₺)
               </label>
               <div className="relative">
-                <Icons.DollarSign size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <DollarSign size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                 <input
                   required
                   type="number"
@@ -121,9 +121,9 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
             className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl active-scale flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
           >
             {isUpdating ? (
-              <><Icons.Loader2 size={18} className="animate-spin" /> GÜNCELLENİYOR...</>
+              <><Loader2 size={18} className="animate-spin" /> GÜNCELLENİYOR...</>
             ) : (
-              <><Icons.Save size={18} /> DEĞİŞİKLİKLERİ KAYDET</>
+              <><Save size={18} /> DEĞİŞİKLİKLERİ KAYDET</>
             )}
           </button>
         </form>

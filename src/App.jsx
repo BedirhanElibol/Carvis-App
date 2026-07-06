@@ -17,9 +17,9 @@ import CartDrawer from "./components/modals/CartDrawer";
 import SOSPanicModal from "./components/modals/SOSPanicModal";
 import AccidentAssistantModal from "./components/modals/AccidentAssistantModal";
 import { supabase } from "./supabaseClient";
-import VehicleSearch from "./features/garage/VehicleSearch";
+const VehicleSearch = React.lazy(() => import("./features/garage/VehicleSearch"));
 import { useGarage } from "./context/GarageContext";
-import * as Icons from "lucide-react";
+import { Loader2, Mail, X } from "lucide-react";
 import ThemeToggleFAB from "./components/common/ThemeToggleFAB";
 const App = () => {
   const {
@@ -66,10 +66,10 @@ const App = () => {
   const hideGlobalNav = isLanding || isSeller || isPartner || isAdmin;
 
   return (
-    <div className="w-full h-[100dvh] font-sans bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white relative selection:bg-orange-500/30 flex flex-col overflow-hidden">
+    <div className="w-full h-[100dvh] font-sans bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-white relative selection:bg-emerald-500/30 flex flex-col overflow-hidden">
       {/* Background Gradients */}
       <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white dark:from-slate-900 dark:via-slate-950 dark:to-black"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white via-emerald-50/50 to-teal-100/30 dark:from-slate-900 dark:via-slate-950 dark:to-black"></div>
       </div>
 
       {/* Header - Only show inside App */}
@@ -82,7 +82,7 @@ const App = () => {
               <div className="bg-orange-500/10 border-b border-orange-500/20 px-4 py-2.5 flex items-center justify-between gap-3 animate-slide-down">
                 <div className="flex items-center gap-3">
                   <div className="bg-orange-500/20 p-1.5 rounded-lg">
-                    <Icons.Mail size={14} className="text-orange-500" />
+                    <Mail size={14} className="text-orange-500" />
                   </div>
                   <p className="text-[10px] font-bold text-orange-200">
                     <span className="uppercase mr-1">DOĞRULAMA GEREKLİ:</span>{" "}
@@ -267,10 +267,11 @@ const App = () => {
               onClick={() => setShowVehicleSelector(false)}
               className="absolute -top-12 right-0 text-slate-900 dark:text-white hover:text-red-500 transition"
             >
-              <Icons.X size={24} />
+              <X size={24} />
             </button>
-            <VehicleSearch
-              onVehicleFound={async (data) => {
+            <React.Suspense fallback={<div className="p-10 flex justify-center"><Loader2 className="animate-spin text-primary-500" size={32}/></div>}>
+              <VehicleSearch
+                onVehicleFound={async (data) => {
                 const { error } = await addVehicle({
                   brand: data.brand,
                   model: data.model,
@@ -292,8 +293,10 @@ const App = () => {
                     "error",
                   );
                 }
+                setShowVehicleSelector(false);
               }}
             />
+            </React.Suspense>
           </div>
         </div>
       )}

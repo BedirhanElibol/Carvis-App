@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
 import jobsRouter from './routes/jobs.js';
+import paymentsRouter from './routes/payments.js';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use(limiter);
 
 // Routes
 app.use('/api/v1/jobs', jobsRouter);
+app.use('/api/v1/payments', paymentsRouter);
 
 // Health Check
 app.get('/health', (req, res) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
-import * as Icons from "lucide-react";
+import { Briefcase, Check, ChevronRight, Clock, FileText, Layers, Loader2, ShieldCheck, X } from "lucide-react";
  
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../context/UIContext";
@@ -114,11 +114,11 @@ const PartnerApplications = () => {
       <div className="grid grid-cols-1 gap-4">
         {loading ? (
           <div className="flex justify-center py-20">
-            <Icons.Loader2 className="animate-spin text-red-500" size={40} />
+            <Loader2 className="animate-spin text-red-500" size={40} />
           </div>
         ) : filteredApps.length === 0 ? (
           <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-2xl p-12 text-center">
-            <Icons.Layers className="mx-auto text-slate-700 mb-4" size={48} />
+            <Layers className="mx-auto text-slate-700 mb-4" size={48} />
             <h3 className="text-slate-900 dark:text-white font-bold">Kayıt Bulunamadı</h3>
             <p className="text-slate-500 text-sm">Bu kategoride henüz bir başvuru yok.</p>
           </div>
@@ -134,19 +134,19 @@ const PartnerApplications = () => {
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform">
-                    <Icons.Briefcase size={24} />
+                    <Briefcase size={24} />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-slate-900 dark:text-white">{app.company_name}</h4>
                     <div className="flex items-center gap-3 mt-1">
                       <span className="text-xs text-slate-500 flex items-center gap-1">
-                        <Icons.Clock size={12} /> {new Date(app.created_at).toLocaleDateString("tr-TR")}
+                        <Clock size={12} /> {new Date(app.created_at).toLocaleDateString("tr-TR")}
                       </span>
                       <StatusBadge status={app.status} />
                     </div>
                   </div>
                 </div>
-                <Icons.ChevronRight className="text-slate-600 group-hover:text-slate-900 dark:text-white" size={20} />
+                <ChevronRight className="text-slate-600 group-hover:text-slate-900 dark:text-white" size={20} />
               </div>
             </motion.div>
           ))
@@ -173,7 +173,7 @@ const PartnerApplications = () => {
               <div className="p-8 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-2xl bg-red-600/20 flex items-center justify-center text-red-500">
-                    <Icons.ShieldCheck size={24} />
+                    <ShieldCheck size={24} />
                   </div>
                   <div>
                     <h3 className="text-2xl font-black text-slate-900 dark:text-white">{selectedApp.company_name}</h3>
@@ -181,7 +181,7 @@ const PartnerApplications = () => {
                   </div>
                 </div>
                 <button onClick={() => setSelectedApp(null)} className="text-slate-500 hover:text-slate-900 dark:text-white">
-                  <Icons.X size={32} />
+                  <X size={32} />
                 </button>
               </div>
 
@@ -237,7 +237,7 @@ const PartnerApplications = () => {
                   <div className="grid grid-cols-2 gap-4">
                     {["Vergi Levhası", "İmza Sirküleri", "Sicil Gazetesi", "Faaliyet Belgesi"].map((doc) => (
                       <div key={doc} className="group aspect-video bg-black/40 border border-black/5 dark:border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-slate-100 dark:bg-slate-800 hover:border-red-500/50 transition-all cursor-pointer relative overflow-hidden">
-                        <Icons.FileText size={24} className="text-slate-600 group-hover:text-red-500" />
+                        <FileText size={24} className="text-slate-600 group-hover:text-red-500" />
                         <span className="text-[10px] font-bold text-slate-500 group-hover:text-slate-900 dark:text-white uppercase tracking-tight">{doc}</span>
                         <div className="absolute inset-0 bg-red-600/0 group-hover:bg-red-600/10 transition-all" />
                       </div>
@@ -259,9 +259,9 @@ const PartnerApplications = () => {
                     <button
                       disabled={actionLoading}
                       onClick={() => handleStatusUpdate(selectedApp.id, selectedApp.user_id, "approved")}
-                      className="flex-1 py-4 bg-emerald-600 hover:bg-emerald-500 text-black font-black rounded-2xl shadow-lg shadow-emerald-900/40 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                      className="flex-1 py-4 bg-teal-500 hover:bg-emerald-500 text-black font-black rounded-2xl shadow-lg shadow-emerald-900/40 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                     >
-                      {actionLoading ? <Icons.Loader2 className="animate-spin" /> : <Icons.Check size={20} />}
+                      {actionLoading ? <Loader2 className="animate-spin" /> : <Check size={20} />}
                       BAŞVURUYU ONAYLA
                     </button>
                     <button
@@ -269,14 +269,14 @@ const PartnerApplications = () => {
                       onClick={() => handleStatusUpdate(selectedApp.id, selectedApp.user_id, "rejected")}
                       className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 hover:bg-rose-900/50 text-slate-900 dark:text-white font-black rounded-2xl border border-black/5 dark:border-white/5 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                     >
-                      {actionLoading ? <Icons.Loader2 className="animate-spin" /> : <Icons.X size={20} />}
+                      {actionLoading ? <Loader2 className="animate-spin" /> : <X size={20} />}
                       REDDET
                     </button>
                   </>
                 )}
                 {selectedApp.status !== "pending" && (
                   <div className={`w-full py-4 text-center rounded-2xl font-black ${
-                    selectedApp.status === "approved" ? "bg-emerald-600/10 text-emerald-500" : "bg-rose-600/10 text-rose-500"
+                    selectedApp.status === "approved" ? "bg-teal-500/10 text-emerald-500" : "bg-rose-600/10 text-rose-500"
                   }`}>
                     BU BAŞVURU {selectedApp.status.toUpperCase()} DURUMUNDADIR
                   </div>

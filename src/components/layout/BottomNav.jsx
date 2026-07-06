@@ -1,4 +1,4 @@
-import * as Icons from "lucide-react";
+import { Home, LayoutDashboard, Map, MessageSquare, ShoppingCart } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUI } from "../../context/UIContext";
 import { triggerHaptic } from "../../utils/haptics";
@@ -17,16 +17,16 @@ export const BottomNav = () => {
   );
 
   const tabs = [
-    { id: "/", icon: Icons.Home, label: "Ana Sayfa" },
-    { id: "/app/parts", icon: Icons.ShoppingCart, label: "Market" },
+    { id: "/", icon: Home, label: "Ana Sayfa" },
+    { id: "/app/parts", icon: ShoppingCart, label: "Market" },
     {
       id: "/messages",
-      icon: Icons.MessageSquare,
+      icon: MessageSquare,
       label: "Mesajlar",
       badge: unreadCount,
     },
-    { id: "/app/map", icon: Icons.Map, label: "Harita" },
-    { id: "/application/home", icon: Icons.LayoutDashboard, label: "Hizmetler" },
+    { id: "/app/map", icon: Map, label: "Harita" },
+    { id: "/application/home", icon: LayoutDashboard, label: "Hizmetler" },
   ];
 
   if (!t) return null;

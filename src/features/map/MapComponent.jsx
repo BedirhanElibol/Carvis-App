@@ -31,7 +31,7 @@ const createProviderIcon = (provider) => {
   // Role-based color palette and shorthand icons
   const roleStyles = {
     valet: { color: "#2563eb", bg: "bg-blue-600", icon: "V" },
-    parking: { color: "#059669", bg: "bg-emerald-600", icon: "P" },
+    parking: { color: "#059669", bg: "bg-teal-500", icon: "P" },
     mechanic: { color: "#ea580c", bg: "bg-orange-600", icon: "M" },
     parts: { color: "#4f46e5", bg: "bg-primary-600", icon: "S" },
     default: { color: "#475569", bg: "bg-slate-600", icon: "*" }
@@ -105,7 +105,7 @@ const createAlertIcon = (type) => {
     bgClass = "bg-amber-500 ring-amber-400/50";
     symbol = "KSS"; // Kasis
   } else if (type === "fuel") {
-    bgClass = "bg-emerald-600 ring-emerald-500/50";
+    bgClass = "bg-teal-500 ring-emerald-500/50";
     symbol = "AKR"; // Akaryakıt
   } else if (type === "accident") {
     bgClass = "bg-orange-500 ring-orange-400/50";

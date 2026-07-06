@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { Clock, ShieldCheck, X } from "lucide-react";
  
 import { motion, AnimatePresence } from "framer-motion";
 import { EscrowService } from "../../services/EscrowService";
@@ -58,12 +58,12 @@ const ServiceApprovalModal = ({ isOpen, onClose, orderId, orderAmount }) => {
              <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-3">
                    <div className="p-3 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
-                      <Icons.ShieldCheck size={24} className="text-emerald-400" />
+                      <ShieldCheck size={24} className="text-teal-400" />
                    </div>
                    <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Hizmet Onayı</h2>
                 </div>
                 <button onClick={onClose} className="text-slate-500 hover:text-slate-900 dark:text-white transition-colors">
-                   <Icons.X size={24} />
+                   <X size={24} />
                 </button>
              </div>
              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.3em]">Harcama Tutarı: ₺{orderAmount}</p>
@@ -75,7 +75,7 @@ const ServiceApprovalModal = ({ isOpen, onClose, orderId, orderAmount }) => {
                 <div className="text-center py-20 opacity-50 uppercase text-[10px] font-black tracking-widest">Kanıtlar yükleniyor...</div>
              ) : !proof ? (
                 <div className="text-center py-20 opacity-30">
-                   <Icons.Clock size={48} className="mx-auto mb-4" />
+                   <Clock size={48} className="mx-auto mb-4" />
                    <p className="text-[10px] font-black uppercase tracking-widest">Ustanız henüz hizmet kanıtlarını yüklemedi.</p>
                 </div>
              ) : (

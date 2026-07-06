@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Banknote, Cpu, Globe } from "lucide-react";
 import { motion } from "framer-motion";  
 import { useUI } from "../../context/UIContext";
 
@@ -21,7 +21,7 @@ const AdminSettings = () => {
   const settingSections = [
     {
       title: "Finansal Ayarlar",
-      icon: Icons.Banknote,
+      icon: Banknote,
       items: [
         {
           label: "Platform Komisyon Oranı (%)",
@@ -34,7 +34,7 @@ const AdminSettings = () => {
     },
     {
       title: "Sistem Kontrolü",
-      icon: Icons.Cpu,
+      icon: Cpu,
       items: [
         {
           label: "Bakım Modu",
@@ -56,7 +56,7 @@ const AdminSettings = () => {
     },
     {
       title: "İletişim & Kimlik",
-      icon: Icons.Globe,
+      icon: Globe,
       items: [
         {
           label: "Uygulama Adı",

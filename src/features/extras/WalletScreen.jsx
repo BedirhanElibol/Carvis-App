@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { ArrowDownLeft, ArrowLeft, ArrowUpRight, ChevronRight, Inbox, LayoutGrid, Plus, ShieldCheck, Wallet, X } from "lucide-react";
 import { useWallet } from "../../context/WalletContext";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
@@ -31,7 +31,7 @@ const WalletScreen = () => {
               onClick={() => navigate("/app/profile")}
               className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale transition hover:bg-black/10 dark:bg-white/10"
             >
-              <Icons.ArrowLeft size={20} />
+              <ArrowLeft size={20} />
             </button>
             <div>
               <h1 className="text-xl font-black font-sans uppercase tracking-tighter">
@@ -40,7 +40,7 @@ const WalletScreen = () => {
             </div>
           </div>
           <div className="w-10 h-10 rounded-xl bg-primary-600/20 flex items-center justify-center text-primary-400">
-            <Icons.Wallet size={20} />
+            <Wallet size={20} />
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@ const WalletScreen = () => {
             <div className="flex justify-between items-start">
               <div>
                 <div className="text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-[9px] mb-2 flex items-center gap-1.5 font-sans">
-                  <Icons.ShieldCheck size={12} className="text-primary-400" />
+                  <ShieldCheck size={12} className="text-primary-400" />
                   RAPIDSY GÜVENCESİ
                 </div>
                 <div className="text-slate-900 dark:text-white text-4xl font-black font-sans tracking-tighter">
@@ -108,7 +108,7 @@ const WalletScreen = () => {
             className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center justify-center gap-3 hover:bg-primary-600/10 hover:border-primary-500/30 transition-all active-scale group"
           >
             <div className="w-14 h-14 rounded-2xl bg-primary-600 flex items-center justify-center text-slate-900 dark:text-white shadow-xl group-hover:scale-110 transition-transform">
-              <Icons.Plus size={28} />
+              <Plus size={28} />
             </div>
             <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest font-sans">
               Bakiye Yükle
@@ -125,7 +125,7 @@ const WalletScreen = () => {
             className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center justify-center gap-3 hover:bg-black/5 dark:bg-white/5 transition-all active-scale group"
           >
             <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-black/10 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 shadow-xl group-hover:scale-110 transition-transform">
-              <Icons.LayoutGrid size={24} />
+              <LayoutGrid size={24} />
             </div>
             <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest font-sans">
               Diğer İşlemler
@@ -147,7 +147,7 @@ const WalletScreen = () => {
           <div className="space-y-3">
             {transactions.length === 0 ? (
               <div className="text-center py-16 glass-card rounded-[2rem] border border-black/5 dark:border-white/5">
-                <Icons.Inbox
+                <Inbox
                   size={40}
                   className="mx-auto text-slate-800 mb-3"
                 />
@@ -165,16 +165,16 @@ const WalletScreen = () => {
                     <div
                       className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                         tx.type === "deposit" || tx.type === "refund"
-                          ? "bg-emerald-500/10 text-emerald-400"
+                          ? "bg-emerald-500/10 text-teal-400"
                           : tx.type === "block"
                             ? "bg-yellow-500/10 text-yellow-400"
                             : "bg-red-500/10 text-red-500"
                       }`}
                     >
                       {tx.type === "deposit" || tx.type === "refund" ? (
-                        <Icons.ArrowDownLeft size={22} />
+                        <ArrowDownLeft size={22} />
                       ) : (
-                        <Icons.ArrowUpRight size={22} />
+                        <ArrowUpRight size={22} />
                       )}
                     </div>
                     <div>
@@ -193,7 +193,7 @@ const WalletScreen = () => {
                   <div
                     className={`text-lg font-black text-right font-sans ${
                       tx.type === "deposit" || tx.type === "refund"
-                        ? "text-emerald-400"
+                        ? "text-teal-400"
                         : tx.type === "block"
                           ? "text-yellow-500"
                           : "text-slate-900 dark:text-white"
@@ -226,7 +226,7 @@ const WalletScreen = () => {
                 onClick={() => setShowTopUp(false)}
                 className="w-10 h-10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-white bg-black/5 dark:bg-white/5 rounded-full transition-colors"
               >
-                <Icons.X size={20} />
+                <X size={20} />
               </button>
             </div>
             <div className="grid grid-cols-1 gap-3 mb-8">
@@ -245,12 +245,12 @@ const WalletScreen = () => {
                   className="bg-black/5 dark:bg-white/5 hover:bg-primary-600/20 border border-black/5 dark:border-white/5 hover:border-primary-500/50 text-slate-900 dark:text-white font-black py-4 rounded-2xl transition-all font-sans text-lg flex items-center justify-between px-6 group"
                 >
                   <span>+{val.toLocaleString("tr-TR")} ₺</span>
-                  <Icons.ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ChevronRight className="opacity-0 group-hover:opacity-100 transition-opacity" />
                 </button>
               ))}
             </div>
             <div className="flex items-center justify-center pt-6 border-t border-black/5 dark:border-white/5 text-[9px] text-slate-600 font-black uppercase tracking-[0.2em] gap-2 font-sans">
-              <Icons.ShieldCheck size={14} className="text-emerald-500/50" />
+              <ShieldCheck size={14} className="text-emerald-500/50" />
               3D Secure & AES-256 Korumalı
             </div>
           </div>

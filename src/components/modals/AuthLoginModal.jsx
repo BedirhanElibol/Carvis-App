@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { ArrowLeft, CheckCircle, Loader2, Lock, LogIn, Mail, Send, User, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
 
@@ -118,7 +118,7 @@ const AuthLoginModal = ({
           onClick={onClose}
           className="absolute top-4 right-4 bg-black/5 dark:bg-white/5 p-2 rounded-full hover:bg-black/10 dark:bg-white/10 transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white border border-black/5 dark:border-white/5 cursor-pointer"
         >
-          <Icons.X size={20} />
+          <X size={20} />
         </button>
 
         {view === "login" && (
@@ -133,7 +133,7 @@ const AuthLoginModal = ({
             </div>
 
             <div className="mb-6 flex items-center justify-center gap-2 text-teal-400 font-black uppercase tracking-widest text-xs font-sans">
-              <Icons.User size={16} /> Müşteri Girişi
+              <User size={16} /> Müşteri Girişi
             </div>
 
             <form onSubmit={handleLogin} className="space-y-5">
@@ -142,7 +142,7 @@ const AuthLoginModal = ({
                   {t.email}
                 </label>
                 <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                  <Icons.Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
+                  <Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                   <input
                     type="email"
                     required
@@ -171,7 +171,7 @@ const AuthLoginModal = ({
                   </button>
                 </div>
                 <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                  <Icons.Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
+                  <Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                   <input
                     type="password"
                     required
@@ -197,9 +197,9 @@ const AuthLoginModal = ({
                 }`}
               >
                 {loading ? (
-                  <Icons.Loader2 className="animate-spin" />
+                  <Loader2 className="animate-spin" />
                 ) : (
-                  <Icons.LogIn size={20} />
+                  <LogIn size={20} />
                 )}
                 {loading ? "Bağlanıyor..." : t.loginButton || "Giriş Yap"}
               </button>
@@ -222,7 +222,7 @@ const AuthLoginModal = ({
                 className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-2xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer"
               >
                 {socialLoading === "google" ? (
-                  <Icons.Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
+                  <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
                 ) : (
                   <img
                     src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -238,7 +238,7 @@ const AuthLoginModal = ({
                 className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-2xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer"
               >
                 {socialLoading === "apple" ? (
-                  <Icons.Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
+                  <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
                 ) : (
                   <img
                     src="https://www.svgrepo.com/show/511330/apple-173.svg"
@@ -292,7 +292,7 @@ const AuthLoginModal = ({
                   E-posta Adresi
                 </label>
                 <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                  <Icons.Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
+                  <Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                   <input
                     type="email"
                     required
@@ -318,9 +318,9 @@ const AuthLoginModal = ({
                 }`}
               >
                 {loading ? (
-                  <Icons.Loader2 className="animate-spin" />
+                  <Loader2 className="animate-spin" />
                 ) : (
-                  <Icons.Send size={20} />
+                  <Send size={20} />
                 )}
                 {loading ? "Gönderiliyor..." : "Sıfırlama Bağlantısı Gönder"}
               </button>
@@ -333,7 +333,7 @@ const AuthLoginModal = ({
                 }}
                 className="w-full py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all active:scale-[0.98] font-sans cursor-pointer flex items-center justify-center gap-1.5"
               >
-                <Icons.ArrowLeft size={14} /> Giriş Ekranına Dön
+                <ArrowLeft size={14} /> Giriş Ekranına Dön
               </button>
             </form>
           </>
@@ -343,7 +343,7 @@ const AuthLoginModal = ({
           <>
             <div className="text-center py-6 space-y-6">
               <div className="w-16 h-16 bg-teal-500/10 border border-teal-500/20 rounded-full flex items-center justify-center mx-auto text-teal-400 animate-bounce">
-                <Icons.CheckCircle size={32} />
+                <CheckCircle size={32} />
               </div>
               <div>
                 <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 font-sans uppercase tracking-tight">

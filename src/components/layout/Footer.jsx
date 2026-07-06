@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Car, Instagram, Linkedin, Twitter } from "lucide-react";
 import LegalViewModal from "../../features/legal/LegalViewModal";
 
 const Footer = () => {
@@ -19,7 +19,7 @@ const Footer = () => {
           <div className="space-y-4 max-w-xs">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <Icons.Car size={18} className="text-slate-900 dark:text-white" />
+                <Car size={18} className="text-slate-900 dark:text-white" />
               </div>
               <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white">
                 RAPIDSY <span className="text-primary-500">PRO</span>
@@ -57,9 +57,9 @@ const Footer = () => {
             &copy; {currentYear} Rapidsy Teknoloji A.Ş. Tüm hakları saklıdır.
           </p>
           <div className="flex items-center gap-6">
-            <Icons.Instagram size={16} className="text-slate-600 hover:text-primary-400 cursor-pointer transition-colors" />
-            <Icons.Twitter size={16} className="text-slate-600 hover:text-primary-400 cursor-pointer transition-colors" />
-            <Icons.Linkedin size={16} className="text-slate-600 hover:text-primary-400 cursor-pointer transition-colors" />
+            <Instagram size={16} className="text-slate-600 hover:text-primary-400 cursor-pointer transition-colors" />
+            <Twitter size={16} className="text-slate-600 hover:text-primary-400 cursor-pointer transition-colors" />
+            <Linkedin size={16} className="text-slate-600 hover:text-primary-400 cursor-pointer transition-colors" />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { CheckCircle2, Database, Droplet, Leaf, Wrench, Zap } from "lucide-react";
 
 const CarwashProfileForm = ({ data, onUpdate }) => {
   const [profileData, setProfileData] = useState({
@@ -22,7 +22,7 @@ const CarwashProfileForm = ({ data, onUpdate }) => {
       {/* Şirket Adı & Temel Bilgiler */}
       <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-2xl p-6 shadow-sm">
         <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-6 flex items-center gap-2">
-          <Icons.Droplet size={18} className="text-cyan-500" /> Temel İşletme Bilgileri
+          <Droplet size={18} className="text-cyan-500" /> Temel İşletme Bilgileri
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -70,7 +70,7 @@ const CarwashProfileForm = ({ data, onUpdate }) => {
       {/* Ekipman & Teknik Kapasite */}
       <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-2xl p-6 shadow-sm">
         <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-6 flex items-center gap-2">
-          <Icons.Tool size={18} className="text-cyan-500" /> Ekipman ve Teknik Altyapı
+          <Wrench size={18} className="text-cyan-500" /> Ekipman ve Teknik Altyapı
         </h3>
         
         <div className="space-y-4">
@@ -84,14 +84,14 @@ const CarwashProfileForm = ({ data, onUpdate }) => {
           >
             <div className="flex items-center gap-3">
               <div className={`p-2 rounded-lg ${profileData.has_own_water_tank ? "bg-cyan-500/20" : "bg-black/10 dark:bg-white/10"}`}>
-                <Icons.Database size={16} />
+                <Database size={16} />
               </div>
               <div className="text-left">
                 <div className="text-sm font-bold">Kendi Su Tankım Var</div>
                 <div className="text-xs opacity-70">Müşterinin su hattına ihtiyaç duymadan yıkama yapabilirim.</div>
               </div>
             </div>
-            {profileData.has_own_water_tank && <Icons.CheckCircle2 size={20} className="text-cyan-500" />}
+            {profileData.has_own_water_tank && <CheckCircle2 size={20} className="text-cyan-500" />}
           </button>
 
           <button 
@@ -104,34 +104,34 @@ const CarwashProfileForm = ({ data, onUpdate }) => {
           >
             <div className="flex items-center gap-3">
               <div className={`p-2 rounded-lg ${profileData.has_generator ? "bg-cyan-500/20" : "bg-black/10 dark:bg-white/10"}`}>
-                <Icons.Zap size={16} />
+                <Zap size={16} />
               </div>
               <div className="text-left">
                 <div className="text-sm font-bold">Jeneratörüm Var</div>
                 <div className="text-xs opacity-70">Müşterinin elektriğine ihtiyaç duymadan cihazlarımı çalıştırabilirim.</div>
               </div>
             </div>
-            {profileData.has_generator && <Icons.CheckCircle2 size={20} className="text-cyan-500" />}
+            {profileData.has_generator && <CheckCircle2 size={20} className="text-cyan-500" />}
           </button>
 
           <button 
             onClick={() => handleChange("is_eco_friendly", !profileData.is_eco_friendly)}
             className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${
               profileData.is_eco_friendly 
-                ? "bg-emerald-500/10 border-emerald-500 text-emerald-700 dark:text-emerald-400" 
+                ? "bg-emerald-500/10 border-emerald-500 text-teal-600 dark:text-teal-400" 
                 : "bg-slate-50 dark:bg-black/20 border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-black/20 dark:hover:border-white/20"
             }`}
           >
             <div className="flex items-center gap-3">
               <div className={`p-2 rounded-lg ${profileData.is_eco_friendly ? "bg-emerald-500/20" : "bg-black/10 dark:bg-white/10"}`}>
-                <Icons.Leaf size={16} />
+                <Leaf size={16} />
               </div>
               <div className="text-left">
                 <div className="text-sm font-bold">Çevre Dostu Ürünler Kullanıyorum</div>
                 <div className="text-xs opacity-70">Doğaya zarar vermeyen, bio-çözünür yıkama kimyasalları kullanıyorum.</div>
               </div>
             </div>
-            {profileData.is_eco_friendly && <Icons.CheckCircle2 size={20} className="text-emerald-500" />}
+            {profileData.is_eco_friendly && <CheckCircle2 size={20} className="text-emerald-500" />}
           </button>
         </div>
       </div>

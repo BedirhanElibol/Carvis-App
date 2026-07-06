@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { ArrowLeft, Copy, Loader2, Package, Ticket } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +49,7 @@ const CampaignsScreen = () => {
           onClick={() => navigate(-1)}
           className="p-3 glass-card rounded-2xl text-slate-900 dark:text-white active-scale border border-black/10 dark:border-white/10"
         >
-          <Icons.ArrowLeft size={20} />
+          <ArrowLeft size={20} />
         </button>
         <div>
           <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter uppercase">
@@ -71,7 +71,7 @@ const CampaignsScreen = () => {
               : "text-slate-500 hover:text-slate-500 dark:text-slate-400"
           }`}
         >
-          <Icons.Ticket size={14} /> Kuponlar
+          <Ticket size={14} /> Kuponlar
         </button>
         <button
           onClick={() => setActiveTab("packages")}
@@ -81,7 +81,7 @@ const CampaignsScreen = () => {
               : "text-slate-500 hover:text-slate-500 dark:text-slate-400"
           }`}
         >
-          <Icons.Package size={14} /> Paketler
+          <Package size={14} /> Paketler
         </button>
       </div>
 
@@ -92,11 +92,11 @@ const CampaignsScreen = () => {
           <div className="space-y-4">
             {loading ? (
               <div className="text-center py-20">
-                <Icons.Loader2 className="animate-spin mx-auto text-orange-500" size={40} />
+                <Loader2 className="animate-spin mx-auto text-orange-500" size={40} />
               </div>
             ) : coupons.length === 0 ? (
               <div className="text-center py-20 bg-black/5 dark:bg-white/5 rounded-[2.5rem] border border-dashed border-black/10 dark:border-white/10">
-                <Icons.Ticket size={40} className="mx-auto text-slate-600 mb-4" />
+                <Ticket size={40} className="mx-auto text-slate-600 mb-4" />
                 <p className="text-sm font-bold text-slate-500">Aktif kupon bulunamadı.</p>
               </div>
             ) : (
@@ -136,7 +136,7 @@ const CampaignsScreen = () => {
                         onClick={() => copyCoupon(coupon.code)}
                         className="bg-orange-600/20 text-orange-500 p-3 rounded-xl hover:bg-orange-600/30 transition active-scale border border-orange-500/20"
                       >
-                        <Icons.Copy size={20} />
+                        <Copy size={20} />
                       </button>
                     </div>
                   </div>

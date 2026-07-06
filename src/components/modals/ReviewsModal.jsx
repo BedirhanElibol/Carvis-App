@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Star, X } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../supabaseClient";
@@ -48,13 +48,13 @@ const ReviewsModal = ({ isOpen, onClose, targetId, orderId, targetName }) => {
       <div className="bg-slate-50 dark:bg-slate-950 w-full max-w-md rounded-[3rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-slide-up relative">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-600 to-accent-600"></div>
         <button onClick={onClose} className="absolute top-6 right-6 text-slate-500 hover:text-slate-900 dark:text-white transition">
-          <Icons.X size={24} />
+          <X size={24} />
         </button>
 
         <div className="p-8 space-y-6">
           <div className="text-center">
             <div className="w-16 h-16 bg-primary-600/10 rounded-[1.5rem] flex items-center justify-center mx-auto mb-4 border border-primary-500/10">
-              <Icons.Star size={32} className="text-primary-500" />
+              <Star size={32} className="text-primary-500" />
             </div>
             <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase">{targetName}</h3>
             <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Deneyiminizi Puanlayın</p>
@@ -67,7 +67,7 @@ const ReviewsModal = ({ isOpen, onClose, targetId, orderId, targetName }) => {
                 onClick={() => setRating(s)}
                 className={`p-3 rounded-2xl border transition-all active-scale ${s <= rating ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' : 'bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 text-slate-600'}`}
               >
-                <Icons.Star size={24} fill={s <= rating ? "currentColor" : "none"} />
+                <Star size={24} fill={s <= rating ? "currentColor" : "none"} />
               </button>
             ))}
           </div>

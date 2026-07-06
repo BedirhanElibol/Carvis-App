@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { supabase } from "../supabaseClient";
 import { useAuth } from "./AuthContext";
 import { useUI } from "./UIContext";
@@ -206,7 +206,7 @@ export const MapProvider = ({ children }) => {
     };
   }, [currentUser, showAlert]);
 
-  const value = {
+  const value = useMemo(() => ({
     nearbyProviders,
     activeSOS,
     userLocation,
@@ -227,7 +227,7 @@ export const MapProvider = ({ children }) => {
         console.warn("Bypass is only available in development mode.");
       }
     },
-  };
+  }), [nearbyProviders, activeSOS, userLocation, loadingMap, permissionStatus, fetchNearbyProviders, createSOSRequest, cancelSOS]);
 
   return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
 };

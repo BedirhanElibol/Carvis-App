@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMessage } from "../../context/MessageContext";
 import { useAuth } from "../../context/AuthContext";
-import * as Icons from "lucide-react";
+import { ArrowLeft, Check, CheckCheck, MoreVertical, Send, ShieldCheck, Smartphone } from "lucide-react";
 
 const MessageScreen = () => {
   const { userId } = useParams();
@@ -61,7 +61,7 @@ const MessageScreen = () => {
               onClick={() => navigate(-1)}
               className="w-10 h-10 glass-card rounded-2xl flex items-center justify-center active-scale border border-black/5 dark:border-white/5"
             >
-              <Icons.ArrowLeft size={20} className="text-slate-600 dark:text-slate-300" />
+              <ArrowLeft size={20} className="text-slate-600 dark:text-slate-300" />
             </button>
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-black/10 dark:border-white/10 shadow-lg font-black text-primary-500">
@@ -86,10 +86,10 @@ const MessageScreen = () => {
           </div>
           <div className="flex items-center gap-1">
             <button className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 border border-black/5 dark:border-white/5">
-              <Icons.Smartphone size={18} />
+              <Smartphone size={18} />
             </button>
             <button className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 border border-black/5 dark:border-white/5">
-              <Icons.MoreVertical size={18} />
+              <MoreVertical size={18} />
             </button>
           </div>
         </div>
@@ -98,7 +98,7 @@ const MessageScreen = () => {
       {/* Safe Trading Banner */}
       <div className="mx-4 mt-2 bg-primary-950/20 border border-primary-500/20 rounded-2xl p-3 flex items-center gap-3 z-10">
         <div className="bg-primary-500/20 p-2 rounded-xl text-primary-400">
-          <Icons.ShieldCheck size={18} />
+          <ShieldCheck size={18} />
         </div>
         <p className="text-[10px] text-primary-100 font-medium leading-tight font-sans">
           Güvenliğiniz için ödemelerinizi uygulama dışından yapmayınız.
@@ -110,7 +110,7 @@ const MessageScreen = () => {
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center opacity-50 space-y-4">
             <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-[2.5rem] flex items-center justify-center border border-black/5 dark:border-white/5 shadow-2xl">
-              <Icons.Send size={32} className="text-slate-700 -rotate-12" />
+              <Send size={32} className="text-slate-700 -rotate-12" />
             </div>
             <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 font-sans">
               Sohbeti Başlatın
@@ -166,9 +166,9 @@ const MessageScreen = () => {
                       {isOwn && (
                         <div className="text-primary-500">
                           {message.is_read ? (
-                            <Icons.CheckCheck size={12} />
+                            <CheckCheck size={12} />
                           ) : (
-                            <Icons.Check size={12} />
+                            <Check size={12} />
                           )}
                         </div>
                       )}
@@ -203,7 +203,7 @@ const MessageScreen = () => {
             {sending ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
             ) : (
-              <Icons.Send size={22} className="text-slate-900 dark:text-white -mr-1" />
+              <Send size={22} className="text-slate-900 dark:text-white -mr-1" />
             )}
           </button>
         </form>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { ArrowLeft, CheckCircle, ChevronRight, CreditCard, Lock, MapPin, RefreshCw, ShieldCheck, ShoppingBag } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import { useUI } from "../../context/UIContext";
 import { useWallet } from "../../context/WalletContext";
@@ -107,7 +107,7 @@ const CheckoutScreen = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-slate-50 dark:bg-slate-950 z-[-1]"></div>
         <div className="glass-card p-12 rounded-[3rem] text-center max-w-lg border border-black/5 dark:border-white/5 shadow-2xl">
           <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-green-900/50">
-            <Icons.CheckCircle size={48} className="text-slate-900 dark:text-white" />
+            <CheckCircle size={48} className="text-slate-900 dark:text-white" />
           </div>
           <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">Siparişiniz Alındı!</h1>
           <p className="text-slate-500 dark:text-slate-400 mb-8">
@@ -137,13 +137,13 @@ const CheckoutScreen = () => {
             onClick={handleBack}
             className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
           >
-            <Icons.ArrowLeft size={24} />
+            <ArrowLeft size={24} />
           </button>
           <div className="flex items-center gap-2 md:gap-4">
             <StepIndicator
               current={step}
               num={1}
-              icon={Icons.ShoppingBag}
+              icon={ShoppingBag}
               label="Sepetim"
             />
             <div
@@ -152,7 +152,7 @@ const CheckoutScreen = () => {
             <StepIndicator
               current={step}
               num={2}
-              icon={Icons.MapPin}
+              icon={MapPin}
               label="Teslimat"
             />
             <div
@@ -161,7 +161,7 @@ const CheckoutScreen = () => {
             <StepIndicator
               current={step}
               num={3}
-              icon={Icons.CreditCard}
+              icon={CreditCard}
               label="Ödeme"
             />
           </div>
@@ -228,7 +228,7 @@ const CheckoutScreen = () => {
                 className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2"
               >
                 {step === 1 ? "Sepeti Onayla" : "Ödemeye Geç"}
-                <Icons.ChevronRight size={18} />
+                <ChevronRight size={18} />
               </button>
             ) : (
               <div className="space-y-4">
@@ -254,7 +254,7 @@ const CheckoutScreen = () => {
                   </label>
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] text-slate-500 font-bold flex items-center gap-1">
-                      <Icons.ShieldCheck size={12} /> 3D Secure
+                      <ShieldCheck size={12} /> 3D Secure
                     </span>
                     <div
                       onClick={() => setUse3D(!use3D)}
@@ -275,9 +275,9 @@ const CheckoutScreen = () => {
                   className={`w-full text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${paymentMethod === "wallet" ? "bg-primary-600 hover:bg-primary-500" : "bg-green-600 hover:bg-green-500"}`}
                 >
                   {isProcessingCheckout ? (
-                    <Icons.RefreshCw className="animate-spin" />
+                    <RefreshCw className="animate-spin" />
                   ) : (
-                    <Icons.Lock size={18} />
+                    <Lock size={18} />
                   )}
                   <span className="flex-1 text-center">
                     {paymentMethod === "wallet"
@@ -292,7 +292,7 @@ const CheckoutScreen = () => {
             )}
             <div className="text-center">
               <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest flex items-center justify-center gap-1">
-                <Icons.ShieldCheck size={12} /> Güvenli Alışveriş
+                <ShieldCheck size={12} /> Güvenli Alışveriş
               </p>
             </div>
           </div>

@@ -4,7 +4,9 @@ import { useGarage } from "../../context/GarageContext";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
 import { supabase } from "../../supabaseClient";
-import * as Icons from "lucide-react";
+import { AlertCircle, Banknote, Camera, Car, ChevronLeft, FileText, HelpCircle, Image, Loader2, Mic, Paperclip, Send, ShieldAlert, Sparkles, Trash2, Volume2, Activity, Flame, ChevronsDown, CircleSlash, Droplets, Wind, ZapOff } from "lucide-react";
+
+const Icons = { Activity, Volume2, Flame, ChevronsDown, CircleSlash, Droplets, Wind, ZapOff };
 
 const SYMPTOMS_LIST = [
   { id: "vibration", label: "Titreme / Sarsıntı", icon: "Activity", desc: "Pedalda veya direksiyonda sarsıntı", color: "text-amber-400" },
@@ -12,7 +14,7 @@ const SYMPTOMS_LIST = [
   { id: "overheating", label: "Hararet / Isınma", icon: "Flame", desc: "Hararet göstergesi yüksek seviyede", color: "text-red-400" },
   { id: "loss_of_power", label: "Çekiş Düşüklüğü", icon: "ChevronsDown", desc: "Gaza basıldığında geç tepki verme", color: "text-indigo-400" },
   { id: "weak_brakes", label: "Fren Zayıflığı", icon: "CircleSlash", desc: "Geç yavaşlama veya fren sesi", color: "text-pink-400" },
-  { id: "leak", label: "Sıvı Kaçağı", icon: "Droplets", desc: "Alt kısımdan yağ veya su sızıntısı", color: "text-emerald-400" },
+  { id: "leak", label: "Sıvı Kaçağı", icon: "Droplets", desc: "Alt kısımdan yağ veya su sızıntısı", color: "text-teal-400" },
   { id: "smoke", label: "Egzoz Dumanı", icon: "Wind", desc: "Siyah veya mavi renkli yoğun duman", color: "text-slate-500 dark:text-slate-400" },
   { id: "crank_issue", label: "Marş Sorunu", icon: "ZapOff", desc: "Aracın geç çalışması veya çalışmaması", color: "text-yellow-400" },
 ];
@@ -48,7 +50,7 @@ const ServiceRequestForm = () => {
 
   const getSymptomIconComponent = (iconName) => {
     const Comp = Icons[iconName];
-    return Comp ? <Comp size={20} /> : <Icons.HelpCircle size={20} />;
+    return Comp ? <Comp size={20} /> : <HelpCircle size={20} />;
   };
 
   const handleSymptomToggle = (id) => {
@@ -250,7 +252,7 @@ const ServiceRequestForm = () => {
             onClick={() => navigate(-1)}
             className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5 transition-colors"
           >
-            <Icons.ChevronLeft size={20} />
+            <ChevronLeft size={20} />
           </button>
           <div>
             <h1 className="text-lg font-black tracking-tighter uppercase">AKILLI TEŞHİS SİHİRBAZI</h1>
@@ -265,7 +267,7 @@ const ServiceRequestForm = () => {
           {/* Araç Seçimi */}
           <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
             <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
-              <Icons.Car size={16} className="text-primary-500" />
+              <Car size={16} className="text-primary-500" />
               Araç Seçimi
             </label>
             <select
@@ -286,7 +288,7 @@ const ServiceRequestForm = () => {
           {/* Belirti Seçici Grid */}
           <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
             <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
-              <Icons.ShieldAlert size={16} className="text-primary-500" />
+              <ShieldAlert size={16} className="text-primary-500" />
               Hissedilen Belirtiler (Çoklu Seçim)
             </label>
             
@@ -329,7 +331,7 @@ const ServiceRequestForm = () => {
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                   <div className="bg-primary-600/10 p-2.5 rounded-xl border border-primary-500/20 text-primary-400">
-                    <Icons.Sparkles size={16} className="animate-pulse" />
+                    <Sparkles size={16} className="animate-pulse" />
                   </div>
                   <div>
                     <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">AI Ön Teşhis Motoru</h3>
@@ -340,7 +342,7 @@ const ServiceRequestForm = () => {
                 {isAnalyzing ? (
                   <span className="text-[8px] font-black text-primary-400 uppercase tracking-widest animate-pulse">ANALİZ EDİLİYOR...</span>
                 ) : aiDiagnosis.confidence > 0 ? (
-                  <span className="text-[8px] font-black text-emerald-400 uppercase tracking-widest bg-emerald-500/10 px-2 py-1 rounded-md">%{aiDiagnosis.confidence} Güven</span>
+                  <span className="text-[8px] font-black text-teal-400 uppercase tracking-widest bg-emerald-500/10 px-2 py-1 rounded-md">%{aiDiagnosis.confidence} Güven</span>
                 ) : (
                   <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest">Girdi Bekleniyor</span>
                 )}
@@ -359,7 +361,7 @@ const ServiceRequestForm = () => {
                       <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded mt-1 inline-block ${
                         aiDiagnosis.risk === 'critical' ? 'bg-red-500/10 text-red-400' :
                         aiDiagnosis.risk === 'high' ? 'bg-orange-500/10 text-orange-400' :
-                        aiDiagnosis.risk === 'medium' ? 'bg-amber-500/10 text-amber-400' : 'bg-emerald-500/10 text-emerald-400'
+                        aiDiagnosis.risk === 'medium' ? 'bg-amber-500/10 text-amber-400' : 'bg-emerald-500/10 text-teal-400'
                       }`}>
                         {aiDiagnosis.risk.toUpperCase()}
                       </span>
@@ -369,11 +371,11 @@ const ServiceRequestForm = () => {
                   {/* Cost Prediction Range */}
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-2xl border border-black/5 dark:border-white/5">
-                      <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><Icons.Banknote size={10} className="text-emerald-500" /> Tahmini Alt Limit</p>
-                      <p className="text-lg font-black text-emerald-400 mt-1">₺{aiDiagnosis.minCost.toLocaleString('tr-TR')}</p>
+                      <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><Banknote size={10} className="text-emerald-500" /> Tahmini Alt Limit</p>
+                      <p className="text-lg font-black text-teal-400 mt-1">₺{aiDiagnosis.minCost.toLocaleString('tr-TR')}</p>
                     </div>
                     <div className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-2xl border border-black/5 dark:border-white/5">
-                      <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><Icons.AlertCircle size={10} className="text-red-500" /> Tahmini Üst Limit</p>
+                      <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><AlertCircle size={10} className="text-red-500" /> Tahmini Üst Limit</p>
                       <p className="text-lg font-black text-red-400 mt-1">₺{aiDiagnosis.maxCost.toLocaleString('tr-TR')}</p>
                     </div>
                   </div>
@@ -390,7 +392,7 @@ const ServiceRequestForm = () => {
           <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
             <div className="flex justify-between items-center">
               <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                <Icons.Paperclip size={16} className="text-primary-500" />
+                <Paperclip size={16} className="text-primary-500" />
                 Medya Kanıtı Yükle
               </label>
               <span className="text-[8px] font-black uppercase bg-primary-500/10 text-primary-500 px-2 py-1 rounded-md">BETA</span>
@@ -407,7 +409,7 @@ const ServiceRequestForm = () => {
                 onClick={() => handleUploadClick('image')}
                 className="py-4 bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-primary-500/30 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
-                <Icons.Camera size={18} />
+                <Camera size={18} />
                 <span className="text-[9px] font-black uppercase tracking-widest">FOTOĞRAF EKLE</span>
               </button>
               <button 
@@ -415,7 +417,7 @@ const ServiceRequestForm = () => {
                 onClick={() => handleUploadClick('audio')}
                 className="py-4 bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-primary-500/30 transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
-                <Icons.Mic size={18} />
+                <Mic size={18} />
                 <span className="text-[9px] font-black uppercase tracking-widest">SES KAYDI YÜKLE</span>
               </button>
             </div>
@@ -427,7 +429,7 @@ const ServiceRequestForm = () => {
                   <div key={media.id} className="p-3 bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-black/5 dark:border-white/5 flex justify-between items-center animate-in slide-in-from-bottom-2 duration-300">
                     <div className="flex items-center gap-2">
                       <span className="text-primary-400">
-                        {media.type === 'image' ? <Icons.Image size={14} /> : <Icons.Volume2 size={14} />}
+                        {media.type === 'image' ? <Image size={14} /> : <Volume2 size={14} />}
                       </span>
                       <span className="text-[9px] font-bold text-slate-600 dark:text-slate-300 truncate max-w-[200px] uppercase tracking-tight">{media.name}</span>
                     </div>
@@ -436,7 +438,7 @@ const ServiceRequestForm = () => {
                       onClick={() => handleRemoveMedia(media.id)}
                       className="p-1 text-slate-500 hover:text-red-500 transition-colors"
                     >
-                      <Icons.Trash2 size={14} />
+                      <Trash2 size={14} />
                     </button>
                   </div>
                 ))}
@@ -519,7 +521,7 @@ const ServiceRequestForm = () => {
           {/* Açıklama */}
           <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
             <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
-              <Icons.FileText size={16} className="text-primary-500" />
+              <FileText size={16} className="text-primary-500" />
               Talep Açıklaması
             </label>
             <textarea
@@ -546,10 +548,10 @@ const ServiceRequestForm = () => {
             className="w-full bg-gradient-to-r from-primary-600 to-indigo-600 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-xs uppercase tracking-[0.2em] text-slate-900 dark:text-white active-scale disabled:opacity-50 shadow-xl shadow-primary-900/20 border border-black/10 dark:border-white/10"
           >
             {loading ? (
-              <Icons.Loader2 className="animate-spin text-slate-900 dark:text-white" size={16} />
+              <Loader2 className="animate-spin text-slate-900 dark:text-white" size={16} />
             ) : (
               <>
-                <Icons.Send size={16} />
+                <Send size={16} />
                 TEŞHİSLİ TALEBİ GÖNDER
               </>
             )}

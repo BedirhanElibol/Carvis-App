@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import * as Icons from "lucide-react";
+import { CheckCircle, Clock, FileText, Key, MapPin, User, XCircle } from "lucide-react";
 import { useUI } from "../../../context/UIContext";
 import { useAuth } from "../../../context/AuthContext";
 import { supabase } from "../../../supabaseClient";
@@ -126,7 +126,7 @@ const ValetRequests = () => {
           </div>
         ) : requests.length === 0 ? (
           <div className="glass-card p-10 text-center">
-            <Icons.Key size={48} className="mx-auto text-slate-600 mb-4" />
+            <Key size={48} className="mx-auto text-slate-600 mb-4" />
             <p className="text-slate-500">Şu an bekleyen çağrı yok.</p>
           </div>
         ) : (
@@ -144,7 +144,7 @@ const ValetRequests = () => {
                         : "bg-green-500/10 text-green-500"
                     }`}
                   >
-                    <Icons.Key size={24} />
+                    <Key size={24} />
                   </div>
                   <div>
                     <h3 className="text-lg font-black text-slate-900 dark:text-white font-mono">
@@ -157,22 +157,22 @@ const ValetRequests = () => {
                 </div>
                 <div className="text-right">
                   <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs justify-end">
-                    <Icons.Clock size={12} /> {req.time}
+                    <Clock size={12} /> {req.time}
                   </div>
                   <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs justify-end mt-1">
-                    <Icons.MapPin size={12} /> {req.location}
+                    <MapPin size={12} /> {req.location}
                   </div>
                 </div>
               </div>
 
               <div className="mb-4 flex flex-col gap-2 bg-black/5 dark:bg-white/5 p-3 rounded-xl border border-black/5">
                 <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                  <Icons.User size={14} className="text-slate-500" />
+                  <User size={14} className="text-slate-500" />
                   <span className="font-semibold">{req.owner}</span>
                   <span className="text-slate-500">({req.phone})</span>
                 </div>
                 <div className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-2">
-                  <Icons.FileText size={12} />
+                  <FileText size={12} />
                   <span>Not: {req.plate}</span>
                 </div>
                 <div className="text-xs text-primary-400 flex items-center gap-2 font-bold uppercase tracking-wider">
@@ -187,13 +187,13 @@ const ValetRequests = () => {
                       onClick={() => handleAction(req.id, "reject")}
                       className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active-scale"
                     >
-                      <Icons.XCircle size={18} /> REDDET
+                      <XCircle size={18} /> REDDET
                     </button>
                     <button
                       onClick={() => handleAction(req.id, "accept")}
                       className="flex-[2] bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary-900/50 transition-all active-scale"
                     >
-                      <Icons.CheckCircle size={18} /> KABUL ET
+                      <CheckCircle size={18} /> KABUL ET
                     </button>
                   </>
                 )}
@@ -202,7 +202,7 @@ const ValetRequests = () => {
                     onClick={() => handleAction(req.id, "picked_up")}
                     className="w-full bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active-scale font-sans"
                   >
-                    <Icons.Key size={18} /> ARACI TESLİM ALDIM
+                    <Key size={18} /> ARACI TESLİM ALDIM
                   </button>
                 )}
                 {req.status === "picked_up" && (
@@ -210,7 +210,7 @@ const ValetRequests = () => {
                     onClick={() => handleAction(req.id, "parked")}
                     className="w-full bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active-scale font-sans"
                   >
-                    <Icons.MapPin size={18} /> GÜVENLİ PARK ETTİM
+                    <MapPin size={18} /> GÜVENLİ PARK ETTİM
                   </button>
                 )}
                 {req.status === "parked" && (
@@ -218,7 +218,7 @@ const ValetRequests = () => {
                     onClick={() => handleAction(req.id, "completed")}
                     className="w-full bg-green-600 hover:bg-green-500 text-slate-900 dark:text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active-scale font-sans"
                   >
-                    <Icons.CheckCircle size={18} /> HİZMETİ TAMAMLA
+                    <CheckCircle size={18} /> HİZMETİ TAMAMLA
                   </button>
                 )}
               </div>

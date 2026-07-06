@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { AlertTriangle, Loader2, Trash2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
 
@@ -48,7 +48,7 @@ const DeleteAccountModal = ({ show, onClose, showAlert }) => {
       <div className="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl relative overflow-hidden p-8 border border-black/10 dark:border-white/10">
         <div className="flex flex-col items-center text-center">
           <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6 text-red-600 shadow-lg shadow-red-500/20">
-            <Icons.Trash2 size={40} />
+            <Trash2 size={40} />
           </div>
           
           <h2 className="text-2xl font-black text-slate-900 tracking-tighter uppercase mb-4">
@@ -57,7 +57,7 @@ const DeleteAccountModal = ({ show, onClose, showAlert }) => {
           
           <div className="bg-red-50 border border-red-100 p-4 rounded-2xl mb-8 text-left">
             <h4 className="text-red-800 font-bold text-xs uppercase mb-2 flex items-center gap-2">
-              <Icons.AlertTriangle size={14} /> Bu İşlem Geri Alınamaz!
+              <AlertTriangle size={14} /> Bu İşlem Geri Alınamaz!
             </h4>
             <ul className="text-[10px] text-red-700 space-y-1 font-medium">
               <li>• Tüm araç bilgileriniz ve bakım geçmişiniz silinir.</li>
@@ -90,7 +90,7 @@ const DeleteAccountModal = ({ show, onClose, showAlert }) => {
               disabled={loading || confirmText !== EXPECTED_TEXT}
               className="p-4 rounded-2xl bg-red-600 text-slate-900 dark:text-white font-black text-xs uppercase tracking-widest hover:bg-red-500 shadow-xl shadow-red-900/20 transition-all active-scale disabled:opacity-30 disabled:grayscale"
             >
-              {loading ? <Icons.Loader2 className="animate-spin mx-auto" size={18} /> : "HESABIMI SİL"}
+              {loading ? <Loader2 className="animate-spin mx-auto" size={18} /> : "HESABIMI SİL"}
             </button>
           </div>
         </div>

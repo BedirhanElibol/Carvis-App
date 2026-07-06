@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import * as Icons from "lucide-react";
+import { Camera, CheckCircle2, ChevronRight, ClipboardList, Clock, Loader2, Lock, Plus, Search, ShieldCheck, Wrench } from "lucide-react";
 import { EscrowService } from "../../services/EscrowService";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
@@ -16,42 +16,42 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
       label: "Talep Alındı",
       next: "diagnosing",
       action: "Teşhise Başla",
-      icon: Icons.ClipboardList,
+      icon: ClipboardList,
     },
     {
       id: "diagnosing",
       label: "Teşhis Ediliyor",
       next: "repairing",
       action: "Onarımı Başlat",
-      icon: Icons.Search,
+      icon: Search,
     },
     {
       id: "repairing",
       label: "Onarılıyor",
       next: "quality_check",
       action: "Kontrole Gönder",
-      icon: Icons.Wrench,
+      icon: Wrench,
     },
     {
       id: "quality_check",
       label: "Son Kontrol",
       next: "pending_approval",
       action: "Müşteri Onayına Gönder",
-      icon: Icons.ShieldCheck,
+      icon: ShieldCheck,
     },
     {
       id: "pending_approval",
       label: "Onay Bekliyor",
       next: null,
       action: null,
-      icon: Icons.Lock,
+      icon: Lock,
     },
     {
       id: "completed",
       label: "Teslim Edildi",
       next: null,
       action: null,
-      icon: Icons.CheckCircle2,
+      icon: CheckCircle2,
     },
   ];
 
@@ -140,7 +140,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
     return (
       <div className="bg-primary-500/10 border border-primary-500/20 p-8 rounded-[2rem] flex flex-col items-center justify-center gap-4 text-primary-400 group">
         <div className="w-16 h-16 rounded-3xl bg-primary-950 flex items-center justify-center border border-primary-500/20 shadow-2xl">
-          <Icons.Clock size={32} className="animate-pulse" />
+          <Clock size={32} className="animate-pulse" />
         </div>
         <div className="text-center">
            <span className="font-black uppercase text-[10px] tracking-[0.3em] font-sans block mb-1">
@@ -156,9 +156,9 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
 
   if (currentStatus === "completed") {
     return (
-      <div className="bg-emerald-500/10 border border-emerald-500/20 p-8 rounded-[2rem] flex flex-col items-center justify-center gap-4 text-emerald-400 group">
+      <div className="bg-emerald-500/10 border border-emerald-500/20 p-8 rounded-[2rem] flex flex-col items-center justify-center gap-4 text-teal-400 group">
         <div className="w-16 h-16 rounded-3xl bg-emerald-950 flex items-center justify-center border border-emerald-500/20 shadow-2xl">
-          <Icons.CheckCircle2 size={32} />
+          <CheckCircle2 size={32} />
         </div>
         <div className="text-center">
            <span className="font-black uppercase text-[10px] tracking-[0.3em] font-sans block mb-1">
@@ -216,7 +216,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
           onClick={() => fileRef.current?.click()}
           className="flex flex-col items-center justify-center gap-2 py-4 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 border border-black/5 dark:border-white/5 rounded-2xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest transition-all active-scale font-sans"
         >
-          <Icons.Camera size={20} />
+          <Camera size={20} />
           FOTOĞRAF EKLE
         </button>
         <input aria-label="Fotoğraf Ekle"
@@ -233,10 +233,10 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
           className="flex flex-col items-center justify-center gap-2 py-4 bg-gradient-to-br from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-primary-900/40 active-scale disabled:opacity-50 font-sans"
         >
           {uploading ? (
-            <Icons.Loader2 size={20} className="animate-spin" />
+            <Loader2 size={20} className="animate-spin" />
           ) : (
             <>
-              <Icons.ChevronRight size={20} />
+              <ChevronRight size={20} />
               {currentStep.action}
             </>
           )}
@@ -250,7 +250,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
             onClick={() => setShowApprovalForm(true)}
             className="w-full py-4 bg-amber-500/10 border border-amber-500/20 rounded-2xl text-amber-500 text-[10px] font-black uppercase tracking-widest hover:bg-amber-500/20 transition-all flex items-center justify-center gap-2"
           >
-            <Icons.Plus size={16} /> EK İŞLEM/PARÇA ONAYI İSTE
+            <Plus size={16} /> EK İŞLEM/PARÇA ONAYI İSTE
           </button>
         ) : (
           <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-amber-500/20 space-y-4 animate-in fade-in zoom-in-95">

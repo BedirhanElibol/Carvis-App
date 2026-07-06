@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { Power, Save } from "lucide-react";
 import { useUI } from "../../../context/UIContext";
 import { useAuth } from "../../../context/AuthContext";
 import { supabase } from "../../../supabaseClient";
@@ -153,7 +153,7 @@ const ParkingCapacity = () => {
                 : "bg-green-500/10 text-green-400 hover:bg-green-500/20"
             }`}
           >
-            <Icons.Power size={20} />
+            <Power size={20} />
             {isOpen ? "KAPAT" : "AÇ"}
           </button>
           <button
@@ -161,7 +161,7 @@ const ParkingCapacity = () => {
             disabled={loading}
             className="flex-[2] bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white p-4 rounded-xl font-black flex items-center justify-center gap-2 shadow-lg shadow-primary-900/50 active-scale disabled:opacity-50 transition-all font-sans"
           >
-            <Icons.Save size={20} />
+            <Save size={20} />
             {loading ? "KAYDEDİLİYOR..." : "GÜNCELLE"}
           </button>
         </div>

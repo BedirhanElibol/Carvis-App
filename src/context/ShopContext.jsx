@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback , useMemo } from "react";
 import { useUI } from "./UIContext";
 import { useAuth } from "./AuthContext";
 import { useWallet } from "./WalletContext";
@@ -268,7 +268,8 @@ export const ShopProvider = ({ children }) => {
     }
   };
 
-  const value = {
+  const value = useMemo(() => ({
+
     products,
     setProducts,
     orders,
@@ -296,7 +297,8 @@ export const ShopProvider = ({ children }) => {
     setSortBy,
     searchHistory,
     addToSearchHistory,
-  };
+  
+  }), [products, orders, cart, addToCart, addServiceToCart, removeFromCart, favorites, toggleFavorite, searchQuery, selectedProduct, isCartOpen, toggleCart, checkout, addresses, selectedAddress, isProcessingCheckout, sortBy, searchHistory, addToSearchHistory]);
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };

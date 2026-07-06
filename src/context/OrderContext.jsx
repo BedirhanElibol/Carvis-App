@@ -1,11 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, {
-  createContext,
+import React, { createContext,
   useContext,
   useState,
   useEffect,
-  useCallback,
-} from "react";
+  useCallback, useMemo } from "react";
 import { supabase } from "../supabaseClient";
 import { useAuth } from "./AuthContext";
 
@@ -133,14 +131,16 @@ export const OrderProvider = ({ children }) => {
     return orders.find((o) => o.id === orderId);
   };
 
-  const value = {
+  const value = useMemo(() => ({
+
     orders,
     loading,
     isCreatingOrder,
     fetchOrders,
     createOrderFromQuote,
     getOrderById,
-  };
+  
+  }), [orders, loading, isCreatingOrder, fetchOrders, createOrderFromQuote, getOrderById]);
 
   return (
     <OrderContext.Provider value={value}>{children}</OrderContext.Provider>

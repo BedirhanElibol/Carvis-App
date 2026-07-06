@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { ChevronRight, Crosshair, MapPin, Save, X } from "lucide-react";
 import { TURKEY_CITIES } from "../../constants/turkeyCities";
 
 const LocationSelectModal = ({
@@ -61,13 +61,13 @@ const LocationSelectModal = ({
             onClick={onClose}
             className="bg-black/5 dark:bg-white/5 p-3 rounded-2xl hover:bg-black/10 dark:bg-white/10 transition-all active-scale border border-black/5 dark:border-white/5"
           >
-            <Icons.X size={20} className="text-slate-900 dark:text-white" />
+            <X size={20} className="text-slate-900 dark:text-white" />
           </button>
         </div>
 
         <div className="bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 p-4 rounded-2xl mb-8 flex items-center gap-3 relative z-10">
           <div className="bg-primary-500/20 p-2 rounded-lg">
-            <Icons.MapPin size={16} className="text-primary-500" />
+            <MapPin size={16} className="text-primary-500" />
           </div>
           <div className="flex-1">
             <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-0.5 font-sans">
@@ -87,7 +87,7 @@ const LocationSelectModal = ({
             className="w-full bg-gradient-to-r from-primary-600/20 to-primary-900/10 border border-primary-500/20 p-5 rounded-3xl flex items-center gap-5 hover:bg-primary-500/20 transition-all group active-scale shadow-lg"
           >
             <div className="bg-primary-500 p-3.5 rounded-2xl shadow-[0_5px_15px_rgba(59,130,246,0.3)] group-hover:scale-110 transition-transform">
-              <Icons.Crosshair size={24} className="text-slate-900 dark:text-white" />
+              <Crosshair size={24} className="text-slate-900 dark:text-white" />
             </div>
             <div className="text-left">
               <h4 className="font-black text-slate-900 dark:text-white text-sm uppercase tracking-tight font-sans">
@@ -110,13 +110,13 @@ const LocationSelectModal = ({
             >
               <div className="flex items-center gap-4">
                 <div className="bg-slate-100 dark:bg-slate-800 p-2 rounded-xl">
-                  <Icons.MapPin size={20} className="text-slate-500 dark:text-slate-400" />
+                  <MapPin size={20} className="text-slate-500 dark:text-slate-400" />
                 </div>
                 <h4 className="font-black text-slate-900 dark:text-white text-sm uppercase tracking-tight font-sans">
                   {t.manualLocation}
                 </h4>
               </div>
-              <Icons.ChevronRight
+              <ChevronRight
                 size={20}
                 className={`text-slate-500 transition-transform duration-300 ${isManual ? "rotate-90" : ""}`}
               />
@@ -151,7 +151,7 @@ const LocationSelectModal = ({
                       </option>
                     ))}
                   </select>
-                  <Icons.ChevronRight
+                  <ChevronRight
                     size={16}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 rotate-90 pointer-events-none"
                   />
@@ -182,7 +182,7 @@ const LocationSelectModal = ({
                       </option>
                     ))}
                   </select>
-                  <Icons.ChevronRight
+                  <ChevronRight
                     size={16}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 rotate-90 pointer-events-none"
                   />
@@ -192,7 +192,7 @@ const LocationSelectModal = ({
                   onClick={handleSelect}
                   className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active-scale shadow-lg shadow-primary-900/20 flex items-center justify-center gap-3 mt-4 font-sans"
                 >
-                  <Icons.Save size={18} /> {t.save}
+                  <Save size={18} /> {t.save}
                 </button>
               </div>
             )}

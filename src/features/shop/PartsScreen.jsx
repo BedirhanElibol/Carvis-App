@@ -8,7 +8,59 @@ import { useUI } from '../../context/UIContext';
 import { useGarage } from '../../context/GarageContext';
 import FilterModal from '../../components/modals/FilterModal';
 
-const PartsScreen = () => {
+const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFavorite, addToCart, setSelectedProduct, winnerOffer }) => {
+    return (
+        <div onClick={() => setSelectedProduct(product)} className="glass-card p-3 rounded-[2rem] border border-black/5 dark:border-white/5 shadow-2xl hover:border-primary-500/30 transition-all cursor-pointer group relative active-scale overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            <div className="absolute top-3 left-3 z-20 flex flex-col gap-1">
+                {product.certified && (
+                    <div className="bg-primary-600 text-slate-900 dark:text-white text-[8px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg border border-primary-400/20 uppercase tracking-widest">
+                        <ShieldCheck size={8} /> ONAYLI
+                    </div>
+                )}
+                {currentVehicle && (
+                    <div className="bg-green-600 text-slate-900 dark:text-white text-[8px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg border border-green-400/20 uppercase tracking-widest">
+                        <CircleCheck size={8} /> %100 UYUMLU
+                    </div>
+                )}
+            </div>
+
+            <button onClick={(e) => { e.stopPropagation(); toggleFavorite(product.id); }} className="absolute top-3 right-3 p-2 glass-card rounded-full text-slate-500 hover:text-red-500 transition-all z-10 shadow-lg border border-black/5 dark:border-white/5 active-scale">
+                <Heart size={14} className={isFavorite ? "fill-red-500 text-red-500" : ""} />
+            </button>
+            <div className="w-full h-36 bg-white dark:bg-slate-900/50 rounded-2xl mb-4 overflow-hidden border border-black/5 dark:border-white/5">
+                <img src={product.img} className="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-90 group-hover:opacity-100" alt={product.name} />
+            </div>
+            <div className="space-y-1 relative z-10 px-1">
+                <p className="text-[9px] text-primary-500 font-black uppercase tracking-[0.15em] mb-0.5">{product.brand}</p>
+                <h4 className="font-bold text-xs text-slate-800 dark:text-slate-100 leading-tight line-clamp-2 h-8">{product.name}</h4>
+                <div className="flex justify-between items-end mt-3 border-t border-black/5 dark:border-white/5 pt-2">
+                    <div>
+                        <p className="text-[9px] text-slate-500 line-through">{((winnerOffer?.price || 0) * 1.2).toFixed(0)} ₺</p>
+                        <p className="font-black text-base text-slate-900 dark:text-white">{(winnerOffer?.price || 0).toLocaleString()} ₺</p>
+                    </div>
+                    <div className="flex gap-1">
+                        <button onClick={(e) => { e.stopPropagation(); addToCart(product, winnerOffer); }} className="w-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white p-2.5 rounded-xl hover:bg-slate-700 transition-all shadow-lg active-scale flex items-center justify-center gap-2">
+                            <CirclePlus size={18} />
+                            <span className="text-xs font-bold">Sepete Ekle</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            {winnerOffer?.stock < 5 && winnerOffer?.stock > 0 && (
+                <div className="absolute bottom-3 left-3 text-[9px] font-bold text-red-500 animate-pulse">
+                    Son {winnerOffer.stock} ürün!
+                </div>
+            )}
+        </div>
+    );
+}, (prevProps, nextProps) => {
+    return prevProps.product.id === nextProps.product.id && 
+           prevProps.isFavorite === nextProps.isFavorite &&
+           prevProps.currentVehicle?.id === nextProps.currentVehicle?.id;
+});const PartsScreen = () => {
     const navigate = useNavigate();
     const { t } = useUI();
     const {
@@ -112,53 +164,16 @@ const PartsScreen = () => {
                 {filteredProducts.map(product => {
                     const winnerOffer = getBuyBoxWinner(product.offers);
                     return (
-                        <div key={product.id} onClick={() => setSelectedProduct(product)} className="glass-card p-3 rounded-[2rem] border border-black/5 dark:border-white/5 shadow-2xl hover:border-primary-500/30 transition-all cursor-pointer group relative active-scale overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                            <div className="absolute top-3 left-3 z-20 flex flex-col gap-1">
-                                {product.certified && (
-                                    <div className="bg-primary-600 text-slate-900 dark:text-white text-[8px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg border border-primary-400/20 uppercase tracking-widest">
-                                        <ShieldCheck size={8} /> ONAYLI
-                                    </div>
-                                )}
-                                {currentVehicle && (
-                                    <div className="bg-green-600 text-slate-900 dark:text-white text-[8px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg border border-green-400/20 uppercase tracking-widest">
-                                        <CircleCheck size={8} /> %100 UYUMLU
-                                    </div>
-                                )}
-                            </div>
-
-                            <button onClick={(e) => { e.stopPropagation(); toggleFavorite(product.id); }} className="absolute top-3 right-3 p-2 glass-card rounded-full text-slate-500 hover:text-red-500 transition-all z-10 shadow-lg border border-black/5 dark:border-white/5 active-scale">
-                                <Heart size={14} className={favorites.includes(product.id) ? "fill-red-500 text-red-500" : ""} />
-                            </button>
-                            <div className="w-full h-36 bg-white dark:bg-slate-900/50 rounded-2xl mb-4 overflow-hidden border border-black/5 dark:border-white/5">
-                                <img src={product.img} className="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-90 group-hover:opacity-100" alt={product.name} />
-                            </div>
-                            <div className="space-y-1 relative z-10 px-1">
-                                <p className="text-[9px] text-primary-500 font-black uppercase tracking-[0.15em] mb-0.5">{product.brand}</p>
-                                <h4 className="font-bold text-xs text-slate-800 dark:text-slate-100 leading-tight line-clamp-2 h-8">{product.name}</h4>
-                                <div className="flex justify-between items-end mt-3 border-t border-black/5 dark:border-white/5 pt-2">
-                                    <div>
-                                        <p className="text-[9px] text-slate-500 line-through">{((winnerOffer?.price || 0) * 1.2).toFixed(0)} ₺</p>
-                                        <p className="font-black text-base text-slate-900 dark:text-white">{(winnerOffer?.price || 0).toLocaleString()} ₺</p>
-                                    </div>
-                                    <div className="flex gap-1">
-                                        {/* Only Add to Cart Button */}
-                                        <button onClick={(e) => { e.stopPropagation(); addToCart(product, winnerOffer); }} className="w-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white p-2.5 rounded-xl hover:bg-slate-700 transition-all shadow-lg active-scale flex items-center justify-center gap-2">
-                                            <CirclePlus size={18} />
-                                            <span className="text-xs font-bold">Sepete Ekle</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            {/* Stock Indicator */}
-                            {winnerOffer?.stock < 5 && winnerOffer?.stock > 0 && (
-                                <div className="absolute bottom-3 left-3 text-[9px] font-bold text-red-500 animate-pulse">
-                                    Son {winnerOffer.stock} ürün!
-                                </div>
-                            )}
-                        </div>
+                        <ProductCard 
+                            key={product.id}
+                            product={product}
+                            currentVehicle={currentVehicle}
+                            isFavorite={favorites.includes(product.id)}
+                            toggleFavorite={toggleFavorite}
+                            addToCart={addToCart}
+                            setSelectedProduct={setSelectedProduct}
+                            winnerOffer={winnerOffer}
+                        />
                     );
                 })}
             </div>

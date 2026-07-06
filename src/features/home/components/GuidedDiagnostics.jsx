@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import * as Icons from "lucide-react";
+import { Activity, BrainCircuit, ChevronRight, Droplet, Loader2, Radio, ShieldAlert, Volume2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { triggerHaptic } from "../../../utils/haptics";
 import { useUI } from "../../../context/UIContext";
@@ -21,7 +21,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
     {
       id: "engine_knock",
       label: t.engineKnock,
-      icon: Icons.Volume2,
+      icon: Volume2,
       desc: t.engineKnockDesc,
       danger: t.high,
       possibleFault: t.engineKnockFault,
@@ -32,7 +32,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
     {
       id: "vibration",
       label: t.vibration,
-      icon: Icons.Activity,
+      icon: Activity,
       desc: t.vibrationDesc,
       danger: t.medium,
       possibleFault: t.vibrationFault,
@@ -43,7 +43,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
     {
       id: "oil_leak",
       label: t.oilLeak,
-      icon: Icons.Droplet,
+      icon: Droplet,
       desc: t.oilLeakDesc,
       danger: t.high,
       possibleFault: t.oilLeakFault,
@@ -54,7 +54,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
     {
       id: "brake_squeal",
       label: t.brakeSqueal,
-      icon: Icons.ShieldAlert,
+      icon: ShieldAlert,
       desc: t.brakeSquealDesc,
       danger: t.medium,
       possibleFault: t.brakeSquealFault,
@@ -167,21 +167,21 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
           onClick={onClose}
           className="absolute top-5 right-5 z-10 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white flex items-center justify-center border border-black/5 dark:border-white/5 active-scale transition-all"
         >
-          <Icons.X size={16} />
+          <X size={16} />
         </button>
 
         {/* Header */}
         <div className="p-6 border-b border-black/5 dark:border-white/5">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
-              <Icons.BrainCircuit size={20} />
+              <BrainCircuit size={20} />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[8px] font-black uppercase tracking-[0.25em] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
                   Carvis Teşhis Asistanı
                 </span>
-                <span className="text-[8px] font-black uppercase tracking-[0.25em] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                <span className="text-[8px] font-black uppercase tracking-[0.25em] text-teal-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
                   AI Real-Time
                 </span>
               </div>
@@ -235,7 +235,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                           }`}>
                             {symptom.danger} Risk
                           </span>
-                          <Icons.ChevronRight size={16} className="text-slate-500 group-hover:translate-x-0.5 transition-transform" />
+                          <ChevronRight size={16} className="text-slate-500 group-hover:translate-x-0.5 transition-transform" />
                         </div>
                       </button>
                     );
@@ -257,7 +257,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                   <>
                     <div className="text-center">
                       <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-[9px] font-black uppercase tracking-widest animate-pulse">
-                        <Icons.Radio size={12} className="animate-spin" /> CANLI DİNLEME AKTİF
+                        <Radio size={12} className="animate-spin" /> CANLI DİNLEME AKTİF
                       </div>
                       <h3 className="text-3xl font-mono font-black text-slate-900 dark:text-white mt-4">
                         00:0{recordingTime}
@@ -299,7 +299,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
 
                 {isCompiling && (
                   <div className="text-center space-y-4 py-8">
-                    <Icons.Loader2 className="animate-spin text-amber-500 mx-auto" size={44} />
+                    <Loader2 className="animate-spin text-amber-500 mx-auto" size={44} />
                     <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">{t.aiDiagReportCompiling}</h3>
                     <p className="text-xs text-slate-500 max-w-xs mx-auto leading-relaxed">
                       Sinyal harmonik rezonans analizi tamamlandı. Tahribat derinlik ve parça masraf veritabanı sorgulanıyor...
@@ -321,7 +321,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                 {/* Diagnostic Alert Card */}
                 <div className="p-5 rounded-xl bg-amber-500/5 border border-amber-500/20 flex gap-4">
                   <div className="p-3 bg-amber-500/10 rounded-xl text-amber-400 self-start">
-                    <Icons.ShieldAlert size={24} />
+                    <ShieldAlert size={24} />
                   </div>
                   <div>
                     <span className="text-[8px] font-black uppercase tracking-widest text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
@@ -340,7 +340,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                 <div className="bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-black/5 dark:border-white/5 overflow-hidden">
                   <div className="px-4 py-3 bg-white dark:bg-white/5 shadow-sm border-b border-black/5 dark:border-white/5 flex justify-between items-center">
                     <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.techAnalysisReport}</span>
-                    <span className="text-[9px] font-black text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+                    <span className="text-[9px] font-black text-teal-400 uppercase tracking-wider flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> MİSAFİR GÜVENLİĞİ: ONAYLI
                     </span>
                   </div>
@@ -365,7 +365,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                     <div className="border-t border-black/5 dark:border-white/5 pt-3 mt-2 flex justify-between items-center">
                       <div>
                         <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">{t.estTotalCost}</span>
-                        <span className="text-2xl font-black text-emerald-400 tracking-tighter mt-1 block">
+                        <span className="text-2xl font-black text-teal-400 tracking-tighter mt-1 block">
                           {selectedSymptom.estimatedCostRange}
                         </span>
                       </div>
@@ -389,7 +389,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                     onClick={handleCreateServiceRequest}
                     className="p-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-black rounded-xl text-xs uppercase tracking-widest transition-all shadow-xl shadow-orange-950/20 flex items-center justify-center gap-2 active-scale"
                   >
-                    USTALARDAN TEKLİF AL <Icons.ChevronRight size={14} />
+                    USTALARDAN TEKLİF AL <ChevronRight size={14} />
                   </button>
                 </div>
               </motion.div>

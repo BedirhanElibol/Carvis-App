@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { ArrowLeft, ArrowRight, Car, Droplet, Key, Package, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 
@@ -29,9 +29,9 @@ const RoleCard = ({ title, icon: Icon, color, desc, onClick }) => {
       badge: "from-orange-500 to-red-600"
     },
     emerald: {
-      border: "border-emerald-500/20 hover:border-emerald-400/50",
+      border: "border-emerald-500/20 hover:border-teal-400/50",
       bg: "bg-emerald-500/5 hover:bg-emerald-500/10",
-      text: "text-emerald-400",
+      text: "text-teal-400",
       glow: "rgba(16, 185, 129, 0.15)",
       badge: "from-emerald-500 to-teal-600"
     },
@@ -58,7 +58,7 @@ const RoleCard = ({ title, icon: Icon, color, desc, onClick }) => {
           <Icon size={26} />
         </div>
         <div className={`w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white group-hover:bg-black/10 dark:bg-white/10 transition-all active:scale-90`}>
-          <Icons.ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+          <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
         </div>
       </div>
 
@@ -84,7 +84,7 @@ const PartnerLandingScreen = () => {
       {/* Background Ambience */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-15%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[130px] animate-pulse-slow" />
-        <div className="absolute bottom-[-10%] right-[-15%] w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[130px] animate-liquid" />
+        <div className="absolute bottom-[-10%] right-[-15%] w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-[130px] animate-liquid" />
       </div>
 
       {/* Grid Pattern overlay */}
@@ -117,7 +117,7 @@ const PartnerLandingScreen = () => {
             className="text-5xl md:text-6xl font-black font-sans text-slate-900 dark:text-white mb-6 tracking-tight uppercase"
           >
             RAPIDSY{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 tracking-tighter drop-shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400 tracking-tighter drop-shadow-[0_0_30px_rgba(59,130,246,0.2)]">
               ENTERPRISE
             </span>
           </motion.h1>
@@ -142,35 +142,35 @@ const PartnerLandingScreen = () => {
           <RoleCard
             title="Otopark"
             desc="Kapasite doluluk oranları, dinamik tarife düzenlemeleri ve kapı bariyer sistemleri yönetimi."
-            icon={Icons.Car}
+            icon={Car}
             color="cyan"
             onClick={() => navigate("/partner-login/parking")}
           />
           <RoleCard
             title="Vale Hizmeti"
             desc="Müşteri karşılama, vale talepleri, anlık araç teslimatı ve teslim noktası takibi."
-            icon={Icons.Key}
+            icon={Key}
             color="amber"
             onClick={() => navigate("/partner-login/valet")}
           />
           <RoleCard
             title="Usta & Servis"
             desc="İş emri yönetim kartları, servis randevuları, müşteri onaylı bakım kartları."
-            icon={Icons.Wrench}
+            icon={Wrench}
             color="orange"
             onClick={() => navigate("/partner-login/mechanic")}
           />
           <RoleCard
             title="Parça Satıcısı"
             desc="Stok seviyesi güncellemeleri, yedek parça sipariş takibi ve ürün kataloğu yönetimi."
-            icon={Icons.Package}
+            icon={Package}
             color="emerald"
             onClick={() => navigate("/partner-login/parts")}
           />
           <RoleCard
             title="Seyyar Yıkama"
             desc="Mobil yıkama randevuları, lokasyon bazlı talepler ve hizmet paketleri yönetimi."
-            icon={Icons.Droplet}
+            icon={Droplet}
             color="cyan"
             onClick={() => navigate("/partner-login/carwash")}
           />
@@ -192,7 +192,7 @@ const PartnerLandingScreen = () => {
             }}
             className="text-slate-500 hover:text-slate-900 dark:text-white transition-colors text-xs font-black uppercase tracking-widest flex items-center gap-2 mx-auto cursor-pointer"
           >
-            <Icons.ArrowLeft size={14} />
+            <ArrowLeft size={14} />
             Uygulamaya Geri Dön
           </button>
         </motion.div>

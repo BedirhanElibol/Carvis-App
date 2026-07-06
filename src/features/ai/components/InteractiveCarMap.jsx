@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";  
-import * as Icons from "lucide-react";
+import { Activity, Cpu, Disc, Wind, Zap } from "lucide-react";
 
 /**
  * InteractiveCarMap Component
@@ -9,12 +9,12 @@ import * as Icons from "lucide-react";
 const InteractiveCarMap = ({ activeZones = [], onZoneClick }) => {
   // Zones definition (Coordinates for SVG paths or circles)
   const zones = [
-    { id: "engine", label: "Motor & Transmisyon", x: "50%", y: "25%", icon: Icons.Cpu },
-    { id: "brakes_front", label: "Ön Frenler", x: "50%", y: "40%", icon: Icons.Disc },
-    { id: "brakes_rear", label: "Arka Frenler", x: "50%", y: "75%", icon: Icons.Disc },
-    { id: "battery", label: "Elektrik & Batarya", x: "35%", y: "22%", icon: Icons.Zap },
-    { id: "exhaust", label: "Egzoz Sistemi", x: "50%", y: "85%", icon: Icons.Wind },
-    { id: "suspension", label: "Süspansiyon", x: "65%", y: "50%", icon: Icons.Activity },
+    { id: "engine", label: "Motor & Transmisyon", x: "50%", y: "25%", icon: Cpu },
+    { id: "brakes_front", label: "Ön Frenler", x: "50%", y: "40%", icon: Disc },
+    { id: "brakes_rear", label: "Arka Frenler", x: "50%", y: "75%", icon: Disc },
+    { id: "battery", label: "Elektrik & Batarya", x: "35%", y: "22%", icon: Zap },
+    { id: "exhaust", label: "Egzoz Sistemi", x: "50%", y: "85%", icon: Wind },
+    { id: "suspension", label: "Süspansiyon", x: "65%", y: "50%", icon: Activity },
   ];
 
   return (
@@ -127,7 +127,7 @@ const InteractiveCarMap = ({ activeZones = [], onZoneClick }) => {
             {activeZones.length} KRİTİK ARIZA
           </p>
         ) : (
-          <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">
+          <p className="text-[10px] font-black text-teal-400 uppercase tracking-widest">
             TÜM BİRİMLER OK
           </p>
         )}

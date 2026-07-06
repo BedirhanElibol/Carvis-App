@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { ArrowLeft, Clock, FileText, Package, RefreshCw, Wrench } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../supabaseClient";
 
@@ -80,7 +80,7 @@ const TenderScreen = () => {
               onClick={() => navigate("/app/home")}
               className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-black/5 dark:border-white/5"
             >
-              <Icons.ArrowLeft size={20} />
+              <ArrowLeft size={20} />
             </button>
             <div>
               <h1 className="text-xl font-bold font-sans">Açık Taleplerim</h1>
@@ -94,7 +94,7 @@ const TenderScreen = () => {
             disabled={loading}
             className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white p-2"
           >
-            <Icons.RefreshCw
+            <RefreshCw
               size={20}
               className={loading ? "animate-spin" : ""}
             />
@@ -105,7 +105,7 @@ const TenderScreen = () => {
       <div className="p-5 space-y-4">
         {loading ? (
           <div className="text-center py-20 flex flex-col items-center">
-            <Icons.RefreshCw
+            <RefreshCw
               className="animate-spin text-primary-500 mb-4"
               size={32}
             />
@@ -115,7 +115,7 @@ const TenderScreen = () => {
           </div>
         ) : requests.length === 0 ? (
           <div className="text-center py-20">
-            <Icons.FileText className="mx-auto text-slate-600 mb-4" size={48} />
+            <FileText className="mx-auto text-slate-600 mb-4" size={48} />
             <p className="text-slate-500 dark:text-slate-400 font-medium mb-4">
               Henüz oluşturduğunuz bir teknik servis talebi yok.
             </p>
@@ -138,9 +138,9 @@ const TenderScreen = () => {
                   <div className="flex items-center gap-3">
                     <div className="bg-slate-100 dark:bg-slate-800 p-2.5 rounded-xl text-primary-400">
                       {req.demand_type === "part" ? (
-                        <Icons.Package size={20} />
+                        <Package size={20} />
                       ) : (
-                        <Icons.Wrench size={20} />
+                        <Wrench size={20} />
                       )}
                     </div>
                     <div>
@@ -155,7 +155,7 @@ const TenderScreen = () => {
                   <div
                     className={`px-2.5 py-1 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider rounded-lg border ${statusInfo.bg} ${statusInfo.color} font-sans`}
                   >
-                    <Icons.Clock size={12} /> {statusInfo.label}
+                    <Clock size={12} /> {statusInfo.label}
                   </div>
                 </div>
                 <div className="text-sm text-slate-600 dark:text-slate-300 mb-4 leading-relaxed font-medium">

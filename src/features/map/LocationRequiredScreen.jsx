@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { ChevronLeft, MapPin, RefreshCw, ShieldAlert } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -21,7 +21,7 @@ const LocationRequiredScreen = ({ onRetry }) => {
           onClick={() => navigate(-1)}
           className="absolute -top-12 -left-4 flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:text-white transition-colors group"
         >
-          <Icons.ChevronLeft
+          <ChevronLeft
             size={20}
             className="group-hover:-translate-x-1 transition-transform"
           />
@@ -33,10 +33,10 @@ const LocationRequiredScreen = ({ onRetry }) => {
         {/* Icon Cluster */}
         <div className="relative mb-10">
           <div className="w-24 h-24 bg-gradient-to-tr from-primary-600 to-primary-600 rounded-[2.5rem] flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,0.4)] rotate-12 group-hover:rotate-0 transition-transform duration-500">
-            <Icons.MapPin size={48} className="text-slate-900 dark:text-white -rotate-12" />
+            <MapPin size={48} className="text-slate-900 dark:text-white -rotate-12" />
           </div>
           <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-full flex items-center justify-center shadow-xl animate-bounce">
-            <Icons.ShieldAlert size={20} className="text-red-500" />
+            <ShieldAlert size={20} className="text-red-500" />
           </div>
         </div>
 
@@ -58,7 +58,7 @@ const LocationRequiredScreen = ({ onRetry }) => {
             onClick={onRetry}
             className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 shadow-2xl shadow-primary-900/50 transition-all active-scale-95 group"
           >
-            <Icons.RefreshCw
+            <RefreshCw
               size={20}
               className="group-active-rotate-180 transition-transform duration-500"
             />

@@ -55,7 +55,7 @@ const PartnerDashboard = () => {
             color: 'emerald',
             gradient: 'from-emerald-500/10 to-teal-500/5',
             border: 'border-emerald-500/20',
-            text: 'text-emerald-400'
+            text: 'text-teal-400'
         },
         carwash: {
             title: 'Seyyar Yıkama',

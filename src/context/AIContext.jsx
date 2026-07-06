@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo } from "react";
 import { callRealGeminiAPI, analyzeVehicleDamage } from "../utils/aiUtils";
 import { useGarage } from "./GarageContext";
 import { useUI } from "./UIContext";
@@ -142,17 +142,17 @@ export const AIProvider = ({ children }) => {
     ]);
   };
 
+  const value = useMemo(() => ({
+    messages,
+    isTyping,
+    analysisStatus,
+    sendMessage,
+    analyzeDamage,
+    clearHistory,
+  }), [messages, isTyping, analysisStatus]);
+
   return (
-    <AIContext.Provider
-      value={{
-        messages,
-        isTyping,
-        analysisStatus,
-        sendMessage,
-        analyzeDamage,
-        clearHistory,
-      }}
-    >
+    <AIContext.Provider value={value}>
       {children}
     </AIContext.Provider>
   );

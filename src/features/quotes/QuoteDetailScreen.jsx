@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuote } from "../../context/QuoteContext";
 import { useUI } from "../../context/UIContext";
-import * as Icons from "lucide-react";
+import { ArrowLeft, Calendar, CheckCircle, Clock, Layers, MessageCircle, Package, Percent, Phone, Shield, ShieldCheck, Star, Truck, Wrench, XCircle } from "lucide-react";
 
 const QuoteDetailScreen = () => {
   const { id } = useParams();
@@ -60,35 +60,35 @@ const QuoteDetailScreen = () => {
     switch (status) {
       case "pending":
         return {
-          icon: Icons.Clock,
+          icon: Clock,
           color: "text-yellow-400",
           bg: "bg-yellow-500/10",
           label: "Beklemede",
         };
       case "accepted":
         return {
-          icon: Icons.CheckCircle,
+          icon: CheckCircle,
           color: "text-green-400",
           bg: "bg-green-500/10",
           label: "Kabul Edildi",
         };
       case "rejected":
         return {
-          icon: Icons.XCircle,
+          icon: XCircle,
           color: "text-red-400",
           bg: "bg-red-500/10",
           label: "Reddedildi",
         };
       case "expired":
         return {
-          icon: Icons.Clock,
+          icon: Clock,
           color: "text-slate-500",
           bg: "bg-slate-500/10",
           label: "Süresi Doldu",
         };
       default:
         return {
-          icon: Icons.Clock,
+          icon: Clock,
           color: "text-slate-500 dark:text-slate-400",
           bg: "bg-slate-500/10",
           label: "Bilinmiyor",
@@ -116,7 +116,7 @@ const QuoteDetailScreen = () => {
             onClick={() => navigate(-1)}
             className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale"
           >
-            <Icons.ArrowLeft size={20} />
+            <ArrowLeft size={20} />
           </button>
           <div className="flex-1">
             <h1 className="text-xl font-bold">Teklif Detayları</h1>
@@ -142,7 +142,7 @@ const QuoteDetailScreen = () => {
               </p>
             </div>
             <div className="bg-primary-500/10 border border-primary-500/20 text-primary-400 text-[8px] font-black uppercase px-2.5 py-1 rounded-full flex items-center gap-1">
-              <Icons.ShieldCheck size={10} /> CARVİS GÜVENCELİ
+              <ShieldCheck size={10} /> CARVİS GÜVENCELİ
             </div>
           </div>
 
@@ -150,7 +150,7 @@ const QuoteDetailScreen = () => {
           <div className="mt-6 border-t border-black/5 dark:border-white/5 pt-4 space-y-2.5">
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Icons.Package size={13} className="text-slate-500" /> Yedek Parça Bedeli (%45)
+                <Package size={13} className="text-slate-500" /> Yedek Parça Bedeli (%45)
               </span>
               <span className="text-slate-900 dark:text-white font-mono font-bold">
                 ₺{(quote.price * 0.45).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
@@ -159,7 +159,7 @@ const QuoteDetailScreen = () => {
             
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Icons.Wrench size={13} className="text-slate-500" /> İşçilik & Kalibrasyon (%25)
+                <Wrench size={13} className="text-slate-500" /> İşçilik & Kalibrasyon (%25)
               </span>
               <span className="text-slate-900 dark:text-white font-mono font-bold">
                 ₺{(quote.price * 0.25).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
@@ -168,16 +168,16 @@ const QuoteDetailScreen = () => {
 
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Icons.Layers size={13} className="text-slate-500" /> Carvis Hizmet Bedeli (%10)
+                <Layers size={13} className="text-slate-500" /> Carvis Hizmet Bedeli (%10)
               </span>
-              <span className="text-emerald-400 font-mono font-bold">
+              <span className="text-teal-400 font-mono font-bold">
                 ₺{(quote.price * 0.10).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
               </span>
             </div>
 
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Icons.Percent size={13} className="text-slate-500" /> Devlet KDV Vergisi (%20)
+                <Percent size={13} className="text-slate-500" /> Devlet KDV Vergisi (%20)
               </span>
               <span className="text-slate-900 dark:text-white font-mono font-bold">
                 ₺{(quote.price * 0.20).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
@@ -192,7 +192,7 @@ const QuoteDetailScreen = () => {
 
           {quote.estimated_delivery_days && (
             <div className="flex items-center gap-2 mt-4 text-slate-600 dark:text-slate-300 border-t border-black/5 dark:border-white/5 pt-3 text-xs">
-              <Icons.Truck size={14} className="text-primary-400" />
+              <Truck size={14} className="text-primary-400" />
               <span>
                 Tahmini tamamlanma süresi: <strong>{quote.estimated_delivery_days} iş günü</strong>
               </span>
@@ -216,7 +216,7 @@ const QuoteDetailScreen = () => {
               <div className="flex items-center justify-between">
                 <span className="text-slate-500 dark:text-slate-400">Puan</span>
                 <div className="flex items-center gap-1">
-                  <Icons.Star
+                  <Star
                     size={16}
                     className="text-yellow-400 fill-yellow-400"
                   />
@@ -253,13 +253,13 @@ const QuoteDetailScreen = () => {
               }}
               className="glass-card p-3 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold active-scale"
             >
-              <Icons.Phone size={16} /> Ara
+              <Phone size={16} /> Ara
             </button>
             <button
               onClick={() => navigate(`/messages/${quote.seller_id}`)}
               className="glass-card p-3 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold active-scale"
             >
-              <Icons.MessageCircle size={16} /> Mesaj
+              <MessageCircle size={16} /> Mesaj
             </button>
           </div>
         </div>
@@ -276,7 +276,7 @@ const QuoteDetailScreen = () => {
             )}
             {quote.warranty_months > 0 && (
               <div className="flex items-center gap-2 text-green-400">
-                <Icons.Shield size={16} />
+                <Shield size={16} />
                 <span className="text-sm">
                   {quote.warranty_months} ay garanti
                 </span>
@@ -284,7 +284,7 @@ const QuoteDetailScreen = () => {
             )}
             {quote.expires_at && quote.status === "pending" && (
               <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                <Icons.Calendar size={16} />
+                <Calendar size={16} />
                 <span className="text-sm">
                   Son geçerlilik:{" "}
                   {new Date(quote.expires_at).toLocaleDateString("tr-TR")}
@@ -333,7 +333,7 @@ const QuoteDetailScreen = () => {
               disabled={actionLoading}
               className="glass-card p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-red-400 border border-red-500/30 active-scale disabled:opacity-50"
             >
-              <Icons.XCircle size={20} /> Reddet
+              <XCircle size={20} /> Reddet
             </button>
             <button
               onClick={handleAccept}
@@ -344,7 +344,7 @@ const QuoteDetailScreen = () => {
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
               ) : (
                 <>
-                  <Icons.CheckCircle size={20} /> Kabul Et
+                  <CheckCircle size={20} /> Kabul Et
                 </>
               )}
             </button>
@@ -355,7 +355,7 @@ const QuoteDetailScreen = () => {
           <div className="space-y-3">
             <div className="glass-card p-4 rounded-2xl border border-green-500/30 bg-green-500/10">
               <div className="flex items-center gap-3">
-                <Icons.CheckCircle size={24} className="text-green-400" />
+                <CheckCircle size={24} className="text-green-400" />
                 <div>
                   <p className="font-bold text-green-400">
                     Teklif Kabul Edildi

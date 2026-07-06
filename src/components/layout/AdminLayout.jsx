@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { FileCheck, LayoutDashboard, LogOut, Menu, Settings, ShieldAlert, Users, Wallet, X } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
 
@@ -31,31 +31,31 @@ const AdminLayout = () => {
     {
       key: "dashboard",
       label: t.adminOverview,
-      icon: Icons.LayoutDashboard,
+      icon: LayoutDashboard,
       path: "/admin/dashboard",
     },
     {
       key: "users",
       label: t.adminUsers,
-      icon: Icons.Users,
+      icon: Users,
       path: "/admin/users",
     },
     {
       key: "partners",
       label: t.adminPartners,
-      icon: Icons.FileCheck,
+      icon: FileCheck,
       path: "/admin/partners",
     },
     {
       key: "finance",
       label: t.adminFinance,
-      icon: Icons.Wallet,
+      icon: Wallet,
       path: "/admin/finance",
     },
     {
       key: "settings",
       label: t.adminSettings,
-      icon: Icons.Settings,
+      icon: Settings,
       path: "/admin/settings",
     },
   ];
@@ -69,7 +69,7 @@ const AdminLayout = () => {
         <div className="p-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-900/50">
-              <Icons.ShieldAlert size={20} className="text-slate-900 dark:text-white" />
+              <ShieldAlert size={20} className="text-slate-900 dark:text-white" />
             </div>
             <div>
               <h1 className="text-xl font-black tracking-tighter">RAPIDSY</h1>
@@ -82,7 +82,7 @@ const AdminLayout = () => {
             onClick={() => setIsSidebarOpen(false)}
             className="md:hidden text-slate-500 dark:text-slate-400"
           >
-            <Icons.X size={24} />
+            <X size={24} />
           </button>
         </div>
 
@@ -110,7 +110,7 @@ const AdminLayout = () => {
             onClick={handleLogout}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-red-500/10 hover:text-red-400 transition-all font-sans"
           >
-            <Icons.LogOut size={20} />
+            <LogOut size={20} />
             <span className="font-medium text-sm">{t.logout}</span>
           </button>
         </div>
@@ -121,7 +121,7 @@ const AdminLayout = () => {
         {/* Header for Mobile */}
         <div className="md:hidden p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
           <button onClick={() => setIsSidebarOpen(true)} className="text-slate-900 dark:text-white">
-            <Icons.Menu size={24} />
+            <Menu size={24} />
           </button>
           <span className="font-bold text-red-500">{t.adminPanel}</span>
           <div className="w-6"></div>

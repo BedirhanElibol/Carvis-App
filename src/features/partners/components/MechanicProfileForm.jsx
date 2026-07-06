@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Award, CheckCircle2, Plus, Users2, Wrench, X } from "lucide-react";
 
 const MechanicProfileForm = ({ data, onUpdate }) => {
   const [mechanicData, setMechanicData] = useState({
@@ -64,7 +64,7 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary-400">
-          <Icons.Wrench size={20} />
+          <Wrench size={20} />
         </div>
         <div>
           <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Teknik Servis Bilgileri</h2>
@@ -87,7 +87,7 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
         <label className="space-y-2">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Teknisyen Sayısı</span>
           <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
-            <Icons.Users2 size={18} className="text-primary-400" />
+            <Users2 size={18} className="text-primary-400" />
             <input
               type="number"
               value={mechanicData.technician_count}
@@ -108,10 +108,10 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
             }`}
           >
             <div className="flex items-center gap-2">
-              <Icons.Award size={16} />
+              <Award size={16} />
               <span className="text-[10px] font-black uppercase tracking-widest text-left">Yetkili Servis Durumu</span>
             </div>
-            {mechanicData.is_authorized_service && <Icons.CheckCircle2 size={16} className="text-blue-400" />}
+            {mechanicData.is_authorized_service && <CheckCircle2 size={16} className="text-blue-400" />}
           </button>
         </div>
 
@@ -144,7 +144,7 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
               >
                 {brand}
                 <button onClick={() => removeBrand(brand)} className="text-slate-500 hover:text-red-400">
-                  <Icons.X size={14} />
+                  <X size={14} />
                 </button>
               </span>
             ))}
@@ -162,7 +162,7 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
               onClick={addBrand}
               className="bg-primary-600 text-slate-900 dark:text-white p-2 rounded-xl active-scale"
             >
-              <Icons.Plus size={20} />
+              <Plus size={20} />
             </button>
           </div>
         </div>

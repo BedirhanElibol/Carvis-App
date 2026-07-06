@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { Check, Loader2, Package, Plus, Settings, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
@@ -93,18 +93,18 @@ const PackageManager = () => {
           onClick={() => setShowAddModal(true)}
           className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-lg shadow-primary-900/20"
         >
-          <Icons.Plus size={16} /> Yeni Paket Ekle
+          <Plus size={16} /> Yeni Paket Ekle
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {loading ? (
           <div className="col-span-full py-20 text-center">
-            <Icons.Loader2 className="animate-spin mx-auto text-primary-500" size={32} />
+            <Loader2 className="animate-spin mx-auto text-primary-500" size={32} />
           </div>
         ) : packages.length === 0 ? (
           <div className="col-span-full py-20 bg-black/5 dark:bg-white/5 rounded-[2.5rem] border border-dashed border-black/10 dark:border-white/10 text-center">
-             <Icons.Package size={40} className="mx-auto text-slate-700 mb-4" />
+             <Package size={40} className="mx-auto text-slate-700 mb-4" />
              <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Henüz paketiniz bulunmuyor</p>
           </div>
         ) : (
@@ -134,7 +134,7 @@ const PackageManager = () => {
               <div className="space-y-2 mb-6">
                  {pkg.included_services?.map((service, i) => (
                    <div key={i} className="flex items-center gap-2 text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wide">
-                     <Icons.Check size={12} className="text-primary-500" /> {service}
+                     <Check size={12} className="text-primary-500" /> {service}
                    </div>
                  ))}
               </div>
@@ -147,7 +147,7 @@ const PackageManager = () => {
                    {pkg.is_active ? 'DURDUR' : 'YAYINLA'}
                  </button>
                  <button className="p-3 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl text-slate-500 hover:text-slate-900 dark:text-white transition-all">
-                    <Icons.Settings size={16} />
+                    <Settings size={16} />
                  </button>
               </div>
             </div>
@@ -161,7 +161,7 @@ const PackageManager = () => {
           <div className="bg-white dark:bg-[#0f172a] w-full max-w-lg rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div className="p-6 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
               <h3 className="font-black text-slate-900 dark:text-white text-xl uppercase tracking-tighter">Yeni Servis Paketi</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-slate-500 hover:text-slate-900 dark:text-white transition"><Icons.X size={20} /></button>
+              <button onClick={() => setShowAddModal(false)} className="text-slate-500 hover:text-slate-900 dark:text-white transition"><X size={20} /></button>
             </div>
             
             <form onSubmit={handleAddPackage} className="p-8 space-y-5 overflow-y-auto custom-scrollbar">

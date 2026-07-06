@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { BookOpen, Plus, Search, SearchX, X } from "lucide-react";
 import { OEM_CATALOG } from "../../../constants/mockData";
 
 const ProductCatalogModal = ({ isOpen, onClose, onSelect }) => {
@@ -25,7 +25,7 @@ const ProductCatalogModal = ({ isOpen, onClose, onSelect }) => {
         <div className="p-6 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-black/5 dark:bg-white/5 shrink-0 rounded-t-3xl">
           <div>
             <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Icons.BookOpen className="text-primary-500" /> OEM Hazır Katalog
+              <BookOpen className="text-primary-500" /> OEM Hazır Katalog
             </h2>
             <p className="text-xs text-slate-500 mt-1">Hızlıca stok eklemek için hazır ürün listesinden seçim yapın.</p>
           </div>
@@ -33,14 +33,14 @@ const ProductCatalogModal = ({ isOpen, onClose, onSelect }) => {
             onClick={onClose}
             className="w-10 h-10 flex items-center justify-center bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 rounded-xl text-slate-500 transition-colors"
           >
-            <Icons.X size={20} />
+            <X size={20} />
           </button>
         </div>
 
         {/* Filters */}
         <div className="p-4 border-b border-black/10 dark:border-white/10 flex flex-col md:flex-row gap-4 shrink-0 bg-slate-50 dark:bg-slate-950/50">
           <div className="flex-1 relative">
-            <Icons.Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             <input
               type="text"
               placeholder="Ürün adı veya marka ara..."
@@ -88,7 +88,7 @@ const ProductCatalogModal = ({ isOpen, onClose, onSelect }) => {
                     }}
                     className="bg-primary-600/10 hover:bg-primary-600 text-primary-600 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors flex items-center gap-2"
                   >
-                    <Icons.Plus size={14} /> SEÇ
+                    <Plus size={14} /> SEÇ
                   </button>
                 </div>
               </div>
@@ -97,7 +97,7 @@ const ProductCatalogModal = ({ isOpen, onClose, onSelect }) => {
 
           {filteredCatalog.length === 0 && (
             <div className="col-span-full py-12 flex flex-col items-center justify-center text-slate-500">
-              <Icons.SearchX size={48} className="mb-4 opacity-50" />
+              <SearchX size={48} className="mb-4 opacity-50" />
               <p>Arama kriterlerine uygun ürün bulunamadı.</p>
             </div>
           )}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Package, Send, Wrench } from "lucide-react";
 
 /**
  * VehicleDemandForm Component
@@ -44,7 +44,7 @@ const VehicleDemandForm = ({
               : "border-slate-100 bg-slate-50"
           }`}
         >
-          <Icons.Package
+          <Package
             className={
               demandType === "part" ? "text-blue-600" : "text-slate-500 dark:text-slate-400"
             }
@@ -60,7 +60,7 @@ const VehicleDemandForm = ({
               : "border-slate-100 bg-slate-50"
           }`}
         >
-          <Icons.Wrench
+          <Wrench
             className={
               demandType === "service" ? "text-blue-600" : "text-slate-500 dark:text-slate-400"
             }
@@ -92,7 +92,7 @@ const VehicleDemandForm = ({
         onClick={() => onSubmit({ demandType, description })}
         className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-5 rounded-2xl font-black text-lg tracking-widest uppercase shadow-xl hover:bg-blue-600 transition-all flex items-center justify-center space-x-3 active:scale-95"
       >
-        <Icons.Send size={20} />
+        <Send size={20} />
         <span>Talebi Gönder</span>
       </button>
     </div>

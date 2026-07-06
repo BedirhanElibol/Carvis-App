@@ -1,11 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, {
-  createContext,
+import React, { createContext,
   useContext,
   useState,
   useEffect,
-  useCallback,
-} from "react";
+  useCallback, useMemo } from "react";
 import { supabase } from "../supabaseClient";
 import { useAuth } from "./AuthContext";
 
@@ -451,12 +449,13 @@ export const GarageProvider = ({ children }) => {
         id: "tires",
         label: "Lastik Ömrü",
         value: calcLife(currentKm, intervals.tires),
-        color: "text-emerald-400",
+        color: "text-teal-400",
       },
     ];
   };
 
-  const value = {
+  const value = useMemo(() => ({
+
     vehicles,
     currentVehicle,
     setCurrentVehicle,
@@ -476,7 +475,8 @@ export const GarageProvider = ({ children }) => {
     addReport,
     deleteVehicle,
     getMaintenanceStatus,
-  };
+  
+  }), [vehicles, currentVehicle, maintenanceRecords, expenses, documents, reports, loading, isSubmittingVehicle, isSubmittingMaintenance, addVehicle, updateVehicleDates, addExpense, addDocument, addReport, deleteVehicle, getMaintenanceStatus]);
 
   return (
     <GarageContext.Provider value={value}>{children}</GarageContext.Provider>

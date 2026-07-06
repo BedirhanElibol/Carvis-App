@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { Car, Key, LayoutDashboard, LogOut, Menu, Package, ParkingCircle, Settings, ShieldAlert, User, Wrench, X } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 const PartnerLayout = () => {
@@ -36,13 +36,13 @@ const PartnerLayout = () => {
     {
       key: "dashboard",
       label: "Panel",
-      icon: Icons.LayoutDashboard,
+      icon: LayoutDashboard,
       path: "/partner/dashboard",
     },
     {
       key: "settings",
       label: "Ayarlar",
-      icon: Icons.Settings,
+      icon: Settings,
       path: "/partner/settings",
     },
   ];
@@ -52,34 +52,34 @@ const PartnerLayout = () => {
     navItems.splice(1, 0, {
       key: "capacity",
       label: "Otopark Yönetimi",
-      icon: Icons.ParkingCircle,
+      icon: ParkingCircle,
       path: "/partner/parking/capacity",
     });
   } else if (role === "valet") {
     navItems.splice(1, 0, {
       key: "requests",
       label: "Vale Çağrıları",
-      icon: Icons.Key,
+      icon: Key,
       path: "/partner/valet/requests",
     });
   } else if (role === "mechanic") {
     navItems.splice(1, 0, {
       key: "services",
       label: "Hizmet Paketleri",
-      icon: Icons.Settings,
+      icon: Settings,
       path: "/partner/mechanic/services",
     });
     navItems.splice(1, 0, {
       key: "jobs",
       label: "İş Takibi",
-      icon: Icons.Wrench,
+      icon: Wrench,
       path: "/partner/mechanic/jobs",
     });
   } else if (role === "parts") {
     navItems.splice(1, 0, {
       key: "products",
       label: "Ürün Yönetimi",
-      icon: Icons.Package,
+      icon: Package,
       path: "/partner/products",
     });
   }
@@ -95,7 +95,7 @@ const PartnerLayout = () => {
         <div className="p-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
-              <Icons.Car size={20} className="text-slate-900 dark:text-white" />
+              <Car size={20} className="text-slate-900 dark:text-white" />
             </div>
             <div>
               <h1 className="text-xl font-black tracking-tighter">RAPIDSY</h1>
@@ -108,7 +108,7 @@ const PartnerLayout = () => {
             onClick={() => setIsSidebarOpen(false)}
             className="md:hidden text-slate-500 dark:text-slate-400"
           >
-            <Icons.X size={24} />
+            <X size={24} />
           </button>
         </div>
 
@@ -179,7 +179,7 @@ const PartnerLayout = () => {
             onClick={() => navigate("/application/home")}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-primary-400 hover:bg-primary-500/10 transition-all border border-primary-500/10"
           >
-            <Icons.User size={20} />
+            <User size={20} />
             <span className="font-medium text-sm">Müşteri Modu</span>
           </button>
 
@@ -187,7 +187,7 @@ const PartnerLayout = () => {
             onClick={handleLogout}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 transition-all"
           >
-            <Icons.LogOut size={20} />
+            <LogOut size={20} />
             <span className="font-medium text-sm">Çıkış Yap</span>
           </button>
         </div>
@@ -198,7 +198,7 @@ const PartnerLayout = () => {
         {/* Header for Mobile */}
         <div className="md:hidden p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
           <button onClick={() => setIsSidebarOpen(true)} className="text-slate-900 dark:text-white">
-            <Icons.Menu size={24} />
+            <Menu size={24} />
           </button>
           <span className="font-bold">
             Partner Paneli ({(role || "PARTNER").toUpperCase()})
@@ -215,7 +215,7 @@ const PartnerLayout = () => {
               <div className={`${
                 currentUser.verification_status === "rejected" ? "bg-red-500/20" : "bg-orange-500/20"
               } p-2 rounded-xl`}>
-                <Icons.ShieldAlert size={20} className={
+                <ShieldAlert size={20} className={
                   currentUser.verification_status === "rejected" ? "text-red-500" : "text-orange-500"
                 } />
               </div>

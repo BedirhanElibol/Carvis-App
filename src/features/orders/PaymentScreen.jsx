@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useOrder } from "../../context/OrderContext";
 import { useQuote } from "../../context/QuoteContext";
 import { useUI } from "../../context/UIContext";
-import * as Icons from "lucide-react";
+import { ArrowLeft, CheckCircle, CreditCard, Loader2, Shield } from "lucide-react";
 
 const PaymentScreen = () => {
   const { quoteId } = useParams();
@@ -66,7 +66,7 @@ const PaymentScreen = () => {
             onClick={() => navigate(-1)}
             className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale border border-black/5 dark:border-white/5"
           >
-            <Icons.ArrowLeft size={20} />
+            <ArrowLeft size={20} />
           </button>
           <div>
             <h1 className="text-xl font-bold font-sans">Ödeme</h1>
@@ -124,7 +124,7 @@ const PaymentScreen = () => {
         {/* Güvenlik Bilgisi */}
         <div className="glass-card p-4 rounded-2xl border border-green-500/30 bg-green-500/5">
           <div className="flex items-start gap-3">
-            <Icons.Shield size={24} className="text-green-400 flex-shrink-0" />
+            <Shield size={24} className="text-green-400 flex-shrink-0" />
             <div>
               <p className="font-bold text-green-400 text-sm mb-1 uppercase tracking-tight">
                 Güvenli Ödeme
@@ -145,10 +145,10 @@ const PaymentScreen = () => {
             className="w-full bg-primary-600 hover:bg-primary-500 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-sm uppercase tracking-widest text-slate-900 dark:text-white shadow-xl shadow-primary-600/20 active-scale disabled:opacity-50 transition-all font-sans"
           >
             {loading ? (
-              <Icons.Loader2 className="animate-spin" size={20} />
+              <Loader2 className="animate-spin" size={20} />
             ) : (
               <>
-                <Icons.CreditCard size={20} />
+                <CreditCard size={20} />
                 Ödemeyi Güvenle Tamamla
               </>
             )}
@@ -156,7 +156,7 @@ const PaymentScreen = () => {
         ) : (
           <div className="glass-card p-8 rounded-3xl border border-green-500/30 bg-green-500/10 text-center animate-bounce-in">
             <div className="bg-green-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Icons.CheckCircle size={40} className="text-green-400" />
+              <CheckCircle size={40} className="text-green-400" />
             </div>
             <h3 className="text-xl font-bold text-green-400 mb-2 font-sans">
               Ödeme Başarılı!

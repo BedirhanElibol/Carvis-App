@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { Car, CheckCircle2, Info, ShieldCheck } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 import { useGarage } from "../../context/GarageContext";
@@ -50,7 +50,7 @@ const InsuranceMarket = () => {
       <div className="space-y-2">
         <div className="flex items-center gap-2">
            <div className="p-2 bg-accent-500/20 rounded-lg">
-             <Icons.ShieldCheck size={20} className="text-accent-500" />
+             <ShieldCheck size={20} className="text-accent-500" />
            </div>
            <span className="text-[10px] font-black text-accent-500 uppercase tracking-[0.3em]">Rapidsy Protection</span>
         </div>
@@ -63,12 +63,12 @@ const InsuranceMarket = () => {
       {currentVehicle && (
         <div className="glass-card p-4 rounded-2xl border border-primary-500/20 bg-primary-500/5 flex items-center justify-between">
            <div className="flex items-center gap-3">
-             <Icons.Car size={20} className="text-primary-400" />
+             <Car size={20} className="text-primary-400" />
              <p className="text-[11px] font-black uppercase text-slate-600 dark:text-slate-300">
                {currentVehicle.brand} {currentVehicle.model} <span className="text-primary-500">İÇİN TEKLİFLER</span>
              </p>
            </div>
-           <Icons.CheckCircle2 size={16} className="text-primary-400" />
+           <CheckCircle2 size={16} className="text-primary-400" />
         </div>
       )}
 
@@ -119,7 +119,7 @@ const InsuranceMarket = () => {
 
       {/* Info Banner */}
       <div className="p-6 bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-black/5 dark:border-white/5 text-center">
-        <Icons.Info size={24} className="text-slate-500 mx-auto mb-3" />
+        <Info size={24} className="text-slate-500 mx-auto mb-3" />
         <p className="text-[10px] text-slate-500 leading-relaxed font-sans uppercase tracking-tight">
           Teklifler araç yaşınıza ve hasar geçmişinize göre değişiklik gösterebilir. <br />
           Tüm başvurular sigorta uzmanlarımız tarafından incelenir.

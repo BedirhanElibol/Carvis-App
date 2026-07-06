@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import * as Icons from "lucide-react";
+import { FileCheck, Inbox, MessageSquare, ShieldCheck, Users } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -45,8 +45,8 @@ const ActivityCenter = () => {
     const colors = {
       pending: "bg-orange-500/10 text-orange-400 border-orange-500/20",
       scheduled: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-      completed: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-      active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+      completed: "bg-emerald-500/10 text-teal-400 border-emerald-500/20",
+      active: "bg-emerald-500/10 text-teal-400 border-emerald-500/20",
       won: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
       lost: "bg-slate-500/10 text-slate-500 dark:text-slate-400 border-slate-500/20",
     };
@@ -67,8 +67,8 @@ const ActivityCenter = () => {
       {/* Tabs */}
       <div className="flex gap-2 bg-white dark:bg-slate-900/50 p-1.5 rounded-3xl border border-black/5 dark:border-white/5">
         {[
-          { id: "consultations", label: "Danışmanlık", icon: Icons.Users },
-          { id: "insurance", label: "Sigorta", icon: Icons.ShieldCheck },
+          { id: "consultations", label: "Danışmanlık", icon: Users },
+          { id: "insurance", label: "Sigorta", icon: ShieldCheck },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -89,7 +89,7 @@ const ActivityCenter = () => {
           <div className="flex items-center justify-center h-full opacity-50 uppercase text-[10px] font-black tracking-widest">Veriler çekiliyor...</div>
         ) : data.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 opacity-30 text-center">
-            <Icons.Inbox size={48} className="mb-4" />
+            <Inbox size={48} className="mb-4" />
             <p className="text-[10px] font-black uppercase tracking-widest">Eksik parça: Henüz kayıt bulunamadı</p>
           </div>
         ) : (
@@ -105,8 +105,8 @@ const ActivityCenter = () => {
                 >
                   <div className="flex justify-between items-start mb-6">
                     <div className="p-3 rounded-2xl bg-black/20 border border-black/5 dark:border-white/5 group-hover:scale-110 transition-transform">
-                      {activeTab === 'consultations' ? <Icons.MessageSquare size={20} className="text-primary-400" /> : 
-                       <Icons.FileCheck size={20} className="text-emerald-400" />}
+                      {activeTab === 'consultations' ? <MessageSquare size={20} className="text-primary-400" /> : 
+                       <FileCheck size={20} className="text-teal-400" />}
                     </div>
                     <StatusBadge status={item.status} />
                   </div>

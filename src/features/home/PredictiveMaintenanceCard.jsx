@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { Activity, AlertCircle, ChevronRight, Clock, Settings } from "lucide-react";
 
 /**
  * PredictiveMaintenanceCard Component
@@ -37,7 +37,7 @@ const PredictiveMaintenanceCard = ({
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 flex items-center justify-center shadow-inner">
-            <Icons.Settings
+            <Settings
               size={20}
               className="text-primary-400 group-hover:rotate-90 transition-transform duration-500"
             />
@@ -53,7 +53,7 @@ const PredictiveMaintenanceCard = ({
         </div>
         {isCritical && (
           <div className="flex items-center gap-1.5 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full animate-pulse">
-            <Icons.AlertCircle size={10} className="text-red-500" />
+            <AlertCircle size={10} className="text-red-500" />
             <span className="text-[8px] font-black text-red-500 uppercase">
               Kritik
             </span>
@@ -86,7 +86,7 @@ const PredictiveMaintenanceCard = ({
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-white dark:bg-slate-900/40 rounded-2xl p-3 border border-black/5 dark:border-white/5">
             <div className="flex items-center gap-2 mb-1">
-              <Icons.Clock size={12} className="text-primary-400" />
+              <Clock size={12} className="text-primary-400" />
               <span className="text-[9px] font-black text-slate-500 uppercase">
                 KALAN KM
               </span>
@@ -100,7 +100,7 @@ const PredictiveMaintenanceCard = ({
           </div>
           <div className="bg-white dark:bg-slate-900/40 rounded-2xl p-3 border border-black/5 dark:border-white/5">
             <div className="flex items-center gap-2 mb-1">
-              <Icons.Activity size={12} className="text-accent-400" />
+              <Activity size={12} className="text-accent-400" />
               <span className="text-[9px] font-black text-slate-500 uppercase">
                 SAĞLIK PUANI
               </span>
@@ -114,7 +114,7 @@ const PredictiveMaintenanceCard = ({
             onClick={() => setActiveTab("parts")}
             className="flex-1 py-3.5 bg-white text-black rounded-2xl font-black text-xs tracking-tighter hover:bg-slate-200 transition-all active-scale-95 uppercase flex items-center justify-center gap-2"
           >
-            Parça Bak <Icons.ChevronRight size={14} />
+            Parça Bak <ChevronRight size={14} />
           </button>
           <button
             onClick={onShowHistory}

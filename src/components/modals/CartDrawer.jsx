@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { ChevronRight, CreditCard, Loader2, MapPin, Package, ShoppingBag, ShoppingCart, Trash2, Wrench, X } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import { useUI } from "../../context/UIContext";
 import AddressModal from "./AddressModal";
@@ -67,14 +67,14 @@ const CartDrawer = () => {
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-black text-xl text-slate-900 dark:text-white flex items-center gap-2 font-sans">
-              <Icons.ShoppingBag className="text-primary-500" /> Sepetim (
+              <ShoppingBag className="text-primary-500" /> Sepetim (
               {cart.length})
             </h3>
             <button
               onClick={toggleCart}
               className="glass-card p-2 rounded-full hover:bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10"
             >
-              <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
+              <X size={20} className="text-slate-500 dark:text-slate-400" />
             </button>
           </div>
 
@@ -83,12 +83,12 @@ const CartDrawer = () => {
             <div className="flex gap-2 mb-4">
               {partsCount > 0 && (
                 <div className="flex items-center gap-1.5 bg-primary-500/20 text-primary-400 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest font-sans">
-                  <Icons.Package size={12} /> {partsCount} Parça
+                  <Package size={12} /> {partsCount} Parça
                 </div>
               )}
               {servicesCount > 0 && (
                 <div className="flex items-center gap-1.5 bg-accent-500/20 text-accent-400 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest font-sans">
-                  <Icons.Wrench size={12} /> {servicesCount} Servis
+                  <Wrench size={12} /> {servicesCount} Servis
                 </div>
               )}
             </div>
@@ -98,7 +98,7 @@ const CartDrawer = () => {
           <div className="flex-1 overflow-y-auto space-y-3 mb-4 pr-1">
             {cart.length === 0 ? (
               <div className="text-center py-10">
-                <Icons.ShoppingCart
+                <ShoppingCart
                   size={48}
                   className="mx-auto mb-3 text-slate-600"
                 />
@@ -119,7 +119,7 @@ const CartDrawer = () => {
                     }`}
                   >
                     {item.itemType === "service" ? (
-                      <Icons.Wrench size={28} className="text-accent-400" />
+                      <Wrench size={28} className="text-accent-400" />
                     ) : (
                       <img
                         src={item.img}
@@ -164,7 +164,7 @@ const CartDrawer = () => {
                         onClick={() => removeFromCart(index)}
                         className="text-red-400 hover:text-red-300 bg-red-500/10 p-1.5 rounded-lg hover:bg-red-500/20 transition"
                       >
-                        <Icons.Trash2 size={14} />
+                        <Trash2 size={14} />
                       </button>
                     </div>
                   </div>
@@ -191,7 +191,7 @@ const CartDrawer = () => {
                   <div
                     className={`p-2 rounded-xl ${addressError ? "bg-red-500/20 text-red-400" : "bg-primary-500/20 text-primary-400"}`}
                   >
-                    <Icons.MapPin size={16} />
+                    <MapPin size={16} />
                   </div>
                   <div className="text-left">
                     <p
@@ -212,7 +212,7 @@ const CartDrawer = () => {
                     </p>
                   </div>
                 </div>
-                <Icons.ChevronRight
+                <ChevronRight
                   size={16}
                   className={addressError ? "text-red-400" : "text-slate-500"}
                 />
@@ -256,9 +256,9 @@ const CartDrawer = () => {
                 }`}
               >
                 {isProcessingCheckout ? (
-                  <Icons.Loader2 className="animate-spin" size={18} />
+                  <Loader2 className="animate-spin" size={18} />
                 ) : (
-                  <Icons.CreditCard size={18} />
+                  <CreditCard size={18} />
                 )}
                 {isProcessingCheckout
                   ? t.checkingPrice || "İşleniyor..."

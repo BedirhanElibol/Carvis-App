@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback , useMemo } from "react";
 import { useAuth } from "./AuthContext";
 import { useUI } from "./UIContext";
 import { supabase } from "../supabaseClient";
@@ -182,7 +182,8 @@ export const WalletProvider = ({ children }) => {
     }
   };
 
-  const value = {
+  const value = useMemo(() => ({
+
     balance,
     creditLimit,
     creditUsed,
@@ -193,7 +194,8 @@ export const WalletProvider = ({ children }) => {
     blockFunds,
     releaseFunds,
     cancelEscrow,
-  };
+  
+  }), [balance, creditLimit, creditUsed, escrowBalance, transactions, isAddingFunds, addFunds, blockFunds, releaseFunds, cancelEscrow]);
 
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;
 };

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppointment } from "../../context/AppointmentContext";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
-import * as Icons from "lucide-react";
+import { AlertCircle, ArrowLeft, Calendar, CheckCircle, Clock, XCircle } from "lucide-react";
 const AppointmentScreen = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
@@ -18,35 +18,35 @@ const AppointmentScreen = () => {
     switch (status) {
       case "pending":
         return {
-          icon: Icons.Clock,
+          icon: Clock,
           color: "text-yellow-400",
           bg: "bg-yellow-500/10",
           label: "Beklemede",
         };
       case "confirmed":
         return {
-          icon: Icons.CheckCircle,
+          icon: CheckCircle,
           color: "text-green-400",
           bg: "bg-green-500/10",
           label: "Onaylandı",
         };
       case "completed":
         return {
-          icon: Icons.CheckCircle,
+          icon: CheckCircle,
           color: "text-blue-400",
           bg: "bg-blue-500/10",
           label: "Tamamlandı",
         };
       case "cancelled":
         return {
-          icon: Icons.XCircle,
+          icon: XCircle,
           color: "text-red-400",
           bg: "bg-red-500/10",
           label: "İptal Edildi",
         };
       default:
         return {
-          icon: Icons.AlertCircle,
+          icon: AlertCircle,
           color: "text-slate-500 dark:text-slate-400",
           bg: "bg-slate-500/10",
           label: "Bilinmiyor",
@@ -76,7 +76,7 @@ const AppointmentScreen = () => {
               className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale"
             >
               {" "}
-              <Icons.ArrowLeft size={20} />{" "}
+              <ArrowLeft size={20} />{" "}
             </button>{" "}
             <div>
               {" "}
@@ -86,7 +86,7 @@ const AppointmentScreen = () => {
               </p>{" "}
             </div>{" "}
           </div>{" "}
-          <Icons.Calendar size={20} className="text-slate-500 dark:text-slate-400" />{" "}
+          <Calendar size={20} className="text-slate-500 dark:text-slate-400" />{" "}
         </div>{" "}
         {/* Filter Tabs */}{" "}
         <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
@@ -120,7 +120,7 @@ const AppointmentScreen = () => {
         ) : filteredAppointments.length === 0 ? (
           <div className="text-center py-20">
             {" "}
-            <Icons.Calendar
+            <Calendar
               size={48}
               className="mx-auto text-slate-600 dark:text-slate-300 mb-4"
             />{" "}
@@ -166,7 +166,7 @@ const AppointmentScreen = () => {
                   {" "}
                   <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     {" "}
-                    <Icons.Calendar size={16} />{" "}
+                    <Calendar size={16} />{" "}
                     {new Date(appointment.appointment_date).toLocaleDateString(
                       "tr-TR",
                       { day: "numeric", month: "long", year: "numeric" },
@@ -174,7 +174,7 @@ const AppointmentScreen = () => {
                   </div>{" "}
                   <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     {" "}
-                    <Icons.Clock size={16} />{" "}
+                    <Clock size={16} />{" "}
                     {new Date(appointment.appointment_date).toLocaleTimeString(
                       "tr-TR",
                       { hour: "2-digit", minute: "2-digit" },

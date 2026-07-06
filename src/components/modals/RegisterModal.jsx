@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Check, Eye, EyeOff, Loader2, Lock, Mail, User, UserPlus, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
@@ -121,13 +121,13 @@ const RegisterModal = ({
             onClick={onClose}
             className="absolute top-4 right-4 bg-black/5 dark:bg-white/5 p-2 rounded-full hover:bg-black/10 dark:bg-white/10 transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white border border-black/5 dark:border-white/5 cursor-pointer"
           >
-            <Icons.X size={20} />
+            <X size={20} />
           </button>
           
           {isRegistered ? (
             <div className="py-8 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Icons.Mail size={40} className="text-emerald-400" />
+                <Mail size={40} className="text-teal-400" />
               </div>
               <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-4 font-sans">
                 {t.verifyEmailTitle || "E-POSTANI ONAYLA"}
@@ -162,7 +162,7 @@ const RegisterModal = ({
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="relative group">
                   <div className="bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                    <Icons.User size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
+                    <User size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                     <input
                       type="text"
                       placeholder="Ad Soyad"
@@ -178,7 +178,7 @@ const RegisterModal = ({
 
                 <div className="relative group">
                   <div className="bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                    <Icons.Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
+                    <Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                     <input
                       type="email"
                       placeholder={t.emailPlaceholder || "E-posta Adresi"}
@@ -194,7 +194,7 @@ const RegisterModal = ({
 
                 <div className="relative group">
                   <div className="bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                    <Icons.Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
+                    <Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder={t.passwordPlaceholder || "Şifre"}
@@ -211,9 +211,9 @@ const RegisterModal = ({
                       className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors border-none bg-transparent cursor-pointer ml-2 shrink-0"
                     >
                       {showPassword ? (
-                        <Icons.EyeOff size={18} />
+                        <EyeOff size={18} />
                       ) : (
-                        <Icons.Eye size={18} />
+                        <Eye size={18} />
                       )}
                     </button>
                   </div>
@@ -230,7 +230,7 @@ const RegisterModal = ({
                         className="peer hidden"
                       />
                       <div className="w-5 h-5 border-2 border-black/10 dark:border-white/10 rounded-md bg-transparent peer-checked:bg-teal-500 peer-checked:border-teal-500 transition-all flex items-center justify-center">
-                        <Icons.Check size={12} className="text-slate-900 dark:text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
+                        <Check size={12} className="text-slate-900 dark:text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
                       </div>
                     </div>
                     <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold leading-tight select-none">
@@ -262,7 +262,7 @@ const RegisterModal = ({
                         className="peer hidden"
                       />
                       <div className="w-5 h-5 border-2 border-black/10 dark:border-white/10 rounded-md bg-transparent peer-checked:bg-teal-500 peer-checked:border-teal-500 transition-all flex items-center justify-center">
-                        <Icons.Check size={12} className="text-slate-900 dark:text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
+                        <Check size={12} className="text-slate-900 dark:text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
                       </div>
                     </div>
                     <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold leading-tight select-none">
@@ -277,10 +277,10 @@ const RegisterModal = ({
                   className="w-full bg-teal-500 hover:bg-teal-400 text-slate-900 dark:text-white py-4.5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-teal-500/20 flex items-center justify-center gap-3 active:scale-95 h-14 disabled:opacity-50 disabled:grayscale font-sans border-none cursor-pointer"
                 >
                   {loading ? (
-                    <Icons.Loader2 className="animate-spin" size={24} />
+                    <Loader2 className="animate-spin" size={24} />
                   ) : (
                     <>
-                      <Icons.UserPlus size={20} /> {t.registerTitle}
+                      <UserPlus size={20} /> {t.registerTitle}
                     </>
                   )}
                 </button>
@@ -304,7 +304,7 @@ const RegisterModal = ({
                   className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
                 >
                   {socialLoading === "google" ? (
-                    <Icons.Loader2
+                    <Loader2
                       size={18}
                       className="animate-spin text-slate-500 dark:text-slate-400"
                     />
@@ -324,7 +324,7 @@ const RegisterModal = ({
                   className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
                 >
                   {socialLoading === "apple" ? (
-                    <Icons.Loader2
+                    <Loader2
                       size={18}
                       className="animate-spin text-slate-500 dark:text-slate-400"
                     />

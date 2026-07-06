@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { CreditCard, Inbox, Loader2, Package } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
@@ -70,7 +70,7 @@ const PackageStore = () => {
     }
   };
 
-  if (loading) return <div className="flex justify-center p-10"><Icons.Loader2 className="animate-spin text-primary-500" /></div>;
+  if (loading) return <div className="flex justify-center p-10"><Loader2 className="animate-spin text-primary-500" /></div>;
 
   return (
     <div className="space-y-6">
@@ -86,7 +86,7 @@ const PackageStore = () => {
             <div className="absolute inset-0 backdrop-blur-sm"></div>
             <div className="absolute bottom-4 left-6 flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-black/10 dark:bg-white/10 backdrop-blur-md border border-black/20 dark:border-white/20 flex items-center justify-center">
-                <Icons.Package size={24} className="text-slate-900 dark:text-white" />
+                <Package size={24} className="text-slate-900 dark:text-white" />
               </div>
               <div>
                 <h4 className="font-black text-xl text-slate-900 dark:text-white tracking-tight leading-none">{pkg.name}</h4>
@@ -96,7 +96,7 @@ const PackageStore = () => {
               </div>
             </div>
             <div className="absolute top-4 right-6 bg-slate-50 dark:bg-slate-950/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10">
-              <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">
+              <span className="text-[10px] font-black text-teal-400 uppercase tracking-widest">
                 {pkg.validity_months} AY GEÇERLİ
               </span>
             </div>
@@ -130,7 +130,7 @@ const PackageStore = () => {
                 disabled={buyingId === pkg.id}
                 className="bg-white text-slate-950 px-8 py-3.5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest hover:bg-slate-100 transition-all active-scale disabled:opacity-50 flex items-center gap-2"
               >
-                {buyingId === pkg.id ? <Icons.Loader2 className="animate-spin" size={16} /> : <Icons.CreditCard size={16} />}
+                {buyingId === pkg.id ? <Loader2 className="animate-spin" size={16} /> : <CreditCard size={16} />}
                 HEMEN AL
               </button>
             </div>
@@ -140,7 +140,7 @@ const PackageStore = () => {
 
       {packages.length === 0 && (
         <div className="text-center py-20 bg-black/5 dark:bg-white/5 rounded-[2.5rem] border border-dashed border-black/10 dark:border-white/10">
-          <Icons.Inbox size={40} className="mx-auto text-slate-600 mb-4" />
+          <Inbox size={40} className="mx-auto text-slate-600 mb-4" />
           <p className="text-sm font-bold text-slate-500">Şu an aktif servis paketi bulunmamaktadır.</p>
         </div>
       )}

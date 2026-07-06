@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback , useMemo } from "react";
 import { supabase } from "../supabaseClient";
 import { useAuth } from "./AuthContext";
 import { useUI } from "./UIContext";
@@ -252,7 +252,8 @@ export const SellerProvider = ({ children }) => {
     }
   };
 
-  const value = {
+  const value = useMemo(() => ({
+
     proTab,
     setProTab,
     sellerProducts,
@@ -268,7 +269,8 @@ export const SellerProvider = ({ children }) => {
     updateOrderStatus,
     uploadInvoice,
     updateOrderTracking,
-  };
+  
+  }), [proTab, sellerProducts, sellerOrders, sellerAppointments, loading, addingProduct, addProduct, updateProduct, deleteProduct, submitQuote, fetchSellerData, updateOrderStatus, uploadInvoice, updateOrderTracking]);
 
   return (
     <SellerContext.Provider value={value}>{children}</SellerContext.Provider>

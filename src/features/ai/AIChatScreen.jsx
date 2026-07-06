@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import * as Icons from "lucide-react";
+import { Activity, Banknote, Bot, Camera, ChevronLeft, ChevronRight, Clock, Eye, Lightbulb, Mic, Package, Send, ShieldAlert, Sparkles, Trash2, Wrench } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useAI } from "../../context/AIContext";
 import { useGarage } from "../../context/GarageContext";
@@ -20,7 +20,7 @@ const DamageAnalysisCard = ({ data, vehicleInfo }) => {
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-4">
             <div className="bg-gradient-to-br from-red-500 to-primary-600 p-3 rounded-2xl shadow-lg shadow-red-900/40">
-              <Icons.Wrench size={20} className="text-slate-900 dark:text-white" />
+              <Wrench size={20} className="text-slate-900 dark:text-white" />
             </div>
             <div>
               <h3 className="font-bold text-slate-900 dark:text-white uppercase text-xs tracking-widest font-sans">
@@ -64,17 +64,17 @@ const DamageAnalysisCard = ({ data, vehicleInfo }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-slate-950 to-slate-900 p-5 rounded-2xl border border-black/5 dark:border-white/5">
-              <Icons.Banknote className="text-emerald-500 mb-2" size={16} />
+              <Banknote className="text-emerald-500 mb-2" size={16} />
               <p className="text-[8px] text-slate-500 font-bold uppercase tracking-widest mb-1 font-sans">
                 Tahmini Masraf
               </p>
-              <p className="text-2xl font-bold text-emerald-400 tracking-tighter font-sans">
+              <p className="text-2xl font-bold text-teal-400 tracking-tighter font-sans">
                 {data.estimatedCost}{" "}
                 <span className="text-xs text-slate-500 uppercase">TL</span>
               </p>
             </div>
             <div className="bg-gradient-to-br from-slate-950 to-slate-900 p-5 rounded-2xl border border-black/5 dark:border-white/5">
-              <Icons.Clock className="text-amber-500 mb-2" size={16} />
+              <Clock className="text-amber-500 mb-2" size={16} />
               <p className="text-[8px] text-slate-500 font-bold uppercase tracking-widest mb-1 font-sans">
                 Servis Süresi
               </p>
@@ -87,10 +87,10 @@ const DamageAnalysisCard = ({ data, vehicleInfo }) => {
           {/* AI Mechanic Insights */}
           <div className="bg-primary-600/5 p-5 rounded-2xl border border-primary-500/10 flex gap-4 items-start relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-5">
-              <Icons.ShieldAlert size={60} />
+              <ShieldAlert size={60} />
             </div>
             <div className="p-2.5 bg-primary-500/10 rounded-xl shrink-0 border border-primary-500/20">
-              <Icons.Lightbulb size={18} className="text-primary-400" />
+              <Lightbulb size={18} className="text-primary-400" />
             </div>
             <div>
               <p className="text-[9px] font-black text-primary-400 uppercase tracking-widest mb-1 font-sans">
@@ -105,10 +105,10 @@ const DamageAnalysisCard = ({ data, vehicleInfo }) => {
 
         <div className="grid grid-cols-2 gap-3 pt-2">
           <button className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale border border-black/10 dark:border-white/10 font-sans">
-            <Icons.Package size={14} /> PARÇA BUL
+            <Package size={14} /> PARÇA BUL
           </button>
           <button className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-xl shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans">
-            USTA ÇAĞIR <Icons.ChevronRight size={14} />
+            USTA ÇAĞIR <ChevronRight size={14} />
           </button>
         </div>
       </div>
@@ -172,13 +172,13 @@ const AIChatScreen = () => {
             onClick={() => navigate(-1)}
             className="p-3 glass-card rounded-2xl text-slate-500 dark:text-slate-400 active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5 transition-all"
           >
-            <Icons.ChevronLeft size={20} />
+            <ChevronLeft size={20} />
           </button>
           <div className="flex items-center gap-4">
             <div className="relative">
               <div className="absolute inset-0 bg-primary-500 blur-xl rounded-full opacity-40 animate-pulse"></div>
               <div className="relative bg-gradient-to-br from-primary-400 to-primary-600 p-3.5 rounded-2xl shadow-2xl border border-black/10 dark:border-white/10 group overflow-hidden">
-                <Icons.Sparkles
+                <Sparkles
                   size={22}
                   className="text-slate-900 dark:text-white group-hover:rotate-12 transition-transform"
                 />
@@ -220,13 +220,13 @@ const AIChatScreen = () => {
             )}
             title="Motor Sesi Analizi"
           >
-            <Icons.Activity size={18} />
+            <Activity size={18} />
           </button>
           <button
             onClick={clearHistory}
             className="p-3 glass-card rounded-2xl text-slate-500 hover:text-red-500 border border-black/10 dark:border-white/10 transition-all active-scale"
           >
-            <Icons.Trash2 size={18} />
+            <Trash2 size={18} />
           </button>
         </div>
       </div>
@@ -250,11 +250,11 @@ const AIChatScreen = () => {
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div className="flex items-center gap-5">
           <div className="bg-primary-500/10 p-4 rounded-2xl text-primary-400 group-hover:scale-110 transition-transform border border-primary-500/20 shadow-inner">
-            <Icons.Camera size={26} />
+            <Camera size={26} />
           </div>
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-400 mb-1 flex items-center gap-2 font-sans">
-              ULTRA-BİLİNÇ <Icons.Eye size={10} />
+              ULTRA-BİLİNÇ <Eye size={10} />
             </p>
             <h4 className="text-lg font-black text-slate-900 dark:text-white tracking-tighter uppercase font-sans">
               HASAR DERİNLİK ANALİZİ
@@ -276,7 +276,7 @@ const AIChatScreen = () => {
       <div className="flex-1 overflow-y-auto p-6 space-y-8 pb-48 relative z-0 no-scrollbar custom-scrollbar">
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center p-10 opacity-30 select-none">
-            <Icons.Bot size={60} className="text-slate-700 mb-4" />
+            <Bot size={60} className="text-slate-700 mb-4" />
             <h3 className="text-xl font-black tracking-tighter text-slate-900 dark:text-white uppercase mb-2 font-sans">
               Yapay Zeka Mekanik Hazır
             </h3>
@@ -406,7 +406,7 @@ const AIChatScreen = () => {
               onClick={handleVoiceInput}
               className="text-slate-600 hover:text-primary-500 transition-all ml-2 p-3.5 rounded-2xl active-scale bg-black/5 dark:bg-white/5 group-hover:bg-primary-500/10"
             >
-              <Icons.Mic size={22} />
+              <Mic size={22} />
             </button>
           </div>
           <button
@@ -419,7 +419,7 @@ const AIChatScreen = () => {
                 : "bg-gradient-to-br from-primary-500 to-primary-600 text-slate-900 dark:text-white shadow-primary-900/50",
             )}
           >
-            <Icons.Send
+            <Send
               size={28}
               className={cn(
                 "transition-transform group-hover:translate-x-1 group-hover:-translate-y-1",

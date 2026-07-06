@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMessage } from "../../context/MessageContext";
-import * as Icons from "lucide-react";
+import { ChevronRight, Loader2, MessageSquare, Search } from "lucide-react";
 import ChatWindow from "./ChatWindow";
 import { formatDistanceToNow } from "date-fns";
 import { tr } from "date-fns/locale";
@@ -41,10 +41,10 @@ const MessageListScreen = () => {
         {/* Header */}
         <div className="p-4 border-b border-black/5 dark:border-white/5">
           <h1 className="text-xl font-black text-slate-900 dark:text-white tracking-tighter mb-4 flex items-center gap-2">
-            <Icons.MessageSquare className="text-primary-500" /> Mesajlar
+            <MessageSquare className="text-primary-500" /> Mesajlar
           </h1>
           <div className="relative group">
-            <Icons.Search
+            <Search
               className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-hover:text-primary-400 transition-colors"
               size={18}
             />
@@ -62,7 +62,7 @@ const MessageListScreen = () => {
         <div className="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1">
           {loading ? (
             <div className="flex justify-center py-10">
-              <Icons.Loader2 className="animate-spin text-slate-600" />
+              <Loader2 className="animate-spin text-slate-600" />
             </div>
           ) : filteredConversations.length > 0 ? (
             filteredConversations.map((conv) => (
@@ -115,7 +115,7 @@ const MessageListScreen = () => {
                     )}
                   </div>
                 </div>
-                <Icons.ChevronRight
+                <ChevronRight
                   size={14}
                   className={`text-slate-600 opacity-0 group-hover:opacity-100 transition-all ${
                     activeConversation === conv.userId
@@ -147,7 +147,7 @@ const MessageListScreen = () => {
         ) : (
           <div className="hidden md:flex flex-col items-center justify-center h-full text-slate-500">
             <div className="w-24 h-24 bg-white dark:bg-slate-900/50 rounded-full flex items-center justify-center mb-6 animate-pulse">
-              <Icons.MessageSquare size={40} className="text-slate-700" />
+              <MessageSquare size={40} className="text-slate-700" />
             </div>
             <p className="text-lg font-medium">
               Bir sohbet seçin veya yeni mesaj başlatın.

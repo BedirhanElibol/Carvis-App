@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback , useMemo } from "react";
 import { supabase } from "../supabaseClient";
 import { useAuth } from "./AuthContext";
 import { useUI } from "./UIContext";
@@ -169,7 +169,8 @@ export const NotificationProvider = ({ children }) => {
     return Notification.permission === "granted";
   };
 
-  const value = {
+  const value = useMemo(() => ({
+
     notifications,
     unreadCount,
     markAsRead,
@@ -177,7 +178,8 @@ export const NotificationProvider = ({ children }) => {
     deleteNotification,
     refreshNotifications: fetchNotifications,
     requestNotificationPermission,
-  };
+  
+  }), [notifications, unreadCount, markAsRead, markAllAsRead, deleteNotification, fetchNotifications, requestNotificationPermission]);
 
   return <NotificationContext.Provider value={value}>{children}</NotificationContext.Provider>;
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { MessageSquare, Star, Wrench } from "lucide-react";
 
 import ReviewsModal from "./modals/ReviewsModal";
 import { useUI } from "../context/UIContext";
@@ -35,7 +35,7 @@ export const SpecialistCard = ({ specialist }) => {
       <div className="flex justify-between items-start mb-6 relative z-10">
         <div className="flex gap-4 items-center">
           <div className="w-14 h-14 bg-gradient-to-tr from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center border border-black/5 dark:border-white/5 shadow-xl">
-             <Icons.Wrench size={24} className="text-primary-400" />
+             <Wrench size={24} className="text-primary-400" />
           </div>
           <div>
             <h3 className="font-black text-slate-900 dark:text-white text-xl tracking-tighter leading-tight">{name}</h3>
@@ -71,10 +71,10 @@ export const SpecialistCard = ({ specialist }) => {
           }}
           className="p-4 glass-card border border-black/10 dark:border-white/10 rounded-2xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all active-scale"
         >
-          <Icons.Star size={18} />
+          <Star size={18} />
         </button>
         <button className="p-4 glass-card border border-black/10 dark:border-white/10 rounded-2xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all active-scale">
-          <Icons.MessageSquare size={18} />
+          <MessageSquare size={18} />
         </button>
       </div>
 
@@ -162,12 +162,12 @@ export const ActionButton = ({
 
 export const Badge = ({ children, type, className }) => {
   const styles = {
-    success: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    success: "bg-emerald-500/20 text-teal-400 border-emerald-500/30",
     warning: "bg-amber-500/20 text-amber-400 border-amber-500/30",
     info: "bg-primary-500/20 text-primary-400 border-primary-500/30",
     danger: "bg-red-500/20 text-red-400 border-red-500/30",
     neutral: "bg-slate-500/20 text-slate-500 dark:text-slate-400 border-slate-500/30",
-    verified: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    verified: "bg-emerald-500/20 text-teal-400 border-emerald-500/30",
   };
   return (
     <span
@@ -193,7 +193,7 @@ export const StarRating = ({ rating = 0, count = 0, size = 12 }) => {
     <div className="flex items-center gap-2">
       <div className="flex gap-0.5">
         {[1, 2, 3, 4, 5].map((star) => (
-          <Icons.Star
+          <Star
             key={star}
             size={size}
             className={

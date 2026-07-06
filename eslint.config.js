@@ -12,6 +12,8 @@ export default defineConfig([
     'ios/**',
     'scratch/**',
     'tmp/**',
+    'carvis-admin/**',
+    '.next/**',
   ]),
   {
     files: ['**/*.{js,jsx,cjs,mjs}'],

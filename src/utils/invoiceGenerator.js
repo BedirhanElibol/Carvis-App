@@ -1,7 +1,7 @@
-import { jsPDF } from "jspdf";
-import "jspdf-autotable";
 
-export const generateInvoicePDF = (order, seller) => {
+export const generateInvoicePDF = async (order, seller) => {
+  const { jsPDF } = await import("jspdf");
+  await import("jspdf-autotable");
   const doc = new jsPDF();
   
   // Header

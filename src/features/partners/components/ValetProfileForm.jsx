@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { AlertCircle, Banknote, Car, CheckCircle2, Layers, MapPin, Power, ShieldCheck } from "lucide-react";
 import { cn } from "../../../lib/utils";
 
 const ValetProfileForm = ({ data, onUpdate }) => {
@@ -24,7 +24,7 @@ const ValetProfileForm = ({ data, onUpdate }) => {
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary-400">
-          <Icons.Car size={20} />
+          <Car size={20} />
         </div>
         <div>
           <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Vale Hizmet Bilgileri</h2>
@@ -36,7 +36,7 @@ const ValetProfileForm = ({ data, onUpdate }) => {
         <label className="space-y-2">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Taban Hizmet Bedeli</span>
           <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
-            <Icons.Banknote size={18} className="text-primary-400" />
+            <Banknote size={18} className="text-primary-400" />
             <input
               type="number"
               value={valetData.base_price}
@@ -50,7 +50,7 @@ const ValetProfileForm = ({ data, onUpdate }) => {
         <label className="space-y-2">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Hizmet Yarıçapı</span>
           <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
-            <Icons.MapPin size={18} className="text-primary-400" />
+            <MapPin size={18} className="text-primary-400" />
             <input
               type="number"
               value={valetData.service_radius_km}
@@ -81,12 +81,12 @@ const ValetProfileForm = ({ data, onUpdate }) => {
             className={cn(
               "w-full p-4 rounded-2xl border-2 transition-all flex items-center justify-between group",
               valetData.is_active_now 
-                ? "bg-emerald-500/10 border-emerald-500/40 text-emerald-400" 
+                ? "bg-emerald-500/10 border-emerald-500/40 text-teal-400" 
                 : "bg-slate-100 dark:bg-slate-800 border-black/5 dark:border-white/5 text-slate-500 hover:border-black/10 dark:border-white/10"
             )}
           >
             <div className="flex items-center gap-2">
-              <Icons.Power size={14} />
+              <Power size={14} />
               <span className="text-[10px] font-black uppercase tracking-widest text-left">Çalışma Durumu</span>
             </div>
             <div className={cn(
@@ -100,17 +100,17 @@ const ValetProfileForm = ({ data, onUpdate }) => {
             valetData.insurance_verified ? "bg-blue-500/10 border-blue-500/20 text-blue-400" : "bg-slate-100 dark:bg-slate-800/50 border-black/5 dark:border-white/5 text-slate-500"
           )}>
             <div className="flex items-center gap-2">
-              <Icons.ShieldCheck size={14} />
+              <ShieldCheck size={14} />
               <span className="text-[10px] font-black uppercase tracking-widest text-left">Sigorta Doğrulama</span>
             </div>
-            {valetData.insurance_verified ? <Icons.CheckCircle2 size={16} /> : <Icons.AlertCircle size={16} className="opacity-50" />}
+            {valetData.insurance_verified ? <CheckCircle2 size={16} /> : <AlertCircle size={16} className="opacity-50" />}
           </div>
         </div>
 
         <label className="space-y-2">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Aynı Anda Max Araç</span>
           <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
-            <Icons.Layers size={18} className="text-primary-400" />
+            <Layers size={18} className="text-primary-400" />
             <input
               type="number"
               value={valetData.max_concurrent_cars}

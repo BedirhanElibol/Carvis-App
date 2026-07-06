@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import * as Icons from "lucide-react";
+
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
@@ -124,7 +124,7 @@ const ConsultationManager = () => {
                     {c.status !== 'completed' && (
                       <button 
                         onClick={() => completeConsultation(c.id)}
-                        className="flex-1 glass-card border border-emerald-500/20 text-emerald-400 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest active-scale transition-all"
+                        className="flex-1 glass-card border border-emerald-500/20 text-teal-400 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest active-scale transition-all"
                       >
                          TAMAMLA
                       </button>

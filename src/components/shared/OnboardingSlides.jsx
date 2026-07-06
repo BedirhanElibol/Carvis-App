@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Car, ChevronRight, MapPin, ShoppingBag, Sparkles, X } from "lucide-react";
 const SLIDES = [
   {
-    icon: Icons.Car,
+    icon: Car,
     color: "from-blue-500 to-primary-600",
     title: "Garajınızı Oluşturun",
     subtitle:
@@ -10,7 +10,7 @@ const SLIDES = [
     highlight: "%100 doğru parça eşleştirme",
   },
   {
-    icon: Icons.Sparkles,
+    icon: Sparkles,
     color: "from-primary-500 to-primary-700",
     title: "AI Ekspertiniz Hazır",
     subtitle:
@@ -18,7 +18,7 @@ const SLIDES = [
     highlight: "Gemini Pro ile güçlendirilmiş",
   },
   {
-    icon: Icons.ShoppingBag,
+    icon: ShoppingBag,
     color: "from-emerald-500 to-green-700",
     title: "Pazar Yeri & BuyBox",
     subtitle:
@@ -26,7 +26,7 @@ const SLIDES = [
     highlight: "Akıllı fiyat karşılaştırma",
   },
   {
-    icon: Icons.MapPin,
+    icon: MapPin,
     color: "from-amber-500 to-orange-600",
     title: "En Yakın Usta",
     subtitle:
@@ -62,7 +62,7 @@ const OnboardingSlides = ({ onComplete }) => {
           className="text-slate-600 hover:text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-1 transition-colors"
         >
           {" "}
-          Atla <Icons.X size={14} />{" "}
+          Atla <X size={14} />{" "}
         </button>{" "}
       </div>{" "}
       {/* Content */}{" "}
@@ -113,7 +113,7 @@ const OnboardingSlides = ({ onComplete }) => {
         >
           {" "}
           {isLast ? "Başlayalım!" : "Devam"}{" "}
-          <Icons.ChevronRight size={18} />{" "}
+          <ChevronRight size={18} />{" "}
         </button>{" "}
       </div>{" "}
     </div>

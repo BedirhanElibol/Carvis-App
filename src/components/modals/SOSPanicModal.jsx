@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { Activity, MapPin, Phone, ShieldCheck, TriangleAlert, Truck, X } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 const SOSPanicModal = ({ show, onClose }) => {
@@ -50,10 +50,10 @@ const SOSPanicModal = ({ show, onClose }) => {
             onClick={onClose}
             className="absolute right-6 top-6 bg-black/20 hover:bg-black/40 p-2 rounded-full transition-all text-slate-900 dark:text-white active-scale"
           >
-            <Icons.X size={24} />
+            <X size={24} />
           </button>
           <div className="bg-black/20 dark:bg-white/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/30 animate-pulse">
-            <Icons.TriangleAlert size={44} className="text-slate-900 dark:text-white" />
+            <TriangleAlert size={44} className="text-slate-900 dark:text-white" />
           </div>
           <h2 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white uppercase font-sans">
             PANİK MODU
@@ -84,9 +84,9 @@ const SOSPanicModal = ({ show, onClose }) => {
                 )}
               >
                 {locationStatus === "capturing" ? (
-                  <Icons.MapPin className="animate-bounce" size={20} />
+                  <MapPin className="animate-bounce" size={20} />
                 ) : (
-                  <Icons.ShieldCheck size={20} />
+                  <ShieldCheck size={20} />
                 )}
               </div>
               <div>
@@ -98,7 +98,7 @@ const SOSPanicModal = ({ show, onClose }) => {
                     "font-bold text-sm font-sans",
                     locationStatus === "capturing"
                       ? "text-slate-900 dark:text-white"
-                      : "text-emerald-400",
+                      : "text-teal-400",
                   )}
                 >
                   {locationStatus === "capturing"
@@ -120,7 +120,7 @@ const SOSPanicModal = ({ show, onClose }) => {
           <div className="grid grid-cols-2 gap-4">
             <button className="bg-red-600/10 border border-red-500/20 p-6 rounded-[2rem] flex flex-col items-center justify-center gap-3 hover:bg-red-600/20 transition-all active-scale group">
               <div className="bg-red-600 p-4 rounded-2xl group-hover:scale-110 transition duration-300">
-                <Icons.Truck size={32} className="text-slate-900 dark:text-white" />
+                <Truck size={32} className="text-slate-900 dark:text-white" />
               </div>
               <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest text-center font-sans">
                 ÇEKİCİ ÇAĞIR
@@ -128,7 +128,7 @@ const SOSPanicModal = ({ show, onClose }) => {
             </button>
             <button className="bg-primary-500/10 border border-primary-500/20 p-6 rounded-[2rem] flex flex-col items-center justify-center gap-3 hover:bg-primary-500/20 transition-all active-scale group">
               <div className="bg-primary-500 p-4 rounded-2xl group-hover:scale-110 transition duration-300">
-                <Icons.Activity size={32} className="text-slate-900 dark:text-white" />
+                <Activity size={32} className="text-slate-900 dark:text-white" />
               </div>
               <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest text-center font-sans">
                 YOL YARDIM
@@ -140,7 +140,7 @@ const SOSPanicModal = ({ show, onClose }) => {
           <button className="w-full bg-white text-slate-950 p-5 rounded-2xl flex items-center justify-between group active-scale hover:bg-slate-100 transition-all">
             <div className="flex items-center gap-4">
               <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white p-3 rounded-xl">
-                <Icons.Phone size={24} />
+                <Phone size={24} />
               </div>
               <div className="text-left">
                 <p className="font-black text-xl leading-none font-sans">
@@ -152,7 +152,7 @@ const SOSPanicModal = ({ show, onClose }) => {
               </div>
             </div>
             <div className="w-10 h-10 rounded-full border-2 border-slate-200 flex items-center justify-center group-hover:border-slate-950 transition duration-300">
-              <Icons.TriangleAlert size={18} />
+              <TriangleAlert size={18} />
             </div>
           </button>
 

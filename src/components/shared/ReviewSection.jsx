@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Camera, MessageSquare, Send, ThumbsUp, User } from "lucide-react";
 import StarRating from "./StarRating";
 import { triggerHaptic } from "../../utils/haptics";
 
@@ -72,7 +72,7 @@ const ReviewSection = () => {
       <div className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-black text-slate-900 dark:text-white uppercase text-sm tracking-tight flex items-center gap-2">
-            <Icons.MessageSquare size={16} className="text-primary-500" />{" "}
+            <MessageSquare size={16} className="text-primary-500" />{" "}
             Değerlendirmeler
           </h3>
           <button
@@ -131,14 +131,14 @@ const ReviewSection = () => {
           />
           <div className="flex gap-3">
             <button className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-4 py-2.5 rounded-xl text-[10px] font-bold">
-              <Icons.Camera size={14} /> Fotoğraf Ekle
+              <Camera size={14} /> Fotoğraf Ekle
             </button>
             <button
               onClick={handleSubmitReview}
               disabled={!newRating || !newText.trim()}
               className="flex-1 flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-500 disabled:opacity-30 text-slate-900 dark:text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
             >
-              <Icons.Send size={14} /> Gönder
+              <Send size={14} /> Gönder
             </button>
           </div>
         </div>
@@ -154,7 +154,7 @@ const ReviewSection = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                  <Icons.User size={14} className="text-slate-500" />
+                  <User size={14} className="text-slate-500" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -178,7 +178,7 @@ const ReviewSection = () => {
               {review.text}
             </p>
             <button className="flex items-center gap-1.5 text-slate-600 hover:text-primary-400 transition-colors">
-              <Icons.ThumbsUp size={12} />
+              <ThumbsUp size={12} />
               <span className="text-[10px] font-bold">{review.likes}</span>
             </button>
           </div>

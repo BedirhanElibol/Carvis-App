@@ -1,7 +1,7 @@
 import React, { useState } from "react";
  
 import { motion, AnimatePresence } from "framer-motion";
-import * as Icons from "lucide-react";
+import { ChevronRight, ShieldCheck, ShoppingBag, Zap } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 
 const getSlides = (t) => [
@@ -10,7 +10,7 @@ const getSlides = (t) => [
     subtitle: t.masterMatchSub,
     description:
       t.masterMatchDesc,
-    icon: Icons.Zap,
+    icon: Zap,
     color: "text-yellow-400",
     bg: "from-yellow-500/20 to-transparent",
   },
@@ -19,7 +19,7 @@ const getSlides = (t) => [
     subtitle: t.buyBoxSub,
     description:
       t.buyBoxDesc,
-    icon: Icons.ShoppingBag,
+    icon: ShoppingBag,
     color: "text-primary-400",
     bg: "from-primary-500/20 to-transparent",
   },
@@ -28,8 +28,8 @@ const getSlides = (t) => [
     subtitle: t.transparentRepairSub,
     description:
       t.transparentRepairDesc,
-    icon: Icons.ShieldCheck,
-    color: "text-emerald-400",
+    icon: ShieldCheck,
+    color: "text-teal-400",
     bg: "from-emerald-500/20 to-transparent",
   },
 ];
@@ -112,7 +112,7 @@ const OnboardingSlides = ({ onComplete }) => {
           className="w-full py-5 bg-white text-black rounded-3xl font-black text-xl tracking-tighter transition-all active:scale-95 hover:shadow-2xl hover:shadow-white/10 flex items-center justify-center gap-2 uppercase"
         >
           {current === getSlides(t).length - 1 ? t.letsStart : t.continueBtn}
-          <Icons.ChevronRight size={24} />
+          <ChevronRight size={24} />
         </button>
       </div>
     </div>

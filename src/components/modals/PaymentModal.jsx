@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { CheckCircle, CreditCard, Loader2, ShieldCheck, X } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 
 const PaymentModal = ({
@@ -59,14 +59,14 @@ const PaymentModal = ({
           onClick={onClose}
           className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
         >
-          <Icons.X size={18} />
+          <X size={18} />
         </button>
 
         {step === "card" && (
           <div className="p-8">
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-primary-600/20 rounded-2xl flex items-center justify-center mx-auto mb-4 text-primary-500 border border-primary-500/20">
-                <Icons.CreditCard size={32} />
+                <CreditCard size={32} />
               </div>
               <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1 font-sans">{title}</h2>
               <p className="text-3xl font-black text-slate-900 dark:text-white font-sans">
@@ -163,10 +163,10 @@ const PaymentModal = ({
                   type="submit"
                   className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl shadow-primary-900/50 active-scale flex items-center justify-center gap-2 transition-all font-sans"
                 >
-                  <Icons.ShieldCheck size={18} /> Güvenli Öde
+                  <ShieldCheck size={18} /> Güvenli Öde
                 </button>
                 <p className="text-center text-[10px] text-slate-500 mt-3 flex items-center justify-center gap-1">
-                  <Icons.ShieldCheck size={10} /> 256-bit SSL ile korunmaktadır
+                  <ShieldCheck size={10} /> 256-bit SSL ile korunmaktadır
                 </p>
               </div>
             </form>
@@ -176,7 +176,7 @@ const PaymentModal = ({
         {step === "processing" && (
           <div className="p-12 flex flex-col items-center text-center">
             <div className="w-20 h-20 bg-slate-50 dark:bg-slate-950 rounded-full flex items-center justify-center mb-6 relative">
-              <Icons.Loader2
+              <Loader2
                 size={40}
                 className="text-primary-500 animate-spin"
               />
@@ -194,7 +194,7 @@ const PaymentModal = ({
         {step === "success" && (
           <div className="p-12 flex flex-col items-center text-center">
             <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-xl shadow-green-900/50 animate-in zoom-in">
-              <Icons.CheckCircle size={40} className="text-slate-900 dark:text-white" />
+              <CheckCircle size={40} className="text-slate-900 dark:text-white" />
             </div>
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 font-sans">
               Ödeme Başarılı!

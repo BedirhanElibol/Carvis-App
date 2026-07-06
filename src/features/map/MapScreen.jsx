@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { AlertOctagon, AlertTriangle, Camera, ChevronLeft, CircleDollarSign, Layers, LocateFixed, MapPin, MessageCircle, Navigation, Phone, Search, Shield, ShieldCheck, Star, Truck, Users, Wrench, X, XCircle, Zap } from "lucide-react";
 import { useMap } from "../../context/MapContext";
 import { Badge } from "../../components/Core";
 import MapComponent from "./MapComponent";
@@ -222,10 +222,10 @@ const MapScreen = () => {
           onClick={() => navigate(-1)}
           className="w-12 h-12 glass-card rounded-2xl flex items-center justify-center active-scale border border-black/10 dark:border-white/10"
         >
-          <Icons.ChevronLeft size={24} />
+          <ChevronLeft size={24} />
         </button>
         <div className="flex-1 glass-card rounded-2xl border border-black/10 dark:border-white/10 flex items-center px-4 backdrop-blur-3xl shadow-2xl">
-          <Icons.Search size={18} className="text-slate-500 dark:text-slate-400 mr-3" />
+          <Search size={18} className="text-slate-500 dark:text-slate-400 mr-3" />
           <input
             type="text"
             placeholder="Usta veya Yol Yardım ara..."
@@ -245,7 +245,7 @@ const MapScreen = () => {
                 : "bg-black/80 dark:bg-white/10 text-white border-transparent backdrop-blur-xl hover:bg-black"
             }`}
           >
-            <Icons.Navigation size={20} className={isDriveMode ? "animate-pulse" : ""} />
+            <Navigation size={20} className={isDriveMode ? "animate-pulse" : ""} />
             <span className="text-[9px] font-black mt-1 uppercase tracking-wider">{isDriveMode ? "Kapat" : "Sürüş"}</span>
           </button>
 
@@ -253,7 +253,7 @@ const MapScreen = () => {
             onClick={() => setShowSOSPanel(true)}
             className="w-16 h-16 bg-red-600 text-slate-900 dark:text-white rounded-[2rem] shadow-[0_0_30px_rgba(220,38,38,0.5)] flex flex-col items-center justify-center active-scale border-4 border-black/20 dark:border-white/20 group hover:bg-red-500 transition-all"
           >
-            <Icons.AlertTriangle size={20} className="group-hover:animate-bounce" />
+            <AlertTriangle size={20} className="group-hover:animate-bounce" />
             <span className="text-[10px] font-black mt-1">SOS</span>
           </button>
         </div>
@@ -289,9 +289,9 @@ const MapScreen = () => {
                   <>
                     <div className="flex items-center gap-2 mb-1">
                       {closestEDS.distanceMeters < 500 ? (
-                        <Icons.AlertOctagon size={16} className="text-red-500 animate-pulse" />
+                        <AlertOctagon size={16} className="text-red-500 animate-pulse" />
                       ) : (
-                        <Icons.AlertTriangle size={16} className="text-orange-500" />
+                        <AlertTriangle size={16} className="text-orange-500" />
                       )}
                       <span className={`text-[10px] font-black uppercase tracking-widest ${
                         closestEDS.distanceMeters < 500 ? "text-red-500" : "text-orange-500"
@@ -307,7 +307,7 @@ const MapScreen = () => {
                 ) : (
                   <>
                     <div className="flex items-center gap-2 mb-1">
-                      <Icons.ShieldCheck size={16} className="text-emerald-500" />
+                      <ShieldCheck size={16} className="text-emerald-500" />
                       <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">YOL GÜVENLİ</span>
                     </div>
                     <span className="text-sm font-bold text-slate-500 dark:text-slate-400">Yakında radar veya EDS yok</span>
@@ -338,7 +338,7 @@ const MapScreen = () => {
               onClick={() => setSelectedProvider(null)}
               className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-white transition-colors z-10"
             >
-              <Icons.X size={18} />
+              <X size={18} />
             </button>
 
             <div className="flex items-start gap-4 mb-6 relative z-10">
@@ -355,12 +355,12 @@ const MapScreen = () => {
                     {selectedProvider.full_name}
                   </h3>
                   {selectedProvider.specialized?.is_authorized_service && (
-                    <Icons.ShieldCheck size={16} className="text-blue-400" />
+                    <ShieldCheck size={16} className="text-blue-400" />
                   )}
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="flex items-center gap-1 text-yellow-400">
-                    <Icons.Star size={14} className="fill-yellow-400" />
+                    <Star size={14} className="fill-yellow-400" />
                     <span className="text-xs font-black">{selectedProvider.rating || "4.8"}</span>
                   </div>
                   <Badge type={selectedProvider.role === "valet" ? "info" : "success"} className="text-[8px] px-2 py-0.5">
@@ -376,43 +376,43 @@ const MapScreen = () => {
             <div className="grid grid-cols-3 gap-2 mb-6 relative z-10">
               {selectedProvider.role === "valet" && (
                 <>
-                  <StatItem icon={<Icons.Shield size={14}/>} label="Sigorta" value={selectedProvider.specialized?.insurance_verified ? "Var" : "Yok"} color="text-blue-400" />
-                  <StatItem icon={<Icons.Layers size={14}/>} label="Kapasite" value={`${selectedProvider.specialized?.max_concurrent_cars || 1} Araç`} />
-                  <StatItem icon={<Icons.MapPin size={14}/>} label="Uzaklık" value="1.2 KM" color="text-emerald-400" />
+                  <StatItem icon={<Shield size={14}/>} label="Sigorta" value={selectedProvider.specialized?.insurance_verified ? "Var" : "Yok"} color="text-blue-400" />
+                  <StatItem icon={<Layers size={14}/>} label="Kapasite" value={`${selectedProvider.specialized?.max_concurrent_cars || 1} Araç`} />
+                  <StatItem icon={<MapPin size={14}/>} label="Uzaklık" value="1.2 KM" color="text-teal-400" />
                 </>
               )}
               {selectedProvider.role === "parking" && (
                 <>
-                  <StatItem icon={<Icons.Zap size={14}/>} label="Şarj (EV)" value={selectedProvider.specialized?.has_ev_charging ? "Aktif" : "Yok"} color={selectedProvider.specialized?.has_ev_charging ? "text-emerald-400" : "text-slate-500"} />
-                  <StatItem icon={<Icons.Camera size={14}/>} label="Güvenlik" value={selectedProvider.specialized?.has_security_cams ? "Kamera" : "Sınırlı"} />
-                  <StatItem icon={<Icons.MapPin size={14}/>} label="Uzaklık" value="0.8 KM" color="text-emerald-400" />
+                  <StatItem icon={<Zap size={14}/>} label="Şarj (EV)" value={selectedProvider.specialized?.has_ev_charging ? "Aktif" : "Yok"} color={selectedProvider.specialized?.has_ev_charging ? "text-teal-400" : "text-slate-500"} />
+                  <StatItem icon={<Camera size={14}/>} label="Güvenlik" value={selectedProvider.specialized?.has_security_cams ? "Kamera" : "Sınırlı"} />
+                  <StatItem icon={<MapPin size={14}/>} label="Uzaklık" value="0.8 KM" color="text-teal-400" />
                 </>
               )}
               {selectedProvider.role === "mechanic" && (
                 <>
-                  <StatItem icon={<Icons.Wrench size={14}/>} label="Hizmet" value="Yerinde Mobil" color="text-orange-400" />
-                  <StatItem icon={<Icons.Users size={14}/>} label="Ekip" value={`${selectedProvider.specialized?.technician_count || 1} Usta`} />
-                  <StatItem icon={<Icons.MapPin size={14}/>} label="Uzaklık" value="2.1 KM" color="text-emerald-400" />
+                  <StatItem icon={<Wrench size={14}/>} label="Hizmet" value="Yerinde Mobil" color="text-orange-400" />
+                  <StatItem icon={<Users size={14}/>} label="Ekip" value={`${selectedProvider.specialized?.technician_count || 1} Usta`} />
+                  <StatItem icon={<MapPin size={14}/>} label="Uzaklık" value="2.1 KM" color="text-teal-400" />
                 </>
               )}
               {selectedProvider.role === "parts" && (
                 <>
-                  <StatItem icon={<Icons.Truck size={14}/>} label="Teslimat" value={`${selectedProvider.specialized?.delivery_radius_km || 50} KM`} color="text-primary-400" />
-                  <StatItem icon={<Icons.CircleDollarSign size={14}/>} label="Min Sip." value={`${selectedProvider.specialized?.min_order_amount || 0}₺`} />
-                  <StatItem icon={<Icons.MapPin size={14}/>} label="Uzaklık" value="4.5 KM" color="text-emerald-400" />
+                  <StatItem icon={<Truck size={14}/>} label="Teslimat" value={`${selectedProvider.specialized?.delivery_radius_km || 50} KM`} color="text-primary-400" />
+                  <StatItem icon={<CircleDollarSign size={14}/>} label="Min Sip." value={`${selectedProvider.specialized?.min_order_amount || 0}₺`} />
+                  <StatItem icon={<MapPin size={14}/>} label="Uzaklık" value="4.5 KM" color="text-teal-400" />
                 </>
               )}
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <button className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active-scale border border-black/5 dark:border-white/5">
-                <Icons.Phone size={18} /> ARA
+                <Phone size={18} /> ARA
               </button>
               <button
                 onClick={() => selectedProvider?.id && navigate(`/messages/${selectedProvider.id}`)}
                 className="bg-primary-600 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active-scale shadow-xl shadow-primary-900/20"
               >
-                <Icons.MessageCircle size={18} /> MESAJ AT
+                <MessageCircle size={18} /> MESAJ AT
               </button>
             </div>
           </div>
@@ -439,25 +439,25 @@ const MapScreen = () => {
                 {
                   id: "engine_failure",
                   label: "Motor Arızası",
-                  icon: Icons.AlertTriangle,
+                  icon: AlertTriangle,
                   color: "text-orange-500",
                 },
                 {
                   id: "tow_truck",
                   label: "Çekici Lazım",
-                  icon: Icons.Truck,
+                  icon: Truck,
                   color: "text-blue-500",
                 },
                 {
                   id: "battery_dead",
                   label: "Akü Bitti",
-                  icon: Icons.Zap,
+                  icon: Zap,
                   color: "text-yellow-500",
                 },
                 {
                   id: "tire_puncture",
                   label: "Lastik Patladı",
-                  icon: Icons.LocateFixed,
+                  icon: LocateFixed,
                   color: "text-emerald-500",
                 },
               ].map((item) => (
@@ -478,7 +478,7 @@ const MapScreen = () => {
               ))}
             </div>
             <div className="mt-8 flex items-center justify-center gap-2 bg-emerald-500/10 p-4 rounded-2xl border border-emerald-500/20">
-              <Icons.ShieldCheck size={18} className="text-emerald-500" />
+              <ShieldCheck size={18} className="text-emerald-500" />
               <span className="text-[10px] font-black text-emerald-500 uppercase">
                 Resmi Carvis Güvencesi Altındasınız
               </span>
@@ -495,7 +495,7 @@ const MapScreen = () => {
               <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-600 via-orange-500 to-red-600 animate-pulse"></div>
               
               <div className="flex flex-col items-center justify-center py-4 text-center">
-                <Icons.Search size={32} className="text-red-500 mb-2 animate-pulse" />
+                <Search size={32} className="text-red-500 mb-2 animate-pulse" />
                 <h3 className="font-black text-base uppercase text-slate-900 dark:text-white tracking-tight">Yol Yardım Aranıyor...</h3>
                 <p className="text-xs text-slate-500 mt-1">Bölgenizdeki uygun ekiplere sinyal gönderildi.</p>
                 <div className="mt-4">
@@ -503,7 +503,7 @@ const MapScreen = () => {
                     onClick={() => cancelSOS(activeSOS.id)}
                     className="bg-red-950/20 text-red-400 rounded-2xl font-black text-xs uppercase tracking-wider px-6 py-3 flex items-center justify-center gap-2 border border-red-500/20 w-full"
                   >
-                    <Icons.XCircle size={16} /> TALEBİ İPTAL ET
+                    <XCircle size={16} /> TALEBİ İPTAL ET
                   </button>
                 </div>
               </div>

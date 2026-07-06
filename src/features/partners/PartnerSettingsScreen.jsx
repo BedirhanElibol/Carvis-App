@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import * as Icons from "lucide-react";
+import { Building2, Loader2, MapPinned, ShieldCheck } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
 import { supabase } from "../../supabaseClient";
@@ -202,7 +202,7 @@ const PartnerSettingsScreen = () => {
         <div className="glass-card rounded-[2rem] border border-black/5 dark:border-white/5 p-6 space-y-5">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary-400">
-              <Icons.Building2 size={20} />
+              <Building2 size={20} />
             </div>
             <div>
               <h2 className="text-lg font-black text-slate-900 dark:text-white">İşletme Profili</h2>
@@ -248,7 +248,7 @@ const PartnerSettingsScreen = () => {
                 Hizmet Yarıçapı
               </span>
               <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
-                <Icons.MapPinned size={18} className="text-primary-400" />
+                <MapPinned size={18} className="text-primary-400" />
                 <input
                   type="number"
                   min="1"
@@ -292,8 +292,8 @@ const PartnerSettingsScreen = () => {
 
         <div className="glass-card rounded-[2rem] border border-black/5 dark:border-white/5 p-6 space-y-4">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-emerald-400">
-              <Icons.ShieldCheck size={20} />
+            <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-teal-400">
+              <ShieldCheck size={20} />
             </div>
             <div>
               <h2 className="text-lg font-black text-slate-900 dark:text-white">
@@ -371,7 +371,7 @@ const PartnerSettingsScreen = () => {
         >
           {isSaving ? (
             <>
-              <Icons.Loader2 className="animate-spin" size={20} />
+              <Loader2 className="animate-spin" size={20} />
               Kaydediliyor...
             </>
           ) : (

@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Car, FileText, Landmark, PieChart, ShieldCheck, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 const FinancialCockpit = ({ _vehicle }) => {
@@ -16,7 +16,7 @@ const FinancialCockpit = ({ _vehicle }) => {
     {
       id: "kasko",
       name: "Kasko",
-      icon: <Icons.ShieldCheck size={18} />,
+      icon: <ShieldCheck size={18} />,
       daysLeft: 45,
       totalDays: 365,
       color: "teal"
@@ -24,7 +24,7 @@ const FinancialCockpit = ({ _vehicle }) => {
     {
       id: "trafik",
       name: "Trafik Sigortası",
-      icon: <Icons.FileText size={18} />,
+      icon: <FileText size={18} />,
       daysLeft: 12,
       totalDays: 365,
       color: "amber"
@@ -32,7 +32,7 @@ const FinancialCockpit = ({ _vehicle }) => {
     {
       id: "mtv",
       name: "MTV Ödemesi",
-      icon: <Icons.Landmark size={18} />,
+      icon: <Landmark size={18} />,
       daysLeft: 2,
       totalDays: 180,
       color: "red"
@@ -47,7 +47,7 @@ const FinancialCockpit = ({ _vehicle }) => {
     <div className="mb-8 space-y-4">
       <div className="flex items-center justify-between px-1">
         <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest flex items-center gap-2">
-          <Icons.PieChart className="text-primary-500" size={18} />
+          <PieChart className="text-primary-500" size={18} />
           Finans & Değer
         </h3>
         <button className="text-[10px] font-bold text-slate-500 hover:text-primary-500 transition-colors uppercase tracking-wider">
@@ -67,11 +67,11 @@ const FinancialCockpit = ({ _vehicle }) => {
           <div className="relative z-10 flex flex-col h-full justify-between gap-6">
             <div className="flex justify-between items-start">
               <div className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full border border-white/10">
-                <Icons.TrendingUp size={14} className="text-primary-400" />
+                <TrendingUp size={14} className="text-primary-400" />
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-300">Piyasa Değeri</span>
               </div>
               <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md">
-                <Icons.Car size={20} className="text-slate-300" />
+                <Car size={20} className="text-slate-300" />
               </div>
             </div>
 
@@ -81,7 +81,7 @@ const FinancialCockpit = ({ _vehicle }) => {
                   {formatCurrency(valuation.currentValue)}
                 </h2>
                 <div className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-lg ${valuation.trend === 'up' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-                  {valuation.trend === 'up' ? <Icons.ArrowUpRight size={14} /> : <Icons.ArrowDownRight size={14} />}
+                  {valuation.trend === 'up' ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
                   %{valuation.percentage}
                 </div>
               </div>

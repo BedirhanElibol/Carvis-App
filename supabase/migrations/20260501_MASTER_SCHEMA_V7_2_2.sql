@@ -475,7 +475,6 @@ ALTER TABLE public.addresses ENABLE ROW LEVEL SECURITY;
 
 -- Profiles: Complete Security (SELECT, INSERT, UPDATE)
 DROP POLICY IF EXISTS "Profiles Security Policy v7.2" ON public.profiles;
-DROP POLICY IF EXISTS "Profiles Security Policy v7.2" ON public.profiles;
 CREATE POLICY "Profiles Security Policy v7.2" ON public.profiles
 FOR SELECT USING (
     public.is_admin() 
@@ -484,11 +483,9 @@ FOR SELECT USING (
 );
 
 DROP POLICY IF EXISTS "Users can insert own profile" ON public.profiles;
-DROP POLICY IF EXISTS "Users can insert own profile" ON public.profiles;
 CREATE POLICY "Users can insert own profile" ON public.profiles 
 FOR INSERT WITH CHECK (auth.uid() = id);
 
-DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 CREATE POLICY "Users can update own profile" ON public.profiles 
 FOR UPDATE USING (auth.uid() = id OR public.is_admin());
@@ -520,70 +517,55 @@ FOR EACH ROW EXECUTE FUNCTION public.prevent_role_escalation();
 
 -- Wallets: Upsert Support (v7.2.4 FIX 403)
 DROP POLICY IF EXISTS "Users can view own wallet" ON public.wallets;
-DROP POLICY IF EXISTS "Users can view own wallet" ON public.wallets;
 CREATE POLICY "Users can view own wallet" ON public.wallets 
 FOR SELECT USING (auth.uid() = user_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Users can insert own wallet" ON public.wallets;
-DROP POLICY IF EXISTS "Users can insert own wallet" ON public.wallets;
 CREATE POLICY "Users can insert own wallet" ON public.wallets 
 FOR INSERT WITH CHECK (auth.uid() = id);
 
-DROP POLICY IF EXISTS "Users can update own wallet" ON public.wallets;
 DROP POLICY IF EXISTS "Users can update own wallet" ON public.wallets;
 CREATE POLICY "Users can update own wallet" ON public.wallets 
 FOR UPDATE USING (auth.uid() = user_id OR public.is_admin());
 
 -- Wallet Transactions: Access & Log
 DROP POLICY IF EXISTS "Users can view own transactions" ON public.wallet_transactions;
-DROP POLICY IF EXISTS "Users can view own transactions" ON public.wallet_transactions;
 CREATE POLICY "Users can view own transactions" ON public.wallet_transactions 
 FOR SELECT USING (wallet_id IN (SELECT id FROM public.profiles WHERE id = auth.uid()) OR public.is_admin());
 
-DROP POLICY IF EXISTS "Users can insert own transactions" ON public.wallet_transactions;
 DROP POLICY IF EXISTS "Users can insert own transactions" ON public.wallet_transactions;
 CREATE POLICY "Users can insert own transactions" ON public.wallet_transactions 
 FOR INSERT WITH CHECK (wallet_id IN (SELECT id FROM public.profiles WHERE id = auth.uid()));
 
 -- Specialized Profiles: Persistence & Discovery
 DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.valet_profiles;
-DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.valet_profiles;
 CREATE POLICY "Users can manage own specialized profiles" ON public.valet_profiles FOR ALL USING (auth.uid() = id);
-DROP POLICY IF EXISTS "Public read active valets" ON public.valet_profiles;
 DROP POLICY IF EXISTS "Public read active valets" ON public.valet_profiles;
 CREATE POLICY "Public read active valets" ON public.valet_profiles FOR SELECT USING (is_active_now = true);
 
 DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.parking_profiles;
-DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.parking_profiles;
 CREATE POLICY "Users can manage own specialized profiles" ON public.parking_profiles FOR ALL USING (auth.uid() = id);
-DROP POLICY IF EXISTS "Public read parking" ON public.parking_profiles;
 DROP POLICY IF EXISTS "Public read parking" ON public.parking_profiles;
 CREATE POLICY "Public read parking" ON public.parking_profiles FOR SELECT USING (true);
 
 DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.parts_profiles;
-DROP POLICY IF EXISTS "Users can manage own specialized profiles" ON public.parts_profiles;
 CREATE POLICY "Users can manage own specialized profiles" ON public.parts_profiles FOR ALL USING (auth.uid() = id);
-DROP POLICY IF EXISTS "Public read parts" ON public.parts_profiles;
 DROP POLICY IF EXISTS "Public read parts" ON public.parts_profiles;
 CREATE POLICY "Public read parts" ON public.parts_profiles FOR SELECT USING (true);
 
 -- Messaging & Notifications: Privacy
 DROP POLICY IF EXISTS "Messages Security Policy v7.2" ON public.messages;
-DROP POLICY IF EXISTS "Messages Security Policy v7.2" ON public.messages;
 CREATE POLICY "Messages Security Policy v7.2" ON public.messages
 FOR ALL USING (auth.uid() = sender_id OR auth.uid() = receiver_id OR public.is_admin());
 
-DROP POLICY IF EXISTS "Notifications Security Policy v7.2" ON public.notifications;
 DROP POLICY IF EXISTS "Notifications Security Policy v7.2" ON public.notifications;
 CREATE POLICY "Notifications Security Policy v7.2" ON public.notifications
 FOR ALL USING (auth.uid() = user_id OR public.is_admin());
 
 -- General Visibility (Shops & Products)
 DROP POLICY IF EXISTS "Public read active providers" ON public.mechanic_shops;
-DROP POLICY IF EXISTS "Public read active providers" ON public.mechanic_shops;
 CREATE POLICY "Public read active providers" ON public.mechanic_shops FOR SELECT USING (true);
 
-DROP POLICY IF EXISTS "Public read products" ON public.products;
 DROP POLICY IF EXISTS "Public read products" ON public.products;
 CREATE POLICY "Public read products" ON public.products FOR SELECT USING (true);
 
@@ -773,11 +755,9 @@ END $$;
 ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Everyone can see reviews" ON public.reviews;
-DROP POLICY IF EXISTS "Everyone can see reviews" ON public.reviews;
 CREATE POLICY "Everyone can see reviews" ON public.reviews
     FOR SELECT USING (true);
 
-DROP POLICY IF EXISTS "Order owner can review" ON public.reviews;
 DROP POLICY IF EXISTS "Order owner can review" ON public.reviews;
 CREATE POLICY "Order owner can review" ON public.reviews
     FOR INSERT WITH CHECK (
@@ -878,11 +858,9 @@ ADD COLUMN IF NOT EXISTS updated_at timestamptz DEFAULT now();
 ALTER TABLE public.partner_applications ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Users can search their own applications" ON public.partner_applications;
-DROP POLICY IF EXISTS "Users can search their own applications" ON public.partner_applications;
 CREATE POLICY "Users can search their own applications" ON public.partner_applications FOR SELECT 
 USING (auth.uid() = user_id);
 
-DROP POLICY IF EXISTS "Users can submit their own applications" ON public.partner_applications;
 DROP POLICY IF EXISTS "Users can submit their own applications" ON public.partner_applications;
 CREATE POLICY "Users can submit their own applications" ON public.partner_applications FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
@@ -937,16 +915,13 @@ ALTER TABLE public.escrow_vault ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.service_proofs ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "View own escrow" ON public.escrow_vault;
-DROP POLICY IF EXISTS "View own escrow" ON public.escrow_vault;
 CREATE POLICY "View own escrow" ON public.escrow_vault FOR SELECT 
 USING (EXISTS (SELECT 1 FROM public.orders WHERE id = order_id AND (customer_id = auth.uid() OR seller_id = auth.uid())));
 
 DROP POLICY IF EXISTS "View own proof" ON public.service_proofs;
-DROP POLICY IF EXISTS "View own proof" ON public.service_proofs;
 CREATE POLICY "View own proof" ON public.service_proofs FOR SELECT 
 USING (EXISTS (SELECT 1 FROM public.orders WHERE id = order_id AND (customer_id = auth.uid() OR seller_id = auth.uid())));
 
-DROP POLICY IF EXISTS "Partners manage proof" ON public.service_proofs;
 DROP POLICY IF EXISTS "Partners manage proof" ON public.service_proofs;
 CREATE POLICY "Partners manage proof" ON public.service_proofs FOR ALL 
 USING (EXISTS (SELECT 1 FROM public.orders WHERE id = order_id AND seller_id = auth.uid()));
@@ -1115,11 +1090,9 @@ ALTER TABLE public.consultations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.system_settings ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Consultations access" ON public.consultations;
-DROP POLICY IF EXISTS "Consultations access" ON public.consultations;
 CREATE POLICY "Consultations access" ON public.consultations
 FOR ALL USING (auth.uid() = user_id OR auth.uid() = expert_id OR public.is_admin());
 
-DROP POLICY IF EXISTS "Public read settings" ON public.system_settings;
 DROP POLICY IF EXISTS "Public read settings" ON public.system_settings;
 CREATE POLICY "Public read settings" ON public.system_settings FOR SELECT USING (true);
 
@@ -1230,15 +1203,12 @@ ALTER TABLE public.partner_monetization ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.platform_earnings ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Settings read" ON public.monetization_plans;
-DROP POLICY IF EXISTS "Settings read" ON public.monetization_plans;
 CREATE POLICY "Settings read" ON public.monetization_plans FOR SELECT USING (true);
 
-DROP POLICY IF EXISTS "Partner access own settings" ON public.partner_monetization;
 DROP POLICY IF EXISTS "Partner access own settings" ON public.partner_monetization;
 CREATE POLICY "Partner access own settings" ON public.partner_monetization 
 FOR ALL USING (auth.uid() = partner_id OR public.is_admin());
 
-DROP POLICY IF EXISTS "Admin only earnings" ON public.platform_earnings;
 DROP POLICY IF EXISTS "Admin only earnings" ON public.platform_earnings;
 CREATE POLICY "Admin only earnings" ON public.platform_earnings FOR SELECT USING (public.is_admin());
 
@@ -1333,14 +1303,11 @@ ALTER TABLE public.service_packages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_subscriptions ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Anyone can view active packages" ON public.service_packages;
-DROP POLICY IF EXISTS "Anyone can view active packages" ON public.service_packages;
 CREATE POLICY "Anyone can view active packages" ON public.service_packages FOR SELECT USING (is_active = true);
 
 DROP POLICY IF EXISTS "Partners manage own packages" ON public.service_packages;
-DROP POLICY IF EXISTS "Partners manage own packages" ON public.service_packages;
 CREATE POLICY "Partners manage own packages" ON public.service_packages FOR ALL USING (auth.uid() = partner_id OR public.is_admin());
 
-DROP POLICY IF EXISTS "Users view own subscriptions" ON public.user_subscriptions;
 DROP POLICY IF EXISTS "Users view own subscriptions" ON public.user_subscriptions;
 CREATE POLICY "Users view own subscriptions" ON public.user_subscriptions FOR SELECT USING (auth.uid() = user_id OR public.is_admin());
 
@@ -1451,14 +1418,11 @@ ALTER TABLE public.vehicle_reports ENABLE ROW LEVEL SECURITY;
 
 -- 8. RLS POLICIES
 DROP POLICY IF EXISTS "Users can manage own expenses" ON public.vehicle_expenses;
-DROP POLICY IF EXISTS "Users can manage own expenses" ON public.vehicle_expenses;
 CREATE POLICY "Users can manage own expenses" ON public.vehicle_expenses FOR ALL USING (auth.uid() = user_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Users can manage own documents" ON public.vehicle_documents;
-DROP POLICY IF EXISTS "Users can manage own documents" ON public.vehicle_documents;
 CREATE POLICY "Users can manage own documents" ON public.vehicle_documents FOR ALL USING (auth.uid() = user_id OR public.is_admin());
 
-DROP POLICY IF EXISTS "Users can manage own reports" ON public.vehicle_reports;
 DROP POLICY IF EXISTS "Users can manage own reports" ON public.vehicle_reports;
 CREATE POLICY "Users can manage own reports" ON public.vehicle_reports FOR ALL USING (auth.uid() = user_id OR public.is_admin());
 
@@ -1553,30 +1517,23 @@ ALTER TABLE public.insurance_applications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.transactions ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Anyone can view active appointment slots" ON public.appointment_slots;
-DROP POLICY IF EXISTS "Anyone can view active appointment slots" ON public.appointment_slots;
 CREATE POLICY "Anyone can view active appointment slots" ON public.appointment_slots FOR SELECT USING (is_active = true);
 
-DROP POLICY IF EXISTS "Sellers can manage own appointment slots" ON public.appointment_slots;
 DROP POLICY IF EXISTS "Sellers can manage own appointment slots" ON public.appointment_slots;
 CREATE POLICY "Sellers can manage own appointment slots" ON public.appointment_slots FOR ALL USING (auth.uid() = seller_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Anyone can view insurance products" ON public.insurance_products;
-DROP POLICY IF EXISTS "Anyone can view insurance products" ON public.insurance_products;
 CREATE POLICY "Anyone can view insurance products" ON public.insurance_products FOR SELECT USING (true);
 
-DROP POLICY IF EXISTS "Only admin can manage insurance products" ON public.insurance_products;
 DROP POLICY IF EXISTS "Only admin can manage insurance products" ON public.insurance_products;
 CREATE POLICY "Only admin can manage insurance products" ON public.insurance_products FOR ALL USING (public.is_admin());
 
 DROP POLICY IF EXISTS "Users can view own insurance applications" ON public.insurance_applications;
-DROP POLICY IF EXISTS "Users can view own insurance applications" ON public.insurance_applications;
 CREATE POLICY "Users can view own insurance applications" ON public.insurance_applications FOR SELECT USING (auth.uid() = user_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Users can insert own insurance applications" ON public.insurance_applications;
-DROP POLICY IF EXISTS "Users can insert own insurance applications" ON public.insurance_applications;
 CREATE POLICY "Users can insert own insurance applications" ON public.insurance_applications FOR INSERT WITH CHECK (auth.uid() = user_id);
 
-DROP POLICY IF EXISTS "Users can view own transactions" ON public.transactions;
 DROP POLICY IF EXISTS "Users can view own transactions" ON public.transactions;
 CREATE POLICY "Users can view own transactions" ON public.transactions FOR SELECT USING (
     auth.uid() = (SELECT customer_id FROM public.orders WHERE id = order_id) OR
@@ -1660,22 +1617,17 @@ ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
 
 -- Yeni Tablolar İçin RLS Politikaları
 DROP POLICY IF EXISTS "Everyone can view commission rules" ON public.commission_rules;
-DROP POLICY IF EXISTS "Everyone can view commission rules" ON public.commission_rules;
 CREATE POLICY "Everyone can view commission rules" ON public.commission_rules FOR SELECT USING (true);
 
-DROP POLICY IF EXISTS "Admins can modify commission rules" ON public.commission_rules;
 DROP POLICY IF EXISTS "Admins can modify commission rules" ON public.commission_rules;
 CREATE POLICY "Admins can modify commission rules" ON public.commission_rules FOR ALL USING (public.is_admin());
 
 DROP POLICY IF EXISTS "Partners can view own payouts" ON public.payouts;
-DROP POLICY IF EXISTS "Partners can view own payouts" ON public.payouts;
 CREATE POLICY "Partners can view own payouts" ON public.payouts FOR SELECT USING (auth.uid() = partner_id OR public.is_admin());
 
 DROP POLICY IF EXISTS "Only admin can modify payouts" ON public.payouts;
-DROP POLICY IF EXISTS "Only admin can modify payouts" ON public.payouts;
 CREATE POLICY "Only admin can modify payouts" ON public.payouts FOR ALL USING (public.is_admin());
 
-DROP POLICY IF EXISTS "Involved users can view gig disputes" ON public.gig_disputes;
 DROP POLICY IF EXISTS "Involved users can view gig disputes" ON public.gig_disputes;
 CREATE POLICY "Involved users can view gig disputes" ON public.gig_disputes FOR SELECT USING (
     auth.uid() = reporter_id OR 
@@ -1685,18 +1637,14 @@ CREATE POLICY "Involved users can view gig disputes" ON public.gig_disputes FOR 
 );
 
 DROP POLICY IF EXISTS "Involved users can insert disputes" ON public.gig_disputes;
-DROP POLICY IF EXISTS "Involved users can insert disputes" ON public.gig_disputes;
 CREATE POLICY "Involved users can insert disputes" ON public.gig_disputes FOR INSERT WITH CHECK (auth.uid() = reporter_id);
 
-DROP POLICY IF EXISTS "Everyone can read partner metrics" ON public.partner_metrics;
 DROP POLICY IF EXISTS "Everyone can read partner metrics" ON public.partner_metrics;
 CREATE POLICY "Everyone can read partner metrics" ON public.partner_metrics FOR SELECT USING (true);
 
 DROP POLICY IF EXISTS "Partners and admins can manage metrics" ON public.partner_metrics;
-DROP POLICY IF EXISTS "Partners and admins can manage metrics" ON public.partner_metrics;
 CREATE POLICY "Partners and admins can manage metrics" ON public.partner_metrics FOR ALL USING (auth.uid() = partner_id OR public.is_admin());
 
-DROP POLICY IF EXISTS "Admins can read audit logs" ON public.audit_logs;
 DROP POLICY IF EXISTS "Admins can read audit logs" ON public.audit_logs;
 CREATE POLICY "Admins can read audit logs" ON public.audit_logs FOR SELECT USING (public.is_admin());
 
@@ -2100,7 +2048,6 @@ ON CONFLICT (id) DO NOTHING;
 
 -- 3.1 Belge Kasası ve Kaza Raporları RLS: Sadece dosya sahibi okuyabilir ve yükleyebilir
 DROP POLICY IF EXISTS "Users can manage own documents" ON storage.objects;
-DROP POLICY IF EXISTS "Users can manage own documents" ON storage.objects;
 CREATE POLICY "Users can manage own documents" ON storage.objects
 FOR ALL
 USING (bucket_id IN ('vehicle-documents', 'accident-reports') AND auth.uid() = owner)
@@ -2108,13 +2055,11 @@ WITH CHECK (bucket_id IN ('vehicle-documents', 'accident-reports') AND auth.uid(
 
 -- 3.2 Servis Kanıtları (Proofs) RLS: Siparişle ilişkili müşteri veya satıcı görebilir, sadece satıcı yükleyebilir
 DROP POLICY IF EXISTS "Authenticated users upload proofs" ON storage.objects;
-DROP POLICY IF EXISTS "Authenticated users upload proofs" ON storage.objects;
 CREATE POLICY "Authenticated users upload proofs" ON storage.objects
 FOR INSERT
 TO authenticated
 WITH CHECK (bucket_id = 'service-proofs');
 
-DROP POLICY IF EXISTS "Users view relevant service proofs" ON storage.objects;
 DROP POLICY IF EXISTS "Users view relevant service proofs" ON storage.objects;
 CREATE POLICY "Users view relevant service proofs" ON storage.objects
 FOR SELECT
@@ -2166,11 +2111,9 @@ ALTER TABLE public.quotes ADD COLUMN IF NOT EXISTS estimated_delivery_days INTEG
 ALTER TABLE public.valet_bookings ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Users can manage own valet bookings" ON public.valet_bookings;
-DROP POLICY IF EXISTS "Users can manage own valet bookings" ON public.valet_bookings;
 CREATE POLICY "Users can manage own valet bookings" ON public.valet_bookings
 FOR ALL USING (auth.uid() = customer_id OR auth.uid() = valet_id);
 
-DROP POLICY IF EXISTS "Valets can view pending bookings" ON public.valet_bookings;
 DROP POLICY IF EXISTS "Valets can view pending bookings" ON public.valet_bookings;
 CREATE POLICY "Valets can view pending bookings" ON public.valet_bookings
 FOR SELECT USING (
@@ -2203,21 +2146,17 @@ CREATE TABLE IF NOT EXISTS public.road_alerts (
 ALTER TABLE public.road_alerts ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Anyone can select road alerts" ON public.road_alerts;
-DROP POLICY IF EXISTS "Anyone can select road alerts" ON public.road_alerts;
 CREATE POLICY "Anyone can select road alerts" ON public.road_alerts
 FOR SELECT USING (true);
 
-DROP POLICY IF EXISTS "Authenticated users can insert road alerts" ON public.road_alerts;
 DROP POLICY IF EXISTS "Authenticated users can insert road alerts" ON public.road_alerts;
 CREATE POLICY "Authenticated users can insert road alerts" ON public.road_alerts
 FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 DROP POLICY IF EXISTS "Anyone can update road alerts for voting" ON public.road_alerts;
-DROP POLICY IF EXISTS "Anyone can update road alerts for voting" ON public.road_alerts;
 CREATE POLICY "Anyone can update road alerts for voting" ON public.road_alerts
 FOR UPDATE USING (true) WITH CHECK (true);
 
-DROP POLICY IF EXISTS "Users can delete their own alerts" ON public.road_alerts;
 DROP POLICY IF EXISTS "Users can delete their own alerts" ON public.road_alerts;
 CREATE POLICY "Users can delete their own alerts" ON public.road_alerts
 FOR DELETE USING (auth.uid() = user_id);
@@ -2305,3 +2244,214 @@ CREATE POLICY "Service role can do everything" ON diagnostics FOR ALL
 TO service_role
 USING (true)
 WITH CHECK (true);
+
+
+-- ==============================================================================
+-- CARVIS PERFORMANCE OPTIMIZATION INDEXES
+-- Purpose: Add missing Foreign Key indexes and common filter indexes to prevent
+-- Full Table Scans and dramatically improve JOIN and filtering performance.
+-- Author: Carvis AI Architecture
+-- Date: 2026-07-02
+-- ==============================================================================
+
+-- 1. FOREIGN KEY INDEXES (Crucial for JOIN operations)
+CREATE INDEX IF NOT EXISTS idx_wallets_user_id ON public.wallets(user_id);
+CREATE INDEX IF NOT EXISTS idx_wallet_tx_wallet_id ON public.wallet_transactions(wallet_id);
+
+CREATE INDEX IF NOT EXISTS idx_products_seller_id ON public.products(seller_id);
+CREATE INDEX IF NOT EXISTS idx_mechanic_shops_seller_id ON public.mechanic_shops(seller_id);
+
+CREATE INDEX IF NOT EXISTS idx_vehicles_user_id ON public.vehicles(user_id);
+
+CREATE INDEX IF NOT EXISTS idx_service_req_user_id ON public.service_requests(user_id);
+
+CREATE INDEX IF NOT EXISTS idx_quotes_service_request_id ON public.quotes(service_request_id);
+CREATE INDEX IF NOT EXISTS idx_quotes_seller_id ON public.quotes(seller_id);
+CREATE INDEX IF NOT EXISTS idx_quotes_customer_id ON public.quotes(customer_id);
+
+CREATE INDEX IF NOT EXISTS idx_appoint_customer_id ON public.appointments(customer_id);
+CREATE INDEX IF NOT EXISTS idx_appoint_seller_id ON public.appointments(seller_id);
+CREATE INDEX IF NOT EXISTS idx_appoint_vehicle_id ON public.appointments(vehicle_id);
+CREATE INDEX IF NOT EXISTS idx_appoint_quote_id ON public.appointments(quote_id);
+
+CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON public.orders(customer_id);
+CREATE INDEX IF NOT EXISTS idx_orders_seller_id ON public.orders(seller_id);
+CREATE INDEX IF NOT EXISTS idx_orders_quote_id ON public.orders(quote_id);
+
+CREATE INDEX IF NOT EXISTS idx_order_items_order_id ON public.order_items(order_id);
+CREATE INDEX IF NOT EXISTS idx_order_items_product_id ON public.order_items(product_id);
+
+CREATE INDEX IF NOT EXISTS idx_messages_sender_id ON public.messages(sender_id);
+CREATE INDEX IF NOT EXISTS idx_messages_receiver_id ON public.messages(receiver_id);
+
+CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON public.notifications(user_id);
+CREATE INDEX IF NOT EXISTS idx_addresses_user_id ON public.addresses(user_id);
+CREATE INDEX IF NOT EXISTS idx_emergency_req_customer_id ON public.emergency_requests(customer_id);
+
+CREATE INDEX IF NOT EXISTS idx_reviews_order_id ON public.reviews(order_id);
+CREATE INDEX IF NOT EXISTS idx_reviews_reviewer_id ON public.reviews(reviewer_id);
+CREATE INDEX IF NOT EXISTS idx_reviews_seller_id ON public.reviews(seller_id);
+
+CREATE INDEX IF NOT EXISTS idx_escrow_vault_order_id ON public.escrow_vault(order_id);
+CREATE INDEX IF NOT EXISTS idx_service_proofs_order_id ON public.service_proofs(order_id);
+
+CREATE INDEX IF NOT EXISTS idx_consultations_user_id ON public.consultations(user_id);
+CREATE INDEX IF NOT EXISTS idx_consultations_expert_id ON public.consultations(expert_id);
+
+CREATE INDEX IF NOT EXISTS idx_partner_monetization_partner_id ON public.partner_monetization(partner_id);
+CREATE INDEX IF NOT EXISTS idx_platform_earnings_order_id ON public.platform_earnings(order_id);
+
+CREATE INDEX IF NOT EXISTS idx_vehicle_exp_user_id ON public.vehicle_expenses(user_id);
+CREATE INDEX IF NOT EXISTS idx_vehicle_exp_vehicle_id ON public.vehicle_expenses(vehicle_id);
+
+CREATE INDEX IF NOT EXISTS idx_vehicle_docs_user_id ON public.vehicle_documents(user_id);
+CREATE INDEX IF NOT EXISTS idx_vehicle_docs_vehicle_id ON public.vehicle_documents(vehicle_id);
+
+CREATE INDEX IF NOT EXISTS idx_vehicle_reports_user_id ON public.vehicle_reports(user_id);
+CREATE INDEX IF NOT EXISTS idx_vehicle_reports_vehicle_id ON public.vehicle_reports(vehicle_id);
+
+CREATE INDEX IF NOT EXISTS idx_appoint_slots_seller_id ON public.appointment_slots(seller_id);
+
+CREATE INDEX IF NOT EXISTS idx_insur_app_user_id ON public.insurance_applications(user_id);
+CREATE INDEX IF NOT EXISTS idx_insur_app_vehicle_id ON public.insurance_applications(vehicle_id);
+
+CREATE INDEX IF NOT EXISTS idx_transactions_order_id ON public.transactions(order_id);
+CREATE INDEX IF NOT EXISTS idx_payouts_partner_id ON public.payouts(partner_id);
+
+CREATE INDEX IF NOT EXISTS idx_valet_book_customer_id ON public.valet_bookings(customer_id);
+CREATE INDEX IF NOT EXISTS idx_valet_book_valet_id ON public.valet_bookings(valet_id);
+CREATE INDEX IF NOT EXISTS idx_maint_records_vehicle_id ON public.maintenance_records(vehicle_id);
+
+
+-- 2. STATUS & FILTERING INDEXES (Crucial for Dashboard and List views)
+CREATE INDEX IF NOT EXISTS idx_service_req_status ON public.service_requests(status);
+CREATE INDEX IF NOT EXISTS idx_quotes_status ON public.quotes(status);
+CREATE INDEX IF NOT EXISTS idx_appoint_status ON public.appointments(status);
+CREATE INDEX IF NOT EXISTS idx_orders_status ON public.orders(status);
+CREATE INDEX IF NOT EXISTS idx_emergency_req_status ON public.emergency_requests(status);
+CREATE INDEX IF NOT EXISTS idx_valet_book_status ON public.valet_bookings(status);
+
+
+-- 3. DATE/SORTING INDEXES (Crucial for feeds, unread messages, recent notifications)
+CREATE INDEX IF NOT EXISTS idx_messages_created_at ON public.messages(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_notifications_created_at ON public.notifications(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_orders_created_at ON public.orders(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_service_req_created_at ON public.service_requests(created_at DESC);
+
+-- Analyze the database to update query planner statistics immediately
+ANALYZE;
+
+
+-- 6. FUEL TRACKING
+CREATE TABLE IF NOT EXISTS public.fuel_logs (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    vehicle_id UUID,
+    liters DECIMAL(10,2) NOT NULL,
+    price_per_liter DECIMAL(10,2) NOT NULL,
+    total_cost DECIMAL(12,2) NOT NULL,
+    mileage INTEGER,
+    station_name TEXT,
+    date TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE public.fuel_logs ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Users can manage own fuel logs" ON public.fuel_logs;
+CREATE POLICY "Users can manage own fuel logs" ON public.fuel_logs FOR ALL USING (auth.uid() = user_id);
+
+
+-- 9. AI DIAGNOSTICS (carvis-ai-core)
+CREATE TABLE IF NOT EXISTS public.ai_diagnostics (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    vehicle_id UUID,
+    description TEXT NOT NULL,
+    predicted_issue TEXT NOT NULL,
+    confidence_score DECIMAL(3,2) NOT NULL,
+    recommended_action TEXT,
+    severity TEXT CHECK (severity IN ('Low', 'Medium', 'High', 'Critical')),
+    images JSONB DEFAULT '[]'::jsonb,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE public.ai_diagnostics ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Users can manage own ai diagnostics" ON public.ai_diagnostics;
+CREATE POLICY "Users can manage own ai diagnostics" ON public.ai_diagnostics FOR ALL USING (auth.uid() = user_id);
+
+
+-- =========================================================
+-- CARVIS PAYMENTS & ESCROW SCHEMA v1.0
+-- =========================================================
+
+-- 1. ENUMS
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'payment_status') THEN
+        CREATE TYPE payment_status AS ENUM ('pending', 'escrow', 'released', 'refunded', 'failed');
+    END IF;
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
+-- 2. PAYMENTS TABLE
+CREATE TABLE IF NOT EXISTS public.payments (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    request_id UUID REFERENCES public.service_requests(id) ON DELETE CASCADE,
+    customer_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    provider_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    platform_fee DECIMAL(10,2) NOT NULL,
+    provider_earning DECIMAL(10,2) NOT NULL,
+    currency TEXT DEFAULT 'TRY',
+    status payment_status DEFAULT 'pending',
+    provider_type TEXT, -- e.g., 'iyzico', 'stripe'
+    transaction_id TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. WALLETS TABLE (Already exists, adding extra columns for Payments)
+DO $$ BEGIN
+    ALTER TABLE public.wallets ADD COLUMN IF NOT EXISTS bank_account_iban TEXT;
+    ALTER TABLE public.wallets ADD COLUMN IF NOT EXISTS bank_account_name TEXT;
+EXCEPTION WHEN duplicate_column THEN null; END $$;
+
+-- 4. WALLET TRANSACTIONS TABLE
+CREATE TABLE IF NOT EXISTS public.wallet_transactions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    wallet_id UUID REFERENCES public.wallets(id) ON DELETE CASCADE,
+    amount DECIMAL(10,2) NOT NULL,
+    type TEXT, -- 'credit' (earned), 'debit' (withdrawn)
+    description TEXT,
+    reference_id UUID, -- Can be payment_id or withdrawal_id
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 5. RLS (Row Level Security)
+ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.wallets ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.wallet_transactions ENABLE ROW LEVEL SECURITY;
+
+-- Policies for Payments
+DROP POLICY IF EXISTS "Users can view their own payments" ON public.payments;
+CREATE POLICY "Users can view their own payments" 
+    ON public.payments FOR SELECT 
+    USING (auth.uid() = customer_id OR auth.uid() = provider_id);
+
+-- Policies for Wallets
+DROP POLICY IF EXISTS "Providers can view their own wallet" ON public.wallets;
+CREATE POLICY "Providers can view their own wallet" 
+    ON public.wallets FOR SELECT 
+    USING (auth.uid() = user_id);
+
+-- Policies for Wallet Transactions
+DROP POLICY IF EXISTS "Providers can view their own transactions" ON public.wallet_transactions;
+CREATE POLICY "Providers can view their own transactions" 
+    ON public.wallet_transactions FOR SELECT 
+    USING (
+        wallet_id IN (SELECT id FROM public.wallets WHERE user_id = auth.uid())
+    );
+
+-- 6. INDEXES for Performance
+CREATE INDEX IF NOT EXISTS idx_payments_customer ON public.payments(customer_id);
+CREATE INDEX IF NOT EXISTS idx_payments_provider ON public.payments(provider_id);
+CREATE INDEX IF NOT EXISTS idx_payments_status ON public.payments(status);
+CREATE INDEX IF NOT EXISTS idx_wallet_tx_wallet ON public.wallet_transactions(wallet_id);

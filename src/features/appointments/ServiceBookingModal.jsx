@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAppointment } from "../../context/AppointmentContext";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
-import * as Icons from "lucide-react";
+import { CheckCircle, X } from "lucide-react";
 import { format, addDays, isSameDay } from "date-fns";
 import { tr } from "date-fns/locale";
 
@@ -93,7 +93,7 @@ const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked 
               <p className="text-sm text-slate-500 dark:text-slate-400">{serviceType}</p>
             </div>
             <button onClick={onClose} className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center">
-              <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
+              <X size={20} className="text-slate-500 dark:text-slate-400" />
             </button>
           </div>
 
@@ -158,7 +158,7 @@ const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked 
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
             ) : (
               <>
-                <Icons.CheckCircle size={20} />
+                <CheckCircle size={20} />
                 Randevuyu Onayla
               </>
             )}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { CreditCard, ShieldCheck, Wallet, X } from "lucide-react";
  
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "../../context/WalletContext";
@@ -41,11 +41,11 @@ const TopUpModal = ({ isOpen, onClose }) => {
             onClick={onClose}
             className="absolute right-4 top-4 p-2 bg-black/5 dark:bg-white/5 rounded-full hover:bg-black/10 dark:bg-white/10"
           >
-            <Icons.X size={20} className="text-slate-900 dark:text-white" />
+            <X size={20} className="text-slate-900 dark:text-white" />
           </button>
 
           <h2 className="text-xl font-bold text-slate-900 dark:text-white font-sans mb-2 flex items-center gap-2">
-            <Icons.Wallet size={24} className="text-primary-400" />
+            <Wallet size={24} className="text-primary-400" />
             Bakiye Yükle
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
@@ -85,7 +85,7 @@ const TopUpModal = ({ isOpen, onClose }) => {
                 Kayıtlı Kart
               </label>
               <div className="flex items-center gap-3 p-4 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl mt-1">
-                <Icons.CreditCard className="text-slate-500 dark:text-slate-400" />
+                <CreditCard className="text-slate-500 dark:text-slate-400" />
                 <div>
                   <p className="text-slate-900 dark:text-white font-bold text-sm">
                     •••• •••• •••• 4242
@@ -104,7 +104,7 @@ const TopUpModal = ({ isOpen, onClose }) => {
                 "İşleniyor..."
               ) : (
                 <>
-                  <Icons.ShieldCheck size={20} />
+                  <ShieldCheck size={20} />
                   Güvenli Ödeme Yap
                 </>
               )}

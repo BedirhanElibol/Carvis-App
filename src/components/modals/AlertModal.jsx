@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { CircleCheck, Info, ShieldCheck, TriangleAlert } from "lucide-react";
 
 const AlertModal = ({ show, onClose, title, message, type }) => {
   if (!show) return null;
@@ -20,13 +20,13 @@ const AlertModal = ({ show, onClose, title, message, type }) => {
             }`}
           >
             {type === "error" ? (
-              <Icons.TriangleAlert size={32} />
+              <TriangleAlert size={32} />
             ) : type === "success" ? (
-              <Icons.CircleCheck size={32} />
+              <CircleCheck size={32} />
             ) : type === "verified" ? (
-              <Icons.ShieldCheck size={32} />
+              <ShieldCheck size={32} />
             ) : (
-              <Icons.Info size={32} />
+              <Info size={32} />
             )}
           </div>
           <h3 className="font-black text-xl text-slate-900 mb-2 font-sans">{title}</h3>

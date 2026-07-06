@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Accessibility, Camera, ShieldCheck, SquareParking, Tag, UserCheck, Warehouse, Zap } from "lucide-react";
 
 const ParkingProfileForm = ({ data, onUpdate }) => {
   const [parkingData, setParkingData] = useState({
@@ -27,7 +27,7 @@ const ParkingProfileForm = ({ data, onUpdate }) => {
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary-400">
-          <Icons.SquareParking size={20} />
+          <SquareParking size={20} />
         </div>
         <div>
           <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Otopark İşletme Bilgileri</h2>
@@ -50,7 +50,7 @@ const ParkingProfileForm = ({ data, onUpdate }) => {
         <label className="space-y-2">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Saatlik Ücret</span>
           <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
-            <Icons.Tag size={18} className="text-primary-400" />
+            <Tag size={18} className="text-primary-400" />
             <input
               type="number"
               value={parkingData.price_per_hour}
@@ -77,19 +77,19 @@ const ParkingProfileForm = ({ data, onUpdate }) => {
               type="number"
               value={parkingData.occupied_count}
               onChange={(e) => handleChange("occupied_count", Number(e.target.value))}
-              className="w-full bg-white dark:bg-slate-900/80 border border-emerald-500/20 text-emerald-400 rounded-2xl px-4 py-3 text-sm outline-none font-sans text-center"
+              className="w-full bg-white dark:bg-slate-900/80 border border-emerald-500/20 text-teal-400 rounded-2xl px-4 py-3 text-sm outline-none font-sans text-center"
             />
           </label>
         </div>
 
         <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {[
-            { key: "is_indoor", label: "Kapalı", icon: Icons.Warehouse },
-            { key: "has_security", label: "Güvenlik", icon: Icons.ShieldCheck },
-            { key: "has_security_cams", label: "Kamera", icon: Icons.Camera },
-            { key: "has_ev_charging", label: "Şarj (EV)", icon: Icons.Zap },
-            { key: "has_disabled_access", label: "Engelli", icon: Icons.Accessibility },
-            { key: "has_valet", label: "Vale", icon: Icons.UserCheck },
+            { key: "is_indoor", label: "Kapalı", icon: Warehouse },
+            { key: "has_security", label: "Güvenlik", icon: ShieldCheck },
+            { key: "has_security_cams", label: "Kamera", icon: Camera },
+            { key: "has_ev_charging", label: "Şarj (EV)", icon: Zap },
+            { key: "has_disabled_access", label: "Engelli", icon: Accessibility },
+            { key: "has_valet", label: "Vale", icon: UserCheck },
           ].map((item) => (
             <button
               key={item.key}

@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback , useMemo } from "react";
 import { supabase } from "../supabaseClient";
 import { useAuth } from "./AuthContext";
 import { useUI } from "./UIContext";
@@ -182,7 +182,8 @@ export const MessageProvider = ({ children }) => {
     }
   };
 
-  const value = {
+  const value = useMemo(() => ({
+
     conversations,
     messages,
     loading,
@@ -190,7 +191,8 @@ export const MessageProvider = ({ children }) => {
     fetchMessages,
     sendMessage,
     markAsRead,
-  };
+  
+  }), [conversations, messages, loading, activeConversation, fetchMessages, sendMessage, markAsRead]);
 
   return <MessageContext.Provider value={value}>{children}</MessageContext.Provider>;
 };

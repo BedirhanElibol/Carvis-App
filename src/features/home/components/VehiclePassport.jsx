@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Icons from "lucide-react";
+import { CalendarCheck, Car, Check, Compass, Copy, CreditCard, Disc, Download, Droplets, Eye, File, FileLock2, FileText, Flower2, Gauge, History, Key, Lightbulb, Plus, RotateCw, Save, ShieldAlert, Sparkles, Thermometer, Trash2, Wind, Workflow, Wrench, X, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../../context/UIContext";
 import { useAuth } from "../../../context/AuthContext";
@@ -25,16 +25,16 @@ const VehiclePassport = ({ vehicle, onClose }) => {
 
   // Default maintenance items users can track
   const maintenancePresets = [
-    { name: "Motor Yağı & Filtre", icon: Icons.Droplets, interval_km: 10000, interval_months: 12, color: "text-amber-500" },
-    { name: "Fren Balatası (Ön)", icon: Icons.ShieldAlert, interval_km: 40000, interval_months: 36, color: "text-rose-500" },
-    { name: "Fren Balatası (Arka)", icon: Icons.ShieldAlert, interval_km: 50000, interval_months: 48, color: "text-rose-400" },
-    { name: "Hava Filtresi", icon: Icons.Wind, interval_km: 20000, interval_months: 24, color: "text-blue-500" },
-    { name: "Polen Filtresi", icon: Icons.Flower2, interval_km: 15000, interval_months: 12, color: "text-emerald-500" },
-    { name: "Lastik Değişimi", icon: Icons.Disc, interval_km: 40000, interval_months: 48, color: "text-slate-500" },
-    { name: "Akü", icon: Icons.Zap, interval_km: 80000, interval_months: 48, color: "text-cyan-500" },
-    { name: "Triger Kayışı/Zinciri", icon: Icons.RotateCw, interval_km: 90000, interval_months: 72, color: "text-orange-500" },
-    { name: "Antifriz", icon: Icons.Thermometer, interval_km: 40000, interval_months: 24, color: "text-sky-500" },
-    { name: "Buji", icon: Icons.Sparkles, interval_km: 30000, interval_months: 36, color: "text-yellow-500" }
+    { name: "Motor Yağı & Filtre", icon: Droplets, interval_km: 10000, interval_months: 12, color: "text-amber-500" },
+    { name: "Fren Balatası (Ön)", icon: ShieldAlert, interval_km: 40000, interval_months: 36, color: "text-rose-500" },
+    { name: "Fren Balatası (Arka)", icon: ShieldAlert, interval_km: 50000, interval_months: 48, color: "text-rose-400" },
+    { name: "Hava Filtresi", icon: Wind, interval_km: 20000, interval_months: 24, color: "text-blue-500" },
+    { name: "Polen Filtresi", icon: Flower2, interval_km: 15000, interval_months: 12, color: "text-emerald-500" },
+    { name: "Lastik Değişimi", icon: Disc, interval_km: 40000, interval_months: 48, color: "text-slate-500" },
+    { name: "Akü", icon: Zap, interval_km: 80000, interval_months: 48, color: "text-cyan-500" },
+    { name: "Triger Kayışı/Zinciri", icon: RotateCw, interval_km: 90000, interval_months: 72, color: "text-orange-500" },
+    { name: "Antifriz", icon: Thermometer, interval_km: 40000, interval_months: 24, color: "text-sky-500" },
+    { name: "Buji", icon: Sparkles, interval_km: 30000, interval_months: 36, color: "text-yellow-500" }
   ];
 
   // Load saved records from Supabase
@@ -162,21 +162,21 @@ const VehiclePassport = ({ vehicle, onClose }) => {
           onClick={onClose}
           className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 text-slate-900 dark:text-white flex items-center justify-center border border-black/5 dark:border-white/5 active-scale transition-all cursor-pointer"
         >
-          <Icons.X size={20} />
+          <X size={20} />
         </button>
 
         {/* Header Section */}
         <div className="p-8 pb-4 relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             <div className="p-4 rounded-3xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
-              <Icons.FileText size={32} />
+              <FileText size={32} />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">
                   Carvis Araç Pasaportu
                 </span>
-                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
                   Resmi Hafıza
                 </span>
               </div>
@@ -196,7 +196,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                       className="p-1 hover:bg-white dark:bg-white/5 shadow-sm rounded text-teal-400 hover:text-slate-900 dark:text-white transition-all active-scale cursor-pointer border-none bg-transparent"
                       title={t.copy}
                     >
-                      {copied ? <Icons.Check size={14} className="text-emerald-400" /> : <Icons.Copy size={14} />}
+                      {copied ? <Check size={14} className="text-teal-400" /> : <Copy size={14} />}
                     </button>
                   </>
                 )}
@@ -208,10 +208,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         {/* Tab Selector */}
         <div className="px-8 border-b border-black/5 dark:border-white/5 flex gap-2 overflow-x-auto relative z-10 scrollbar-none">
           {[
-            { id: "overview", label: t.generalStatus || "Genel Durum", icon: Icons.Compass },
-            { id: "timeline", label: t.memoryTimeline || "Hafıza Zaman Çizelgesi", icon: Icons.History },
-            { id: "documents", label: t.documentVault || "Belge Kasası", icon: Icons.FileLock2 },
-            { id: "maintenance", label: "Bakım Takibi", icon: Icons.Wrench }
+            { id: "overview", label: t.generalStatus || "Genel Durum", icon: Compass },
+            { id: "timeline", label: t.memoryTimeline || "Hafıza Zaman Çizelgesi", icon: History },
+            { id: "documents", label: t.documentVault || "Belge Kasası", icon: FileLock2 },
+            { id: "maintenance", label: "Bakım Takibi", icon: Wrench }
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -248,7 +248,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6">Araç Özeti</h4>
                   <div className="relative w-36 h-36 flex items-center justify-center">
                     <div className="w-28 h-28 rounded-full bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-500/30 flex items-center justify-center">
-                      <Icons.Car size={40} className="text-teal-400" />
+                      <Car size={40} className="text-teal-400" />
                     </div>
                   </div>
                   <div className="mt-4 space-y-1">
@@ -265,12 +265,12 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   {/* Detailed Specs Grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {[
-                      { label: t.mileage || "Kilometre", val: `${vehicle.km?.toLocaleString() || "—"} km`, icon: Icons.Gauge },
-                      { label: t.lastMaintenance || "Son Bakım", val: vehicle.last_oil_change ? new Date(vehicle.last_oil_change).toLocaleDateString("tr-TR") : "Belirtilmedi", icon: Icons.Wrench },
-                      { label: "Model Yılı", val: vehicle.year || "—", icon: Icons.CalendarCheck },
-                      { label: "Motor Kodu", val: vehicle.engine_code || "—", icon: Icons.Workflow },
-                      { label: t.spareKey || "Yedek Anahtar", val: t.available || "Mevcut", icon: Icons.Key },
-                      { label: "Plaka", val: vehicle.plate || "—", icon: Icons.CreditCard }
+                      { label: t.mileage || "Kilometre", val: `${vehicle.km?.toLocaleString() || "—"} km`, icon: Gauge },
+                      { label: t.lastMaintenance || "Son Bakım", val: vehicle.last_oil_change ? new Date(vehicle.last_oil_change).toLocaleDateString("tr-TR") : "Belirtilmedi", icon: Wrench },
+                      { label: "Model Yılı", val: vehicle.year || "—", icon: CalendarCheck },
+                      { label: "Motor Kodu", val: vehicle.engine_code || "—", icon: Workflow },
+                      { label: t.spareKey || "Yedek Anahtar", val: t.available || "Mevcut", icon: Key },
+                      { label: "Plaka", val: vehicle.plate || "—", icon: CreditCard }
                     ].map((spec, i) => {
                       const SpecIcon = spec.icon;
                       return (
@@ -287,7 +287,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
 
                   {/* Info Panel */}
                   <div className="p-6 rounded-3xl bg-teal-500/10 border border-teal-500/20 flex gap-4">
-                    <Icons.Lightbulb className="text-teal-400 flex-shrink-0" size={24} />
+                    <Lightbulb className="text-teal-400 flex-shrink-0" size={24} />
                     <div>
                       <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Bakım Hatırlatması</h4>
                       <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -354,7 +354,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 <div className="flex items-center justify-between">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.myDigitalDocs || "Dijital Belgelerim"}</h4>
                   <button className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.2)] flex items-center gap-2 border-none cursor-pointer">
-                    <Icons.Plus size={14} /> Yeni Belge Yükle
+                    <Plus size={14} /> Yeni Belge Yükle
                   </button>
                 </div>
 
@@ -364,7 +364,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                       <div key={i} className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/20 transition-all flex items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
                           <div className="p-3 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
-                            <Icons.File size={20} />
+                            <File size={20} />
                           </div>
                           <div>
                             <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">{doc.category}</span>
@@ -374,10 +374,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                         </div>
                         <div className="flex gap-2">
                           <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale border border-black/5 dark:border-white/5 cursor-pointer">
-                            <Icons.Download size={16} />
+                            <Download size={16} />
                           </button>
                           <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale border border-black/5 dark:border-white/5 cursor-pointer">
-                            <Icons.Eye size={16} />
+                            <Eye size={16} />
                           </button>
                         </div>
                       </div>
@@ -406,7 +406,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                     onClick={() => setShowAddForm(!showAddForm)}
                     className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.2)] flex items-center gap-2 border-none cursor-pointer"
                   >
-                    <Icons.Plus size={14} /> Bakım Kaydı Ekle
+                    <Plus size={14} /> Bakım Kaydı Ekle
                   </button>
                 </div>
 
@@ -499,7 +499,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                           type="submit"
                           className="px-5 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl border-none cursor-pointer transition-all flex items-center gap-1.5"
                         >
-                          <Icons.Save size={12} /> Kaydet
+                          <Save size={12} /> Kaydet
                         </button>
                       </div>
                     </form>
@@ -510,7 +510,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 <div className="space-y-3">
                   {maintenanceRecords.length === 0 && !showAddForm && (
                     <div className="text-center py-12">
-                      <Icons.Wrench size={40} className="mx-auto text-slate-600 dark:text-slate-500 mb-4" />
+                      <Wrench size={40} className="mx-auto text-slate-600 dark:text-slate-500 mb-4" />
                       <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase mb-2">Henüz Bakım Kaydınız Yok</h4>
                       <p className="text-xs text-slate-500 max-w-sm mx-auto">
                         "Bakım Kaydı Ekle" butonuna basarak parça değişikliklerinizi kaydedin. Carvis size sonraki değişim zamanını hatırlatsın.
@@ -521,7 +521,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   {maintenanceRecords.map((record) => {
                     const s = getMaintenanceStatus(record);
                     const preset = maintenancePresets.find(p => p.name === record.part_name);
-                    const RecordIcon = preset?.icon || Icons.Wrench;
+                    const RecordIcon = preset?.icon || Wrench;
                     const iconColor = preset?.color || "text-slate-500";
                     
                     return (
@@ -558,7 +558,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                             onClick={() => handleDeleteRecord(record.id)}
                             className="w-8 h-8 rounded-xl bg-transparent hover:bg-red-500/10 text-slate-400 hover:text-red-500 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 border-none cursor-pointer"
                           >
-                            <Icons.Trash2 size={14} />
+                            <Trash2 size={14} />
                           </button>
                         </div>
                       </div>

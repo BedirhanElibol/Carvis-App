@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Icons from "lucide-react";
+import { Bell, ChevronRight, Globe, LogOut, MapPin, MessageSquare, Moon, ShieldAlert, Store, Sun, User } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
 import { useNotification } from "../../context/NotificationContext";
@@ -37,7 +37,7 @@ const AppHeader = () => {
         className="flex items-center gap-2.5 text-slate-800 dark:text-slate-100 glass-card px-4 py-2.5 rounded-2xl active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5 transition-all shadow-xl"
       >
         <div className="bg-primary-500/20 p-1.5 rounded-lg shadow-inner">
-          <Icons.MapPin size={16} className="text-primary-500" />
+          <MapPin size={16} className="text-primary-500" />
         </div>
         <div className="text-left">
           <p className="text-[7px] font-black text-slate-500 uppercase tracking-widest leading-none mb-0.5">
@@ -47,7 +47,7 @@ const AppHeader = () => {
             {selectedLocation || t.selectCityHeader}
           </p>
         </div>
-        <Icons.ChevronRight
+        <ChevronRight
           size={12}
           className="text-slate-500 rotate-90 ml-1"
         />
@@ -58,7 +58,7 @@ const AppHeader = () => {
           onClick={toggleLanguage}
           className="w-10 h-10 glass-card text-slate-900 dark:text-white rounded-xl flex items-center justify-center relative group active-scale border border-black/5 dark:border-white/5"
         >
-          <Icons.Globe
+          <Globe
             size={18}
             className="text-slate-500 dark:text-slate-400 group-hover:text-primary-500 transition-colors"
           />
@@ -74,9 +74,9 @@ const AppHeader = () => {
           title={theme === "dark" ? t.lightMode : t.darkMode}
         >
           {theme === "dark" ? (
-            <Icons.Sun size={18} className="text-amber-400" />
+            <Sun size={18} className="text-amber-400" />
           ) : (
-            <Icons.Moon size={18} className="text-slate-500 dark:text-slate-400" />
+            <Moon size={18} className="text-slate-500 dark:text-slate-400" />
           )}
         </button>
 
@@ -85,7 +85,7 @@ const AppHeader = () => {
           onClick={() => navigate("/messages")}
           className="w-10 h-10 glass-card text-slate-900 dark:text-white rounded-xl flex items-center justify-center relative active-scale border border-black/5 dark:border-white/5"
         >
-          <Icons.MessageSquare size={18} className="text-slate-500 dark:text-slate-400" />
+          <MessageSquare size={18} className="text-slate-500 dark:text-slate-400" />
           {totalUnreadMessages > 0 && (
             <span className="absolute -top-1 -right-1 bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black rounded-full w-5 h-5 flex items-center justify-center animate-pulse border-2 border-slate-950">
               {totalUnreadMessages > 9 ? "9+" : totalUnreadMessages}
@@ -98,7 +98,7 @@ const AppHeader = () => {
           onClick={() => navigate("/notifications")}
           className="w-10 h-10 glass-card text-slate-900 dark:text-white rounded-xl flex items-center justify-center relative active-scale border border-black/5 dark:border-white/5"
         >
-          <Icons.Bell size={18} className="text-slate-500 dark:text-slate-400" />
+          <Bell size={18} className="text-slate-500 dark:text-slate-400" />
           {unreadCount > 0 && (
             <span className="absolute -top-1 -right-1 bg-red-500 text-slate-900 dark:text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse border-2 border-slate-950">
               {unreadCount > 9 ? "9+" : unreadCount}
@@ -110,7 +110,7 @@ const AppHeader = () => {
           onClick={handleSellerEntry}
           className="w-10 h-10 bg-primary-600 text-slate-900 dark:text-white rounded-xl shadow-lg flex items-center justify-center active-scale transition-all"
         >
-          <Icons.Store size={20} />
+          <Store size={20} />
         </button>
 
         {/* Admin Girişi (Sadece Adminler görür) */}
@@ -121,7 +121,7 @@ const AppHeader = () => {
             title={t.adminPanel || "Yönetim Paneli"}
           >
             <div className="animate-pulse-slow">
-              <Icons.ShieldAlert size={20} />
+              <ShieldAlert size={20} />
             </div>
           </button>
         )}
@@ -131,7 +131,7 @@ const AppHeader = () => {
             onClick={() => setShowUserMenu(!showUserMenu)}
             className="w-10 h-10 glass-card text-slate-900 dark:text-white rounded-xl flex items-center justify-center active-scale border border-black/10 dark:border-white/10"
           >
-            <Icons.User size={20} className="text-slate-700 dark:text-slate-200" />
+            <User size={20} className="text-slate-700 dark:text-slate-200" />
           </button>
           {showUserMenu && (
             <>
@@ -156,7 +156,7 @@ const AppHeader = () => {
                   }}
                   className="w-full text-left px-4 py-2.5 text-xs text-red-400 hover:bg-red-500/10 flex items-center gap-2 font-bold font-sans"
                 >
-                  <Icons.LogOut size={16} />
+                  <LogOut size={16} />
                   {t.logout}
                 </button>
               </div>

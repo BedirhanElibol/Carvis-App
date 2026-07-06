@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuote } from "../../context/QuoteContext";
-import * as Icons from "lucide-react";
+import { ArrowLeft, Filter } from "lucide-react";
 import QuoteCard from "./QuoteCard";
 
 const QuotesScreen = () => {
@@ -46,7 +46,7 @@ const QuotesScreen = () => {
               onClick={() => navigate(-1)}
               className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale"
             >
-              <Icons.ArrowLeft size={20} />
+              <ArrowLeft size={20} />
             </button>
             <div>
               <h1 className="text-xl font-bold">Tekliflerim</h1>
@@ -55,7 +55,7 @@ const QuotesScreen = () => {
               </p>
             </div>
           </div>
-          <Icons.Filter size={20} className="text-slate-500 dark:text-slate-400" />
+          <Filter size={20} className="text-slate-500 dark:text-slate-400" />
         </div>
 
         {/* Filter Tabs */}

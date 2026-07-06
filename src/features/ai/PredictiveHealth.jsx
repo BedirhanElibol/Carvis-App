@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import * as Icons from "lucide-react";
+import { Activity, AlertTriangle, CheckCircle, Thermometer, TrendingDown } from "lucide-react";
 import { motion } from "framer-motion";  
 
 /**
@@ -136,7 +136,7 @@ const PredictiveHealth = ({ vehicle }) => {
       <div className="flex items-start justify-between mb-6 relative z-10">
         <div>
           <h3 className="font-black text-xl text-slate-900 dark:text-white flex items-center gap-2 uppercase tracking-tighter">
-            <Icons.Activity className="text-primary-400" /> Tahmini Sistem Skoru
+            <Activity className="text-primary-400" /> Tahmini Sistem Skoru
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-sans">
             Girdiğiniz veriler baz alınarak hesaplanan tahmini skordur.
@@ -171,9 +171,9 @@ const PredictiveHealth = ({ vehicle }) => {
               className="flex items-start gap-3 p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5"
             >
               {risk.risk === "Kritik" || risk.risk === "Yüksek" ? (
-                <Icons.AlertTriangle size={18} className="text-red-400 shrink-0 mt-0.5" />
+                <AlertTriangle size={18} className="text-red-400 shrink-0 mt-0.5" />
               ) : (
-                <Icons.TrendingDown size={18} className="text-orange-400 shrink-0 mt-0.5" />
+                <TrendingDown size={18} className="text-orange-400 shrink-0 mt-0.5" />
               )}
               <div>
                 <h4 className="text-sm font-black text-slate-900 dark:text-white mb-0.5 uppercase tracking-tight">
@@ -186,8 +186,8 @@ const PredictiveHealth = ({ vehicle }) => {
             </div>
           ))
         ) : (
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-            <Icons.CheckCircle size={20} />
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-teal-400">
+            <CheckCircle size={20} />
             <span className="font-black text-sm uppercase tracking-widest">
               Harika! Önemli bir risk tespit edilmedi.
             </span>
@@ -198,7 +198,7 @@ const PredictiveHealth = ({ vehicle }) => {
       {assessment.score < 50 && (
         <div className="mt-4 pt-4 border-t border-black/10 dark:border-white/10">
           <button className="w-full py-3 bg-red-600/20 hover:bg-red-600/30 text-red-500 border border-red-500/30 rounded-xl font-black text-xs uppercase tracking-[0.2em] transition flex items-center justify-center gap-2 animate-pulse">
-            <Icons.Thermometer size={16} /> Acil Bakım Randevusu Al
+            <Thermometer size={16} /> Acil Bakım Randevusu Al
           </button>
         </div>
       )}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import * as Icons from "lucide-react";
+import { AlertCircle, Check, Loader2, Mic, Square } from "lucide-react";
 
 /**
  * AudioAnalyzer Component
@@ -76,7 +76,7 @@ const AudioAnalyzer = () => {
   return (
     <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5">
       <h3 className="font-black text-xl text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-        <Icons.Mic className="text-primary-400" /> Sesli Arıza Tespiti
+        <Mic className="text-primary-400" /> Sesli Arıza Tespiti
       </h3>
       <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 font-sans">
         Motor sesini dinletin, Carvis AI anormal sesleri (vuruntu, sürtünme, kayış sesi)
@@ -94,7 +94,7 @@ const AudioAnalyzer = () => {
 
         {analyzing && (
           <div className="absolute inset-0 bg-white dark:bg-slate-900/80 backdrop-blur-sm flex flex-col items-center justify-center">
-            <Icons.Loader2 className="animate-spin text-primary-500 mb-2" size={32} />
+            <Loader2 className="animate-spin text-primary-500 mb-2" size={32} />
             <span className="text-xs font-black text-primary-400 animate-pulse uppercase tracking-widest">
               Analiz Ediliyor...
             </span>
@@ -106,7 +106,7 @@ const AudioAnalyzer = () => {
             {result === "normal" ? (
               <>
                 <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-2">
-                  <Icons.Check className="text-green-500" size={24} />
+                  <Check className="text-green-500" size={24} />
                 </div>
                 <h4 className="font-bold text-green-400">Normal Motor Sesi</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Anormal bir rezonans tespit edilmedi.</p>
@@ -114,7 +114,7 @@ const AudioAnalyzer = () => {
             ) : (
               <>
                 <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center mb-2">
-                  <Icons.AlertCircle className="text-red-500" size={24} />
+                  <AlertCircle className="text-red-500" size={24} />
                 </div>
                 <h4 className="font-bold text-red-500">Düzensiz Rölanti Sesi</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-sans">
@@ -144,9 +144,9 @@ const AudioAnalyzer = () => {
           }`}
         >
           {isRecording ? (
-            <Icons.Square size={24} fill="white" className="text-slate-900 dark:text-white" />
+            <Square size={24} fill="white" className="text-slate-900 dark:text-white" />
           ) : (
-            <Icons.Mic size={28} className="text-slate-900 dark:text-white" />
+            <Mic size={28} className="text-slate-900 dark:text-white" />
           )}
         </button>
       </div>

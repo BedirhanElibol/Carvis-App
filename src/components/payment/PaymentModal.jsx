@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import * as Icons from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2, ShieldCheck, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { usePayment } from "../../context/PaymentContext";
 import { useWallet } from "../../context/WalletContext";
@@ -132,14 +132,14 @@ const PaymentModal = ({
       <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
         <div className="p-5 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-slate-100 dark:bg-slate-800/50">
           <h3 className="font-bold text-slate-900 dark:text-white text-lg flex items-center gap-2">
-            <Icons.CreditCard className="text-primary-500" />
+            <CreditCard className="text-primary-500" />
             {type === "topup" ? "Bakiye Y�kle" : "�deme Yap"}
           </h3>
           <button
             onClick={onClose}
             className="p-2 hover:bg-black/10 dark:bg-white/10 rounded-full transition text-slate-900 dark:text-white"
           >
-            <Icons.X size={20} />
+            <X size={20} />
           </button>
         </div>
 
@@ -181,7 +181,7 @@ const PaymentModal = ({
               )}
 
               <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl flex items-start gap-3">
-                <Icons.ShieldCheck
+                <ShieldCheck
                   className="text-blue-400 shrink-0"
                   size={20}
                 />
@@ -197,7 +197,7 @@ const PaymentModal = ({
                 className="w-full py-4 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white rounded-xl font-bold text-lg shadow-lg shadow-primary-900/50 active-scale disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {loading ? (
-                  <Icons.Loader2 className="animate-spin" />
+                  <Loader2 className="animate-spin" />
                 ) : (
                   "Devam Et"
                 )}
@@ -207,7 +207,7 @@ const PaymentModal = ({
 
           {step === "processing" && (
             <div className="flex flex-col items-center justify-center py-10">
-              <Icons.Loader2
+              <Loader2
                 size={48}
                 className="text-primary-500 animate-spin mb-4"
               />
@@ -221,7 +221,7 @@ const PaymentModal = ({
           {step === "success" && (
             <div className="space-y-5 py-4 text-center">
               <div className="w-20 h-20 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto">
-                <Icons.CheckCircle2 size={42} className="text-emerald-400" />
+                <CheckCircle2 size={42} className="text-teal-400" />
               </div>
               <div>
                 <h4 className="text-2xl font-black text-slate-900 dark:text-white">
@@ -248,7 +248,7 @@ const PaymentModal = ({
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-500">Tutar</span>
-                  <span className="text-emerald-400 font-black">
+                  <span className="text-teal-400 font-black">
                     {formatCurrency(paymentResult?.amount || finalAmount)}
                   </span>
                 </div>

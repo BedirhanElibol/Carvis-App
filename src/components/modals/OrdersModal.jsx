@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { Package, X } from "lucide-react";
 import { Badge } from "../Core";
 
 const OrdersModal = ({ show, onClose, t, orders }) => {
@@ -10,10 +10,10 @@ const OrdersModal = ({ show, onClose, t, orders }) => {
       <div className="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl max-h-[80vh] flex flex-col">
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-bold text-xl flex items-center gap-2 font-sans">
-            <Icons.Package size={22} className="text-orange-600" /> {t.myOrders}
+            <Package size={22} className="text-orange-600" /> {t.myOrders}
           </h3>
           <button onClick={onClose}>
-            <Icons.X size={20} className="text-slate-500 dark:text-slate-400" />
+            <X size={20} className="text-slate-500 dark:text-slate-400" />
           </button>
         </div>
 

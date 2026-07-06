@@ -1,7 +1,7 @@
 import React, { useState } from "react";
  
 import { motion, AnimatePresence } from "framer-motion";
-import * as Icons from "lucide-react";
+import { Activity, Calendar, CreditCard, Plus, Wrench, X } from "lucide-react";
 import { useGarage } from "../../context/GarageContext";
 import { Badge } from "../Core";
 
@@ -55,7 +55,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
           <div className="p-6 bg-gradient-to-br from-slate-900 to-slate-950 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
             <div className="flex items-center gap-4">
               <div className="bg-primary-500/10 p-3 rounded-2xl">
-                <Icons.Activity size={24} className="text-primary-500" />
+                <Activity size={24} className="text-primary-500" />
               </div>
               <div>
                 <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tighter uppercase leading-none font-sans">
@@ -70,7 +70,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
               onClick={onClose}
               className="p-2 hover:bg-black/5 dark:bg-white/5 rounded-full text-slate-500 dark:text-slate-400 transition-all active-scale"
             >
-              <Icons.X size={24} />
+              <X size={24} />
             </button>
           </div>
 
@@ -82,7 +82,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
                 onClick={() => setIsAdding(true)}
                 className="w-full py-4 border-2 border-dashed border-black/10 dark:border-white/10 rounded-3xl flex items-center justify-center gap-3 text-slate-500 dark:text-slate-400 hover:border-primary-500/50 hover:text-primary-400 transition-all group"
               >
-                <Icons.Plus
+                <Plus
                   size={20}
                   className="group-hover:rotate-90 transition-transform"
                 />
@@ -104,7 +104,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
                     onClick={() => setIsAdding(false)}
                     className="text-slate-500 hover:text-slate-900 dark:text-white"
                   >
-                    <Icons.X size={16} />
+                    <X size={16} />
                   </button>
                 </div>
                 <div className="space-y-4">
@@ -146,7 +146,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
                         setFormData({ ...formData, cost: e.target.value })
                       }
                       placeholder="Tutar (₺)"
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 p-4 rounded-xl text-slate-900 dark:text-white outline-none focus:border-primary-500 font-bold text-emerald-400 font-sans"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 p-4 rounded-xl text-slate-900 dark:text-white outline-none focus:border-primary-500 font-bold text-teal-400 font-sans"
                     />
                   </div>
                   <button
@@ -155,7 +155,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
                     className="w-full bg-primary-600 text-slate-900 dark:text-white py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary-500 transition shadow-xl shadow-primary-900/40 active-scale disabled:opacity-50 font-sans"
                   >
                     {loading ? (
-                      <Icons.Activity
+                      <Activity
                         size={20}
                         className="animate-spin mx-auto"
                       />
@@ -174,7 +174,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
               </h4>
               {maintenanceRecords.length === 0 ? (
                 <div className="text-center py-12 opacity-30 bg-black/5 dark:bg-white/5 rounded-3xl border border-dashed border-black/10 dark:border-white/10">
-                  <Icons.Wrench size={32} className="mx-auto mb-2" />
+                  <Wrench size={32} className="mx-auto mb-2" />
                   <p className="text-xs font-medium font-sans">
                     Henüz bir servis kaydı yok.
                   </p>
@@ -188,7 +188,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex items-center gap-3">
                         <div className="bg-primary-500/10 p-2.5 rounded-xl border border-primary-500/20">
-                          <Icons.Calendar
+                          <Calendar
                             size={16}
                             className="text-primary-400"
                           />
@@ -219,15 +219,15 @@ const ServiceHistoryModal = ({ show, onClose }) => {
                       {record.description}
                     </p>
                     <div className="flex items-center justify-between pt-3 border-t border-black/5 dark:border-white/5">
-                      <div className="flex items-center gap-2 text-emerald-400">
-                        <Icons.CreditCard size={14} />
+                      <div className="flex items-center gap-2 text-teal-400">
+                        <CreditCard size={14} />
                         <span className="text-xs font-black font-sans">
                           {record.cost
                             ? `${Number(record.cost).toLocaleString()} ₺`
                             : "Fiyat Belirtilmedi"}
                         </span>
                       </div>
-                      <Icons.Wrench
+                      <Wrench
                         size={16}
                         className="text-slate-700 group-hover:text-primary-600 transition"
                       />

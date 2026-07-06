@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "lucide-react";
+import { CreditCard, Wallet } from "lucide-react";
 import { useWallet } from "../../../context/WalletContext";
 const CheckoutPaymentStep = ({
   paymentMethod,
@@ -22,7 +22,7 @@ const CheckoutPaymentStep = ({
           className={`flex-1 p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all active-scale ${paymentMethod === "card" ? "bg-primary-600/20 border-primary-500 text-slate-900 dark:text-white" : "glass-card border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400"}`}
         >
           {" "}
-          <Icons.CreditCard size={24} />{" "}
+          <CreditCard size={24} />{" "}
           <span className="text-xs font-bold">Kredi Kartı</span>{" "}
         </button>{" "}
         <button
@@ -30,7 +30,7 @@ const CheckoutPaymentStep = ({
           className={`flex-1 p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all active-scale ${paymentMethod === "wallet" ? "bg-primary-600/20 border-primary-500 text-slate-900 dark:text-white" : "glass-card border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400"}`}
         >
           {" "}
-          <Icons.Wallet size={24} />{" "}
+          <Wallet size={24} />{" "}
           <span className="text-xs font-bold">Rapidsy Cüzdan</span>{" "}
         </button>{" "}
       </div>{" "}
@@ -58,7 +58,7 @@ const CheckoutPaymentStep = ({
                       setCardData({ ...cardData, number: e.target.value })
                     }
                   />{" "}
-                  <Icons.CreditCard
+                  <CreditCard
                     size={16}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500"
                   />{" "}
@@ -167,7 +167,7 @@ const CheckoutPaymentStep = ({
             {" "}
             <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-black/10 dark:border-white/10 shadow-lg">
               {" "}
-              <Icons.Wallet size={32} className="text-primary-400" />{" "}
+              <Wallet size={32} className="text-primary-400" />{" "}
             </div>{" "}
             <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-2">
               Cüzdan Bakiyeniz

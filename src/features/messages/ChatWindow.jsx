@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useMessage } from "../../context/MessageContext";
 import { useAuth } from "../../context/AuthContext";
-import * as Icons from "lucide-react";
+import { ArrowLeft, CheckCheck, Loader2, Paperclip, Send } from "lucide-react";
 import { format } from "date-fns";
 
 const ChatWindow = ({ activeUserId, onBack }) => {
@@ -60,7 +60,7 @@ const ChatWindow = ({ activeUserId, onBack }) => {
           onClick={onBack}
           className="md:hidden p-2 -ml-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
         >
-          <Icons.ArrowLeft size={20} />
+          <ArrowLeft size={20} />
         </button>
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary-600 to-primary-600 flex items-center justify-center text-slate-900 dark:text-white font-bold text-sm shadow-lg shadow-primary-900/20">
@@ -80,7 +80,7 @@ const ChatWindow = ({ activeUserId, onBack }) => {
       <div className="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4">
         {msgLoading && messages.length === 0 ? (
           <div className="flex justify-center items-center h-full">
-            <Icons.Loader2 className="animate-spin text-primary-500" />
+            <Loader2 className="animate-spin text-primary-500" />
           </div>
         ) : (
           messages.map((msg) => {
@@ -103,7 +103,7 @@ const ChatWindow = ({ activeUserId, onBack }) => {
                   >
                     <span>{format(new Date(msg.created_at), "HH:mm")}</span>
                     {isMe && (
-                      <Icons.CheckCheck
+                      <CheckCheck
                         size={12}
                         className={
                           msg.is_read ? "text-blue-200" : "text-primary-300/50"
@@ -126,7 +126,7 @@ const ChatWindow = ({ activeUserId, onBack }) => {
             type="button"
             className="p-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
           >
-            <Icons.Paperclip size={20} />
+            <Paperclip size={20} />
           </button>
           <input
             type="text"
@@ -141,9 +141,9 @@ const ChatWindow = ({ activeUserId, onBack }) => {
             className="p-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white rounded-xl shadow-lg shadow-primary-900/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all active-scale"
           >
             {sending ? (
-              <Icons.Loader2 size={20} className="animate-spin" />
+              <Loader2 size={20} className="animate-spin" />
             ) : (
-              <Icons.Send size={20} />
+              <Send size={20} />
             )}
           </button>
         </form>

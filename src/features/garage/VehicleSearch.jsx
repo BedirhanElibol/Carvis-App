@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
-import Tesseract from "tesseract.js";
-import * as Icons from "lucide-react";
+import { CalendarDays, Camera, Car, Check, ChevronLeft, ChevronRight, Gauge, Hash, HelpCircle, Search, ShieldCheck } from "lucide-react";
 import { Badge } from "../../components/Core";
 import { useExternalData } from "../../hooks/useExternalData";
 import { useUI } from "../../context/UIContext";
@@ -64,6 +63,10 @@ const VehicleSearch = ({ onVehicleFound }) => {
     setOcrProgress(0);
 
     try {
+      // Dinamik Import: OCR sadece buton basıldığında yüklenecek! (Code Splitting)
+      const tesseractModule = await import("tesseract.js");
+      const Tesseract = tesseractModule.default || tesseractModule;
+
       const {
         data: { text },
       } = await Tesseract.recognize(file, "eng", {
@@ -116,7 +119,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
   const getFuelBadgeColor = (fuel) => {
     switch (fuel?.toLowerCase()) {
       case "benzin":
-        return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+        return "bg-emerald-500/10 text-teal-400 border-emerald-500/20";
       case "dizel":
         return "bg-blue-500/10 text-blue-400 border-blue-500/20";
       case "elektrik":
@@ -143,7 +146,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
         <div className="absolute inset-0 z-50 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-md flex flex-col items-center justify-center gap-6 animate-in fade-in">
           <div className="relative w-48 h-32 border-2 border-primary-500/50 rounded-2xl overflow-hidden">
             <div className="absolute inset-0 bg-primary-500/5 flex items-center justify-center">
-              <Icons.Hash
+              <Hash
                 size={48}
                 className="text-primary-500/20 animate-pulse"
               />
@@ -164,7 +167,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
       <div className="relative z-10">
         <div className="flex items-center gap-3 mb-6">
           <div className="bg-primary-500/20 p-2.5 rounded-2xl">
-            <Icons.Car size={24} className="text-primary-500" />
+            <Car size={24} className="text-primary-500" />
           </div>
           <div>
             <h2 className="text-xl font-black tracking-tighter uppercase text-slate-900 dark:text-white">
@@ -203,7 +206,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
         {searchMode === "vin" ? (
           <div className="space-y-6 animate-in slide-in-from-right-4">
             <div className="relative">
-              <Icons.Hash
+              <Hash
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
                 size={18}
               />
@@ -220,7 +223,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-primary-500/10 hover:bg-primary-500/20 rounded-xl transition-all"
                 title="Kamera ile Tara"
               >
-                <Icons.Camera size={18} className="text-primary-500" />
+                <Camera size={18} className="text-primary-500" />
               </button>
               <input
                 ref={fileInputRef}
@@ -233,7 +236,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
             </div>
 
             <div className="bg-primary-500/5 border border-primary-500/20 p-4 rounded-2xl flex items-start gap-3">
-              <Icons.ShieldCheck
+              <ShieldCheck
                 size={20}
                 className="text-primary-500 shrink-0"
               />
@@ -272,7 +275,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                   }}
                   className="flex items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
-                  <Icons.ChevronLeft size={16} />
+                  <ChevronLeft size={16} />
                   <span className="text-[9px] font-black uppercase tracking-widest">Geri</span>
                 </button>
                 <div className="text-right">
@@ -289,7 +292,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
             {step === "brand" && (
               <div className="space-y-4 animate-in fade-in slide-in-from-left-4">
                 <div className="relative">
-                  <Icons.Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
                   <input
                     type="text"
                     placeholder="Marka Ara... (Örn: Fiat, BMW)"
@@ -327,7 +330,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
             {step === "series" && selectedBrandData && (
               <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
                 <div className="relative">
-                  <Icons.Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
                   <input
                     type="text"
                     placeholder="Seri Ara... (Örn: Egea, 3 Serisi)"
@@ -352,7 +355,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       <span className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors">
                         {ser.name}
                       </span>
-                      <Icons.ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
+                      <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
                     </button>
                   ))}
                 </div>
@@ -382,7 +385,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                         <span className={`px-2.5 py-0.5 rounded-full text-[8px] font-black uppercase border ${getFuelBadgeColor(mod.fuel)}`}>
                           {mod.fuel}
                         </span>
-                        <Icons.ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
+                        <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
                       </div>
                     </button>
                   ))}
@@ -407,7 +410,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       <span className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors truncate">
                         {trm}
                       </span>
-                      <Icons.ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors shrink-0" />
+                      <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors shrink-0" />
                     </button>
                   ))}
                   {/* Option for custom/other trim */}
@@ -421,7 +424,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                     <span className="text-xs font-bold uppercase text-slate-500 group-hover:text-slate-900 dark:text-white transition-colors">
                       Standart / Diğer
                     </span>
-                    <Icons.ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
+                    <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
                   </button>
                 </div>
               </div>
@@ -433,7 +436,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                 {/* Summary Card */}
                 <div className="bg-primary-500/5 border border-primary-500/20 p-5 rounded-3xl relative overflow-hidden flex items-start gap-4">
                   <div className="bg-primary-500/10 p-3 rounded-2xl text-primary-400 shrink-0">
-                    <Icons.Car size={22} />
+                    <Car size={22} />
                   </div>
                   <div className="space-y-1 w-full">
                     <p className="text-[9px] font-black uppercase tracking-[0.2em] text-primary-500">Seçilen Araç Karakteri</p>
@@ -457,7 +460,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       ÜRETİM YILI
                     </label>
                     <div className="relative">
-                      <Icons.CalendarDays size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                      <CalendarDays size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                       <input
                         type="number"
                         placeholder="Örn: 2020"
@@ -475,7 +478,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       MEVCUT KİLOMETRE
                     </label>
                     <div className="relative">
-                      <Icons.Gauge size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                      <Gauge size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                       <input
                         type="number"
                         placeholder="Örn: 95000"
@@ -493,7 +496,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                   className="w-full bg-white text-slate-950 hover:bg-slate-100 disabled:opacity-30 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active-scale shadow-xl flex items-center justify-center gap-3"
                 >
                   GARAJA EKLE
-                  <Icons.Check size={18} />
+                  <Check size={18} />
                 </button>
               </div>
             )}
@@ -502,7 +505,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
 
         <div className="mt-8 flex items-center justify-center gap-4 text-slate-600">
           <button className="flex items-center gap-1.5 hover:text-slate-900 dark:text-white transition-colors">
-            <Icons.HelpCircle size={14} />
+            <HelpCircle size={14} />
             <span className="text-[9px] font-black uppercase tracking-widest leading-none">
               Şase No Nerede Yazar?
             </span>

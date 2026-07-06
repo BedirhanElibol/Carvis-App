@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../../../supabaseClient";
-import * as Icons from "lucide-react";
+import { AlertCircle, ArrowLeft, CheckCircle, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const PartnerAuthScreen = () => {
@@ -30,7 +30,7 @@ const PartnerAuthScreen = () => {
     parking: { title: "Otopark İşletmesi", color: "cyan", bg: "from-cyan-900/40 to-slate-950", btn: "bg-cyan-500 hover:bg-cyan-400", border: "border-cyan-500/30", text: "text-cyan-400" },
     valet: { title: "Vale Hizmeti", color: "amber", bg: "from-amber-900/40 to-slate-950", btn: "bg-amber-500 hover:bg-amber-400", border: "border-amber-500/30", text: "text-amber-400" },
     mechanic: { title: "Usta & Servis", color: "orange", bg: "from-orange-900/40 to-slate-950", btn: "bg-orange-500 hover:bg-orange-400", border: "border-orange-500/30", text: "text-orange-400" },
-    parts: { title: "Parça Tedarikçisi", color: "emerald", bg: "from-emerald-900/40 to-slate-950", btn: "bg-emerald-500 hover:bg-emerald-400", border: "border-emerald-500/30", text: "text-emerald-400" },
+    parts: { title: "Parça Tedarikçisi", color: "emerald", bg: "from-emerald-900/40 to-slate-950", btn: "bg-emerald-500 hover:bg-teal-400", border: "border-emerald-500/30", text: "text-teal-400" },
     carwash: { title: "Seyyar Yıkama", color: "cyan", bg: "from-cyan-900/40 to-slate-950", btn: "bg-cyan-500 hover:bg-cyan-400", border: "border-cyan-500/30", text: "text-cyan-400" },
   };
 
@@ -231,7 +231,7 @@ const PartnerAuthScreen = () => {
         return (
           <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center py-8">
             <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Icons.CheckCircle size={40} className="text-green-500" />
+              <CheckCircle size={40} className="text-green-500" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Başvuru Alındı!</h3>
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
@@ -253,7 +253,7 @@ const PartnerAuthScreen = () => {
         
         <div className="flex justify-between items-center mb-8">
           <button onClick={() => isLogin ? navigate("/partner-login") : setStep(Math.max(1, step - 1))} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
-            <Icons.ArrowLeft size={20} />
+            <ArrowLeft size={20} />
           </button>
           <div className={`px-4 py-1.5 rounded-full bg-${currentTheme.color}-500/10 ${currentTheme.text} text-[10px] font-black uppercase tracking-widest`}>
             {currentTheme.title}
@@ -270,7 +270,7 @@ const PartnerAuthScreen = () => {
         </div>
 
         {error && <div className="bg-red-500/10 border border-red-500/20 text-red-200 p-4 rounded-xl mb-6 text-sm flex items-center gap-3">
-          <Icons.AlertCircle size={18} /> {error}
+          <AlertCircle size={18} /> {error}
         </div>}
 
         <form onSubmit={handleAuth} className="space-y-6">
@@ -293,7 +293,7 @@ const PartnerAuthScreen = () => {
               disabled={loading}
               className={`w-full py-5 rounded-2xl text-black text-lg font-black font-sans shadow-xl shadow-${currentTheme.color}-500/10 ${currentTheme.btn} transition-all active:scale-[0.97] flex items-center justify-center gap-3`}
             >
-              {loading ? <Icons.Loader2 className="animate-spin" size={24} /> : (isLogin ? "Sisteme Gir" : (step === 3 ? "Başvuruyu Tamamla" : "Sonraki Adım"))}
+              {loading ? <Loader2 className="animate-spin" size={24} /> : (isLogin ? "Sisteme Gir" : (step === 3 ? "Başvuruyu Tamamla" : "Sonraki Adım"))}
             </button>
           )}
         </form>

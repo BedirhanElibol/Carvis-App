@@ -38,18 +38,24 @@ async def diagnose_vehicle(request: DiagnosisRequest):
         severity=prediction["severity"]
     )
 
-    # Save to Supabase (Mock insert - assuming a 'diagnostics' table exists)
+    # Save to Supabase
     try:
-        # Example of how you would insert into Supabase:
-        # db.table("diagnostics").insert({
-        #     "id": diag_id,
-        #     "user_id": request.user_id,
-        #     "description": request.description,
-        #     "prediction": prediction["issue"],
-        #     "severity": prediction["severity"]
-        # }).execute()
-        pass
+        data = {
+            "id": diag_id,
+            "user_id": request.user_id,
+            "description": request.description,
+            "predicted_issue": prediction["issue"],
+            "confidence_score": confidence,
+            "recommended_action": prediction["action"],
+            "severity": prediction["severity"]
+        }
+        # Assuming request.image_url is available
+        if request.image_url:
+            data["images"] = [request.image_url]
+
+        db.table("ai_diagnostics").insert(data).execute()
+        print(f"✅ Successfully inserted AI diagnosis {diag_id} into Supabase")
     except Exception as e:
-        print(f"Supabase error: {e}")
+        print(f"❌ Supabase error: {e}")
 
     return response_data

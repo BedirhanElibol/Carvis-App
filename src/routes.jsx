@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import * as Icons from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useAuth } from "./context/AuthContext";
 import SEO from "./components/SEO";
 
@@ -100,7 +100,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-        <Icons.Loader2 className="animate-spin text-primary-500" size={32} />
+        <Loader2 className="animate-spin text-primary-500" size={32} />
       </div>
     );
   }
@@ -143,7 +143,7 @@ export const AppRoutes = () => {
     <Suspense
       fallback={
         <div className="h-screen w-full flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-          <Icons.Loader2 className="animate-spin text-primary-600" size={32} />
+          <Loader2 className="animate-spin text-primary-600" size={32} />
         </div>
       }
     >

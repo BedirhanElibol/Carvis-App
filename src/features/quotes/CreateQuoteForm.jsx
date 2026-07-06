@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
 import { supabase } from "../../supabaseClient";
-import * as Icons from "lucide-react";
+import { ArrowLeft, Clock, DollarSign, FileText, Send, Shield, ShieldAlert } from "lucide-react";
 
 const CreateQuoteForm = () => {
   const { requestId } = useParams();
@@ -105,7 +105,7 @@ const CreateQuoteForm = () => {
   if (currentUser?.role !== "partner" && currentUser?.role !== "admin") {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-5 text-center">
-        <Icons.ShieldAlert size={64} className="text-red-500 mb-6 mx-auto animate-pulse" />
+        <ShieldAlert size={64} className="text-red-500 mb-6 mx-auto animate-pulse" />
         <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">Yetkisiz Erişim</h2>
         <p className="text-slate-500 dark:text-slate-400 max-w-md mb-8">Bu form sadece onaylı servisler ve idari yöneticiler içindir.</p>
         <button onClick={() => navigate("/application/home")} className="bg-white text-slate-950 font-black px-8 py-3 rounded-xl hover:bg-slate-200 transition-all">Geri Dön</button>
@@ -126,7 +126,7 @@ const CreateQuoteForm = () => {
             onClick={() => navigate(-1)}
             className="w-10 h-10 glass-card rounded-xl flex items-center justify-center active-scale"
           >
-            <Icons.ArrowLeft size={20} />
+            <ArrowLeft size={20} />
           </button>
           <div>
             <h1 className="text-xl font-bold">Teklif Oluştur</h1>
@@ -183,7 +183,7 @@ const CreateQuoteForm = () => {
           {/* Fiyat */}
           <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
             <label className="flex items-center gap-2 text-sm font-bold mb-3">
-              <Icons.DollarSign size={18} className="text-primary-500" /> Teklif
+              <DollarSign size={18} className="text-primary-500" /> Teklif
               Fiyatı (₺)
             </label>
             <input
@@ -202,7 +202,7 @@ const CreateQuoteForm = () => {
           {/* Teslimat Süresi */}
           <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
             <label className="flex items-center gap-2 text-sm font-bold mb-3">
-              <Icons.Clock size={18} className="text-primary-500" /> Tahmini
+              <Clock size={18} className="text-primary-500" /> Tahmini
               Teslimat (Gün)
             </label>
             <input
@@ -222,7 +222,7 @@ const CreateQuoteForm = () => {
           {/* Garanti */}
           <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
             <label className="flex items-center gap-2 text-sm font-bold mb-3">
-              <Icons.Shield size={18} className="text-primary-500" /> Garanti
+              <Shield size={18} className="text-primary-500" /> Garanti
               Süresi (Ay)
             </label>
             <select
@@ -243,7 +243,7 @@ const CreateQuoteForm = () => {
           {/* Açıklama */}
           <div className="glass-card p-5 rounded-2xl border border-black/10 dark:border-white/10">
             <label className="flex items-center gap-2 text-sm font-bold mb-3">
-              <Icons.FileText size={18} className="text-primary-500" /> Teklif
+              <FileText size={18} className="text-primary-500" /> Teklif
               Açıklaması
             </label>
             <textarea
@@ -281,7 +281,7 @@ const CreateQuoteForm = () => {
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
             ) : (
               <>
-                <Icons.Send size={20} /> Teklifi Gönder
+                <Send size={20} /> Teklifi Gönder
               </>
             )}
           </button>
