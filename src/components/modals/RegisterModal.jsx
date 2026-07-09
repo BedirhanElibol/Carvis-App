@@ -3,6 +3,7 @@ import { Check, Eye, EyeOff, Loader2, Lock, Mail, User, UserPlus, X } from "luci
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
+import SocialLogins from "../shared/SocialLogins";
 
 const RegisterModal = ({
   show,
@@ -286,58 +287,7 @@ const RegisterModal = ({
                 </button>
               </form>
 
-              {/* Social Logic Divider */}
-              <div className="flex items-center gap-4 my-6 opacity-50">
-                <div className="h-px bg-black/10 dark:bg-white/10 flex-1"></div>
-                <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-sans">
-                  Veya
-                </span>
-                <div className="h-px bg-black/10 dark:bg-white/10 flex-1"></div>
-              </div>
-
-              {/* Social Logins */}
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                <button
-                  type="button"
-                  onClick={() => handleSocialRegister("google")}
-                  disabled={socialLoading !== null}
-                  className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
-                >
-                  {socialLoading === "google" ? (
-                    <Loader2
-                      size={18}
-                      className="animate-spin text-slate-500 dark:text-slate-400"
-                    />
-                  ) : (
-                    <img
-                      src="https://www.svgrepo.com/show/475656/google-color.svg"
-                      alt="Google"
-                      className="w-5 h-5"
-                    />
-                  )}
-                  Google
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleSocialRegister("apple")}
-                  disabled={socialLoading !== null}
-                  className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
-                >
-                  {socialLoading === "apple" ? (
-                    <Loader2
-                      size={18}
-                      className="animate-spin text-slate-500 dark:text-slate-400"
-                    />
-                  ) : (
-                    <img
-                      src="https://www.svgrepo.com/show/511330/apple-173.svg"
-                      alt="Apple"
-                      className="w-5 h-5 invert"
-                    />
-                  )}
-                  Apple
-                </button>
-              </div>
+              <SocialLogins onSocialLogin={handleSocialRegister} socialLoading={socialLoading} />
 
               <div className="mt-8 text-center bg-black/20 p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center gap-2">
                 <div>
