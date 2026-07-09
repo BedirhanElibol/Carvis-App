@@ -9,8 +9,6 @@
  */
 import { supabase } from "../supabaseClient";
 
-const CORS_PROXY = "https://corsproxy.io/?"; 
-
 // --- Turkey Cities Coordinate & API Mapping ---
 // Accuracy for 81 provinces to ensure correct weather & fuel data
 const TURKEY_CITIES = {
