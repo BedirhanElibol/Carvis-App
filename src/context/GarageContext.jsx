@@ -44,14 +44,17 @@ export const GarageProvider = ({ children }) => {
         return;
       }
       setVehicles(data || []);
-      if (data?.length > 0 && !currentVehicle) setCurrentVehicle(data[0]);
+      // Only set currentVehicle if none is selected yet
+      if (data?.length > 0) {
+        setCurrentVehicle((prev) => prev ?? data[0]);
+      }
     } catch (error) {
       console.error("Garage Fetch Error:", error);
       setVehicles([]);
     } finally {
       setLoading(false);
     }
-  }, [currentUser?.id, currentVehicle]);
+  }, [currentUser?.id]); // ← removed currentVehicle — was causing infinite refetch loop
 
   const fetchMaintenanceRecords = useCallback(async (vehicleId) => {
     if (!vehicleId) return;
@@ -146,7 +149,13 @@ export const GarageProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (!currentUser || currentUser.isAnonymous || !currentUser.id) {
+    // Guard: don't fetch for guest/anonymous users
+    const isGuest =
+      !currentUser ||
+      currentUser.isAnonymous === true ||
+      String(currentUser.id || "").startsWith("guest-");
+
+    if (isGuest) {
       setVehicles([]);
       setCurrentVehicle(null);
       setMaintenanceRecords([]);
@@ -185,7 +194,7 @@ export const GarageProvider = ({ children }) => {
           table: "maintenance_records",
           filter: `user_id=eq.${currentUser.id}`,
         },
-        () => {
+        (payload) => {
           if (currentVehicle) fetchMaintenanceRecords(currentVehicle.id);
         },
       )
@@ -195,7 +204,7 @@ export const GarageProvider = ({ children }) => {
       supabase.removeChannel(vehicleChannel);
       supabase.removeChannel(maintenanceChannel);
     };
-  }, [currentUser, currentVehicle, fetchVehicles, fetchMaintenanceRecords]);
+  }, [currentUser, fetchVehicles, fetchMaintenanceRecords]); // ← removed currentVehicle dep
 
   // Araç seçildiğinde bakım, harcama, belge ve raporları getir
   useEffect(() => {
@@ -213,6 +222,10 @@ export const GarageProvider = ({ children }) => {
   }, [currentVehicle, fetchMaintenanceRecords, fetchExpenses, fetchDocuments, fetchReports]);
 
   const addVehicle = async (vehicleData) => {
+    // Guard against adding vehicles as guest
+    if (!currentUser?.id || String(currentUser.id).startsWith("guest-")) {
+      return { data: null, error: new Error("Araç eklemek için giriş yapmanız gerekiyor.") };
+    }
     setIsSubmittingVehicle(true);
     try {
       const { data, error } = await supabase
@@ -228,6 +241,8 @@ export const GarageProvider = ({ children }) => {
         throw error;
       }
       setVehicles((prev) => [data, ...prev]);
+      // Auto-select the newly added vehicle
+      setCurrentVehicle(data);
       return { data, error: null };
     } catch (error) {
       console.error("Error adding vehicle:", error);

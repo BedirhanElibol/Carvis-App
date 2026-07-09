@@ -27,6 +27,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
     fuel: "",
     year: "",
     km: "",
+    plate: "",
   });
 
   const { fetchVinDetails } = useExternalData();
@@ -45,8 +46,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
         model: data.model || "Bilinmiyor",
         year: data.year || "",
         engine: `${data.engine_cylinders || "4"} Silindir - ${data.fuel_type || "Benzin"}`,
-        plate:
-          "34" + (Math.random() + 1).toString(36).substring(7).toUpperCase(),
+        plate: selection.plate ? selection.plate.toUpperCase().replace(/\s+/g, '') : "34" + (Math.random() + 1).toString(36).substring(7).toUpperCase(),
         vin: vin,
       });
     } else {
@@ -109,8 +109,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
         model: `${selection.series} ${selection.model || ""}`.trim(),
         year: selection.year,
         engine: `${selection.trim || ""} - ${selection.fuel || ""}`.trim().replace(/^-\s*|\s*-$/, ""),
-        plate:
-          "34" + (Math.random() + 1).toString(36).substring(7).toUpperCase(),
+        plate: selection.plate ? selection.plate.toUpperCase().replace(/\s+/g, '') : "34" + (Math.random() + 1).toString(36).substring(7).toUpperCase(),
         km: selection.km,
       });
     }
@@ -490,16 +489,35 @@ const VehicleSearch = ({ onVehicleFound }) => {
                   </div>
                 </div>
 
+                {/* License Plate Field */}
+                <div className="space-y-1.5">
+                  <label className="text-[9px] font-black text-slate-500 uppercase tracking-wider ml-1.5 block">
+                    ARAÇ PLAKASI
+                  </label>
+                  <div className="relative">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-1 bg-blue-600 text-white font-black text-[9px] px-1.5 py-0.5 rounded-sm select-none">
+                      TR
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Örn: 34ABC123"
+                      value={selection.plate}
+                      onChange={(e) => setSelection({ ...selection, plate: e.target.value.toUpperCase() })}
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-2xl p-4.5 pl-14 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-slate-600"
+                    />
+                  </div>
+                </div>
+
                 <button
                   onClick={handleManualSubmit}
-                  disabled={!selection.year || !selection.km}
+                  disabled={!selection.year || !selection.km || !selection.plate}
                   className="w-full bg-white text-slate-950 hover:bg-slate-100 disabled:opacity-30 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active-scale shadow-xl flex items-center justify-center gap-3"
                 >
                   GARAJA EKLE
                   <Check size={18} />
                 </button>
               </div>
-            )}
+             )}
           </div>
         )}
 
