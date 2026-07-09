@@ -9,20 +9,22 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchProfile = async (user) => {
     if (!user) return null;
     try {
-      const { data: rows } = await supabase
+      const { data: rows, error: selectError } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", user.id)
         .limit(1);
 
+      if (selectError) throw selectError;
       if (rows && rows.length > 0) return rows[0];
 
       // Profile missing (OAuth user created before trigger) — auto-create it
-      const { data: newProfile } = await supabase
+      const { data: newProfile, error: upsertError } = await supabase
         .from("profiles")
         .upsert(
           {
@@ -39,28 +41,36 @@ export const AuthProvider = ({ children }) => {
         .select()
         .limit(1);
 
+      if (upsertError) throw upsertError;
       return newProfile?.[0] || { role: "customer" };
     } catch (err) {
       if (err.code !== "42501") console.error("Profile fetch error:", err);
-      return { role: "customer" };
+      throw err;
     }
   };
 
   useEffect(() => {
     const updateUserData = async (session) => {
       if (session?.user) {
-        let profile = await fetchProfile(session.user);
-        
-        // Roles and Application statuses are strictly enforced by the Database and Admin panel.
-        // No client-side URL interception for privileges.
-        
-        // Check email confirmation OR if logged in via Social Provider
-        const isVerified =
-          profile?.is_verified ||
-          !!session.user.email_confirmed_at ||
-          ["google", "apple"].includes(session.user.app_metadata?.provider);
+        try {
+          setError(null);
+          let profile = await fetchProfile(session.user);
 
-        setCurrentUser({ ...session.user, ...profile, isVerified });
+          // Roles and Application statuses are strictly enforced by the Database and Admin panel.
+          // No client-side URL interception for privileges.
+
+          // Check email confirmation OR if logged in via Social Provider
+          const isVerified =
+            profile?.is_verified ||
+            !!session.user.email_confirmed_at ||
+            ["google", "apple"].includes(session.user.app_metadata?.provider);
+
+          setCurrentUser({ ...session.user, ...profile, isVerified });
+        } catch (err) {
+          console.error("Auth error:", err);
+          setError(err.message || "Authentication failed");
+          setCurrentUser(null);
+        }
       } else {
         setCurrentUser(null);
       }
@@ -109,9 +119,10 @@ export const AuthProvider = ({ children }) => {
     currentUser,
     setCurrentUser,
     loading,
+    error,
     handleLogout,
     loginAsGuest,
-  }), [currentUser, loading]);
+  }), [currentUser, loading, error]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
