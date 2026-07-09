@@ -607,11 +607,13 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                     </div>
                   )}
 
-                  {maintenanceRecords.map((record) => {
-                    const s = getMaintenanceStatus(record);
-                    const preset = maintenancePresets.find(p => p.name === record.part_name);
-                    const RecordIcon = preset?.icon || Wrench;
-                    const iconColor = preset?.color || "text-slate-500";
+                  {(() => {
+                    const maintenancePresetMap = new Map(maintenancePresets.map(p => [p.name, p]));
+                    return maintenanceRecords.map((record) => {
+                      const s = getMaintenanceStatus(record);
+                      const preset = maintenancePresetMap.get(record.part_name);
+                      const RecordIcon = preset?.icon || Wrench;
+                      const iconColor = preset?.color || "text-slate-500";
                     
                     return (
                       <div key={record.id} className="p-5 rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 flex items-center justify-between gap-4 group hover:border-teal-500/20 transition-all">
@@ -657,7 +659,8 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                         </div>
                       </div>
                     );
-                  })}
+                  });
+                  })()}
                 </div>
               </motion.div>
             )}
