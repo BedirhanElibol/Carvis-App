@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { ArrowRight, ChevronDown, ChevronRight, Droplets, Fuel, Map, MapPin, RefreshCw, Search, Box, Wrench, TrendingUp, ShieldCheck, HardDrive, Wind, Flame } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 const LandingHero = memo(({t, language, searchQuery, setSearchQuery, searchLocation, setSearchLocation, CITIES, fuelPrices, fuelCity, setFuelCity, fuelLastUpdated, isLoadingFuel}) => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const LandingHero = memo(({t, language, searchQuery, setSearchQuery, searchLocat
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-7xl font-black tracking-tight uppercase max-w-4xl leading-[1.05] mb-6"
-            dangerouslySetInnerHTML={{ __html: t.landingHeroTitle }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(t.landingHeroTitle) }}
           />
 
           {/* Subtitle */}
