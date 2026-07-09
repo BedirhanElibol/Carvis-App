@@ -4,7 +4,7 @@ import L from "leaflet";
 import { MapPin, Navigation, Star } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 
-// Fix for default Leaflet icon issues in React
+// Workaround for default Leaflet icon issues in React
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
