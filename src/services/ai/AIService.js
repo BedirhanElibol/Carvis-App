@@ -9,7 +9,7 @@ const LOCAL_KNOWLEDGE_BASE = {
   "akü": "Araç çalışmıyorsa akü bitmiş olabilir. Takviye kablosu ile çalıştırmayı deneyebilir veya bir elektrikçiye danışabilirsiniz.",
   "motor": "Motordan gelen tıkırtı veya vuruntu sesleri ciddi olabilir. Yağ seviyesini kontrol edip uzman bir ustaya görünmenizi öneririm.",
   "lastik": "Lastik basınç uyarısı mevsimsel sıcaklık farklarından olabilir. En yakın istasyonda basınçları kontrol edebilirsiniz.",
-  "merhaba": "Merhaba! Ben Carvis Asistan. Aracınızla ilgili her türlü teknik soruda size yardımcı olmaya hazırım.",
+  "merhaba": "Merhaba! Ben Rapidsy Asistan. Aracınızla ilgili her türlü teknik soruda size yardımcı olmaya hazırım.",
   "nasılsın": "Teşekkür ederim, size yardımcı olmak için buradayım. Aracınızda bir sorun mu var?",
   "fiyat": "Fiyatlar parça ve işçiliğe göre değişebilir. Ustalardan canlı teklif alarak net maliyeti görebilirsiniz."
 };

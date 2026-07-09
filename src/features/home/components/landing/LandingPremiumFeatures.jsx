@@ -1,91 +1,73 @@
 import React, { memo } from "react";
-import { TrendingUp, Fuel, Wrench, CheckCircle2, Layers, Star, Package, ShieldCheck, Navigation, User } from "lucide-react";
+import { TrendingUp, Fuel, Wrench, CheckCircle2, Layers, Star, Package, ShieldCheck, Navigation, User, HardDrive, Battery, Zap, FileText } from "lucide-react";
 
 const LandingPremiumFeatures = memo(({t, language}) => {
   return (
     <>
         {/* PREMIUM FEATURE SHOWCASE (Ürün Tanıtım Bölümleri) */}
-        <section className="w-full max-w-7xl mx-auto px-6 mb-28 space-y-32 z-10 relative">
+        <section id="premium-features" className="w-full max-w-7xl mx-auto px-6 mb-28 space-y-32 z-10 relative">
           
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-20">
             <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-blue-500">
-              {language === "tr" ? "KAPSAMLI ÇÖZÜMLER" : "COMPREHENSIVE SOLUTIONS"}
+              {language === "tr" ? "GÜVENLİ LİMANINIZ" : "YOUR SECURE HARBOR"}
             </span>
             <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tight uppercase">
-              {language === "tr" ? "ARACINIZIN İHTİYAÇ DUYDUĞU TÜM DİJİTAL KONTROLLER" : "ALL THE DIGITAL CONTROLS YOUR VEHICLE NEEDS"}
+              {language === "tr" ? "SÜRPRİZLERE YER YOK, %100 KONTROL SİZDE" : "NO SURPRISES, 100% IN YOUR CONTROL"}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto mt-4 text-sm md:text-base font-semibold leading-relaxed">
               {language === "tr" 
-                ? "Yakıt ve gider takibinden yedek parça tedariğine, usta tekliflerinden servis randevularına kadar tüm ihtiyaçlarınızı tek bir panelden şeffafça yönetin."
-                : "Manage all your needs from fuel & expense tracking to spare parts, mechanic quotes to service appointments transparently from a single dashboard."}
+                ? "Sanayi stresi bitti. Doğrulanmış ustalar, havuz ödeme güvencesi ve onaylı işlemler ile en temel ihtiyacınız olan 'güven' problemini kökünden çözüyoruz."
+                : "Mechanic stress is over. We solve your fundamental need for 'trust' from the ground up with verified mechanics, escrow payments, and approved repairs."}
             </p>
           </div>
 
-          {/* FEATURE 1: FUEL & EXPENSE TRACKING (Yakıt ve Gider Takip Sistemi) */}
+          {/* FEATURE 1: ESCROW & LEGAL GUARANTEE (Havuz Ödemesi ve Garanti) */}
           <div className="flex flex-col lg:flex-row items-center gap-16">
-            {/* Left: Graphic mockup of Fuel & Expenses */}
+            {/* Left: Graphic mockup of Escrow & Payment */}
             <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 shadow-2xl relative overflow-hidden group">
               <div className="absolute top-0 left-0 w-[200px] h-[200px] bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none"></div>
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
-                  <span className="text-[8px] font-black text-indigo-400 tracking-wider uppercase">CARVIS TELEMETRİ</span>
+                  <span className="text-[8px] font-black text-indigo-400 tracking-wider uppercase">RAPIDSY GÜVENCESİ</span>
                   <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                    {language === "tr" ? "YAKIT VE GİDER KOKPİTİ" : "FUEL & EXPENSE COCKPIT"}
+                    {language === "tr" ? "%100 GÜVENLİ HAVUZ ÖDEMESİ" : "100% SECURE ESCROW PAYMENT"}
                   </h4>
                 </div>
-                <TrendingUp className="text-indigo-400" size={18} />
+                <ShieldCheck className="text-indigo-400" size={18} />
               </div>
 
-              {/* Monthly Stats Row */}
-              <div className="grid grid-cols-3 gap-3 mb-6">
-                <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-3 shadow-md text-left">
-                  <span className="text-[8px] font-black text-slate-400 uppercase">{language === "tr" ? "AKARYAKIT" : "FUEL"}</span>
-                  <div className="text-xs md:text-sm font-black text-slate-900 dark:text-white font-mono mt-1">₺4.250</div>
+              {/* Escrow Status Mockup */}
+              <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-4 shadow-md text-left mb-6">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-[9px] font-black text-slate-400 uppercase">{language === "tr" ? "HİZMET BEDELİ (BLOKEDE)" : "SERVICE FEE (IN ESCROW)"}</span>
+                  <span className="text-[8px] font-black text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-full uppercase">{language === "tr" ? "Güvenli Havuzda" : "In Secure Escrow"}</span>
                 </div>
-                <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-3 shadow-md text-left">
-                  <span className="text-[8px] font-black text-slate-400 uppercase">{language === "tr" ? "SERVİS / USTA" : "SERVICE"}</span>
-                  <div className="text-xs md:text-sm font-black text-slate-900 dark:text-white font-mono mt-1">₺2.400</div>
+                <div className="text-2xl font-black text-slate-900 dark:text-white font-mono mb-2">₺4.250</div>
+                <div className="w-full h-1.5 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-full bg-indigo-500 rounded-full w-[60%] animate-pulse"></div>
                 </div>
-                <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-3 shadow-md text-left">
-                  <span className="text-[8px] font-black text-slate-400 uppercase">{language === "tr" ? "TASARRUF" : "SAVINGS"}</span>
-                  <div className="text-xs md:text-sm font-black text-teal-400 font-mono mt-1">₺1.120</div>
-                </div>
+                <p className="text-[9px] text-slate-500 font-bold mt-2">{language === "tr" ? "Siz aracı teslim alıp onaylayana kadar para ustaya aktarılmaz." : "Funds are not released to the mechanic until you inspect and approve."}</p>
               </div>
 
-              {/* Chart Mockup */}
-              <div className="bg-white/50 dark:bg-[#070b18]/50 border border-black/5 dark:border-white/10 rounded-2xl p-4 mb-6 shadow-inner text-left">
-                <span className="text-[8px] font-black text-slate-400 uppercase mb-3 block">
-                  {language === "tr" ? "AYLIK TÜKETİM TRENDİ (L/100KM)" : "MONTHLY CONSUMPTION TREND"}
-                </span>
-                <div className="flex items-end justify-between h-24 pt-4 gap-2">
-                  {[45, 60, 30, 80, 50, 75, 40].map((h, i) => (
-                    <div key={i} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
-                      <div className={`w-full bg-gradient-to-t ${i === 3 ? 'from-indigo-600 to-indigo-400' : 'from-slate-300 to-slate-400 dark:from-slate-800 dark:to-blue-500'} rounded-t-md`} style={{ height: `${h}%` }}></div>
-                      <span className="text-[8px] font-bold text-slate-400 font-mono">M{i+1}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Transaction Logs */}
+              {/* Legal Documents Mockup */}
               <div className="space-y-2 text-left">
-                <div className="flex justify-between items-center p-2.5 bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-xl">
+                <div className="flex justify-between items-center p-2.5 bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
                   <div className="flex items-center gap-2">
-                    <Fuel className="text-slate-400" size={14} />
-                    <span className="text-[10px] font-black text-slate-900 dark:text-white">Shell V-Power (Benzin)</span>
+                    <CheckCircle2 className="text-emerald-500" size={14} />
+                    <span className="text-[10px] font-black text-slate-900 dark:text-white">{language === "tr" ? "Rapidsy Onarım Garantisi (6 Ay)" : "Rapidsy Repair Warranty (6 Months)"}</span>
                   </div>
-                  <span className="text-[10px] font-mono font-black text-slate-900 dark:text-white">₺2.150</span>
+                  <span className="text-[9px] font-bold text-emerald-500 uppercase">{language === "tr" ? "Aktif" : "Active"}</span>
                 </div>
-                <div className="flex justify-between items-center p-2.5 bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-xl">
+                <div className="flex justify-between items-center p-2.5 bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-xl opacity-80">
                   <div className="flex items-center gap-2">
-                    <Wrench className="text-slate-400" size={14} />
+                    <FileText className="text-slate-400" size={14} />
                     <span className="text-[10px] font-black text-slate-900 dark:text-white">
-                      {language === "tr" ? "Rot Balans Hizmeti" : "Wheel Alignment Service"}
+                      {language === "tr" ? "Dijital Hizmet Sözleşmesi" : "Digital Service Contract"}
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono font-black text-slate-900 dark:text-white">₺600</span>
+                  <span className="text-[9px] font-bold text-slate-400 uppercase">{language === "tr" ? "İmzalandı" : "Signed"}</span>
                 </div>
               </div>
             </div>
@@ -93,28 +75,28 @@ const LandingPremiumFeatures = memo(({t, language}) => {
             {/* Right: Pitch copy */}
             <div className="w-full lg:w-1/2 space-y-6 text-left">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[9px] font-black text-indigo-400 tracking-widest uppercase">
-                {language === "tr" ? "ÜCRETSİZ PREMIUM HİZMET" : "FREE PREMIUM SERVICE"}
+                {language === "tr" ? "FİNANSAL RİSK YÖNETİMİ" : "FINANCIAL RISK MANAGEMENT"}
               </span>
               <h3 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight uppercase">
-                {language === "tr" ? "DETAYLI YAKIT VE GİDER ANALİZ SİSTEMİ" : "ADVANCED FUEL & EXPENSE TRACKING"}
+                {language === "tr" ? "UÇTAN UCA KORUMALI HAVUZ (ESCROW) SİSTEMİ" : "END-TO-END PROTECTED ESCROW SYSTEM"}
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base font-semibold leading-relaxed">
                 {language === "tr"
-                  ? "Piyasada aylık abonelikle satılan gider takip yazılımlarını unutun. Carvis ile tüm akaryakıt fişlerinizi, servis ödemelerinizi ve kasko/sigorta masraflarınızı kaydedin. Ortalama yakıt tüketiminizi (L/100km) otomatik hesaplayarak bütçenizi kontrol altına alın."
-                  : "Forget expensive expense managers sold on subscriptions. Record fuel logs, service fees, and insurance costs in Carvis. Track real-time fuel efficiency (L/100km) automatically and take control of your budget."}
+                  ? "Operasyonel süreçlerinizde finansal güvenliği şansa bırakmayın. Onaylanan servis tekliflerindeki bakiye, iş teslim edilip dijital onayınız verilene kadar Rapidsy kurumsal havuz hesabında güvence altına alınır. Süreç şeffaftır, sürpriz faturalandırma engellenir."
+                  : "Do not leave financial security to chance in your operational processes. The balance for approved service quotes is secured in the Rapidsy corporate escrow account until the job is delivered and your digital approval is given. The process is transparent, preventing unexpected billing."}
               </p>
               <ul className="space-y-3 text-xs font-black text-slate-700 dark:text-slate-300">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Aylık/Yıllık Grafiksel Masraf Analiz Raporu" : "Monthly/Yearly Graphical Expense Analysis"}</span>
+                  <span>{language === "tr" ? "Kurumsal Standartlarda Escrow Ödeme Altyapısı" : "Enterprise-Grade Escrow Payment Infrastructure"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Plakaya Göre Tüketim ve Tasarruf Kıyaslaması" : "Consumption & Saving Benchmarks by Plate"}</span>
+                  <span>{language === "tr" ? "Sözleşmeli ve Garantili Hizmet Ağı" : "Contracted and Guaranteed Service Network"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Trafik Sigortası ve Muayene Hatırlatma Bildirimleri" : "Insurance & Inspection Reminder Push Alerts"}</span>
+                  <span>{language === "tr" ? "Dijital Doğrulama (PIN/QR) İle Mutabakat" : "Digital Verification (PIN/QR) Reconciliation"}</span>
                 </li>
               </ul>
             </div>
@@ -128,9 +110,9 @@ const LandingPremiumFeatures = memo(({t, language}) => {
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
-                  <span className="text-[8px] font-black text-amber-500 tracking-wider uppercase">{language === "tr" ? "ŞEFFAF FİYATLANDIRMA" : "TRANSPARENT PRICING"}</span>
+                  <span className="text-[8px] font-black text-amber-500 tracking-wider uppercase">{language === "tr" ? "ŞEFFAF FİYAT TAHMİNİ & ONAY" : "TRANSPARENT ESTIMATES & APPROVAL"}</span>
                   <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                    {language === "tr" ? "USTA TEKLİFLERİ & PARÇALAR" : "MECHANIC QUOTES & PARTS"}
+                    {language === "tr" ? "USTA TEKLİFLERİ & ŞEFFAF KEŞİF" : "MECHANIC QUOTES & DISCOVERY"}
                   </h4>
                 </div>
                 <Layers className="text-amber-500" size={18} />
@@ -192,12 +174,12 @@ const LandingPremiumFeatures = memo(({t, language}) => {
                 {language === "tr" ? "AKILLI PAZARYERİ VE SEÇİM" : "SMART MARKETPLACE & MATCH"}
               </span>
               <h3 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight uppercase">
-                {language === "tr" ? "USTA TEKLİFLERİ VE GÜVENLİ FİYAT ANALİZİ" : "MECHANIC QUOTES & PRICE ANALYSIS"}
+                {language === "tr" ? "USTA TEKLİFLERİ VE ONAYLI İŞLEM SÜRECİ" : "MECHANIC QUOTES & APPROVED REPAIRS"}
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base font-semibold leading-relaxed">
                 {language === "tr"
-                  ? "Aracınızın tamiri veya periyodik bakımı için sanayide dükkan dükkan gezmeye son verin. Carvis ile usta talebi oluşturarak yakınınızdaki doğrulanmış özel servislerden anında şeffaf fiyat teklifleri toplayın. Fiyatları, müşteri puanlarını ve yakınlığı karşılaştırıp en uygun seçimi yapın. Ayrıca aracınızın marka ve modeline %100 uyumlu orijinal/OEM yedek parçaları tek tıkla listeleyin."
-                  : "Stop wandering around mechanic shops for car maintenance or repairs. Create a request in Carvis to receive instant, transparent quotes from verified local mechanics. Compare prices, ratings, and proximity. Plus, list original/OEM spare parts 100% compatible with your car brand and model with a single click."}
+                  ? "Aracınızın tamiri için dükkan dükkan gezmeyin. Rapidsy ile usta talebi oluşturarak yakınınızdaki servislerden şeffaf fiyat tahminleri toplayın. Araç başında çıkan ekstra masraflar, sizin dijital onayınız olmadan işleme alınmaz. Fiyatları, müşteri puanlarını karşılaştırın ve kontrolü elinizde tutun."
+                  : "Stop wandering around mechanic shops. Create a request to receive transparent estimated quotes from local mechanics. Extra costs discovered during inspection will not proceed without your digital approval. Compare ratings and keep control."}
               </p>
               <ul className="space-y-3 text-xs font-black text-slate-700 dark:text-slate-300">
                 <li className="flex items-center gap-2.5">
@@ -216,172 +198,169 @@ const LandingPremiumFeatures = memo(({t, language}) => {
             </div>
           </div>
 
-          {/* FEATURE 3: DIGITAL VEHICLE PASSPORT (Dijital Servis Defteri ve Pasaport) */}
+          {/* FEATURE 3: VERIFIED REVIEWS & RATINGS (Doğrulanmış Yorumlar) */}
           <div className="flex flex-col lg:flex-row items-center gap-16">
-            {/* Left: Graphic mockup of Digital Passport */}
+            {/* Left: Graphic mockup of Verified Reviews */}
             <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 shadow-2xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-teal-500/10 rounded-full blur-[80px] pointer-events-none"></div>
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
-                  <span className="text-[8px] font-black text-teal-400 tracking-wider uppercase">{language === "tr" ? "KRONOLOJİK GEÇMİŞ" : "CHRONOLOGICAL HISTORY"}</span>
+                  <span className="text-[8px] font-black text-teal-400 tracking-wider uppercase">{language === "tr" ? "SADECE GERÇEK DENEYİMLER" : "ONLY REAL EXPERIENCES"}</span>
                   <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                    {language === "tr" ? "ARAÇ SERVİS PASAPORTU" : "VEHICLE SERVICE PASSPORT"}
+                    {language === "tr" ? "DOĞRULANMIŞ USTA YORUMLARI" : "VERIFIED MECHANIC REVIEWS"}
                   </h4>
                 </div>
-                <ShieldCheck className="text-teal-400" size={18} />
+                <Star className="text-teal-400" size={18} />
               </div>
 
-              {/* Timeline Items */}
-              <div className="relative border-l border-black/10 dark:border-white/10 ml-3 pl-6 space-y-6 text-left">
-                
-                {/* Timeline entry 1 */}
-                <div className="relative">
-                  <span className="absolute -left-[30px] top-1.5 w-3.5 h-3.5 rounded-full bg-teal-400 border-4 border-white dark:border-[#040817] shadow-md"></span>
-                  <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-3 shadow-md">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                        42,500 KM • {language === "tr" ? "Disk & Balata Değişimi" : "Disc & Pad Replacement"}
-                      </span>
-                      <span className="text-[8px] font-black text-teal-400 bg-teal-400/10 px-2 py-0.5 rounded-full uppercase">{language === "tr" ? "Faturalı" : "Invoiced"}</span>
-                    </div>
-                    <p className="text-[9px] text-slate-500 font-bold">{language === "tr" ? "Güven Oto Özel Servisi • Rapidsy Onaylı Parça" : "Guven Auto Service • Rapidsy Verified Parts"}</p>
+              {/* Reviews Mockup */}
+              <div className="space-y-4 text-left">
+                {/* Review 1 */}
+                <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-4 shadow-md relative">
+                  <span className="absolute top-0 right-0 bg-teal-500 text-white text-[8px] font-black uppercase px-2 py-1 rounded-bl-lg rounded-tr-xl">
+                    {language === "tr" ? "Doğrulanmış Müşteri" : "Verified Customer"}
+                  </span>
+                  <div className="flex items-center gap-1 mb-2">
+                    {[1,2,3,4,5].map(i => <Star key={i} size={12} className="text-yellow-400 fill-yellow-400" />)}
                   </div>
+                  <p className="text-[10px] text-slate-700 dark:text-slate-300 font-medium mb-2">
+                    {language === "tr" 
+                      ? "Sanayide her gidişimde ekstra masraf çıkıyordu. Rapidsy üzerinden Maslak Pro'ya gittim, baştan ne dedilerse havuzdan o çekildi. Harika sistem." 
+                      : "I used to get extra charges every time I visited a shop. Used Maslak Pro via Rapidsy, escrow paid exactly what was agreed upfront. Great system."}
+                  </p>
+                  <span className="text-[8px] font-black text-slate-400 uppercase">— Ahmet K. (Fiat Egea Sahibi)</span>
                 </div>
 
-                {/* Timeline entry 2 */}
-                <div className="relative">
-                  <span className="absolute -left-[30px] top-1.5 w-3.5 h-3.5 rounded-full bg-teal-400 border-4 border-white dark:border-[#040817] shadow-md"></span>
-                  <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-3 shadow-md">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                        35,000 KM • {language === "tr" ? "10k Periyodik Bakım" : "10k Periodic Service"}
-                      </span>
-                      <span className="text-[8px] font-black text-teal-400 bg-teal-400/10 px-2 py-0.5 rounded-full uppercase">{language === "tr" ? "Faturalı" : "Invoiced"}</span>
-                    </div>
-                    <p className="text-[9px] text-slate-500 font-bold">{language === "tr" ? "Mobil 1 Yetkili Servis • Castrol Edge Yağ" : "Mobil 1 Service • Castrol Edge Oil"}</p>
+                {/* Review 2 */}
+                <div className="bg-white/50 dark:bg-[#070b18]/50 border border-black/5 dark:border-white/10 rounded-2xl p-4 shadow-inner relative opacity-90">
+                  <span className="absolute top-0 right-0 bg-teal-500 text-white text-[8px] font-black uppercase px-2 py-1 rounded-bl-lg rounded-tr-xl">
+                    {language === "tr" ? "Doğrulanmış Müşteri" : "Verified Customer"}
+                  </span>
+                  <div className="flex items-center gap-1 mb-2">
+                    {[1,2,3,4,5].map(i => <Star key={i} size={12} className="text-yellow-400 fill-yellow-400" />)}
                   </div>
+                  <p className="text-[10px] text-slate-700 dark:text-slate-300 font-medium mb-2">
+                    {language === "tr" 
+                      ? "Kadın bir sürücü olarak sanayiye gitmekten çekiniyordum. Rapidsy puanlarına bakarak seçim yaptım, çok saygılı ve dürüst hizmet aldım." 
+                      : "As a woman driver, I hesitated going to mechanics. Chose based on Rapidsy ratings, received very respectful and honest service."}
+                  </p>
+                  <span className="text-[8px] font-black text-slate-400 uppercase">— Ayşe Y. (Renault Clio Sahibi)</span>
                 </div>
-
               </div>
             </div>
 
             {/* Left: Pitch copy */}
             <div className="w-full lg:w-1/2 space-y-6 text-left">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-[9px] font-black text-teal-400 tracking-widest uppercase">
-                {language === "tr" ? "KAYIT VE HİZMET ARŞİVİ" : "RECORD & SERVICE ARCHIVE"}
+                {language === "tr" ? "SAHTE YORUMLARA YER YOK" : "NO FAKE REVIEWS"}
               </span>
               <h3 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight uppercase">
-                {language === "tr" ? "DİJİTAL ARAÇ PASAPORTU VE GEÇMİŞİ" : "DIGITAL VEHICLE PASSPORT & HISTORY"}
+                {language === "tr" ? "USTANIZI GERÇEK MÜŞTERİ DENEYİMLERİYLE SEÇİN" : "CHOOSE YOUR MECHANIC BASED ON REAL EXPERIENCES"}
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base font-semibold leading-relaxed">
                 {language === "tr"
-                  ? "Aracınızın bakım geçmişini kaybolan kağıt faturalardan kurtarın. Rapidsy Dijital Araç Pasaportu, yapılan tüm servis işlemlerinizi, periyodik bakımlarınızı ve aldığınız parça değişimlerini kronolojik bir sırayla dijital arşivinizde tesciller. Aracınızın geçmişini tek ekrandan şeffafça kontrol edin."
-                  : "Save your vehicle service history from lost paper receipts. Rapidsy Digital Vehicle Passport registers all completed repairs, periodic maintenance, and spare parts logs in a chronological digital archive. Check your vehicle's full logbook transparently from a single dashboard."}
+                  ? "Google Haritalar'daki sahte, satın alınmış usta yorumlarına güvenmeyin. Rapidsy'deki bir ustaya yorum yapabilmek için o ustanın Rapidsy üzerinden gerçekten hizmet vermiş ve havuz ödemesinin gerçekleşmiş olması gerekir. Sadece %100 doğrulanmış, faturası kesilmiş hizmetlerin yorumlarını okursunuz."
+                  : "Don't trust fake purchased reviews on Google Maps. To review a mechanic on Rapidsy, the service must be completed and paid through our escrow system. You only read 100% verified, invoiced real experiences."}
               </p>
               <ul className="space-y-3 text-xs font-black text-slate-700 dark:text-slate-300">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Araç Kilometresine Bağlı Gider Grafikleri" : "Mileage & KM-Based Expense Distribution Graphs"}</span>
+                  <span>{language === "tr" ? "Sadece İşlem Yaptırmış Müşterilerin Gerçek Yorumları" : "Only Real Reviews from Customers Who Completed Services"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Geçmiş Servis ve Bakım Detayları Kaydı" : "Completed Service & Maintenance History Logging"}</span>
+                  <span>{language === "tr" ? "Kalite Standartlarını Karşılamayan Ustaların Sistemden Çıkarılması" : "Removal of Mechanics Who Fail Quality Standards"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Tek Tıkla Dijital Araç Pasaportu Özeti" : "One-Click Digital Vehicle Passport Summary"}</span>
+                  <span>{language === "tr" ? "Araba Modeline Göre Filtrelenebilen Şeffaf Deneyimler" : "Transparent Experiences Filterable by Car Model"}</span>
                 </li>
               </ul>
             </div>
           </div>
 
-          {/* FEATURE 4: TOW & VALET (Yol Yardım, Çekici ve Kapıdan Kapıya Vale) */}
+          {/* FEATURE 4: RAPIDSY ENTERPRISE (BIG DATA & EV ECOSYSTEM) */}
           <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
-            {/* Left: Graphic mockup of Valet Stepper */}
+            {/* Left: Graphic mockup of EV Battery SoH and Big Data Dashboard */}
             <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 left-0 w-[200px] h-[200px] bg-orange-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+              <div className="absolute top-0 left-0 w-[200px] h-[200px] bg-blue-500/10 rounded-full blur-[80px] pointer-events-none"></div>
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
-                  <span className="text-[8px] font-black text-orange-400 tracking-wider uppercase">{language === "tr" ? "ADIM ADIM DURUM" : "STEP BY STEP STATUS"}</span>
+                  <span className="text-[8px] font-black text-blue-500 tracking-wider uppercase">{language === "tr" ? "BÜYÜK VERİ & FİLO YÖNETİMİ" : "BIG DATA & FLEET MANAGEMENT"}</span>
                   <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                    {language === "tr" ? "VALE HİZMET SÜREÇLERİ" : "VALET SERVICE PROGRESS"}
+                    {language === "tr" ? "RAPIDSY ENTERPRISE & EV" : "RAPIDSY ENTERPRISE & EV"}
                   </h4>
                 </div>
-                <Navigation className="text-orange-400 animate-pulse" size={18} />
+                <HardDrive className="text-blue-500" size={18} />
               </div>
 
-              {/* Status Stepper Mockup */}
+              {/* EV Battery Status Mockup */}
               <div className="bg-white/50 dark:bg-[#070b18]/50 border border-black/5 dark:border-white/10 rounded-2xl p-5 mb-4 text-left">
-                <span className="text-[8px] font-black text-slate-400 uppercase mb-3.5 block">
-                  {language === "tr" ? "VALE HİZMET ADIMLARI" : "VALET STATUS STEPS"}
-                </span>
-                <div className="space-y-4">
-                  {[
-                    { step: "1", title: language === "tr" ? "Talep oluşturuldu" : "Request created", active: true },
-                    { step: "2", title: language === "tr" ? "Vale yönlendirildi (Ahmet Y.)" : "Valet dispatched (Ahmet Y.)", active: true, badge: "#4890" },
-                    { step: "3", title: language === "tr" ? "Araç teslim alındı" : "Vehicle picked up", active: false },
-                    { step: "4", title: language === "tr" ? "Güvenli alana park edildi" : "Parked in secure area", active: false }
-                  ].map((s, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-black ${s.active ? 'bg-orange-500 text-white' : 'bg-slate-200 dark:bg-white/5 text-slate-400'}`}>
-                        {s.step}
-                      </div>
-                      <div className="flex-1 flex justify-between items-center">
-                        <span className={`text-[10px] font-bold ${s.active ? 'text-slate-900 dark:text-white font-black' : 'text-slate-400'}`}>{s.title}</span>
-                        {s.badge && <span className="text-[8px] font-mono font-black bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded-md">{s.badge}</span>}
-                      </div>
-                    </div>
-                  ))}
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-[8px] font-black text-slate-400 uppercase">
+                    {language === "tr" ? "EV BATARYA SAĞLIĞI (SoH)" : "EV BATTERY HEALTH (SoH)"}
+                  </span>
+                  <Zap size={14} className="text-blue-500" />
                 </div>
+                <div className="flex items-end gap-3 mb-3">
+                  <span className="text-3xl font-black text-slate-900 dark:text-white leading-none">%94.2</span>
+                  <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded uppercase tracking-widest">{language === "tr" ? "KUSURSUZ" : "PERFECT"}</span>
+                </div>
+                <div className="w-full h-2 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full w-[94.2%]"></div>
+                </div>
+                <p className="text-[9px] text-slate-500 font-bold mt-2">
+                  {language === "tr" ? "Telemetri verisine göre hücresel degredasyon (kayıp) normal sınırlar içindedir." : "Cellular degradation is within normal limits based on telemetry data."}
+                </p>
               </div>
 
-              {/* Tracking card info */}
-              <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-4 flex items-center justify-between text-left">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-500 dark:text-slate-400">
-                    <User size={16} />
+              {/* Fleet & Big Data Prediction card */}
+              <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-4 flex items-start justify-between text-left">
+                <div className="flex gap-3">
+                  <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
+                    <TrendingUp size={16} className="text-blue-500" />
                   </div>
                   <div>
-                    <h5 className="text-[10px] font-black text-slate-900 dark:text-white">Ahmet Y.</h5>
-                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{language === "tr" ? "Rapidsy Vale Görevlisi" : "Rapidsy Valet Agent"}</span>
+                    <h5 className="text-[10px] font-black text-slate-900 dark:text-white uppercase mb-1">
+                      {language === "tr" ? "ÖNLEYİCİ BAKIM TAHMİNİ (AI)" : "PREDICTIVE MAINTENANCE (AI)"}
+                    </h5>
+                    <p className="text-[9px] text-slate-500 font-medium">
+                      {language === "tr" 
+                        ? "Bölgenizdeki 14.200 Fiat Egea verisine dayanarak, 2.500 KM içinde triger seti değişimi öngörülmektedir." 
+                        : "Based on 14,200 fleet data points, a timing belt replacement is predicted within 2,500 KM."}
+                    </p>
                   </div>
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  <button className="px-3 py-1.5 bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/5 text-[9px] font-black uppercase rounded-lg text-slate-600 dark:text-slate-300">
-                    {language === "tr" ? "ARA" : "CALL"}
-                  </button>
                 </div>
               </div>
             </div>
 
             {/* Right: Pitch copy */}
             <div className="w-full lg:w-1/2 space-y-6 text-left">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[9px] font-black text-orange-400 tracking-widest uppercase">
-                {language === "tr" ? "KONFOR VE GÜVENLİK" : "COMFORT & EMERGENCY"}
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[9px] font-black text-blue-500 tracking-widest uppercase">
+                {language === "tr" ? "OTOMOTİV VERİ EKOSİSTEMİ" : "AUTOMOTIVE DATA ECOSYSTEM"}
               </span>
               <h3 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight uppercase">
-                {language === "tr" ? "GÜVENLİ VALE TALEBİ VE ACİL YOL YARDIM" : "SECURE VALET REQUEST & ROAD ASSISTANCE"}
+                {language === "tr" ? "GELECEĞİN BÜYÜK VERİSİ VE EV ALTYAPISI" : "BIG DATA & EV INFRASTRUCTURE OF THE FUTURE"}
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base font-semibold leading-relaxed">
                 {language === "tr"
-                  ? "İş günlerinizde veya acil durumlarda Rapidsy yanınızda. Aracınızın bakımı, muayenesi veya park ihtiyacı mı var? İstediğiniz paketi (Standart, VIP veya Gece Modu) seçerek anında vale talebi oluşturun. Valeniz atandığında benzersiz doğrulama kodunuz ile anahtarınızı güvenle teslim edin ve süreci adım adım takip edin. Yolda kaldığınızda ise acil çekici yol yardım butonunu kullanın."
-                  : "In busy workdays or emergencies, Rapidsy is by your side. Select your preferred package (Standard, VIP, or Night mode) to book a valet for periodic maintenance, inspection, or parking. Get a unique verification code to safely hand over your key, and track each milestone step by step. Use the emergency road assistance button if you break down."}
+                  ? "Rapidsy sadece bir tamir aracı değil, kasko firmaları ve kurumsal filolar için devasa bir veri analiz platformudur. Kullanıcıların kilometre, arıza ve lokasyon verileri kullanılarak 'Önleyici Bakım (Predictive Maintenance)' algoritmaları çalıştırılır. Üstelik elektrikli araçların (EV) yaygınlaşmasıyla birlikte, Batarya Sağlık (SoH) skorlarınızı canlı telemetri üzerinden takip edebileceğiniz ilk akıllı ekosistemdir."
+                  : "Rapidsy is not just a repair tool; it's a massive data analysis platform for insurance companies and corporate fleets. Using mileage, breakdown, and location data, 'Predictive Maintenance' algorithms are constantly running. Furthermore, as EVs take over, Rapidsy is the first smart ecosystem allowing you to monitor your Battery State of Health (SoH) scores via live telemetry."}
               </p>
               <ul className="space-y-3 text-xs font-black text-slate-700 dark:text-slate-300">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Doğrulama Kodu ile Güvenli Anahtar Teslimi" : "Secure Key Handover via Verification Code"}</span>
+                  <span>{language === "tr" ? "Sigorta ve Filolar için Veri API'leri" : "Data APIs for Insurance and Fleets"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Adım Adım Vale Durum Takibi ve İptal Edebilme" : "Step-by-Step Valet Status Tracking & Cancellation"}</span>
+                  <span>{language === "tr" ? "Elektrikli Araç (EV) Batarya Degredasyon Takibi" : "Electric Vehicle (EV) Battery Degradation Tracking"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Acil Durumlarda SOS Çekici Çağrı Butonu" : "SOS Towing Dispatch for Roadside Emergencies"}</span>
+                  <span>{language === "tr" ? "Makine Öğrenimi (ML) ile Önleyici Bakım Uyarıları" : "Predictive Maintenance Alerts powered by ML"}</span>
                 </li>
               </ul>
             </div>

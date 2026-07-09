@@ -21,26 +21,10 @@ const PartnerDashboard = () => {
     const [customPosData, setCustomPosData] = useState({ title: '', amount: '' });
 
     // Determine active role (Query Param for Dev/Preview OR Real User Role)
-    const activeRole = searchParams.get('role') || currentUser?.role || 'parking';
+    const activeRole = searchParams.get('role') || currentUser?.role || 'mechanic';
 
     // UI/UX Pro Max Themes
     const themes = {
-        parking: {
-            title: 'Otopark İşletmesi',
-            icon: Car,
-            color: 'cyan',
-            gradient: 'from-cyan-500/10 to-blue-500/5',
-            border: 'border-cyan-500/20',
-            text: 'text-cyan-400'
-        },
-        valet: {
-            title: 'Vale Hizmeti',
-            icon: Key,
-            color: 'amber',
-            gradient: 'from-amber-500/10 to-orange-500/5',
-            border: 'border-amber-500/20',
-            text: 'text-amber-400'
-        },
         mechanic: {
             title: 'Oto Servis & Bakım',
             icon: Wrench,
@@ -67,7 +51,7 @@ const PartnerDashboard = () => {
         }
     };
 
-    const currentTheme = themes[activeRole] || themes.parking;
+    const currentTheme = themes[activeRole] || themes.mechanic;
 
     // Dynamic Stats based on Role
     const [stats, setStats] = useState([

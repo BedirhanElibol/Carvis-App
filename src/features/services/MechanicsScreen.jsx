@@ -21,6 +21,7 @@ const MechanicsScreen = () => {
   const navigate = useNavigate();
 
   const [specialFlow, setSpecialFlow] = useState(location.state?.flow || null);
+  const serviceType = location.state?.serviceType || "maintenance";
   const [isMapView, setIsMapView] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [mechanicsList, setMechanicsList] = useState([]);
@@ -90,7 +91,15 @@ const MechanicsScreen = () => {
         <VehicleDemandForm
           vehicle={currentVehicle}
           initialDemandType="service"
-          initialDescription={`Periyodik Bakım Talebi: ${currentVehicle?.brand} ${currentVehicle?.model} aracım için en uygun bakım paketini ve usta tekliflerini bekliyorum.`}
+          initialDescription={
+            serviceType === "repair"
+              ? `Arıza / Sorun Bildirimi: ${currentVehicle?.brand} ${currentVehicle?.model} aracımda bir sorun yaşıyorum. İnceleme ve onarım için teklif/randevu bekliyorum.`
+              : serviceType === "tire"
+              ? `Lastik & Rot Balans Talebi: ${currentVehicle?.brand} ${currentVehicle?.model} aracım için lastik / rot-balans hizmetine ihtiyacım var.`
+              : serviceType === "wash"
+              ? `Temizlik & Detaylı Bakım Talebi: ${currentVehicle?.brand} ${currentVehicle?.model} aracım için detaylı iç/dış yıkama, seramik kaplama vb. hizmet arıyorum.`
+              : `Periyodik Bakım Talebi: ${currentVehicle?.brand} ${currentVehicle?.model} aracım için en uygun bakım paketini ve usta tekliflerini bekliyorum.`
+          }
           onSubmit={async (data) => {
             setSubmitting(true);
             try {
@@ -143,8 +152,8 @@ const MechanicsScreen = () => {
     <div className="p-5 pb-32 space-y-6 animate-fade-in relative">
       <div className="absolute top-[10%] right-[-10%] w-[50%] h-[50%] bg-accent-600/5 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="flex justify-between items-center mb-4">
-        <h3 className="font-black text-3xl text-slate-900 dark:text-white tracking-tighter uppercase">
-          {t.mechanics || "Servis & Tamir"}
+        <h3 className="font-black text-3xl text-slate-900 dark:text-white tracking-tighter uppercase leading-none">
+          {t.mechanics || "Kurumsal Servisler"}
         </h3>
         <div className="glass-card p-1.5 rounded-2xl flex gap-1 shadow-2xl border border-black/10 dark:border-white/10 backdrop-blur-xl">
           <button
@@ -179,11 +188,11 @@ const MechanicsScreen = () => {
       {/* Premium Filter Bar */}
       {!isMapView && (
         <div className="flex gap-2 overflow-x-auto no-scrollbar py-2 px-1">
-          <button aria-label="Yakınlık (En Yakın)" className="flex items-center gap-1.5 px-4 py-2 bg-primary-500/10 border border-primary-500/20 text-primary-400 rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
-            <MapPin size={12} /> Yakınlık (En Yakın)
+          <button aria-label="Kurumsal Zincirler" className="flex items-center gap-1.5 px-4 py-2 bg-primary-500/10 border border-primary-500/20 text-primary-600 dark:text-primary-400 rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale shadow-sm">
+            <ShieldCheck size={12} /> Kurumsal Zincirler
           </button>
-          <button aria-label="Puan (4.5+)" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
-            <Star size={12} /> Puan (4.5+)
+          <button aria-label="Yetkili Servis" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
+            <Star size={12} /> Yetkili Servis
           </button>
           <button aria-label="Açık/Kapalı" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
             <Clock size={12} /> Açık/Kapalı
@@ -205,14 +214,14 @@ const MechanicsScreen = () => {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
           <div className="relative z-10 glass-card p-8 rounded-[2.5rem] text-center shadow-2xl backdrop-blur-2xl border border-black/10 dark:border-white/10 animate-slide-up">
-            <div className="w-16 h-16 bg-accent-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-accent-500/20">
-              <MapPin size={32} className="text-accent-500" />
+            <div className="w-16 h-16 bg-primary-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary-500/20 shadow-[0_0_30px_rgba(20,184,166,0.3)]">
+              <ShieldCheck size={32} className="text-primary-500" />
             </div>
             <p className="font-black text-slate-900 dark:text-white text-xl tracking-tighter mb-1">
-              RADAR AKTİF
+              KURUMSAL AĞ RADARI
             </p>
             <p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-[0.2em]">
-              En Yakın Ustalar Taranıyor...
+              Ulusal Servis Ağları Taranıyor...
             </p>
           </div>
         </div>
@@ -246,7 +255,7 @@ const MechanicsScreen = () => {
             <EmptyState
               icon={Wrench}
               title="Servis Bulunamadı"
-              subtitle="Bölgenizde henüz Carvis onaylı servis bulunmuyor. İhale sistemini kullanarak teklif toplayabilirsiniz."
+              subtitle="Bölgenizde henüz Rapidsy onaylı servis bulunmuyor. İhale sistemini kullanarak teklif toplayabilirsiniz."
               actionLabel="İhale Sistemini Aç"
               onAction={() => navigate("/app/tender")}
             />

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Car, Droplet, Key, Package, Wrench } from "lucide-react";
+import { ArrowLeft, ArrowRight, Car, Droplet, Key, Package, Wrench, ShieldAlert, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 
@@ -34,6 +34,13 @@ const RoleCard = ({ title, icon: Icon, color, desc, onClick }) => {
       text: "text-teal-400",
       glow: "rgba(16, 185, 129, 0.15)",
       badge: "from-emerald-500 to-teal-600"
+    },
+    blue: {
+      border: "border-blue-500/20 hover:border-blue-400/50",
+      bg: "bg-blue-500/5 hover:bg-blue-500/10",
+      text: "text-blue-400",
+      glow: "rgba(59, 130, 246, 0.15)",
+      badge: "from-blue-500 to-indigo-600"
     },
   };
 
@@ -96,7 +103,7 @@ const PartnerLandingScreen = () => {
         }}
       ></div>
 
-      <div className="z-10 w-full max-w-5xl">
+      <div className="z-10 w-full max-w-6xl">
         <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -137,22 +144,9 @@ const PartnerLandingScreen = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"
         >
-          <RoleCard
-            title="Otopark"
-            desc="Kapasite doluluk oranları, dinamik tarife düzenlemeleri ve kapı bariyer sistemleri yönetimi."
-            icon={Car}
-            color="cyan"
-            onClick={() => navigate("/partner-login/parking")}
-          />
-          <RoleCard
-            title="Vale Hizmeti"
-            desc="Müşteri karşılama, vale talepleri, anlık araç teslimatı ve teslim noktası takibi."
-            icon={Key}
-            color="amber"
-            onClick={() => navigate("/partner-login/valet")}
-          />
+
           <RoleCard
             title="Usta & Servis"
             desc="İş emri yönetim kartları, servis randevuları, müşteri onaylı bakım kartları."
@@ -173,6 +167,20 @@ const PartnerLandingScreen = () => {
             icon={Droplet}
             color="cyan"
             onClick={() => navigate("/partner-login/carwash")}
+          />
+          <RoleCard
+            title="Acil Çekici"
+            desc="Yol yardım talepleri, güvenli Escrow ödemeleri ve canlı konum takibi."
+            icon={ShieldAlert}
+            color="amber"
+            onClick={() => navigate("/partner-login/tow_truck")}
+          />
+          <RoleCard
+            title="Sigorta Şirketi"
+            desc="Kasko, trafik ve roadside poliçe teklifleri yönetimi ve Rapidsy entegrasyonu."
+            icon={Shield}
+            color="blue"
+            onClick={() => navigate("/partner-login/insurance")}
           />
         </motion.div>
 

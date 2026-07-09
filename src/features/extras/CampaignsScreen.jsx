@@ -56,7 +56,7 @@ const CampaignsScreen = () => {
             {activeTab === "coupons" ? "FIRSATLAR" : "SERVİS PAKETLERİ"}
           </h3>
           <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mt-0.5">
-            Carvis Avantajlar Dünyası
+            Rapidsy Avantajlar Dünyası
           </p>
         </div>
       </div>

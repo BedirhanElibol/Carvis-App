@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { CalendarCheck, Car, Check, Compass, Copy, CreditCard, Disc, Download, Droplets, Eye, File, FileLock2, FileText, Flower2, Gauge, History, Key, Lightbulb, Plus, RotateCw, Save, ShieldAlert, Sparkles, Thermometer, Trash2, Wind, Workflow, Wrench, X, Zap } from "lucide-react";
+import { CalendarCheck, Car, Check, Compass, Copy, CreditCard, Disc, Download, Eye, File, FileLock2, FileText, Flower2, Gauge, History, Key, Lightbulb, Loader2, Plus, RotateCw, Save, ShieldAlert, Sparkles, Thermometer, Trash2, Wind, Workflow, Wrench, X, Zap, ScanText, CheckCircle2, UploadCloud, Droplets } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../../context/UIContext";
 import { useAuth } from "../../../context/AuthContext";
 import { supabase } from "../../../supabaseClient";
+import Tesseract from "tesseract.js";
 
 const VehiclePassport = ({ vehicle, onClose }) => {
   const { t, showAlert } = useUI();
@@ -14,6 +15,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
   // Maintenance tracker state
   const [maintenanceRecords, setMaintenanceRecords] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [proofFile, setProofFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [ocrScanning, setOcrScanning] = useState(false);
+  const [ocrComplete, setOcrComplete] = useState(false);
   const [newRecord, setNewRecord] = useState({
     part_name: "",
     changed_date: new Date().toISOString().split("T")[0],
@@ -61,12 +66,81 @@ const VehiclePassport = ({ vehicle, onClose }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleAddRecord = async (e) => {
-    e.preventDefault();
-    if (!newRecord.part_name.trim()) return;
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setProofFile(file);
+    setOcrScanning(true);
+    setOcrComplete(false);
+
+    try {
+      // Real OCR using Tesseract.js
+      const { data: { text } } = await Tesseract.recognize(
+        file,
+        'tur',
+        { logger: m => console.log("OCR Progress:", m) }
+      );
+      
+      const rawText = text.toLowerCase();
+      
+      // Basic keyword mapping
+      let detectedPart = "Genel Bakım ve Onarım";
+      if (rawText.includes("yağ") || rawText.includes("filtre")) detectedPart = "Periyodik Bakım (Yağ ve Filtreler)";
+      if (rawText.includes("balata") || rawText.includes("disk")) detectedPart = "Fren Sistemi Bakımı";
+      if (rawText.includes("lastik") || rawText.includes("rot")) detectedPart = "Lastik / Rot Balans İşlemi";
+      
+      const kmMatch = rawText.match(/(\d{2,3}[.\s]?\d{3})\s*km/i) || rawText.match(/kilometre\s*:\s*(\d+)/i);
+      const parsedKm = kmMatch ? parseInt(kmMatch[1].replace(/[.\s]/g, "")) : (vehicle?.km || 0);
+      
+      setOcrScanning(false);
+      setOcrComplete(true);
+      
+      setNewRecord({
+        part_name: detectedPart,
+        changed_date: new Date().toISOString().split("T")[0],
+        changed_km: parsedKm,
+        next_km_interval: 15000,
+        next_date_interval_months: 12,
+        notes: `OCR Sonucu: Taranan fiş başarıyla analiz edildi.`
+      });
+      
+    } catch (err) {
+      console.error("OCR Error:", err);
+      showAlert("Hata", "Fatura okunamadı, lütfen daha net bir fotoğraf çekin.", "error");
+      setOcrScanning(false);
+      setProofFile(null);
+    }
+  };
+
+  const handleConfirmOcrRecord = async () => {
+    if (!proofFile || !ocrComplete) return;
 
     if (!currentUser) {
       showAlert("Giriş Gerekli", "Bakım kaydı eklemek için giriş yapmalısınız.", "warning");
+      return;
+    }
+
+    setUploading(true);
+    let proofImageUrl = null;
+    
+    try {
+      const extension = proofFile.name.split(".").pop() || "jpg";
+      const filePath = `maintenance_${vehicle.id}/${Date.now()}_ocr.${extension}`;
+      const { error: uploadError } = await supabase.storage
+        .from("service-proofs")
+        .upload(filePath, proofFile, { upsert: false });
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabase.storage
+        .from("service-proofs")
+        .getPublicUrl(filePath);
+        
+      proofImageUrl = publicUrlData.publicUrl;
+    } catch (error) {
+      console.error("Proof upload error:", error);
+      showAlert("Hata", "Fotoğraf yüklenemedi. Lütfen tekrar deneyin.", "error");
+      setUploading(false);
       return;
     }
 
@@ -78,7 +152,8 @@ const VehiclePassport = ({ vehicle, onClose }) => {
       changed_km: parseInt(newRecord.changed_km) || 0,
       next_km_interval: parseInt(newRecord.next_km_interval) || 15000,
       next_date_interval_months: parseInt(newRecord.next_date_interval_months) || 12,
-      notes: newRecord.notes
+      notes: newRecord.notes,
+      proof_image_url: proofImageUrl
     };
 
     const { data, error } = await supabase
@@ -88,15 +163,18 @@ const VehiclePassport = ({ vehicle, onClose }) => {
 
     if (error) {
       console.error("Maintenance record insert error:", error);
-      // Fallback: add locally
       const localRecord = { ...payload, id: `local-${Date.now()}`, created_at: new Date().toISOString() };
       setMaintenanceRecords(prev => [localRecord, ...prev]);
-      showAlert("Kayıt Eklendi", "Bakım kaydınız yerel olarak eklendi.", "success");
+      showAlert("Kayıt Eklendi", "Bakım faturası işlendi (Yerel).", "success");
     } else if (data && data[0]) {
       setMaintenanceRecords(prev => [data[0], ...prev]);
-      showAlert("Kayıt Eklendi", `${newRecord.part_name} bakım kaydı başarıyla eklendi.`, "success");
+      showAlert("Kayıt Eklendi", `Fatura başarıyla dijital pasaporta işlendi.`, "success");
     }
 
+    resetForm();
+  };
+
+  const resetForm = () => {
     setNewRecord({
       part_name: "",
       changed_date: new Date().toISOString().split("T")[0],
@@ -105,7 +183,11 @@ const VehiclePassport = ({ vehicle, onClose }) => {
       next_date_interval_months: 12,
       notes: ""
     });
+    setProofFile(null);
+    setOcrScanning(false);
+    setOcrComplete(false);
     setShowAddForm(false);
+    setUploading(false);
   };
 
   const handleDeleteRecord = async (recordId) => {
@@ -174,7 +256,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">
-                  Carvis Araç Pasaportu
+                  Rapidsy Araç Pasaportu
                 </span>
                 <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
                   Resmi Hafıza
@@ -291,7 +373,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                     <div>
                       <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Bakım Hatırlatması</h4>
                       <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Bakım Takibi sekmesinde parça değişim tarihlerinizi ve km bilgilerinizi kaydedin. Carvis sizi zamanı geldiğinde uyaracaktır.
+                        Bakım Takibi sekmesinde parça değişim tarihlerinizi ve km bilgilerinizi kaydedin. Rapidsy sizi zamanı geldiğinde uyaracaktır.
                       </p>
                     </div>
                   </div>
@@ -400,7 +482,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">Bakım Takip Kayıtları</h4>
-                    <p className="text-[9px] text-slate-500 mt-1">Parça değişikliklerinizi kaydedin, Carvis size zamanını hatırlatsın.</p>
+                    <p className="text-[9px] text-slate-500 mt-1">Parça değişikliklerinizi kaydedin, Rapidsy size zamanını hatırlatsın.</p>
                   </div>
                   <button 
                     onClick={() => setShowAddForm(!showAddForm)}
@@ -413,96 +495,103 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 {/* Quick preset selection */}
                 {showAddForm && (
                   <div className="space-y-4">
-                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                      {maintenancePresets.map((preset, idx) => {
-                        const PresetIcon = preset.icon;
-                        const isSelected = newRecord.part_name === preset.name;
-                        return (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => handlePresetSelect(preset)}
-                            className={`flex flex-col items-center p-3 rounded-2xl border transition-all cursor-pointer text-center ${
-                              isSelected
-                                ? "bg-teal-500/10 border-teal-500/30"
-                                : "bg-white dark:bg-white/5 border-black/5 dark:border-white/5 hover:border-teal-500/20"
-                            }`}
-                          >
-                            <PresetIcon size={18} className={preset.color + " mb-1"} />
-                            <span className="text-[8px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 leading-tight">{preset.name}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
+                    <div className="bg-white dark:bg-[#0a0f24] border border-slate-200 dark:border-white/10 rounded-[2rem] p-8 shadow-xl relative overflow-hidden flex flex-col items-center justify-center text-center">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -mr-16 -mt-16"></div>
 
-                    {/* Add form */}
-                    <form onSubmit={handleAddRecord} className="bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-3xl p-6 space-y-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Parça / İşlem</label>
-                          <input
-                            type="text"
-                            value={newRecord.part_name}
-                            onChange={(e) => setNewRecord(prev => ({ ...prev, part_name: e.target.value }))}
-                            placeholder="Örn: Motor Yağı & Filtre"
-                            required
-                            className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
-                          />
+                      {!proofFile && !ocrScanning && !ocrComplete && (
+                        <div className="space-y-4 w-full">
+                          <div className="w-20 h-20 bg-teal-500/10 rounded-full flex items-center justify-center mx-auto mb-2 relative">
+                            <div className="absolute inset-0 bg-teal-500/20 rounded-full animate-ping opacity-20"></div>
+                            <ScanText size={36} className="text-teal-500" />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Akıllı Fatura Tarama</h3>
+                            <p className="text-xs text-slate-500 font-medium mt-1">Ustadan aldığınız faturanın veya fişin fotoğrafını çekin, Rapidsy yapay zeka ile işlemleri pasaportunuza otomatik işlesin.</p>
+                          </div>
+                          
+                          <div className="relative mt-4">
+                            <input
+                              aria-label="Fatura Yükle"
+                              type="file"
+                              accept="image/*"
+                              capture="environment"
+                              onChange={handleFileChange}
+                              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                            />
+                            <div className="w-full bg-slate-100 dark:bg-white/5 border-2 border-dashed border-slate-300 dark:border-white/20 hover:border-teal-500 dark:hover:border-teal-500 rounded-2xl py-8 flex flex-col items-center justify-center gap-2 transition-colors">
+                              <UploadCloud size={28} className="text-slate-400" />
+                              <span className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 tracking-widest">Kamerayı Aç / Fotoğraf Seç</span>
+                            </div>
+                          </div>
+                          
+                          <button onClick={resetForm} className="text-[10px] uppercase font-black tracking-widest text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 mt-4 cursor-pointer bg-transparent border-none">
+                            Vazgeç
+                          </button>
                         </div>
-                        <div>
-                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Değişim Tarihi</label>
-                          <input
-                            type="date"
-                            value={newRecord.changed_date}
-                            onChange={(e) => setNewRecord(prev => ({ ...prev, changed_date: e.target.value }))}
-                            className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
-                          />
+                      )}
+
+                      {ocrScanning && (
+                        <div className="space-y-6 w-full py-8">
+                          <div className="relative w-24 h-24 mx-auto">
+                            <div className="absolute inset-0 border-4 border-slate-200 dark:border-white/10 rounded-2xl"></div>
+                            <div className="absolute top-0 left-0 w-full h-1 bg-teal-500 rounded-full shadow-[0_0_15px_rgba(20,184,166,0.8)] animate-[scan_2s_ease-in-out_infinite]"></div>
+                            <ScanText size={40} className="text-teal-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest animate-pulse">
+                              Rapidsy AI Faturayı Analiz Ediyor...
+                            </h3>
+                            <p className="text-[10px] text-slate-500 mt-2 font-mono">Motor yağı, kilometre ve tutar bilgileri eşleştiriliyor.</p>
+                          </div>
                         </div>
-                        <div>
-                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Değişim KM</label>
-                          <input
-                            type="number"
-                            value={newRecord.changed_km}
-                            onChange={(e) => setNewRecord(prev => ({ ...prev, changed_km: e.target.value }))}
-                            className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
-                          />
+                      )}
+
+                      {ocrComplete && (
+                        <div className="space-y-6 w-full text-left">
+                          <div className="flex items-center gap-3 pb-4 border-b border-black/5 dark:border-white/10">
+                            <div className="w-12 h-12 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center shrink-0">
+                              <CheckCircle2 size={24} />
+                            </div>
+                            <div>
+                              <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase">Tarama Başarılı</h3>
+                              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Faturadaki İşlemler Çözümlendi</p>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-2xl border border-black/5 dark:border-white/5">
+                              <span className="text-[8px] font-black uppercase text-slate-500 tracking-widest">Tespit Edilen İşlem</span>
+                              <p className="text-xs font-black text-slate-900 dark:text-white mt-1 leading-snug">{newRecord.part_name}</p>
+                            </div>
+                            <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-2xl border border-black/5 dark:border-white/5">
+                              <span className="text-[8px] font-black uppercase text-slate-500 tracking-widest">Değişim KM</span>
+                              <p className="text-xs font-black text-slate-900 dark:text-white mt-1 font-mono">{newRecord.changed_km.toLocaleString()} KM</p>
+                            </div>
+                            <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-2xl border border-black/5 dark:border-white/5 col-span-2">
+                              <span className="text-[8px] font-black uppercase text-slate-500 tracking-widest">Çıkarılan Notlar / Tutar</span>
+                              <p className="text-xs font-bold text-slate-600 dark:text-slate-300 mt-1">{newRecord.notes}</p>
+                            </div>
+                          </div>
+
+                          <div className="flex justify-end gap-3 mt-4">
+                            <button
+                              onClick={resetForm}
+                              className="px-5 py-3 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-white/5 rounded-xl transition-all cursor-pointer border-none"
+                            >
+                              İptal / Yeniden Çek
+                            </button>
+                            <button
+                              onClick={handleConfirmOcrRecord}
+                              disabled={uploading}
+                              className="px-6 py-3 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg flex items-center gap-2 cursor-pointer border-none disabled:opacity-50"
+                            >
+                              {uploading ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
+                              {uploading ? "PASAPORTA İŞLENİYOR..." : "ONAYLA VE PASAPORTA İŞLE"}
+                            </button>
+                          </div>
                         </div>
-                        <div>
-                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Sonraki Değişim Aralığı (KM)</label>
-                          <input
-                            type="number"
-                            value={newRecord.next_km_interval}
-                            onChange={(e) => setNewRecord(prev => ({ ...prev, next_km_interval: e.target.value }))}
-                            className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Not (Opsiyonel)</label>
-                        <input
-                          type="text"
-                          value={newRecord.notes}
-                          onChange={(e) => setNewRecord(prev => ({ ...prev, notes: e.target.value }))}
-                          placeholder="Örn: Castrol Edge 5W-30 kullanıldı"
-                          className="w-full bg-slate-50 dark:bg-slate-950/50 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-1 focus:ring-teal-500/30"
-                        />
-                      </div>
-                      <div className="flex justify-end gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setShowAddForm(false)}
-                          className="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 dark:hover:text-white bg-transparent border border-black/10 dark:border-white/10 rounded-xl cursor-pointer transition-all"
-                        >
-                          İptal
-                        </button>
-                        <button
-                          type="submit"
-                          className="px-5 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl border-none cursor-pointer transition-all flex items-center gap-1.5"
-                        >
-                          <Save size={12} /> Kaydet
-                        </button>
-                      </div>
-                    </form>
+                      )}
+                    </div>
                   </div>
                 )}
 
@@ -513,7 +602,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                       <Wrench size={40} className="mx-auto text-slate-600 dark:text-slate-500 mb-4" />
                       <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase mb-2">Henüz Bakım Kaydınız Yok</h4>
                       <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                        "Bakım Kaydı Ekle" butonuna basarak parça değişikliklerinizi kaydedin. Carvis size sonraki değişim zamanını hatırlatsın.
+                        "Bakım Kaydı Ekle" butonuna basarak parça değişikliklerinizi kaydedin. Rapidsy size sonraki değişim zamanını hatırlatsın.
                       </p>
                     </div>
                   )}
@@ -537,6 +626,11 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                             </p>
                             {record.notes && (
                               <p className="text-[9px] text-slate-400 mt-0.5 italic">{record.notes}</p>
+                            )}
+                            {record.proof_image_url && (
+                              <a href={record.proof_image_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-1 text-[9px] font-black uppercase text-amber-500 hover:text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded">
+                                <File size={10} /> Belgeyi Gör
+                              </a>
                             )}
                           </div>
                         </div>

@@ -17,7 +17,7 @@ export const UIProvider = ({ children }) => {
   // Dil tespiti ve normalizasyonu (en-US -> en, tr-TR -> tr)
   const [language, setLanguageState] = useState(() => {
     try {
-      const savedLang = localStorage.getItem("carvis_lang");
+      const savedLang = localStorage.getItem("rapidsy_lang");
       if (savedLang && TRANSLATIONS[savedLang]) return savedLang;
       const browserLang = navigator.language?.split("-")[0] || "tr";
       return TRANSLATIONS[browserLang] ? browserLang : "tr";
@@ -29,7 +29,7 @@ export const UIProvider = ({ children }) => {
   // Tema yönetimi
   const [theme, setTheme] = useState(() => {
     try {
-      const savedTheme = localStorage.getItem("carvis_theme");
+      const savedTheme = localStorage.getItem("rapidsy_theme");
       if (savedTheme) return savedTheme;
       return "dark"; // Default to dark based on original design
     } catch {
@@ -44,14 +44,14 @@ export const UIProvider = ({ children }) => {
     } else {
       root.classList.remove("dark");
     }
-    localStorage.setItem("carvis_theme", theme);
+    localStorage.setItem("rapidsy_theme", theme);
   }, [theme]);
 
   const setLanguage = (langOrUpdater) => {
     setLanguageState((prev) => {
       const newLang = typeof langOrUpdater === "function" ? langOrUpdater(prev) : langOrUpdater;
       if (TRANSLATIONS[newLang]) {
-        localStorage.setItem("carvis_lang", newLang);
+        localStorage.setItem("rapidsy_lang", newLang);
         return newLang;
       }
       return prev;

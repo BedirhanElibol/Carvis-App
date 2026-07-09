@@ -29,7 +29,7 @@ const PrivacyPolicyScreen = () => {
           Gizlilik Politikası
         </h1>
         <p className="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto">
-          Carvis — Akıllı Araç Platformu
+          Rapidsy — Akıllı Araç Platformu
         </p>
         <p className="text-slate-600 text-xs mt-2">
           Son Güncelleme: Nisan 2026 · KVKK & GDPR Uyumlu
@@ -38,7 +38,7 @@ const PrivacyPolicyScreen = () => {
 
       <div className="max-w-2xl mx-auto px-5 py-10">
         <Section icon={Database} title="Topladığımız Veriler">
-          <p>Carvis, aşağıdaki kişisel verileri toplar ve işler:</p>
+          <p>Rapidsy, aşağıdaki kişisel verileri toplar ve işler:</p>
           <ul className="list-disc pl-5 space-y-1 mt-2">
             <li>
               <strong className="text-slate-900 dark:text-white">Hesap Bilgileri:</strong> Ad,
@@ -77,11 +77,11 @@ const PrivacyPolicyScreen = () => {
 
         <Section icon={MapPin} title="Konum Verisi">
           <p>
-            Carvis, yakındaki usta ve yol yardım servislerini göstermek için
+            Rapidsy, yakındaki usta ve yol yardım servislerini göstermek için
             cihazınızın konumuna erişim talep eder. Bu veriye yalnızca
             uygulamayı aktif kullandığınızda erişilir (<em>When In Use</em>).
             Konum verisini sunucularımızda depolamaz, üçüncü taraflarla
-            paylaşmayız. İstediğiniz zaman iOS Ayarlar → Carvis → Konum
+            paylaşmayız. İstediğiniz zaman iOS Ayarlar → Rapidsy → Konum
             bölümünden bu izni iptal edebilirsiniz.
           </p>
         </Section>
@@ -90,7 +90,7 @@ const PrivacyPolicyScreen = () => {
           <p>
             Push bildirimleri; sipariş durumu, teklif kabul/red ve randevu
             hatırlatmaları için kullanılır. iOS cihazınızda bildirim iznini
-            istediğiniz zaman Ayarlar → Carvis bölümünden kapatabilirsiniz.
+            istediğiniz zaman Ayarlar → Rapidsy bölümünden kapatabilirsiniz.
           </p>
         </Section>
 
@@ -141,10 +141,10 @@ const PrivacyPolicyScreen = () => {
             Hesabınızı silmek veya tüm verilerinizin kaldırılmasını talep etmek
             için:{" "}
             <a
-              href="mailto:privacy@carvis.app"
+              href="mailto:privacy@rapidsy.app"
               className="text-blue-400 hover:underline ml-1"
             >
-              privacy@carvis.app
+              privacy@rapidsy.app
             </a>{" "}
             adresine yazabilirsiniz. Talepler en geç 30 iş günü içinde
             yanıtlanır.
@@ -155,19 +155,19 @@ const PrivacyPolicyScreen = () => {
           <p>
             Gizlilikle ilgili sorularınız için:{" "}
             <a
-              href="mailto:privacy@carvis.app"
+              href="mailto:privacy@rapidsy.app"
               className="text-blue-400 hover:underline ml-1"
             >
-              privacy@carvis.app
+              privacy@rapidsy.app
             </a>
           </p>
           <p className="mt-1">
-            Veri Sorumlusu: Carvis Teknoloji A.Ş., Türkiye
+            Veri Sorumlusu: Rapidsy Teknoloji A.Ş., Türkiye
           </p>
         </Section>
 
         <div className="mt-12 py-6 border-t border-black/10 dark:border-white/10 text-center text-slate-600 text-xs">
-          <p>© 2026 Carvis. Tüm hakları saklıdır.</p>
+          <p>© 2026 Rapidsy. Tüm hakları saklıdır.</p>
           <p className="mt-1">
             Bu politika, Apple App Store ve Google Play gizlilik
             gereksinimlerine uygundur.

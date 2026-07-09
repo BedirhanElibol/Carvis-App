@@ -20,7 +20,7 @@ const MarketPulse = () => {
   useEffect(() => {
     // Clear stale null cache so we always get fresh data
     const city = selectedLocation.toLowerCase().split(",")[0].trim();
-    const cacheKey = `carvis_fuel_prices_${city}`;
+    const cacheKey = `rapidsy_fuel_prices_${city}`;
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {

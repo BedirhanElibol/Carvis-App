@@ -79,7 +79,7 @@ const AudioAnalyzer = () => {
         <Mic className="text-primary-400" /> Sesli Arıza Tespiti
       </h3>
       <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 font-sans">
-        Motor sesini dinletin, Carvis AI anormal sesleri (vuruntu, sürtünme, kayış sesi)
+        Motor sesini dinletin, Rapidsy AI anormal sesleri (vuruntu, sürtünme, kayış sesi)
         analiz etsin.
       </p>
 

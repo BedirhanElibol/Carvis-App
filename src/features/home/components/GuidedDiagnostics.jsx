@@ -179,7 +179,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[8px] font-black uppercase tracking-[0.25em] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                  Carvis Teşhis Asistanı
+                  Rapidsy Teşhis Asistanı
                 </span>
                 <span className="text-[8px] font-black uppercase tracking-[0.25em] text-teal-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
                   AI Real-Time
@@ -207,7 +207,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
               >
                 <div className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-xl border border-black/5 dark:border-white/5 text-center">
                   <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">
-                    Aracınızda gözlemlediğiniz ana arıza belirtisini seçin. Carvis AI mikrofon veya görsel telemetry modülüyle arızayı saniyeler içinde doğrulayacaktır.
+                    Aracınızda gözlemlediğiniz ana arıza belirtisini seçin. Rapidsy AI mikrofon veya görsel telemetry modülüyle arızayı saniyeler içinde doğrulayacaktır.
                   </p>
                 </div>
 
@@ -371,7 +371,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                       </div>
                       <div className="text-right">
                         <span className="text-[8px] text-slate-500 font-bold block">{t.laborAndPartsIncVAT}</span>
-                        <span className="text-[9px] text-slate-500 dark:text-slate-400 font-bold block mt-1">{t.carvisMarketplaceGuaranteed}</span>
+                        <span className="text-[9px] text-slate-500 dark:text-slate-400 font-bold block mt-1">{t.rapidsyMarketplaceGuaranteed}</span>
                       </div>
                     </div>
                   </div>

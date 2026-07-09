@@ -25,7 +25,7 @@ const SEO = ({ title, description, type }) => {
         content={description || "Rapidsy - Oto Servis Asistanınız"}
       />
       {/* Twitter tags */}
-      <meta name="twitter:creator" content="@carvisapp" />
+      <meta name="twitter:creator" content="@rapidsyapp" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta
         name="twitter:title"

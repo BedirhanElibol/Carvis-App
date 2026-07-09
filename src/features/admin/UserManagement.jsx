@@ -160,9 +160,14 @@ const UserManagement = () => {
                           {user.full_name?.charAt(0) || "?"}
                         </div>
                         <div>
-                          <p className="font-bold text-slate-900 dark:text-white text-sm">
-                            {user.full_name || "İsimsiz"}
-                          </p>
+                          <div className="flex items-center gap-2">
+                            <p className="font-bold text-slate-900 dark:text-white text-sm">
+                              {user.full_name || "İsimsiz"}
+                            </p>
+                            {user.is_banned && (
+                              <span className="bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-sm uppercase">BANNED</span>
+                            )}
+                          </div>
                           <p className="text-xs text-slate-500">
                             {user.email || user.phone_number || "İletişim yok"}
                           </p>
@@ -274,17 +279,17 @@ const UserManagement = () => {
                 </div>
               </div>
               <div className="space-y-3 pt-4 border-t border-black/5 dark:border-white/5">
-                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center justify-between">
+                <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl flex items-center justify-between">
                   <div>
-                    <div className="text-sm font-black text-red-500 uppercase tracking-tight">
+                    <div className="text-sm font-black text-orange-500 uppercase tracking-tight">
                       Kullanıcıyı Askıya Al
                     </div>
-                    <div className="text-[10px] text-red-400/70 font-bold">
-                      Sistem erişimini tamamen keser.
+                    <div className="text-[10px] text-orange-400/70 font-bold">
+                      Sistem erişimini geçici olarak keser.
                     </div>
                   </div>
                   <button
-                    className="bg-red-500 hover:bg-red-600 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg transition-all hover:scale-105 active-scale uppercase"
+                    className="bg-orange-500 hover:bg-orange-600 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg transition-all hover:scale-105 active-scale uppercase"
                     disabled={processingId === selectedUser.id}
                     onClick={async () => {
                       setProcessingId(selectedUser.id);
@@ -307,6 +312,55 @@ const UserManagement = () => {
                   >
                     {selectedUser.is_suspended ? "AKTİF ET" : "ASKIYA AL"}
                   </button>
+                </div>
+
+                {/* KALICI BAN (Özellikle Usta/Partnerler için) */}
+                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-sm font-black text-red-500 uppercase tracking-tight">
+                        Kalıcı Olarak Banla (Perma-ban)
+                      </div>
+                      <div className="text-[10px] text-red-400/70 font-bold">
+                        Standart Sözleşme İhlali
+                      </div>
+                    </div>
+                    <button
+                      className={`${selectedUser.is_banned ? 'bg-slate-500 hover:bg-slate-600' : 'bg-red-600 hover:bg-red-700'} text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg transition-all hover:scale-105 active-scale uppercase`}
+                      disabled={processingId === selectedUser.id}
+                      onClick={async () => {
+                        const isBanning = !selectedUser.is_banned;
+                        if(isBanning && !window.confirm("Bu kullanıcıyı KALICI olarak platformdan uzaklaştırmak istediğinize emin misiniz?")) return;
+                        
+                        setProcessingId(selectedUser.id);
+                        try {
+                          const { error } = await supabase
+                            .from("profiles")
+                            .update({ 
+                              is_banned: isBanning,
+                              ban_reason: isBanning ? "Rapidsy Standartları Sözleşmesi İhlali" : null
+                            })
+                            .eq("id", selectedUser.id);
+                          
+                          if (error) throw error;
+                          
+                          showAlert(
+                            "Başarılı", 
+                            `Kullanıcı ${isBanning ? 'KALICI OLARAK BANLANDI' : 'banı kaldırıldı'}.`, 
+                            "success"
+                          );
+                          setUsers(prev => prev.map(u => u.id === selectedUser.id ? { ...u, is_banned: isBanning, ban_reason: isBanning ? "Rapidsy Standartları Sözleşmesi İhlali" : null } : u));
+                          setSelectedUser(null);
+                        } catch(err) {
+                          showAlert("Hata", "Banlama başarısız: " + err.message, "error");
+                        } finally {
+                          setProcessingId(null);
+                        }
+                      }}
+                    >
+                      {selectedUser.is_banned ? "BANI KALDIR" : "KALICI BANLA"}
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>

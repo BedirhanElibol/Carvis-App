@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { BellRing, Image, ShieldCheck, Truck, X } from "lucide-react";
+import { BellRing, Image, ShieldCheck, Truck, X, AlertCircle } from "lucide-react";
 import ServiceTimeline from "./ServiceTimeline";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
+import EscrowPinModal from "../../components/modals/EscrowPinModal";
+import DisputeCenterModal from "../disputes/components/DisputeCenterModal";
 
 const OrderDetailsModal = ({ show, onClose, order }) => {
   const { showAlert } = useUI();
   const [localOrder, setLocalOrder] = useState(order);
   const [isReturning, setIsReturning] = useState(false);
+  const [showEscrowPin, setShowEscrowPin] = useState(false);
+  const [showDisputeModal, setShowDisputeModal] = useState(false);
 
   useEffect(() => {
     setLocalOrder(order);
@@ -100,7 +104,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
             </div>
             <div>
               <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest">
-                GÜVENLİ İŞLEM (CARVIS TRUST ENGINE)
+                GÜVENLİ İŞLEM (RAPIDSY TRUST ENGINE)
               </p>
               <p className="text-sm text-slate-900 dark:text-white font-medium">
                 Bu servis işlemi %100 şeffaflık garantisi altındadır.
@@ -208,6 +212,30 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
                <span className="text-[10px] text-slate-600 uppercase font-bold">Ödeme Durumu</span>
                <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">EMANET ALTINDA</span>
              </div>
+             
+             {localOrder.status !== 'completed' && localOrder.status !== 'cancelled' && localOrder.status !== 'refunded' && (
+               <button 
+                 onClick={() => setShowEscrowPin(true)}
+                 className="w-full mt-4 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-white font-black py-3 rounded-2xl text-[10px] uppercase tracking-widest shadow-lg shadow-teal-500/20 active-scale transition-all flex items-center justify-center gap-2"
+               >
+                 <ShieldCheck size={16} /> GÜVENLİ ÖDEME (ESCROW) PIN KODUNU GÖRÜNTÜLE
+               </button>
+             )}
+
+             {localOrder.status !== 'completed' && localOrder.status !== 'cancelled' && localOrder.status !== 'refunded' && !localOrder.is_escrow_blocked && (
+               <button 
+                 onClick={() => setShowDisputeModal(true)}
+                 className="w-full mt-2 border border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500 hover:text-slate-900 transition-all py-3.5 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2"
+               >
+                 <AlertCircle size={14} /> KUSURLU HİZMET BİLDİR / DESTEK AL
+               </button>
+             )}
+
+             {localOrder.is_escrow_blocked && (
+               <div className="w-full mt-2 text-center text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-widest bg-amber-500/10 py-3.5 rounded-2xl flex items-center justify-center gap-2 border border-amber-500/20">
+                 <AlertCircle size={14} /> Ödeme Rapidsy Güvencesiyle Bloke Edildi
+               </div>
+             )}
           </div>
 
           {/* Tracking & Returns */}
@@ -243,6 +271,27 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
           )}
         </div>
       </div>
+      
+      <EscrowPinModal
+        isOpen={showEscrowPin}
+        onClose={() => setShowEscrowPin(false)}
+        amount={localOrder.total_amount}
+        providerName={localOrder.seller?.company_name || 'Servis Sağlayıcı'}
+        pinCode="482159" 
+      />
+
+      <DisputeCenterModal
+        isOpen={showDisputeModal}
+        onClose={() => setShowDisputeModal(false)}
+        orderId={localOrder.id}
+        customerId={localOrder.customer_id}
+        sellerId={localOrder.seller_id}
+        sellerName={localOrder.seller?.full_name || localOrder.seller?.company_name || 'Servis Sağlayıcı'}
+        onDisputeOpened={(data) => {
+          setLocalOrder(prev => ({ ...prev, is_escrow_blocked: true }));
+          showAlert("Başarılı", "Bildiriminiz kaydedildi. Ödemeniz Rapidsy Güvencesi altında donduruldu.", "success");
+        }}
+      />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Archive, Calendar, CheckCircle, CheckCircle2, Clock, Download, FileText
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../../context/UIContext";
 import { useSeller } from "../../../context/SellerContext";
+import EscrowReleaseModal from "../../../components/modals/EscrowReleaseModal";
 
 
 const ErpCrmManager = () => {
@@ -11,6 +12,7 @@ const ErpCrmManager = () => {
   const [activeSubTab, setActiveSubTab] = useState("calendar"); // 'calendar', 'inventory', 'billing'
   const [searchQuery, setSearchQuery] = useState("");
   const [trackingInput, setTrackingInput] = useState({});
+  const [escrowModalOrder, setEscrowModalOrder] = useState(null);
 
   const handleExportPDF = async (invoice) => {
     try {
@@ -31,7 +33,7 @@ const ErpCrmManager = () => {
       doc.setTextColor(255, 255, 255);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(24);
-      doc.text("CARVIS B2B ERP", 15, 20);
+      doc.text("RAPIDSY SERVİS ERP", 15, 20);
 
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
@@ -94,7 +96,7 @@ const ErpCrmManager = () => {
       doc.setFont("helvetica", "italic");
       doc.setFontSize(8);
       doc.setTextColor(100, 116, 139);
-      doc.text("Carvis B2B ERP Fatura Servisi. Bu belge dijital olarak imzalanmistir.", 15, 280);
+      doc.text("Rapidsy Fatura Servisi. Bu belge dijital olarak imzalanmistir.", 15, 280);
 
       // Save PDF
       doc.save(`Fatura_${invoice.id}.pdf`);
@@ -141,7 +143,7 @@ const ErpCrmManager = () => {
         </div>
         <div className="relative z-10 max-w-2xl">
           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-400 bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/20">
-            B2B ERP & CRM Sistemi
+            ERP & CRM Sistemi
           </span>
           <h2 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase mt-4 mb-2 font-sans">
             Gelişmiş Servis & Stok Yönetimi
@@ -249,6 +251,15 @@ const ErpCrmManager = () => {
                         <option value="quality_check">Son Kontroller (Hazır)</option>
                         <option value="completed">Teslim Edildi (Tamamla)</option>
                       </select>
+
+                      {order.status === 'quality_check' && (
+                        <button
+                          onClick={() => setEscrowModalOrder(order)}
+                          className="w-full mt-2 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-white font-black py-2.5 rounded-xl text-[10px] uppercase tracking-widest shadow-lg shadow-teal-500/20 active-scale transition-all flex items-center justify-center gap-2"
+                        >
+                          <CheckCircle2 size={14} /> HAVUZ BAKİYESİNİ ÇEK (PIN ONAYI)
+                        </button>
+                      )}
 
                       {order.status === 'return_requested' && (
                         <button
@@ -460,6 +471,18 @@ const ErpCrmManager = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <EscrowReleaseModal 
+        isOpen={!!escrowModalOrder}
+        onClose={() => setEscrowModalOrder(null)}
+        amount={escrowModalOrder?.total_amount}
+        customerName={escrowModalOrder?.customer?.full_name || 'Müşteri'}
+        transactionId={escrowModalOrder?.id}
+        onRelease={() => {
+          updateOrderStatus(escrowModalOrder.id, 'completed');
+          showAlert("Başarılı", "Havuz ödemesi cüzdanınıza aktarıldı ve sipariş tamamlandı.", "success");
+        }}
+      />
     </div>
   );
 };

@@ -1,6 +1,6 @@
-# 🛰️ Carvis Rekabet Stratejisi & Yol Haritası
+# 🛰️ Rapidsy Rekabet Stratejisi & Yol Haritası
 
-Yapılan araştırmalar sonucunda Carvis; Armut (İşlemsel), OtoKonfor (Yasal Takip) ve CarFax (Veri) modellerinin en güçlü yanlarını birleştiren hibrit bir yapıda olduğu tespit edilmiştir.
+Yapılan araştırmalar sonucunda Rapidsy; Armut (İşlemsel), OtoKonfor (Yasal Takip) ve CarFax (Veri) modellerinin en güçlü yanlarını birleştiren hibrit bir yapıda olduğu tespit edilmiştir.
 
 ## 🏁 Rekabet Analizi Özeti
 
@@ -13,8 +13,8 @@ Yapılan araştırmalar sonucunda Carvis; Armut (İşlemsel), OtoKonfor (Yasal T
 
 ## 🛠️ Gelecek "Killer" Özellikler (Gap Closing)
 
-### 1. Carvis Verified PDF (Satış Danışmanı)
-*   **Amaç:** Aracını satacak kullanıcıya "Carvis Onaylı Ekspertiz Raporu" gibi bir döküman sunmak.
+### 1. Rapidsy Verified PDF (Satış Danışmanı)
+*   **Amaç:** Aracını satacak kullanıcıya "Rapidsy Onaylı Ekspertiz Raporu" gibi bir döküman sunmak.
 *   **Etki:** Aracın ikinci el değerini resmi olarak artırarak uygulamayı vazgeçilmez kılar.
 
 ### 2. Akıllı Sigorta Teklifi (Monetizasyon 2.0)

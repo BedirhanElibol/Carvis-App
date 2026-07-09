@@ -1,4 +1,4 @@
-import { Home, LayoutDashboard, Map, MessageSquare, ShoppingCart } from "lucide-react";
+import { Home, LayoutDashboard, Map, MessageSquare, ShoppingCart, FileText, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUI } from "../../context/UIContext";
 import { triggerHaptic } from "../../utils/haptics";
@@ -25,8 +25,8 @@ export const BottomNav = () => {
       label: "Mesajlar",
       badge: unreadCount,
     },
-    { id: "/app/map", icon: Map, label: "Harita" },
-    { id: "/application/home", icon: LayoutDashboard, label: "Hizmetler" },
+    { id: "/app/quotes", icon: FileText, label: t.tenders },
+    { id: "/app/profile", icon: User, label: t.profile },
   ];
 
   if (!t) return null;

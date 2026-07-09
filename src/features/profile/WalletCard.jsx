@@ -19,7 +19,7 @@ const WalletCard = () => {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <Wallet size={20} className="text-primary-200" />
-              <span className="text-[10px] font-black text-primary-200 uppercase tracking-[0.3em]">Carvis Wallet</span>
+              <span className="text-[10px] font-black text-primary-200 uppercase tracking-[0.3em]">Rapidsy Wallet</span>
             </div>
             <Radio size={20} className="text-slate-900 dark:text-white/40 animate-pulse" />
           </div>
@@ -53,7 +53,7 @@ const WalletCard = () => {
             <div className="p-2 bg-accent-500/10 rounded-lg">
               <Zap size={16} className="text-accent-500" />
             </div>
-            <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">Carvis Credit (SNPL)</h4>
+            <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">Rapidsy Credit (SNPL)</h4>
           </div>
           <span className="text-[10px] font-bold text-accent-500 bg-accent-500/10 px-2 py-0.5 rounded-full">AKTİF</span>
         </div>
@@ -74,7 +74,7 @@ const WalletCard = () => {
 
         <div className="p-3 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5 flex items-center gap-3">
           <ShieldCheck size={16} className="text-emerald-500" />
-          <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Bu limitle Carvis servislerinde "Şimdi Al, Sonra Öde" avantajını kullanabilirsiniz.</p>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Bu limitle Rapidsy servislerinde "Şimdi Al, Sonra Öde" avantajını kullanabilirsiniz.</p>
         </div>
       </div>
     </div>

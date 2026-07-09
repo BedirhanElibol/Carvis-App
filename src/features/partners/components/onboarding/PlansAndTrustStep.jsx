@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Check, ShieldAlert } from "lucide-react";
 
-export const planDetails = {
+const planDetails = {
   parking: {
     free: {
       title: "ÜCRETSİZ BAŞLANGIÇ",
@@ -35,7 +35,7 @@ export const planDetails = {
       features: [
         "Haritada En Üst Sıralarda Listelenme",
         "Bölgesel Reklam & Harita Sponsorluğu",
-        "Carvis Trust B2B Güven Rozeti",
+        "Rapidsy Trust Güven Rozeti",
         "7/24 Öncelikli Operasyon Desteği",
       ]
     }
@@ -72,7 +72,7 @@ export const planDetails = {
       features: [
         "Sınırsız Vale Çağrısı Kabulü",
         "Haritada En Yakın Vale Öncelikli Listelenme",
-        "Carvis Trust Eğitim Sertifikalı Vale Rozeti",
+        "Rapidsy Trust Eğitim Sertifikalı Vale Rozeti",
         "Araç Teslim Hasarsızlık Garantisi Desteği",
       ]
     }
@@ -103,13 +103,13 @@ export const planDetails = {
     },
     premium: {
       title: "PREMIUM AI SERVİS",
-      desc: "Bölgenizde lider, AI teşhisli ve Carvis Garantili elit oto servis olun.",
+      desc: "Bölgenizde lider, AI teşhisli ve Rapidsy Garantili elit oto servis olun.",
       price: "350 TL / ay",
       commission: "%6 İş Başarı Komisyonu",
       features: [
         "Sınırsız Arıza Teklifi Gönderme",
         "Arama Sonuçlarında En Üstte Listelenme",
-        "Carvis Trust Rozeti & Kalite Taahhütü",
+        "Rapidsy Trust Rozeti & Kalite Taahhütü",
         "Öncelikli Müşteri Yönlendirmeleri",
       ]
     }
@@ -146,7 +146,7 @@ export const planDetails = {
       features: [
         "Haritada En Üst Sıralarda Listelenme",
         "Bölgesel Reklam & Harita Sponsorluğu",
-        "Carvis Trust B2B Güven Rozeti",
+        "Rapidsy Trust Güven Rozeti",
         "7/24 Öncelikli Operasyon Desteği",
       ]
     }
@@ -181,7 +181,7 @@ export const planDetails = {
       price: "350 TL / ay",
       commission: "%6 Hizmet Komisyonu",
       features: [
-        "Carvis Trust Hijyen & Güven Rozeti",
+        "Rapidsy Trust Hijyen & Güven Rozeti",
         "Arama ve Haritada 1. Sıra Garantisi",
         "Özel Kurumsal Anlaşmalı İş Yönlendirmeleri",
         "Gelişmiş CRM ve Müşteri Paneli",
@@ -220,7 +220,7 @@ const PlansAndTrustStep = ({
           Üyelik Planları & Güven Ağı
         </h2>
         <p className="text-amber-400 font-extrabold text-xs bg-amber-500/10 border border-amber-500/20 px-6 py-3 rounded-2xl max-w-2xl mx-auto leading-relaxed mt-3">
-          📢 "Carvis'te iş almaya ücretsiz başlayın. İşleriniz büyüdükçe daha fazla görünürlük, daha düşük komisyon ve profesyonel araçlar açılır."
+          📢 "Rapidsy'te iş almaya ücretsiz başlayın. İşleriniz büyüdükçe daha fazla görünürlük, daha düşük komisyon ve profesyonel araçlar açılır."
         </p>
       </div>
 
@@ -288,7 +288,7 @@ const PlansAndTrustStep = ({
           <ShieldAlert size={14} className="text-primary-500" /> Güvenlik ve Katılım Koşulları
         </h5>
         
-        {/* Carvis B2B Güven Ağı Katılım Koşulları */}
+        {/* Rapidsy Güven Ağı Katılım Koşulları */}
         <label className="flex items-start gap-3 cursor-pointer group">
           <input 
             type="checkbox" 
@@ -298,12 +298,12 @@ const PlansAndTrustStep = ({
           />
           <div>
             <p className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:text-white transition-colors">
-              Carvis B2B Güven Ağı Katılım Koşulları'nı okudum ve taahhüt ederim.
+              Rapidsy Güven Ağı Katılım Koşulları'nı okudum ve taahhüt ederim.
             </p>
             <p className="text-[10px] font-semibold text-slate-500 leading-relaxed mt-0.5">
               {(profession === "valet" || profession === "mechanic") 
                 ? "⚠️ Vale ve Oto Bakım servisleri için arka plan kontrolü, ehliyet/usta sertifikası ve hizmet sigortası garantisi katılım koşuluna dahildir."
-                : "Carvis iş ortaklığı ekosistem standartları ve hizmet kalitesi kuralları."}
+                : "Rapidsy iş ortaklığı ekosistem standartları ve hizmet kalitesi kuralları."}
             </p>
           </div>
         </label>
@@ -318,7 +318,7 @@ const PlansAndTrustStep = ({
           />
           <div>
             <p className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:text-white transition-colors">
-              Carvis B2B Hizmet Kalitesi ve Sigorta Taahhüdünü onaylıyorum.
+              Rapidsy Hizmet Kalitesi ve Sigorta Taahhüdünü onaylıyorum.
             </p>
             <p className="text-[10px] font-semibold text-slate-500 leading-relaxed mt-0.5">
               Müşteri memnuniyetini korumak, hasarsızlık ve güvenilirlik standartlarını sağlamak amacıyla hizmet vermeyi kabul ediyorum.

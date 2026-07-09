@@ -111,7 +111,7 @@ const DigitalPassport = ({ vehicle }) => {
       });
 
       const plate = tr(vehicle?.plate || "34ABC123");
-      const brandModel = tr(`${vehicle?.brand || "Carvis"} ${vehicle?.model || "V2"}`);
+      const brandModel = tr(`${vehicle?.brand || "Rapidsy"} ${vehicle?.model || "V2"}`);
 
       // 2. Draw Premium Header Banner
       doc.setFillColor(15, 23, 42); // slate-900
@@ -125,7 +125,7 @@ const DigitalPassport = ({ vehicle }) => {
       doc.setTextColor(255, 255, 255);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(22);
-      doc.text("CARVIS VERIFIED VEHICLE REPORT", 14, 20);
+      doc.text("RAPIDSY VERIFIED VEHICLE REPORT", 14, 20);
 
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
@@ -268,16 +268,16 @@ const DigitalPassport = ({ vehicle }) => {
       doc.setFont("helvetica", "bold");
       doc.setFontSize(8);
       doc.setTextColor(100, 116, 139);
-      doc.text("BU BELGE CARVIS SISTEMI TARAFINDAN RESMI OLARAK URETILMISTIR VE DEGIS TI-RILEMEZ.", 14, 280);
+      doc.text("BU BELGE RAPIDSY SISTEMI TARAFINDAN RESMI OLARAK URETILMISTIR VE DEGIS TI-RILEMEZ.", 14, 280);
       doc.text(`Dogrulama Kodu: SHA-256 / ${vehicle?.id?.toUpperCase()}`, 14, 285);
 
       // Download file to client device
-      doc.save(`Carvis_Servis_Karnesi_${plate}.pdf`);
+      doc.save(`Rapidsy_Servis_Karnesi_${plate}.pdf`);
 
       // Write report record to `vehicle_reports` table for database integrity!
       await addReport({
         report_type: "full",
-        file_url: `https://app.carvis.com/reports/Carvis_Servis_Karnesi_${plate}.pdf`,
+        file_url: `https://app.rapidsy.com/reports/Rapidsy_Servis_Karnesi_${plate}.pdf`,
       });
 
       showAlert("Rapor Hazir", "Servis karneniz basariyla indirildi!", "success");
@@ -302,7 +302,7 @@ const DigitalPassport = ({ vehicle }) => {
           <div className="relative z-10">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-80 mb-2 print:opacity-100">Carvis Verified History</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-80 mb-2 print:opacity-100">Rapidsy Verified History</p>
                 <h2 className="text-3xl font-black tracking-tighter uppercase leading-none mb-1">Dijital Servis Karnesi</h2>
                 <p className="text-sm font-medium opacity-70 italic print:opacity-100">{vehicle?.brand} {vehicle?.model} - {vehicle?.plate}</p>
               </div>
@@ -450,7 +450,7 @@ const DigitalPassport = ({ vehicle }) => {
                   <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex justify-between items-center print:border-black/10">
                      <div className="flex items-center gap-2">
                        <CheckCircle2 className="text-emerald-500 print:text-black" size={14} />
-                       <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest print:text-black">Carvis Onaylı Kayıt</span>
+                       <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest print:text-black">Rapidsy Onaylı Kayıt</span>
                      </div>
                      <span className="text-xs font-black text-slate-900 dark:text-white print:text-black">₺{record.total_amount?.toLocaleString('tr-TR')}</span>
                   </div>

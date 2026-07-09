@@ -41,19 +41,31 @@ const LandingScreen = () => {
   const [isLoadingProviders, setIsLoadingProviders] = useState(false);
   const [mapCenter, setMapCenter] = useState({ lat: 41.0082, lng: 28.9784 });
 
-  // Fetch Providers and EGM EDS Points
+  // Fetch Providers and EGM EDS Points across Turkey
   useEffect(() => {
     let isMounted = true;
     const fetchProvidersAndEDS = async () => {
       setIsLoadingProviders(true);
-      const cityMeta = getCityMetadata(fuelCity);
-      setMapCenter({ lat: cityMeta.lat, lng: cityMeta.lng });
+      // Türkiye geneli harita için merkez
+      setMapCenter({ lat: 39.0, lng: 35.0 });
+      
       try {
-        const providers = await getNearbyProviders(cityMeta.lat, cityMeta.lng, 8000); // 8km radius
-        const eds = await getEGMEDSMarkers(fuelCity);
+        const targetCities = ["istanbul", "ankara", "izmir", "adana", "trabzon", "diyarbakir", "erzurum"];
+        let allProvs = [];
+        let allEds = [];
+        
+        for(let city of targetCities) {
+          const cityMeta = getCityMetadata(city);
+          const providers = await getNearbyProviders(cityMeta.lat, cityMeta.lng, 10000);
+          const eds = await getEGMEDSMarkers(city);
+          
+          allProvs.push(...providers.slice(0, 3)); // Her şehirden 3 usta
+          allEds.push(...(eds || []).slice(0, 1)); // Her şehirden 1 EDS
+        }
+        
         if (isMounted) {
-          setNearbyProviders(providers.slice(0, 10)); // Top 10
-          setEdsMarkers(eds || []);
+          setNearbyProviders(allProvs);
+          setEdsMarkers(allEds);
         }
       } catch (err) {
         console.error("Providers fetch error:", err);
@@ -63,7 +75,7 @@ const LandingScreen = () => {
     };
     fetchProvidersAndEDS();
     return () => { isMounted = false; };
-  }, [fuelCity]);
+  }, []);
 
   // Fetch Fuel Prices
   useEffect(() => {
@@ -184,6 +196,7 @@ const LandingScreen = () => {
               </button>
             ) : (
               <>
+
                 {/* Seller/Partner Page link */}
                 <button
                   onClick={() => navigate("/partner-login")}

@@ -75,7 +75,7 @@ const ReviewModal = ({ isOpen, onClose, order, onSuccess }) => {
                             </motion.div>
                             <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-2">Teşekkürler!</h3>
                             <p className="text-slate-500 dark:text-slate-400">
-                                Değerlendirmeniz iş ortağımıza iletildi. Carvis Trust ağına katkıda bulunduğunuz için teşekkür ederiz.
+                                Değerlendirmeniz iş ortağımıza iletildi. Rapidsy Trust ağına katkıda bulunduğunuz için teşekkür ederiz.
                             </p>
                         </div>
                     ) : (

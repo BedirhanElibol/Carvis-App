@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Activity, Zap, AlertCircle, AlertTriangle, Calendar, Car, CheckCircle, ChevronRight, Disc, Droplets, FileText, Flame, HardDrive, HeartHandshake, Key, Layers, Loader2, Map, MapPin, Maximize, Navigation, Package, Plus, RefreshCw, Search, ShieldAlert, ShieldCheck, ShoppingBag, Star, TrendingDown, User, UserCheck, Video, Wind, Wrench, X } from "lucide-react";
+import { Activity, Zap, AlertCircle, AlertTriangle, Calendar, Car, CheckCircle, ChevronRight, Disc, Droplets, FileText, Flame, HardDrive, HeartHandshake, Key, Layers, Loader2, Map, MapPin, Maximize, Navigation, Package, Plus, RefreshCw, Search, ShieldAlert, ShieldCheck, ShoppingBag, Star, TrendingDown, User, UserCheck, Video, Wind, Wrench, X, Clock, Lightbulb, TrendingUp } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { Badge } from "../../components/Core";
 import { useUI } from "../../context/UIContext";
@@ -23,6 +23,7 @@ import SearchAndCategoriesPanel from "./components/SearchAndCategoriesPanel";
 import PopularProvidersPanel from "./components/PopularProvidersPanel";
 import FeaturedDealsPanel from "./components/FeaturedDealsPanel";
 import HowItWorksPanel from "./components/HowItWorksPanel";
+import IssueReportingModal from "../../components/home/IssueReportingModal";
 import { useFuelPrices } from "../../hooks/useFuelPrices";
 
 // Service Categories and Featured Deals moved inside the component to use t
@@ -53,7 +54,8 @@ const CustomerHome = () => {
   const [showVehicleSelector, setShowVehicleSelector] = useState(false);
   const [showServiceHistory, setShowServiceHistory] = useState(false);
   const [showVehiclePassport, setShowVehiclePassport] = useState(false);
-    const [selectedCity, setSelectedCity] = useState("istanbul");
+  const [showIssueModal, setShowIssueModal] = useState(false);
+  const [selectedCity, setSelectedCity] = useState("istanbul");
   
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -118,7 +120,7 @@ const CustomerHome = () => {
 
   const [showOnboarding, setShowOnboarding] = useState(() => {
     try {
-      return !localStorage.getItem("__SAFE_TOKEN_6__carvis_onboarding__END_TOKEN_6___seen");
+      return !localStorage.getItem("__SAFE_TOKEN_6__rapidsy_onboarding__END_TOKEN_6___seen");
     } catch (err) {
       console.error("Storage access error:", err);
       return false;
@@ -127,7 +129,7 @@ const CustomerHome = () => {
 
   const handleOnboardingComplete = () => {
     try {
-      localStorage.setItem("__SAFE_TOKEN_6__carvis_onboarding__END_TOKEN_6___seen", "true");
+      localStorage.setItem("__SAFE_TOKEN_6__rapidsy_onboarding__END_TOKEN_6___seen", "true");
     } catch (err) {
       console.error("Storage write error:", err);
     }
@@ -258,7 +260,7 @@ const CustomerHome = () => {
           </div>
           <div>
             <p className="text-[9px] uppercase tracking-[0.25em] text-slate-500 font-bold leading-none">
-              Carvis
+              Rapidsy
             </p>
             <h2 className="text-sm font-black tracking-tight mt-1 text-slate-900 dark:text-white">
               KOKPİT PANELİ
@@ -288,6 +290,28 @@ const CustomerHome = () => {
 
       {/* CORE CONTAINER: Responsive 3-Column Layout on Desktop */}
       <div className="max-w-7xl mx-auto px-6 py-8 relative z-10">
+        
+        {/* SOS EMERGENCY BUTTON */}
+        <div className="mb-6">
+          <button 
+            onClick={() => navigate("/app/sos")}
+            className="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white p-4 rounded-3xl shadow-xl shadow-red-500/20 flex items-center justify-between group transition-all"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
+                <ShieldAlert size={24} className="text-white" />
+              </div>
+              <div className="text-left">
+                <h3 className="font-black text-lg uppercase tracking-wider">ACİL ÇEKİCİ & YOL YARDIM</h3>
+                <p className="text-white/80 text-xs font-medium mt-0.5">Yolda mı kaldınız? Hemen bir çekici çağırın.</p>
+              </div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+              <ChevronRight size={20} />
+            </div>
+          </button>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           
           {/* LEFT AREA: 2 Columns equivalent (Main Actions & Details) */}
@@ -316,7 +340,7 @@ const CustomerHome = () => {
                     )}
                   </div>
                   
-                  <h3 className="text-2xl font-black tracking-tighter uppercase mb-2">{t.welcomeToCarvis}</h3>
+                  <h3 className="text-2xl font-black tracking-tighter uppercase mb-2">{t.welcomeToRapidsy}</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed mb-6 font-medium">
                     {isGuest ? t.guestModeDesc : t.addCarToGarageDesc}
                   </p>
@@ -353,6 +377,35 @@ const CustomerHome = () => {
 
             {/* PROACTIVE ALERTS */}
             {activeVehicle && <ProactiveAlerts vehicle={activeVehicle} mapCenter={mapCenter} />}
+
+            {/* DIRECT ACTION CTA (LINEAR UX) */}
+            {activeVehicle && (
+              <button
+                onClick={() => {
+                  triggerHaptic("impact");
+                  setShowIssueModal(true);
+                }}
+                className="w-full bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-400 hover:to-orange-400 text-white rounded-[2.5rem] p-6 shadow-2xl shadow-red-500/20 border-none cursor-pointer text-left relative overflow-hidden group active-scale transition-all"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl pointer-events-none -mr-8 -mt-8 group-hover:bg-white/30 transition-colors"></div>
+                <div className="flex items-center justify-between relative z-10">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/30 shrink-0">
+                      <Wrench size={32} className="text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl sm:text-3xl font-black tracking-tighter uppercase mb-1">
+                        Sorun Bildir / Usta Bul
+                      </h2>
+                      <p className="text-xs font-medium text-white/90">
+                        Arıza, bakım veya diğer servis ihtiyaçlarınız için doğrudan randevu alın.
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight size={28} className="text-white/70 group-hover:translate-x-1 group-hover:text-white transition-all hidden sm:block" />
+                </div>
+              </button>
+            )}
 
             {/* VEHICLE COCKPIT MASTER MODULE */}
             {activeVehicle && (
@@ -517,6 +570,52 @@ const CustomerHome = () => {
               </div>
             )}
 
+            {/* DAILY ALERTS WIDGET */}
+            {activeVehicle && (
+              <div className="bg-white dark:bg-[#0a0f24]/85 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 backdrop-blur-md shadow-2xl space-y-4">
+                <div className="flex justify-between items-center mb-2 border-b border-black/5 dark:border-white/5 pb-3">
+                  <h3 className="font-black text-base uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                    <AlertCircle size={18} className="text-amber-500" /> {t.dailyAlerts}
+                  </h3>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  {/* Fuel Alert */}
+                  <div className="flex items-start gap-3 bg-red-500/10 border border-red-500/20 rounded-2xl p-3.5 cursor-pointer hover:bg-red-500/20 transition-colors">
+                    <div className="mt-0.5 bg-red-500 rounded-full p-1.5 shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+                      <Flame size={14} className="text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-black text-red-600 dark:text-red-400 uppercase tracking-tight mb-0.5">{t.fuelAlertTitle}</h4>
+                      <p className="text-[10px] text-red-800 dark:text-red-300 font-medium leading-snug">{t.fuelAlertDesc}</p>
+                    </div>
+                  </div>
+
+                  {/* Inspection Alert */}
+                  <div className="flex items-start gap-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl p-3.5 cursor-pointer hover:bg-amber-500/20 transition-colors">
+                    <div className="mt-0.5 bg-amber-500 rounded-full p-1.5 shadow-[0_0_15px_rgba(245,158,11,0.4)]">
+                      <Clock size={14} className="text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-tight mb-0.5">{t.inspectionAlertTitle}</h4>
+                      <p className="text-[10px] text-amber-800 dark:text-amber-300 font-medium leading-snug">{t.inspectionAlertDesc}</p>
+                    </div>
+                  </div>
+
+                  {/* Weekly Tip */}
+                  <div className="flex items-start gap-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl p-3.5 cursor-pointer hover:bg-blue-500/20 transition-colors">
+                    <div className="mt-0.5 bg-blue-500 rounded-full p-1.5 shadow-[0_0_15px_rgba(59,130,246,0.4)]">
+                      <Lightbulb size={14} className="text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-tight mb-0.5">{t.weeklyTipTitle}</h4>
+                      <p className="text-[10px] text-blue-800 dark:text-blue-300 font-medium leading-snug">{t.weeklyTipDesc}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {activeVehicle && (
               <FeaturedDealsPanel t={t} featuredDeals={featuredDeals} showAlert={showAlert} />
             )}
@@ -652,7 +751,7 @@ const CustomerHome = () => {
             )}
 
 
-            {/* COST INTELLIGENCE PANEL (Enhanced with circular donut SVG chart) */}
+            {/* BIG DATA & COST INTELLIGENCE PANEL (Enhanced with circular donut SVG chart) */}
             {activeVehicle && (
               <div className="bg-white dark:bg-[#0a0f24]/85 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 backdrop-blur-md shadow-2xl">
                 <div className="flex justify-between items-center mb-5 border-b border-black/5 dark:border-white/5 pb-4">
@@ -664,14 +763,16 @@ const CustomerHome = () => {
                       {t.monthlyCostViz}
                     </p>
                   </div>
-                  <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter font-mono">₺4.850</p>
+                  <div className="text-right">
+                    <p className="text-2xl font-black text-emerald-500 tracking-tighter font-mono">85<span className="text-sm text-slate-400">/100</span></p>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 mb-4">
                   {/* Circular SVG Donut Chart */}
                   <div className="relative w-24 h-24 shrink-0 flex items-center justify-center bg-black/20 rounded-full border border-black/5 dark:border-white/5">
                     <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                      {/* Donut slice 1: Fuel (66%) */}
+                      {/* Donut slice 1: Sürüş (50%) */}
                       <circle
                         cx="18"
                         cy="18"
@@ -679,10 +780,10 @@ const CustomerHome = () => {
                         fill="transparent"
                         stroke="#10b981"
                         strokeWidth="3.5"
-                        strokeDasharray="66 100"
+                        strokeDasharray="50 100"
                         strokeDashoffset="0"
                       />
-                      {/* Donut slice 2: Service (24%) */}
+                      {/* Donut slice 2: Bakım (35%) */}
                       <circle
                         cx="18"
                         cy="18"
@@ -690,10 +791,10 @@ const CustomerHome = () => {
                         fill="transparent"
                         stroke="#3b82f6"
                         strokeWidth="3.5"
-                        strokeDasharray="24 100"
-                        strokeDashoffset="-66"
+                        strokeDasharray="35 100"
+                        strokeDashoffset="-50"
                       />
-                      {/* Donut slice 3: Other (10%) */}
+                      {/* Donut slice 3: Lokasyon (15%) */}
                       <circle
                         cx="18"
                         cy="18"
@@ -701,13 +802,13 @@ const CustomerHome = () => {
                         fill="transparent"
                         stroke="#64748b"
                         strokeWidth="3.5"
-                        strokeDasharray="10 100"
-                        strokeDashoffset="-90"
+                        strokeDasharray="15 100"
+                        strokeDashoffset="-85"
                       />
                     </svg>
                     <div className="absolute flex flex-col items-center">
                       <span className="text-[8px] font-black text-slate-500 tracking-wider">{t.thisMonth}</span>
-                      <span className="text-[10px] font-mono font-black text-slate-900 dark:text-white">%100</span>
+                      <span className="text-[12px] font-mono font-black text-emerald-500">A+</span>
                     </div>
                   </div>
 
@@ -715,17 +816,24 @@ const CustomerHome = () => {
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-500"></span> {t.fuelLabel}</span>
-                      <span className="font-bold text-slate-900 dark:text-white font-mono">₺3.200</span>
+                      <span className="font-bold text-slate-900 dark:text-white font-mono">%50</span>
                     </div>
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-500"></span> {t.serviceLabel}</span>
-                      <span className="font-bold text-slate-900 dark:text-white font-mono">₺1.150</span>
+                      <span className="font-bold text-slate-900 dark:text-white font-mono">%35</span>
                     </div>
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-slate-500"></span> {t.otherLabel}</span>
-                      <span className="font-bold text-slate-900 dark:text-white font-mono">₺500</span>
+                      <span className="font-bold text-slate-900 dark:text-white font-mono">%15</span>
                     </div>
                   </div>
+                </div>
+                
+                <div className="mt-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3">
+                  <p className="text-[10px] text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed">
+                    <TrendingUp size={12} className="inline mr-1 mb-0.5" />
+                    {t.dataSyncDesc}
+                  </p>
                 </div>
               </div>
             )}
@@ -749,6 +857,9 @@ const CustomerHome = () => {
                 </div>
                 
                 <select
+                  id="city-select"
+                  name="city"
+                  aria-label="Araç Seçimi"
                   value={selectedCity}
                   onChange={(e) => setSelectedCity(e.target.value)}
                   className="bg-slate-100 dark:bg-[#030712] border border-black/5 dark:border-white/5 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-wider rounded-xl px-3 py-1.5 outline-none cursor-pointer hover:border-black/20 dark:hover:border-white/20 transition-colors"
@@ -849,7 +960,7 @@ const CustomerHome = () => {
               <div className="grid grid-cols-4 gap-3">
                 {[
                   { icon: Wrench, label: t.getService, route: "/app/mechanics" },
-                  { icon: AlertCircle, label: t.emergencySOS, route: "/app/map" },
+                  { icon: AlertCircle, label: t.emergencySOS, route: "/app/sos" },
                   { icon: Package, label: t.autoParts, route: "/app/parts" },
                   { icon: Key, label: t.callValet, route: "/app/valet" },
                 ].map((item, idx) => (
@@ -877,7 +988,7 @@ const CustomerHome = () => {
                 </div>
                 <div>
                   <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">{t.rightServiceMatch}</h4>
-                  <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">{t.carvisApproved}</p>
+                  <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">{t.rapidsyApproved}</p>
                 </div>
               </div>
               <CheckCircle className="text-cyan-400 shrink-0" size={18} />
@@ -921,6 +1032,12 @@ const CustomerHome = () => {
           vehicle={activeVehicle}
         />
       )}
+
+      <IssueReportingModal 
+        isOpen={showIssueModal} 
+        onClose={() => setShowIssueModal(false)}
+        t={t}
+      />
 
       <Footer />
     </div>

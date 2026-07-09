@@ -1,5 +1,5 @@
 /**
- * Carvis Secure Logger Utility
+ * Rapidsy Secure Logger Utility
  * OWASP Mobile M2:2024 (Insecure Data Storage & Leakage Prevention)
  * Masking PII and sensitive tokens in console outputs.
  */
@@ -34,16 +34,16 @@ const isProd = import.meta.env.PROD;
 export const logger = {
   info: (message, ...optionalParams) => {
     if (isProd) return; // Do not show verbose info in production console
-    console.info(`[Carvis INFO] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
+    console.info(`[Rapidsy INFO] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
   },
   warn: (message, ...optionalParams) => {
-    console.warn(`[Carvis WARN] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
+    console.warn(`[Rapidsy WARN] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
   },
   error: (message, ...optionalParams) => {
-    console.error(`[Carvis ERROR] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
+    console.error(`[Rapidsy ERROR] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
   },
   debug: (message, ...optionalParams) => {
     if (isProd) return;
-    console.debug(`[Carvis DEBUG] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
+    console.debug(`[Rapidsy DEBUG] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
   }
 };

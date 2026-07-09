@@ -35,7 +35,7 @@ export const SellerProvider = ({ children }) => {
           .order("created_at", { ascending: false }),
         supabase
           .from("appointments")
-          .select("*, customer:profiles!appointments_user_id_fkey(full_name, phone_number)")
+          .select("*, customer:profiles!appointments_customer_id_fkey(full_name, phone_number)")
           .eq("seller_id", currentUser.id)
           .order("appointment_date", { ascending: true }),
       ]);

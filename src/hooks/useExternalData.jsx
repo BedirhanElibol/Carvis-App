@@ -25,7 +25,7 @@ export const useExternalData = () => {
 
   const fetchFuelPrices = useCallback(async (city = "istanbul") => {
     setLoading(true);
-    const cacheKey = `carvis_fuel_prices_${city.toLowerCase().split(",")[0].trim()}`;
+    const cacheKey = `rapidsy_fuel_prices_${city.toLowerCase().split(",")[0].trim()}`;
     try {
       // Check LocalStorage cache first
       const cached = localStorage.getItem(cacheKey);
@@ -53,7 +53,7 @@ export const useExternalData = () => {
   }, []);
 
   const fetchEVStations = useCallback(async (lat, lng) => {
-    const cacheKey = `carvis_ev_stations_${lat.toFixed(2)}_${lng.toFixed(2)}`;
+    const cacheKey = `rapidsy_ev_stations_${lat.toFixed(2)}_${lng.toFixed(2)}`;
     setLoading(true);
     try {
       const cached = sessionStorage.getItem(cacheKey);
@@ -81,7 +81,7 @@ export const useExternalData = () => {
 
   const fetchWeather = useCallback(async (lat, lng, cityName = null) => {
     const cityKey = cityName ? cityName.toLowerCase().split(",")[0].trim() : `${lat.toFixed(2)}_${lng.toFixed(2)}`;
-    const cacheKey = `carvis_weather_${cityKey}`;
+    const cacheKey = `rapidsy_weather_${cityKey}`;
     try {
       const cached = sessionStorage.getItem(cacheKey);
       if (cached) {

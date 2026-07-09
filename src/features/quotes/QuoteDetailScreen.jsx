@@ -137,12 +137,19 @@ const QuoteDetailScreen = () => {
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Toplam Tutar (KDV Dahil)</p>
-              <p className="text-4xl font-black text-primary-400 font-mono">
+              <p className="text-2xl font-bold text-slate-700 dark:text-slate-300 font-mono">
                 ₺{quote.price.toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
               </p>
             </div>
-            <div className="bg-primary-500/10 border border-primary-500/20 text-primary-400 text-[8px] font-black uppercase px-2.5 py-1 rounded-full flex items-center gap-1">
-              <ShieldCheck size={10} /> CARVİS GÜVENCELİ
+            <div className="flex flex-col items-end gap-2">
+              <div className="bg-primary-500/10 border border-primary-500/20 text-primary-400 text-xs font-black uppercase px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm shadow-primary-500/10">
+                <ShieldCheck size={14} /> CARVİS GÜVENCELİ
+              </div>
+              {quote.warranty_months > 0 && (
+                <div className="bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-[10px] font-black uppercase px-2 py-1 rounded-lg flex items-center gap-1">
+                  <Shield size={12} /> {quote.warranty_months} AY GARANTİLİ İŞÇİLİK
+                </div>
+              )}
             </div>
           </div>
 
@@ -150,7 +157,7 @@ const QuoteDetailScreen = () => {
           <div className="mt-6 border-t border-black/5 dark:border-white/5 pt-4 space-y-2.5">
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Package size={13} className="text-slate-500" /> Yedek Parça Bedeli (%45)
+                <Package size={13} className="text-slate-500" /> Yedek Parça Bedeli <span className="text-[10px] bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-600 dark:text-slate-300 ml-1">(Orijinal / Sertifikalı)</span>
               </span>
               <span className="text-slate-900 dark:text-white font-mono font-bold">
                 ₺{(quote.price * 0.45).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
@@ -159,7 +166,7 @@ const QuoteDetailScreen = () => {
             
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Wrench size={13} className="text-slate-500" /> İşçilik & Kalibrasyon (%25)
+                <Wrench size={13} className="text-slate-500" /> İşçilik & Kalibrasyon <span className="text-[10px] bg-green-500/10 text-green-600 dark:text-green-400 px-1 rounded ml-1 border border-green-500/20">(Garantili)</span>
               </span>
               <span className="text-slate-900 dark:text-white font-mono font-bold">
                 ₺{(quote.price * 0.25).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
@@ -168,7 +175,7 @@ const QuoteDetailScreen = () => {
 
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Layers size={13} className="text-slate-500" /> Carvis Hizmet Bedeli (%10)
+                <Layers size={13} className="text-slate-500" /> Rapidsy Hizmet Bedeli (%10)
               </span>
               <span className="text-teal-400 font-mono font-bold">
                 ₺{(quote.price * 0.10).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
@@ -186,7 +193,7 @@ const QuoteDetailScreen = () => {
 
             <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-xl border border-black/5 dark:border-white/5 text-[9px] text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
               <span className="font-bold text-slate-900 dark:text-white uppercase block mb-1">Müşteri ve Ortak Şeffaflık İlkesi:</span>
-              Carvis, şeffaf oto servis modeli gereği tüm parça ve işçilik maliyetlerini açıkça gösterir. %10 Carvis bedeli; usta eğitimleri, yol yardımı sigortası ve 1 Yıl / 20.000 KM parça garantisi için kullanılır.
+              Rapidsy, şeffaf oto servis modeli gereği tüm parça ve işçilik maliyetlerini açıkça gösterir. %10 Rapidsy bedeli; usta eğitimleri, yol yardımı sigortası ve 1 Yıl / 20.000 KM parça garantisi için kullanılır.
             </div>
           </div>
 
@@ -214,14 +221,11 @@ const QuoteDetailScreen = () => {
             </div>
             {quote.seller?.seller_rating > 0 && (
               <div className="flex items-center justify-between">
-                <span className="text-slate-500 dark:text-slate-400">Puan</span>
-                <div className="flex items-center gap-1">
-                  <Star
-                    size={16}
-                    className="text-yellow-400 fill-yellow-400"
-                  />
-                  <span className="font-semibold">
-                    {quote.seller.seller_rating.toFixed(1)}
+                <span className="text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-wider">Rapidsy Güven Skoru</span>
+                <div className="flex items-center gap-1 bg-green-500/10 px-2 py-1 rounded-lg border border-green-500/20">
+                  <Shield size={14} className="text-green-500" />
+                  <span className="font-black text-green-600 dark:text-green-400">
+                    {quote.seller.seller_rating.toFixed(1)} / 5.0
                   </span>
                 </div>
               </div>
@@ -274,14 +278,7 @@ const QuoteDetailScreen = () => {
                 <p className="text-slate-700 dark:text-slate-200">{quote.description}</p>
               </div>
             )}
-            {quote.warranty_months > 0 && (
-              <div className="flex items-center gap-2 text-green-400">
-                <Shield size={16} />
-                <span className="text-sm">
-                  {quote.warranty_months} ay garanti
-                </span>
-              </div>
-            )}
+
             {quote.expires_at && quote.status === "pending" && (
               <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                 <Calendar size={16} />

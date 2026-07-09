@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useMessage } from "../../context/MessageContext";
 import { useAuth } from "../../context/AuthContext";
-import { ArrowLeft, CheckCheck, Loader2, Paperclip, Send } from "lucide-react";
+import { ArrowLeft, CheckCheck, Loader2, Paperclip, Send, ShieldAlert } from "lucide-react";
 import { format } from "date-fns";
+import { filterMessage } from "../../utils/antiLeakage";
 
 const ChatWindow = ({ activeUserId, onBack }) => {
   const {
@@ -45,7 +46,10 @@ const ChatWindow = ({ activeUserId, onBack }) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
     setSending(true);
-    const { error } = await sendMessage(activeUserId, newMessage);
+
+    const filtered = filterMessage(newMessage);
+
+    const { error } = await sendMessage(activeUserId, filtered.text);
     setSending(false);
     if (!error) {
       setNewMessage("");
@@ -78,6 +82,15 @@ const ChatWindow = ({ activeUserId, onBack }) => {
 
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4">
+        {/* Anti-Leakage Banner */}
+        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 flex items-start gap-2 mb-4 mx-2">
+          <ShieldAlert size={16} className="text-amber-500 shrink-0 mt-0.5" />
+          <p className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold leading-relaxed">
+            Güvenliğiniz için ödemeler tamamlanana kadar iletişim bilgilerinizi paylaşmayınız. 
+            Platform dışı ödemeler <strong className="text-amber-700 dark:text-amber-300">Rapidsy Hasar Garantisi</strong> kapsamı dışındadır.
+          </p>
+        </div>
+
         {msgLoading && messages.length === 0 ? (
           <div className="flex justify-center items-center h-full">
             <Loader2 className="animate-spin text-primary-500" />

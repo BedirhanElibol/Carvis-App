@@ -1,6 +1,6 @@
-# 🚀 Carvis "Halkın Gücü" Özellikleri - Uygulama Planı (v1.0)
+# 🚀 Rapidsy "Halkın Gücü" Özellikleri - Uygulama Planı (v1.0)
 
-Rakiplerin (Armut, OtoKonfor vb.) kullanıcı şikayetlerinden yola çıkarak, Carvis'i "Piyasanın En Güvenilir İsmi" yapacak 2 ana modül geliştirilecektir.
+Rakiplerin (Armut, OtoKonfor vb.) kullanıcı şikayetlerinden yola çıkarak, Rapidsy'i "Piyasanın En Güvenilir İsmi" yapacak 2 ana modül geliştirilecektir.
 
 ## 🔴 1. SOS Acil Yardım & Çekici Sistemi
 **Sorun:** Yolda kalınca muhatap bulamama, konum tarif edememe.

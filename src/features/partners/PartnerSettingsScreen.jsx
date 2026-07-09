@@ -5,8 +5,7 @@ import { useUI } from "../../context/UIContext";
 import { supabase } from "../../supabaseClient";
 
 // Optimized Imports for Specialized Profiles
-import ValetProfileForm from "./components/ValetProfileForm";
-import ParkingProfileForm from "./components/ParkingProfileForm";
+
 import MechanicProfileForm from "./components/MechanicProfileForm";
 import ProductProfileForm from "./components/ProductProfileForm";
 import CarwashProfileForm from "./components/CarwashProfileForm";
@@ -16,7 +15,7 @@ const PartnerSettingsScreen = () => {
   const { showAlert } = useUI();
   const [profile, setProfile] = useState({
     businessName:
-      currentUser?.company_name || currentUser?.full_name || "Carvis Partner",
+      currentUser?.company_name || currentUser?.full_name || "Rapidsy Partner",
     contactPhone: currentUser?.phone_number || currentUser?.phone || "",
     serviceRadius: 12,
     payoutIban: "TR00 0000 0000 0000 0000 0000 00",
@@ -38,12 +37,7 @@ const PartnerSettingsScreen = () => {
 
       let tableName = "";
       switch (currentUser.role) {
-        case "valet":
-          tableName = "valet_profiles";
-          break;
-        case "parking":
-          tableName = "parking_profiles";
-          break;
+
         case "mechanic":
           tableName = "mechanic_shops";
           break;
@@ -116,8 +110,7 @@ const PartnerSettingsScreen = () => {
         let filterField = "id";
         
         switch (currentUser.role) {
-          case "valet": tableName = "valet_profiles"; break;
-          case "parking": tableName = "parking_profiles"; break;
+
           case "mechanic": 
             tableName = "mechanic_shops"; 
             filterField = "seller_id";
@@ -159,8 +152,7 @@ const PartnerSettingsScreen = () => {
     };
 
     switch (currentUser?.role) {
-      case "valet": return <ValetProfileForm {...props} />;
-      case "parking": return <ParkingProfileForm {...props} />;
+
       case "mechanic": return <MechanicProfileForm {...props} />;
       case "parts": return <ProductProfileForm {...props} />;
       case "carwash": return <CarwashProfileForm {...props} />;

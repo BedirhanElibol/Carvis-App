@@ -1,6 +1,6 @@
-# Carvis Monetizasyon ve Ödeme Planı (v1.0)
+# Rapidsy Monetizasyon ve Ödeme Planı (v1.0)
 
-Bu doküman, Carvis platformundaki farklı iş ortaklarının (Satıcılar, Servisler, Valeler) platforma ödeyeceği ücretlerin, komisyon oranlarının ve abonelik modellerinin teknik ve iş mantığını tanımlar.
+Bu doküman, Rapidsy platformundaki farklı iş ortaklarının (Satıcılar, Servisler, Valeler) platforma ödeyeceği ücretlerin, komisyon oranlarının ve abonelik modellerinin teknik ve iş mantığını tanımlar.
 
 ## 1. Gelir Modelleri (Revenue Models)
 
@@ -21,7 +21,7 @@ Bu doküman, Carvis platformundaki farklı iş ortaklarının (Satıcılar, Serv
 
 ### 2.2. RPC ve Fonksiyon Güncellemeleri
 - `process_wallet_payment` fonksiyonu, ödeme sırasında ilgili satıcının `plan_type` ve `commission_rate` değerini kontrol ederek tutarı ikiye bölecek:
-    - **%X**: Carvis Platform Hesabı (Komisyon)
+    - **%X**: Rapidsy Platform Hesabı (Komisyon)
     - **% (100-X)**: Satıcı Hesabı (Hakediş)
 
 ## 3. Ödeme ve Hakediş Akışı (Payout Flow)

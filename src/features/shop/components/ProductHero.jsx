@@ -72,7 +72,7 @@ const ProductHero = ({ product, winnerOffer, buyBoxPrice, t }) => {
                                         <FileBadge size={26} className="text-primary-500" />
                                     </div>
                                     <div>
-                                        <h4 className="font-black text-slate-900 dark:text-white text-sm italic tracking-tight">CARVIS DİJİTAL SERTİFİKA</h4>
+                                        <h4 className="font-black text-slate-900 dark:text-white text-sm italic tracking-tight">RAPIDSY DİJİTAL SERTİFİKA</h4>
                                         <p className="text-[9px] text-slate-500 uppercase tracking-widest font-black mt-0.5">{showCert ? "Gizlemek için dokun" : "İncelemek için dokun"}</p>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@ const ProductHero = ({ product, winnerOffer, buyBoxPrice, t }) => {
                                         <span className="text-green-500">KUSURSUZ (A+)</span>
                                     </div>
                                     <div className="flex justify-between items-center text-[10px] font-black tracking-widest uppercase">
-                                        <span className="text-slate-500">Carvis Onay No:</span>
+                                        <span className="text-slate-500">Rapidsy Onay No:</span>
                                         <span className="text-slate-900 dark:text-white">CRV-988231-X</span>
                                     </div>
                                 </div>

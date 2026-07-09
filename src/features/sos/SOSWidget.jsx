@@ -79,7 +79,7 @@ const SOSWidget = ({ userId, currentVehicle }) => {
           </div>
           <div>
             <h4 className="text-slate-900 dark:text-white font-black uppercase text-sm tracking-tight">Yolda mı kaldın?</h4>
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Carvis SOS ile tek tuşla yardım çağır.</p>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Rapidsy SOS ile tek tuşla yardım çağır.</p>
           </div>
         </div>
         

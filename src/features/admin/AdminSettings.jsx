@@ -10,7 +10,7 @@ const AdminSettings = () => {
     maintenanceMode: false,
     autoApprovePartners: false,
     platformName: "Rapidsy",
-    supportEmail: "support@carvis.com",
+    supportEmail: "support@rapidsy.com",
   });
 
   const handleSave = () => {

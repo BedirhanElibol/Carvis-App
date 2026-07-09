@@ -20,10 +20,10 @@ const SLIDES = [
   {
     icon: ShoppingBag,
     color: "from-emerald-500 to-green-700",
-    title: "Pazar Yeri & BuyBox",
+    title: "Garantili Usta & Parça",
     subtitle:
-      "Onlarca satıcıdan en uygun fiyatı otomatik bulun. Sertifikalı parçalar ve güvenli alışveriş.",
-    highlight: "Akıllı fiyat karşılaştırma",
+      "Garantili işçilik ve orijinal yedek parçalarla aracınız için en güvenilir ustayı bulun.",
+    highlight: "Şeffaf Rapidsy Güven Skoru",
   },
   {
     icon: MapPin,
@@ -41,14 +41,14 @@ const OnboardingSlides = ({ onComplete }) => {
   const Icon = slide.icon;
   const handleNext = () => {
     if (isLast) {
-      localStorage.setItem("__SAFE_TOKEN_6__carvis_onboarding__END_TOKEN_6___seen", "true");
+      localStorage.setItem("__SAFE_TOKEN_6__rapidsy_onboarding__END_TOKEN_6___seen", "true");
       onComplete();
     } else {
       setCurrentSlide((prev) => prev + 1);
     }
   };
   const handleSkip = () => {
-    localStorage.setItem("__SAFE_TOKEN_6__carvis_onboarding__END_TOKEN_6___seen", "true");
+    localStorage.setItem("__SAFE_TOKEN_6__rapidsy_onboarding__END_TOKEN_6___seen", "true");
     onComplete();
   };
   return (

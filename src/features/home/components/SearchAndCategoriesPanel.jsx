@@ -61,7 +61,7 @@ const SearchAndCategoriesPanel = memo(({ t, searchQuery, setSearchQuery, service
         ))}
       </div>
 
-      {/* EDS & Social Map Banner */}
+      {/* EDS & Social Map Banner - Temporarily hidden per user request
       <button 
         onClick={() => navigate("/app/map")}
         className="w-full bg-gradient-to-r from-cyan-500/10 to-orange-500/10 hover:from-cyan-500/20 hover:to-orange-500/20 border border-cyan-500/30 p-4 rounded-2xl flex items-center justify-between group active-scale transition-all cursor-pointer"
@@ -86,6 +86,7 @@ const SearchAndCategoriesPanel = memo(({ t, searchQuery, setSearchQuery, service
         </div>
         <ChevronRight className="text-cyan-500 group-hover:translate-x-1 transition-transform" />
       </button>
+      */}
     </div>
   );
 });

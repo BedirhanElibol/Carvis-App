@@ -29,15 +29,16 @@ const AppointmentsScreen = lazy(
 const CampaignsScreen = lazy(() => import("./features/extras/CampaignsScreen"));
 const FuelScreen = lazy(() => import("./features/extras/FuelScreen"));
 const ParkingScreen = lazy(() => import("./features/extras/ParkingScreen"));
+const ValetScreen = lazy(() => import("./features/extras/ValetScreen"));
 const ProductDetailScreen = lazy(
   () => import("./features/shop/ProductDetailScreen"),
 );
 const WalletScreen = lazy(() => import("./features/extras/WalletScreen"));
 const TenderScreen = lazy(() => import("./features/extras/TenderScreen"));
-const ValetScreen = lazy(() => import("./features/extras/ValetScreen"));
 const FavoritesScreen = lazy(() => import("./features/shop/FavoritesScreen"));
 const ExpertHotline = lazy(() => import("./features/extras/ExpertHotline"));
 const InsuranceMarket = lazy(() => import("./features/extras/InsuranceMarket"));
+const SosRequestScreen = lazy(() => import("./features/sos/SosRequestScreen"));
 
 // --- PARTNER FEATURES (New) ---
 const PartnerLayout = lazy(() => import("./components/layout/PartnerLayout"));
@@ -46,10 +47,10 @@ const PartnerDashboard = lazy(
   () => import("./features/partners/PartnerDashboard"),
 );
 const ParkingCapacity = lazy(
-  () => import("./features/partners/parking/ParkingCapacity"),
+  () => import("./features/partners/ParkingDashboard"),
 );
 const ValetRequests = lazy(
-  () => import("./features/partners/valet/ValetRequests"),
+  () => import("./features/partners/ValetDashboard"),
 );
 const MechanicJobs = lazy(
   () => import("./features/partners/mechanic/MechanicJobs"),
@@ -59,6 +60,12 @@ const MechanicServices = lazy(
 );
 const SellerProducts = lazy(
   () => import("./features/partners/products/SellerProducts"),
+);
+const InsurancePolicies = lazy(
+  () => import("./features/partners/insurance/InsurancePolicies"),
+);
+const InsuranceClaims = lazy(
+  () => import("./features/partners/insurance/InsuranceClaims"),
 );
 
 // Partner Auth
@@ -255,6 +262,14 @@ export const AppRoutes = () => {
           }
         />
         <Route
+          path="/app/sos"
+          element={
+            <ProtectedRoute allowedRoles={["customer", "admin"]}>
+              <SosRequestScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/app/profile"
           element={
             <ProtectedRoute allowedRoles={["customer", "partner", "admin"]}>
@@ -415,7 +430,7 @@ export const AppRoutes = () => {
         <Route
           path="/partner"
           element={
-            <ProtectedRoute allowedRoles={["partner", "admin"]}>
+            <ProtectedRoute allowedRoles={["partner", "admin", "provider", "mechanic", "valet", "parking", "parts", "tow_truck", "insurance", "carwash"]}>
               <PartnerLayout />
             </ProtectedRoute>
           }
@@ -427,6 +442,8 @@ export const AppRoutes = () => {
           <Route path="mechanic/jobs" element={<MechanicJobs />} />
           <Route path="mechanic/services" element={<MechanicServices />} />
           <Route path="products" element={<SellerProducts />} />
+          <Route path="insurance/policies" element={<InsurancePolicies />} />
+          <Route path="insurance/claims" element={<InsuranceClaims />} />
           <Route path="settings" element={<PartnerSettingsScreen />} />
         </Route>
 

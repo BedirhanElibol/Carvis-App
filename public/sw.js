@@ -1,5 +1,5 @@
-const CACHE_NAME = 'carvis-v1';
-const DYNAMIC_CACHE = 'carvis-dynamic-v1';
+const CACHE_NAME = 'rapidsy-v1';
+const DYNAMIC_CACHE = 'rapidsy-dynamic-v1';
 
 // Assets to cache immediately
 const STATIC_ASSETS = [

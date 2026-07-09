@@ -31,12 +31,12 @@ export const ShopProvider = ({ children }) => {
   const [sortBy, setSortBy] = useState("relevant"); // 'relevant', 'price_asc', 'price_desc', 'newest'
 
   const [searchHistory, setSearchHistory] = useState(() => {
-    const saved = localStorage.getItem("__SAFE_TOKEN_7__carvis_search__END_TOKEN_7___history");
+    const saved = localStorage.getItem("__SAFE_TOKEN_7__rapidsy_search__END_TOKEN_7___history");
     return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem("__SAFE_TOKEN_7__carvis_search__END_TOKEN_7___history", JSON.stringify(searchHistory));
+    localStorage.setItem("__SAFE_TOKEN_7__rapidsy_search__END_TOKEN_7___history", JSON.stringify(searchHistory));
   }, [searchHistory]);
 
   const addToSearchHistory = (query) => {
@@ -222,7 +222,7 @@ export const ShopProvider = ({ children }) => {
             seller_id: cart[0]?.selectedOffer?.sellerId || currentUser.id,
             total_amount: total,
             status: "pending", // RPC ile 'paid' yapılacak
-            payment_method: useWallet ? "carvis_wallet" : "credit_card",
+            payment_method: useWallet ? "rapidsy_wallet" : "credit_card",
           },
         ])
         .select();

@@ -335,7 +335,7 @@ export const updatePartnerSubscription = async (partnerId, tier) => {
     let profession = "";
     if (currentPlans?.monetization_plans?.name) {
       const planName = currentPlans.monetization_plans.name;
-      // Get the profession prefix: "parking_", "valet_", "mechanic_", "parts_"
+      // Get the profession prefix: "mechanic_", "parts_"
       const parts = planName.split("_");
       if (parts.length > 0) {
         profession = parts[0];
@@ -350,8 +350,8 @@ export const updatePartnerSubscription = async (partnerId, tier) => {
         .eq("id", partnerId)
         .maybeSingle();
       
-      // Default to 'parking' if general partner, or look at specific settings
-      profession = "parking";
+      // Default to 'mechanic' if general partner, or look at specific settings
+      profession = "mechanic";
     }
 
     // 2. Fetch the target plan ID from monetization_plans

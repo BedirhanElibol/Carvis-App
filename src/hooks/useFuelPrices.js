@@ -3,151 +3,76 @@ import { supabase } from "../supabaseClient";
 
 export const useFuelPrices = (t) => {
   const [fuelPrices, setFuelPrices] = useState({
-    istanbul: { benzin: 65.02, motorin: 67.46, lpg: 35.02 },
-    ankara: { benzin: 65.99, motorin: 68.58, lpg: 35.56 },
-    izmir: { benzin: 66.27, motorin: 68.85, lpg: 34.98 }
+    istanbul: { benzin: "-", motorin: "-", lpg: "-" },
+    ankara: { benzin: "-", motorin: "-", lpg: "-" },
+    izmir: { benzin: "-", motorin: "-", lpg: "-" }
   });
-  const [lastUpdated, setLastUpdated] = useState(() => {
-    const d = new Date();
-    return `${d.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" })} 12:00`;
-  });
+  const [lastUpdated, setLastUpdated] = useState("-");
 
   useEffect(() => {
     let isMounted = true;
     
     const fetchLivePrices = async () => {
       try {
-        const citiesConfig = [
-          { name: "istanbul", code: 34, lpgRatio: 0.5386 },
-          { name: "ankara", code: 6, lpgRatio: 0.5388 },
-          { name: "izmir", code: 35, lpgRatio: 0.5278 }
-        ];
+        const provinceCodes = ["34", "06", "35"]; // istanbul, ankara, izmir
 
-        const updatedPrices = {
-          istanbul: { benzin: 65.02, motorin: 67.46, lpg: 35.02 },
-          ankara: { benzin: 65.99, motorin: 68.58, lpg: 35.56 },
-          izmir: { benzin: 66.27, motorin: 68.85, lpg: 34.98 }
-        };
+        const { data, error } = await supabase
+          .from('live_fuel_prices')
+          .select('*')
+          .in('province_code', provinceCodes);
 
-        const fetchWithProxy = async (targetUrl) => {
-          const proxies = [
-            (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-            (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-            (url) => `https://thingproxy.freeboard.io/fetch/${url}`,
-            (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
-          ];
+        if (error) throw error;
 
-          for (const getProxyUrl of proxies) {
-            if (!isMounted) break;
-            try {
-              const controller = new AbortController();
-              const timeoutId = setTimeout(() => controller.abort(), 5000);
-              
-              const res = await fetch(getProxyUrl(targetUrl), { signal: controller.signal });
-              clearTimeout(timeoutId);
-              
-              if (res.ok) {
-                const data = await res.json();
-                if (Array.isArray(data) && data.length > 0) {
-                  return data;
-                }
-              }
-            } catch {
-              // Fail silently, try next proxy
+        if (data && data.length > 0) {
+          const updatedPrices = { ...fuelPrices };
+          let latestDateStr = "-";
+
+          data.forEach((cityData) => {
+            let cityName = "istanbul";
+            if (cityData.province_code === "06") cityName = "ankara";
+            else if (cityData.province_code === "35") cityName = "izmir";
+
+            updatedPrices[cityName] = {
+              benzin: cityData.benzin,
+              motorin: cityData.motorin,
+              lpg: cityData.lpg
+            };
+
+            // Parse DB UTC to Local Date String
+            if (cityData.last_fetched_at) {
+              const d = new Date(cityData.last_fetched_at);
+              latestDateStr = `${d.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
             }
+          });
+
+          if (isMounted) {
+            setFuelPrices(updatedPrices);
+            setLastUpdated(latestDateStr);
           }
-          throw new Error("All proxies failed to fetch");
-        };
-
-        for (const city of citiesConfig) {
-          if (!isMounted) break;
-          try {
-            let data = null;
-
-            if (import.meta.env.DEV) {
-              try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3000);
-                const localUrl = `/api/opet/fuelprices/prices?provinceCode=${city.code}&nocache=${Date.now()}`;
-                const res = await fetch(localUrl, { signal: controller.signal });
-                clearTimeout(timeoutId);
-                if (res.ok) {
-                  const jsonData = await res.json();
-                  if (Array.isArray(jsonData) && jsonData.length > 0) {
-                    data = jsonData;
-                  }
-                }
-              } catch {
-                // Fallback
-              }
-            }
-
-            if (!data) {
-              try {
-                const { data: edgeData, error: edgeError } = await supabase.functions.invoke('fuel-prices', {
-                  method: 'GET',
-                  queryParams: { city: city.name }
-                });
-
-                if (!edgeError && edgeData && edgeData.results) {
-                  const benzinObj = edgeData.results.find(r => r.name.includes("Benzin"));
-                  const motorinObj = edgeData.results.find(r => r.name.includes("Dizel") || r.name.includes("{t.diesel}"));
-                  const lpgObj = edgeData.results.find(r => r.name.includes("LPG") || r.name.includes("Otogaz"));
-
-                  if (benzinObj && motorinObj) {
-                    updatedPrices[city.name] = {
-                      benzin: benzinObj.price,
-                      motorin: motorinObj.price,
-                      lpg: lpgObj ? lpgObj.price : Math.round((benzinObj.price * city.lpgRatio) * 100) / 100
-                    };
-                    continue;
-                  }
-                }
-              } catch {
-                // Fallback
-              }
-            }
-
-            if (!data) {
-              const targetUrl = `https://api.opet.com.tr/api/fuelprices/prices?provinceCode=${city.code}&nocache=${Date.now()}`;
-              data = await fetchWithProxy(targetUrl);
-            }
-
-            if (data) {
-              let targetDistrict = data.find(d => 
-                d.districtName === "ALTINDAĞ" || 
-                d.districtName === "KADIKÖY" || 
-                d.districtName === "MERKEZ" || 
-                d.districtName === "KONAK"
-              ) || data[0];
-
-              if (targetDistrict && targetDistrict.prices) {
-                const benzinObj = targetDistrict.prices.find(p => p.productShortName === "KURS");
-                const motorinObj = targetDistrict.prices.find(p => p.productShortName === "MT_ULT");
-                
-                if (benzinObj && motorinObj) {
-                  const benzin = benzinObj.amount;
-                  const motorin = motorinObj.amount;
-                  const lpg = Math.round((benzin * city.lpgRatio) * 100) / 100;
-                  
-                  updatedPrices[city.name] = { benzin, motorin, lpg };
-                }
-              }
-            }
-          } catch {
-            // Silently fail
+        } else {
+          // Fallback to static data if DB is empty
+          if (isMounted) {
+            setFuelPrices({
+              istanbul: { benzin: "43.77", motorin: "41.35", lpg: "22.80" },
+              ankara: { benzin: "44.52", motorin: "42.15", lpg: "22.85" },
+              izmir: { benzin: "44.75", motorin: "42.30", lpg: "22.60" }
+            });
+            const d = new Date();
+            setLastUpdated(`${d.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`);
           }
-        }
-
-        if (isMounted) {
-          setFuelPrices(updatedPrices);
-          const now = new Date();
-          const dateStr = now.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" });
-          const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-          setLastUpdated(`${dateStr} ${timeStr}`);
         }
       } catch (err) {
-        console.error("Live prices fetch failed:", err);
+        console.error("Live prices fetch from Supabase failed:", err);
+        // Fallback to static data on error too
+        if (isMounted) {
+          setFuelPrices({
+            istanbul: { benzin: "43.77", motorin: "41.35", lpg: "22.80" },
+            ankara: { benzin: "44.52", motorin: "42.15", lpg: "22.85" },
+            izmir: { benzin: "44.75", motorin: "42.30", lpg: "22.60" }
+          });
+          const d = new Date();
+          setLastUpdated(`${d.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`);
+        }
       }
     };
 

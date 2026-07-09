@@ -1,5 +1,5 @@
 -- =========================================================
--- CARVIS PWA MASTER SCHEMA v7.2.2 (GÜVENLİ & TAMİR EDİLMİŞ)
+-- CARVIS PWA MASTER SCHEMA v7.2.2 (GÃœVENLÄ° & TAMÄ°R EDÄ°LMÄ°Å)
 -- COMPLETE DATABASE DEFINITION - IDEMPOTENT & NON-DESTRUCTIVE
 -- FIX: Enum 'parts' unsafe use error by using text-casting in logic
 -- =========================================================
@@ -9,8 +9,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "postgis";
 
 -- 2. ENUM INITIALIZATION & REPAIR
--- [ÖNEMLİ] Postgres 12+ kısıtlaması nedeniyle yeni eklenen enum değerleri 
--- aynı transaction içinde kullanılamaz. Bu yüzden aşağıda ::text cast kullanılmıştır.
+-- [Ã–NEMLÄ°] Postgres 12+ kÄ±sÄ±tlamasÄ± nedeniyle yeni eklenen enum deÄŸerleri 
+-- aynÄ± transaction iÃ§inde kullanÄ±lamaz. Bu yÃ¼zden aÅŸaÄŸÄ±da ::text cast kullanÄ±lmÄ±ÅŸtÄ±r.
 
 DO $$ BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
@@ -24,7 +24,7 @@ DO $$ BEGIN
     END IF;
 EXCEPTION WHEN duplicate_object THEN null; END $$;
 
--- Eksik değerleri ekle (Burası hata verirse SQL Editor'de seçip sadece burayı çalıştırın)
+-- Eksik deÄŸerleri ekle (BurasÄ± hata verirse SQL Editor'de seÃ§ip sadece burayÄ± Ã§alÄ±ÅŸtÄ±rÄ±n)
 ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'parts';
 ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'driver';
 ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'dealer';
@@ -32,6 +32,16 @@ ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'seller';
 ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'partner';
 
 -- 3. TABLES (CREATE IF NOT EXISTS - Zero Data Loss)
+
+-- CORPORATE CHAINS (Ulusal Servis AÄŸlarÄ±)
+CREATE TABLE IF NOT EXISTS public.corporate_chains (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL,
+    logo_url TEXT,
+    description TEXT,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
 
 -- PROFILES
 CREATE TABLE IF NOT EXISTS public.profiles (
@@ -80,6 +90,23 @@ DO $$ BEGIN
     -- Partner Metrics (Nicelik) Column
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='business_details') THEN
         ALTER TABLE public.profiles ADD COLUMN business_details JSONB DEFAULT '{}'::jsonb;
+    END IF;
+    -- Corporate Chain Integration
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='corporate_chain_id') THEN
+        ALTER TABLE public.profiles ADD COLUMN corporate_chain_id UUID REFERENCES public.corporate_chains(id) ON DELETE SET NULL;
+    END IF;
+    -- Rapidsy Standards & Partner Bans
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='rapidsy_contract_approved_at') THEN
+        ALTER TABLE public.profiles ADD COLUMN rapidsy_contract_approved_at TIMESTAMPTZ;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='is_approved_partner') THEN
+        ALTER TABLE public.profiles ADD COLUMN is_approved_partner BOOLEAN DEFAULT false;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='is_banned') THEN
+        ALTER TABLE public.profiles ADD COLUMN is_banned BOOLEAN DEFAULT false;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='ban_reason') THEN
+        ALTER TABLE public.profiles ADD COLUMN ban_reason TEXT;
     END IF;
 END $$;
 
@@ -502,7 +529,7 @@ BEGIN
             IF current_setting('request.jwt.claims', true)::jsonb->>'role' = 'service_role' THEN
                 RETURN NEW;
             END IF;
-            RAISE EXCEPTION 'Security Violation: Yetki yükseltme veya statü değiştirme izniniz yok.';
+            RAISE EXCEPTION 'Security Violation: Yetki yÃ¼kseltme veya statÃ¼ deÄŸiÅŸtirme izniniz yok.';
         END IF;
     END IF;
     RETURN NEW;
@@ -583,8 +610,8 @@ BEGIN
     VALUES (
       NEW.customer_id,
       'info',
-      'Yeni Bir Teklif Aldınız!',
-      'Hizmet talebinize yeni bir fiyat teklifi geldi. Detayları incelemek için dokunun.'
+      'Yeni Bir Teklif AldÄ±nÄ±z!',
+      'Hizmet talebinize yeni bir fiyat teklifi geldi. DetaylarÄ± incelemek iÃ§in dokunun.'
     );
   -- Quote Accepted (Customer -> Seller)
   ELSIF (TG_OP = 'UPDATE' AND OLD.status = 'pending' AND NEW.status = 'accepted') THEN
@@ -593,7 +620,7 @@ BEGIN
       NEW.seller_id,
       'success',
       'Teklifiniz Kabul Edildi!',
-      'Müşteri verdiğiniz teklifi kabul etti. Sipariş sürecini takip edebilirsiniz.'
+      'MÃ¼ÅŸteri verdiÄŸiniz teklifi kabul etti. SipariÅŸ sÃ¼recini takip edebilirsiniz.'
     );
   END IF;
   RETURN NEW;
@@ -615,8 +642,8 @@ BEGIN
     VALUES (
       NEW.seller_id,
       'success',
-      'Ödeme Onaylandı!',
-      'Sipariş ödemesi başarıyla tamamlandı. Hazırlıklara başlayabilirsiniz.'
+      'Ã–deme OnaylandÄ±!',
+      'SipariÅŸ Ã¶demesi baÅŸarÄ±yla tamamlandÄ±. HazÄ±rlÄ±klara baÅŸlayabilirsiniz.'
     );
   -- Order Completed (Seller -> Customer)
   ELSIF (OLD.status <> 'completed' AND NEW.status = 'completed') THEN
@@ -624,8 +651,8 @@ BEGIN
     VALUES (
       NEW.customer_id,
       'success',
-      'Siparişiniz Tamamlandı!',
-      'Hizmet süreci başarıyla sonuçlandı. Bizi tercih ettiğiniz için teşekkürler!'
+      'SipariÅŸiniz TamamlandÄ±!',
+      'Hizmet sÃ¼reci baÅŸarÄ±yla sonuÃ§landÄ±. Bizi tercih ettiÄŸiniz iÃ§in teÅŸekkÃ¼rler!'
     );
   END IF;
   RETURN NEW;
@@ -646,8 +673,8 @@ BEGIN
     VALUES (
       NEW.user_id,
       'success',
-      'Cüzdan Bakiyesi Güncellendi',
-      'Hesabınıza ' || (NEW.balance - OLD.balance) || ' TRY tutarında bakiye eklendi.'
+      'CÃ¼zdan Bakiyesi GÃ¼ncellendi',
+      'HesabÄ±nÄ±za ' || (NEW.balance - OLD.balance) || ' TRY tutarÄ±nda bakiye eklendi.'
     );
   END IF;
   RETURN NEW;
@@ -806,7 +833,7 @@ BEGIN
   -- Scrub profile info
   UPDATE public.profiles
   SET 
-    full_name = 'Kullanıcı Silindi',
+    full_name = 'KullanÄ±cÄ± Silindi',
     username = 'deleted_user_' || id,
     email = 'deleted@carvis.com',
     phone_number = NULL,
@@ -819,7 +846,7 @@ BEGIN
   -- Note: Check if audit_logs table exists or use a generic notification
   -- For now, we assume it exists as per previous master schema audits
   INSERT INTO public.notifications (user_id, type, title, message)
-  VALUES (auth.uid(), 'info', 'Hesap Silme Talebi', 'Kişisel verileriniz KVKK kapsamında silinmek üzere işaretlendi.');
+  VALUES (auth.uid(), 'info', 'Hesap Silme Talebi', 'KiÅŸisel verileriniz KVKK kapsamÄ±nda silinmek Ã¼zere iÅŸaretlendi.');
 
   RETURN;
 END;
@@ -841,7 +868,7 @@ CREATE TABLE IF NOT EXISTS public.partner_applications (
     kep_address text,
     office_address text,
     iban_number text,
-    documents jsonb DEFAULT '[]'::jsonb, -- Store links to Vergi Levhası, Signature Circular etc.
+    documents jsonb DEFAULT '[]'::jsonb, -- Store links to Vergi LevhasÄ±, Signature Circular etc.
     status text DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
     reviewer_note text,
     created_at timestamptz DEFAULT now(),
@@ -890,7 +917,7 @@ END $$;
 -- 10. CORPORATE EXCELLENCE: ESCROW & PROOF OF WORK (v7.3)
 -- =========================================================
 
--- 10.1 Escrow Vault (Ödemeleri Bloke Eden Kasa)
+-- 10.1 Escrow Vault (Ã–demeleri Bloke Eden Kasa)
 CREATE TABLE IF NOT EXISTS public.escrow_vault (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     order_id uuid REFERENCES public.orders(id) ON DELETE CASCADE,
@@ -900,7 +927,7 @@ CREATE TABLE IF NOT EXISTS public.escrow_vault (
     updated_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- 10.2 Service Proofs (Hizmet Kanıtları - Fotoğraflı Tutanak)
+-- 10.2 Service Proofs (Hizmet KanÄ±tlarÄ± - FotoÄŸraflÄ± Tutanak)
 CREATE TABLE IF NOT EXISTS public.service_proofs (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     order_id uuid REFERENCES public.orders(id) ON DELETE CASCADE,
@@ -941,8 +968,8 @@ BEGIN
     VALUES (
         target_customer_id,
         'info',
-        'Hizmet Kanıtı Yüklendi!',
-        'Ustanız işlemleri tamamlayıp fotoğrafları yükledi. Lütfen onay vererek ödemeyi serbest bırakın.'
+        'Hizmet KanÄ±tÄ± YÃ¼klendi!',
+        'UstanÄ±z iÅŸlemleri tamamlayÄ±p fotoÄŸraflarÄ± yÃ¼kledi. LÃ¼tfen onay vererek Ã¶demeyi serbest bÄ±rakÄ±n.'
     );
     RETURN NEW;
 END;
@@ -1030,18 +1057,18 @@ BEGIN
 
     -- Log transaction securely
     INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
-    VALUES (v_user_id, p_amount, 'deposit', 'Bakiye Yüklendi (Güvenli Sistem)');
+    VALUES (v_user_id, p_amount, 'deposit', 'Bakiye YÃ¼klendi (GÃ¼venli Sistem)');
     
     RETURN TRUE;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- =========================================================
--- CARVIS MASTER SCHEMA PATCH v7.2.2.1 (EKSİK PARÇALAR)
+-- CARVIS MASTER SCHEMA PATCH v7.2.2.1 (EKSÄ°K PARÃ‡ALAR)
 -- FIX: Missing Tables & RPCs for Admin/Partner Dashboards
 -- =========================================================
 
--- 1. Eksik Tablolar: Danışmanlık ve Sistem Ayarları
+-- 1. Eksik Tablolar: DanÄ±ÅŸmanlÄ±k ve Sistem AyarlarÄ±
 CREATE TABLE IF NOT EXISTS public.consultations (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES public.profiles(id),
@@ -1062,7 +1089,7 @@ CREATE TABLE IF NOT EXISTS public.system_settings (
     updated_at TIMESTAMPTZ DEFAULT now()
 );
 
--- 2. Admin Dashboard İstatistik Fonksiyonu (v2)
+-- 2. Admin Dashboard Ä°statistik Fonksiyonu (v2)
 CREATE OR REPLACE FUNCTION public.get_admin_dashboard_stats_v2()
 RETURNS JSONB AS $$
 DECLARE
@@ -1158,7 +1185,7 @@ BEGIN
     FROM public.orders WHERE id = p_order_id AND customer_id = p_customer_id AND status = 'pending';
 
     IF NOT FOUND THEN
-        RETURN jsonb_build_object('success', false, 'message', 'Sipariş bulunamadı veya işlenemez durumda.');
+        RETURN jsonb_build_object('success', false, 'message', 'SipariÅŸ bulunamadÄ± veya iÅŸlenemez durumda.');
     END IF;
 
     -- 2. Check Customer Balance
@@ -1191,7 +1218,7 @@ BEGIN
 
     -- Log Transactions
     INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
-    VALUES (p_customer_id, -v_total_amount, 'payment', 'Sipariş Ödemesi (Komisyon Kesildi)');
+    VALUES (p_customer_id, -v_total_amount, 'payment', 'SipariÅŸ Ã–demesi (Komisyon Kesildi)');
 
     RETURN jsonb_build_object('success', true, 'commission', v_comm_amount, 'seller_payout', v_seller_amount);
 END;
@@ -1216,7 +1243,7 @@ CREATE POLICY "Admin only earnings" ON public.platform_earnings FOR SELECT USING
 -- CARVIS ESCROW RELEASE SYSTEM (v7.5)
 -- =========================================================
 
--- RPC: Müşteri Onayı ile Parayı Blokeden Çıkar (Escrow Payout)
+-- RPC: MÃ¼ÅŸteri OnayÄ± ile ParayÄ± Blokeden Ã‡Ä±kar (Escrow Payout)
 CREATE OR REPLACE FUNCTION public.rpc_confirm_order_delivery(p_order_id UUID)
 RETURNS JSONB AS $$
 DECLARE
@@ -1224,35 +1251,35 @@ DECLARE
     v_seller_amount DECIMAL(12,2);
     v_comm_amount DECIMAL(12,2);
 BEGIN
-    -- 1. Siparişi doğrula (Sadece 'paid' durumundakiler onaylanabilir)
+    -- 1. SipariÅŸi doÄŸrula (Sadece 'paid' durumundakiler onaylanabilir)
     SELECT * INTO v_order FROM public.orders 
     WHERE id = p_order_id AND customer_id = auth.uid() AND status = 'paid';
 
     IF NOT FOUND THEN
-        RETURN jsonb_build_object('success', false, 'message', 'Sipariş bulunamadı veya zaten tamamlanmış.');
+        RETURN jsonb_build_object('success', false, 'message', 'SipariÅŸ bulunamadÄ± veya zaten tamamlanmÄ±ÅŸ.');
     END IF;
 
-    -- 2. Satıcı hakedişini hesapla (Platform payı hariç)
+    -- 2. SatÄ±cÄ± hakediÅŸini hesapla (Platform payÄ± hariÃ§)
     SELECT amount INTO v_comm_amount FROM public.platform_earnings WHERE order_id = p_order_id LIMIT 1;
     v_seller_amount := v_order.total_amount - COALESCE(v_comm_amount, 0);
 
-    -- 3. Cüzdan Transferi (PENDING -> BALANCE)
+    -- 3. CÃ¼zdan Transferi (PENDING -> BALANCE)
     UPDATE public.wallets SET 
         pending_balance = pending_balance - v_seller_amount,
         balance = balance + v_seller_amount
     WHERE user_id = v_order.seller_id;
 
-    -- 4. Sipariş Durumunu Kapat
+    -- 4. SipariÅŸ Durumunu Kapat
     UPDATE public.orders SET 
         status = 'completed',
         completed_at = now()
     WHERE id = p_order_id;
 
-    -- 5. İşlem Kaydı
+    -- 5. Ä°ÅŸlem KaydÄ±
     INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
-    VALUES (v_order.seller_id, v_seller_amount, 'deposit', 'Sipariş Onaylandı - Hakediş Aktarıldı');
+    VALUES (v_order.seller_id, v_seller_amount, 'deposit', 'SipariÅŸ OnaylandÄ± - HakediÅŸ AktarÄ±ldÄ±');
 
-    RETURN jsonb_build_object('success', true, 'message', 'Ödeme başarıyla satıcıya aktarıldı.');
+    RETURN jsonb_build_object('success', true, 'message', 'Ã–deme baÅŸarÄ±yla satÄ±cÄ±ya aktarÄ±ldÄ±.');
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
@@ -1338,7 +1365,7 @@ ADD CONSTRAINT mechanic_shops_seller_id_fkey FOREIGN KEY (seller_id) REFERENCES 
 
 -- =========================================================
 -- CARVIS 2.0 FEATURE ENHANCEMENTS (v8.0)
--- 1. Garajım 2.0 (Health Score, Reminders, Storage)
+-- 1. GarajÄ±m 2.0 (Health Score, Reminders, Storage)
 -- 2. Smart Diagnosis (Symptoms, AI Pre-Diagnosis)
 -- 3. Live SOS Emergency Tracking (ETA, Pricing, Provider)
 -- 4. Expense Tracking & Vehicle Reports PDF
@@ -1548,10 +1575,10 @@ CREATE POLICY "Users can view own transactions" ON public.transactions FOR SELEC
 
 
 -- =========================================================================
--- FAZ 1: CARVIS PLATFORM EKONOMİSİ & OWASP API SIKILAŞTIRMA SÜRÜMÜ (v7.3.0)
+-- FAZ 1: CARVIS PLATFORM EKONOMÄ°SÄ° & OWASP API SIKILAÅTIRMA SÃœRÃœMÃœ (v7.3.0)
 -- =========================================================================
 
--- 1. Komisyon ve Gelir Kuralları
+-- 1. Komisyon ve Gelir KurallarÄ±
 CREATE TABLE IF NOT EXISTS public.commission_rules (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     service_type TEXT UNIQUE NOT NULL,
@@ -1562,7 +1589,7 @@ CREATE TABLE IF NOT EXISTS public.commission_rules (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- 2. Partner Hakedişleri ve Payout Muhasebesi
+-- 2. Partner HakediÅŸleri ve Payout Muhasebesi
 CREATE TABLE IF NOT EXISTS public.payouts (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     partner_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
@@ -1573,7 +1600,7 @@ CREATE TABLE IF NOT EXISTS public.payouts (
     processed_at TIMESTAMPTZ
 );
 
--- 3. Görev İptal ve İhtilaf Masası (Gig Disputes)
+-- 3. GÃ¶rev Ä°ptal ve Ä°htilaf MasasÄ± (Gig Disputes)
 CREATE TABLE IF NOT EXISTS public.gig_disputes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     task_id UUID REFERENCES public.gig_tasks(id) ON DELETE CASCADE,
@@ -1595,7 +1622,7 @@ CREATE TABLE IF NOT EXISTS public.partner_metrics (
     updated_at TIMESTAMPTZ DEFAULT now()
 );
 
--- 5. OWASP API Denetim Kayıtları (Audit Logs)
+-- 5. OWASP API Denetim KayÄ±tlarÄ± (Audit Logs)
 CREATE TABLE IF NOT EXISTS public.audit_logs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
@@ -1608,14 +1635,14 @@ CREATE TABLE IF NOT EXISTS public.audit_logs (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- RLS Etkinleştirilmesi
+-- RLS EtkinleÅŸtirilmesi
 ALTER TABLE public.commission_rules ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.payouts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.gig_disputes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.partner_metrics ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
 
--- Yeni Tablolar İçin RLS Politikaları
+-- Yeni Tablolar Ä°Ã§in RLS PolitikalarÄ±
 DROP POLICY IF EXISTS "Everyone can view commission rules" ON public.commission_rules;
 CREATE POLICY "Everyone can view commission rules" ON public.commission_rules FOR SELECT USING (true);
 
@@ -1650,10 +1677,10 @@ CREATE POLICY "Admins can read audit logs" ON public.audit_logs FOR SELECT USING
 
 
 -- =========================================================================
--- GÜVENLİ BACKEND RPC FONKSİYONLARI (OWASP BOLA/BFLA KORUMALARI)
+-- GÃœVENLÄ° BACKEND RPC FONKSÄ°YONLARI (OWASP BOLA/BFLA KORUMALARI)
 -- =========================================================================
 
--- 1. Güvenli Görev Kapma İşlemi (Yarış Koşulu Korumalı)
+-- 1. GÃ¼venli GÃ¶rev Kapma Ä°ÅŸlemi (YarÄ±ÅŸ KoÅŸulu KorumalÄ±)
 CREATE OR REPLACE FUNCTION public.claim_gig_task_secure(
     p_task_id UUID,
     p_claimer_id UUID
@@ -1663,18 +1690,18 @@ DECLARE
     v_status TEXT;
     v_user_role TEXT;
 BEGIN
-    -- Yetki kontrolü (Claimer istek atan kişi mi?)
+    -- Yetki kontrolÃ¼ (Claimer istek atan kiÅŸi mi?)
     IF auth.uid() <> p_claimer_id THEN
-        RAISE EXCEPTION 'Yetkisiz erişim: Kimlik eşleşmiyor.';
+        RAISE EXCEPTION 'Yetkisiz eriÅŸim: Kimlik eÅŸleÅŸmiyor.';
     END IF;
 
-    -- Kullanıcının partner rolü kontrolü
+    -- KullanÄ±cÄ±nÄ±n partner rolÃ¼ kontrolÃ¼
     SELECT role INTO v_user_role FROM public.profiles WHERE id = p_claimer_id;
     IF v_user_role <> 'partner' THEN
-        RAISE EXCEPTION 'Görevleri yalnızca onaylanmış partnerler alabilir.';
+        RAISE EXCEPTION 'GÃ¶revleri yalnÄ±zca onaylanmÄ±ÅŸ partnerler alabilir.';
     END IF;
 
-    -- Yarış koşulunu önlemek için satırı kilitliyoruz (SELECT FOR UPDATE)
+    -- YarÄ±ÅŸ koÅŸulunu Ã¶nlemek iÃ§in satÄ±rÄ± kilitliyoruz (SELECT FOR UPDATE)
     SELECT status INTO v_status 
     FROM public.gig_tasks 
     WHERE id = p_task_id 
@@ -1687,7 +1714,7 @@ BEGIN
             assigned_partner_id = p_claimer_id
         WHERE id = p_task_id;
         
-        -- Denetim kaydı oluştur
+        -- Denetim kaydÄ± oluÅŸtur
         INSERT INTO public.audit_logs (user_id, action, table_name, record_id, new_values)
         VALUES (p_claimer_id, 'CLAIM_GIG_TASK', 'gig_tasks', p_task_id, jsonb_build_object('status', 'claimed', 'claimer_id', p_claimer_id));
         
@@ -1699,7 +1726,7 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 
--- 2. Güvenli Görev Tamamlama ve Hakediş Muhasebe RPC'si
+-- 2. GÃ¼venli GÃ¶rev Tamamlama ve HakediÅŸ Muhasebe RPC'si
 CREATE OR REPLACE FUNCTION public.complete_gig_task_secure(
     p_task_id UUID,
     p_claimer_id UUID,
@@ -1715,24 +1742,24 @@ DECLARE
     v_partner_points INTEGER := 0;
     v_badge TEXT := 'Bronze';
 BEGIN
-    -- Yetki kontrolü
+    -- Yetki kontrolÃ¼
     IF auth.uid() <> p_claimer_id THEN
-        RAISE EXCEPTION 'Yetkisiz işlem: Görev sahibi siz değilsiniz.';
+        RAISE EXCEPTION 'Yetkisiz iÅŸlem: GÃ¶rev sahibi siz deÄŸilsiniz.';
     END IF;
 
-    -- Satır kilitleme
+    -- SatÄ±r kilitleme
     SELECT status, customer_id INTO v_status, v_customer_id 
     FROM public.gig_tasks 
     WHERE id = p_task_id 
     FOR UPDATE;
 
     IF v_status = 'claimed' THEN
-        -- Görev durumunu güncelle
+        -- GÃ¶rev durumunu gÃ¼ncelle
         UPDATE public.gig_tasks 
         SET status = 'completed'
         WHERE id = p_task_id;
 
-        -- Partner akademi puanını bulalım ve seviyesini belirleyelim
+        -- Partner akademi puanÄ±nÄ± bulalÄ±m ve seviyesini belirleyelim
         SELECT COALESCE(SUM(score), 0) INTO v_partner_points 
         FROM public.partner_academy 
         WHERE partner_id = p_claimer_id;
@@ -1745,32 +1772,32 @@ BEGIN
             v_base_commission := 12.00;
         END IF;
 
-        -- Komisyon ve Net Hakediş Hesaplaması
+        -- Komisyon ve Net HakediÅŸ HesaplamasÄ±
         v_commission_amount := (p_payout * v_base_commission) / 100.00;
         v_net_payout := p_payout - v_commission_amount;
 
-        -- Partner cüzdan bakiyesini artır
+        -- Partner cÃ¼zdan bakiyesini artÄ±r
         INSERT INTO public.wallets (id, user_id, balance, currency, updated_at)
         VALUES (p_claimer_id, p_claimer_id, v_net_payout, 'TRY', now())
         ON CONFLICT (id) DO UPDATE
         SET balance = COALESCE(public.wallets.balance, 0) + v_net_payout,
             updated_at = now();
 
-        -- Cüzdan hareketi logla
+        -- CÃ¼zdan hareketi logla
         INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
-        VALUES (p_claimer_id, v_net_payout, 'gig_payout', 'Tamamlanan Gig Görevi Hakedişi (Kesilen Komisyon: ' || v_base_commission || '%)');
+        VALUES (p_claimer_id, v_net_payout, 'gig_payout', 'Tamamlanan Gig GÃ¶revi HakediÅŸi (Kesilen Komisyon: ' || v_base_commission || '%)');
 
-        -- Payouts muhasebe kaydı ekle
+        -- Payouts muhasebe kaydÄ± ekle
         INSERT INTO public.payouts (partner_id, amount, status, bank_reference)
         VALUES (p_claimer_id, v_net_payout, 'pending', 'CARVIS-GIG-' || substring(p_task_id::text, 1, 8));
 
-        -- Partner performans metriklerini güncelle
+        -- Partner performans metriklerini gÃ¼ncelle
         INSERT INTO public.partner_metrics (partner_id, acceptance_rate, avg_response_time_minutes, score)
         VALUES (p_claimer_id, 100.00, 10, 5.00)
         ON CONFLICT (partner_id) DO UPDATE 
         SET loyal_customers_count = public.partner_metrics.loyal_customers_count + 1;
 
-        -- Denetim kaydı oluştur
+        -- Denetim kaydÄ± oluÅŸtur
         INSERT INTO public.audit_logs (user_id, action, table_name, record_id, new_values)
         VALUES (p_claimer_id, 'COMPLETE_GIG_TASK', 'gig_tasks', p_task_id, jsonb_build_object('status', 'completed', 'net_payout', v_net_payout, 'commission', v_commission_amount));
 
@@ -1782,7 +1809,7 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 
--- 3. Güvenli Partner SaaS Abonelik Yükseltme RPC'si
+-- 3. GÃ¼venli Partner SaaS Abonelik YÃ¼kseltme RPC'si
 CREATE OR REPLACE FUNCTION public.upgrade_partner_plan_secure(
     p_partner_id UUID,
     p_plan_type TEXT,
@@ -1792,19 +1819,19 @@ DECLARE
     v_balance DECIMAL(12,2);
     v_success BOOLEAN := FALSE;
 BEGIN
-    -- Yetki kontrolü
+    -- Yetki kontrolÃ¼
     IF auth.uid() <> p_partner_id THEN
-        RAISE EXCEPTION 'Yetkisiz abonelik yükseltme isteği.';
+        RAISE EXCEPTION 'Yetkisiz abonelik yÃ¼kseltme isteÄŸi.';
     END IF;
 
-    -- Partner cüzdanını kontrol et ve kilitle
+    -- Partner cÃ¼zdanÄ±nÄ± kontrol et ve kilitle
     SELECT COALESCE(balance, 0) INTO v_balance 
     FROM public.wallets 
     WHERE id = p_partner_id 
     FOR UPDATE;
 
     IF v_balance >= p_cost THEN
-        -- Ücreti tahsil et
+        -- Ãœcreti tahsil et
         UPDATE public.wallets 
         SET balance = balance - p_cost,
             updated_at = now()
@@ -1814,17 +1841,17 @@ BEGIN
         SET partner_level = p_plan_type
         WHERE id = p_partner_id;
 
-        -- İşlem kaydı ekle
+        -- Ä°ÅŸlem kaydÄ± ekle
         INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
-        VALUES (p_partner_id, -p_cost, 'saas_subscription', 'Carvis Partner ' || p_plan_type || ' Planı Üyeliği');
+        VALUES (p_partner_id, -p_cost, 'saas_subscription', 'Carvis Partner ' || p_plan_type || ' PlanÄ± ÃœyeliÄŸi');
 
-        -- Denetim kaydı oluştur
+        -- Denetim kaydÄ± oluÅŸtur
         INSERT INTO public.audit_logs (user_id, action, table_name, record_id, new_values)
         VALUES (p_partner_id, 'SUBSCRIBE_SAAS_PLAN', 'profiles', p_partner_id, jsonb_build_object('plan_type', p_plan_type, 'cost', p_cost));
 
         v_success := TRUE;
     ELSE
-        RAISE EXCEPTION 'Yetersiz bakiye. Lütfen cüzdanınıza bakiye yükleyin.';
+        RAISE EXCEPTION 'Yetersiz bakiye. LÃ¼tfen cÃ¼zdanÄ±nÄ±za bakiye yÃ¼kleyin.';
     END IF;
 
     RETURN v_success;
@@ -1839,24 +1866,24 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 -- 1. Seeding Monetization Plans for all 4 Professions (3 Tiers each)
 INSERT INTO public.monetization_plans (id, name, monthly_fee, commission_rate, features) VALUES
 -- Otopark (parking)
-('10000000-0000-0000-0000-000000000001', 'parking_free', 0.00, 0.10, '{"title": "Ücretsiz Başlangıç", "commission_rate": 0.10, "desc": "Otopark kapasitenizi sisteme kaydedin ve hemen rezervasyon almaya başlayın."}'),
-('10000000-0000-0000-0000-000000000002', 'parking_pro', 150.00, 0.05, '{"title": "Pro Otopark", "commission_rate": 0.05, "desc": "Doluluk yönetimini ve özel tarifelerinizi esnekçe yönetip gelirinizi artırın."}'),
-('10000000-0000-0000-0000-000000000003', 'parking_premium', 350.00, 0.03, '{"title": "Prestij Premium", "commission_rate": 0.03, "desc": "Şehrin en popüler noktalarında harita üstünde en çok tercih edilen otopark olun."}'),
+('10000000-0000-0000-0000-000000000001', 'parking_free', 0.00, 0.10, '{"title": "Ãœcretsiz BaÅŸlangÄ±Ã§", "commission_rate": 0.10, "desc": "Otopark kapasitenizi sisteme kaydedin ve hemen rezervasyon almaya baÅŸlayÄ±n."}'),
+('10000000-0000-0000-0000-000000000002', 'parking_pro', 150.00, 0.05, '{"title": "Pro Otopark", "commission_rate": 0.05, "desc": "Doluluk yÃ¶netimini ve Ã¶zel tarifelerinizi esnekÃ§e yÃ¶netip gelirinizi artÄ±rÄ±n."}'),
+('10000000-0000-0000-0000-000000000003', 'parking_premium', 350.00, 0.03, '{"title": "Prestij Premium", "commission_rate": 0.03, "desc": "Åehrin en popÃ¼ler noktalarÄ±nda harita Ã¼stÃ¼nde en Ã§ok tercih edilen otopark olun."}'),
 
 -- Vale (valet)
-('10000000-0000-0000-0000-000000000004', 'valet_free', 0.00, 0.20, '{"title": "Ücretsiz Başlangıç", "commission_rate": 0.20, "desc": "Kayıt olun, sertifikanızı yükleyin ve çağrı başına gelir elde edin."}'),
-('10000000-0000-0000-0000-000000000005', 'valet_pro', 150.00, 0.12, '{"title": "Pro Vale", "commission_rate": 0.12, "desc": "Daha yüksek çağrı kotası ve öncelikli bölgesel yönlendirmelerle kazanın."}'),
-('10000000-0000-0000-0000-000000000006', 'valet_premium', 350.00, 0.08, '{"title": "Premium Elit Vale", "commission_rate": 0.08, "desc": "Güvenilir premium vale ağında en yüksek öncelik ve dev sigorta koruması."}'),
+('10000000-0000-0000-0000-000000000004', 'valet_free', 0.00, 0.20, '{"title": "Ãœcretsiz BaÅŸlangÄ±Ã§", "commission_rate": 0.20, "desc": "KayÄ±t olun, sertifikanÄ±zÄ± yÃ¼kleyin ve Ã§aÄŸrÄ± baÅŸÄ±na gelir elde edin."}'),
+('10000000-0000-0000-0000-000000000005', 'valet_pro', 150.00, 0.12, '{"title": "Pro Vale", "commission_rate": 0.12, "desc": "Daha yÃ¼ksek Ã§aÄŸrÄ± kotasÄ± ve Ã¶ncelikli bÃ¶lgesel yÃ¶nlendirmelerle kazanÄ±n."}'),
+('10000000-0000-0000-0000-000000000006', 'valet_premium', 350.00, 0.08, '{"title": "Premium Elit Vale", "commission_rate": 0.08, "desc": "GÃ¼venilir premium vale aÄŸÄ±nda en yÃ¼ksek Ã¶ncelik ve dev sigorta korumasÄ±."}'),
 
 -- Usta & Servis (mechanic)
-('10000000-0000-0000-0000-000000000007', 'mechanic_free', 0.00, 0.15, '{"title": "Ücretsiz Başlangıç", "commission_rate": 0.15, "desc": "Profilinizi oluşturun, bölgenizdeki arıza taleplerine ücretsiz teklif verin."}'),
-('10000000-0000-0000-0000-000000000008', 'mechanic_pro', 150.00, 0.10, '{"title": "Pro Oto Servis", "commission_rate": 0.10, "desc": "Müşteri randevularını, iş emirlerini ve bakım kartlarını profesyonelce yönetin."}'),
-('10000000-0000-0000-0000-000000000009', 'mechanic_premium', 350.00, 0.06, '{"title": "Premium AI Servis", "commission_rate": 0.06, "desc": "Bölgenizde lider, AI teşhisli ve Carvis Garantili elit oto servis olun."}'),
+('10000000-0000-0000-0000-000000000007', 'mechanic_free', 0.00, 0.15, '{"title": "Ãœcretsiz BaÅŸlangÄ±Ã§", "commission_rate": 0.15, "desc": "Profilinizi oluÅŸturun, bÃ¶lgenizdeki arÄ±za taleplerine Ã¼cretsiz teklif verin."}'),
+('10000000-0000-0000-0000-000000000008', 'mechanic_pro', 150.00, 0.10, '{"title": "Pro Oto Servis", "commission_rate": 0.10, "desc": "MÃ¼ÅŸteri randevularÄ±nÄ±, iÅŸ emirlerini ve bakÄ±m kartlarÄ±nÄ± profesyonelce yÃ¶netin."}'),
+('10000000-0000-0000-0000-000000000009', 'mechanic_premium', 350.00, 0.06, '{"title": "Premium AI Servis", "commission_rate": 0.06, "desc": "BÃ¶lgenizde lider, AI teÅŸhisli ve Carvis Garantili elit oto servis olun."}'),
 
--- Parça Tedarikçisi (parts)
-('10000000-0000-0000-0000-000000000010', 'parts_free', 0.00, 0.15, '{"title": "Ücretsiz Başlangıç", "commission_rate": 0.15, "desc": "Yedek parça dükkanınızı açın, teklif taleplerini anında yanıtlamaya başlayın."}'),
-('10000000-0000-0000-0000-000000000011', 'parts_pro', 150.00, 0.10, '{"title": "Pro Tedarikçi", "commission_rate": 0.10, "desc": "Toplu ürün yükleme, XML entegrasyonları ve gelişmiş stok araçlarıyla satışları katlayın."}'),
-('10000000-0000-0000-0000-000000000012', 'parts_premium', 350.00, 0.06, '{"title": "Premium Tedarikçi", "commission_rate": 0.06, "desc": "E-ticarette zirveye oynayıp orijinal tescilli yedek parçalarınızla lider satıcı olun."}')
+-- ParÃ§a TedarikÃ§isi (parts)
+('10000000-0000-0000-0000-000000000010', 'parts_free', 0.00, 0.15, '{"title": "Ãœcretsiz BaÅŸlangÄ±Ã§", "commission_rate": 0.15, "desc": "Yedek parÃ§a dÃ¼kkanÄ±nÄ±zÄ± aÃ§Ä±n, teklif taleplerini anÄ±nda yanÄ±tlamaya baÅŸlayÄ±n."}'),
+('10000000-0000-0000-0000-000000000011', 'parts_pro', 150.00, 0.10, '{"title": "Pro TedarikÃ§i", "commission_rate": 0.10, "desc": "Toplu Ã¼rÃ¼n yÃ¼kleme, XML entegrasyonlarÄ± ve geliÅŸmiÅŸ stok araÃ§larÄ±yla satÄ±ÅŸlarÄ± katlayÄ±n."}'),
+('10000000-0000-0000-0000-000000000012', 'parts_premium', 350.00, 0.06, '{"title": "Premium TedarikÃ§i", "commission_rate": 0.06, "desc": "E-ticarette zirveye oynayÄ±p orijinal tescilli yedek parÃ§alarÄ±nÄ±zla lider satÄ±cÄ± olun."}')
 ON CONFLICT (id) DO UPDATE SET 
     monthly_fee = EXCLUDED.monthly_fee,
     commission_rate = EXCLUDED.commission_rate,
@@ -1877,7 +1904,7 @@ DECLARE
 BEGIN
     -- 1. Validate profession
     IF p_profession NOT IN ('valet', 'parking', 'mechanic', 'parts', 'carwash') THEN
-        RETURN jsonb_build_object('success', false, 'message', 'Geçersiz meslek seçimi.');
+        RETURN jsonb_build_object('success', false, 'message', 'GeÃ§ersiz meslek seÃ§imi.');
     END IF;
 
     -- 2. Update profiles: role escalation and base initial settings
@@ -1890,7 +1917,7 @@ BEGIN
     WHERE id = p_user_id;
 
     IF NOT FOUND THEN
-        RETURN jsonb_build_object('success', false, 'message', 'Profil bulunamadı.');
+        RETURN jsonb_build_object('success', false, 'message', 'Profil bulunamadÄ±.');
     END IF;
 
     -- 3. Insert specialized B2B profiles with exact schema columns
@@ -1930,7 +1957,7 @@ BEGIN
         subscription_status = 'active',
         custom_commission_rate = NULL;
 
-    RETURN jsonb_build_object('success', true, 'message', 'Onboarding işlemi başarıyla tamamlandı.');
+    RETURN jsonb_build_object('success', true, 'message', 'Onboarding iÅŸlemi baÅŸarÄ±yla tamamlandÄ±.');
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
@@ -1954,7 +1981,7 @@ BEGIN
     FROM public.monetization_plans WHERE id = p_plan_id;
 
     IF NOT FOUND THEN
-        RETURN jsonb_build_object('success', false, 'message', 'Seçilen üyelik planı bulunamadı.');
+        RETURN jsonb_build_object('success', false, 'message', 'SeÃ§ilen Ã¼yelik planÄ± bulunamadÄ±.');
     END IF;
 
     -- 2. Fetch Wallet Balance
@@ -1962,13 +1989,13 @@ BEGIN
     FROM public.wallets WHERE user_id = p_partner_id;
 
     IF NOT FOUND THEN
-        RETURN jsonb_build_object('success', false, 'message', 'İş ortağının cüzdanı bulunamadı.');
+        RETURN jsonb_build_object('success', false, 'message', 'Ä°ÅŸ ortaÄŸÄ±nÄ±n cÃ¼zdanÄ± bulunamadÄ±.');
     END IF;
 
     -- 3. Free Plan Check vs Payment Check
     IF v_monthly_fee > 0.00 THEN
         IF v_balance < v_monthly_fee THEN
-            RETURN jsonb_build_object('success', false, 'message', 'Yetersiz cüzdan bakiyesi. Lütfen bakiye yükleyin.');
+            RETURN jsonb_build_object('success', false, 'message', 'Yetersiz cÃ¼zdan bakiyesi. LÃ¼tfen bakiye yÃ¼kleyin.');
         END IF;
 
         -- 4. Deduct Wallet Balance
@@ -1980,7 +2007,7 @@ BEGIN
 
         -- 6. Record Wallet Transaction
         INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
-        VALUES (v_wallet_id, -v_monthly_fee, 'payment', 'Carvis İş Ortağı Plan Yükseltmesi: ' || v_plan_name);
+        VALUES (v_wallet_id, -v_monthly_fee, 'payment', 'Carvis Ä°ÅŸ OrtaÄŸÄ± Plan YÃ¼kseltmesi: ' || v_plan_name);
     END IF;
 
     -- 7. Update partner monetization settings
@@ -2014,7 +2041,7 @@ BEGIN
 
     RETURN jsonb_build_object(
         'success', true, 
-        'message', 'Üyelik planı başarıyla yükseltildi.', 
+        'message', 'Ãœyelik planÄ± baÅŸarÄ±yla yÃ¼kseltildi.', 
         'new_tier', v_base_tier,
         'deducted_amount', v_monthly_fee
     );
@@ -2028,13 +2055,13 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 -- SETUP: Supabase Storage Buckets & Policies
 -- =========================================================
 
--- 1. REVIEWER AUTH USER & GARAJA ÖN HAZIRLIK SEED (Removed for production)
+-- 1. REVIEWER AUTH USER & GARAJA Ã–N HAZIRLIK SEED (Removed for production)
 
 
 -- 2. SUPABASE STORAGE BUCKETS TANIMLARI
--- vehicle-documents: Belge kasası için
--- service-proofs: Usta tamamlandı kanıtları için
--- accident-reports: Kaza asistanı fotoğrafları için
+-- vehicle-documents: Belge kasasÄ± iÃ§in
+-- service-proofs: Usta tamamlandÄ± kanÄ±tlarÄ± iÃ§in
+-- accident-reports: Kaza asistanÄ± fotoÄŸraflarÄ± iÃ§in
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES 
   ('vehicle-documents', 'vehicle-documents', false, 10485760, ARRAY['image/png', 'image/jpeg', 'application/pdf']),
@@ -2043,17 +2070,17 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 
--- 3. STORAGE RLS GÜVENLİK POLİTİKALARI
+-- 3. STORAGE RLS GÃœVENLÄ°K POLÄ°TÄ°KALARI
 -- (storage.objects RLS is already enabled by Supabase by default)
 
--- 3.1 Belge Kasası ve Kaza Raporları RLS: Sadece dosya sahibi okuyabilir ve yükleyebilir
+-- 3.1 Belge KasasÄ± ve Kaza RaporlarÄ± RLS: Sadece dosya sahibi okuyabilir ve yÃ¼kleyebilir
 DROP POLICY IF EXISTS "Users can manage own documents" ON storage.objects;
 CREATE POLICY "Users can manage own documents" ON storage.objects
 FOR ALL
 USING (bucket_id IN ('vehicle-documents', 'accident-reports') AND auth.uid() = owner)
 WITH CHECK (bucket_id IN ('vehicle-documents', 'accident-reports') AND auth.uid() = owner);
 
--- 3.2 Servis Kanıtları (Proofs) RLS: Siparişle ilişkili müşteri veya satıcı görebilir, sadece satıcı yükleyebilir
+-- 3.2 Servis KanÄ±tlarÄ± (Proofs) RLS: SipariÅŸle iliÅŸkili mÃ¼ÅŸteri veya satÄ±cÄ± gÃ¶rebilir, sadece satÄ±cÄ± yÃ¼kleyebilir
 DROP POLICY IF EXISTS "Authenticated users upload proofs" ON storage.objects;
 CREATE POLICY "Authenticated users upload proofs" ON storage.objects
 FOR INSERT
@@ -2172,12 +2199,12 @@ CREATE TABLE IF NOT EXISTS public.maintenance_records (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   vehicle_id UUID NOT NULL REFERENCES public.vehicles(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  part_name TEXT NOT NULL,                       -- e.g. "Motor Yağı & Filtre", "Fren Balatası (Ön)"
+  part_name TEXT NOT NULL,                       -- e.g. "Motor YaÄŸÄ± & Filtre", "Fren BalatasÄ± (Ã–n)"
   changed_date DATE NOT NULL DEFAULT CURRENT_DATE,
   changed_km INTEGER NOT NULL DEFAULT 0,
   next_km_interval INTEGER NOT NULL DEFAULT 15000,   -- km until next change
   next_date_interval_months INTEGER NOT NULL DEFAULT 12, -- months until next change
-  notes TEXT,                                    -- e.g. "Castrol Edge 5W-30 kullanıldı"
+  notes TEXT,                                    -- e.g. "Castrol Edge 5W-30 kullanÄ±ldÄ±"
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -2185,6 +2212,12 @@ CREATE TABLE IF NOT EXISTS public.maintenance_records (
 -- Index for fast vehicle-based queries
 CREATE INDEX IF NOT EXISTS idx_maintenance_records_vehicle_id ON public.maintenance_records(vehicle_id);
 CREATE INDEX IF NOT EXISTS idx_maintenance_records_user_id ON public.maintenance_records(user_id);
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'maintenance_records' AND column_name = 'proof_image_url') THEN
+        ALTER TABLE public.maintenance_records ADD COLUMN proof_image_url TEXT;
+    END IF;
+END $$;
 
 -- Enable RLS
 ALTER TABLE public.maintenance_records ENABLE ROW LEVEL SECURITY;
@@ -2455,3 +2488,870 @@ CREATE INDEX IF NOT EXISTS idx_payments_customer ON public.payments(customer_id)
 CREATE INDEX IF NOT EXISTS idx_payments_provider ON public.payments(provider_id);
 CREATE INDEX IF NOT EXISTS idx_payments_status ON public.payments(status);
 CREATE INDEX IF NOT EXISTS idx_wallet_tx_wallet ON public.wallet_transactions(wallet_id);
+
+-- =========================================================
+-- 9. SEED REAL DATA FOR CORPORATE CHAINS
+-- =========================================================
+-- 9. SEED REAL DATA FOR CORPORATE CHAINS
+-- =========================================================
+INSERT INTO public.corporate_chains (name, logo_url, description)
+VALUES 
+  ('Bosch Car Service', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Bosch-Logo.svg/2000px-Bosch-Logo.svg.png', 'TÃ¼rkiye genelinde 350+ nokta ile garantili ve standart periyodik bakÄ±m aÄŸÄ±.'),
+  ('Otopratik', 'https://www.brisa.com.tr/assets/img/otopratik-logo.png', 'Brisa gÃ¼vencesiyle hÄ±zlÄ± araÃ§ bakÄ±m ve lastik servis zinciri.'),
+  ('Auto King', 'https://www.autoking.com.tr/assets/img/logo.png', 'Mini onarÄ±m, kaporta ve ekspertiz alanlarÄ±nda uzman servis aÄŸÄ±.'),
+  ('RS Servis', 'https://www.rsservis.com.tr/images/logo.png', 'Hasar onarÄ±mÄ±, dolu hasarÄ± ve mobilite Ã§Ã¶zÃ¼mleri sunan ulusal servis noktasÄ±.')
+ON CONFLICT DO NOTHING;
+
+-- =========================================================
+-- 10. LIVE FUEL PRICES & CRON
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS public.live_fuel_prices (
+    province_code text PRIMARY KEY,
+    city_name text NOT NULL,
+    benzin numeric NOT NULL DEFAULT 0,
+    motorin numeric NOT NULL DEFAULT 0,
+    lpg numeric NOT NULL DEFAULT 0,
+    last_fetched_at timestamptz DEFAULT timezone('utc'::text, now())
+);
+
+ALTER TABLE public.live_fuel_prices ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Enable read access for all users on fuel_prices" ON public.live_fuel_prices;
+CREATE POLICY "Enable read access for all users on fuel_prices" 
+ON public.live_fuel_prices FOR SELECT USING (true);
+
+-- =========================================================
+-- 11. CORPORATE BRANCHES (REAL DATA & RPC)
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS public.corporate_branches (
+    id uuid DEFAULT extensions.uuid_generate_v4() PRIMARY KEY,
+    chain_name text NOT NULL,
+    name text NOT NULL,
+    address text,
+    phone text,
+    lat double precision,
+    lng double precision,
+    city text
+);
+
+ALTER TABLE public.corporate_branches ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Enable read access for all users on branches" ON public.corporate_branches;
+CREATE POLICY "Enable read access for all users on branches" ON public.corporate_branches FOR SELECT USING (true);
+
+-- Seed Real Istanbul Corporate Branches
+INSERT INTO public.corporate_branches (chain_name, name, address, phone, lat, lng, city)
+VALUES 
+    ('Bosch Car Service', 'MTK Bosch Oto Service', 'Kartaltepe Mah. 2 NamÄ±k Kemal Cad. 28/A, KÃ¼Ã§Ã¼kÃ§ekmece', '0212 598 12 44', 41.002, 28.794, 'istanbul'),
+    ('Bosch Car Service', 'Birsay Otomotiv', 'Libadiye Cad. No: 4-B, ÃœskÃ¼dar', '0216 545 02 22', 41.011, 29.066, 'istanbul'),
+    ('Bosch Car Service', 'Ä°timat Otomotiv', 'GÃ¼ven Mah. Menderes Cad. 72, GÃ¼ngÃ¶ren', '0212 539 10 10', 41.025, 28.874, 'istanbul'),
+    ('Bosch Car Service', 'Park Bosch Car Servisi', 'MerdivenkÃ¶y Mah. Nisan Sok. 4/B, KadÄ±kÃ¶y', '0216 337 61 61', 40.985, 29.071, 'istanbul'),
+    ('Bosch Car Service', 'Akkaya Otomotiv', 'Sanayi Mah. DavutpaÅŸa Cad. BaÅŸaklÄ± Sok. 26, GÃ¼ngÃ¶ren', '0212 505 12 43', 41.020, 28.885, 'istanbul'),
+    ('Bosch Car Service', 'Åžahinler Otomotiv', 'Selami Ali Mah. Cumhuriyet Cad. 16/A, ÃœskÃ¼dar', '0216 310 84 30', 41.025, 29.015, 'istanbul'),
+    ('Bosch Car Service', 'TopaloÄŸlu Servis BakÄ±m', 'ÅženlikkÃ¶y Mah. IÅŸÄ±k Sok. 1, Florya/BakÄ±rkÃ¶y', '0212 580 74 00', 40.975, 28.790, 'istanbul'),
+    ('Bosch Car Service', 'Mert Otomotiv', 'Esentepe Mah. Ä°nÃ¶nÃ¼ Cad. 5, Kartal Oto San. Sit., Kartal', '0216 306 84 88', 40.902, 29.175, 'istanbul'),
+    ('Bosch Car Service', 'Otomist Otomotiv', 'Barbaros Mah. Mor Amber Sok. No: 1, AtaÅŸehir', '0216 255 55 05', 40.995, 29.112, 'istanbul'),
+    ('Otopratik', 'Otopratik Maslak', 'Maslak Mah. AOS 55. Sok. No: 2, SarÄ±yer', '0212 285 00 00', 41.113, 29.020, 'istanbul'),
+    ('Otopratik', 'Otopratik BostancÄ±', 'BostancÄ± Sanayi Sitesi DeÄŸirmenyolu Cad. No:14', '0216 574 00 00', 40.966, 29.102, 'istanbul')
+ON CONFLICT DO NOTHING;
+
+-- RPC for fetching nearby corporate branches using Haversine formula
+CREATE OR REPLACE FUNCTION public.get_nearby_corporate_branches(p_lat double precision, p_lng double precision, p_radius_meters double precision)
+RETURNS TABLE (
+    id text,
+    name text,
+    type text,
+    distance text,
+    dist_num double precision,
+    lat double precision,
+    lng double precision,
+    address text,
+    features text[],
+    compliance jsonb
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        b.id::text,
+        b.name,
+        b.chain_name as type,
+        ROUND((6371 * acos(least(1.0, greatest(-1.0, cos(radians(p_lat)) * cos(radians(b.lat)) * cos(radians(b.lng) - radians(p_lng)) + sin(radians(p_lat)) * sin(radians(b.lat))))))::numeric, 1)::text || ' km' as distance,
+        (6371 * acos(least(1.0, greatest(-1.0, cos(radians(p_lat)) * cos(radians(b.lat)) * cos(radians(b.lng) - radians(p_lng)) + sin(radians(p_lat)) * sin(radians(b.lat)))))) as dist_num,
+        b.lat,
+        b.lng,
+        b.address,
+        ARRAY['Kurumsal Hizmet', 'Garantili BakÄ±m', 'Orijinal ParÃ§a']::text[] as features,
+        jsonb_build_object(
+            'mersis', 'Ulusal Kurumsal Vergi No',
+            'wasteOilCert', 'AtÄ±k YaÄŸ BertarafÄ± Ã‡evre LisanslÄ± (Kurumsal Standard)',
+            'fireLicense', 'Ä°tfaiye YangÄ±n GÃ¼venlik Raporu OnaylÄ± (TSE Belgeli)',
+            'isCompliant', true
+        ) as compliance
+    FROM public.corporate_branches b
+    WHERE (6371 * acos(least(1.0, greatest(-1.0, cos(radians(p_lat)) * cos(radians(b.lat)) * cos(radians(b.lng) - radians(p_lng)) + sin(radians(p_lat)) * sin(radians(b.lat)))))) <= (p_radius_meters / 1000.0)
+    ORDER BY dist_num ASC;
+END;
+$$;
+
+-- =========================================================
+-- 12. AUTOMATIC NETWORK INTEGRATION TRIGGER
+-- =========================================================
+-- When a partner application is approved from admin panel, automatically
+-- add them to the Rapidsy Corporate Branches network so they appear on the map.
+
+ALTER TABLE public.partner_applications 
+ADD COLUMN IF NOT EXISTS phone text,
+ADD COLUMN IF NOT EXISTS lat double precision,
+ADD COLUMN IF NOT EXISTS lng double precision,
+ADD COLUMN IF NOT EXISTS city text;
+
+CREATE OR REPLACE FUNCTION public.handle_partner_approval()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Only trigger when status changes to 'approved'
+    IF NEW.status = 'approved' AND OLD.status != 'approved' THEN
+        
+        -- 1. Upgrade the user profile
+        UPDATE public.profiles
+        SET application_status = 'approved',
+            role = 'provider'
+        WHERE id = NEW.user_id;
+
+        -- 2. Add them directly to the corporate_branches network (Rapidsy AÄŸÄ±)
+        -- If lat/lng are NULL, they won't appear on the map until geocoded by admin.
+        INSERT INTO public.corporate_branches (chain_name, name, address, phone, lat, lng, city)
+        VALUES (
+            COALESCE(NEW.company_name, 'BaÄŸÄ±msÄ±z Kurumsal Servis'),
+            COALESCE(NEW.company_name, 'Yeni Rapidsy NoktasÄ±'),
+            NEW.office_address,
+            NEW.phone,
+            NEW.lat,
+            NEW.lng,
+            COALESCE(NEW.city, 'istanbul')
+        );
+        
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS on_partner_approved ON public.partner_applications;
+CREATE TRIGGER on_partner_approved
+    AFTER UPDATE ON public.partner_applications
+    FOR EACH ROW
+    EXECUTE FUNCTION public.handle_partner_approval();
+
+-- =========================================================
+-- 13. RAPIDSY SOS (TOW TRUCK & ESCROW) EXTENSIONS
+-- =========================================================
+
+-- Distinguish tow trucks from normal service branches
+ALTER TABLE public.partner_applications 
+ADD COLUMN IF NOT EXISTS business_type text DEFAULT 'service';
+
+ALTER TABLE public.corporate_branches 
+ADD COLUMN IF NOT EXISTS branch_type text DEFAULT 'service';
+
+-- Enhance emergency requests to handle escrow and towing
+ALTER TABLE public.emergency_requests
+ADD COLUMN IF NOT EXISTS assigned_provider_id uuid REFERENCES public.profiles(id),
+ADD COLUMN IF NOT EXISTS price numeric,
+ADD COLUMN IF NOT EXISTS escrow_order_id uuid REFERENCES public.orders(id);
+
+
+-- =========================================================
+-- 14. RAPIDSY GÜVENCESİ & RÜCU SİSTEMİ (ASSURANCE & RECOURSE)
+-- =========================================================
+
+-- 1. Create enum types for claim and recourse statuses
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'claim_status_type') THEN
+        CREATE TYPE claim_status_type AS ENUM ('pending', 'approved', 'rejected', 'recoursed_to_partner');
+    END IF;
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'recourse_status_type') THEN
+        CREATE TYPE recourse_status_type AS ENUM ('pending_collection', 'collected', 'legal_dispute');
+    END IF;
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+-- 2. Add assurance fields to profiles and orders
+ALTER TABLE public.profiles 
+ADD COLUMN IF NOT EXISTS has_active_assurance_sub BOOLEAN DEFAULT false,
+ADD COLUMN IF NOT EXISTS assurance_sub_expires_at TIMESTAMPTZ;
+
+ALTER TABLE public.orders 
+ADD COLUMN IF NOT EXISTS assurance_opted_in BOOLEAN DEFAULT false,
+ADD COLUMN IF NOT EXISTS assurance_fee NUMERIC DEFAULT 0;
+
+-- 3. Create assurance claims table (Hasar Bildirimleri)
+CREATE TABLE IF NOT EXISTS public.assurance_claims (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
+    customer_id UUID NOT NULL REFERENCES auth.users(id),
+    seller_id UUID NOT NULL REFERENCES public.profiles(id), -- Standardized to profiles reference
+    claim_status claim_status_type DEFAULT 'pending',
+    reported_damage_desc TEXT NOT NULL,
+    damage_images TEXT[], -- Array of URLs to secure storage images
+    payout_amount NUMERIC DEFAULT 0,
+    recourse_amount NUMERIC DEFAULT 0,
+    recourse_status recourse_status_type DEFAULT 'pending_collection',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS for assurance_claims
+ALTER TABLE public.assurance_claims ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Customers can view their own claims" ON public.assurance_claims;
+CREATE POLICY "Customers can view their own claims" 
+ON public.assurance_claims FOR SELECT 
+USING (auth.uid() = customer_id);
+
+DROP POLICY IF EXISTS "Customers can insert their claims" ON public.assurance_claims;
+CREATE POLICY "Customers can insert their claims" 
+ON public.assurance_claims FOR INSERT 
+WITH CHECK (auth.uid() = customer_id);
+
+DROP POLICY IF EXISTS "Sellers can view recourse claims against them" ON public.assurance_claims;
+CREATE POLICY "Sellers can view recourse claims against them" 
+ON public.assurance_claims FOR SELECT 
+USING (auth.uid() = seller_id);
+
+
+-- =========================================================
+-- 15. ANLAŞMAZLIK ÇÖZÜM MERKEZİ & OPERASYONEL GPS TAKİBİ
+-- =========================================================
+
+-- 1. Create enum type for dispute status
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'dispute_status_type') THEN
+        CREATE TYPE dispute_status_type AS ENUM ('under_review', 'refunded', 'released_to_seller');
+    END IF;
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'tracking_event_type') THEN
+        CREATE TYPE tracking_event_type AS ENUM ('check_in', 'check_out', 'proof_uploaded');
+    END IF;
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+-- 2. Add is_escrow_blocked field to orders table
+ALTER TABLE public.orders 
+ADD COLUMN IF NOT EXISTS is_escrow_blocked BOOLEAN DEFAULT false;
+
+-- 3. Create disputes table (Anlaşmazlık Çözüm Merkezi)
+CREATE TABLE IF NOT EXISTS public.order_disputes (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
+    customer_id UUID NOT NULL REFERENCES auth.users(id),
+    seller_id UUID NOT NULL REFERENCES public.profiles(id),
+    reason_category TEXT NOT NULL, -- e.g., 'wrong_part', 'damage', 'poor_quality', 'other'
+    description TEXT NOT NULL,
+    evidence_url TEXT, -- Link to uploaded photo proof of issue
+    status dispute_status_type DEFAULT 'under_review',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. Create tracking table (GPS and Photo Proof check-in/out)
+CREATE TABLE IF NOT EXISTS public.order_tracking_events (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
+    partner_id UUID NOT NULL REFERENCES public.profiles(id),
+    event_type tracking_event_type NOT NULL,
+    lat DECIMAL(10,8) NOT NULL,
+    lng DECIMAL(11,8) NOT NULL,
+    accuracy_meters DECIMAL(6,2),
+    photo_url TEXT, -- Required for 'proof_uploaded' event
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS Configuration
+ALTER TABLE public.order_disputes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.order_tracking_events ENABLE ROW LEVEL SECURITY;
+
+-- Disputes Policies
+DROP POLICY IF EXISTS "Customers can view their disputes" ON public.order_disputes;
+CREATE POLICY "Customers can view their disputes" 
+ON public.order_disputes FOR SELECT 
+USING (auth.uid() = customer_id);
+
+DROP POLICY IF EXISTS "Customers can open disputes" ON public.order_disputes;
+CREATE POLICY "Customers can open disputes" 
+ON public.order_disputes FOR INSERT 
+WITH CHECK (auth.uid() = customer_id);
+
+DROP POLICY IF EXISTS "Sellers can view disputes for their orders" ON public.order_disputes;
+CREATE POLICY "Sellers can view disputes for their orders" 
+ON public.order_disputes FOR SELECT 
+USING (auth.uid() = seller_id);
+
+-- Tracking Policies
+DROP POLICY IF EXISTS "Everyone involved can view tracking" ON public.order_tracking_events;
+CREATE POLICY "Everyone involved can view tracking" 
+ON public.order_tracking_events FOR SELECT 
+USING (
+    auth.uid() = partner_id OR 
+    auth.uid() = (SELECT customer_id FROM public.orders WHERE id = order_id)
+);
+
+DROP POLICY IF EXISTS "Partners can insert tracking events" ON public.order_tracking_events;
+CREATE POLICY "Partners can insert tracking events" 
+ON public.order_tracking_events FOR INSERT 
+WITH CHECK (auth.uid() = partner_id);
+
+
+-- =========================================================
+-- 16. PARTNER EKOSİSTEMİ GENİŞLETMESİ v1.0
+--     Usta, Parçacı, Yıkamacı, Çekici, Sigorta Şirketi
+--     Kapsamlı Özellik Matrisi + Problem Önleyici Alanlar
+-- =========================================================
+
+-- ─────────────────────────────────────────────────────────
+-- 16.1 MECHANIC SHOPS — Genişletilmiş Profesyonel Alanlar
+-- ─────────────────────────────────────────────────────────
+DO $$ BEGIN
+    -- Sertifika türü (Usta Odası, TSE, ISO 9001)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='certification_type') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN certification_type TEXT;
+    END IF;
+    -- Teşhis cihazları (Bosch, Snap-on, Launch, vs.)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='diagnostic_tools') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN diagnostic_tools TEXT[] DEFAULT '{}';
+    END IF;
+    -- Lift sayısı — kapasite göstergesi
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='lift_count') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN lift_count INTEGER DEFAULT 1;
+    END IF;
+    -- Kabul edilen araç tipleri (passenger, suv, commercial, electric, hybrid, motorcycle)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='accepted_vehicle_types') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN accepted_vehicle_types TEXT[] DEFAULT '{passenger}';
+    END IF;
+    -- Mobil servis (yol başı bakım yapılıyor mu?)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='is_mobile_service') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN is_mobile_service BOOLEAN DEFAULT false;
+    END IF;
+    -- Standart garanti politikası (gün)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='warranty_policy_days') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN warranty_policy_days INTEGER DEFAULT 30;
+    END IF;
+    -- Mali mesuliyet sigortası bitiş tarihi — otomatik askıya alma için kritik
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='liability_insurance_expiry') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN liability_insurance_expiry DATE;
+    END IF;
+    -- Hizmet konumu tipi (at_shop=serviste, at_customer=müşteride, both=her ikisi)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='service_location_type') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN service_location_type TEXT DEFAULT 'at_shop' 
+            CHECK (service_location_type IN ('at_shop', 'at_customer', 'both'));
+    END IF;
+    -- Teknisyen sayısı
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='technician_count') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN technician_count INTEGER DEFAULT 1;
+    END IF;
+END $$;
+
+-- ─────────────────────────────────────────────────────────
+-- 16.2 PARTS PROFILES — Parça Kökeni ve Garanti Alanları
+-- ─────────────────────────────────────────────────────────
+DO $$ BEGIN
+    -- Satıcının kabul ettiği parça köken tipleri
+    -- OEM=Orijinal, OES=Eşdeğer, remanufactured=Revize, used=Çıkma, aftermarket=Muadil
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parts_profiles' AND column_name='part_origin_types') THEN
+        ALTER TABLE public.parts_profiles ADD COLUMN part_origin_types TEXT[] DEFAULT '{oem,oes,aftermarket}';
+    END IF;
+    -- Yetkili distribütör olduğu markalar
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parts_profiles' AND column_name='brand_authorization_ids') THEN
+        ALTER TABLE public.parts_profiles ADD COLUMN brand_authorization_ids TEXT[] DEFAULT '{}';
+    END IF;
+    -- İade politikası (gün cinsinden)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parts_profiles' AND column_name='return_policy_days') THEN
+        ALTER TABLE public.parts_profiles ADD COLUMN return_policy_days INTEGER DEFAULT 14;
+    END IF;
+    -- Minimum garanti süresi (ay)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parts_profiles' AND column_name='min_warranty_months') THEN
+        ALTER TABLE public.parts_profiles ADD COLUMN min_warranty_months INTEGER DEFAULT 0;
+    END IF;
+    -- OTS (Otomotiv Tedarik Sistemi) kayıt durumu
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parts_profiles' AND column_name='is_ots_registered') THEN
+        ALTER TABLE public.parts_profiles ADD COLUMN is_ots_registered BOOLEAN DEFAULT false;
+    END IF;
+    -- Minimum sipariş tutarı
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parts_profiles' AND column_name='min_order_amount') THEN
+        ALTER TABLE public.parts_profiles ADD COLUMN min_order_amount DECIMAL(12,2) DEFAULT 0;
+    END IF;
+    -- Çalışma günleri
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parts_profiles' AND column_name='working_days') THEN
+        ALTER TABLE public.parts_profiles ADD COLUMN working_days TEXT[] DEFAULT '{mon,tue,wed,thu,fri}';
+    END IF;
+END $$;
+
+-- ─────────────────────────────────────────────────────────
+-- 16.3 PRODUCTS — Parça Kökeni ve Uyumluluk Alanları
+-- ─────────────────────────────────────────────────────────
+DO $$ BEGIN
+    -- Parça kökeni — ZORUNLU bilgi (oem/oes/remanufactured/used/aftermarket/replica)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='part_origin') THEN
+        ALTER TABLE public.products ADD COLUMN part_origin TEXT DEFAULT 'aftermarket'
+            CHECK (part_origin IN ('oem', 'oes', 'remanufactured', 'used', 'aftermarket', 'replica'));
+    END IF;
+    -- Garanti süresi (ay)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='warranty_months') THEN
+        ALTER TABLE public.products ADD COLUMN warranty_months INTEGER DEFAULT 0;
+    END IF;
+    -- Uyumlu araç markaları
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='compatible_brands') THEN
+        ALTER TABLE public.products ADD COLUMN compatible_brands TEXT[] DEFAULT '{}';
+    END IF;
+    -- Uyumlu araç modelleri
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='compatible_models') THEN
+        ALTER TABLE public.products ADD COLUMN compatible_models TEXT[] DEFAULT '{}';
+    END IF;
+    -- OEM parça numarası (doğrulama için)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='oem_number') THEN
+        ALTER TABLE public.products ADD COLUMN oem_number TEXT;
+    END IF;
+    -- Barkod / QR kodu
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='barcode') THEN
+        ALTER TABLE public.products ADD COLUMN barcode TEXT;
+    END IF;
+    -- Parçanın orijinalliği platform tarafından doğrulandı mı?
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='is_verified_authentic') THEN
+        ALTER TABLE public.products ADD COLUMN is_verified_authentic BOOLEAN DEFAULT false;
+    END IF;
+    -- Bu parça hangi usta siparişiyle bağlantılı (parça+işçilik köprüsü)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='linked_service_request_id') THEN
+        ALTER TABLE public.products ADD COLUMN linked_service_request_id UUID REFERENCES public.service_requests(id) ON DELETE SET NULL;
+    END IF;
+END $$;
+
+-- ─────────────────────────────────────────────────────────
+-- 16.4 CARWASH PROFILES — Detaylı Hizmet ve Operasyon
+-- ─────────────────────────────────────────────────────────
+-- Önce carwash_profiles tablosunu oluştur (yoksa)
+CREATE TABLE IF NOT EXISTS public.carwash_profiles (
+    id UUID PRIMARY KEY REFERENCES public.profiles(id) ON DELETE CASCADE,
+    company_name TEXT,
+    base_price DECIMAL(12,2) DEFAULT 0.00,
+    service_radius_km INTEGER DEFAULT 10,
+    has_own_water_tank BOOLEAN DEFAULT false,
+    has_generator BOOLEAN DEFAULT false,
+    is_eco_friendly BOOLEAN DEFAULT false,
+    seller_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    rating DECIMAL(3,2) DEFAULT 5.0,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+DO $$ BEGIN
+    -- Sunulan hizmet tipleri (exterior, interior, detailing, engine, steam, ozone, full)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='service_types') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN service_types TEXT[] DEFAULT '{exterior}';
+    END IF;
+    -- Ekip büyüklüğü
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='team_size') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN team_size INTEGER DEFAULT 1;
+    END IF;
+    -- Araç boyutuna göre fiyatlandırma {small, medium, large, suv, commercial}
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='vehicle_size_pricing') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN vehicle_size_pricing JSONB DEFAULT '{}'::jsonb;
+    END IF;
+    -- Kullanılan kimyasal marka
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='chemicals_brand') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN chemicals_brand TEXT;
+    END IF;
+    -- Yıkama hasarı sigortası
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='insurance_covers_damage') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN insurance_covers_damage BOOLEAN DEFAULT false;
+    END IF;
+    -- Ortalama müdahale süresi (dakika)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='response_time_minutes') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN response_time_minutes INTEGER DEFAULT 30;
+    END IF;
+    -- Buhar temizleyici
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='has_steam_cleaner') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN has_steam_cleaner BOOLEAN DEFAULT false;
+    END IF;
+    -- Ozon makinesi (koku giderme)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='has_ozone_machine') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN has_ozone_machine BOOLEAN DEFAULT false;
+    END IF;
+    -- Anahtar teslim politikası (keyless=anahtarsız, customer_present=müşteri yanında, key_box=güvenli kutu)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='key_exchange_policy') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN key_exchange_policy TEXT DEFAULT 'keyless'
+            CHECK (key_exchange_policy IN ('keyless', 'customer_present', 'key_box'));
+    END IF;
+    -- Aktif durum
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='carwash_profiles' AND column_name='is_active_now') THEN
+        ALTER TABLE public.carwash_profiles ADD COLUMN is_active_now BOOLEAN DEFAULT false;
+    END IF;
+END $$;
+
+-- Carwash RLS
+ALTER TABLE public.carwash_profiles ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can manage own carwash profile" ON public.carwash_profiles;
+CREATE POLICY "Users can manage own carwash profile" ON public.carwash_profiles 
+FOR ALL USING (auth.uid() = id);
+
+DROP POLICY IF EXISTS "Public read carwash" ON public.carwash_profiles;
+CREATE POLICY "Public read carwash" ON public.carwash_profiles 
+FOR SELECT USING (true);
+
+-- ─────────────────────────────────────────────────────────
+-- 16.5 ÇEKİCİ / YOL YARDIM PROFİLLERİ (YENİ)
+-- ─────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.tow_truck_profiles (
+    id UUID PRIMARY KEY REFERENCES public.profiles(id) ON DELETE CASCADE,
+    company_name TEXT,
+    -- Sunulan yol yardım hizmetleri
+    service_types TEXT[] DEFAULT '{towing}',  -- towing, tire_change, battery_boost, fuel_delivery, lockout
+    -- Araç kapasitesi (ton)
+    truck_capacity_tons DECIMAL(5,2) DEFAULT 2.0,
+    -- 7/24 aktif mi?
+    is_24_7 BOOLEAN DEFAULT false,
+    -- Ortalama müdahale süresi (dakika)
+    response_time_minutes INTEGER DEFAULT 20,
+    -- Hizmet verilen iller
+    coverage_provinces TEXT[] DEFAULT '{}',
+    -- Flatbed (lüks araçlar için düz platform taşıyıcı) var mı?
+    has_flatbed BOOLEAN DEFAULT false,
+    -- Temel fiyat (ilk km dahil)
+    base_price DECIMAL(12,2) DEFAULT 0.00,
+    -- KM başı ek ücret
+    price_per_km DECIMAL(12,2) DEFAULT 0.00,
+    -- Şu an aktif mi?
+    is_active_now BOOLEAN DEFAULT false,
+    -- Anlık konum (GPS)
+    current_lat DECIMAL(10,8),
+    current_lng DECIMAL(11,8),
+    -- Mali mesuliyet sigortası bitiş tarihi
+    liability_insurance_expiry DATE,
+    -- Rating
+    rating DECIMAL(3,2) DEFAULT 5.0,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- RLS for Tow Trucks
+ALTER TABLE public.tow_truck_profiles ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can manage own tow truck profile" ON public.tow_truck_profiles;
+CREATE POLICY "Users can manage own tow truck profile" ON public.tow_truck_profiles 
+FOR ALL USING (auth.uid() = id);
+
+DROP POLICY IF EXISTS "Public read active tow trucks" ON public.tow_truck_profiles;
+CREATE POLICY "Public read active tow trucks" ON public.tow_truck_profiles 
+FOR SELECT USING (true);
+
+-- ─────────────────────────────────────────────────────────
+-- 16.6 SİGORTA ŞİRKETİ PROFİLLERİ (YENİ)
+-- ─────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.insurance_company_profiles (
+    id UUID PRIMARY KEY REFERENCES public.profiles(id) ON DELETE CASCADE,
+    company_name TEXT NOT NULL,
+    -- Sigortacılık lisans numarası (Hazine ve Maliye Bakanlığı)
+    license_number TEXT,
+    -- Şirket hizmet tipleri (kasko, trafik, ferdi_kaza, roadside, green_card)
+    company_type TEXT[] DEFAULT '{}',
+    -- Sunulan poliçe tipleri
+    policy_types TEXT[] DEFAULT '{}',
+    -- Maksimum teminat tutarı (TRY)
+    coverage_limit_max DECIMAL(15,2),
+    -- Aylık prim aralığı
+    monthly_premium_min DECIMAL(12,2),
+    monthly_premium_max DECIMAL(12,2),
+    -- Hasar bildiriminden çözüme ortalama süre (saat)
+    claim_response_hours INTEGER DEFAULT 24,
+    -- Dijital poliçe sunuluyor mu?
+    is_digital_policy BOOLEAN DEFAULT true,
+    -- Anlaşmalı servis/garaj sayısı
+    partner_garage_network_count INTEGER DEFAULT 0,
+    -- Rapidsy platformuyla entegre (hasar bildirimi otomatik iletilir)
+    is_rapidsy_integrated BOOLEAN DEFAULT false,
+    -- Hasar bildirimi webhook URL'si
+    api_webhook_url TEXT,
+    -- Müşteri portalı URL'si
+    customer_portal_url TEXT,
+    -- Çağrı merkezi telefonu
+    contact_phone TEXT,
+    -- 7/24 destek var mı?
+    is_24_7_support BOOLEAN DEFAULT false,
+    rating DECIMAL(3,2) DEFAULT 5.0,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- RLS for Insurance Companies
+ALTER TABLE public.insurance_company_profiles ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can manage own insurance profile" ON public.insurance_company_profiles;
+CREATE POLICY "Users can manage own insurance profile" ON public.insurance_company_profiles 
+FOR ALL USING (auth.uid() = id OR public.is_admin());
+
+DROP POLICY IF EXISTS "Public read insurance companies" ON public.insurance_company_profiles;
+CREATE POLICY "Public read insurance companies" ON public.insurance_company_profiles 
+FOR SELECT USING (true);
+
+-- ─────────────────────────────────────────────────────────
+-- 16.7 SİGORTA POLİÇE TEKLİFLERİ (Sigorta→Müşteri)
+-- ─────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.insurance_policy_offers (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    -- Teklifi yapan sigorta şirketi
+    insurance_partner_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+    -- Teklifin yapıldığı müşteri
+    customer_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+    -- Teklifin ilgili olduğu araç
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE SET NULL,
+    -- Poliçe tipi (kasko, trafik, vs.)
+    policy_type TEXT NOT NULL,
+    -- Yıllık prim (TRY)
+    annual_premium DECIMAL(12,2),
+    -- Teminat detayları (JSON)
+    coverage_details JSONB DEFAULT '{}'::jsonb,
+    -- Teklifin geçerlilik tarihi
+    valid_until TIMESTAMPTZ,
+    -- Durum
+    status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'accepted', 'rejected', 'expired')),
+    -- Sigorta şirketinin notları
+    notes TEXT,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE public.insurance_policy_offers ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Customer view own offers" ON public.insurance_policy_offers;
+CREATE POLICY "Customer view own offers" ON public.insurance_policy_offers 
+FOR SELECT USING (auth.uid() = customer_id OR auth.uid() = insurance_partner_id OR public.is_admin());
+
+DROP POLICY IF EXISTS "Insurance company can manage offers" ON public.insurance_policy_offers;
+CREATE POLICY "Insurance company can manage offers" ON public.insurance_policy_offers 
+FOR ALL USING (auth.uid() = insurance_partner_id);
+
+-- ─────────────────────────────────────────────────────────
+-- 16.8 PARTNER SİGORTA DOĞRULAMASI (Otomatik Askıya Alma)
+-- ─────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.partner_insurance_verifications (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    -- Partner kimliği (usta, yıkamacı, çekici)
+    partner_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+    -- Poliçe numarası
+    policy_number TEXT NOT NULL,
+    -- Sigorta şirketi adı
+    insurer_name TEXT,
+    -- Teminat tipi (Mesleki Sorumluluk, Genel Sorumluluk, vs.)
+    coverage_type TEXT,
+    -- Teminat tutarı (TRY)
+    coverage_amount DECIMAL(15,2),
+    -- Bitiş tarihi — ÖNEMLİ: bu tarih geçince partner askıya alınır
+    expiry_date DATE NOT NULL,
+    -- Belge URL'si (Supabase Storage)
+    document_url TEXT,
+    -- Admin tarafından doğrulandı mı?
+    is_verified BOOLEAN DEFAULT false,
+    verified_at TIMESTAMPTZ,
+    verified_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    -- Yenileme bildirimi gönderildi mi?
+    renewal_notified_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE public.partner_insurance_verifications ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Partners view own insurance" ON public.partner_insurance_verifications;
+CREATE POLICY "Partners view own insurance" ON public.partner_insurance_verifications 
+FOR SELECT USING (auth.uid() = partner_id OR public.is_admin());
+
+DROP POLICY IF EXISTS "Partners manage own insurance" ON public.partner_insurance_verifications;
+CREATE POLICY "Partners manage own insurance" ON public.partner_insurance_verifications 
+FOR ALL USING (auth.uid() = partner_id OR public.is_admin());
+
+-- ─────────────────────────────────────────────────────────
+-- 16.9 TETİKLEYİCİ: Sigorta Süresi Dolunca Askıya Alma
+--       Sipariş oluşturulurken partner sigorta kontrolü
+-- ─────────────────────────────────────────────────────────
+CREATE OR REPLACE FUNCTION public.check_partner_insurance_on_order()
+RETURNS TRIGGER AS $$
+DECLARE
+    v_expiry DATE;
+    v_partner_name TEXT;
+BEGIN
+    -- Partner'ın en güncel sigorta bitiş tarihini bul
+    SELECT expiry_date INTO v_expiry
+    FROM public.partner_insurance_verifications
+    WHERE partner_id = NEW.seller_id AND is_verified = true
+    ORDER BY expiry_date DESC
+    LIMIT 1;
+
+    -- Eğer sigorta yoksa veya süresi geçmişse sipariş oluşturmayı engelleme
+    -- (sadece loglama yapıyoruz, bloklama değil — kullanıcı deneyimi bozulmamalı)
+    IF v_expiry IS NOT NULL AND v_expiry < CURRENT_DATE THEN
+        -- Sigorta süresi dolmuş — partner'ı askıya al
+        UPDATE public.profiles 
+        SET is_suspended = true, 
+            ban_reason = 'Mali mesuliyet sigortası süresi dolmuştur. Lütfen poliçenizi yenileyin.'
+        WHERE id = NEW.seller_id AND is_suspended = false;
+
+        -- Admin'e bildirim gönder
+        INSERT INTO public.notifications (user_id, type, title, message)
+        SELECT id, 'warning', 
+            'Partner Sigorta Süresi Doldu',
+            'Bir partner''ın mali mesuliyet sigortası süresi dolmuştur ve otomatik olarak askıya alınmıştır.'
+        FROM public.profiles WHERE role::text = 'admin' LIMIT 1;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS trg_check_partner_insurance ON public.orders;
+CREATE TRIGGER trg_check_partner_insurance
+BEFORE INSERT ON public.orders
+FOR EACH ROW EXECUTE FUNCTION public.check_partner_insurance_on_order();
+
+-- ─────────────────────────────────────────────────────────
+-- 16.10 TETİKLEYİCİ: Sigorta Yenileme Bildirimi (30 gün öncesi)
+-- ─────────────────────────────────────────────────────────
+CREATE OR REPLACE FUNCTION public.notify_upcoming_insurance_expiry()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Sigorta bitiş tarihine 30 gün kala bildirim gönder
+    IF NEW.expiry_date <= (CURRENT_DATE + INTERVAL '30 days') 
+       AND NEW.expiry_date > CURRENT_DATE 
+       AND OLD.renewal_notified_at IS NULL THEN
+        
+        INSERT INTO public.notifications (user_id, type, title, message)
+        VALUES (
+            NEW.partner_id,
+            'warning',
+            '⚠️ Sigorta Poliçeniz Yakında Bitiyor',
+            'Mali mesuliyet sigorta poliçenizin süresi ' || 
+            to_char(NEW.expiry_date, 'DD/MM/YYYY') || 
+            ' tarihinde dolmaktadır. Hizmet vermaya devam edebilmek için poliçenizi yenilemeniz gerekmektedir.'
+        );
+
+        -- Bildirim gönderildi olarak işaretle
+        NEW.renewal_notified_at := now();
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS trg_notify_insurance_expiry ON public.partner_insurance_verifications;
+CREATE TRIGGER trg_notify_insurance_expiry
+BEFORE UPDATE ON public.partner_insurance_verifications
+FOR EACH ROW EXECUTE FUNCTION public.notify_upcoming_insurance_expiry();
+
+-- ─────────────────────────────────────────────────────────
+-- 16.11 user_role ENUM — Yeni Partner Tipleri Ekleme
+-- ─────────────────────────────────────────────────────────
+ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'tow_truck';
+ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'insurance';
+ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'carwash';
+
+-- ─────────────────────────────────────────────────────────
+-- 16.12 complete_partner_onboarding_v2 GÜNCELLEMESİ
+--        Yeni partner tiplerini destekle
+-- ─────────────────────────────────────────────────────────
+CREATE OR REPLACE FUNCTION public.complete_partner_onboarding_v2(
+    p_user_id UUID,
+    p_profession TEXT,
+    p_business_name TEXT,
+    p_phone TEXT
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+    v_result jsonb;
+BEGIN
+    -- Update profile role safely
+    UPDATE public.profiles
+    SET 
+        role = p_profession::public.user_role,
+        company_name = p_business_name,
+        phone_number = COALESCE(p_phone, phone_number),
+        is_active_provider = true,
+        updated_at = now()
+    WHERE id = p_user_id;
+
+    -- Create specialized profile based on profession
+    IF p_profession = 'mechanic' THEN
+        INSERT INTO public.mechanic_shops (seller_id, shop_name, is_active, specialties, brands, accepted_vehicle_types)
+        VALUES (p_user_id, p_business_name, true, ARRAY['Periyodik Bakım'], ARRAY[]::TEXT[], ARRAY['passenger'])
+        ON CONFLICT DO NOTHING;
+
+    ELSIF p_profession = 'parts' THEN
+        INSERT INTO public.parts_profiles (id, business_name, delivery_radius_km, store_type, part_origin_types)
+        VALUES (p_user_id, p_business_name, 50, 'retail', ARRAY['oem', 'oes', 'aftermarket'])
+        ON CONFLICT (id) DO NOTHING;
+
+    ELSIF p_profession = 'carwash' THEN
+        INSERT INTO public.carwash_profiles (id, seller_id, company_name, service_radius_km, service_types, has_own_water_tank)
+        VALUES (p_user_id, p_user_id, p_business_name, 10, ARRAY['exterior'], false)
+        ON CONFLICT (id) DO NOTHING;
+
+    ELSIF p_profession = 'tow_truck' THEN
+        INSERT INTO public.tow_truck_profiles (id, company_name, service_types, is_24_7)
+        VALUES (p_user_id, p_business_name, ARRAY['towing'], false)
+        ON CONFLICT (id) DO NOTHING;
+
+    ELSIF p_profession = 'insurance' THEN
+        INSERT INTO public.insurance_company_profiles (id, company_name, is_digital_policy)
+        VALUES (p_user_id, p_business_name, true)
+        ON CONFLICT (id) DO NOTHING;
+
+    ELSIF p_profession = 'valet' THEN
+        INSERT INTO public.valet_profiles (id, bio, experience_years)
+        VALUES (p_user_id, p_business_name, 1)
+        ON CONFLICT (id) DO NOTHING;
+
+    ELSIF p_profession = 'parking' THEN
+        INSERT INTO public.parking_profiles (id, parking_name, total_capacity)
+        VALUES (p_user_id, p_business_name, 10)
+        ON CONFLICT (id) DO NOTHING;
+    END IF;
+
+    -- Ensure wallet exists
+    INSERT INTO public.wallets (id, user_id, balance, currency)
+    VALUES (p_user_id, p_user_id, 0.00, 'TRY')
+    ON CONFLICT (id) DO NOTHING;
+
+    v_result := jsonb_build_object('success', true, 'message', 'Partner kaydı tamamlandı.');
+    RETURN v_result;
+
+EXCEPTION WHEN OTHERS THEN
+    v_result := jsonb_build_object('success', false, 'message', SQLERRM);
+    RETURN v_result;
+END;
+$$;
+
+-- ─────────────────────────────────────────────────────────
+-- 16.13 İNDEKSLER — Performans Optimizasyonu
+-- ─────────────────────────────────────────────────────────
+CREATE INDEX IF NOT EXISTS idx_products_part_origin ON public.products(part_origin);
+CREATE INDEX IF NOT EXISTS idx_products_compatible_brands ON public.products USING GIN(compatible_brands);
+CREATE INDEX IF NOT EXISTS idx_tow_truck_active ON public.tow_truck_profiles(is_active_now);
+CREATE INDEX IF NOT EXISTS idx_insurance_offers_customer ON public.insurance_policy_offers(customer_id, status);
+CREATE INDEX IF NOT EXISTS idx_partner_insurance_expiry ON public.partner_insurance_verifications(expiry_date, is_verified);
+CREATE INDEX IF NOT EXISTS idx_mechanic_vehicle_types ON public.mechanic_shops USING GIN(accepted_vehicle_types);
+
+-- Schema reload
+NOTIFY pgrst, 'reload schema';
+
+
+

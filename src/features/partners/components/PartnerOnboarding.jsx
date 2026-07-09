@@ -5,19 +5,28 @@ import { AnimatePresence } from "framer-motion";
 import { supabase } from "../../../supabaseClient";
 import ProfessionSelectionStep from "./onboarding/ProfessionSelectionStep";
 import BusinessDetailsStep from "./onboarding/BusinessDetailsStep";
+import KYCAndLegalStep from "./onboarding/KYCAndLegalStep";
 import PlansAndTrustStep from "./onboarding/PlansAndTrustStep";
+import { KYCService } from "../../../services/KYCService";
+// Yeni partner form bileşenleri
 
 const PartnerOnboarding = ({ onComplete }) => {
   const { currentUser } = useAuth();
   const { showAlert } = useUI();
   const [step, setStep] = useState(1);
-  const [profession, setProfession] = useState(null); // 'valet', 'parking', 'mechanic', 'parts'
+  const [profession, setProfession] = useState(null); // 'mechanic', 'parts'
   const [businessName, setBusinessName] = useState("");
   const [phone, setPhone] = useState("");
   const [details, setDetails] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Step 3 states
+  // Step 3 states (KYC)
+  const [insurancePolicyNumber, setInsurancePolicyNumber] = useState("");
+  const [insuranceExpiryDate, setInsuranceExpiryDate] = useState("");
+  const [criminalRecordFile, setCriminalRecordFile] = useState(null);
+  const [competenceCertFile, setCompetenceCertFile] = useState(null);
+
+  // Step 4 states
   const [selectedPlanTab, setSelectedPlanTab] = useState("free");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [acceptedTrust, setAcceptedTrust] = useState(false);
@@ -30,6 +39,10 @@ const PartnerOnboarding = ({ onComplete }) => {
     }
     if (step === 2 && (!businessName || !phone)) {
       showAlert("Hata", "Lütfen gerekli alanları doldurunuz.", "error");
+      return;
+    }
+    if (step === 3 && (!insurancePolicyNumber || !insuranceExpiryDate || !criminalRecordFile || !competenceCertFile)) {
+      showAlert("Hata", "Lütfen yasal doğrulama belgelerini eksiksiz doldurunuz.", "error");
       return;
     }
     setStep(prev => prev + 1);
@@ -48,6 +61,24 @@ const PartnerOnboarding = ({ onComplete }) => {
     setIsSubmitting(true);
     try {
       showAlert("Bilgi", "Başvurunuz kaydediliyor ve profiliniz güncelleniyor...", "info");
+
+      // Save KYC documents
+      let criminalRecordUrl = null;
+      let competenceCertUrl = null;
+      
+      if (criminalRecordFile) {
+         criminalRecordUrl = await KYCService.uploadSecureDocument(criminalRecordFile, `kyc/${currentUser.id}/criminal_record_${Date.now()}.pdf`);
+      }
+      if (competenceCertFile) {
+         competenceCertUrl = await KYCService.uploadSecureDocument(competenceCertFile, `kyc/${currentUser.id}/competence_${Date.now()}.pdf`);
+      }
+
+      await KYCService.submitKYCData(currentUser.id, {
+        criminalRecordUrl,
+        competenceCertUrl,
+        insurancePolicyNumber,
+        insuranceExpiryDate
+      });
 
       // 1. First, attempt to use the secure SECURITY DEFINER RPC to bypass client-side triggers and prevent role escalation issues
       const { data: rpcData, error: rpcError } = await supabase.rpc("complete_partner_onboarding_v2", {
@@ -77,28 +108,6 @@ const PartnerOnboarding = ({ onComplete }) => {
           let payload = {};
           
           switch (profession) {
-            case "valet":
-              tableName = "valet_profiles";
-              payload = {
-                id: currentUser.id,
-                is_active_now: true,
-                service_radius_km: 15,
-                experience_years: 3
-              };
-              break;
-            case "parking":
-              tableName = "parking_profiles";
-              payload = {
-                id: currentUser.id,
-                parking_name: businessName,
-                total_capacity: 50,
-                occupied_count: 0,
-                price_per_hour: 30.00,
-                is_indoor: true,
-                has_security: true,
-                has_valet: false
-              };
-              break;
             case "mechanic":
               tableName = "mechanic_shops";
               payload = {
@@ -107,7 +116,8 @@ const PartnerOnboarding = ({ onComplete }) => {
                 shop_name: businessName,
                 is_active: true,
                 specialties: ["Periyodik Bakım", "Fren Sistemleri"],
-                brands: ["BMW", "Audi", "Volkswagen", "Mercedes"]
+                brands: [],
+                accepted_vehicle_types: ["passenger"]
               };
               break;
             case "parts":
@@ -116,7 +126,8 @@ const PartnerOnboarding = ({ onComplete }) => {
                 id: currentUser.id,
                 business_name: businessName,
                 delivery_radius_km: 50,
-                store_type: "retail"
+                store_type: "retail",
+                part_origin_types: ["oem", "oes", "aftermarket"]
               };
               break;
             case "carwash":
@@ -126,9 +137,27 @@ const PartnerOnboarding = ({ onComplete }) => {
                 seller_id: currentUser.id,
                 company_name: businessName,
                 service_radius_km: 10,
-                has_own_water_tank: true,
-                has_generator: true,
-                is_eco_friendly: true
+                service_types: ["exterior"],
+                key_exchange_policy: "keyless"
+              };
+              break;
+            case "tow_truck":
+              tableName = "tow_truck_profiles";
+              payload = {
+                id: currentUser.id,
+                company_name: businessName,
+                service_types: ["towing"],
+                is_24_7: false,
+                response_time_minutes: 20
+              };
+              break;
+            case "insurance":
+              tableName = "insurance_company_profiles";
+              payload = {
+                id: currentUser.id,
+                company_name: businessName,
+                is_digital_policy: true,
+                claim_response_hours: 24
               };
               break;
             default:
@@ -167,7 +196,7 @@ const PartnerOnboarding = ({ onComplete }) => {
         throw new Error(rpcData.message);
       }
 
-      showAlert("Başarılı", "Tebrikler! Carvis B2B Ortağı oldunuz. Dijital garaj ve kokpitiniz hazırlandı.", "success");
+      showAlert("Başarılı", "Tebrikler! Rapidsy Servis Ortağı oldunuz. Dijital garaj ve kokpitiniz hazırlandı.", "success");
       
       if (onComplete) {
         onComplete();
@@ -190,14 +219,14 @@ const PartnerOnboarding = ({ onComplete }) => {
 
       {/* Stepper Indicators */}
       <div className="flex items-center justify-between mb-10 max-w-md mx-auto relative z-10">
-        {[1, 2, 3].map((s) => (
+        {[1, 2, 3, 4].map((s) => (
           <div key={s} className="flex items-center gap-2">
             <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black transition-all ${
               step >= s ? 'bg-primary-600 text-slate-900 dark:text-white shadow-lg shadow-primary-600/20' : 'bg-black/5 dark:bg-white/5 text-slate-500 border border-black/5 dark:border-white/5'
             }`}>
               {s}
             </div>
-            {s < 3 && <div className={`w-12 h-0.5 rounded-full transition-all ${step > s ? 'bg-primary-600' : 'bg-black/5 dark:bg-white/5'}`}></div>}
+            {s < 4 && <div className={`w-8 sm:w-12 h-0.5 rounded-full transition-all ${step > s ? 'bg-primary-600' : 'bg-black/5 dark:bg-white/5'}`}></div>}
           </div>
         ))}
       </div>
@@ -225,6 +254,21 @@ const PartnerOnboarding = ({ onComplete }) => {
         )}
 
         {step === 3 && (
+          <KYCAndLegalStep
+            insurancePolicyNumber={insurancePolicyNumber}
+            setInsurancePolicyNumber={setInsurancePolicyNumber}
+            insuranceExpiryDate={insuranceExpiryDate}
+            setInsuranceExpiryDate={setInsuranceExpiryDate}
+            criminalRecordFile={criminalRecordFile}
+            setCriminalRecordFile={setCriminalRecordFile}
+            competenceCertFile={competenceCertFile}
+            setCompetenceCertFile={setCompetenceCertFile}
+            handleBack={handleBack}
+            handleNext={handleNext}
+          />
+        )}
+
+        {step === 4 && (
           <PlansAndTrustStep
             profession={profession}
             selectedPlanTab={selectedPlanTab}

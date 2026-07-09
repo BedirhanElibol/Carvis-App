@@ -480,7 +480,7 @@ const MapScreen = () => {
             <div className="mt-8 flex items-center justify-center gap-2 bg-emerald-500/10 p-4 rounded-2xl border border-emerald-500/20">
               <ShieldCheck size={18} className="text-emerald-500" />
               <span className="text-[10px] font-black text-emerald-500 uppercase">
-                Resmi Carvis Güvencesi Altındasınız
+                Resmi Rapidsy Güvencesi Altındasınız
               </span>
             </div>
           </div>

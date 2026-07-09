@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const LandingHero = memo(({t, language, searchQuery, setSearchQuery, searchLocation, setSearchLocation, CITIES, fuelPrices, fuelCity, setFuelCity, fuelLastUpdated, isLoadingFuel}) => {
+  const navigate = useNavigate();
   return (
     <>
         <section className="w-full max-w-7xl mx-auto px-6 text-center flex flex-col items-center">
@@ -186,7 +187,7 @@ const LandingHero = memo(({t, language, searchQuery, setSearchQuery, searchLocat
             </div>
           </motion.div>
 
-          {/* EDS & Social Map Banner for Guests */}
+          {/* EDS & Social Map Banner for Guests - Temporarily hidden per user request
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -220,6 +221,7 @@ const LandingHero = memo(({t, language, searchQuery, setSearchQuery, searchLocat
               </div>
             </button>
           </motion.div>
+          */}
         </section>
 
     </>

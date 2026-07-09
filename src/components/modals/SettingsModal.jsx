@@ -142,7 +142,7 @@ const SettingsModal = ({ show, onClose, t, currentUser, showAlert }) => {
                 </p>
                 <p className="text-slate-500 font-medium font-sans">
                   Yapay Zeka (AI) API anahtarı bu ortamda otomatik olarak
-                  sağlanmaktadır. Carvis AI asistanınız her zaman aktif.
+                  sağlanmaktadır. Rapidsy AI asistanınız her zaman aktif.
                 </p>
               </div>
             </div>

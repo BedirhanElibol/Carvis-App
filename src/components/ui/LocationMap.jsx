@@ -101,9 +101,9 @@ const LocationMap = ({
         </Marker>
 
         {/* Real Providers Pins */}
-        {markers.map((marker) => (
+        {markers.map((marker, index) => (
           <Marker
-            key={marker.id}
+            key={`${marker.id}-${index}`}
             position={[marker.lat, marker.lng]}
             icon={createCustomIcon(marker.type, hoveredPin === marker.id)}
             zIndexOffset={hoveredPin === marker.id ? 1000 : 0}

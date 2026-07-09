@@ -1,4 +1,4 @@
-# 📋 Carvis 2.0 (Pro Max) Teknik Uygulama Planı
+# 📋 Rapidsy 2.0 (Pro Max) Teknik Uygulama Planı
 
 Bu plan; Garajım 2.0, Akıllı Servis Talebi, Canlı Yol Yardım, Araç Geçmiş Raporu (PDF) ve Maliyet Zekası gibi platformu pazar liderliğine taşıyacak gelişmiş özellikleri kapsayan veritabanı, backend ve frontend mimarisini tanımlar.
 

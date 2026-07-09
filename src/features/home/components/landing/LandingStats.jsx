@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
 
-const LandingStats = memo(({}) => {
+const LandingStats = memo(() => {
   return (
     <>
         {/* STATS / TRUST SIGNALS */}

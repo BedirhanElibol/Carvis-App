@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Car, Key, LayoutDashboard, LogOut, Menu, Package, ParkingCircle, Settings, ShieldAlert, User, Wrench, X } from "lucide-react";
+import { Car, Key, LayoutDashboard, LogOut, Menu, Package, ParkingCircle, Settings, ShieldAlert, Shield, Truck, Droplets, User, Wrench, X, FileText, ClipboardList } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 const PartnerLayout = () => {
@@ -14,7 +14,7 @@ const PartnerLayout = () => {
 
   useEffect(() => {
     if (currentUser) {
-      const allowedRoles = ["parking", "valet", "mechanic", "parts"];
+      const allowedRoles = ["parking", "valet", "mechanic", "parts", "insurance", "tow_truck", "carwash"];
       if (!allowedRoles.includes(currentUser.role)) {
         // STRICT: If not in allowed list, KICK OUT immediately.
         navigate("/partner-login");
@@ -82,6 +82,33 @@ const PartnerLayout = () => {
       icon: Package,
       path: "/partner/products",
     });
+  } else if (role === "insurance") {
+    navItems.splice(1, 0, {
+      key: "claims",
+      label: "Hasar Talepleri",
+      icon: ClipboardList,
+      path: "/partner/insurance/claims",
+    });
+    navItems.splice(1, 0, {
+      key: "policies",
+      label: "Poliçe Teklifleri",
+      icon: FileText,
+      path: "/partner/insurance/policies",
+    });
+  } else if (role === "tow_truck") {
+    navItems.splice(1, 0, {
+      key: "assignments",
+      label: "Çekici Görevleri",
+      icon: Truck,
+      path: "/partner/tow/assignments",
+    });
+  } else if (role === "carwash") {
+    navItems.splice(1, 0, {
+      key: "slots",
+      label: "Randevu Takvimleri",
+      icon: Droplets,
+      path: "/partner/carwash/slots",
+    });
   }
 
   return (
@@ -145,7 +172,7 @@ const PartnerLayout = () => {
               onClick={() => setRole("parking")}
               className={`p-2 rounded-lg text-xs font-bold ${
                 role === "parking"
-                  ? "bg-primary-500 text-slate-900 dark:text-white"
+                  ? "bg-primary-500 text-white"
                   : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
               }`}
             >
@@ -155,7 +182,7 @@ const PartnerLayout = () => {
               onClick={() => setRole("valet")}
               className={`p-2 rounded-lg text-xs font-bold ${
                 role === "valet"
-                  ? "bg-emerald-500 text-slate-900 dark:text-white"
+                  ? "bg-emerald-500 text-white"
                   : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
               }`}
             >
@@ -165,11 +192,51 @@ const PartnerLayout = () => {
               onClick={() => setRole("mechanic")}
               className={`p-2 rounded-lg text-xs font-bold ${
                 role === "mechanic"
-                  ? "bg-orange-500 text-slate-900 dark:text-white"
+                  ? "bg-orange-500 text-white"
                   : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
               }`}
             >
               Usta
+            </button>
+            <button
+              onClick={() => setRole("parts")}
+              className={`p-2 rounded-lg text-xs font-bold ${
+                role === "parts"
+                  ? "bg-yellow-500 text-white"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
+              }`}
+            >
+              Parça
+            </button>
+            <button
+              onClick={() => setRole("insurance")}
+              className={`p-2 rounded-lg text-xs font-bold ${
+                role === "insurance"
+                  ? "bg-blue-500 text-white"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
+              }`}
+            >
+              Sigorta
+            </button>
+            <button
+              onClick={() => setRole("tow_truck")}
+              className={`p-2 rounded-lg text-xs font-bold ${
+                role === "tow_truck"
+                  ? "bg-red-500 text-white"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
+              }`}
+            >
+              Çekici
+            </button>
+            <button
+              onClick={() => setRole("carwash")}
+              className={`p-2 rounded-lg text-xs font-bold ${
+                role === "carwash"
+                  ? "bg-cyan-500 text-white"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
+              }`}
+            >
+              Yıkama
             </button>
           </div>
         </div>

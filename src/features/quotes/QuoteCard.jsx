@@ -1,5 +1,5 @@
 import React from "react";
-import { AlertCircle, ArrowRight, CheckCircle, Clock, XCircle } from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle, Clock, XCircle, Shield, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const QuoteCard = ({ quote }) => {
@@ -87,17 +87,36 @@ const QuoteCard = ({ quote }) => {
               </div>
             )}
           </div>
-          {quote.seller?.seller_rating > 0 && (
-            <div className="flex items-center gap-1 mt-1">
-              <span className="text-yellow-400 text-sm">★</span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
-                {quote.seller.seller_rating.toFixed(1)}
-              </span>
+          {quote.seller?.seller_rating > 0 ? (
+            <div className="flex items-center gap-2 mt-2">
+              <div className="flex items-center gap-1 bg-green-500/10 px-2 py-1 rounded-lg border border-green-500/20">
+                <Shield size={12} className="text-green-500" />
+                <span className="text-green-600 dark:text-green-400 font-black text-[10px] uppercase tracking-wider">
+                  Rapidsy Güven Skoru: {quote.seller.seller_rating.toFixed(1)}/5
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    size={12}
+                    className={
+                      i < Math.floor(quote.seller.seller_rating)
+                        ? "text-yellow-400 fill-yellow-400"
+                        : "text-slate-300 dark:text-slate-700"
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1 mt-2 text-xs text-slate-500">
+              <Shield size={12} /> Yeni İş Ortağı
             </div>
           )}
         </div>
         <div className="text-right">
-          <p className="text-2xl font-black text-primary-400">
+          <p className="text-lg font-bold text-slate-700 dark:text-slate-300">
             ₺{quote.price.toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
           </p>
           {quote.estimated_delivery_days && (

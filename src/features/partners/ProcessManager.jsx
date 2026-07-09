@@ -61,6 +61,29 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
 
   const handleNextStep = async () => {
     if (!currentStep.next) return;
+
+    // Fraud Prevention: Require proof before moving to quality_check or pending_approval
+    if (currentStep.next === "quality_check" || currentStep.next === "pending_approval") {
+      setUploading(true);
+      try {
+        const { data: proofs, error } = await supabase
+          .from("service_proofs")
+          .select("id")
+          .eq("order_id", orderId)
+          .limit(1);
+
+        if (error || !proofs || proofs.length === 0) {
+          showAlert("Hata", "Lütfen işleme devam etmeden önce bir fatura veya değişen parça fotoğrafı yükleyin.", "error");
+          setUploading(false);
+          return;
+        }
+      } catch (err) {
+        console.error("Proof check error:", err);
+        setUploading(false);
+        return;
+      }
+    }
+
     setUploading(true);
     await onUpdateStatus(currentStep.next);
     setUploading(false);
@@ -88,6 +111,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
           [publicUrlData.publicUrl],
           technicianNote || "İşlem başarıyla tamamlandı ve kontroller yapıldı.",
         );
+        showAlert("Başarılı", "Fotoğraf ve notunuz başarıyla eklendi.", "success");
         setTechnicianNote("");
       } catch (error) {
         console.error("Proof upload error:", error);

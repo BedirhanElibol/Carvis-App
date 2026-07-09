@@ -3,6 +3,7 @@ import { Store } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const LandingBusinessPortalCTA = memo(({t}) => {
+  const navigate = useNavigate();
   return (
     <>
         {/* BOTTOM BUSINESS PORTAL CTA */}

@@ -10,10 +10,10 @@ const LandingInteractiveMap = memo(({t, language, isLoadingProviders, nearbyProv
           <div className="text-center mb-12">
             <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-orange-400">{t.rapidsyNetwork}</span>
             <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tight uppercase">
-              {t.nearbyPoints}
+              {language === "tr" ? "TÜRKİYE GENELİ SERVİS AĞI" : "NATIONWIDE SERVICE NETWORK"}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
-              {t.nearbyPointsDesc}
+              {language === "tr" ? "Sadece İstanbul'da değil, Anadolu'nun dört bir yanındaki onaylı ustalar ve vale noktaları Rapidsy güvencesiyle hizmetinizde." : "Not just in Istanbul, but certified mechanics and valet points all across the country at your service."}
             </p>
           </div>
 
@@ -29,9 +29,9 @@ const LandingInteractiveMap = memo(({t, language, isLoadingProviders, nearbyProv
                   {t.noServiceFound}
                 </div>
               ) : (
-                nearbyProviders.map((prov) => (
+                nearbyProviders.map((prov, index) => (
                   <div 
-                    key={prov.id}
+                    key={`${prov.id}-${index}`}
                     onMouseEnter={() => setHoveredPin(prov.id)}
                     onMouseLeave={() => setHoveredPin(null)}
                     onClick={() => openModal("login", "customer")}
@@ -112,7 +112,7 @@ const LandingInteractiveMap = memo(({t, language, isLoadingProviders, nearbyProv
                 center={mapCenter} 
                 markers={[...nearbyProviders, ...edsMarkers]} 
                 hoveredPin={hoveredPin} 
-                zoom={13} 
+                zoom={5.7} 
               />
             </div>
           </div>

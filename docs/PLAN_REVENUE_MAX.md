@@ -1,6 +1,6 @@
-# 🏁 PLAN: Carvis Revenue Maximizer & Premium Features
+# 🏁 PLAN: Rapidsy Revenue Maximizer & Premium Features
 
-Bu döküman, Carvis'in pazar payını artıracak ve kullanıcı sadakatini en üst düzeye çıkaracak olan "Premium" özelliklerin teknik detaylarını içerir.
+Bu döküman, Rapidsy'in pazar payını artıracak ve kullanıcı sadakatini en üst düzeye çıkaracak olan "Premium" özelliklerin teknik detaylarını içerir.
 
 ## 👥 Görevli Ajanlar (Invoked Agents)
 1. `database-architect`: Şema değişiklikleri ve yeni tablolar.

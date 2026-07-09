@@ -3,21 +3,22 @@ import { Car, Clock, Wrench, ChevronRight, SearchCheck, FileText, Lock } from "l
 import { useNavigate } from "react-router-dom";
 
 const LandingAppShowcase = memo(({t, language}) => {
+  const navigate = useNavigate();
   return (
     <>
         {/* INTERACTIVE APP SHOWCASE (Görsel Tanıtım Kokpiti) */}
         <section className="w-full max-w-7xl mx-auto px-6 mb-28 relative z-10">
           <div className="text-center mb-16">
             <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-teal-500">
-              {language === "tr" ? "BENZERSİZ TEKNOLOJİ" : "UNIQUE TECHNOLOGY"}
+              {language === "tr" ? "FİNANSAL GÜVENCE" : "FINANCIAL SECURITY"}
             </span>
             <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tight uppercase">
-              {language === "tr" ? "ARACINIZIN TÜM YAŞAM DÖNGÜSÜ TEK BİR PANELDE" : "EVERYTHING ABOUT YOUR VEHICLE IN ONE PANEL"}
+              {language === "tr" ? "AKILLI ESCROW ALTYAPISIYLA RİSKSİZ İŞLEMLER" : "RISK-FREE OPERATIONS WITH SMART ESCROW"}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mt-4 text-sm md:text-base font-semibold leading-relaxed">
               {language === "tr" 
-                ? "Carvis, dükkan dükkan gezmeden arıza bildirimi yapıp teklifleri karşılaştırdığınız, yedek parçaları listelediğiniz ve servis sürecinizi yönettiğiniz dijital kokpitinizdir."
-                : "Carvis is your digital cockpit where you report faults, compare quotes, list spare parts, and manage your service history without visiting shops."}
+                ? "Filo ve bireysel operasyonlarınızda finansal sürprizlere yer yok. Onaylanmış hizmet ağı üzerinden net teklifler alın, iş onaylanana kadar tüm bakiyenizi uçtan uca korumalı havuz sisteminde güvende tutun."
+                : "No more financial surprises in your fleet or personal operations. Get transparent quotes from a certified service network, and keep your balance secured in an end-to-end protected escrow system until the job is approved."}
             </p>
           </div>
 
@@ -34,7 +35,7 @@ const LandingAppShowcase = memo(({t, language}) => {
                     C
                   </div>
                   <div>
-                    <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight font-sans">CARVIS MOBİL KOKPİT</h4>
+                    <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight font-sans">RAPIDSY MOBİL KOKPİT</h4>
                     <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-widest flex items-center gap-1.5 mt-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                       {language === "tr" ? "ARAÇ ASİSTANI AKTİF" : "VEHICLE ASSISTANT ACTIVE"}
@@ -166,8 +167,8 @@ const LandingAppShowcase = memo(({t, language}) => {
                   icon: SearchCheck,
                   title: language === "tr" ? "Teklif Karşılaştırın, Tasarruf Edin" : "Compare Quotes, Save Money",
                   desc: language === "tr" 
-                    ? "Aracınızın hasarı veya periyodik bakımı için onlarca servise gitmeyin. Carvis, yakınınızdaki onaylı dükkanlardan anında fiyat teklifi toplar. Fiyatları, puanları ve garanti sürelerini tek ekrandan şeffafça karşılaştırın."
-                    : "Don't visit dozens of mechanics for car repair. Carvis gathers instant price quotes from verified local shops. Compare prices, ratings, and warranty periods transparently from one single dashboard.",
+                    ? "Aracınızın hasarı veya periyodik bakımı için onlarca servise gitmeyin. Rapidsy, yakınınızdaki onaylı dükkanlardan anında fiyat teklifi toplar. Fiyatları, puanları ve garanti sürelerini tek ekrandan şeffafça karşılaştırın."
+                    : "Don't visit dozens of mechanics for car repair. Rapidsy gathers instant price quotes from verified local shops. Compare prices, ratings, and warranty periods transparently from one single dashboard.",
                   color: "text-teal-400 bg-teal-400/10 border-teal-500/10",
                   highlight: language === "tr" ? "Yarı Yarıya Tasarruf" : "Save Up To 50%"
                 },
@@ -182,12 +183,12 @@ const LandingAppShowcase = memo(({t, language}) => {
                 },
                 {
                   icon: Lock,
-                  title: language === "tr" ? "Sürpriz Maliyet Yok, Carvis Güvencesi" : "No Surprise Costs, Carvis Guarantee",
+                  title: language === "tr" ? "Şeffaf Fiyat Tahmini ve Onay Sistemi" : "Transparent Price Estimates & Approval",
                   desc: language === "tr" 
-                    ? "Sanayi dükkanlarında sürpriz ek masraflarla veya fahiş fiyatlarla karşılaşmaya son. Hizmet bedeli siz işi onaylayana kadar güvenli havuz hesabımızda tutulur. İş bittiğinde, usta onaylandığında ödeme aktarılır."
-                    : "No more unexpected extra costs or inflated bills at repair shops. The service fee is held securely in our escrow account until you approve the job. Payment is released only when you confirm satisfaction.",
+                    ? "Sanayideki belirsiz maliyetlere son. Ustadan aldığınız tahmini fiyat, araç başındaki muayenede değişse bile dijital onayınız olmadan işleme alınmaz. Kontrol daima sizde."
+                    : "End cost uncertainty at repair shops. The estimated price quote cannot be exceeded or changed without your digital approval after inspection. You are always in control.",
                   color: "text-orange-400 bg-orange-400/10 border-orange-500/10",
-                  highlight: language === "tr" ? "%100 Güvenli Havuz Ödemesi" : "100% Escrow Protection"
+                  highlight: language === "tr" ? "Müşteri Onaylı İşlem" : "Customer Approved Repairs"
                 }
               ].map((val, idx) => (
                 <div 

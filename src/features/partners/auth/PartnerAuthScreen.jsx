@@ -32,6 +32,8 @@ const PartnerAuthScreen = () => {
     mechanic: { title: "Usta & Servis", color: "orange", bg: "from-orange-900/40 to-slate-950", btn: "bg-orange-500 hover:bg-orange-400", border: "border-orange-500/30", text: "text-orange-400" },
     parts: { title: "Parça Tedarikçisi", color: "emerald", bg: "from-emerald-900/40 to-slate-950", btn: "bg-emerald-500 hover:bg-teal-400", border: "border-emerald-500/30", text: "text-teal-400" },
     carwash: { title: "Seyyar Yıkama", color: "cyan", bg: "from-cyan-900/40 to-slate-950", btn: "bg-cyan-500 hover:bg-cyan-400", border: "border-cyan-500/30", text: "text-cyan-400" },
+    tow_truck: { title: "Acil Çekici", color: "amber", bg: "from-amber-900/40 to-slate-950", btn: "bg-amber-500 hover:bg-amber-400", border: "border-amber-500/30", text: "text-amber-400" },
+    insurance: { title: "Sigorta Şirketi", color: "blue", bg: "from-blue-900/40 to-slate-950", btn: "bg-blue-500 hover:bg-blue-400", border: "border-blue-500/30", text: "text-blue-400" },
   };
 
   const currentTheme = themes[role] || themes.parking;

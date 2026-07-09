@@ -1,35 +1,44 @@
-# Performans Optimizasyonu ve Takılma (Stutter/Freeze) Çözüm Planı
+# 🎯 ORCHESTRATION PLAN: İki Taraflı Güvenli Ödeme (Escrow/Havuz) Sistemi
 
-Uygulamadaki takılma ve yavaşlamaların (özellikle `CustomerHome.jsx` sayfasında) temel nedenleri:
-1. **Devasa Component Boyutu (1384 satır):** Tüm arayüz (arama, harita, kampanyalar, yakıt fiyatları) tek bir component içinde.
-2. **Gereksiz Re-render'lar:** Haritadaki bir pin'in üzerine gelindiğinde (`hoveredPin` state değişimi) veya arama kutusuna yazı yazıldığında tüm sayfa (ve harita/diğer ağır bileşenler) baştan render ediliyor.
-3. **Ağır Effect'ler:** Yakıt fiyatları için yazılan karmaşık `setInterval` ve proxy zinciri doğrudan UI thread'i ve state'i meşgul ediyor.
+## 📌 Durum Analizi ve Problem Tanımı
+Kullanıcımız, "Sanayide Güven Sorununa Son" mottomuzun altını dolduracak en kritik altyapıyı, yani **İki Taraflı Güvenli Ödeme (Escrow) Sistemini** talep etmektedir.
+- **Problem:** Araç sahibi ustaya güvenmiyor (işin yarım kalması, sürpriz masraf), usta araç sahibine güvenmiyor (parayı alamama endişesi).
+- **Çözüm:** Kullanıcı parayı öder, para Rapidsy'nin güvenli havuz hesabında (Escrow) bekletilir. İş bitiminde her iki taraf da dijital onay (QR Kod veya PIN) verdiğinde para ustanın cüzdanına (Wallet) aktarılır.
+- **İhtiyaç:** Bu sistemin hem arayüzde (UI/UX) hem de veritabanında (Supabase Schema & RPC) modellenmesi gerekmektedir.
 
-## Proposed Changes
+## 🚀 Faz 1: Planlama (Şu Anki Aşama)
 
-### src/features/home/
-#### [MODIFY] CustomerHome.jsx
-- Component içi devasa JSX blokları (`searchAndCategoriesPanel`, `featuredDealsPanel`, `popularProvidersPanel`, vb.) ayrı bileşenlere taşınacak.
-- State'ler (`searchQuery`, `hoveredPin`, `fuelPrices`) ilgili alt bileşenlere veya custom hook'lara dağıtılacak. Böylece biri değiştiğinde hepsi render edilmeyecek.
+Bu belgede, %100 güvenli havuz sisteminin nasıl inşa edileceği adım adım planlanmıştır.
 
-#### [NEW] components/SearchAndCategoriesPanel.jsx
-- Arama kutusu ve kategorileri içerecek. Sadece arama state'i değiştiğinde kendisi güncellenecek. `React.memo` ile sarılacak.
+### Hedeflenen Mimari (Faz 2 için)
 
-#### [NEW] components/PopularProvidersPanel.jsx
-- Harita ve servis noktası listesi buraya taşınacak.
-- `hoveredPin` state'i sadece bu bileşeni etkileyecek, tüm sayfayı dondurmayacak.
+1. **Veritabanı Mimarisi (Database & RPC):**
+   - `escrow_transactions` tablosunun oluşturulması (Durumlar: `locked`, `released`, `disputed`, `refunded`).
+   - İş bitimi onayı için `release_escrow` adlı güvenli bir RPC (Stored Procedure) yazılması. Bu RPC, parayı havuzdan alıp ustanın `wallets` tablosuna (bakiye olarak) ekleyecek.
 
-#### [NEW] components/FeaturedDealsPanel.jsx
-- Fırsatlar ve kampanyalar kısmı. `React.memo` ile optimize edilecek.
+2. **Frontend & UI/UX (Müşteri Tarafı):**
+   - Müşterinin teklifi onaylarken ödeme yapacağı "Güvenli Ödeme (Checkout)" sayfasının iyileştirilmesi.
+   - Ödeme sonrası müşteriye "İş Bitim PIN Kodu" veya "Onay Butonu" sunan "Aktif İşlem (Active Order)" ekranının tasarlanması.
 
-#### [NEW] components/HowItWorksPanel.jsx
-- Statik bilgi paneli. Gereksiz renderları önlemek için `React.memo` kullanılacak.
+3. **Frontend & UI/UX (Usta/Servis Tarafı):**
+   - Usta paneline (Partner Dashboard) "Havuzda Bekleyen Bakiyeler (Escrow Balance)" göstergesinin eklenmesi (Motivasyon için).
+   - İş bitiminde ustanın müşteriden onay (PIN/QR) isteyeceği ekranın yapılması.
 
-### src/hooks/
-#### [NEW] useFuelPrices.js
-- `CustomerHome` içindeki 100+ satırlık yakıt fiyatı çekme ve proxy (yedekleme) mantığı bağımsız bir hook'a taşınacak.
-- Effect temizlikleri (cleanup) ve interval yönetimi daha stabil hale getirilecek.
+---
 
-## Verification Plan
-- `CustomerHome` sayfasında haritadaki pinler üzerinde mouse ile gezinildiğinde (hover) sayfanın geri kalanının donup donmadığı test edilecek.
-- Arama kutusuna hızlıca yazı yazıldığında klavye gecikmesi (input lag) olup olmadığı kontrol edilecek.
+## 🚦 Faz 2 İçin Görevlendirilecek Ajanlar (Onay Sonrası Paralel Çalışacak)
+
+- 🏗️ **`database-architect`**: Supabase üzerinde `escrow_transactions` tablosunu ve parayı ustaya güvenle aktaracak PL/pgSQL fonksiyonlarını (`rpc`) yazacak.
+- 🎨 **`frontend-specialist`**: Müşteri için "Güvenli Ödeme Onay" ekranını, Usta için ise "Havuzdaki Kazançlar" arayüzünü geliştirecek.
+- 🔒 **`security-auditor`**: Paranın iki tarafın da onayı olmadan (veya admin kararı olmadan) aktarılamamasını sağlayan RLS (Row Level Security) politikalarını denetleyecek.
+- 🧪 **`test-engineer`**: Ödeme akışını mock verilerle test edecek ve yetkisiz erişim/para aktarımı açıklarını linting araçlarıyla tarayacak.
+
+---
+
+## ⏸️ CHECKPOINT: Kullanıcı Onayı Bekleniyor
+
+Yukarıdaki "İki Taraflı Güvenli Ödeme (Escrow)" mimarisi için plan hazırlanmıştır.
+
+**Onaylıyor musunuz? (Y/N)**
+- Y: Yazılım sürecini (Faz 2) başlatır.
+- N: Plana eklemek/çıkarmak istediklerinizi belirtirsiniz.

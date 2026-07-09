@@ -7,7 +7,7 @@ export const generateInvoicePDF = async (order, seller) => {
   // Header
   doc.setFontSize(22);
   doc.setTextColor(14, 165, 233); // Primary Color
-  doc.text("CARVIS", 14, 20);
+  doc.text("RAPIDSY", 14, 20);
   
   doc.setFontSize(10);
   doc.setTextColor(100, 100, 100);
@@ -62,7 +62,7 @@ export const generateInvoicePDF = async (order, seller) => {
   doc.setFont("helvetica", "normal");
   doc.setTextColor(150, 150, 150);
   doc.text("Bizi tercih ettiginiz icin tesekkur ederiz.", 105, 280, null, null, "center");
-  doc.text("Bu belge Carvis uzerinden otomatik olusturulmustur.", 105, 286, null, null, "center");
+  doc.text("Bu belge Rapidsy uzerinden otomatik olusturulmustur.", 105, 286, null, null, "center");
 
   doc.save(`${invoiceNum}.pdf`);
 };

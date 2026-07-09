@@ -21,7 +21,7 @@ export const AIProvider = ({ children }) => {
   const [messages, setMessages] = useState([
     {
       id: "welcome",
-      text: "Merhaba! Ben Carvis AI asistanınız. Aracınızla ilgili her türlü teknik soruyu sorabilir, arıza tespiti yapmamı isteyebilir veya yedek parça tavsiyesi alabilirsiniz. Size nasıl yardımcı olabilirim?",
+      text: "Merhaba! Ben Rapidsy AI asistanınız. Aracınızla ilgili her türlü teknik soruyu sorabilir, arıza tespiti yapmamı isteyebilir veya yedek parça tavsiyesi alabilirsiniz. Size nasıl yardımcı olabilirim?",
       sender: "bot",
       timestamp: new Date(),
     },

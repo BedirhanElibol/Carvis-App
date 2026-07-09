@@ -137,7 +137,15 @@ const PartnerApplications = () => {
                     <Briefcase size={24} />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-slate-900 dark:text-white">{app.company_name}</h4>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-lg font-bold text-slate-900 dark:text-white">{app.company_name}</h4>
+                      {app.business_type === 'tow_truck' && (
+                        <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/20 text-amber-500 uppercase">Çekici</span>
+                      )}
+                      {app.business_type !== 'tow_truck' && (
+                        <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-slate-500/20 text-slate-500 uppercase">Servis</span>
+                      )}
+                    </div>
                     <div className="flex items-center gap-3 mt-1">
                       <span className="text-xs text-slate-500 flex items-center gap-1">
                         <Clock size={12} /> {new Date(app.created_at).toLocaleDateString("tr-TR")}
@@ -176,7 +184,12 @@ const PartnerApplications = () => {
                     <ShieldCheck size={24} />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-black text-slate-900 dark:text-white">{selectedApp.company_name}</h3>
+                    <div className="flex items-center gap-3">
+                      <h3 className="text-2xl font-black text-slate-900 dark:text-white">{selectedApp.company_name}</h3>
+                      {selectedApp.business_type === 'tow_truck' && (
+                        <span className="px-2 py-1 rounded text-[10px] font-bold bg-amber-500/20 text-amber-500 uppercase tracking-widest">Çekici</span>
+                      )}
+                    </div>
                     <p className="text-slate-500 text-sm">Başvuru Detayları ve Evrak İnceleme</p>
                   </div>
                 </div>

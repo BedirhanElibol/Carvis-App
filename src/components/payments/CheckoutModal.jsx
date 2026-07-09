@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CreditCard, ShieldCheck, Loader2, X, Lock } from 'lucide-react';
+import RapidsyTrustBadge from '../shared/RapidsyTrustBadge';
 
 export default function CheckoutModal({ isOpen, onClose, amount, providerName, onPaymentSuccess }) {
     const [isProcessing, setIsProcessing] = useState(false);
@@ -38,11 +39,13 @@ export default function CheckoutModal({ isOpen, onClose, amount, providerName, o
                         <ShieldCheck size={24} className="text-primary" />
                     </div>
                     <h2 className="text-xl font-black text-white tracking-tight">Güvenli Ödeme (Escrow)</h2>
-                    <p className="text-sm text-slate-300 mt-1 font-medium">Hizmet tamamlanana kadar paranız Carvis güvencesindedir.</p>
+                    <p className="text-sm text-slate-300 mt-1 font-medium">Hizmet tamamlanana kadar paranız Rapidsy güvencesindedir.</p>
                 </div>
 
                 {/* Body */}
                 <div className="p-6">
+                    <RapidsyTrustBadge className="mb-6" />
+
                     <div className="flex justify-between items-center mb-6 bg-secondary/50 p-4 rounded-xl border border-white/5">
                         <div>
                             <p className="text-xs text-muted-foreground uppercase font-bold tracking-wider mb-1">Ödenecek Tutar</p>
