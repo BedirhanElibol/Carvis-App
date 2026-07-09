@@ -84,7 +84,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
       if (vinMatch) {
         setVin(vinMatch[0]);
       } else if (cleanVin.length >= 10) {
-        // Partial match, let user fix it
+        // Partial match, let user correct it
         setVin(cleanVin.substring(0, 17));
       } else {
         showAlert(
