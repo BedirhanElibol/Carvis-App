@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { motion } from "framer-motion";  
 import { Activity, Cpu, Disc, Wind, Zap } from "lucide-react";
 
@@ -8,14 +8,17 @@ import { Activity, Cpu, Disc, Wind, Zap } from "lucide-react";
  */
 const InteractiveCarMap = ({ activeZones = [], onZoneClick }) => {
   // Zones definition (Coordinates for SVG paths or circles)
-  const zones = [
+  const zones = useMemo(() => [
     { id: "engine", label: "Motor & Transmisyon", x: "50%", y: "25%", icon: Cpu },
     { id: "brakes_front", label: "Ön Frenler", x: "50%", y: "40%", icon: Disc },
     { id: "brakes_rear", label: "Arka Frenler", x: "50%", y: "75%", icon: Disc },
     { id: "battery", label: "Elektrik & Batarya", x: "35%", y: "22%", icon: Zap },
     { id: "exhaust", label: "Egzoz Sistemi", x: "50%", y: "85%", icon: Wind },
     { id: "suspension", label: "Süspansiyon", x: "65%", y: "50%", icon: Activity },
-  ];
+  ], []);
+
+  const zonesMap = useMemo(() => new Map(zones.map(z => [z.id, z])), [zones]);
+  const activeZonesSet = useMemo(() => new Set(activeZones), [activeZones]);
 
   return (
     <div className="relative w-full aspect-[1/2] max-w-[280px] mx-auto bg-white dark:bg-slate-900/40 rounded-[3rem] border border-black/5 dark:border-white/5 p-8 backdrop-blur-3xl overflow-hidden group">
@@ -62,7 +65,7 @@ const InteractiveCarMap = ({ activeZones = [], onZoneClick }) => {
 
         {/* Active Fault Highlights */}
         {activeZones.map((zoneId) => {
-          const zone = zones.find((z) => z.id === zoneId);
+          const zone = zonesMap.get(zoneId);
           if (!zone) return null;
           return (
             <motion.circle
@@ -90,7 +93,7 @@ const InteractiveCarMap = ({ activeZones = [], onZoneClick }) => {
 
       {/* Interactive Points (Buttons) */}
       {zones.map((zone) => {
-        const isActive = activeZones.includes(zone.id);
+        const isActive = activeZonesSet.has(zone.id);
         const Icon = zone.icon;
         return (
           <motion.button
