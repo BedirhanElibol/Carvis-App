@@ -67,7 +67,7 @@ export class LeadRepository {
      * @returns {Promise<void>}
      */
     static async insertLeads(leads) {
-        for (const lead of leads) {
+        await Promise.all(leads.map(async (lead) => {
             try {
                 // Validate at boundary
                 const validLead = LeadSchema.parse(lead);
@@ -88,6 +88,6 @@ export class LeadRepository {
             } catch (validationError) {
                 console.error(`Validation failed for lead:`, validationError.errors || validationError.message);
             }
-        }
+        }));
     }
 }
