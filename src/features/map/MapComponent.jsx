@@ -7,7 +7,7 @@ import {
   useMap,
 } from "react-leaflet";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css"; // Fix for default Leaflet icon missing issues in React
+import "leaflet/dist/leaflet.css"; // Resolves default Leaflet icon missing issues in React
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconRetina from "leaflet/dist/images/marker-icon-2x.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
