@@ -35,8 +35,16 @@ const ProductDetailScreen = () => {
     const offersSorted = product.offers ? product.offers.map(o => ({ ...o, isBuyBoxWinner: false })) : [];
     const winnerOffer = getBuyBoxWinner(offersSorted) || { price: 0, seller: "Stok Yok", stock: 0 };
     const buyBoxPrice = winnerOffer.price;
+
+    const firstOffersMap = new Map();
+    for (const offer of offersSorted) {
+        if (!firstOffersMap.has(offer.sellerId)) {
+            firstOffersMap.set(offer.sellerId, offer);
+        }
+    }
+
     const scoredOffers = offersSorted.map(offer => {
-        return offersSorted.find(o => o.sellerId === offer.sellerId) || offer;
+        return firstOffersMap.get(offer.sellerId) || offer;
     }).sort((a, b) => (b.buyBoxScore || 0) - (a.buyBoxScore || 0));
 
     return (
