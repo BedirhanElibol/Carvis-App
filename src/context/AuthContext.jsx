@@ -89,9 +89,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginAsGuest = () => {
     // Valid UUID format for Postgres: 8-4-4-4-12
-    const guestId =
-      "00000000-0000-4000-8000-" +
-      Math.random().toString(16).slice(2, 14).padStart(12, "0");
+    const guestId = window.crypto.randomUUID();
     const guestUser = {
       id: guestId,
       aud: "authenticated",
