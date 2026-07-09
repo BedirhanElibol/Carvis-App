@@ -116,11 +116,13 @@ Deno.serve(async (req: Request) => {
     { name: "petrolofisi", fn: () => fetchPOPrices(provinceCode) }
   ];
 
-  for (const source of sources) {
-    const results = await source.fn();
+  const resultsList = await Promise.all(sources.map(source => source.fn()));
+
+  for (let i = 0; i < sources.length; i++) {
+    const results = resultsList[i];
     if (results) {
       return new Response(
-        JSON.stringify({ source: source.name, results, updatedAt: new Date().toISOString(), city }),
+        JSON.stringify({ source: sources[i].name, results, updatedAt: new Date().toISOString(), city }),
         { headers: CORS_HEADERS }
       );
     }
