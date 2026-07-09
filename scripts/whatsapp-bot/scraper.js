@@ -160,20 +160,23 @@ async function runBulkScraper() {
   let currentSearch = 0;
 
   for (let city of CITIES) {
-    for (let cat of CATEGORIES) {
+    const promises = CATEGORIES.map(async (cat) => {
       currentSearch++;
       const query = `${city} ${cat}`;
       console.log(`\n--- İlerleme: [${currentSearch} / ${totalSearches}] ---`);
       
       const added = await scrapeQuery(browser, query);
-      totalNewAdded += added;
+      return added;
+    });
 
-      // Spam yememek için aramalar arası bekleme
-      if (currentSearch < totalSearches) {
-        const waitTime = Math.floor(Math.random() * (15000 - 8000 + 1)) + 8000; // 8 - 15 saniye arası
-        console.log(`⏳ Google'ı şüphelendirmemek için bekleniyor... (${Math.round(waitTime/1000)} sn)`);
-        await sleep(waitTime);
-      }
+    const results = await Promise.all(promises);
+    totalNewAdded += results.reduce((acc, added) => acc + added, 0);
+
+    // Spam yememek için aramalar arası bekleme (şehirler arası)
+    if (currentSearch < totalSearches) {
+      const waitTime = Math.floor(Math.random() * (15000 - 8000 + 1)) + 8000; // 8 - 15 saniye arası
+      console.log(`⏳ Google'ı şüphelendirmemek için bekleniyor... (${Math.round(waitTime/1000)} sn)`);
+      await sleep(waitTime);
     }
   }
 
