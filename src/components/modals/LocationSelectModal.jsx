@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import { ChevronRight, Crosshair, MapPin, Save, X } from "lucide-react";
 import { TURKEY_CITIES } from "../../constants/turkeyCities";
 
+const CITY_OPTIONS = Object.values(TURKEY_CITIES)
+  .map((c) => c.city)
+  .sort((a, b) => a.localeCompare(b, "tr"));
+
+const CITY_TO_DISTRICTS = Object.values(TURKEY_CITIES).reduce((acc, curr) => {
+  acc[curr.city] = [...curr.districts].sort((a, b) => a.localeCompare(b, "tr"));
+  return acc;
+}, {});
+
 const LocationSelectModal = ({
   show,
   onClose,
@@ -17,19 +26,8 @@ const LocationSelectModal = ({
 
   if (!show || !t) return null;
 
-  const cityOptions = Object.values(TURKEY_CITIES)
-    .map((c) => c.city)
-    .sort((a, b) => a.localeCompare(b, "tr"));
-
-  const selectedCityKey = Object.keys(TURKEY_CITIES).find(
-    (key) => TURKEY_CITIES[key].city === city,
-  );
-
-  const districtOptions = selectedCityKey
-    ? TURKEY_CITIES[selectedCityKey].districts.sort((a, b) =>
-        a.localeCompare(b, "tr"),
-      )
-    : [];
+  const cityOptions = CITY_OPTIONS;
+  const districtOptions = city ? CITY_TO_DISTRICTS[city] || [] : [];
 
   const handleSelect = () => {
     if (!city || !district) {
