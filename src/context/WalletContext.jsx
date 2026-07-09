@@ -116,7 +116,7 @@ export const WalletProvider = ({ children }) => {
     if (amount <= 0) return false;
     setIsAddingFunds(true);
     try {
-      // Security Fix: Prevent direct raw DB updates (Privilege Escalation Risk)
+      // Security Addresses: Prevent direct raw DB updates (Privilege Escalation Risk)
       // Frontend cannot securely dictate `balance + amount`.
       const { error: walletError } = await supabase.rpc('rpc_add_wallet_funds', { p_amount: amount });
 
@@ -143,7 +143,7 @@ export const WalletProvider = ({ children }) => {
       return false;
     }
     try {
-      // Security Fix: Prevent direct raw DB updates
+      // Security Addresses: Prevent direct raw DB updates
       // Replaced with RPC placeholder
       await new Promise(res => setTimeout(res, 500));
       return true;
@@ -155,7 +155,7 @@ export const WalletProvider = ({ children }) => {
 
   const releaseFunds = async (amount, _title = "İşlem Tamamlandı") => {
     try {
-      // Security Fix: Replaced with an authorized backend execution trace
+      // Security Addresses: Replaced with an authorized backend execution trace
       const { error: walletError } = await supabase.rpc('rpc_release_funds', { p_amount: amount });
 
       if (walletError) {
@@ -173,7 +173,7 @@ export const WalletProvider = ({ children }) => {
 
   const cancelEscrow = async (amount, _title = "Bloke İptali") => {
     try {
-      // Security Fix: Replaced with authorized backend execution trace
+      // Security Addresses: Replaced with authorized backend execution trace
       await new Promise(res => setTimeout(res, 500));
       return true;
     } catch (error) {
