@@ -88,54 +88,52 @@ const EscrowReleaseModal = ({ isOpen, onClose, amount, customerName, transaction
         <h3 className="text-xl font-black text-slate-900 dark:text-white text-center mb-2">
           Ödemeyi Cüzdana Çek
         </h3>
-        
+
         <p className="text-sm text-slate-500 dark:text-slate-400 text-center mb-6 max-w-sm">
           Müşteriniz <span className="font-bold text-orange-500">{customerName}</span>'in havuzda bekleyen <span className="font-bold text-slate-700 dark:text-slate-200">{amount} ₺</span> tutarındaki ödemesini cüzdanınıza aktarmak için müşteriden iş bitim onay kodunu (PIN) isteyin.
         </p>
 
+        <div className="flex gap-2 mb-6">
+          {pin.map((digit, index) => (
+            <input
+              key={index}
+              id={`pin-${index}`}
+              type="text"
+              inputMode="numeric"
+              maxLength={1}
+              value={digit}
+              aria-label={`PIN kodu hanesi ${index + 1}`}
+              onChange={(e) => handlePinChange(index, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(index, e)}
+              className="w-10 h-14 text-center text-xl font-bold bg-slate-100 dark:bg-slate-800 rounded-xl border-2 border-transparent focus:border-blue-500 outline-none text-slate-900 dark:text-white"
+            />
+          ))}
+        </div>
+
+        {error && (
+          <div className="flex items-center gap-2 text-red-500 text-sm mb-4 bg-red-50 dark:bg-red-500/10 p-3 rounded-lg w-full">
+            <AlertCircle size={16} />
+            {error}
+          </div>
+        )}
+
         {success ? (
-          <div className="w-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-xl p-6 flex flex-col items-center justify-center gap-3">
-            <CheckCircle2 className="w-12 h-12 text-emerald-500" />
-            <p className="text-emerald-700 dark:text-emerald-400 font-bold text-center">Ödeme başarıyla cüzdanınıza aktarıldı!</p>
+          <div className="flex items-center justify-center gap-2 text-green-500 font-bold w-full py-3 bg-green-50 dark:bg-green-500/10 rounded-xl">
+            <CheckCircle2 size={20} />
+            İşlem Başarılı!
           </div>
         ) : (
-          <>
-            {/* PIN Inputs */}
-            <div className="flex items-center justify-center gap-2 mb-4">
-              {pin.map((digit, index) => (
-                <input
-                  key={index}
-                  id={`pin-${index}`}
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handlePinChange(index, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(index, e)}
-                  className={`w-12 h-14 text-center text-2xl font-mono font-black rounded-xl border ${error ? 'border-red-500 bg-red-50 dark:bg-red-500/10 text-red-500' : 'border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20'} outline-none transition-all`}
-                />
-              ))}
-            </div>
-
-            {error && (
-              <div className="w-full mb-4 flex items-center justify-center gap-2 text-red-500 text-sm font-bold">
-                <AlertCircle className="w-4 h-4" />
-                <span>{error}</span>
-              </div>
+          <button
+            onClick={handleVerify}
+            disabled={isLoading || pin.join('').length !== 6}
+            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+          >
+            {isLoading ? (
+              <><Loader2 className="animate-spin" size={20} /> İşleniyor...</>
+            ) : (
+              'Ödemeyi Onayla ve Aktar'
             )}
-
-            <button 
-              onClick={handleVerify}
-              disabled={isLoading || pin.join('').length !== 6}
-              className="w-full mt-2 py-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:hover:bg-blue-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2"
-            >
-              {isLoading ? (
-                <><Loader2 className="w-5 h-5 animate-spin" /> Doğrulanıyor...</>
-              ) : (
-                'Onayla ve Bakiyeyi Aktar'
-              )}
-            </button>
-          </>
+          </button>
         )}
       </div>
     </BaseModal>

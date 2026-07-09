@@ -150,18 +150,18 @@ const PartnerTrackingWidget = ({
           </p>
 
           <form onSubmit={handleUploadProofAndCheckout} className="space-y-4">
-            <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-6 text-center relative hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+            <input 
+              type="file" 
+              accept="image/*" 
+              capture="environment" 
+              onChange={(e) => setPhoto(e.target.files[0])} 
+              className="hidden" 
+              id="proof-upload"
+            />
+            <label htmlFor="proof-upload" className="block border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-6 text-center cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
               <Camera size={24} className="mx-auto text-slate-400 mb-2" />
-              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">Hizmet Sonu Kanıt Fotoğrafı Çek/Yükle</span>
-              <input 
-                type="file" 
-                accept="image/*" 
-                required
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                onChange={(e) => setPhoto(e.target.files[0])}
-              />
-              {photo && <p className="text-[10px] text-teal-500 font-bold mt-2">{photo.name} seçildi.</p>}
-            </div>
+              {photo ? <p className="text-[10px] text-teal-500 font-bold">{photo.name}</p> : <p className="text-[10px] text-slate-400">Görsel Yükle</p>}
+            </label>
 
             <button
               type="submit"
