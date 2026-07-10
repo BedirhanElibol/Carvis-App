@@ -26,6 +26,7 @@ const MechanicsScreen = () => {
   const [submitting, setSubmitting] = useState(false);
   const [mechanicsList, setMechanicsList] = useState([]);
   const [loadingMechanics, setLoadingMechanics] = useState(true);
+  const [activeFilter, setActiveFilter] = useState(null); // 'verified' | 'authorized' | 'open' | null
 
   // Appointment Modal State
   const [bookingModal, setBookingModal] = useState({ open: false, sellerId: null, shopName: "" });
@@ -66,6 +67,22 @@ const MechanicsScreen = () => {
     };
     fetchMechanics();
   }, []);
+
+  // Client-side filtered list
+  const filteredMechanics = mechanicsList.filter(m => {
+    if (activeFilter === 'verified') return m.is_verified || m.verified;
+    if (activeFilter === 'authorized') return m.is_authorized || m.authorized_brands?.length > 0;
+    if (activeFilter === 'open') {
+      const hour = new Date().getHours();
+      return hour >= 8 && hour < 20; // assume 08:00-20:00 as default open hours
+    }
+    return true; // no filter = show all
+  });
+
+  const toggleFilter = (filter) => {
+    setActiveFilter(prev => prev === filter ? null : filter);
+    triggerHaptic('light');
+  };
 
   if (!t) return null;
 
@@ -188,18 +205,48 @@ const MechanicsScreen = () => {
       {/* Premium Filter Bar */}
       {!isMapView && (
         <div className="flex gap-2 overflow-x-auto no-scrollbar py-2 px-1">
-          <button aria-label="Kurumsal Zincirler" className="flex items-center gap-1.5 px-4 py-2 bg-primary-500/10 border border-primary-500/20 text-primary-600 dark:text-primary-400 rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale shadow-sm">
+          <button
+            aria-label="Kurumsal Zincirler"
+            onClick={() => toggleFilter('verified')}
+            className={`flex items-center gap-1.5 px-4 py-2 border rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale shadow-sm transition-all ${
+              activeFilter === 'verified'
+                ? 'bg-primary-500 border-primary-400/30 text-slate-900 dark:text-white shadow-lg shadow-primary-500/20'
+                : 'bg-primary-500/10 border-primary-500/20 text-primary-600 dark:text-primary-400 hover:bg-primary-500/20'
+            }`}
+          >
             <ShieldCheck size={12} /> Kurumsal Zincirler
           </button>
-          <button aria-label="Yetkili Servis" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
+          <button
+            aria-label="Yetkili Servis"
+            onClick={() => toggleFilter('authorized')}
+            className={`flex items-center gap-1.5 px-4 py-2 border rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale transition-all ${
+              activeFilter === 'authorized'
+                ? 'bg-amber-500 border-amber-400/30 text-slate-900 shadow-lg shadow-amber-500/20'
+                : 'bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
+            }`}
+          >
             <Star size={12} /> Yetkili Servis
           </button>
-          <button aria-label="Açık/Kapalı" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
-            <Clock size={12} /> Açık/Kapalı
+          <button
+            aria-label="Açık/Kapalı"
+            onClick={() => toggleFilter('open')}
+            className={`flex items-center gap-1.5 px-4 py-2 border rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale transition-all ${
+              activeFilter === 'open'
+                ? 'bg-green-500 border-green-400/30 text-slate-900 shadow-lg shadow-green-500/20'
+                : 'bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
+            }`}
+          >
+            <Clock size={12} /> Şu An Açık
           </button>
-          <button aria-label="Hizmet Tipi" className="flex items-center gap-1.5 px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale">
-            <SlidersHorizontal size={12} /> Hizmet Tipi
-          </button>
+          {activeFilter && (
+            <button
+              aria-label="Filtreyi Temizle"
+              onClick={() => setActiveFilter(null)}
+              className="flex items-center gap-1.5 px-3 py-2 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-[10px] font-black uppercase tracking-wider font-sans whitespace-nowrap active-scale transition-all"
+            >
+              <SlidersHorizontal size={12} /> Temizle
+            </button>
+          )}
         </div>
       )}
       {isMapView ? (
@@ -229,8 +276,8 @@ const MechanicsScreen = () => {
         <div className="space-y-4">
           {loadingMechanics ? (
             <SkeletonList count={3} />
-          ) : mechanicsList.length > 0 ? (
-            mechanicsList.map((m) => {
+          ) : filteredMechanics.length > 0 ? (
+            filteredMechanics.map((m) => {
               const isBrandSpecialist =
                 currentVehicle && m.brands?.includes(currentVehicle.brand);
               return (

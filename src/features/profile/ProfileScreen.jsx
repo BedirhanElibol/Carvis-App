@@ -15,6 +15,7 @@ const VehicleSearch = React.lazy(() => import("../garage/VehicleSearch"));
 import VehicleProSettings from "../garage/VehicleProSettings";
 import WalletCard from "./WalletCard";
 import ActivityCenter from "./ActivityCenter";
+import ReferralCard from "./ReferralCard";
 
 const ProfileScreen = () => {
   const navigate = useNavigate();
@@ -126,6 +127,9 @@ const ProfileScreen = () => {
       
       {/* Fintech Hub: Wallet & Credit Card */}
       {!currentUser?.isAnonymous && <WalletCard />}
+
+      {/* Referral Program */}
+      {!currentUser?.isAnonymous && <ReferralCard />}
 
       {/* Activity Center: Bids, Consultations, Insurances */}
       {!currentUser?.isAnonymous && <ActivityCenter />}

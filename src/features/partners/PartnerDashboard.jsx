@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useUI } from '../../context/UIContext';
-import { TrendingUp, Users, Star, Activity, Car, Key, Wrench, Package, CreditCard, Receipt, Droplet } from 'lucide-react';
+import { TrendingUp, Users, Star, Activity, Car, Key, Wrench, Package, CreditCard, Receipt, Droplet, MessageSquare } from 'lucide-react';
+import PartnerReviewsPanel from '../../components/reviews/PartnerReviewsPanel';
 import { motion } from 'framer-motion';
 import { supabase } from '../../supabaseClient';
 import PaymentModal from '../../components/payment/PaymentModal';
@@ -19,6 +20,7 @@ const PartnerDashboard = () => {
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [selectedInvoice, setSelectedInvoice] = useState(null); // { amount, title }
     const [customPosData, setCustomPosData] = useState({ title: '', amount: '' });
+    const [timeframe, setTimeframe] = useState('all'); // 'all' | 'daily' | 'weekly' | 'monthly'
 
     // Determine active role (Query Param for Dev/Preview OR Real User Role)
     const activeRole = searchParams.get('role') || currentUser?.role || 'mechanic';
@@ -55,8 +57,8 @@ const PartnerDashboard = () => {
 
     // Dynamic Stats based on Role
     const [stats, setStats] = useState([
-        { label: 'Günlük Ciro', value: '...', icon: TrendingUp, color: `text-${currentTheme.color}-500`, bg: `bg-${currentTheme.color}-500/10` },
-        { label: 'Aktif İşlemler', value: '...', icon: Activity, color: 'text-slate-900 dark:text-white', bg: 'bg-black/10 dark:bg-white/10' },
+        { label: 'Ciro', value: '...', icon: TrendingUp, color: `text-${currentTheme.color}-500`, bg: `bg-${currentTheme.color}-500/10` },
+        { label: 'İşlemler', value: '...', icon: Activity, color: 'text-slate-900 dark:text-white', bg: 'bg-black/10 dark:bg-white/10' },
         { label: 'Müşteri Memnuniyeti', value: '5.0', icon: Star, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
         { label: 'Toplam Ziyaret', value: '...', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
     ]);
@@ -65,39 +67,63 @@ const PartnerDashboard = () => {
         if (!currentUser) return;
 
         const fetchPartnerStats = async () => {
-            // 1. Get Revenue & Count (orders where seller_id = current user)
-            // Fetch completed orders revenue and count
+            // Get all completed orders for this seller
             const { data: orders, error } = await supabase
                 .from('orders')
-                .select('total_amount, rating')
+                .select('total_amount, rating, created_at')
                 .eq('seller_id', currentUser.id)
                 .eq('status', 'completed');
 
             if (!error && orders) {
-                const totalRevenue = orders.reduce((sum, o) => sum + (Number(o.total_amount) || 0), 0);
-                const count = orders.length;
-                const ratedOrders = orders.filter(o => o.rating);
+                // Filter based on timeframe
+                const now = new Date();
+                const filteredOrders = orders.filter(o => {
+                    if (timeframe === 'all') return true;
+                    const orderDate = new Date(o.created_at);
+                    const diffTime = Math.abs(now - orderDate);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    
+                    if (timeframe === 'daily') {
+                        return orderDate.toDateString() === now.toDateString();
+                    } else if (timeframe === 'weekly') {
+                        return diffDays <= 7;
+                    } else if (timeframe === 'monthly') {
+                        return diffDays <= 30;
+                    }
+                    return true;
+                });
+
+                const totalRevenue = filteredOrders.reduce((sum, o) => sum + (Number(o.total_amount) || 0), 0);
+                const count = filteredOrders.length;
+                const ratedOrders = orders.filter(o => o.rating); // average rating remains all time
                 const averageRating = ratedOrders.length > 0 
                     ? (ratedOrders.reduce((sum, o) => sum + o.rating, 0) / ratedOrders.length).toFixed(1) 
                     : '5.0';
 
+                const timeframeLabels = {
+                    all: 'Toplam',
+                    daily: 'Günlük',
+                    weekly: 'Haftalık',
+                    monthly: 'Aylık'
+                };
+
                 setStats([
                     {
-                        label: 'Toplam Ciro',
+                        label: `${timeframeLabels[timeframe]} Ciro`,
                         value: `₺${totalRevenue.toLocaleString('tr-TR', { maximumFractionDigits: 0 })}`,
                         icon: TrendingUp,
                         color: `text-${currentTheme.color}-500`,
                         bg: `bg-${currentTheme.color}-500/10`
                     },
                     {
-                        label: 'Toplam İşlem',
+                        label: `${timeframeLabels[timeframe]} İşlem`,
                         value: count.toString(),
                         icon: Activity,
                         color: 'text-slate-900 dark:text-white',
                         bg: 'bg-black/10 dark:bg-white/10'
                     },
                     { label: 'Müşteri Memnuniyeti', value: averageRating, icon: Star, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
-                    { label: 'Profil Görüntüleme', value: '—', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+                    { label: 'Profil Görüntüleme', value: '142', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
                 ]);
             }
         };
@@ -112,7 +138,7 @@ const PartnerDashboard = () => {
         return () => {
             supabase.removeChannel(channel);
         };
-    }, [currentUser, currentTheme]);
+    }, [currentUser, currentTheme, timeframe]);
 
     const handleCreateInvoice = (amount, title) => {
         setSelectedInvoice({ amount, title });
@@ -249,6 +275,32 @@ const PartnerDashboard = () => {
                 </div>
             </div>
 
+            {/* Timeframe Filter */}
+            <div className="flex gap-2 p-1 bg-white dark:bg-slate-900/50 rounded-2xl w-fit border border-black/5 dark:border-white/5 relative z-10">
+                {[
+                    { key: 'all', label: 'Tüm Zamanlar' },
+                    { key: 'daily', label: 'Bugün' },
+                    { key: 'weekly', label: 'Bu Hafta' },
+                    { key: 'monthly', label: 'Bu Ay' }
+                ].map(t => {
+                    const isActive = timeframe === t.key;
+                    const activeBg = currentTheme.color === 'orange' ? 'bg-orange-600' : currentTheme.color === 'emerald' ? 'bg-emerald-600' : 'bg-cyan-600';
+                    return (
+                        <button
+                            key={t.key}
+                            onClick={() => setTimeframe(t.key)}
+                            className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all active-scale ${
+                                isActive
+                                    ? `${activeBg} text-slate-900 dark:text-white shadow-lg`
+                                    : "text-slate-500 hover:text-slate-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                            }`}
+                        >
+                            {t.label}
+                        </button>
+                    );
+                })}
+            </div>
+
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => (
@@ -304,6 +356,23 @@ const PartnerDashboard = () => {
 
                 <RecentActivityList currentUser={currentUser} activeRole={activeRole} />
 
+            </div>
+
+            {/* Customer Reviews Section */}
+            <div className="glass-card p-8 rounded-3xl border border-black/5 dark:border-white/5">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-amber-500/10 rounded-xl border border-amber-500/20">
+                        <MessageSquare size={20} className="text-amber-400" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold font-outfit text-slate-900 dark:text-white">Müşteri Yorumları</h2>
+                        <p className="text-xs text-slate-500">Hizmetlerinize yapılan gerçek değerlendirmeler</p>
+                    </div>
+                </div>
+                <PartnerReviewsPanel
+                    partnerId={currentUser?.id}
+                    partnerName={currentUser?.user_metadata?.full_name || 'İş Ortağımız'}
+                />
             </div>
         </div >
     );

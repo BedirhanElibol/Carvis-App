@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Car, Key, LayoutDashboard, LogOut, Menu, Package, ParkingCircle, Settings, ShieldAlert, Shield, Truck, Droplets, User, Wrench, X, FileText, ClipboardList } from "lucide-react";
+import { Calendar, Car, Key, LayoutDashboard, LogOut, Menu, Package, ParkingCircle, Settings, ShieldAlert, Shield, Tag, Truck, Droplets, User, Wrench, X, FileText, ClipboardList } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 const PartnerLayout = () => {
@@ -64,6 +64,12 @@ const PartnerLayout = () => {
     });
   } else if (role === "mechanic") {
     navItems.splice(1, 0, {
+      key: "campaigns",
+      label: "Kampanyalarım",
+      icon: Tag,
+      path: "/partner/campaigns",
+    });
+    navItems.splice(1, 0, {
       key: "services",
       label: "Hizmet Paketleri",
       icon: Settings,
@@ -108,6 +114,17 @@ const PartnerLayout = () => {
       label: "Randevu Takvimleri",
       icon: Droplets,
       path: "/partner/carwash/slots",
+    });
+  }
+
+  // Add appointments link for all partner roles (mechanic, valet, carwash, etc.)
+  const appointmentRoles = ["mechanic", "valet", "carwash", "parking", "tow_truck"];
+  if (appointmentRoles.includes(role)) {
+    navItems.push({
+      key: "appointments",
+      label: "Randevularım",
+      icon: Calendar,
+      path: "/partner/appointments",
     });
   }
 

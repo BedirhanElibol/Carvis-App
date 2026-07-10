@@ -11,7 +11,7 @@ import InteractiveCarMap from "./components/InteractiveCarMap";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Özel Analiz Kartı Bileşeni - Premium Holographic Design
-const DamageAnalysisCard = ({ data, vehicleInfo }) => {
+const DamageAnalysisCard = ({ data, vehicleInfo, onFindMechanic, onFindParts }) => {
   return (
     <div className="relative group overflow-hidden">
       {/* Holographic Border Glow */}
@@ -104,10 +104,16 @@ const DamageAnalysisCard = ({ data, vehicleInfo }) => {
         </div>
 
         <div className="grid grid-cols-2 gap-3 pt-2">
-          <button className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale border border-black/10 dark:border-white/10 font-sans">
+          <button
+            onClick={onFindParts}
+            className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale border border-black/10 dark:border-white/10 font-sans"
+          >
             <Package size={14} /> PARÇA BUL
           </button>
-          <button className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-xl shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans">
+          <button
+            onClick={onFindMechanic}
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-xl shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans"
+          >
             USTA ÇAĞIR <ChevronRight size={14} />
           </button>
         </div>
@@ -314,6 +320,10 @@ const AIChatScreen = () => {
                 <DamageAnalysisCard
                   data={m.data}
                   vehicleInfo={currentVehicle}
+                  onFindMechanic={() => navigate('/app/mechanics', {
+                    state: { flow: 'maintenance', serviceType: 'repair', issue: m.data?.damageType }
+                  })}
+                  onFindParts={() => navigate('/app/parts')}
                 />
               ) : (
                 <div

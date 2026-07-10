@@ -52,9 +52,10 @@ const ParkingCapacity = lazy(
 const ValetRequests = lazy(
   () => import("./features/partners/ValetDashboard"),
 );
-const MechanicJobs = lazy(
-  () => import("./features/partners/mechanic/MechanicJobs"),
-);
+const MechanicJobs = lazy(() => import("./features/partners/mechanic/MechanicJobs"));
+const CampaignManager = lazy(() => import("./features/partners/components/CampaignManager"));
+const TowTruckDashboard = lazy(() => import("./features/partners/TowTruckDashboard"));
+const CarwashDashboard = lazy(() => import("./features/partners/CarwashDashboard"));
 const MechanicServices = lazy(
   () => import("./features/partners/mechanic/MechanicServices"),
 );
@@ -445,6 +446,10 @@ export const AppRoutes = () => {
           <Route path="insurance/policies" element={<InsurancePolicies />} />
           <Route path="insurance/claims" element={<InsuranceClaims />} />
           <Route path="settings" element={<PartnerSettingsScreen />} />
+          <Route path="appointments" element={<AppointmentsScreen />} />
+          <Route path="campaigns" element={<CampaignManager />} />
+          <Route path="tow/assignments" element={<TowTruckDashboard />} />
+          <Route path="carwash/slots" element={<CarwashDashboard />} />
         </Route>
 
         {/* Admin Routes */}

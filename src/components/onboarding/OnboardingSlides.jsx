@@ -38,9 +38,17 @@ const OnboardingSlides = ({ onComplete }) => {
   const { t } = useUI();
   const [current, setCurrent] = useState(0);
 
+  const handleComplete = () => {
+    // Mark onboarding as done so it won't show again
+    try {
+      localStorage.setItem('carvis_onboarding_done', '1');
+    } catch { /* ignore storage errors */ }
+    onComplete();
+  };
+
   const next = () => {
     if (current === getSlides(t).length - 1) {
-      onComplete();
+      handleComplete();
     } else {
       setCurrent((prev) => prev + 1);
     }
@@ -50,7 +58,7 @@ const OnboardingSlides = ({ onComplete }) => {
     <div className="fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 flex flex-col justify-center items-center p-8 overflow-hidden">
       {/* Skip Button */}
       <button
-        onClick={onComplete}
+        onClick={handleComplete}
         className="absolute top-12 right-8 text-slate-500 font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all"
       >
         Atla

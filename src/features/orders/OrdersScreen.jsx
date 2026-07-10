@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle, Clock, RefreshCw, ShieldCheck, Shop
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
 import { useOrder } from "../../context/OrderContext";
+import { useAuth } from "../../context/AuthContext";
 import OrderDetailsModal from "./OrderDetailsModal";
 import EmptyState from "../../components/shared/EmptyState";
 import { SkeletonList } from "../../components/ui/SkeletonCard";
@@ -15,6 +16,7 @@ const OrdersScreen = () => {
   const navigate = useNavigate();
   const { orders, loading, fetchOrders } = useOrder();
   const { showAlert } = useUI();
+  const { currentUser } = useAuth();
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [reviewOrder, setReviewOrder] = useState(null);
 
@@ -210,6 +212,40 @@ const OrdersScreen = () => {
                               showAlert("Hata", error.message, "error");
                             } else if (data && data.success) {
                               showAlert("Başarılı", data.message, "success");
+                              
+                              // Automatically log to maintenance records
+                              try {
+                                if (currentUser?.id) {
+                                  const { data: quoteData } = await supabase
+                                    .from('quotes')
+                                    .select('*, service_request:service_requests(*)')
+                                    .eq('id', order.quote_id)
+                                    .single();
+                                  
+                                  if (quoteData && quoteData.service_request) {
+                                    const sr = quoteData.service_request;
+                                    const { data: vehicleData } = await supabase
+                                      .from('vehicles')
+                                      .select('id, km')
+                                      .eq('plate', sr.plate)
+                                      .eq('user_id', currentUser.id)
+                                      .maybeSingle();
+
+                                    if (vehicleData) {
+                                      await supabase.from('maintenance_records').insert({
+                                        user_id: currentUser.id,
+                                        vehicle_id: vehicleData.id,
+                                        description: order.quote?.description || sr.description || 'Bakım / Onarım Hizmeti',
+                                        km: parseInt(vehicleData.km) || 0,
+                                        cost: order.total_amount,
+                                      });
+                                    }
+                                  }
+                                }
+                              } catch (err) {
+                                console.error("Auto maintenance record error:", err);
+                              }
+
                               fetchOrders();
                             }
                           }}

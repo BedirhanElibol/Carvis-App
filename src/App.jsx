@@ -21,6 +21,7 @@ const VehicleSearch = React.lazy(() => import("./features/garage/VehicleSearch")
 import { useGarage } from "./context/GarageContext";
 import { Loader2, Mail, X } from "lucide-react";
 import ThemeToggleFAB from "./components/common/ThemeToggleFAB";
+import usePushNotifications from "./hooks/usePushNotifications";
 const App = () => {
   const {
     alertState,
@@ -40,6 +41,9 @@ const App = () => {
     useGarage();
   const { requestNotificationPermission } = useNotification();
   const location = useLocation();
+
+  // Capacitor Push Notification registration (native only, no-op in web browser)
+  usePushNotifications();
 
   // Bildirim izni iste (uygulama açıldığında)
   useEffect(() => {

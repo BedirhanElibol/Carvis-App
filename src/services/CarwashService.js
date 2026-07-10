@@ -52,12 +52,18 @@ export const CarwashService = {
   },
 
   // 2. Partner: Fetch active requests in area
-  getPendingRequests: async () => {
-    const { data, error } = await supabase
+  getPendingRequests: async (providerId = null) => {
+    let query = supabase
       .from("carwash_requests")
-      .select("*, profiles!customer_id(full_name, phone), vehicles(*)")
-      .eq("status", "pending")
-      .order("created_at", { ascending: false });
+      .select("*, profiles!customer_id(full_name, phone), vehicles(*)");
+    
+    if (providerId) {
+      query = query.or(`status.eq.pending,and(status.eq.accepted,provider_id.eq.${providerId})`);
+    } else {
+      query = query.eq("status", "pending");
+    }
+
+    const { data, error } = await query.order("created_at", { ascending: false });
     
     if (error) return { success: false, message: error.message };
     return { success: true, data };

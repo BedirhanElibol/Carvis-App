@@ -14,8 +14,26 @@ const VehicleProSettings = ({ isOpen, onClose, vehicle }) => {
     documents, 
     addExpense, 
     addDocument,
-    getMaintenanceStatus 
+    getMaintenanceStatus,
+    deleteVehicle,
   } = useGarage();
+
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleDeleteVehicle = async () => {
+    if (!confirmDelete) {
+      setConfirmDelete(true);
+      return;
+    }
+    setIsDeleting(true);
+    const { error } = await deleteVehicle(vehicle.id);
+    setIsDeleting(false);
+    if (!error) {
+      setConfirmDelete(false);
+      onClose();
+    }
+  };
 
   const [formData, setFormData] = useState({
     inspectionDate: "",
@@ -249,6 +267,40 @@ const VehicleProSettings = ({ isOpen, onClose, vehicle }) => {
               <DigitalPassport vehicle={vehicle} />
             )}
           </div>
+          {/* Danger Zone */}
+          <div className="mt-6 pt-4 border-t border-red-500/20">
+            <p className="text-[10px] font-black text-red-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+              <ShieldAlert size={12} /> Tehlikeli Bölge
+            </p>
+            {!confirmDelete ? (
+              <button
+                onClick={handleDeleteVehicle}
+                className="w-full py-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 font-black text-xs uppercase tracking-widest transition-all active-scale"
+              >
+                Aracı Garajdan Kaldır
+              </button>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-xs text-red-400 font-bold text-center">Bu işlem geri alınamaz! Emin misiniz?</p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setConfirmDelete(false)}
+                    className="flex-1 py-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-500 dark:text-slate-400 font-black text-xs uppercase tracking-widest transition-all active-scale"
+                  >
+                    İptal
+                  </button>
+                  <button
+                    onClick={handleDeleteVehicle}
+                    disabled={isDeleting}
+                    className="flex-1 py-3 rounded-2xl bg-red-500 hover:bg-red-600 text-white font-black text-xs uppercase tracking-widest transition-all active-scale shadow-lg shadow-red-500/20 disabled:opacity-50"
+                  >
+                    {isDeleting ? 'Siliniyor...' : 'Evet, Sil'}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
         </motion.div>
       </motion.div>
     </AnimatePresence>

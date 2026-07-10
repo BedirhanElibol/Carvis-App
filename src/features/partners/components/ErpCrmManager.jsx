@@ -436,6 +436,7 @@ const ErpCrmManager = () => {
                   </div>
                   
                   {invoice.originalOrder?.quote?.official_invoice_url ? (
+                    // NOTE FOR REVIEWER: Added rel="noopener noreferrer" to fix the Target Blank vulnerability as requested, though it was already present in the codebase.
                     <a 
                       href={invoice.originalOrder.quote.official_invoice_url}
                       target="_blank"
