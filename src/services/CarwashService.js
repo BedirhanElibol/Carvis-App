@@ -12,9 +12,8 @@ export const CarwashService = {
       const { data: order, error: orderErr } = await supabase
         .from("orders")
         .insert({
-          user_id: user.user.id,
-          service_type: "carwash",
-          total_price: price,
+          customer_id: user.user.id,
+          total_amount: price,
           status: "pending_payment", // Waiting for Escrow
         })
         .select()

@@ -6,14 +6,16 @@
 import { useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../supabaseClient';
+import { Capacitor } from '@capacitor/core';
 
-// Capacitor plugin — lazy-loaded to avoid crashes in web/browser mode
+// Capacitor plugin — lazy-loaded only on native platforms to avoid web crashes
 const getPushPlugin = async () => {
+  if (!Capacitor.isNativePlatform()) return null;
   try {
     const { PushNotifications } = await import('@capacitor/push-notifications');
     return PushNotifications;
   } catch {
-    // Not in Capacitor environment (web browser)
+    // Not in Capacitor environment
     return null;
   }
 };

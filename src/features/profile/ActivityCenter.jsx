@@ -17,7 +17,7 @@ const ActivityCenter = () => {
       if (activeTab === "consultations") {
         const { data: cons } = await supabase
           .from("consultations")
-          .select("*, expert:expert_id(full_name)")
+          .select("*, expert:profiles!expert_id(full_name)")
           .eq("user_id", currentUser.id)
           .order("created_at", { ascending: false });
         result = cons || [];
