@@ -34,7 +34,7 @@ export const SosService = {
           customer_id: customerId,
           seller_id: customerId, // Self placeholder until a tow truck accepts
           total_amount: price,
-          status: 'pending_payment' // requires escrow block
+          status: 'pending' // requires escrow block
         }])
         .select()
         .single();

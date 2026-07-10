@@ -14,7 +14,7 @@ export const CarwashService = {
         .insert({
           customer_id: user.user.id,
           total_amount: price,
-          status: "pending_payment", // Waiting for Escrow
+          status: "pending", // Waiting for Escrow
         })
         .select()
         .single();
