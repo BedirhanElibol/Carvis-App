@@ -68,16 +68,26 @@ const MechanicsScreen = () => {
     fetchMechanics();
   }, []);
 
-  // Client-side filtered list
-  const filteredMechanics = mechanicsList.filter(m => {
-    if (activeFilter === 'verified') return m.is_verified || m.verified;
-    if (activeFilter === 'authorized') return m.is_authorized || m.authorized_brands?.length > 0;
-    if (activeFilter === 'open') {
-      const hour = new Date().getHours();
-      return hour >= 8 && hour < 20; // assume 08:00-20:00 as default open hours
-    }
-    return true; // no filter = show all
-  });
+  // Client-side filtered and sorted list
+  const filteredMechanics = mechanicsList
+    .filter(m => {
+      if (activeFilter === 'verified') return m.is_verified || m.verified;
+      if (activeFilter === 'authorized') return m.is_authorized || m.authorized_brands?.length > 0;
+      if (activeFilter === 'open') {
+        const hour = new Date().getHours();
+        return hour >= 8 && hour < 20; // assume 08:00-20:00 as default open hours
+      }
+      return true; // no filter = show all
+    })
+    .sort((a, b) => {
+      if (currentVehicle) {
+        const aIsSpecialist = a.brands?.includes(currentVehicle.brand);
+        const bIsSpecialist = b.brands?.includes(currentVehicle.brand);
+        if (aIsSpecialist && !bIsSpecialist) return -1;
+        if (!aIsSpecialist && bIsSpecialist) return 1;
+      }
+      return 0;
+    });
 
   const toggleFilter = (filter) => {
     setActiveFilter(prev => prev === filter ? null : filter);
