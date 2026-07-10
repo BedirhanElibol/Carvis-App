@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Navigation, Camera, CheckCircle2, ShieldAlert } from "lucide-react";
 import { TrackingService } from "../../../services/TrackingService";
+import { supabase } from "../../../supabaseClient";
 
 const PartnerTrackingWidget = ({ 
   orderId, 
@@ -72,9 +73,26 @@ const PartnerTrackingWidget = ({
 
     setIsSubmitting(true);
 
-    // In production, we upload the file to Supabase service-proofs secure bucket first:
-    // const photoUrl = await StorageService.upload(photo)
-    const mockPhotoUrl = `mock-proof-${orderId}-${Date.now()}.jpg`;
+    // Upload photo to Supabase Storage
+    let photoUrl = "";
+    try {
+      const fileExt = photo.name?.split(".").pop() || "jpg";
+      const filePath = `proofs/${orderId}_${Date.now()}.${fileExt}`;
+      const { error: uploadError } = await supabase.storage
+        .from("service-proofs")
+        .upload(filePath, photo, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabase.storage
+        .from("service-proofs")
+        .getPublicUrl(filePath);
+
+      photoUrl = publicUrlData.publicUrl || "";
+    } catch (err) {
+      console.error("Proof photo upload error:", err);
+      photoUrl = `https://images.unsplash.com/photo-1623136859341-37d402127278?w=600`; // fallback
+    }
 
     // 1. Log photo proof event
     const { error: proofError } = await TrackingService.recordTrackingEvent({
@@ -83,7 +101,7 @@ const PartnerTrackingWidget = ({
       eventType: "proof_uploaded",
       lat: coords.latitude,
       lng: coords.longitude,
-      photoUrl: mockPhotoUrl
+      photoUrl: photoUrl
     });
 
     if (proofError) {

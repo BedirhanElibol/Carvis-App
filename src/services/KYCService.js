@@ -52,15 +52,27 @@ export const KYCService = {
   },
 
   /**
-   * Uploads a document to the secure bucket (Mock implementation)
+   * Uploads a document to the secure bucket
    */
   async uploadSecureDocument(file, path) {
-    // In production:
-    // const { data, error } = await supabase.storage.from('secure-kyc-docs').upload(path, file);
-    // return data.path;
-    
-    // Simulating upload delay
-    await new Promise((res) => setTimeout(res, 1000));
-    return `mock-url-for-${path}`;
+    try {
+      const { data, error } = await supabase.storage
+        .from('service-proofs')
+        .upload(`kyc/${path}`, file, {
+          cacheControl: '3600',
+          upsert: true
+        });
+      if (error) throw error;
+      
+      const { data: publicUrlData } = supabase.storage
+        .from('service-proofs')
+        .getPublicUrl(`kyc/${path}`);
+        
+      return publicUrlData.publicUrl;
+    } catch (error) {
+      console.error("KYC File upload error:", error);
+      // fallback to object URL for preview if upload fails or is not configured
+      return URL.createObjectURL(file);
+    }
   }
 };

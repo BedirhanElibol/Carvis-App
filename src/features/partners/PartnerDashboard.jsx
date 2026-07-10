@@ -15,7 +15,7 @@ import ActiveOrderCard from './components/ErpCrmManager';
 const PartnerDashboard = () => {
     const { currentUser } = useAuth();
     const { showAlert } = useUI();
-    const { sellerOrders } = useSeller();
+    const { sellerOrders, sellerAppointments } = useSeller();
     const [searchParams] = useSearchParams();
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [selectedInvoice, setSelectedInvoice] = useState(null); // { amount, title }
@@ -60,7 +60,7 @@ const PartnerDashboard = () => {
         { label: 'Ciro', value: '...', icon: TrendingUp, color: `text-${currentTheme.color}-500`, bg: `bg-${currentTheme.color}-500/10` },
         { label: 'İşlemler', value: '...', icon: Activity, color: 'text-slate-900 dark:text-white', bg: 'bg-black/10 dark:bg-white/10' },
         { label: 'Müşteri Memnuniyeti', value: '5.0', icon: Star, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
-        { label: 'Toplam Ziyaret', value: '...', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+        { label: 'Randevularım', value: '...', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
     ]);
 
     useEffect(() => {
@@ -123,7 +123,7 @@ const PartnerDashboard = () => {
                         bg: 'bg-black/10 dark:bg-white/10'
                     },
                     { label: 'Müşteri Memnuniyeti', value: averageRating, icon: Star, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
-                    { label: 'Profil Görüntüleme', value: '142', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+                    { label: 'Randevularım', value: (sellerAppointments?.length || 0).toString(), icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
                 ]);
             }
         };
@@ -138,7 +138,7 @@ const PartnerDashboard = () => {
         return () => {
             supabase.removeChannel(channel);
         };
-    }, [currentUser, currentTheme, timeframe]);
+    }, [currentUser, currentTheme, timeframe, sellerAppointments]);
 
     const handleCreateInvoice = (amount, title) => {
         setSelectedInvoice({ amount, title });
