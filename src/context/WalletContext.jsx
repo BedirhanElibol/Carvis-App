@@ -112,7 +112,7 @@ export const WalletProvider = ({ children }) => {
 
   const [isAddingFunds, setIsAddingFunds] = useState(false);
 
-  const addFunds = async (amount) => {
+  const addFunds = useCallback(async (amount) => {
     if (amount <= 0) return false;
     setIsAddingFunds(true);
     try {
@@ -135,9 +135,9 @@ export const WalletProvider = ({ children }) => {
     } finally {
       setIsAddingFunds(false);
     }
-  };
+  }, [fetchWalletData, showAlert]);
 
-  const blockFunds = async (amount, _title = "İşlem İçin Bloke") => {
+  const blockFunds = useCallback(async (amount, _title = "İşlem İçin Bloke") => {
     if (balance < amount) {
       showAlert("Yetersiz Bakiye", "Hesabınızda yeterli bakiye yok.", "error");
       return false;
@@ -151,12 +151,19 @@ export const WalletProvider = ({ children }) => {
       console.error("Block funds error:", error);
       return false;
     }
-  };
+  }, [balance, showAlert]);
 
-  const releaseFunds = async (amount, _title = "İşlem Tamamlandı") => {
+  const releaseFunds = useCallback(async (amount, _title = "İşlem Tamamlandı") => {
     try {
       // Security Fix: Replaced with an authorized backend execution trace
-      const { error: walletError } = await supabase.rpc('rpc_release_funds', { p_amount: amount });
+      let walletError;
+      try {
+        const res = await supabase.rpc('rpc_release_funds', { p_amount: amount });
+        walletError = res.error;
+      } catch (networkError) {
+        console.error("Release funds network exception:", networkError);
+        throw networkError;
+      }
 
       if (walletError) {
         console.error("RPC Wallet Error:", walletError);
@@ -169,9 +176,9 @@ export const WalletProvider = ({ children }) => {
       console.error("Release funds error:", error);
       return false;
     }
-  };
+  }, [fetchWalletData]);
 
-  const cancelEscrow = async (amount, _title = "Bloke İptali") => {
+  const cancelEscrow = useCallback(async (amount, _title = "Bloke İptali") => {
     try {
       // Security Fix: Replaced with authorized backend execution trace
       await new Promise(res => setTimeout(res, 500));
@@ -180,7 +187,7 @@ export const WalletProvider = ({ children }) => {
       console.error("Cancel escrow error:", error);
       return false;
     }
-  };
+  }, []);
 
   const value = useMemo(() => ({
 
