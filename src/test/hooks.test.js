@@ -38,6 +38,41 @@ describe("useCommon hooks", () => {
       expect(result.current).toBe("updated");
       vi.useRealTimers();
     });
+
+    it("should use default delay of 300ms if not provided", async () => {
+      vi.useFakeTimers();
+      const { result, rerender } = renderHook(
+        ({ value }) => useDebounce(value),
+        { initialProps: { value: "initial" } },
+      );
+
+      rerender({ value: "updated" });
+      expect(result.current).toBe("initial");
+
+      await act(async () => {
+        vi.advanceTimersByTime(299);
+      });
+      expect(result.current).toBe("initial");
+
+      await act(async () => {
+        vi.advanceTimersByTime(1);
+      });
+      expect(result.current).toBe("updated");
+
+      vi.useRealTimers();
+    });
+
+    it("should clear timeout on unmount", () => {
+      vi.useFakeTimers();
+      const clearTimeoutSpy = vi.spyOn(globalThis, "clearTimeout");
+      const { unmount } = renderHook(() => useDebounce("initial", 300));
+
+      unmount();
+
+      expect(clearTimeoutSpy).toHaveBeenCalled();
+      clearTimeoutSpy.mockRestore();
+      vi.useRealTimers();
+    });
   });
 
   describe("useToggle", () => {
