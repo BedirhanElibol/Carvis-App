@@ -62,10 +62,33 @@ const CarwashScreen = () => {
     fetchCarwashes();
   }, []);
 
-  const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  const mapUrl = GOOGLE_MAPS_API_KEY
-    ? `https://maps.googleapis.com/maps/api/staticmap?center=39.93,32.85&zoom=10&size=600x600&sensor=false&key=${GOOGLE_MAPS_API_KEY}`
-    : null;
+  const [mapUrl, setMapUrl] = useState(null);
+
+  useEffect(() => {
+    let objectUrl = null;
+    const fetchMap = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke("get-map-image", {
+          method: "GET",
+        });
+        if (error) throw error;
+        if (data && data instanceof Blob) {
+          objectUrl = URL.createObjectURL(data);
+          setMapUrl(objectUrl);
+        }
+      } catch (err) {
+        console.error("Fetch map err:", err);
+      }
+    };
+    fetchMap();
+
+    // Component unmount map cleanup
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, []);
 
   if (!t) return null;
 
