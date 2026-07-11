@@ -198,23 +198,13 @@ export const getFuelPrices = async (cityInput = "istanbul") => {
 
 // --- 3. EV Charging Stations (Open Charge Map) ---
 export const getEVStations = async (lat, lng, distance = 10) => {
-  const API_KEY = import.meta.env.VITE_OPEN_CHARGE_MAP_KEY;
-
-  if (!API_KEY) {
-    console.error("OpenChargeMap Key missing, cannot fetch stations.");
-    return [];
-  }
-
   try {
-    const response = await fetch(
-      `https://api.openchargemap.io/v3/poi/?output=json&latitude=${lat}&longitude=${lng}&distance=${distance}&maxresults=10&key=${API_KEY}`,
-      {
-        headers: {
-          "User-Agent": "RapidsyApp/1.0",
-        },
-      },
-    );
-    const data = await response.json();
+    const { data, error } = await supabase.functions.invoke('ev-stations', {
+      body: { lat, lng, distance }
+    });
+    if (error) {
+      throw error;
+    }
     return data || [];
   } catch (error) {
     console.error("EV Station Error:", error);
