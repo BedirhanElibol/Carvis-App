@@ -134,19 +134,8 @@ serve(async (req: Request) => {
 
         // Fallback for simulation if keys are missing
         if (!merchantId || !merchantKey || !merchantSalt) {
-            console.warn('PayTR credentials are missing! Falling back to simulated iframe mode.')
-            return new Response(
-                JSON.stringify({
-                    success: true,
-                    simulated: true,
-                    token: "simulated_token_" + crypto.randomUUID().split('-')[0],
-                    iframeUrl: "about:blank"
-                }),
-                {
-                    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-                    status: 200,
-                }
-            )
+            console.error('PayTR credentials are missing! Payment gateway configuration is incomplete.')
+            throw new Error('Payment gateway configuration is missing.')
         }
 
         // Call PayTR API to get iframe token
