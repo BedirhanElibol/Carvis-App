@@ -10,7 +10,6 @@ export const callRealGeminiAPI = async (
   // 1. ÖNCE YEREL BİLGİ BANKASINI TARA (RAG Light)
   const localResult = searchKnowledgeBase(prompt);
   if (localResult.found) {
-    console.log("⚡ Hızlı cevap: Yerel veritabanından bulundu.");
     return (
       localResult.text +
       "\n\n*(Bu bilgi Rapidsy teknik kütüphanesinden anlık getirildi.)*"
