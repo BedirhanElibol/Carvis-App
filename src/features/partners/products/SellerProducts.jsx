@@ -3,6 +3,7 @@ import { BookOpen, DollarSign, Edit2, Filter, Image, Loader2, Package, Plus, Sav
 import { useSeller } from "../../../context/SellerContext";
 import ProductCatalogModal from "./ProductCatalogModal";
 import SellerProductEditModal from "./SellerProductEditModal";
+import { CAR_DATA } from "../../../constants/mockData";
 
 const SellerProducts = () => {
   const { sellerProducts, addProduct, deleteProduct, addingProduct } = useSeller();
@@ -16,6 +17,25 @@ const SellerProducts = () => {
     stock: "",
     category: "Genel",
   });
+  const [compatibilities, setCompatibilities] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedModel, setSelectedModel] = useState("");
+
+  const handleAddCompatibility = () => {
+    if (selectedBrand && selectedModel) {
+      const exists = compatibilities.some(
+        (c) => c.brand === selectedBrand && c.model === selectedModel
+      );
+      if (!exists) {
+        setCompatibilities([...compatibilities, { brand: selectedBrand, model: selectedModel }]);
+      }
+      setSelectedModel("");
+    }
+  };
+
+  const handleRemoveCompatibility = (index) => {
+    setCompatibilities(compatibilities.filter((_, i) => i !== index));
+  };
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
@@ -27,10 +47,12 @@ const SellerProducts = () => {
       price: newProduct.price,
       stock: newProduct.stock,
       category: newProduct.category,
+      compatibility: compatibilities,
     });
     
     if (success) {
       setShowModal(false);
+      setCompatibilities([]);
       setNewProduct({
         name: "",
         brand: "",
@@ -57,6 +79,7 @@ const SellerProducts = () => {
       description: product.description,
       image_url: product.image_url
     });
+    setCompatibilities(product.compatibility || []);
     setShowModal(true);
   };
 
@@ -294,6 +317,71 @@ const SellerProducts = () => {
                   />
                 </div>
               </div>
+              {/* Araç Uyum Bilgisi */}
+              <div className="space-y-3">
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">
+                  Uyumlu Araçlar (Compatibility)
+                </label>
+                <div className="flex gap-2">
+                  <select
+                    disabled={addingProduct}
+                    value={selectedBrand}
+                    onChange={(e) => {
+                      setSelectedBrand(e.target.value);
+                      setSelectedModel("");
+                    }}
+                    className="flex-1 bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2 text-slate-900 dark:text-white text-xs outline-none focus:border-primary-500"
+                  >
+                    <option value="">Marka Seçin</option>
+                    {CAR_DATA.map((c) => (
+                      <option key={c.brand} value={c.brand}>{c.brand}</option>
+                    ))}
+                  </select>
+
+                  <select
+                    disabled={addingProduct || !selectedBrand}
+                    value={selectedModel}
+                    onChange={(e) => setSelectedModel(e.target.value)}
+                    className="flex-1 bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2 text-slate-900 dark:text-white text-xs outline-none focus:border-primary-500"
+                  >
+                    <option value="">Model Seçin</option>
+                    {selectedBrand &&
+                      CAR_DATA.find((c) => c.brand === selectedBrand)?.models.map((m) => (
+                        <option key={m} value={m}>{m}</option>
+                      ))}
+                  </select>
+
+                  <button
+                    type="button"
+                    onClick={handleAddCompatibility}
+                    disabled={!selectedBrand || !selectedModel}
+                    className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white px-3 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                  >
+                    Ekle
+                  </button>
+                </div>
+
+                {compatibilities.length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {compatibilities.map((comp, idx) => (
+                      <span
+                        key={idx}
+                        className="inline-flex items-center gap-1 bg-primary-500/10 border border-primary-500/30 text-primary-600 dark:text-primary-400 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter"
+                      >
+                        {comp.brand} {comp.model}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveCompatibility(idx)}
+                          className="text-slate-400 hover:text-red-500"
+                        >
+                          <X size={12} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <div className="border border-dashed border-black/20 dark:border-white/20 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 hover:bg-black/5 dark:bg-white/5 transition-colors cursor-pointer group">
                 <Image
                   size={32}

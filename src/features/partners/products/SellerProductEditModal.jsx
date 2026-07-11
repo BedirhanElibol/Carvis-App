@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DollarSign, Edit2, Loader2, Package, Save, X } from "lucide-react";
 import { useSeller } from "../../../context/SellerContext";
+import { CAR_DATA } from "../../../constants/mockData";
 
 const SellerProductEditModal = ({ isOpen, onClose, product }) => {
   const { updateProduct } = useSeller();
@@ -10,6 +11,25 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
     stock: "",
     description: ""
   });
+  const [compatibilities, setCompatibilities] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedModel, setSelectedModel] = useState("");
+
+  const handleAddCompatibility = () => {
+    if (selectedBrand && selectedModel) {
+      const exists = compatibilities.some(
+        (c) => c.brand === selectedBrand && c.model === selectedModel
+      );
+      if (!exists) {
+        setCompatibilities([...compatibilities, { brand: selectedBrand, model: selectedModel }]);
+      }
+      setSelectedModel("");
+    }
+  };
+
+  const handleRemoveCompatibility = (index) => {
+    setCompatibilities(compatibilities.filter((_, i) => i !== index));
+  };
 
   useEffect(() => {
     if (product) {
@@ -18,6 +38,9 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
         stock: product.stock || "",
         description: product.description || ""
       });
+      setCompatibilities(product.compatibility || []);
+      setSelectedBrand("");
+      setSelectedModel("");
     }
   }, [product]);
 
@@ -29,7 +52,8 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
     const success = await updateProduct(product.id, {
       price: parseFloat(editForm.price),
       stock: parseInt(editForm.stock),
-      description: editForm.description
+      description: editForm.description,
+      compatibility: compatibilities
     });
     setIsUpdating(false);
     if (success) {
@@ -113,6 +137,71 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
               className="w-full bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:border-primary-500 outline-none transition-colors disabled:opacity-50 resize-none"
               placeholder="Ürün hakkında teknik detaylar..."
             />
+          </div>
+          
+          {/* Araç Uyum Bilgisi */}
+          <div className="space-y-3">
+            <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1 ml-1">
+              Uyumlu Araçlar (Compatibility)
+            </label>
+            <div className="flex gap-2">
+              <select
+                disabled={isUpdating}
+                value={selectedBrand}
+                onChange={(e) => {
+                  setSelectedBrand(e.target.value);
+                  setSelectedModel("");
+                }}
+                className="flex-1 bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2 text-slate-900 dark:text-white text-xs outline-none focus:border-primary-500"
+              >
+                <option value="">Marka Seçin</option>
+                {CAR_DATA.map((c) => (
+                  <option key={c.brand} value={c.brand}>{c.brand}</option>
+                ))}
+              </select>
+
+              <select
+                disabled={isUpdating || !selectedBrand}
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                className="flex-1 bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2 text-slate-900 dark:text-white text-xs outline-none focus:border-primary-500"
+              >
+                <option value="">Model Seçin</option>
+                {selectedBrand &&
+                  CAR_DATA.find((c) => c.brand === selectedBrand)?.models.map((m) => (
+                    <option key={m} value={m}>{m}</option>
+                  ))}
+              </select>
+
+              <button
+                type="button"
+                onClick={handleAddCompatibility}
+                disabled={!selectedBrand || !selectedModel}
+                className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white px-3 py-2 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+              >
+                Ekle
+              </button>
+            </div>
+
+            {compatibilities.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {compatibilities.map((comp, idx) => (
+                  <span
+                    key={idx}
+                    className="inline-flex items-center gap-1 bg-primary-500/10 border border-primary-500/30 text-primary-600 dark:text-primary-400 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter"
+                  >
+                    {comp.brand} {comp.model}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveCompatibility(idx)}
+                      className="text-slate-400 hover:text-red-500"
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           <button

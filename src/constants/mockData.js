@@ -133,4 +133,57 @@ export const CAR_DATA = [
   { brand: "Tesla", models: ["Model Y", "Model 3", "Model S", "Model X"] },
 ];
 
-export const OEM_CATALOG = [];
+export const OEM_CATALOG = [
+  {
+    id: 101,
+    name: "Bosch Ön Fren Balata Seti",
+    brand: "Bosch",
+    category: "Fren Sistemi",
+    price: 1250,
+    image_url: "/src/assets/products/brake_pads.png",
+    description: "Fiat Egea ve Renault Clio ile %100 uyumlu yüksek performanslı ön fren balata seti.",
+    compatibility: [
+      { brand: "Fiat", model: "Egea" },
+      { brand: "Renault", model: "Clio" }
+    ]
+  },
+  {
+    id: 102,
+    name: "Castrol Edge 5W-30 Motor Yağı 4L",
+    brand: "Castrol",
+    category: "Motor Parçaları",
+    price: 1850,
+    image_url: "/src/assets/products/engine_oil.png",
+    description: "Volkswagen Golf ve Ford Focus için onaylı tam sentetik motor yağı.",
+    compatibility: [
+      { brand: "Volkswagen", model: "Golf" },
+      { brand: "Ford", model: "Focus" }
+    ]
+  },
+  {
+    id: 103,
+    name: "Mann Filtre Yağ Filtresi",
+    brand: "Mann Filter",
+    category: "Filtreler",
+    price: 320,
+    image_url: "/src/assets/products/car_battery.png",
+    description: "Toyota Corolla ve Honda Civic uyumlu orijinal kalitede yağ filtresi.",
+    compatibility: [
+      { brand: "Toyota", model: "Corolla" },
+      { brand: "Honda", model: "Civic" }
+    ]
+  },
+  {
+    id: 104,
+    name: "Mutlu Akü 12V 72Ah SFB",
+    brand: "Mutlu",
+    category: "Elektrik",
+    price: 3400,
+    image_url: "/src/assets/products/car_battery.png",
+    description: "Fiat Egea ve Dacia Duster uyumlu yüksek marş gücüne sahip akü.",
+    compatibility: [
+      { brand: "Fiat", model: "Egea" },
+      { brand: "Dacia", model: "Duster" }
+    ]
+  }
+];

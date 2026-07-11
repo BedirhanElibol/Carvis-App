@@ -73,6 +73,7 @@ export const SellerProvider = ({ children }) => {
             description: productData.description || "",
             certified: productData.certified || false,
             image_url: productData.image_url || null,
+            compatibility: productData.compatibility || [],
           },
         ])
         .select()
