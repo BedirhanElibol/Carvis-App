@@ -29,7 +29,7 @@ export const OrderProvider = ({ children }) => {
         .select(
           `
                     *,
-                    seller:seller_id(id, full_name, company_name, avatar_url),
+                    seller:seller_id(id, full_name, company_name, avatar_url, lat, lng),
                     quote:quote_id(id, price, description, warranty_months)
                 `,
         )

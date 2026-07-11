@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navigation, Camera, CheckCircle2, ShieldAlert } from "lucide-react";
-import { TrackingService } from "../../../services/TrackingService";
+import { TrackingService } from "../../../services/DisputeService";
 import { supabase } from "../../../supabaseClient";
 
 const PartnerTrackingWidget = ({ 

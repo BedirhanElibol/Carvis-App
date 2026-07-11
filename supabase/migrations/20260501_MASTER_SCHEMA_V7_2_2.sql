@@ -236,10 +236,18 @@ CREATE TABLE IF NOT EXISTS public.maintenance_records (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
     vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE CASCADE,
-    description TEXT NOT NULL,
+    part_name TEXT,
+    description TEXT,
     km INTEGER,
     cost DECIMAL(12,2),
-    created_at TIMESTAMPTZ DEFAULT now()
+    changed_date DATE DEFAULT CURRENT_DATE,
+    changed_km INTEGER,
+    next_km_interval INTEGER DEFAULT 15000,
+    next_date_interval_months INTEGER DEFAULT 12,
+    notes TEXT,
+    proof_image_url TEXT,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
 );
 
 -- SERVICE REQUESTS & QUOTES
@@ -2195,19 +2203,7 @@ FOR DELETE USING (auth.uid() = user_id);
 -- Users log their own part changes with KM and date.
 -- System calculates remaining time/km for next change.
 -- =====================================================
-CREATE TABLE IF NOT EXISTS public.maintenance_records (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  vehicle_id UUID NOT NULL REFERENCES public.vehicles(id) ON DELETE CASCADE,
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  part_name TEXT NOT NULL,                       -- e.g. "Motor YaÄŸÄ± & Filtre", "Fren BalatasÄ± (Ã–n)"
-  changed_date DATE NOT NULL DEFAULT CURRENT_DATE,
-  changed_km INTEGER NOT NULL DEFAULT 0,
-  next_km_interval INTEGER NOT NULL DEFAULT 15000,   -- km until next change
-  next_date_interval_months INTEGER NOT NULL DEFAULT 12, -- months until next change
-  notes TEXT,                                    -- e.g. "Castrol Edge 5W-30 kullanÄ±ldÄ±"
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+-- Note: maintenance_records table is already defined in the first schema section
 
 -- Index for fast vehicle-based queries
 CREATE INDEX IF NOT EXISTS idx_maintenance_records_vehicle_id ON public.maintenance_records(vehicle_id);
