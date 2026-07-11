@@ -190,7 +190,6 @@ export const MapProvider = ({ children }) => {
           table: "emergency_requests",
         },
         (payload) => {
-          console.log("SOS Değişikliği:", payload);
           if (payload.new.customer_id === currentUser.id) {
             setActiveSOS(payload.new);
             if (payload.new.status === "assigned") {
