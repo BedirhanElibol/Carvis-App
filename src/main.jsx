@@ -19,6 +19,7 @@ import { AIProvider } from "./context/AIContext";
 import { MapProvider } from "./context/MapContext";
 import { WalletProvider } from "./context/WalletContext";
 import { HelmetProvider } from "react-helmet-async";
+import { ComposeProviders } from "./components/ComposeProviders";
 if (import.meta.env.PROD && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
@@ -37,59 +38,29 @@ if (import.meta.env.PROD && "serviceWorker" in navigator) {
     }
   });
 } 
+const providers = [
+  HelmetProvider,
+  [BrowserRouter, { future: { v7_startTransition: true, v7_relativeSplatPath: true } }],
+  AuthProvider,
+  UIProvider,
+  WalletProvider,
+  GarageProvider,
+  AIProvider,
+  MapProvider,
+  ShopProvider,
+  SellerProvider,
+  QuoteProvider,
+  NotificationProvider,
+  MessageProvider,
+  AppointmentProvider,
+  PaymentProvider,
+  OrderProvider,
+];
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {" "}
-    <HelmetProvider>
-      {" "}
-      <BrowserRouter
-        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-      >
-        {" "}
-        <AuthProvider>
-          {" "}
-          <UIProvider>
-            {" "}
-            <WalletProvider>
-              {" "}
-              <GarageProvider>
-                {" "}
-                <AIProvider>
-                  {" "}
-                  <MapProvider>
-                    {" "}
-                    <ShopProvider>
-                      {" "}
-                      <SellerProvider>
-                        {" "}
-                        <QuoteProvider>
-                          {" "}
-                          <NotificationProvider>
-                            {" "}
-                            <MessageProvider>
-                              {" "}
-                              <AppointmentProvider>
-                                {" "}
-                                <PaymentProvider>
-                                  {" "}
-                                  <OrderProvider>
-                                    {" "}
-                                    <App />{" "}
-                                  </OrderProvider>{" "}
-                                </PaymentProvider>{" "}
-                              </AppointmentProvider>{" "}
-                            </MessageProvider>{" "}
-                          </NotificationProvider>{" "}
-                        </QuoteProvider>{" "}
-                      </SellerProvider>{" "}
-                    </ShopProvider>{" "}
-                  </MapProvider>{" "}
-                </AIProvider>{" "}
-              </GarageProvider>{" "}
-            </WalletProvider>{" "}
-          </UIProvider>{" "}
-        </AuthProvider>{" "}
-      </BrowserRouter>{" "}
-    </HelmetProvider>{" "}
+    <ComposeProviders providers={providers}>
+      <App />
+    </ComposeProviders>
   </StrictMode>,
 );
