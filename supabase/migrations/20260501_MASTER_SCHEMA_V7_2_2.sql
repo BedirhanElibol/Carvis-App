@@ -3355,3 +3355,1005 @@ NOTIFY pgrst, 'reload schema';
 
 
 
+
+
+-- =========================================================
+-- MERGED FROM: 20260501_MASTER_SCHEMA_V7_2_3.sql
+-- =========================================================
+
+-- =========================================================
+-- 14. CARWASH & PARKING & VALET EXTENSIONS
+-- =========================================================
+
+-- 1. VALET BOOKINGS UPDATE (Add escrow_order_id, price, assigned_provider_id)
+ALTER TABLE public.valet_bookings ADD COLUMN IF NOT EXISTS escrow_order_id UUID REFERENCES public.orders(id) ON DELETE SET NULL;
+ALTER TABLE public.valet_bookings ADD COLUMN IF NOT EXISTS price NUMERIC(10,2) DEFAULT 0.00;
+ALTER TABLE public.valet_bookings ADD COLUMN IF NOT EXISTS assigned_provider_id UUID REFERENCES public.profiles(id);
+
+-- 2. PARKING RESERVATIONS TABLE
+CREATE TABLE IF NOT EXISTS public.parking_reservations (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    parking_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE SET NULL,
+    escrow_order_id UUID REFERENCES public.orders(id) ON DELETE SET NULL,
+    start_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    end_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    price NUMERIC(10,2) NOT NULL DEFAULT 0.00,
+    status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'active', 'completed', 'cancelled')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+);
+
+ALTER TABLE public.parking_reservations ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view their own parking reservations" ON public.parking_reservations
+FOR SELECT USING (auth.uid() = customer_id OR auth.uid() = parking_id);
+
+CREATE POLICY "Users can insert their own parking reservations" ON public.parking_reservations
+FOR INSERT WITH CHECK (auth.uid() = customer_id);
+
+CREATE POLICY "Users can update their own parking reservations" ON public.parking_reservations
+FOR UPDATE USING (auth.uid() = customer_id OR auth.uid() = parking_id);
+
+CREATE INDEX IF NOT EXISTS idx_parking_res_customer ON public.parking_reservations(customer_id);
+CREATE INDEX IF NOT EXISTS idx_parking_res_parking ON public.parking_reservations(parking_id);
+
+-- 3. CARWASH REQUESTS TABLE
+CREATE TABLE IF NOT EXISTS public.carwash_requests (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    provider_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE SET NULL,
+    escrow_order_id UUID REFERENCES public.orders(id) ON DELETE SET NULL,
+    location_lat NUMERIC(10,8) NOT NULL,
+    location_lng NUMERIC(11,8) NOT NULL,
+    address_text TEXT,
+    wash_type TEXT NOT NULL CHECK (wash_type IN ('interior', 'exterior', 'full', 'premium')),
+    price NUMERIC(10,2) NOT NULL DEFAULT 0.00,
+    status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'accepted', 'in_progress', 'completed', 'cancelled')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+);
+
+ALTER TABLE public.carwash_requests ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view their own carwash requests" ON public.carwash_requests
+FOR SELECT USING (auth.uid() = customer_id OR auth.uid() = provider_id);
+
+CREATE POLICY "Users can insert their own carwash requests" ON public.carwash_requests
+FOR INSERT WITH CHECK (auth.uid() = customer_id);
+
+CREATE POLICY "Users can update their own carwash requests" ON public.carwash_requests
+FOR UPDATE USING (auth.uid() = customer_id OR auth.uid() = provider_id);
+
+CREATE INDEX IF NOT EXISTS idx_carwash_req_customer ON public.carwash_requests(customer_id);
+CREATE INDEX IF NOT EXISTS idx_carwash_req_provider ON public.carwash_requests(provider_id);
+
+-- Trigger functionality for updated_at
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = timezone('utc'::text, now());
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_parking_reservations_updated_at
+    BEFORE UPDATE ON public.parking_reservations
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_carwash_requests_updated_at
+    BEFORE UPDATE ON public.carwash_requests
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+
+-- =========================================================
+-- MERGED FROM: 20260519_monetization_plans_seed.sql
+-- =========================================================
+
+-- =========================================================================
+-- CARVIS MASTER PLAN SEED & SECURE B2B PARTNER MONETIZATION ENGINE (v8.0)
+-- =========================================================================
+
+-- 1. Seeding Monetization Plans for all 4 Professions (3 Tiers each)
+INSERT INTO public.monetization_plans (id, name, monthly_fee, commission_rate, features) VALUES
+-- Otopark (parking)
+('10000000-0000-0000-0000-000000000001', 'parking_free', 0.00, 0.10, '{"title": "Ücretsiz Başlangıç", "commission_rate": 0.10, "desc": "Otopark kapasitenizi sisteme kaydedin ve hemen rezervasyon almaya başlayın."}'),
+('10000000-0000-0000-0000-000000000002', 'parking_pro', 150.00, 0.05, '{"title": "Pro Otopark", "commission_rate": 0.05, "desc": "Doluluk yönetimini ve özel tarifelerinizi esnekçe yönetip gelirinizi artırın."}'),
+('10000000-0000-0000-0000-000000000003', 'parking_premium', 350.00, 0.03, '{"title": "Prestij Premium", "commission_rate": 0.03, "desc": "Şehrin en popüler noktalarında harita üstünde en çok tercih edilen otopark olun."}'),
+
+-- Vale (valet)
+('10000000-0000-0000-0000-000000000004', 'valet_free', 0.00, 0.20, '{"title": "Ücretsiz Başlangıç", "commission_rate": 0.20, "desc": "Kayıt olun, sertifikanızı yükleyin ve çağrı başına gelir elde edin."}'),
+('10000000-0000-0000-0000-000000000005', 'valet_pro', 150.00, 0.12, '{"title": "Pro Vale", "commission_rate": 0.12, "desc": "Daha yüksek çağrı kotası ve öncelikli bölgesel yönlendirmelerle kazanın."}'),
+('10000000-0000-0000-0000-000000000006', 'valet_premium', 350.00, 0.08, '{"title": "Premium Elit Vale", "commission_rate": 0.08, "desc": "Güvenilir premium vale ağında en yüksek öncelik ve dev sigorta koruması."}'),
+
+-- Usta & Servis (mechanic)
+('10000000-0000-0000-0000-000000000007', 'mechanic_free', 0.00, 0.15, '{"title": "Ücretsiz Başlangıç", "commission_rate": 0.15, "desc": "Profilinizi oluşturun, bölgenizdeki arıza taleplerine ücretsiz teklif verin."}'),
+('10000000-0000-0000-0000-000000000008', 'mechanic_pro', 150.00, 0.10, '{"title": "Pro Oto Servis", "commission_rate": 0.10, "desc": "Müşteri randevularını, iş emirlerini ve bakım kartlarını profesyonelce yönetin."}'),
+('10000000-0000-0000-0000-000000000009', 'mechanic_premium', 350.00, 0.06, '{"title": "Premium AI Servis", "commission_rate": 0.06, "desc": "Bölgenizde lider, AI teşhisli ve Carvis Garantili elit oto servis olun."}'),
+
+-- Parça Tedarikçisi (parts)
+('10000000-0000-0000-0000-000000000010', 'parts_free', 0.00, 0.15, '{"title": "Ücretsiz Başlangıç", "commission_rate": 0.15, "desc": "Yedek parça dükkanınızı açın, teklif taleplerini anında yanıtlamaya başlayın."}'),
+('10000000-0000-0000-0000-000000000011', 'parts_pro', 150.00, 0.10, '{"title": "Pro Tedarikçi", "commission_rate": 0.10, "desc": "Toplu ürün yükleme, XML entegrasyonları ve gelişmiş stok araçlarıyla satışları katlayın."}'),
+('10000000-0000-0000-0000-000000000012', 'parts_premium', 350.00, 0.06, '{"title": "Premium Tedarikçi", "commission_rate": 0.06, "desc": "E-ticarette zirveye oynayıp orijinal tescilli yedek parçalarınızla lider satıcı olun."}')
+ON CONFLICT (id) DO UPDATE SET 
+    monthly_fee = EXCLUDED.monthly_fee,
+    commission_rate = EXCLUDED.commission_rate,
+    features = EXCLUDED.features;
+
+
+-- 2. Secure RPC: Complete Partner Onboarding Bypass triggers safely (SECURITY DEFINER)
+CREATE OR REPLACE FUNCTION public.complete_partner_onboarding_v2(
+    p_user_id UUID,
+    p_profession TEXT,
+    p_business_name TEXT,
+    p_phone TEXT
+)
+RETURNS JSONB AS $$
+DECLARE
+    v_plan_id UUID;
+    v_mechanic_id UUID;
+BEGIN
+    -- 1. Validate profession
+    IF p_profession NOT IN ('valet', 'parking', 'mechanic', 'parts') THEN
+        RETURN jsonb_build_object('success', false, 'message', 'Geçersiz meslek seçimi.');
+    END IF;
+
+    -- 2. Update profiles: role escalation and base initial settings
+    -- This runs with SECURITY DEFINER bypasses block_role_escalation trigger since security definer acts as table owner (admin)
+    UPDATE public.profiles 
+    SET role = 'partner',
+        application_status = 'approved',
+        subscription_tier = 'free',
+        bids_left = CASE WHEN p_profession = 'mechanic' THEN 5 ELSE 0 END
+    WHERE id = p_user_id;
+
+    IF NOT FOUND THEN
+        RETURN jsonb_build_object('success', false, 'message', 'Profil bulunamadı.');
+    END IF;
+
+    -- 3. Insert specialized B2B profiles with exact schema columns
+    IF p_profession = 'valet' THEN
+        INSERT INTO public.valet_profiles (id, base_price, service_radius_km, experience_years, is_active_now)
+        VALUES (p_user_id, 0.00, 15, 3, true)
+        ON CONFLICT (id) DO UPDATE SET is_active_now = true;
+
+    ELSIF p_profession = 'parking' THEN
+        INSERT INTO public.parking_profiles (id, parking_name, total_capacity, occupied_count, price_per_hour, is_indoor, has_security, has_valet)
+        VALUES (p_user_id, p_business_name, 50, 0, 30.00, true, true, false)
+        ON CONFLICT (id) DO UPDATE SET parking_name = EXCLUDED.parking_name;
+
+    ELSIF p_profession = 'mechanic' THEN
+        v_mechanic_id := crypto.randomUUID();
+        INSERT INTO public.mechanic_shops (seller_id, shop_name, is_active, specialties, brands)
+        VALUES (p_user_id, p_business_name, true, ARRAY['Periyodik Bakım', 'Fren Sistemleri'], ARRAY['BMW', 'Audi', 'Volkswagen', 'Mercedes']);
+
+    ELSIF p_profession = 'parts' THEN
+        INSERT INTO public.parts_profiles (id, business_name, delivery_radius_km, store_type)
+        VALUES (p_user_id, p_business_name, 50, 'retail')
+        ON CONFLICT (id) DO UPDATE SET business_name = EXCLUDED.business_name;
+    END IF;
+
+    -- 4. Get Initial Free Plan ID
+    SELECT id INTO v_plan_id FROM public.monetization_plans WHERE name = p_profession || '_free';
+
+    -- 5. Set up B2B subscription configuration
+    INSERT INTO public.partner_monetization (partner_id, plan_id, subscription_status, last_billing_date, next_billing_date)
+    VALUES (p_user_id, v_plan_id, 'active', now(), now() + interval '1 month')
+    ON CONFLICT (partner_id) DO UPDATE SET 
+        plan_id = EXCLUDED.plan_id,
+        subscription_status = 'active',
+        custom_commission_rate = NULL;
+
+    RETURN jsonb_build_object('success', true, 'message', 'Onboarding işlemi başarıyla tamamlandı.');
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+
+-- 3. Secure RPC: Purchase Partner Plan Subscription with Wallet balance deduction
+CREATE OR REPLACE FUNCTION public.purchase_partner_subscription_v2(
+    p_partner_id UUID,
+    p_plan_id UUID
+)
+RETURNS JSONB AS $$
+DECLARE
+    v_monthly_fee DECIMAL(12,2);
+    v_plan_name TEXT;
+    v_commission_rate DECIMAL(5,2);
+    v_wallet_id UUID;
+    v_balance DECIMAL(12,2);
+    v_base_tier TEXT;
+BEGIN
+    -- 1. Fetch Plan Details
+    SELECT monthly_fee, name, commission_rate INTO v_monthly_fee, v_plan_name, v_commission_rate
+    FROM public.monetization_plans WHERE id = p_plan_id;
+
+    IF NOT FOUND THEN
+        RETURN jsonb_build_object('success', false, 'message', 'Seçilen üyelik planı bulunamadı.');
+    END IF;
+
+    -- 2. Fetch Wallet Balance
+    SELECT id, balance INTO v_wallet_id, v_balance
+    FROM public.wallets WHERE user_id = p_partner_id;
+
+    IF NOT FOUND THEN
+        RETURN jsonb_build_object('success', false, 'message', 'İş ortağının cüzdanı bulunamadı.');
+    END IF;
+
+    -- 3. Free Plan Check vs Payment Check
+    IF v_monthly_fee > 0.00 THEN
+        IF v_balance < v_monthly_fee THEN
+            RETURN jsonb_build_object('success', false, 'message', 'Yetersiz cüzdan bakiyesi. Lütfen bakiye yükleyin.');
+        END IF;
+
+        -- 4. Deduct Wallet Balance
+        UPDATE public.wallets SET balance = balance - v_monthly_fee WHERE id = v_wallet_id;
+
+        -- 5. Record Platform Earnings
+        INSERT INTO public.platform_earnings (amount, earning_type, status)
+        VALUES (v_monthly_fee, 'subscription', 'collected');
+
+        -- 6. Record Wallet Transaction
+        INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
+        VALUES (v_wallet_id, -v_monthly_fee, 'payment', 'Carvis İş Ortağı Plan Yükseltmesi: ' || v_plan_name);
+    END IF;
+
+    -- 7. Update partner monetization settings
+    UPDATE public.partner_monetization 
+    SET plan_id = p_plan_id,
+        subscription_status = 'active',
+        last_billing_date = now(),
+        next_billing_date = now() + interval '1 month',
+        custom_commission_rate = NULL -- Falls back to default plan rate
+    WHERE partner_id = p_partner_id;
+
+    -- If no record, create one
+    IF NOT FOUND THEN
+        INSERT INTO public.partner_monetization (partner_id, plan_id, subscription_status, last_billing_date, next_billing_date)
+        VALUES (p_partner_id, p_plan_id, 'active', now(), now() + interval '1 month');
+    END IF;
+
+    -- 8. Update profiles table subscription_tier
+    -- Determine base tier ('free', 'pro', 'premium')
+    IF v_plan_name LIKE '%_pro' THEN
+        v_base_tier := 'pro';
+    ELSIF v_plan_name LIKE '%_premium' THEN
+        v_base_tier := 'premium';
+    ELSE
+        v_base_tier := 'free';
+    END IF;
+
+    UPDATE public.profiles 
+    SET subscription_tier = v_base_tier
+    WHERE id = p_partner_id;
+
+    RETURN jsonb_build_object(
+        'success', true, 
+        'message', 'Üyelik planı başarıyla yükseltildi.', 
+        'new_tier', v_base_tier,
+        'deducted_amount', v_monthly_fee
+    );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+
+-- =========================================================
+-- MERGED FROM: 20260601_seed_reviewer_and_buckets.sql
+-- =========================================================
+
+-- =========================================================
+-- CARVIS APP RELEASE SEED & STORAGE MIGRATION
+-- SEED: Apple/Google Reviewer Test Account
+-- SETUP: Supabase Storage Buckets & Policies
+-- =========================================================
+
+-- 1. REVIEWER AUTH USER & GARAJA ÖN HAZIRLIK SEED
+DO $$
+DECLARE
+  v_user_id UUID := '00000000-0000-0000-0000-000000000001'; -- Sabit test UUID
+BEGIN
+  -- Eğer reviewer@rapidsy.app kullanıcısı yoksa auth tablosuna ekle
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'reviewer@rapidsy.app') THEN
+    INSERT INTO auth.users (
+      id,
+      instance_id,
+      email,
+      encrypted_password,
+      email_confirmed_at,
+      raw_app_meta_data,
+      raw_user_meta_data,
+      created_at,
+      updated_at,
+      role,
+      confirmation_token,
+      is_super_admin
+    ) VALUES (
+      v_user_id,
+      '00000000-0000-0000-0000-000000000000',
+      'reviewer@rapidsy.app',
+      -- 'RapidsyTest2026!' şifresinin Blowfish hash'i
+      crypt('RapidsyTest2026!', gen_salt('bf')),
+      now(),
+      '{"provider":"email","providers":["email"]}'::jsonb,
+      '{"full_name":"Reviewer Account","role":"customer"}'::jsonb,
+      now(),
+      now(),
+      'authenticated',
+      '',
+      false
+    );
+    
+    -- Triggere takılmamak veya asenkron gecikmeyi önlemek için public.profiles tablosuna manuel ekle
+    INSERT INTO public.profiles (id, email, full_name, role, application_status, loyalty_points)
+    VALUES (v_user_id, 'reviewer@rapidsy.app', 'Reviewer Account', 'customer', 'none', 150)
+    ON CONFLICT (id) DO UPDATE 
+    SET full_name = 'Reviewer Account', role = 'customer';
+    
+    -- İnceleme ekibinin işlem yapabilmesi için cüzdana bakiye yükle
+    INSERT INTO public.wallets (id, user_id, balance, currency, pending_balance)
+    VALUES (v_user_id, v_user_id, 10000.00, 'TRY', 0.00)
+    ON CONFLICT (id) DO UPDATE 
+    SET balance = balance + 10000.00;
+
+    -- Cüzdan işlem geçmişi kaydı
+    INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
+    VALUES (v_user_id, 10000.00, 'deposit', 'Test Bakiye Tanımlandı (App Reviewer)');
+
+    -- İnceleme ekibinin garajında hazır görebileceği test aracı ekle
+    INSERT INTO public.vehicles (
+      id, user_id, brand, model, plate, km, year, color, health_score, reminder_enabled
+    )
+    VALUES (
+      '00000000-0000-0000-0000-000000000002',
+      v_user_id,
+      'Fiat',
+      'Egea 1.3 Multijet',
+      '34REV2026',
+      '45000',
+      2022,
+      'Beyaz',
+      98,
+      true
+    ) ON CONFLICT (plate) DO NOTHING;
+  END IF;
+END $$;
+
+
+-- 2. SUPABASE STORAGE BUCKETS TANIMLARI
+-- vehicle-documents: Belge kasası için
+-- service-proofs: Usta tamamlandı kanıtları için
+-- accident-reports: Kaza asistanı fotoğrafları için
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES 
+  ('vehicle-documents', 'vehicle-documents', false, 10485760, ARRAY['image/png', 'image/jpeg', 'application/pdf']),
+  ('service-proofs', 'service-proofs', false, 10485760, ARRAY['image/png', 'image/jpeg']),
+  ('accident-reports', 'accident-reports', false, 10485760, ARRAY['image/png', 'image/jpeg'])
+ON CONFLICT (id) DO NOTHING;
+
+
+-- 3. STORAGE RLS GÜVENLİK POLİTİKALARI
+-- (storage.objects RLS is already enabled by Supabase by default)
+
+-- 3.1 Belge Kasası ve Kaza Raporları RLS: Sadece dosya sahibi okuyabilir ve yükleyebilir
+DROP POLICY IF EXISTS "Users can manage own documents" ON storage.objects;
+CREATE POLICY "Users can manage own documents"
+ON storage.objects
+FOR ALL
+USING (bucket_id IN ('vehicle-documents', 'accident-reports') AND auth.uid() = owner)
+WITH CHECK (bucket_id IN ('vehicle-documents', 'accident-reports') AND auth.uid() = owner);
+
+-- 3.2 Servis Kanıtları (Proofs) RLS: Siparişle ilişkili müşteri veya satıcı görebilir, sadece satıcı yükleyebilir
+DROP POLICY IF EXISTS "Authenticated users upload proofs" ON storage.objects;
+CREATE POLICY "Authenticated users upload proofs"
+ON storage.objects
+FOR INSERT
+TO authenticated
+WITH CHECK (bucket_id = 'service-proofs');
+
+DROP POLICY IF EXISTS "Users view relevant service proofs" ON storage.objects;
+CREATE POLICY "Users view relevant service proofs"
+ON storage.objects
+FOR SELECT
+TO authenticated
+USING (bucket_id = 'service-proofs');
+
+
+-- =========================================================
+-- MERGED FROM: 20260603_fix_wallet_tx_security.sql
+-- =========================================================
+
+-- =========================================================
+-- CARVIS APP SECURITY PATCH
+-- FIX: Remove INSERT policy from wallet_transactions
+-- FIX: Add user_id to transactions for Wallet Top-ups
+-- =========================================================
+
+-- Müşterilerin/Kullanıcıların kendi işlemlerini "okuma" (SELECT) yetkisine dokunmuyoruz.
+-- Ancak doğrudan "ekleme" (INSERT) yetkilerini siliyoruz.
+-- wallet_transactions tablosuna artık sadece backend (service_role veya SECURITY DEFINER RPC'ler) kayıt atabilir.
+
+DROP POLICY IF EXISTS "Users can insert own transactions" ON public.wallet_transactions;
+
+-- Cüzdan yükleme (Top-up) işlemleri için transactions tablosuna user_id sütunu eklenir.
+-- Sipariş ödemesi olmayan (order_id IS NULL) işlemlerde bakiyenin kime yükleneceğini bilmek için bu şart.
+ALTER TABLE public.transactions
+ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES public.profiles(id);
+
+
+-- =========================================================
+-- MERGED FROM: 20260608_marketing_tables.sql
+-- =========================================================
+
+-- Create whatsapp_leads table
+CREATE TABLE IF NOT EXISTS public.whatsapp_leads (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    company_name VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(50) NOT NULL UNIQUE,
+    category VARCHAR(100),
+    status VARCHAR(50) DEFAULT 'pending' CHECK (status IN ('pending', 'contacted', 'replied', 'failed')),
+    last_contacted_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Create whatsapp_campaigns table
+CREATE TABLE IF NOT EXISTS public.whatsapp_campaigns (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    template_text TEXT NOT NULL,
+    is_active BOOLEAN DEFAULT false,
+    daily_limit INTEGER DEFAULT 50,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- RLS Policies
+ALTER TABLE public.whatsapp_leads ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.whatsapp_campaigns ENABLE ROW LEVEL SECURITY;
+
+-- Allow access for authenticated users
+CREATE POLICY "Allow full access for authenticated users on whatsapp_leads" ON public.whatsapp_leads FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Allow full access for authenticated users on whatsapp_campaigns" ON public.whatsapp_campaigns FOR ALL USING (auth.role() = 'authenticated');
+
+-- Setup realtime
+ALTER PUBLICATION supabase_realtime ADD TABLE public.whatsapp_leads;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.whatsapp_campaigns;
+
+
+-- =========================================================
+-- MERGED FROM: 20260609_wallet_rpc.sql
+-- =========================================================
+
+CREATE OR REPLACE FUNCTION public.rpc_block_wallet_funds(p_amount NUMERIC)
+RETURNS BOOLEAN AS $$
+DECLARE
+    v_user_id UUID;
+    v_balance DECIMAL(12,2);
+BEGIN
+    v_user_id := auth.uid();
+    IF v_user_id IS NULL THEN
+        RAISE EXCEPTION 'Unauthorized';
+    END IF;
+
+    SELECT balance INTO v_balance FROM public.wallets WHERE user_id = v_user_id;
+    IF v_balance < p_amount THEN
+        RAISE EXCEPTION 'Insufficient balance';
+    END IF;
+
+    UPDATE public.wallets 
+    SET balance = balance - p_amount,
+        blocked_amount = blocked_amount + p_amount 
+    WHERE user_id = v_user_id;
+
+    INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
+    VALUES (v_user_id, p_amount, 'block', 'İşlem İçin Bloke');
+    
+    RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+CREATE OR REPLACE FUNCTION public.rpc_release_wallet_funds(p_amount NUMERIC)
+RETURNS BOOLEAN AS $$
+DECLARE
+    v_user_id UUID;
+    v_blocked_amount DECIMAL(12,2);
+BEGIN
+    v_user_id := auth.uid();
+    IF v_user_id IS NULL THEN
+        RAISE EXCEPTION 'Unauthorized';
+    END IF;
+
+    SELECT blocked_amount INTO v_blocked_amount FROM public.wallets WHERE user_id = v_user_id;
+    IF v_blocked_amount < p_amount THEN
+        RAISE EXCEPTION 'Insufficient blocked amount';
+    END IF;
+
+    UPDATE public.wallets 
+    SET blocked_amount = blocked_amount - p_amount 
+    WHERE user_id = v_user_id;
+
+    INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
+    VALUES (v_user_id, p_amount, 'payment', 'İşlem Tamamlandı');
+
+    RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+CREATE OR REPLACE FUNCTION public.rpc_cancel_escrow(p_amount NUMERIC)
+RETURNS BOOLEAN AS $$
+DECLARE
+    v_user_id UUID;
+    v_blocked_amount DECIMAL(12,2);
+BEGIN
+    v_user_id := auth.uid();
+    IF v_user_id IS NULL THEN
+        RAISE EXCEPTION 'Unauthorized';
+    END IF;
+
+    SELECT blocked_amount INTO v_blocked_amount FROM public.wallets WHERE user_id = v_user_id;
+    IF v_blocked_amount < p_amount THEN
+        RAISE EXCEPTION 'Insufficient blocked amount';
+    END IF;
+
+    UPDATE public.wallets 
+    SET blocked_amount = blocked_amount - p_amount,
+        balance = balance + p_amount
+    WHERE user_id = v_user_id;
+
+    INSERT INTO public.wallet_transactions (wallet_id, amount, type, description)
+    VALUES (v_user_id, p_amount, 'unblock', 'Bloke İptali');
+
+    RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+
+-- =========================================================
+-- MERGED FROM: 20260625125000_fuel_logs.sql
+-- =========================================================
+
+-- Create fuel_logs table for Fuel Tracking System
+create table public.fuel_logs (
+    id uuid default gen_random_uuid() primary key,
+    user_id uuid references auth.users(id) on delete cascade not null,
+    vehicle_id uuid references public.vehicles(id) on delete cascade not null,
+    liters numeric(10, 2) not null,
+    price_per_liter numeric(10, 2) not null,
+    total_cost numeric(10, 2) not null,
+    odometer int not null,
+    fuel_type text not null,
+    station_name text,
+    notes text,
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- RLS Policies
+alter table public.fuel_logs enable row level security;
+
+create policy "Users can view their own fuel logs"
+    on public.fuel_logs for select
+    using ( auth.uid() = user_id );
+
+create policy "Users can insert their own fuel logs"
+    on public.fuel_logs for insert
+    with check ( auth.uid() = user_id );
+
+create policy "Users can update their own fuel logs"
+    on public.fuel_logs for update
+    using ( auth.uid() = user_id );
+
+create policy "Users can delete their own fuel logs"
+    on public.fuel_logs for delete
+    using ( auth.uid() = user_id );
+
+
+-- =========================================================
+-- MERGED FROM: 20260702_ADD_STOCK_QNA.sql
+-- =========================================================
+
+-- Migration: Add Q&A features
+-- Description: Creates product_qna table
+
+-- 2. Create product_qna table
+CREATE TABLE IF NOT EXISTS public.product_qna (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    product_id INTEGER REFERENCES public.oem_parts(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+    seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    question TEXT NOT NULL,
+    answer TEXT,
+    is_public BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    answered_at TIMESTAMP WITH TIME ZONE
+);
+
+-- 3. RLS for product_qna
+ALTER TABLE public.product_qna ENABLE ROW LEVEL SECURITY;
+
+-- Anyone can read public Q&A
+CREATE POLICY "Public Q&A are viewable by everyone" ON public.product_qna
+    FOR SELECT USING (is_public = true);
+
+-- Users can read their own private Q&A
+CREATE POLICY "Users can view own private Q&A" ON public.product_qna
+    FOR SELECT USING (auth.uid() = user_id OR auth.uid() = seller_id);
+
+-- Authenticated users can insert questions
+CREATE POLICY "Authenticated users can insert questions" ON public.product_qna
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+-- Sellers can update (answer) questions directed to them
+CREATE POLICY "Sellers can update questions" ON public.product_qna
+    FOR UPDATE USING (auth.uid() = seller_id);
+
+
+-- =========================================================
+-- MERGED FROM: 20260708_ESCROW_SYSTEM.sql
+-- =========================================================
+
+-- Migration: Escrow System
+-- Created: 2026-07-08
+
+CREATE TYPE public.escrow_status AS ENUM ('locked', 'released', 'disputed', 'refunded');
+
+CREATE TABLE IF NOT EXISTS public.escrow_transactions (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    customer_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    provider_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    order_id UUID, -- References orders if exists
+    amount DECIMAL(10, 2) NOT NULL CHECK (amount >= 0),
+    status public.escrow_status DEFAULT 'locked',
+    pin_code VARCHAR(6) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- RLS Policies
+ALTER TABLE public.escrow_transactions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view own escrows" ON public.escrow_transactions
+    FOR SELECT USING (auth.uid() = customer_id OR auth.uid() = provider_id);
+
+CREATE POLICY "Admin can view all escrows" ON public.escrow_transactions
+    FOR ALL USING (EXISTS (SELECT 1 FROM auth.users WHERE id = auth.uid() AND raw_user_meta_data->>'role' = 'admin'));
+
+-- Secure RPC for releasing escrow
+CREATE OR REPLACE FUNCTION public.release_escrow(
+    p_escrow_id UUID,
+    p_pin_code VARCHAR(6)
+)
+RETURNS JSONB
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+    v_escrow RECORD;
+    v_wallet RECORD;
+BEGIN
+    -- 1. Check if escrow exists and is locked
+    SELECT * INTO v_escrow FROM public.escrow_transactions 
+    WHERE id = p_escrow_id AND status = 'locked'
+    FOR UPDATE;
+
+    IF v_escrow IS NULL THEN
+        RETURN jsonb_build_object('success', false, 'error', 'Escrow not found or not locked.');
+    END IF;
+
+    -- 2. Check PIN code (Only Customer Knows This)
+    IF v_escrow.pin_code != p_pin_code THEN
+        RETURN jsonb_build_object('success', false, 'error', 'Invalid PIN code.');
+    END IF;
+
+    -- 3. Update escrow status to released
+    UPDATE public.escrow_transactions 
+    SET status = 'released', updated_at = NOW() 
+    WHERE id = p_escrow_id;
+
+    -- 4. Transfer funds to Provider's Wallet
+    SELECT * INTO v_wallet FROM public.wallets WHERE owner_id = v_escrow.provider_id FOR UPDATE;
+    
+    IF v_wallet IS NULL THEN
+        -- Create wallet if missing
+        INSERT INTO public.wallets (owner_id, balance) 
+        VALUES (v_escrow.provider_id, v_escrow.amount);
+    ELSE
+        -- Add balance
+        UPDATE public.wallets 
+        SET balance = balance + v_escrow.amount, updated_at = NOW()
+        WHERE owner_id = v_escrow.provider_id;
+    END IF;
+
+    -- 5. Return success
+    RETURN jsonb_build_object('success', true, 'message', 'Funds transferred securely.', 'amount', v_escrow.amount);
+END;
+$$;
+
+
+-- =========================================================
+-- MERGED FROM: 20260709_partner_kyc_schema.sql
+-- =========================================================
+
+-- 20260709_partner_kyc_schema.sql
+-- KYC and Legal Liability Protection for Partners
+
+-- 1. Create a custom type for KYC Status if not exists
+DO $$ BEGIN
+    CREATE TYPE kyc_status_type AS ENUM ('unverified', 'pending_review', 'verified', 'rejected');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+-- 2. Add KYC columns to sellers table
+ALTER TABLE public.sellers 
+ADD COLUMN IF NOT EXISTS kyc_status kyc_status_type DEFAULT 'unverified',
+ADD COLUMN IF NOT EXISTS criminal_record_url TEXT,
+ADD COLUMN IF NOT EXISTS competence_cert_url TEXT,
+ADD COLUMN IF NOT EXISTS tax_plate_url TEXT,
+ADD COLUMN IF NOT EXISTS insurance_policy_number TEXT,
+ADD COLUMN IF NOT EXISTS insurance_expiry_date DATE,
+ADD COLUMN IF NOT EXISTS legal_terms_accepted_at TIMESTAMPTZ,
+ADD COLUMN IF NOT EXISTS legal_terms_ip_address TEXT;
+
+-- 3. Create Audit Trail table for legal agreements
+CREATE TABLE IF NOT EXISTS public.partner_legal_agreements (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    seller_id UUID NOT NULL REFERENCES public.sellers(id) ON DELETE CASCADE,
+    agreement_type TEXT NOT NULL, -- e.g., 'liability_waiver', 'kvkk', 'distance_selling'
+    agreed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    ip_address TEXT,
+    user_agent TEXT,
+    document_version TEXT NOT NULL
+);
+
+-- RLS for legal agreements
+ALTER TABLE public.partner_legal_agreements ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Partners can view their own agreements" 
+ON public.partner_legal_agreements FOR SELECT 
+USING (auth.uid() = seller_id);
+
+CREATE POLICY "Partners can insert their own agreements" 
+ON public.partner_legal_agreements FOR INSERT 
+WITH CHECK (auth.uid() = seller_id);
+
+-- System/Admin policies can be added here
+
+
+-- =========================================================
+-- MERGED FROM: 20260710_dynamic_contracts_schema.sql
+-- =========================================================
+
+-- 20260710_dynamic_contracts_schema.sql
+-- Dynamic Legal Contracts for Checkout Liability Protection
+
+-- 1. Create table for Legal Templates
+CREATE TABLE IF NOT EXISTS public.legal_templates (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    type TEXT NOT NULL, -- 'mss' (Mesafeli Satis), 'obf' (On Bilgilendirme), 'kvkk'
+    service_category TEXT NOT NULL, -- 'mechanic', 'parts', 'carwash', 'valet', 'parking'
+    version TEXT NOT NULL,
+    content TEXT NOT NULL,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS for legal_templates
+ALTER TABLE public.legal_templates ENABLE ROW LEVEL SECURITY;
+
+-- Anyone can read active templates
+CREATE POLICY "Anyone can view active templates" 
+ON public.legal_templates FOR SELECT 
+USING (is_active = true);
+
+-- 2. Create table for Order Legal Logs (Audit Trail)
+CREATE TABLE IF NOT EXISTS public.order_legal_logs (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
+    customer_id UUID NOT NULL REFERENCES auth.users(id),
+    seller_id UUID NOT NULL REFERENCES public.sellers(id),
+    mss_version TEXT,
+    obf_version TEXT,
+    kvkk_version TEXT,
+    accepted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    ip_address TEXT,
+    user_agent TEXT
+);
+
+-- RLS for order_legal_logs
+ALTER TABLE public.order_legal_logs ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Customers can view their own order logs" 
+ON public.order_legal_logs FOR SELECT 
+USING (auth.uid() = customer_id);
+
+CREATE POLICY "Sellers can view logs for their orders" 
+ON public.order_legal_logs FOR SELECT 
+USING (auth.uid() = seller_id);
+
+CREATE POLICY "Customers can insert logs for their orders" 
+ON public.order_legal_logs FOR INSERT 
+WITH CHECK (auth.uid() = customer_id);
+
+-- 3. Insert Initial Templates (Mock Data)
+INSERT INTO public.legal_templates (type, service_category, version, content) VALUES
+('kvkk', 'carwash', '1.0.0', '<strong>KVKK Aydınlatma Metni:</strong> Anlık konum veriniz hizmetin ifası için işlenmektedir.'),
+('mss', 'carwash', '1.0.0', '<strong>MESAFELİ SATIŞ SÖZLEŞMESİ</strong><br/><br/><strong>DİKKAT: Rapidsy yalnızca aracı platformdur. Tüm hukuki sorumluluk hizmet verene aittir.</strong><br/><br/>Hizmeti Veren: {{SELLER_COMPANY}}<br/>Müşteri: {{CUSTOMER_NAME}}<br/>Hizmet Bedeli: {{TOTAL_PRICE}} TL'),
+('obf', 'carwash', '1.0.0', '<strong>ÖN BİLGİLENDİRME FORMU</strong><br/><br/>Hizmetin temel nitelikleri, süresi ve ek bedeller burada belirtilir.');
+
+
+-- =========================================================
+-- MERGED FROM: 20260711_rapidsy_assurance_schema.sql
+-- =========================================================
+
+-- 20260711_rapidsy_assurance_schema.sql
+-- Rapidsy Assurance & Recourse (Rücu) System
+
+-- 1. Create enum types for claim and recourse statuses
+DO $$ BEGIN
+    CREATE TYPE claim_status_type AS ENUM ('pending', 'approved', 'rejected', 'recoursed_to_partner');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE recourse_status_type AS ENUM ('pending_collection', 'collected', 'legal_dispute');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+-- 2. Add assurance fields to profiles and orders
+ALTER TABLE public.profiles 
+ADD COLUMN IF NOT EXISTS has_active_assurance_sub BOOLEAN DEFAULT false,
+ADD COLUMN IF NOT EXISTS assurance_sub_expires_at TIMESTAMPTZ;
+
+ALTER TABLE public.orders 
+ADD COLUMN IF NOT EXISTS assurance_opted_in BOOLEAN DEFAULT false,
+ADD COLUMN IF NOT EXISTS assurance_fee NUMERIC DEFAULT 0;
+
+-- 3. Create assurance claims table (Hasar Bildirimleri)
+CREATE TABLE IF NOT EXISTS public.assurance_claims (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
+    customer_id UUID NOT NULL REFERENCES auth.users(id),
+    seller_id UUID NOT NULL REFERENCES public.sellers(id),
+    claim_status claim_status_type DEFAULT 'pending',
+    reported_damage_desc TEXT NOT NULL,
+    damage_images TEXT[], -- Array of URLs to secure storage images
+    payout_amount NUMERIC DEFAULT 0,
+    recourse_amount NUMERIC DEFAULT 0,
+    recourse_status recourse_status_type DEFAULT 'pending_collection',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS for assurance_claims
+ALTER TABLE public.assurance_claims ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Customers can view their own claims" 
+ON public.assurance_claims FOR SELECT 
+USING (auth.uid() = customer_id);
+
+CREATE POLICY "Customers can insert their claims" 
+ON public.assurance_claims FOR INSERT 
+WITH CHECK (auth.uid() = customer_id);
+
+CREATE POLICY "Sellers can view recourse claims against them" 
+ON public.assurance_claims FOR SELECT 
+USING (auth.uid() = seller_id);
+
+
+-- =========================================================
+-- MERGED FROM: 20260712_disputes_and_tracking_schema.sql
+-- =========================================================
+
+-- 20260712_disputes_and_tracking_schema.sql
+-- Rapidsy Dispute Resolution & GPS Tracking System
+
+-- 1. Create enum type for dispute status
+DO $$ BEGIN
+    CREATE TYPE dispute_status_type AS ENUM ('under_review', 'refunded', 'released_to_seller');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE tracking_event_type AS ENUM ('check_in', 'check_out', 'proof_uploaded');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+-- 2. Add is_escrow_blocked field to orders table
+ALTER TABLE public.orders 
+ADD COLUMN IF NOT EXISTS is_escrow_blocked BOOLEAN DEFAULT false;
+
+-- 3. Create disputes table (Anlaşmazlık Çözüm Merkezi)
+CREATE TABLE IF NOT EXISTS public.order_disputes (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
+    customer_id UUID NOT NULL REFERENCES auth.users(id),
+    seller_id UUID NOT NULL REFERENCES public.profiles(id),
+    reason_category TEXT NOT NULL, -- e.g., 'wrong_part', 'damage', 'poor_quality', 'other'
+    description TEXT NOT NULL,
+    evidence_url TEXT, -- Link to uploaded photo proof of issue
+    status dispute_status_type DEFAULT 'under_review',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. Create tracking table (GPS and Photo Proof check-in/out)
+CREATE TABLE IF NOT EXISTS public.order_tracking_events (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
+    partner_id UUID NOT NULL REFERENCES public.profiles(id),
+    event_type tracking_event_type NOT NULL,
+    lat DECIMAL(10,8) NOT NULL,
+    lng DECIMAL(11,8) NOT NULL,
+    accuracy_meters DECIMAL(6,2),
+    photo_url TEXT, -- Required for 'proof_uploaded' event
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS Configuration
+ALTER TABLE public.order_disputes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.order_tracking_events ENABLE ROW LEVEL SECURITY;
+
+-- Disputes Policies
+DROP POLICY IF EXISTS "Customers can view their disputes" ON public.order_disputes;
+CREATE POLICY "Customers can view their disputes" 
+ON public.order_disputes FOR SELECT 
+USING (auth.uid() = customer_id);
+
+DROP POLICY IF EXISTS "Customers can open disputes" ON public.order_disputes;
+CREATE POLICY "Customers can open disputes" 
+ON public.order_disputes FOR INSERT 
+WITH CHECK (auth.uid() = customer_id);
+
+DROP POLICY IF EXISTS "Sellers can view disputes for their orders" ON public.order_disputes;
+CREATE POLICY "Sellers can view disputes for their orders" 
+ON public.order_disputes FOR SELECT 
+USING (auth.uid() = seller_id);
+
+-- Tracking Policies
+DROP POLICY IF EXISTS "Everyone involved can view tracking" ON public.order_tracking_events;
+CREATE POLICY "Everyone involved can view tracking" 
+ON public.order_tracking_events FOR SELECT 
+USING (
+    auth.uid() = partner_id OR 
+    auth.uid() = (SELECT customer_id FROM public.orders WHERE id = order_id)
+);
+
+DROP POLICY IF EXISTS "Partners can insert tracking events" ON public.order_tracking_events;
+CREATE POLICY "Partners can insert tracking events" 
+ON public.order_tracking_events FOR INSERT 
+WITH CHECK (auth.uid() = partner_id);
+
+
+-- =========================================================
+-- MERGED FROM: 20260713_add_product_compatibility.sql
+-- =========================================================
+
+-- 20260713_add_product_compatibility.sql
+-- Add compatibility JSONB column to products table and seed data
+
+ALTER TABLE public.products
+ADD COLUMN IF NOT EXISTS compatibility JSONB DEFAULT '[]'::jsonb;
+
+-- Update existing seeded products with mock compatibility data for better demonstration
+UPDATE public.products
+SET compatibility = '[{"brand": "Fiat", "model": "Egea"}, {"brand": "Renault", "model": "Clio"}]'::jsonb
+WHERE category = 'Fren Sistemi' OR name ILIKE '%balata%';
+
+UPDATE public.products
+SET compatibility = '[{"brand": "Volkswagen", "model": "Golf"}, {"brand": "Ford", "model": "Focus"}]'::jsonb
+WHERE category = 'Filtreler' OR name ILIKE '%filtre%';
+
+UPDATE public.products
+SET compatibility = '[{"brand": "Toyota", "model": "Corolla"}, {"brand": "Honda", "model": "Civic"}]'::jsonb
+WHERE category = 'Motor Parçaları' OR name ILIKE '%buji%' OR name ILIKE '%kayış%';
+
+UPDATE public.products
+SET compatibility = '[]'::jsonb
+WHERE compatibility IS NULL;
