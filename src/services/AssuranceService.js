@@ -67,7 +67,6 @@ export const AssuranceService = {
       // 2. Perform mahsuplaşma (deduct from seller/partner pending balance)
       // In production, this would trigger an ERP/accounting ledger entry.
       // E.g., subtracting from their pending payout queue.
-      console.log(`Deducting ${payoutAmount} TL recourse from partner ${claim.seller_id}`);
 
       return { data: claim, error: null };
     } catch (error) {
