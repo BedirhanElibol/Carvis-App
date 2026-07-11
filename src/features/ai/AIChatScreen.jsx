@@ -10,6 +10,8 @@ import InteractiveCarMap from "./components/InteractiveCarMap";
  
 import { motion, AnimatePresence } from "framer-motion";
 
+const ACTION_BUTTON_CLASSES = "flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-xl shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans";
+
 // Özel Analiz Kartı Bileşeni - Premium Holographic Design
 const DamageAnalysisCard = ({ data, vehicleInfo, onFindMechanic, onFindParts }) => {
   return (
@@ -112,7 +114,7 @@ const DamageAnalysisCard = ({ data, vehicleInfo, onFindMechanic, onFindParts }) 
           </button>
           <button
             onClick={onFindMechanic}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-xl shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans"
+            className={ACTION_BUTTON_CLASSES}
           >
             USTA ÇAĞIR <ChevronRight size={14} />
           </button>
