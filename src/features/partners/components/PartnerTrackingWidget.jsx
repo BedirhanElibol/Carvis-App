@@ -59,7 +59,7 @@ const PartnerTrackingWidget = ({
           setCurrentStep("working");
         }
       },
-      (err) => {
+      _err => {
         setErrorMsg("GPS konumu alınamadı. Lütfen konum izinlerinizi kontrol edin.");
         setIsSubmitting(false);
       },
@@ -74,7 +74,7 @@ const PartnerTrackingWidget = ({
     setIsSubmitting(true);
 
     // Upload photo to Supabase Storage
-    let photoUrl = "";
+    let photoUrl;
     try {
       const fileExt = photo.name?.split(".").pop() || "jpg";
       const filePath = `proofs/${orderId}_${Date.now()}.${fileExt}`;
