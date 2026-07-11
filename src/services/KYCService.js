@@ -56,7 +56,7 @@ export const KYCService = {
    */
   async uploadSecureDocument(file, path) {
     try {
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('service-proofs')
         .upload(`kyc/${path}`, file, {
           cacheControl: '3600',
