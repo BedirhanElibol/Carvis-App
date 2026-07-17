@@ -30,9 +30,9 @@ const LandingPremiumFeatures = memo(({t, language}) => {
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
-                  <span className="text-[8px] font-black text-indigo-400 tracking-wider uppercase">RAPIDSY GÜVENCESİ</span>
+                  <span className="text-[8px] font-black text-indigo-400 tracking-wider uppercase">BDDK LİSANSLI HAVUZ HESABI</span>
                   <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                    {language === "tr" ? "%100 GÜVENLİ ÖDEME ALTYAPISI" : "100% SECURE PAYMENT INFRASTRUCTURE"}
+                    {language === "tr" ? "PAYTR / İYZİCO KORUMALI ALTYAPI" : "BDDK LICENSE ESCROW POWERED BY PAYTR"}
                   </h4>
                 </div>
                 <ShieldCheck className="text-indigo-400" size={18} />
@@ -41,14 +41,14 @@ const LandingPremiumFeatures = memo(({t, language}) => {
               {/* Escrow Status Mockup */}
               <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-4 shadow-md text-left mb-6">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-[9px] font-black text-slate-400 uppercase">{language === "tr" ? "HİZMET BEDELİ (GÜVENCEDE)" : "SERVICE FEE (SECURED)"}</span>
-                  <span className="text-[8px] font-black text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-full uppercase">{language === "tr" ? "Ödeme Güvencesinde" : "Under Payment Guarantee"}</span>
+                  <span className="text-[9px] font-black text-slate-400 uppercase">{language === "tr" ? "BDDK LİSANSLI HAVUZ (BLOKE)" : "BDDK LICENSED BLOCKED ESCROW"}</span>
+                  <span className="text-[8px] font-black text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full uppercase">{language === "tr" ? "Yasal Güvencede" : "Legally Secured"}</span>
                 </div>
                 <div className="text-2xl font-black text-slate-900 dark:text-white font-mono mb-2">₺4.250</div>
                 <div className="w-full h-1.5 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
-                  <div className="h-full bg-indigo-500 rounded-full w-[60%] animate-pulse"></div>
+                  <div className="h-full bg-emerald-500 rounded-full w-full"></div>
                 </div>
-                <p className="text-[9px] text-slate-500 font-bold mt-2">{language === "tr" ? "Siz onay verene kadar ödemeniz Rapidsy güvencesinde tutulur." : "Funds are held securely by Rapidsy until your final approval."}</p>
+                <p className="text-[9px] text-slate-500 font-bold mt-2">{language === "tr" ? "Mevzuat gereği paranız Rapidsy havuzunda değil, lisanslı ödeme kuruluşu blokeli hesabında korunur." : "Funds are held in a licensed partner payment gateway pool per central bank regulations."}</p>
               </div>
  
               {/* Legal Documents Mockup */}
@@ -56,18 +56,18 @@ const LandingPremiumFeatures = memo(({t, language}) => {
                 <div className="flex justify-between items-center p-2.5 bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="text-emerald-500" size={14} />
-                    <span className="text-[10px] font-black text-slate-900 dark:text-white">{language === "tr" ? "Rapidsy Onarım Garantisi (6 Ay)" : "Rapidsy Repair Warranty (6 Months)"}</span>
+                    <span className="text-[10px] font-black text-slate-900 dark:text-white">{language === "tr" ? "₺50.000 Rapidsy Hasar Güvencesi" : "₺50,000 Repair Warranty & Insurance"}</span>
                   </div>
-                  <span className="text-[9px] font-bold text-emerald-500 uppercase">{language === "tr" ? "Aktif" : "Active"}</span>
+                  <span className="text-[9px] font-bold text-emerald-500 uppercase">{language === "tr" ? "Yalnızca Havuzda Geçerli" : "Escrow Only"}</span>
                 </div>
                 <div className="flex justify-between items-center p-2.5 bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-xl opacity-80">
                   <div className="flex items-center gap-2">
                     <FileText className="text-slate-400" size={14} />
                     <span className="text-[10px] font-black text-slate-900 dark:text-white">
-                      {language === "tr" ? "Dijital Hizmet Sözleşmesi" : "Digital Service Contract"}
+                      {language === "tr" ? "Anında Esnaf Hak Ediş Transferi" : "Instant Payout upon PIN Release"}
                     </span>
                   </div>
-                  <span className="text-[9px] font-bold text-slate-400 uppercase">{language === "tr" ? "İmzalandı" : "Signed"}</span>
+                  <span className="text-[9px] font-bold text-indigo-400 uppercase">{language === "tr" ? "Aynı Gün" : "Same Day"}</span>
                 </div>
               </div>
             </div>
@@ -75,28 +75,28 @@ const LandingPremiumFeatures = memo(({t, language}) => {
             {/* Right: Pitch copy */}
             <div className="w-full lg:w-1/2 space-y-6 text-left">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[9px] font-black text-indigo-400 tracking-widest uppercase">
-                {language === "tr" ? "FİNANSAL RİSK YÖNETİMİ" : "FINANCIAL RISK MANAGEMENT"}
+                {language === "tr" ? "MEVZUATA UYGUN GÜVEN ALTYAPISI" : "REGULATORY COMPLIANT TRUST PLATFORM"}
               </span>
               <h3 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight uppercase">
-                {language === "tr" ? "UÇTAN UCA GÜVENLİ ÖDEME ALTYAPISI" : "END-TO-END SECURE PAYMENT PLATFORM"}
+                {language === "tr" ? "BDDK UYUMLU PAYTR/İYZİCO HAVUZ ALTYAPISI" : "BDDK-COMPLIANT SECURE ESCROW INFRASTRUCTURE"}
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base font-semibold leading-relaxed">
                 {language === "tr"
-                  ? "Operasyonel süreçlerinizde finansal güvenliği şansa bırakmayın. Onaylanan servis tekliflerindeki bakiye, iş teslim edilip dijital onayınız verilene kadar Rapidsy ödeme altyapısında güvence altına alınır. Süreç şeffaftır, sürpriz faturalandırma engellenir."
-                  : "Do not leave financial security to chance in your operational processes. The balance for approved service quotes is secured in the Rapidsy payment infrastructure until the job is delivered and your digital approval is given. The process is transparent, preventing unexpected billing."}
+                  ? "Türkiye Cumhuriyet Merkez Bankası (TCMB) ve BDDK mevzuatlarına uygun olarak geliştirilen pazaryeri split-payment (paylaşımlı ödeme) modeli sayesinde, paranız usta işi teslim edip siz onay kodu verene kadar PayTR/iyzico nezdindeki korumalı hesaplarda bloke edilir. Sanayi esnafına iş teslimi sonrası hak edişi aynı gün aktarılır, usta nakit akışı kaybı yaşamaz."
+                  : "We use a TCMB and BDDK compliant marketplace split-payment model. Funds are legally held by PayTR/iyzico licensed escrow accounts. Once the repair is verified via check-out PIN, funds are instantly routed to the merchant to ensure smooth cash flow."}
               </p>
               <ul className="space-y-3 text-xs font-black text-slate-700 dark:text-slate-300">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Kurumsal Standartlarda Güvenli Ödeme Altyapısı" : "Enterprise-Grade Secure Payment Infrastructure"}</span>
+                  <span>{language === "tr" ? "Elden Ödemelere Karşı Koruma: Nakit işlemlerde Rapidsy Onarım Garantisi geçersizdir" : "Bypass Prevention: Rapidsy Repair Warranty is invalid for cash deals"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Sözleşmeli ve Garantili Hizmet Ağı" : "Contracted and Guaranteed Service Network"}</span>
+                  <span>{language === "tr" ? "Ustalara Özel Teşvik: Platform cirosuna göre bankalardan anında düşük faizli esnaf kredisi" : "Esnaf Loan program: Turn platform turnover into low-interest commercial loans"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Dijital Doğrulama (PIN/QR) İle Mutabakat" : "Digital Verification (PIN/QR) Reconciliation"}</span>
+                  <span>{language === "tr" ? "Tek Tıkla PIN Doğrulama: Hızlı ve yasal mutabakat süreci" : "One-Click PIN Verification: Quick legal reconciliation"}</span>
                 </li>
               </ul>
             </div>

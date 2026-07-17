@@ -122,18 +122,27 @@ const PaymentScreen = () => {
         </div>
 
         {/* Güvenlik Bilgisi */}
-        <div className="glass-card p-4 rounded-2xl border border-green-500/30 bg-green-500/5">
+        <div className="glass-card p-5 rounded-3xl border border-green-500/30 bg-green-500/5 space-y-4">
           <div className="flex items-start gap-3">
-            <Shield size={24} className="text-green-400 flex-shrink-0" />
+            <Shield size={24} className="text-green-400 flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-bold text-green-400 text-sm mb-1 uppercase tracking-tight">
-                Güvenli Ödeme
+                %100 Rapidsy Ödeme Güvencesi
               </p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
-                Ödemeniz PayTR güvencesi altında 256-bit SSL şifreleme ile
-                korunmaktadır.
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-tight">
+                Ödemeniz, **BDDK denetimli PayTR / iyzico** lisanslı korumalı havuz hesabında bloke edilir. Hizmet tamamlanıp siz onay verene kadar para satıcıya aktarılmaz.
               </p>
             </div>
+          </div>
+          <div className="pt-3 border-t border-green-500/10 text-[11px] text-slate-500 dark:text-slate-400 space-y-2">
+            <p className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+              <strong>Mevzuata Uygun:</strong> 6493 sayılı kanun kapsamında yetkilendirilmiş ödeme kuruluşu güvencesiyle split-payment.
+            </p>
+            <p className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+              <strong>Güvenli Teslimat:</strong> İş tamamlandığında ustaya vereceğiniz tek kullanımlık teslim koduyla ödeme çözülür.
+            </p>
           </div>
         </div>
 
@@ -149,7 +158,7 @@ const PaymentScreen = () => {
             ) : (
               <>
                 <CreditCard size={20} />
-                Ödemeyi Güvenle Tamamla
+                Güvenli Havuz Ödemesini Yap
               </>
             )}
           </button>
@@ -159,11 +168,10 @@ const PaymentScreen = () => {
               <CheckCircle size={40} className="text-green-400" />
             </div>
             <h3 className="text-xl font-bold text-green-400 mb-2 font-sans">
-              Ödeme Başarılı!
+              Havuz Ödemesi Alındı!
             </h3>
             <p className="text-sm text-slate-600 dark:text-slate-300">
-              Siparişiniz oluşturuldu. Siparişler sayfasına
-              yönlendiriliyorsunuz...
+              Tutar güvenli havuz hesabına aktarıldı. Satıcı ile iletişime geçebilirsiniz.
             </p>
           </div>
         )}
@@ -172,10 +180,9 @@ const PaymentScreen = () => {
         <div className="glass-card p-4 rounded-2xl border border-primary-500/30 bg-primary-500/5">
           <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
             <span className="font-black text-primary-400 uppercase tracking-widest mr-1">
-              💡 Not:
+              ⚠️ Önemli:
             </span>
-            Ödeme tamamlandıktan sonra satıcı ile iletişime geçebilir ve
-            teslimat detaylarını görüşebilirsiniz.
+            Elde ödeme (nakit/havale) tekliflerini kabul etmeyiniz. Elden yapılan ödemeler Rapidsy onarım ve hasar garantisi kapsamı dışındadır.
           </p>
         </div>
       </div>

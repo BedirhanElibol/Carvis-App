@@ -1,36 +1,32 @@
-# PLAN: API & App Security Implementation Plan
+# PLAN: Actionable Enhancements based on Strategic Review Comments
 
-This plan details the security enhancements to be made to the client web/mobile application database (Supabase) and the B2B Partner API service (Node.js Express).
+This plan addresses the critical feedback from the core review panels (Skeptic, First Principles, Expander, Outsider, and Executor). We will focus on solving the key "trust & pricing guarantee" problem, ensuring regulatory compliance, and aligning digital flows with real-world sanayi dynamics.
 
 ---
 
-## 🔒 Proposed Security Enhancements
+## 🔒 Proposed Action Items
 
-### 1. Database Security (Supabase Row Level Security - RLS)
-- **Problem:** Currently, none of the database tables have Row Level Security enabled. This allows any user with the anonymous/public API key to read, update, or delete any record.
-- **Solution:** Write a new PostgreSQL migration `supabase/migrations/20260717_security_rls.sql` that:
-  - Enables RLS on all tables (`profiles`, `orders`, `appointments`, `emergency_requests`, `carwash_requests`, `insurance_claims`, `insurance_quotes`, etc.).
-  - Defines safe policies:
-    - Users can read/write their own profiles.
-    - Users/Partners can read/write orders they are a seller or buyer for.
-    - Partners can read available requests (tow, carwash, appointments) in their respective domain, but can only update those assigned to them.
-    - Admins have full access.
+### 1. Payment Compliance & Escrow Gateway Integration (BDDK/Fintech)
+- **Problem:** Holding user funds in a custom escrow table directly is not compliant with BDDK regulations (which require a licensed payment provider).
+- **Solution:** Integrate a compliant Marketplace Split-Payment flow using a licensed provider (e.g., PayTR or iyzico Marketplace API). 
+  - Update [PaymentScreen.jsx](file:///c:/Users/Bedirhan/Desktop/Carvis-App/Carvis/src/features/orders/PaymentScreen.jsx) and the checkout backend endpoints to model how funds are captured and held in the **PayTR/iyzico secure escrow pool**, rather than a custom internal DB wallet, releasing them to the partner upon PIN code validation.
 
-### 2. API Security (B2B Partner Express API)
-- **Problem:** The Express API middleware at `carvis-partner-api/src/middleware/auth.js` has a mocked JWT validator (`test_token_123`), and CORS allows wildcards (`*`).
+### 2. Sourcing Vehicle Data (Automated vs Manual & Privacy)
+- **Problem:** Clarifying where sensitive vehicle data (mileage, market value, insurance expiry) comes from, avoiding high manual entry overhead while addressing privacy concerns.
 - **Solution:**
-  - Update `auth.js` middleware to decode and verify actual JWT tokens using `jsonwebtoken` library against a configurable `JWT_SECRET` environment variable.
-  - Update `carvis-partner-api/src/server.js` to restrict CORS to trusted origins defined in environment variables, and ensure proxy headers are trusted for rate limiting.
+  - Add an integration configuration in `DigitalPassport.jsx` explaining the data sourcing.
+  - Implement a mock EGM / TRAMER API fetch configuration inside `externalApis.js` which automatically pre-fills vehicle data upon entering the license plate and owner's national ID (TCKN), requiring explicit user consent (GDPR/KVKK compliance).
 
-### 3. Vulnerability Verification
-- Write a test script `scratch/verify_security.js` that attempts:
-  - Unauthorized calls to the partner API.
-  - Verification of RLS policy blocks on a simulated client connection.
+### 3. Off-Platform Escrow Bypass Mitigation
+- **Problem:** Physical services and mechanics prefer immediate cash flow and may try to bypass the escrow.
+- **Solution:**
+  - **Rapidsy Assurance Warranty (%100 Rapidsy Güvencesi):** Display badges clarifying that the repair warranty (up to ₺50,000) is only active *if* the transaction is completed via the Escrow pool.
+  - **Esnaf Kredisi (Partner Loans):** Motivate partners to stay on-platform by showing that their escrow volume qualifies them for low-interest commercial loans (modeled in `PartnerLoanView.jsx`).
 
 ---
 
 ## 🏁 Verification Plan
 
 ### Automated Checks
-- Run `python .agent/skills/vulnerability-scanner/scripts/security_scan.py .` to ensure no environment secrets or packages are vulnerable.
-- Run `npm run test` to verify no app regressions.
+- Run `npm run test` to verify zero app regressions.
+- Run `python .agent/scripts/checklist.py .` to audit quality standards.
