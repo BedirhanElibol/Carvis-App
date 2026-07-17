@@ -30,9 +30,9 @@ const LandingPremiumFeatures = memo(({t, language}) => {
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
-                  <span className="text-[8px] font-black text-indigo-400 tracking-wider uppercase">BDDK LİSANSLI HAVUZ HESABI</span>
+                  <span className="text-[8px] font-black text-indigo-400 tracking-wider uppercase">GÜVENLİ KARTLI ÖDEME ALTYAPISI</span>
                   <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                    {language === "tr" ? "PAYTR / İYZİCO KORUMALI ALTYAPI" : "BDDK LICENSE ESCROW POWERED BY PAYTR"}
+                    {language === "tr" ? "PAYTR / İYZİCO GÜVENLİ ÖDEME GEÇİDİ" : "SECURE PAYMENTS POWERED BY PAYTR / IYZICO"}
                   </h4>
                 </div>
                 <ShieldCheck className="text-indigo-400" size={18} />
@@ -41,14 +41,14 @@ const LandingPremiumFeatures = memo(({t, language}) => {
               {/* Escrow Status Mockup */}
               <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-4 shadow-md text-left mb-6">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-[9px] font-black text-slate-400 uppercase">{language === "tr" ? "BDDK LİSANSLI HAVUZ (BLOKE)" : "BDDK LICENSED BLOCKED ESCROW"}</span>
-                  <span className="text-[8px] font-black text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full uppercase">{language === "tr" ? "Yasal Güvencede" : "Legally Secured"}</span>
+                  <span className="text-[9px] font-black text-slate-400 uppercase">{language === "tr" ? "KARTLI GÜVENLİ ÖDEME" : "SECURE CARD PAYMENT"}</span>
+                  <span className="text-[8px] font-black text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full uppercase">{language === "tr" ? "Kartla Güvende" : "Secured with Card"}</span>
                 </div>
                 <div className="text-2xl font-black text-slate-900 dark:text-white font-mono mb-2">₺4.250</div>
                 <div className="w-full h-1.5 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
                   <div className="h-full bg-emerald-500 rounded-full w-full"></div>
                 </div>
-                <p className="text-[9px] text-slate-500 font-bold mt-2">{language === "tr" ? "Mevzuat gereği paranız Rapidsy havuzunda değil, lisanslı ödeme kuruluşu blokeli hesabında korunur." : "Funds are held in a licensed partner payment gateway pool per central bank regulations."}</p>
+                <p className="text-[9px] text-slate-500 font-bold mt-2">{language === "tr" ? "Ödemeniz resmi lisanslı PayTR/iyzico altyapısıyla şifrelenmiş olarak gerçekleşir." : "Your payment is processed securely via licensed PayTR/iyzico payment gateways."}</p>
               </div>
  
               {/* Legal Documents Mockup */}
@@ -56,18 +56,18 @@ const LandingPremiumFeatures = memo(({t, language}) => {
                 <div className="flex justify-between items-center p-2.5 bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="text-emerald-500" size={14} />
-                    <span className="text-[10px] font-black text-slate-900 dark:text-white">{language === "tr" ? "₺50.000 Rapidsy Hasar Güvencesi" : "₺50,000 Repair Warranty & Insurance"}</span>
+                    <span className="text-[10px] font-black text-slate-900 dark:text-white">{language === "tr" ? "Carvis Onaylı Hizmet Güvencesi" : "Carvis Approved Service Guarantee"}</span>
                   </div>
-                  <span className="text-[9px] font-bold text-emerald-500 uppercase">{language === "tr" ? "Yalnızca Havuzda Geçerli" : "Escrow Only"}</span>
+                  <span className="text-[9px] font-bold text-emerald-500 uppercase">{language === "tr" ? "Kartlı Ödemede Geçerli" : "For Card Payments"}</span>
                 </div>
                 <div className="flex justify-between items-center p-2.5 bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-xl opacity-80">
                   <div className="flex items-center gap-2">
                     <FileText className="text-slate-400" size={14} />
                     <span className="text-[10px] font-black text-slate-900 dark:text-white">
-                      {language === "tr" ? "Anında Esnaf Hak Ediş Transferi" : "Instant Payout upon PIN Release"}
+                      {language === "tr" ? "Anında Şeffaf Esnaf Hak Edişi" : "Instant Transparent Payouts"}
                     </span>
                   </div>
-                  <span className="text-[9px] font-bold text-indigo-400 uppercase">{language === "tr" ? "Aynı Gün" : "Same Day"}</span>
+                  <span className="text-[9px] font-bold text-indigo-400 uppercase">{language === "tr" ? "Hızlı" : "Fast"}</span>
                 </div>
               </div>
             </div>
@@ -75,28 +75,28 @@ const LandingPremiumFeatures = memo(({t, language}) => {
             {/* Right: Pitch copy */}
             <div className="w-full lg:w-1/2 space-y-6 text-left">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[9px] font-black text-indigo-400 tracking-widest uppercase">
-                {language === "tr" ? "MEVZUATA UYGUN GÜVEN ALTYAPISI" : "REGULATORY COMPLIANT TRUST PLATFORM"}
+                {language === "tr" ? "KOLAY VE GÜVENLİ KARTLI ÖDEME" : "EASY & SECURE CARD PAYMENTS"}
               </span>
               <h3 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight uppercase">
-                {language === "tr" ? "BDDK UYUMLU PAYTR/İYZİCO HAVUZ ALTYAPISI" : "BDDK-COMPLIANT SECURE ESCROW INFRASTRUCTURE"}
+                {language === "tr" ? "PAYTR/İYZİCO GÜVENLİ KARTLI ÖDEME SİSTEMİ" : "SECURE CARD PAYMENTS POWERED BY PAYTR/IYZICO"}
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base font-semibold leading-relaxed">
                 {language === "tr"
-                  ? "Türkiye Cumhuriyet Merkez Bankası (TCMB) ve BDDK mevzuatlarına uygun olarak geliştirilen pazaryeri split-payment (paylaşımlı ödeme) modeli sayesinde, paranız usta işi teslim edip siz onay kodu verene kadar PayTR/iyzico nezdindeki korumalı hesaplarda bloke edilir. Sanayi esnafına iş teslimi sonrası hak edişi aynı gün aktarılır, usta nakit akışı kaybı yaşamaz."
-                  : "We use a TCMB and BDDK compliant marketplace split-payment model. Funds are legally held by PayTR/iyzico licensed escrow accounts. Once the repair is verified via check-out PIN, funds are instantly routed to the merchant to ensure smooth cash flow."}
+                  ? "TCMB denetimindeki ödeme kuruluşları (PayTR/iyzico) güvencesiyle, servis bedelini kartınızla güvenle ödeyebilirsiniz. Ustanız işini tamamlayıp faturası kesildiğinde ödeme süreci şeffaf bir şekilde tamamlanır. Esnaf iş teslimi sonrası hak edişini hızla alarak nakit akışı sıkıntısı yaşamaz."
+                  : "Pay securely with your credit or debit card powered by licensed payment providers (PayTR/iyzico). Once your service is finished and invoiced, the transaction completes transparently. Mechanics receive their payouts quickly, keeping their cash flow healthy."}
               </p>
               <ul className="space-y-3 text-xs font-black text-slate-700 dark:text-slate-300">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Elden Ödemelere Karşı Koruma: Nakit işlemlerde Rapidsy Onarım Garantisi geçersizdir" : "Bypass Prevention: Rapidsy Repair Warranty is invalid for cash deals"}</span>
+                  <span>{language === "tr" ? "Fatura ve Şeffaflık: Kartlı ödemelerde Carvis güvencesi ve işlem takibi aktiftir" : "Invoiced & Transparent: Carvis tracking is active for card payments"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Ustalara Özel Teşvik: Platform cirosuna göre bankalardan anında düşük faizli esnaf kredisi" : "Esnaf Loan program: Turn platform turnover into low-interest commercial loans"}</span>
+                  <span>{language === "tr" ? "Ustalara Özel Teşvik: Kartlı işlemlerle iş hacmini artıran esnaflara özel banka kredisi kolaylığı" : "Mechanic Rewards: Help mechanics build credit scoring based on card volume"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="text-teal-400 shrink-0" size={16} />
-                  <span>{language === "tr" ? "Tek Tıkla PIN Doğrulama: Hızlı ve yasal mutabakat süreci" : "One-Click PIN Verification: Quick legal reconciliation"}</span>
+                  <span>{language === "tr" ? "Şeffaf ve Kolay Ödeme: Tek tıkla kolay onay ve kartlı ödeme mutabakatı" : "Transparent & Easy Checkouts: One-click card checkout and reconciliation"}</span>
                 </li>
               </ul>
             </div>
@@ -226,12 +226,12 @@ const LandingPremiumFeatures = memo(({t, language}) => {
                   </div>
                   <p className="text-[10px] text-slate-700 dark:text-slate-300 font-medium mb-2">
                     {language === "tr" 
-                      ? "Sanayide her gidişimde ekstra masraf çıkıyordu. Rapidsy üzerinden Maslak Pro'ya gittim, baştan ne dedilerse havuzdan o çekildi. Harika sistem." 
-                      : "I used to get extra charges every time I visited a shop. Used Maslak Pro via Rapidsy, escrow paid exactly what was agreed upfront. Great system."}
+                      ? "Sanayide her gidişimde ekstra masraf çıkıyordu. Rapidsy üzerinden Maslak Pro'ya gittim, baştan ne teklif edildiyse kartımdan o çekildi. Harika sistem." 
+                      : "I used to get extra charges every time I visited a shop. Used Maslak Pro via Rapidsy, my card was charged exactly what was agreed upfront. Great system."}
                   </p>
                   <span className="text-[8px] font-black text-slate-400 uppercase">— Ahmet K. (Fiat Egea Sahibi)</span>
                 </div>
-
+ 
                 {/* Review 2 */}
                 <div className="bg-white/50 dark:bg-[#070b18]/50 border border-black/5 dark:border-white/10 rounded-2xl p-4 shadow-inner relative opacity-90">
                   <span className="absolute top-0 right-0 bg-teal-500 text-white text-[8px] font-black uppercase px-2 py-1 rounded-bl-lg rounded-tr-xl">
@@ -249,7 +249,7 @@ const LandingPremiumFeatures = memo(({t, language}) => {
                 </div>
               </div>
             </div>
-
+ 
             {/* Left: Pitch copy */}
             <div className="w-full lg:w-1/2 space-y-6 text-left">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-[9px] font-black text-teal-400 tracking-widest uppercase">
@@ -260,8 +260,8 @@ const LandingPremiumFeatures = memo(({t, language}) => {
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base font-semibold leading-relaxed">
                 {language === "tr"
-                  ? "Google Haritalar'daki sahte, satın alınmış usta yorumlarına güvenmeyin. Rapidsy'deki bir ustaya yorum yapabilmek için o ustanın Rapidsy üzerinden gerçekten hizmet vermiş ve havuz ödemesinin gerçekleşmiş olması gerekir. Sadece %100 doğrulanmış, faturası kesilmiş hizmetlerin yorumlarını okursunuz."
-                  : "Don't trust fake purchased reviews on Google Maps. To review a mechanic on Rapidsy, the service must be completed and paid through our escrow system. You only read 100% verified, invoiced real experiences."}
+                  ? "Google Haritalar'daki sahte, satın alınmış usta yorumlarına güvenmeyin. Rapidsy'deki bir ustaya yorum yapabilmek için o ustanın Rapidsy üzerinden gerçekten hizmet vermiş ve kartlı ödemesinin gerçekleşmiş olması gerekir. Sadece %100 doğrulanmış, faturası kesilmiş hizmetlerin yorumlarını okursunuz."
+                  : "Don't trust fake purchased reviews on Google Maps. To review a mechanic on Rapidsy, the service must be completed and paid securely via card. You only read 100% verified, invoiced real experiences."}
               </p>
               <ul className="space-y-3 text-xs font-black text-slate-700 dark:text-slate-300">
                 <li className="flex items-center gap-2.5">

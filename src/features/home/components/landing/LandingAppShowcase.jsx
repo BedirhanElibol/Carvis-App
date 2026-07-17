@@ -10,15 +10,15 @@ const LandingAppShowcase = memo(({t, language}) => {
         <section className="w-full max-w-7xl mx-auto px-6 mb-28 relative z-10">
           <div className="text-center mb-16">
             <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-teal-500">
-              {language === "tr" ? "FİNANSAL GÜVENCE" : "FINANCIAL SECURITY"}
+              {language === "tr" ? "GÜVENLİ VE ŞEFFAF" : "SECURE & TRANSPARENT"}
             </span>
             <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tight uppercase">
-              {language === "tr" ? "AKILLI ESCROW ALTYAPISIYLA RİSKSİZ İŞLEMLER" : "RISK-FREE OPERATIONS WITH SMART ESCROW"}
+              {language === "tr" ? "ŞEFFAF FİYAT VE GÜVENLİ KARTLI ÖDEME" : "TRANSPARENT PRICING & SECURE CARD PAYMENTS"}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mt-4 text-sm md:text-base font-semibold leading-relaxed">
               {language === "tr" 
-                ? "Filo ve bireysel operasyonlarınızda finansal sürprizlere yer yok. Onaylanmış hizmet ağı üzerinden net teklifler alın, iş onaylanana kadar tüm bakiyenizi uçtan uca korumalı havuz sisteminde güvende tutun."
-                : "No more financial surprises in your fleet or personal operations. Get transparent quotes from a certified service network, and keep your balance secured in an end-to-end protected escrow system until the job is approved."}
+                ? "Filo ve bireysel bakım süreçlerinde sürpriz ek ücretlere son. Onaylanmış servis ağı üzerinden net fiyat teklifleri alın, usta işini tamamlayıp siz onay verene kadar ödemenizi güvende tutun."
+                : "No more unexpected charges in your fleet or personal maintenance. Get transparent quotes from a certified service network, and pay securely only after the service is completed and approved."}
             </p>
           </div>
 

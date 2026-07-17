@@ -104,10 +104,10 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
             </div>
             <div>
               <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest">
-                GÜVENLİ İŞLEM (RAPIDSY TRUST ENGINE)
+                GÜVENLİ KARTLI ÖDEME (CARVIS ÖDEME SİSTEMİ)
               </p>
               <p className="text-sm text-slate-900 dark:text-white font-medium">
-                Bu servis işlemi %100 şeffaflık garantisi altındadır.
+                Bu servis işlemi Carvis şeffaflık güvencesi altındadır.
               </p>
             </div>
           </div>
@@ -210,7 +210,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
              </div>
              <div className="flex justify-between items-center">
                <span className="text-[10px] text-slate-600 uppercase font-bold">Ödeme Durumu</span>
-               <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">EMANET ALTINDA</span>
+               <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">KARTLA GÜVENLİ</span>
              </div>
              
              {localOrder.status !== 'completed' && localOrder.status !== 'cancelled' && localOrder.status !== 'refunded' && (
@@ -218,7 +218,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
                  onClick={() => setShowEscrowPin(true)}
                  className="w-full mt-4 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-white font-black py-3 rounded-2xl text-[10px] uppercase tracking-widest shadow-lg shadow-teal-500/20 active-scale transition-all flex items-center justify-center gap-2"
                >
-                 <ShieldCheck size={16} /> GÜVENLİ ÖDEME (ESCROW) PIN KODUNU GÖRÜNTÜLE
+                 <ShieldCheck size={16} /> ÖDEME ONAY ŞİFRESİNİ GÖRÜNTÜLE
                </button>
              )}
 
@@ -233,7 +233,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
 
              {localOrder.is_escrow_blocked && (
                <div className="w-full mt-2 text-center text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-widest bg-amber-500/10 py-3.5 rounded-2xl flex items-center justify-center gap-2 border border-amber-500/20">
-                 <AlertCircle size={14} /> Ödeme Rapidsy Güvencesiyle Bloke Edildi
+                 <AlertCircle size={14} /> Ödeme Carvis Güvencesiyle Donduruldu
                </div>
              )}
           </div>
@@ -289,7 +289,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
         sellerName={localOrder.seller?.full_name || localOrder.seller?.company_name || 'Servis Sağlayıcı'}
         onDisputeOpened={(data) => {
           setLocalOrder(prev => ({ ...prev, is_escrow_blocked: true }));
-          showAlert("Başarılı", "Bildiriminiz kaydedildi. Ödemeniz Rapidsy Güvencesi altında donduruldu.", "success");
+          showAlert("Başarılı", "Bildiriminiz kaydedildi. Ödemeniz Carvis Güvencesi altında donduruldu.", "success");
         }}
       />
     </div>
