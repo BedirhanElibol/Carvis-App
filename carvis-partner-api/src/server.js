@@ -12,9 +12,27 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// Trust proxy headers for rate limiting behind reverse proxies
+app.set('trust proxy', 1);
+
 // Security and Logging Middleware
 app.use(helmet());
-app.use(cors());
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',')
+    : ['http://localhost:3000', 'http://localhost:5173'];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            return callback(new Error('CORS Policy Block: Origin not allowed.'), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true
+}));
+
 app.use(morgan('dev'));
 app.use(express.json());
 
