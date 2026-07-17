@@ -4771,7 +4771,7 @@ CREATE POLICY "Claims are viewable by customer or company" ON public.insurance_c
     );
 
 DROP POLICY IF EXISTS "Claims can be updated by customer or company" ON public.insurance_claims;
-CREATE POLICY "Claims can be updated by customer or company" ON public.insurance_claims
+CREATE POLICY "Claims can be updated by company or customer" ON public.insurance_claims
     FOR UPDATE USING (
         auth.uid() = customer_id OR 
         EXISTS (
@@ -4779,4 +4779,145 @@ CREATE POLICY "Claims can be updated by customer or company" ON public.insurance
             WHERE profiles.id = auth.uid() AND profiles.role = 'partner'
         )
     );
+
+
+-- =========================================================
+-- CARVIS DISTINCT CORPORATE PARTNERS SEEDING
+-- DATE: 2026-07-17
+-- =========================================================
+
+DO $$
+DECLARE
+    encrypted_pw TEXT;
+    v_valet_id UUID;
+    v_parking_id UUID;
+    v_parts_id UUID;
+    v_carwash_id UUID;
+    v_tow_id UUID;
+    v_mechanic_id UUID;
+    v_insurance_id UUID;
+BEGIN
+    encrypted_pw := crypt('carvis123', gen_salt('bf', 10));
+
+    -- 1. VALET (valet@carvis.com)
+    SELECT id INTO v_valet_id FROM auth.users WHERE email = 'valet@carvis.com';
+    IF v_valet_id IS NULL THEN
+        v_valet_id := gen_random_uuid();
+        INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+        VALUES ('00000000-0000-0000-0000-000000000000', v_valet_id, 'authenticated', 'authenticated', 'valet@carvis.com', encrypted_pw, now(), '{"provider": "email", "providers": ["email"]}'::jsonb, '{"full_name": "Ahmet Vale"}'::jsonb, now(), now());
+    ELSE
+        UPDATE auth.users SET encrypted_password = encrypted_pw WHERE id = v_valet_id;
+    END IF;
+    INSERT INTO public.profiles (id, email, full_name, role, application_status, phone_number, is_approved_partner, is_active_provider)
+    VALUES (v_valet_id, 'valet@carvis.com', 'Ahmet Vale', 'partner', 'approved', '+905550000001', true, true)
+    ON CONFLICT (id) DO UPDATE SET role = 'partner', application_status = 'approved', is_approved_partner = true, is_active_provider = true;
+    INSERT INTO public.wallets (id, user_id, balance, currency) VALUES (v_valet_id, v_valet_id, 2500.00, 'TRY') ON CONFLICT (id) DO NOTHING;
+    INSERT INTO public.valet_profiles (id, base_price, service_radius_km, experience_years, license_type, bio, is_active_now, rating)
+    VALUES (v_valet_id, 150.00, 25, 6, 'B', 'Profesyonel Carvis Valet Hizmeti', true, 4.9)
+    ON CONFLICT (id) DO UPDATE SET is_active_now = true;
+
+    -- 2. PARKING (parking@carvis.com)
+    SELECT id INTO v_parking_id FROM auth.users WHERE email = 'parking@carvis.com';
+    IF v_parking_id IS NULL THEN
+        v_parking_id := gen_random_uuid();
+        INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+        VALUES ('00000000-0000-0000-0000-000000000000', v_parking_id, 'authenticated', 'authenticated', 'parking@carvis.com', encrypted_pw, now(), '{"provider": "email", "providers": ["email"]}'::jsonb, '{"full_name": "Kavaklıdere Otopark"}'::jsonb, now(), now());
+    ELSE
+        UPDATE auth.users SET encrypted_password = encrypted_pw WHERE id = v_parking_id;
+    END IF;
+    INSERT INTO public.profiles (id, email, full_name, role, application_status, phone_number, is_approved_partner, is_active_provider)
+    VALUES (v_parking_id, 'parking@carvis.com', 'Kavaklıdere Otopark Yetkilisi', 'partner', 'approved', '+905550000002', true, true)
+    ON CONFLICT (id) DO UPDATE SET role = 'partner', application_status = 'approved', is_approved_partner = true, is_active_provider = true;
+    INSERT INTO public.wallets (id, user_id, balance, currency) VALUES (v_parking_id, v_parking_id, 12000.00, 'TRY') ON CONFLICT (id) DO NOTHING;
+    INSERT INTO public.parking_profiles (id, parking_name, total_capacity, occupied_count, price_per_hour, is_indoor, has_security, has_valet, address_text, city)
+    VALUES (v_parking_id, 'Kavaklıdere Güvenli Otopark', 120, 45, 60.00, true, true, true, 'Kavaklıdere Mahallesi, Esat Caddesi No:12', 'Ankara')
+    ON CONFLICT (id) DO NOTHING;
+
+    -- 3. PARTS SUPPLIER (parts@carvis.com)
+    SELECT id INTO v_parts_id FROM auth.users WHERE email = 'parts@carvis.com';
+    IF v_parts_id IS NULL THEN
+        v_parts_id := gen_random_uuid();
+        INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+        VALUES ('00000000-0000-0000-0000-000000000000', v_parts_id, 'authenticated', 'authenticated', 'parts@carvis.com', encrypted_pw, now(), '{"provider": "email", "providers": ["email"]}'::jsonb, '{"full_name": "Yedek Parça Deposu"}'::jsonb, now(), now());
+    ELSE
+        UPDATE auth.users SET encrypted_password = encrypted_pw WHERE id = v_parts_id;
+    END IF;
+    INSERT INTO public.profiles (id, email, full_name, role, application_status, phone_number, is_approved_partner, is_active_provider)
+    VALUES (v_parts_id, 'parts@carvis.com', 'Yedek Parça Deposu A.Ş.', 'partner', 'approved', '+905550000003', true, true)
+    ON CONFLICT (id) DO UPDATE SET role = 'partner', application_status = 'approved', is_approved_partner = true, is_active_provider = true;
+    INSERT INTO public.wallets (id, user_id, balance, currency) VALUES (v_parts_id, v_parts_id, 45000.00, 'TRY') ON CONFLICT (id) DO NOTHING;
+    INSERT INTO public.parts_profiles (id, business_name, delivery_radius_km, store_type, tax_info, is_warehouse_direct, categories)
+    VALUES (v_parts_id, 'Ostim Yedek Parça Toptancısı', 150, 'wholesale', '9876543210', true, ARRAY['Fren Sistemi', 'Filtreler', 'Motor Parçaları'])
+    ON CONFLICT (id) DO NOTHING;
+
+    -- 4. CARWASH (carwash@carvis.com)
+    SELECT id INTO v_carwash_id FROM auth.users WHERE email = 'carwash@carvis.com';
+    IF v_carwash_id IS NULL THEN
+        v_carwash_id := gen_random_uuid();
+        INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+        VALUES ('00000000-0000-0000-0000-000000000000', v_carwash_id, 'authenticated', 'authenticated', 'carwash@carvis.com', encrypted_pw, now(), '{"provider": "email", "providers": ["email"]}'::jsonb, '{"full_name": "Mobil Oto Yıkama"}'::jsonb, now(), now());
+    ELSE
+        UPDATE auth.users SET encrypted_password = encrypted_pw WHERE id = v_carwash_id;
+    END IF;
+    INSERT INTO public.profiles (id, email, full_name, role, application_status, phone_number, is_approved_partner, is_active_provider)
+    VALUES (v_carwash_id, 'carwash@carvis.com', 'Mobil Oto Yıkama Servisi', 'partner', 'approved', '+905550000004', true, true)
+    ON CONFLICT (id) DO UPDATE SET role = 'partner', application_status = 'approved', is_approved_partner = true, is_active_provider = true;
+    INSERT INTO public.wallets (id, user_id, balance, currency) VALUES (v_carwash_id, v_carwash_id, 3200.00, 'TRY') ON CONFLICT (id) DO NOTHING;
+    INSERT INTO public.carwash_profiles (id, company_name, base_price, service_radius_km, has_own_water_tank, has_generator, is_eco_friendly, seller_id, rating)
+    VALUES (v_carwash_id, 'Mobil Eco Oto Yıkama', 250.00, 20, true, true, true, v_carwash_id, 4.8)
+    ON CONFLICT (id) DO NOTHING;
+
+    -- 5. TOW TRUCK (tow@carvis.com)
+    SELECT id INTO v_tow_id FROM auth.users WHERE email = 'tow@carvis.com';
+    IF v_tow_id IS NULL THEN
+        v_tow_id := gen_random_uuid();
+        INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+        VALUES ('00000000-0000-0000-0000-000000000000', v_tow_id, 'authenticated', 'authenticated', 'tow@carvis.com', encrypted_pw, now(), '{"provider": "email", "providers": ["email"]}'::jsonb, '{"full_name": "Çekici Güven"}'::jsonb, now(), now());
+    ELSE
+        UPDATE auth.users SET encrypted_password = encrypted_pw WHERE id = v_tow_id;
+    END IF;
+    INSERT INTO public.profiles (id, email, full_name, role, application_status, phone_number, is_approved_partner, is_active_provider)
+    VALUES (v_tow_id, 'tow@carvis.com', 'Çekici Güven Hizmetleri', 'partner', 'approved', '+905550000005', true, true)
+    ON CONFLICT (id) DO UPDATE SET role = 'partner', application_status = 'approved', is_approved_partner = true, is_active_provider = true;
+    INSERT INTO public.wallets (id, user_id, balance, currency) VALUES (v_tow_id, v_tow_id, 9800.00, 'TRY') ON CONFLICT (id) DO NOTHING;
+    INSERT INTO public.tow_truck_profiles (id, company_name, service_types, truck_capacity_tons, is_24_7, response_time_minutes, coverage_provinces, has_flatbed, base_price, price_per_km, is_active_now, rating)
+    VALUES (v_tow_id, 'Güven Yol Yardım & Çekici', ARRAY['towing', 'tire_change', 'battery_boost'], 4.0, true, 20, ARRAY['Ankara', 'Kırıkkale'], true, 600.00, 20.00, true, 4.7)
+    ON CONFLICT (id) DO NOTHING;
+
+    -- 6. MECHANIC (mechanic@carvis.com)
+    SELECT id INTO v_mechanic_id FROM auth.users WHERE email = 'mechanic@carvis.com';
+    IF v_mechanic_id IS NULL THEN
+        v_mechanic_id := gen_random_uuid();
+        INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+        VALUES ('00000000-0000-0000-0000-000000000000', v_mechanic_id, 'authenticated', 'authenticated', 'mechanic@carvis.com', encrypted_pw, now(), '{"provider": "email", "providers": ["email"]}'::jsonb, '{"full_name": "Özgür Oto Servis"}'::jsonb, now(), now());
+    ELSE
+        UPDATE auth.users SET encrypted_password = encrypted_pw WHERE id = v_mechanic_id;
+    END IF;
+    INSERT INTO public.profiles (id, email, full_name, role, application_status, phone_number, is_approved_partner, is_active_provider)
+    VALUES (v_mechanic_id, 'mechanic@carvis.com', 'Özgür Oto Bakım & Servis', 'partner', 'approved', '+905550000006', true, true)
+    ON CONFLICT (id) DO UPDATE SET role = 'partner', application_status = 'approved', is_approved_partner = true, is_active_provider = true;
+    INSERT INTO public.wallets (id, user_id, balance, currency) VALUES (v_mechanic_id, v_mechanic_id, 35000.00, 'TRY') ON CONFLICT (id) DO NOTHING;
+    IF NOT EXISTS (SELECT 1 FROM public.mechanic_shops WHERE seller_id = v_mechanic_id) THEN
+        INSERT INTO public.mechanic_shops (seller_id, shop_name, brands, rating, experience_years, is_active)
+        VALUES (v_mechanic_id, 'Özgür Oto Özel Servis', ARRAY['Fiat', 'Renault', 'Volkswagen', 'Toyota', 'Ford'], 4.9, 12, true);
+    END IF;
+
+    -- 7. INSURANCE (insurance@carvis.com)
+    SELECT id INTO v_insurance_id FROM auth.users WHERE email = 'insurance@carvis.com';
+    IF v_insurance_id IS NULL THEN
+        v_insurance_id := gen_random_uuid();
+        INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+        VALUES ('00000000-0000-0000-0000-000000000000', v_insurance_id, 'authenticated', 'authenticated', 'insurance@carvis.com', encrypted_pw, now(), '{"provider": "email", "providers": ["email"]}'::jsonb, '{"full_name": "Anadolu Kasko"}'::jsonb, now(), now());
+    ELSE
+        UPDATE auth.users SET encrypted_password = encrypted_pw WHERE id = v_insurance_id;
+    END IF;
+    INSERT INTO public.profiles (id, email, full_name, role, application_status, phone_number, is_approved_partner, is_active_provider)
+    VALUES (v_insurance_id, 'insurance@carvis.com', 'Anadolu Dijital Sigorta A.Ş.', 'partner', 'approved', '+905550000007', true, true)
+    ON CONFLICT (id) DO UPDATE SET role = 'partner', application_status = 'approved', is_approved_partner = true, is_active_provider = true;
+    INSERT INTO public.wallets (id, user_id, balance, currency) VALUES (v_insurance_id, v_insurance_id, 250000.00, 'TRY') ON CONFLICT (id) DO NOTHING;
+    INSERT INTO public.insurance_company_profiles (id, company_name, license_number, company_type, policy_types, coverage_limit_max, monthly_premium_min, monthly_premium_max, is_digital_policy, partner_garage_network_count, is_rapidsy_integrated, is_24_7_support, rating)
+    VALUES (v_insurance_id, 'Anadolu Sigorta Carvis Grubu', 'SIG-556677', ARRAY['kasko', 'trafik'], ARRAY['Kasko Full Güvence', 'Zorunlu Trafik Sigortası'], 5000000.00, 200.00, 2500.00, true, 120, true, true, 4.8)
+    ON CONFLICT (id) DO NOTHING;
+
+END $$;
 
