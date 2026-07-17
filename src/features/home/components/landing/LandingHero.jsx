@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { ArrowRight, ChevronDown, ChevronRight, Droplets, Fuel, Map, MapPin, RefreshCw, Search, Box, Wrench, TrendingUp, ShieldCheck, HardDrive, Wind, Flame } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronRight, Droplets, Fuel, Map, MapPin, RefreshCw, Search, Box, Wrench, TrendingUp, ShieldCheck, HardDrive, Wind, Flame, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -89,13 +89,31 @@ const LandingHero = memo(({t, language, searchQuery, setSearchQuery, searchLocat
 
             </div>
 
+            {/* Direct Problem-Solution Trust Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mt-6 py-2 px-4 bg-white/40 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl border border-slate-200/50 dark:border-white/5 max-w-3xl mx-auto shadow-sm">
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-700 dark:text-emerald-400">
+                <ShieldCheck size={16} className="text-emerald-500" />
+                <span>{language === "tr" ? "%100 Rapidsy Ödeme Güvencesi" : "100% Secure Payment Guarantee"}</span>
+              </div>
+              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-700 dark:text-teal-400">
+                <Wrench size={16} className="text-teal-500" />
+                <span>{language === "tr" ? "Doğrulanmış Servis Ağı" : "Verified Mechanic Network"}</span>
+              </div>
+              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-700 dark:text-indigo-400">
+                <CheckCircle size={16} className="text-indigo-500" />
+                <span>{language === "tr" ? "6 Ay Onarım Garantisi" : "6-Month Repair Warranty"}</span>
+              </div>
+            </div>
+
             {/* Quick Categories below search */}
             <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mt-6">
               <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-emerald-800/50 dark:text-slate-500 mr-2">{t.popularLabel}</span>
               {[
                 { title: t.smartDiagnosis, icon: Fuel, color: "text-emerald-500 dark:text-teal-400", bg: "bg-emerald-500/10", onClick: () => navigate("/application/home") },
-                { title: t.autoSpareParts, icon: Box, color: "text-teal-500 dark:text-teal-400", bg: "bg-teal-500/10", onClick: () => navigate("/application/parts") },
-                { title: t.expertMechanic, icon: Wrench, color: "text-teal-500 dark:text-emerald-500", bg: "bg-teal-500/10", onClick: () => navigate("/application/mechanics") },
+                { title: t.autoSpareParts, icon: Box, color: "text-teal-500 dark:text-teal-400", bg: "bg-teal-500/10", onClick: () => navigate("/app/parts") },
+                { title: t.expertMechanic, icon: Wrench, color: "text-teal-500 dark:text-emerald-500", bg: "bg-teal-500/10", onClick: () => navigate("/app/mechanics") },
                 { title: t.buyBoxInfo, icon: TrendingUp, color: "text-teal-600 dark:text-teal-500", bg: "bg-teal-600/10", onClick: () => navigate("/application/home") }
               ].map((cat, idx) => (
                 <button 

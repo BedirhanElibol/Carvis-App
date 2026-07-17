@@ -1,44 +1,27 @@
-# 🎯 ORCHESTRATION PLAN: İki Taraflı Güvenli Ödeme (Escrow/Havuz) Sistemi
+# PLAN: Partner Dashboard Workflow & Record History Overhaul
 
-## 📌 Durum Analizi ve Problem Tanımı
-Kullanıcımız, "Sanayide Güven Sorununa Son" mottomuzun altını dolduracak en kritik altyapıyı, yani **İki Taraflı Güvenli Ödeme (Escrow) Sistemini** talep etmektedir.
-- **Problem:** Araç sahibi ustaya güvenmiyor (işin yarım kalması, sürpriz masraf), usta araç sahibine güvenmiyor (parayı alamama endişesi).
-- **Çözüm:** Kullanıcı parayı öder, para Rapidsy'nin güvenli havuz hesabında (Escrow) bekletilir. İş bitiminde her iki taraf da dijital onay (QR Kod veya PIN) verdiğinde para ustanın cüzdanına (Wallet) aktarılır.
-- **İhtiyaç:** Bu sistemin hem arayüzde (UI/UX) hem de veritabanında (Supabase Schema & RPC) modellenmesi gerekmektedir.
-
-## 🚀 Faz 1: Planlama (Şu Anki Aşama)
-
-Bu belgede, %100 güvenli havuz sisteminin nasıl inşa edileceği adım adım planlanmıştır.
-
-### Hedeflenen Mimari (Faz 2 için)
-
-1. **Veritabanı Mimarisi (Database & RPC):**
-   - `escrow_transactions` tablosunun oluşturulması (Durumlar: `locked`, `released`, `disputed`, `refunded`).
-   - İş bitimi onayı için `release_escrow` adlı güvenli bir RPC (Stored Procedure) yazılması. Bu RPC, parayı havuzdan alıp ustanın `wallets` tablosuna (bakiye olarak) ekleyecek.
-
-2. **Frontend & UI/UX (Müşteri Tarafı):**
-   - Müşterinin teklifi onaylarken ödeme yapacağı "Güvenli Ödeme (Checkout)" sayfasının iyileştirilmesi.
-   - Ödeme sonrası müşteriye "İş Bitim PIN Kodu" veya "Onay Butonu" sunan "Aktif İşlem (Active Order)" ekranının tasarlanması.
-
-3. **Frontend & UI/UX (Usta/Servis Tarafı):**
-   - Usta paneline (Partner Dashboard) "Havuzda Bekleyen Bakiyeler (Escrow Balance)" göstergesinin eklenmesi (Motivasyon için).
-   - İş bitiminde ustanın müşteriden onay (PIN/QR) isteyeceği ekranın yapılması.
+This plan details the implementation of missing logical transitions (such as promoting approved appointments to active repair orders) and introducing tabs to view completed/historical records across all corporate dashboards.
 
 ---
 
-## 🚦 Faz 2 İçin Görevlendirilecek Ajanlar (Onay Sonrası Paralel Çalışacak)
+## 🛠️ Proposed Enhancements
 
-- 🏗️ **`database-architect`**: Supabase üzerinde `escrow_transactions` tablosunu ve parayı ustaya güvenle aktaracak PL/pgSQL fonksiyonlarını (`rpc`) yazacak.
-- 🎨 **`frontend-specialist`**: Müşteri için "Güvenli Ödeme Onay" ekranını, Usta için ise "Havuzdaki Kazançlar" arayüzünü geliştirecek.
-- 🔒 **`security-auditor`**: Paranın iki tarafın da onayı olmadan (veya admin kararı olmadan) aktarılamamasını sağlayan RLS (Row Level Security) politikalarını denetleyecek.
-- 🧪 **`test-engineer`**: Ödeme akışını mock verilerle test edecek ve yetkisiz erişim/para aktarımı açıklarını linting araçlarıyla tarayacak.
+### 1. Appointment Promotion Workflow (Mechanics)
+- **Problem:** When a mechanic approves a pending appointment, the appointment status becomes `approved` and vanishes from the list, with no follow-up.
+- **Solution:** Update `handleApproveAppointment` in [MechanicDashboardView.jsx](file:///c:/Users/Bedirhan/Desktop/Carvis-App/Carvis/src/features/partners/components/MechanicDashboardView.jsx) to automatically create a corresponding record in the `orders` table with status `in_progress` and details of the vehicle.
+
+### 2. Historical Records & History Tabs
+Introduce a tab switch (`Active` vs `History`) on the main panels so partners can track completed services and shipped orders:
+- **Mechanics:** Show completed work orders (`status === 'completed'`) and approved appointments.
+- **Parts Sellers:** Show shipped or completed orders (`status === 'shipped'` or `'completed'`).
+- **Seyyar Yıkama:** Show accepted vs completed washing jobs.
+- **Acil Çekici:** Show ongoing towing assignments vs completed roadside assist records.
+- **Sigorta Şirketi:** Show pending risk reviews vs approved active policies.
 
 ---
 
-## ⏸️ CHECKPOINT: Kullanıcı Onayı Bekleniyor
+## 🏁 Verification Plan
 
-Yukarıdaki "İki Taraflı Güvenli Ödeme (Escrow)" mimarisi için plan hazırlanmıştır.
-
-**Onaylıyor musunuz? (Y/N)**
-- Y: Yazılım sürecini (Faz 2) başlatır.
-- N: Plana eklemek/çıkarmak istediklerinizi belirtirsiniz.
+### Automated Tests
+- Run `npm run test` to verify no breakages.
+- Run `python .agent/scripts/checklist.py .` to ensure compliance.

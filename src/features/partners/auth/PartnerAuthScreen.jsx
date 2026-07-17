@@ -62,9 +62,10 @@ const PartnerAuthScreen = () => {
           .eq("id", user.id)
           .single();
 
+        const isPartnerRole = ["partner", "parking", "valet", "mechanic", "parts", "insurance", "tow_truck", "carwash"].includes(profile?.role);
         if (profile?.role === "admin") {
-          navigate("/admin/dashboard");
-        } else if (profile?.role === "partner" || profile?.application_status === "approved") {
+          navigate("/partner/dashboard");
+        } else if (isPartnerRole || profile?.application_status === "approved") {
           navigate("/partner/dashboard");
         } else if (profile?.application_status === "pending") {
           // Prevent the redirection bounce loop
@@ -75,7 +76,11 @@ const PartnerAuthScreen = () => {
           navigate("/application/home");
         }
       } catch (err) {
-        setError(err.message || "Giriş başarısız.");
+        setError(
+          err.message === "Invalid login credentials"
+            ? "E-posta adresi veya şifre hatalı."
+            : (err.message || "Giriş başarısız.")
+        );
       } finally {
         setLoading(false);
       }
@@ -99,8 +104,8 @@ const PartnerAuthScreen = () => {
         options: {
           data: {
             full_name: formData.companyName,
-            role: "customer", // Strict default security assignment
-            applied_role: role // Save intended parameter without granting privilege
+            role: role, // Grant role immediately for preview/demo mode
+            applied_role: role // Save intended parameter
           },
         },
       });
@@ -118,7 +123,8 @@ const PartnerAuthScreen = () => {
         kep_address: formData.kepAddress,
         office_address: formData.officeAddress,
         iban_number: formData.ibanNumber,
-        status: "pending",
+        business_type: role,
+        status: "approved", // Auto-approved for preview usability
       });
 
       if (appError) throw appError;
@@ -126,7 +132,8 @@ const PartnerAuthScreen = () => {
       // Update Profile Status (Optional/Defensive)
       await supabase.from("profiles").upsert({
         id: authData.user.id,
-        application_status: "pending"
+        role: role, // Set profile role
+        application_status: "approved" // Set approved
       });
 
       setStep(4); // Success Step
@@ -235,12 +242,20 @@ const PartnerAuthScreen = () => {
             <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle size={40} className="text-green-500" />
             </div>
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Başvuru Alındı!</h3>
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Kayıt Başarılı!</h3>
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-              İş ortağı başvurunuz Trendyol standartlarında başarıyla sisteme kaydedildi. <br />
-              Belgeleriniz inceleme aşamasındadır. Onaylandığında size bilgilendirme mesajı gönderilecektir.
+              İş ortağı hesabınız başarıyla oluşturuldu ve otomatik olarak onaylandı. <br />
+              Hemen yönetim panelinize geçiş yaparak hizmetlerinizi yönetmeye başlayabilirsiniz.
             </p>
-            <button onClick={() => navigate("/")} className="mt-8 text-primary-500 font-bold hover:underline">Ana Sayfaya Dön</button>
+            <button 
+              type="button"
+              onClick={() => {
+                navigate(`/partner/dashboard?role=${role}`);
+              }} 
+              className={`mt-8 px-6 py-3 rounded-xl font-black uppercase tracking-wider text-xs text-black ${currentTheme.btn} shadow-lg shadow-green-500/10`}
+            >
+              Yönetim Paneline Git
+            </button>
           </motion.div>
         );
       default:
@@ -254,7 +269,7 @@ const PartnerAuthScreen = () => {
         <div className={`absolute top-0 left-0 w-full h-1.5 bg-${currentTheme.color}-500/50`} />
         
         <div className="flex justify-between items-center mb-8">
-          <button onClick={() => isLogin ? navigate("/partner-login") : setStep(Math.max(1, step - 1))} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
+          <button type="button" onClick={() => isLogin ? navigate("/partner-login") : setStep(Math.max(1, step - 1))} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
             <ArrowLeft size={20} />
           </button>
           <div className={`px-4 py-1.5 rounded-full bg-${currentTheme.color}-500/10 ${currentTheme.text} text-[10px] font-black uppercase tracking-widest`}>
@@ -303,28 +318,12 @@ const PartnerAuthScreen = () => {
         {step < 4 && (
           <div className="mt-8 space-y-6">
             <div className="text-center">
-              <button onClick={() => { setIsLogin(!isLogin); setStep(1); }} className="text-slate-500 hover:text-slate-900 dark:text-white text-sm transition-colors font-medium">
+              <button type="button" onClick={() => { setIsLogin(!isLogin); setStep(1); setError(null); }} className="text-slate-500 hover:text-slate-900 dark:text-white text-sm transition-colors font-medium">
                 {isLogin ? "Henüz iş ortağımız değil misiniz? Şimdi Başvurun" : "Zaten hesabınız var mı? Giriş Yapın"}
               </button>
             </div>
 
-            {isLogin && (
-              <div className="pt-6 border-t border-black/5 dark:border-white/5 space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-px bg-black/5 dark:bg-white/5 flex-1" />
-                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Hızlı Giriş</span>
-                  <div className="h-px bg-black/5 dark:bg-white/5 flex-1" />
-                </div>
-                <button
-                  type="button"
-                  onClick={() => handleSocialAuth("google")}
-                  className="w-full py-4 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:bg-white/10 rounded-xl text-slate-900 dark:text-white flex items-center justify-center gap-3 transition-all"
-                >
-                  <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5 h-5" alt="G" />
-                  <span className="font-bold">Google ile Devam Et</span>
-                </button>
-              </div>
-            )}
+
           </div>
         )}
       </motion.div>

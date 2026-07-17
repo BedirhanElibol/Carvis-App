@@ -48,6 +48,27 @@ const VehicleSearch = ({ onVehicleFound }) => {
         engine: `${data.engine_cylinders || "4"} Silindir - ${data.fuel_type || "Benzin"}`,
         plate: selection.plate ? selection.plate.toUpperCase().replace(/\s+/g, '') : "34" + (Math.random() + 1).toString(36).substring(7).toUpperCase(),
         vin: vin,
+        chassis_number: vin,
+        vin_data: {
+          engine_displacement: data.engine_displacement,
+          engine_hp: data.engine_hp,
+          engine_cylinders: data.engine_cylinders,
+          drive_type: data.drive_type,
+          transmission: data.transmission,
+          transmission_speeds: data.transmission_speeds,
+          body_type: data.body_type,
+          fuel_type: data.fuel_type,
+          doors: data.doors,
+          vehicle_type: data.vehicle_type,
+          gvwr: data.gvwr,
+          plant_country: data.plant_country,
+          plant_city: data.plant_city,
+          abs: data.abs,
+          esc: data.esc,
+          traction_control: data.traction_control,
+          airbags: data.airbags,
+          steering: data.steering,
+        },
       });
     } else {
       showAlert("Hata", "Araç bilgileri bulunamadı. Lütfen kontrol ediniz.", "error");

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
+import { getFuelPrices } from "../services/externalApis";
 
 export const useFuelPrices = (t) => {
   const [fuelPrices, setFuelPrices] = useState({
@@ -50,28 +51,87 @@ export const useFuelPrices = (t) => {
             setLastUpdated(latestDateStr);
           }
         } else {
-          // Fallback to static data if DB is empty
-          if (isMounted) {
-            setFuelPrices({
-              istanbul: { benzin: "43.77", motorin: "41.35", lpg: "22.80" },
-              ankara: { benzin: "44.52", motorin: "42.15", lpg: "22.85" },
-              izmir: { benzin: "44.75", motorin: "42.30", lpg: "22.60" }
-            });
-            const d = new Date();
-            setLastUpdated(`${d.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`);
+          // Fallback to live API instead of static mock data
+          try {
+            const istData = await getFuelPrices("istanbul");
+            const ankData = await getFuelPrices("ankara");
+            const izmData = await getFuelPrices("izmir");
+
+            const livePrices = {
+              istanbul: {
+                benzin: istData.results.find(r => r.name.includes("Benzin"))?.price || "65.63",
+                motorin: istData.results.find(r => r.name.includes("Dizel"))?.price || "73.05",
+                lpg: istData.results.find(r => r.name.includes("LPG"))?.price || "32.55"
+              },
+              ankara: {
+                benzin: ankData.results.find(r => r.name.includes("Benzin"))?.price || "44.52",
+                motorin: ankData.results.find(r => r.name.includes("Dizel"))?.price || "42.15",
+                lpg: ankData.results.find(r => r.name.includes("LPG"))?.price || "22.85"
+              },
+              izmir: {
+                benzin: izmData.results.find(r => r.name.includes("Benzin"))?.price || "44.75",
+                motorin: izmData.results.find(r => r.name.includes("Dizel"))?.price || "42.30",
+                lpg: izmData.results.find(r => r.name.includes("LPG"))?.price || "22.60"
+              }
+            };
+
+            if (isMounted) {
+              setFuelPrices(livePrices);
+              setLastUpdated(`${new Date().toLocaleDateString("tr-TR")} ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}`);
+            }
+          } catch (apiErr) {
+            console.error("Live API fallback failed:", apiErr);
+            if (isMounted) {
+              setFuelPrices({
+                istanbul: { benzin: "65.63", motorin: "73.05", lpg: "32.55" },
+                ankara: { benzin: "44.52", motorin: "42.15", lpg: "22.85" },
+                izmir: { benzin: "44.75", motorin: "42.30", lpg: "22.60" }
+              });
+              const d = new Date();
+              setLastUpdated(`${d.toLocaleDateString("tr-TR")} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`);
+            }
           }
         }
       } catch (err) {
         console.error("Live prices fetch from Supabase failed:", err);
-        // Fallback to static data on error too
-        if (isMounted) {
-          setFuelPrices({
-            istanbul: { benzin: "43.77", motorin: "41.35", lpg: "22.80" },
-            ankara: { benzin: "44.52", motorin: "42.15", lpg: "22.85" },
-            izmir: { benzin: "44.75", motorin: "42.30", lpg: "22.60" }
-          });
-          const d = new Date();
-          setLastUpdated(`${d.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" })} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`);
+        // Live API fallback on error
+        try {
+          const istData = await getFuelPrices("istanbul");
+          const ankData = await getFuelPrices("ankara");
+          const izmData = await getFuelPrices("izmir");
+
+          const livePrices = {
+            istanbul: {
+              benzin: istData.results.find(r => r.name.includes("Benzin"))?.price || "65.63",
+              motorin: istData.results.find(r => r.name.includes("Dizel"))?.price || "73.05",
+              lpg: istData.results.find(r => r.name.includes("LPG"))?.price || "32.55"
+            },
+            ankara: {
+              benzin: ankData.results.find(r => r.name.includes("Benzin"))?.price || "44.52",
+              motorin: ankData.results.find(r => r.name.includes("Dizel"))?.price || "42.15",
+              lpg: ankData.results.find(r => r.name.includes("LPG"))?.price || "22.85"
+            },
+            izmir: {
+              benzin: izmData.results.find(r => r.name.includes("Benzin"))?.price || "44.75",
+              motorin: izmData.results.find(r => r.name.includes("Dizel"))?.price || "42.30",
+              lpg: izmData.results.find(r => r.name.includes("LPG"))?.price || "22.60"
+            }
+          };
+
+          if (isMounted) {
+            setFuelPrices(livePrices);
+            setLastUpdated(`${new Date().toLocaleDateString("tr-TR")} ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}`);
+          }
+        } catch (apiErr) {
+          if (isMounted) {
+            setFuelPrices({
+              istanbul: { benzin: "65.63", motorin: "73.05", lpg: "32.55" },
+              ankara: { benzin: "44.52", motorin: "42.15", lpg: "22.85" },
+              izmir: { benzin: "44.75", motorin: "42.30", lpg: "22.60" }
+            });
+            const d = new Date();
+            setLastUpdated(`${d.toLocaleDateString("tr-TR")} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`);
+          }
         }
       }
     };

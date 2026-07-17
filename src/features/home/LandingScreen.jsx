@@ -14,6 +14,7 @@ import LandingHowItWorks from "./components/landing/LandingHowItWorks";
 import LandingPremiumFeatures from "./components/landing/LandingPremiumFeatures";
 import LandingStats from "./components/landing/LandingStats";
 import LandingBusinessPortalCTA from "./components/landing/LandingBusinessPortalCTA";
+import LandingProblemSolution from "./components/landing/LandingProblemSolution";
 
 const CITIES = [
   "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin", "Aydın", "Balıkesir", "Bartın", "Batman", "Bayburt", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Düzce", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Iğdır", "Isparta", "İstanbul", "İzmir", "Kahramanmaraş", "Karabük", "Karaman", "Kars", "Kastamonu", "Kayseri", "Kırıkkale", "Kırklareli", "Kırşehir", "Kilis", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Mardin", "Mersin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Osmaniye", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Şanlıurfa", "Şırnak", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat", "Zonguldak"
@@ -240,6 +241,8 @@ const LandingScreen = () => {
 
         <LandingAppShowcase t={t} language={language} />
 
+        <LandingProblemSolution t={t} language={language} />
+
         <LandingInteractiveMap 
           t={t} 
           language={language}
@@ -296,8 +299,8 @@ const LandingScreen = () => {
                 <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">{t.allServices || "Hizmetler"}</h4>
                 <ul className="space-y-2.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
                   <li><button onClick={() => navigate("/application/home")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.smartDiagnosis || "Yakıt & Gider Takibi"}</button></li>
-                  <li><button onClick={() => navigate("/application/parts")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.autoSpareParts || "Oto Yedek Parça"}</button></li>
-                  <li><button onClick={() => navigate("/application/mechanics")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.expertMechanic || "Uzman Usta & Servis"}</button></li>
+                  <li><button onClick={() => navigate("/app/parts")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.autoSpareParts || "Oto Yedek Parça"}</button></li>
+                  <li><button onClick={() => navigate("/app/mechanics")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.expertMechanic || "Uzman Usta & Servis"}</button></li>
                   <li><button onClick={() => navigate("/application/home")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.sosValet || "SOS & Vale Hizmeti"}</button></li>
                 </ul>
               </div>
@@ -316,8 +319,8 @@ const LandingScreen = () => {
               <div className="space-y-4 text-left">
                 <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">{t.company || "Şirket"}</h4>
                 <ul className="space-y-2.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
-                  <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t.aboutUs || "Hakkımızda"}</a></li>
-                  <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t.contact || "İletişim"}</a></li>
+                  <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white transition-colors">{t.aboutUs || "Hakkımızda"}</a></li>
+                  <li><a href="#" onClick={(e) => e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white transition-colors">{t.contact || "İletişim"}</a></li>
                   <li><a href="#" onClick={(e) => { e.preventDefault(); openModal("kvkk"); }} className="hover:text-slate-900 dark:hover:text-white transition-colors">{t.kvkkText || "KVKK Aydınlatma Metni"}</a></li>
                   <li><a href="/privacy-policy" className="hover:text-slate-900 dark:hover:text-white transition-colors">{t.privacy || "Gizlilik Politikası"}</a></li>
                 </ul>

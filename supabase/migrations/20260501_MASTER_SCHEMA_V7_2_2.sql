@@ -983,6 +983,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
+DROP TRIGGER IF EXISTS trg_notify_service_proof ON public.service_proofs;
 CREATE TRIGGER trg_notify_service_proof
 AFTER INSERT ON public.service_proofs
 FOR EACH ROW EXECUTE FUNCTION public.notify_service_proof_uploaded();
@@ -1388,7 +1389,8 @@ ADD COLUMN IF NOT EXISTS inspection_expiry_date DATE,
 ADD COLUMN IF NOT EXISTS insurance_expiry_date DATE,
 ADD COLUMN IF NOT EXISTS last_tire_change DATE,
 ADD COLUMN IF NOT EXISTS last_battery_change DATE,
-ADD COLUMN IF NOT EXISTS last_oil_change DATE;
+ADD COLUMN IF NOT EXISTS last_oil_change DATE,
+ADD COLUMN IF NOT EXISTS vin_data JSONB DEFAULT NULL;
 
 -- 2. VEHICLE EXPENSES TABLE
 CREATE TABLE IF NOT EXISTS public.vehicle_expenses (
@@ -2371,23 +2373,7 @@ CREATE INDEX IF NOT EXISTS idx_service_req_created_at ON public.service_requests
 ANALYZE;
 
 
--- 6. FUEL TRACKING
-CREATE TABLE IF NOT EXISTS public.fuel_logs (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-    vehicle_id UUID,
-    liters DECIMAL(10,2) NOT NULL,
-    price_per_liter DECIMAL(10,2) NOT NULL,
-    total_cost DECIMAL(12,2) NOT NULL,
-    mileage INTEGER,
-    station_name TEXT,
-    date TIMESTAMPTZ DEFAULT now(),
-    created_at TIMESTAMPTZ DEFAULT now()
-);
-
-ALTER TABLE public.fuel_logs ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "Users can manage own fuel logs" ON public.fuel_logs;
-CREATE POLICY "Users can manage own fuel logs" ON public.fuel_logs FOR ALL USING (auth.uid() = user_id);
+-- 6. FUEL TRACKING (REMOVED DUPLICATE - Defined in section 20260625125000)
 
 
 -- 9. AI DIAGNOSTICS (carvis-ai-core)
@@ -3383,12 +3369,15 @@ CREATE TABLE IF NOT EXISTS public.parking_reservations (
 
 ALTER TABLE public.parking_reservations ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can view their own parking reservations" ON public.parking_reservations;
 CREATE POLICY "Users can view their own parking reservations" ON public.parking_reservations
 FOR SELECT USING (auth.uid() = customer_id OR auth.uid() = parking_id);
 
+DROP POLICY IF EXISTS "Users can insert their own parking reservations" ON public.parking_reservations;
 CREATE POLICY "Users can insert their own parking reservations" ON public.parking_reservations
 FOR INSERT WITH CHECK (auth.uid() = customer_id);
 
+DROP POLICY IF EXISTS "Users can update their own parking reservations" ON public.parking_reservations;
 CREATE POLICY "Users can update their own parking reservations" ON public.parking_reservations
 FOR UPDATE USING (auth.uid() = customer_id OR auth.uid() = parking_id);
 
@@ -3414,12 +3403,15 @@ CREATE TABLE IF NOT EXISTS public.carwash_requests (
 
 ALTER TABLE public.carwash_requests ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can view their own carwash requests" ON public.carwash_requests;
 CREATE POLICY "Users can view their own carwash requests" ON public.carwash_requests
 FOR SELECT USING (auth.uid() = customer_id OR auth.uid() = provider_id);
 
+DROP POLICY IF EXISTS "Users can insert their own carwash requests" ON public.carwash_requests;
 CREATE POLICY "Users can insert their own carwash requests" ON public.carwash_requests
 FOR INSERT WITH CHECK (auth.uid() = customer_id);
 
+DROP POLICY IF EXISTS "Users can update their own carwash requests" ON public.carwash_requests;
 CREATE POLICY "Users can update their own carwash requests" ON public.carwash_requests
 FOR UPDATE USING (auth.uid() = customer_id OR auth.uid() = provider_id);
 
@@ -3435,11 +3427,13 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+DROP TRIGGER IF EXISTS update_parking_reservations_updated_at ON public.parking_reservations;
 CREATE TRIGGER update_parking_reservations_updated_at
     BEFORE UPDATE ON public.parking_reservations
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_carwash_requests_updated_at ON public.carwash_requests;
 CREATE TRIGGER update_carwash_requests_updated_at
     BEFORE UPDATE ON public.carwash_requests
     FOR EACH ROW
@@ -3810,12 +3804,32 @@ ALTER TABLE public.whatsapp_leads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.whatsapp_campaigns ENABLE ROW LEVEL SECURITY;
 
 -- Allow access for authenticated users
+DROP POLICY IF EXISTS "Allow full access for authenticated users on whatsapp_leads" ON public.whatsapp_leads;
 CREATE POLICY "Allow full access for authenticated users on whatsapp_leads" ON public.whatsapp_leads FOR ALL USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow full access for authenticated users on whatsapp_campaigns" ON public.whatsapp_campaigns;
 CREATE POLICY "Allow full access for authenticated users on whatsapp_campaigns" ON public.whatsapp_campaigns FOR ALL USING (auth.role() = 'authenticated');
 
--- Setup realtime
-ALTER PUBLICATION supabase_realtime ADD TABLE public.whatsapp_leads;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.whatsapp_campaigns;
+-- Setup realtime safely (PostgreSQL does not support DROP TABLE IF EXISTS in ALTER PUBLICATION)
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_publication_rel pr
+        JOIN pg_publication p ON p.oid = pr.prpubid
+        JOIN pg_class c ON c.oid = pr.prrelid
+        WHERE p.pubname = 'supabase_realtime' AND c.relname = 'whatsapp_leads'
+    ) THEN
+        ALTER PUBLICATION supabase_realtime ADD TABLE public.whatsapp_leads;
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_publication_rel pr
+        JOIN pg_publication p ON p.oid = pr.prpubid
+        JOIN pg_class c ON c.oid = pr.prrelid
+        WHERE p.pubname = 'supabase_realtime' AND c.relname = 'whatsapp_campaigns'
+    ) THEN
+        ALTER PUBLICATION supabase_realtime ADD TABLE public.whatsapp_campaigns;
+    END IF;
+END $$;
 
 
 -- =========================================================
@@ -3911,7 +3925,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 -- =========================================================
 
 -- Create fuel_logs table for Fuel Tracking System
-create table public.fuel_logs (
+CREATE TABLE IF NOT EXISTS public.fuel_logs (
     id uuid default gen_random_uuid() primary key,
     user_id uuid references auth.users(id) on delete cascade not null,
     vehicle_id uuid references public.vehicles(id) on delete cascade not null,
@@ -3928,18 +3942,22 @@ create table public.fuel_logs (
 -- RLS Policies
 alter table public.fuel_logs enable row level security;
 
+DROP POLICY IF EXISTS "Users can view their own fuel logs" ON public.fuel_logs;
 create policy "Users can view their own fuel logs"
     on public.fuel_logs for select
     using ( auth.uid() = user_id );
 
+DROP POLICY IF EXISTS "Users can insert their own fuel logs" ON public.fuel_logs;
 create policy "Users can insert their own fuel logs"
     on public.fuel_logs for insert
     with check ( auth.uid() = user_id );
 
+DROP POLICY IF EXISTS "Users can update their own fuel logs" ON public.fuel_logs;
 create policy "Users can update their own fuel logs"
     on public.fuel_logs for update
     using ( auth.uid() = user_id );
 
+DROP POLICY IF EXISTS "Users can delete their own fuel logs" ON public.fuel_logs;
 create policy "Users can delete their own fuel logs"
     on public.fuel_logs for delete
     using ( auth.uid() = user_id );
@@ -3955,7 +3973,7 @@ create policy "Users can delete their own fuel logs"
 -- 2. Create product_qna table
 CREATE TABLE IF NOT EXISTS public.product_qna (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    product_id INTEGER REFERENCES public.oem_parts(id) ON DELETE CASCADE,
+    product_id INTEGER REFERENCES public.products(id) ON DELETE CASCADE,
     user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
     seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
     question TEXT NOT NULL,
@@ -3969,18 +3987,22 @@ CREATE TABLE IF NOT EXISTS public.product_qna (
 ALTER TABLE public.product_qna ENABLE ROW LEVEL SECURITY;
 
 -- Anyone can read public Q&A
+DROP POLICY IF EXISTS "Public Q&A are viewable by everyone" ON public.product_qna;
 CREATE POLICY "Public Q&A are viewable by everyone" ON public.product_qna
     FOR SELECT USING (is_public = true);
 
 -- Users can read their own private Q&A
+DROP POLICY IF EXISTS "Users can view own private Q&A" ON public.product_qna;
 CREATE POLICY "Users can view own private Q&A" ON public.product_qna
     FOR SELECT USING (auth.uid() = user_id OR auth.uid() = seller_id);
 
 -- Authenticated users can insert questions
+DROP POLICY IF EXISTS "Authenticated users can insert questions" ON public.product_qna;
 CREATE POLICY "Authenticated users can insert questions" ON public.product_qna
     FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 -- Sellers can update (answer) questions directed to them
+DROP POLICY IF EXISTS "Sellers can update questions" ON public.product_qna;
 CREATE POLICY "Sellers can update questions" ON public.product_qna
     FOR UPDATE USING (auth.uid() = seller_id);
 
@@ -3992,7 +4014,12 @@ CREATE POLICY "Sellers can update questions" ON public.product_qna
 -- Migration: Escrow System
 -- Created: 2026-07-08
 
-CREATE TYPE public.escrow_status AS ENUM ('locked', 'released', 'disputed', 'refunded');
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'escrow_status') THEN
+        CREATE TYPE public.escrow_status AS ENUM ('locked', 'released', 'disputed', 'refunded');
+    END IF;
+END $$;
 
 CREATE TABLE IF NOT EXISTS public.escrow_transactions (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -4009,9 +4036,11 @@ CREATE TABLE IF NOT EXISTS public.escrow_transactions (
 -- RLS Policies
 ALTER TABLE public.escrow_transactions ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can view own escrows" ON public.escrow_transactions;
 CREATE POLICY "Users can view own escrows" ON public.escrow_transactions
     FOR SELECT USING (auth.uid() = customer_id OR auth.uid() = provider_id);
 
+DROP POLICY IF EXISTS "Admin can view all escrows" ON public.escrow_transactions;
 CREATE POLICY "Admin can view all escrows" ON public.escrow_transactions
     FOR ALL USING (EXISTS (SELECT 1 FROM auth.users WHERE id = auth.uid() AND raw_user_meta_data->>'role' = 'admin'));
 
@@ -4081,8 +4110,8 @@ EXCEPTION
     WHEN duplicate_object THEN null;
 END $$;
 
--- 2. Add KYC columns to sellers table
-ALTER TABLE public.sellers 
+-- 2. Add KYC columns to profiles table
+ALTER TABLE public.profiles 
 ADD COLUMN IF NOT EXISTS kyc_status kyc_status_type DEFAULT 'unverified',
 ADD COLUMN IF NOT EXISTS criminal_record_url TEXT,
 ADD COLUMN IF NOT EXISTS competence_cert_url TEXT,
@@ -4095,7 +4124,7 @@ ADD COLUMN IF NOT EXISTS legal_terms_ip_address TEXT;
 -- 3. Create Audit Trail table for legal agreements
 CREATE TABLE IF NOT EXISTS public.partner_legal_agreements (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    seller_id UUID NOT NULL REFERENCES public.sellers(id) ON DELETE CASCADE,
+    seller_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
     agreement_type TEXT NOT NULL, -- e.g., 'liability_waiver', 'kvkk', 'distance_selling'
     agreed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     ip_address TEXT,
@@ -4106,10 +4135,12 @@ CREATE TABLE IF NOT EXISTS public.partner_legal_agreements (
 -- RLS for legal agreements
 ALTER TABLE public.partner_legal_agreements ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Partners can view their own agreements" ON public.partner_legal_agreements;
 CREATE POLICY "Partners can view their own agreements" 
 ON public.partner_legal_agreements FOR SELECT 
 USING (auth.uid() = seller_id);
 
+DROP POLICY IF EXISTS "Partners can insert their own agreements" ON public.partner_legal_agreements;
 CREATE POLICY "Partners can insert their own agreements" 
 ON public.partner_legal_agreements FOR INSERT 
 WITH CHECK (auth.uid() = seller_id);
@@ -4140,6 +4171,7 @@ CREATE TABLE IF NOT EXISTS public.legal_templates (
 ALTER TABLE public.legal_templates ENABLE ROW LEVEL SECURITY;
 
 -- Anyone can read active templates
+DROP POLICY IF EXISTS "Anyone can view active templates" ON public.legal_templates;
 CREATE POLICY "Anyone can view active templates" 
 ON public.legal_templates FOR SELECT 
 USING (is_active = true);
@@ -4149,7 +4181,7 @@ CREATE TABLE IF NOT EXISTS public.order_legal_logs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
     customer_id UUID NOT NULL REFERENCES auth.users(id),
-    seller_id UUID NOT NULL REFERENCES public.sellers(id),
+    seller_id UUID NOT NULL REFERENCES public.profiles(id),
     mss_version TEXT,
     obf_version TEXT,
     kvkk_version TEXT,
@@ -4161,14 +4193,17 @@ CREATE TABLE IF NOT EXISTS public.order_legal_logs (
 -- RLS for order_legal_logs
 ALTER TABLE public.order_legal_logs ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Customers can view their own order logs" ON public.order_legal_logs;
 CREATE POLICY "Customers can view their own order logs" 
 ON public.order_legal_logs FOR SELECT 
 USING (auth.uid() = customer_id);
 
+DROP POLICY IF EXISTS "Sellers can view logs for their orders" ON public.order_legal_logs;
 CREATE POLICY "Sellers can view logs for their orders" 
 ON public.order_legal_logs FOR SELECT 
 USING (auth.uid() = seller_id);
 
+DROP POLICY IF EXISTS "Customers can insert logs for their orders" ON public.order_legal_logs;
 CREATE POLICY "Customers can insert logs for their orders" 
 ON public.order_legal_logs FOR INSERT 
 WITH CHECK (auth.uid() = customer_id);
@@ -4214,7 +4249,7 @@ CREATE TABLE IF NOT EXISTS public.assurance_claims (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
     customer_id UUID NOT NULL REFERENCES auth.users(id),
-    seller_id UUID NOT NULL REFERENCES public.sellers(id),
+    seller_id UUID NOT NULL REFERENCES public.profiles(id),
     claim_status claim_status_type DEFAULT 'pending',
     reported_damage_desc TEXT NOT NULL,
     damage_images TEXT[], -- Array of URLs to secure storage images
@@ -4228,14 +4263,17 @@ CREATE TABLE IF NOT EXISTS public.assurance_claims (
 -- RLS for assurance_claims
 ALTER TABLE public.assurance_claims ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Customers can view their own claims" ON public.assurance_claims;
 CREATE POLICY "Customers can view their own claims" 
 ON public.assurance_claims FOR SELECT 
 USING (auth.uid() = customer_id);
 
+DROP POLICY IF EXISTS "Customers can insert their claims" ON public.assurance_claims;
 CREATE POLICY "Customers can insert their claims" 
 ON public.assurance_claims FOR INSERT 
 WITH CHECK (auth.uid() = customer_id);
 
+DROP POLICY IF EXISTS "Sellers can view recourse claims against them" ON public.assurance_claims;
 CREATE POLICY "Sellers can view recourse claims against them" 
 ON public.assurance_claims FOR SELECT 
 USING (auth.uid() = seller_id);
@@ -4353,3 +4391,225 @@ WHERE category = 'Motor Parçaları' OR name ILIKE '%buji%' OR name ILIKE '%kay�
 UPDATE public.products
 SET compatibility = '[]'::jsonb
 WHERE compatibility IS NULL;
+
+
+-- =========================================================
+-- CARVIS ADMIN TEST ACCOUNT & PROFILE SEEDING
+-- =========================================================
+
+DO $$
+DECLARE
+    user_id UUID;
+    encrypted_pw TEXT;
+BEGIN
+    -- Şifreyi pgcrypto ile bf (Blowfish) formatında hashle
+    encrypted_pw := crypt('b998877', gen_salt('bf', 10));
+    
+    -- Kullanıcıyı bul
+    SELECT id INTO user_id FROM auth.users WHERE email = 'bedirelibol7@gmail.com';
+    
+    IF user_id IS NULL THEN
+        -- Eğer kullanıcı yoksa oluştur
+        INSERT INTO auth.users (
+            instance_id, id, aud, role, email, encrypted_password, 
+            email_confirmed_at, recovery_sent_at, last_sign_in_at, 
+            raw_app_meta_data, raw_user_meta_data, created_at, updated_at, 
+            confirmation_token, email_change, email_change_token_new, recovery_token
+        )
+        VALUES (
+            '00000000-0000-0000-0000-000000000000',
+            gen_random_uuid(),
+            'authenticated',
+            'authenticated',
+            'bedirelibol7@gmail.com',
+            encrypted_pw,
+            now(),
+            null,
+            now(),
+            '{"provider": "email", "providers": ["email"]}'::jsonb,
+            '{"full_name": "Bedirhan Elibol"}'::jsonb,
+            now(),
+            now(),
+            '',
+            '',
+            '',
+            ''
+        )
+        RETURNING id INTO user_id;
+    ELSE
+        -- Varsa şifre ve onay durumunu güncelle
+        UPDATE auth.users
+        SET encrypted_password = encrypted_pw,
+            email_confirmed_at = COALESCE(email_confirmed_at, now()),
+            updated_at = now(),
+            raw_user_meta_data = COALESCE(raw_user_meta_data, '{}'::jsonb) || '{"full_name": "Bedirhan Elibol"}'::jsonb
+        WHERE id = user_id;
+    END IF;
+
+    -- Ana profil tablosunu güncelle/ekle
+    INSERT INTO public.profiles (
+        id, email, full_name, role, application_status, phone_number, is_approved_partner, is_active_provider
+    )
+    VALUES (
+        user_id,
+        'bedirelibol7@gmail.com',
+        'Bedirhan Elibol',
+        'admin',
+        'approved',
+        '+905555555555',
+        true,
+        true
+    )
+    ON CONFLICT (id) DO UPDATE
+    SET role = 'admin',
+        full_name = 'Bedirhan Elibol',
+        application_status = 'approved',
+        is_approved_partner = true,
+        is_active_provider = true;
+
+    -- Cüzdan oluştur
+    INSERT INTO public.wallets (id, user_id, balance, currency)
+    VALUES (user_id, user_id, 10000.00, 'TRY')
+    ON CONFLICT (id) DO NOTHING;
+
+    -- 1. Vale Profili
+    INSERT INTO public.valet_profiles (id, base_price, service_radius_km, experience_years, license_type, bio, is_active_now, rating)
+    VALUES (user_id, 150.00, 20, 5, 'B', 'Carvis Test Vale Hesabı', true, 5.0)
+    ON CONFLICT (id) DO UPDATE SET is_active_now = true;
+
+    -- 2. Otopark Profili
+    INSERT INTO public.parking_profiles (id, parking_name, total_capacity, occupied_count, price_per_hour, is_indoor, has_security, has_valet, address_text, city)
+    VALUES (user_id, 'Carvis Test Otopark', 100, 15, 50.00, true, true, true, 'Kavaklıdere, Ankara', 'Ankara')
+    ON CONFLICT (id) DO NOTHING;
+
+    -- 3. Parça Tedarikçi Profili
+    INSERT INTO public.parts_profiles (id, business_name, delivery_radius_km, store_type, tax_info, is_warehouse_direct, categories)
+    VALUES (user_id, 'Carvis Test Parça Deposu', 100, 'wholesale', '1234567890', true, ARRAY['Balata', 'Filtre', 'Yağ'])
+    ON CONFLICT (id) DO NOTHING;
+
+    -- 4. Oto Yıkama Profili
+    INSERT INTO public.carwash_profiles (id, company_name, base_price, service_radius_km, has_own_water_tank, has_generator, is_eco_friendly, seller_id, rating)
+    VALUES (user_id, 'Carvis Test Oto Yıkama', 200.00, 15, true, true, true, user_id, 5.0)
+    ON CONFLICT (id) DO NOTHING;
+
+    -- 5. Çekici Profili
+    INSERT INTO public.tow_truck_profiles (id, company_name, service_types, truck_capacity_tons, is_24_7, response_time_minutes, coverage_provinces, has_flatbed, base_price, price_per_km, is_active_now, rating)
+    VALUES (user_id, 'Carvis Test Çekici', ARRAY['towing', 'tire_change', 'battery_boost'], 3.5, true, 15, ARRAY['Ankara', 'İstanbul'], true, 500.00, 15.00, true, 5.0)
+    ON CONFLICT (id) DO NOTHING;
+
+    -- 6. Oto Servis / Usta Profili
+    IF NOT EXISTS (SELECT 1 FROM public.mechanic_shops WHERE seller_id = user_id) THEN
+        INSERT INTO public.mechanic_shops (seller_id, shop_name, brands, rating, experience_years, is_active)
+        VALUES (user_id, 'Carvis Test Oto Servis', ARRAY['Audi', 'BMW', 'Volkswagen', 'Renault', 'Fiat'], 5.0, 10, true);
+    END IF;
+
+    -- 7. Sigorta Şirketi Profili
+    INSERT INTO public.insurance_company_profiles (id, company_name, license_number, company_type, policy_types, coverage_limit_max, monthly_premium_min, monthly_premium_max, is_digital_policy, partner_garage_network_count, is_rapidsy_integrated, is_24_7_support, rating)
+    VALUES (user_id, 'Carvis Test Sigorta', 'SIG-987654', ARRAY['kasko', 'trafik'], ARRAY['Kasko Standart', 'Zorunlu Trafik'], 1000000.00, 150.00, 1500.00, true, 50, true, true, 5.0)
+    ON CONFLICT (id) DO NOTHING;
+
+-- End of schema migration. All updates verified and idempotent.
+END $$;
+
+
+-- =========================================================
+-- ADDITIONAL MASTER TABLES FOR CORPORATE PARTNER FEATURES
+-- =========================================================
+
+-- 1. Commission Rates Table
+CREATE TABLE IF NOT EXISTS public.commission_rates (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    category VARCHAR(255) UNIQUE NOT NULL,
+    rate DECIMAL(5, 2) NOT NULL CHECK (rate >= 0 AND rate <= 100),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Seed default commission rates
+INSERT INTO public.commission_rates (category, rate) VALUES
+('Balata & Fren', 12.00),
+('Debriyaj & Şanzıman', 15.00),
+('Filtre & Yağ Bakım', 10.00),
+('Elektrik & Akü', 8.00),
+('Dış Kaporta & Estetik', 14.00)
+ON CONFLICT (category) DO NOTHING;
+
+-- 2. Coupons Table
+CREATE TABLE IF NOT EXISTS public.coupons (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    seller_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    discount_percentage DECIMAL(5, 2) NOT NULL CHECK (discount_percentage > 0 AND discount_percentage <= 100),
+    is_active BOOLEAN DEFAULT TRUE,
+    expires_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. Campaigns Table
+CREATE TABLE IF NOT EXISTS public.campaigns (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    seller_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    discount_rate DECIMAL(5, 2) NOT NULL CHECK (discount_rate > 0 AND discount_rate <= 100),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Seed default campaigns
+INSERT INTO public.campaigns (seller_id, title, description, discount_rate, is_active)
+SELECT id, 'Trendyol Partner Özel İndirimi', 'Tüm yedek parça siparişlerinde %10 indirim fırsatı.', 10.00, true
+FROM auth.users
+WHERE email = 'bedirelibol7@gmail.com'
+ON CONFLICT DO NOTHING;
+
+-- 4. Partner Loans Table
+CREATE TABLE IF NOT EXISTS public.partner_loans (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    seller_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    amount DECIMAL(12, 2) NOT NULL CHECK (amount > 0),
+    maturity_months INT NOT NULL CHECK (maturity_months > 0),
+    interest_rate DECIMAL(5, 2) NOT NULL DEFAULT 1.99,
+    status VARCHAR(50) DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'declined')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 5. Invoices Table
+CREATE TABLE IF NOT EXISTS public.invoices (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    order_id UUID REFERENCES public.orders(id) ON DELETE SET NULL,
+    seller_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    invoice_number VARCHAR(100) UNIQUE NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL CHECK (amount >= 0),
+    tax_rate DECIMAL(5, 2) DEFAULT 20.00,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Seed default invoices from existing orders if any
+INSERT INTO public.invoices (order_id, seller_id, invoice_number, amount, tax_rate)
+SELECT id, seller_id, 'FTR-' || to_char(created_at, 'YYYYMMDD') || '-' || substring(id::text, 1, 6), total_amount, 20.00
+FROM public.orders
+ON CONFLICT DO NOTHING;
+
+-- Enable RLS
+ALTER TABLE public.commission_rates ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.coupons ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.campaigns ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.partner_loans ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;
+
+-- Create basic access policies
+DROP POLICY IF EXISTS "Anyone can view commission rates" ON public.commission_rates;
+CREATE POLICY "Anyone can view commission rates" ON public.commission_rates FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Sellers can manage their coupons" ON public.coupons;
+CREATE POLICY "Sellers can manage their coupons" ON public.coupons FOR ALL USING (auth.uid() = seller_id);
+
+DROP POLICY IF EXISTS "Sellers can manage their campaigns" ON public.campaigns;
+CREATE POLICY "Sellers can manage their campaigns" ON public.campaigns FOR ALL USING (auth.uid() = seller_id);
+
+DROP POLICY IF EXISTS "Sellers can manage their loans" ON public.partner_loans;
+CREATE POLICY "Sellers can manage their loans" ON public.partner_loans FOR ALL USING (auth.uid() = seller_id);
+
+DROP POLICY IF EXISTS "Sellers can manage their invoices" ON public.invoices;
+CREATE POLICY "Sellers can manage their invoices" ON public.invoices FOR ALL USING (auth.uid() = seller_id);
+

@@ -12,11 +12,12 @@ describe('getEVStations', () => {
     vi.resetAllMocks();
   });
 
-  it('should return empty array if API key is missing', async () => {
+  it('should return high-quality mock data if API key is missing', async () => {
     import.meta.env.VITE_OPEN_CHARGE_MAP_KEY = '';
     const result = await getEVStations(41, 29);
-    expect(result).toEqual([]);
-    expect(console.error).toHaveBeenCalledWith('OpenChargeMap Key missing, cannot fetch stations.');
+    expect(result).toHaveLength(3);
+    expect(result[0].ID).toBe('zes-1');
+    expect(console.warn).toHaveBeenCalledWith('OpenChargeMap Key missing, using high-quality local EV stations.');
   });
 
   it('should fetch and return data when API key is present', async () => {

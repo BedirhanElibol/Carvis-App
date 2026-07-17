@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Calendar, Car, Key, LayoutDashboard, LogOut, Menu, Package, ParkingCircle, Settings, ShieldAlert, Shield, Tag, Truck, Droplets, User, Wrench, X, FileText, ClipboardList } from "lucide-react";
+import { Calendar, Car, Key, LayoutDashboard, LogOut, Menu, Package, ParkingCircle, Settings, ShieldAlert, Shield, Tag, Truck, Droplets, User, Wrench, X, FileText, ClipboardList, Percent, Wallet, DollarSign, Landmark } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
+// Import High-Fidelity Views
+import InvoiceListingView from "../../features/partners/components/InvoiceListingView";
+import OrderRecordsView from "../../features/partners/components/OrderRecordsView";
+import FinancialReportsView from "../../features/partners/components/FinancialReportsView";
+import PartnerLoanView from "../../features/partners/components/PartnerLoanView";
+import CommissionTariffsView from "../../features/partners/components/CommissionTariffsView";
+import PromotionsView from "../../features/partners/components/PromotionsView";
+import ContractsView from "../../features/partners/components/ContractsView";
+
 const PartnerLayout = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, handleLogout: logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeView, setActiveView] = useState("dashboard");
 
-  // Initial role from Auth Context. DO NOT COMPROMISE SECURITY with defaults.
+  // Initial role from Auth Context.
   const [role, setRole] = useState(currentUser?.role || null);
 
   useEffect(() => {
     if (currentUser) {
-      const allowedRoles = ["parking", "valet", "mechanic", "parts", "insurance", "tow_truck", "carwash"];
+      const allowedRoles = ["parking", "valet", "mechanic", "parts", "insurance", "tow_truck", "carwash", "admin", "partner"];
       if (!allowedRoles.includes(currentUser.role)) {
-        // STRICT: If not in allowed list, KICK OUT immediately.
         navigate("/partner-login");
       } else {
-        setRole(currentUser.role);
+        setRole(currentUser.role === "partner" ? "mechanic" : currentUser.role);
       }
     } else {
-      // No user? Redirect to login.
       navigate("/partner-login");
     }
   }, [currentUser, navigate]);
@@ -32,118 +40,101 @@ const PartnerLayout = () => {
     navigate("/");
   };
 
-  const navItems = [
-    {
-      key: "dashboard",
-      label: "Panel",
-      icon: LayoutDashboard,
-      path: "/partner/dashboard",
-    },
-    {
-      key: "settings",
-      label: "Ayarlar",
-      icon: Settings,
-      path: "/partner/settings",
-    },
+  const handleMenuClick = (item) => {
+    setIsSidebarOpen(false);
+    if (item.viewKey) {
+      setActiveView(item.viewKey);
+    } else {
+      setActiveView("dashboard");
+      navigate(item.path);
+    }
+  };
+
+  // Structured Navigation Groups based on Trendyol Partner Layout screenshots
+  const generalItems = [
+    { key: "dashboard", label: "Panel", icon: LayoutDashboard, path: "/partner/dashboard" }
   ];
 
-  // Role specific items
+  // Add role-specific items to general group
   if (role === "parking") {
-    navItems.splice(1, 0, {
-      key: "capacity",
-      label: "Otopark Yönetimi",
-      icon: ParkingCircle,
-      path: "/partner/parking/capacity",
-    });
+    generalItems.push({ key: "capacity", label: "Otopark Yönetimi", icon: ParkingCircle, path: "/partner/parking/capacity" });
   } else if (role === "valet") {
-    navItems.splice(1, 0, {
-      key: "requests",
-      label: "Vale Çağrıları",
-      icon: Key,
-      path: "/partner/valet/requests",
-    });
+    generalItems.push({ key: "requests", label: "Vale Çağrıları", icon: Key, path: "/partner/valet/requests" });
   } else if (role === "mechanic") {
-    navItems.splice(1, 0, {
-      key: "campaigns",
-      label: "Kampanyalarım",
-      icon: Tag,
-      path: "/partner/campaigns",
-    });
-    navItems.splice(1, 0, {
-      key: "services",
-      label: "Hizmet Paketleri",
-      icon: Settings,
-      path: "/partner/mechanic/services",
-    });
-    navItems.splice(1, 0, {
-      key: "jobs",
-      label: "İş Takibi",
-      icon: Wrench,
-      path: "/partner/mechanic/jobs",
-    });
+    generalItems.push({ key: "jobs", label: "İş Takibi", icon: Wrench, path: "/partner/mechanic/jobs" });
+    generalItems.push({ key: "services", label: "Hizmet Paketleri", icon: Settings, path: "/partner/mechanic/services" });
   } else if (role === "parts") {
-    navItems.splice(1, 0, {
-      key: "products",
-      label: "Ürün Yönetimi",
-      icon: Package,
-      path: "/partner/products",
-    });
+    generalItems.push({ key: "products", label: "Ürün Yönetimi", icon: Package, path: "/partner/products" });
   } else if (role === "insurance") {
-    navItems.splice(1, 0, {
-      key: "claims",
-      label: "Hasar Talepleri",
-      icon: ClipboardList,
-      path: "/partner/insurance/claims",
-    });
-    navItems.splice(1, 0, {
-      key: "policies",
-      label: "Poliçe Teklifleri",
-      icon: FileText,
-      path: "/partner/insurance/policies",
-    });
+    generalItems.push({ key: "claims", label: "Hasar Talepleri", icon: ClipboardList, path: "/partner/insurance/claims" });
+    generalItems.push({ key: "policies", label: "Poliçe Teklifleri", icon: FileText, path: "/partner/insurance/policies" });
   } else if (role === "tow_truck") {
-    navItems.splice(1, 0, {
-      key: "assignments",
-      label: "Çekici Görevleri",
-      icon: Truck,
-      path: "/partner/tow/assignments",
-    });
+    generalItems.push({ key: "assignments", label: "Çekici Görevleri", icon: Truck, path: "/partner/tow/assignments" });
   } else if (role === "carwash") {
-    navItems.splice(1, 0, {
-      key: "slots",
-      label: "Randevu Takvimleri",
-      icon: Droplets,
-      path: "/partner/carwash/slots",
-    });
+    generalItems.push({ key: "slots", label: "Randevu Takvimleri", icon: Droplets, path: "/partner/carwash/slots" });
   }
 
-  // Add appointments link for all partner roles (mechanic, valet, carwash, etc.)
   const appointmentRoles = ["mechanic", "valet", "carwash", "parking", "tow_truck"];
   if (appointmentRoles.includes(role)) {
-    navItems.push({
-      key: "appointments",
-      label: "Randevularım",
-      icon: Calendar,
-      path: "/partner/appointments",
-    });
+    generalItems.push({ key: "appointments", label: "Randevularım", icon: Calendar, path: "/partner/appointments" });
   }
+
+  // Financial and pricing groupings matching screenshots exactly
+  const pricingItems = [
+    { key: "komisyon_tarifeleri", label: "Komisyon Tarifeleri", icon: Percent, viewKey: "komisyon_tarifeleri", badge: "plus" }
+  ];
+
+  const shippingItems = [
+    { key: "siparis_kayitlari", label: "Sipariş Kayıtları", icon: ClipboardList, viewKey: "siparis_kayitlari" }
+  ];
+
+  const financeItems = [
+    { key: "fatura_listeleme", label: "Fatura Listeleme", icon: FileText, viewKey: "fatura_listeleme" },
+    { key: "finans_raporlari", label: "Finans Raporları", icon: Wallet, viewKey: "finans_raporlari", badge: "Yeni" }
+  ];
+
+  const solutionItems = [
+    { key: "partner_loan", label: "İş Ortağım Kredisi", icon: Landmark, viewKey: "partner_loan", badge: "Popüler" }
+  ];
+
+  const promoItems = [
+    { key: "promotions", label: "Kuponlar & Kampanyalar", icon: Tag, viewKey: "promotions" }
+  ];
+
+  const legalItems = [
+    { key: "sozlesmeler", label: "Sözleşmeler & Kurallar", icon: Shield, viewKey: "sozlesmeler" }
+  ];
+
+  const renderBadge = (badge) => {
+    if (!badge) return null;
+    if (badge === "plus") {
+      return <span className="text-[9px] font-black text-rose-500 bg-rose-500/10 px-1.5 py-0.5 rounded uppercase tracking-tighter ml-auto">plus</span>;
+    }
+    if (badge === "Yeni") {
+      return <span className="text-[9px] font-black text-white bg-red-600 px-1.5 py-0.5 rounded ml-auto">Yeni</span>;
+    }
+    if (badge === "Popüler") {
+      return <span className="text-[9px] font-black text-white bg-orange-600 px-1.5 py-0.5 rounded ml-auto">Popüler</span>;
+    }
+    return null;
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white flex">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 border-r border-black/5 dark:border-white/5 transform transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 border-r border-black/5 dark:border-white/5 transform transition-transform duration-300 md:translate-x-0 overflow-y-auto ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="p-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
-              <Car size={20} className="text-slate-900 dark:text-white" />
+            <div className="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center">
+              <Car size={20} className="text-white" />
             </div>
             <div>
               <h1 className="text-xl font-black tracking-tighter">RAPIDSY</h1>
-              <p className="text-[10px] text-primary-400 font-bold uppercase tracking-widest">
+              <p className="text-[10px] text-orange-500 font-bold uppercase tracking-widest">
                 PARTNER
               </p>
             </div>
@@ -156,123 +147,182 @@ const PartnerLayout = () => {
           </button>
         </div>
 
-        <nav className="px-4 py-4 space-y-2">
-          {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <button
-                key={item.key}
-                onClick={() => {
-                  navigate(item.path);
-                  setIsSidebarOpen(false);
-                }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive
-                    ? "bg-primary-600 text-slate-900 dark:text-white shadow-lg shadow-primary-900/50"
-                    : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
-                }`}
-              >
-                <item.icon size={20} />
-                <span className="font-medium text-sm">{item.label}</span>
-              </button>
-            );
-          })}
-        </nav>
+        {/* Sidebar Nav Sections */}
+        <div className="px-4 py-2 space-y-6 pb-24">
+          {/* Group 1: Genel */}
+          <div className="space-y-1">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Genel</p>
+            {generalItems.map((item) => {
+              const isActive = activeView === "dashboard" && location.pathname === item.path;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleMenuClick(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                    isActive
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                  }`}
+                >
+                  <item.icon size={18} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
 
-        {/* DEV: Role Switcher */}
-        <div className="px-4 py-4 mt-4 border-t border-black/5 dark:border-white/5">
-          <p className="text-[10px] text-slate-500 font-bold uppercase mb-2">
-            Simüle Modu (Dev)
-          </p>
-          <div className="grid grid-cols-3 gap-1">
-            <button
-              onClick={() => setRole("parking")}
-              className={`p-2 rounded-lg text-xs font-bold ${
-                role === "parking"
-                  ? "bg-primary-500 text-white"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-              }`}
-            >
-              Oto
-            </button>
-            <button
-              onClick={() => setRole("valet")}
-              className={`p-2 rounded-lg text-xs font-bold ${
-                role === "valet"
-                  ? "bg-emerald-500 text-white"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-              }`}
-            >
-              Vale
-            </button>
-            <button
-              onClick={() => setRole("mechanic")}
-              className={`p-2 rounded-lg text-xs font-bold ${
-                role === "mechanic"
-                  ? "bg-orange-500 text-white"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-              }`}
-            >
-              Usta
-            </button>
-            <button
-              onClick={() => setRole("parts")}
-              className={`p-2 rounded-lg text-xs font-bold ${
-                role === "parts"
-                  ? "bg-yellow-500 text-white"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-              }`}
-            >
-              Parça
-            </button>
-            <button
-              onClick={() => setRole("insurance")}
-              className={`p-2 rounded-lg text-xs font-bold ${
-                role === "insurance"
-                  ? "bg-blue-500 text-white"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-              }`}
-            >
-              Sigorta
-            </button>
-            <button
-              onClick={() => setRole("tow_truck")}
-              className={`p-2 rounded-lg text-xs font-bold ${
-                role === "tow_truck"
-                  ? "bg-red-500 text-white"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-              }`}
-            >
-              Çekici
-            </button>
-            <button
-              onClick={() => setRole("carwash")}
-              className={`p-2 rounded-lg text-xs font-bold ${
-                role === "carwash"
-                  ? "bg-cyan-500 text-white"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-              }`}
-            >
-              Yıkama
-            </button>
+          {/* Group 2: Fiyatlandırma */}
+          <div className="space-y-1">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Fiyatlandırma</p>
+            {pricingItems.map((item) => {
+              const isActive = activeView === item.viewKey;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleMenuClick(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                    isActive
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                  }`}
+                >
+                  <item.icon size={18} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                  {renderBadge(item.badge)}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Group 3: Sipariş & Kargo */}
+          <div className="space-y-1">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Sipariş & Kargo</p>
+            {shippingItems.map((item) => {
+              const isActive = activeView === item.viewKey;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleMenuClick(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                    isActive
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                  }`}
+                >
+                  <item.icon size={18} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Group 4: Finans & Ödemeler */}
+          <div className="space-y-1">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Finans & Ödemeler</p>
+            {financeItems.map((item) => {
+              const isActive = activeView === item.viewKey;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleMenuClick(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                    isActive
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                  }`}
+                >
+                  <item.icon size={18} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                  {renderBadge(item.badge)}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Group 5: Finansal Çözümler */}
+          <div className="space-y-1">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Finansal Çözümler</p>
+            {solutionItems.map((item) => {
+              const isActive = activeView === item.viewKey;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleMenuClick(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                    isActive
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                  }`}
+                >
+                  <item.icon size={18} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                  {renderBadge(item.badge)}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Group 6: Promosyon */}
+          <div className="space-y-1">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Promosyon</p>
+            {promoItems.map((item) => {
+              const isActive = activeView === item.viewKey;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleMenuClick(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                    isActive
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                  }`}
+                >
+                  <item.icon size={18} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Group 7: Yasal & Uyum */}
+          <div className="space-y-1">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Yasal & Uyum</p>
+            {legalItems.map((item) => {
+              const isActive = activeView === item.viewKey;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleMenuClick(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                    isActive
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
+                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                  }`}
+                >
+                  <item.icon size={18} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2">
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-white dark:bg-slate-900 border-t border-black/5 dark:border-white/5">
           <button
-            onClick={() => navigate("/application/home")}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-primary-400 hover:bg-primary-500/10 transition-all border border-primary-500/10"
+            onClick={() => handleMenuClick({ key: "settings", path: "/partner/settings" })}
+            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white ${
+              location.pathname === "/partner/settings" && activeView === "dashboard" ? "bg-orange-600 text-white" : ""
+            }`}
           >
-            <User size={20} />
-            <span className="font-medium text-sm">Müşteri Modu</span>
+            <Settings size={18} />
+            <span className="font-medium text-xs">Ayarlar</span>
           </button>
-
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 transition-all"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 transition-all mt-1"
           >
-            <LogOut size={20} />
-            <span className="font-medium text-sm">Çıkış Yap</span>
+            <LogOut size={18} />
+            <span className="font-medium text-xs">Çıkış Yap</span>
           </button>
         </div>
       </aside>
@@ -284,7 +334,7 @@ const PartnerLayout = () => {
           <button onClick={() => setIsSidebarOpen(true)} className="text-slate-900 dark:text-white">
             <Menu size={24} />
           </button>
-          <span className="font-bold">
+          <span className="font-bold text-xs uppercase tracking-wider">
             Partner Paneli ({(role || "PARTNER").toUpperCase()})
           </span>
           <div className="w-6"></div>
@@ -318,7 +368,10 @@ const PartnerLayout = () => {
             </div>
             {currentUser.verification_status === "rejected" && (
               <button 
-                onClick={() => navigate("/partner/settings")}
+                onClick={() => {
+                  setActiveView("dashboard");
+                  navigate("/partner/settings");
+                }}
                 className="bg-red-500/20 hover:bg-red-500/30 text-red-500 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all"
               >
                 Belgeleri Güncelle
@@ -327,8 +380,16 @@ const PartnerLayout = () => {
           </div>
         )}
 
+        {/* Premium Page Swapper Area */}
         <div className="p-6">
-          <Outlet />
+          {activeView === "dashboard" && <Outlet />}
+          {activeView === "fatura_listeleme" && <InvoiceListingView currentUser={currentUser} />}
+          {activeView === "siparis_kayitlari" && <OrderRecordsView currentUser={currentUser} />}
+          {activeView === "finans_raporlari" && <FinancialReportsView currentUser={currentUser} />}
+          {activeView === "partner_loan" && <PartnerLoanView currentUser={currentUser} />}
+          {activeView === "komisyon_tarifeleri" && <CommissionTariffsView />}
+          {activeView === "promotions" && <PromotionsView currentUser={currentUser} />}
+          {activeView === "sozlesmeler" && <ContractsView currentUser={currentUser} />}
         </div>
       </main>
     </div>

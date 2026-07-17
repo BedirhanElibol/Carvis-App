@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AlertTriangle, CheckCircle, CheckCircle2, Download, Info, Loader2, ShieldCheck } from "lucide-react";
+import { AlertTriangle, CheckCircle, CheckCircle2, Cog, Download, Info, Loader2, Shield, ShieldCheck } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
 import { useGarage } from "../../context/GarageContext";
@@ -190,6 +190,34 @@ const DigitalPassport = ({ vehicle }) => {
       doc.setFont("helvetica", "normal");
       doc.text(vehicle?.inspection_date ? tr(new Date(vehicle.inspection_date).toLocaleDateString("tr-TR")) : "Belirtilmemis", 150, 86);
 
+      // VIN Technical Specs Section in PDF
+      const vinData = vehicle?.vin_data;
+      if (vinData && Object.values(vinData).some(v => v)) {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+        doc.setTextColor(15, 23, 42);
+        doc.text("TEKNIK OZELLIKLER (VIN DECODED)", 14, 104);
+
+        doc.setFillColor(248, 250, 252);
+        doc.rect(14, 108, 182, 28, "F");
+        doc.rect(14, 108, 182, 28);
+
+        doc.setFontSize(8);
+        let specY = 114;
+        const specLines = [
+          vinData.engine_displacement && `Motor: ${vinData.engine_displacement}L ${vinData.engine_cylinders || ""} Silindir ${vinData.engine_hp ? `(${vinData.engine_hp} HP)` : ""}`,
+          vinData.transmission && `Sanziman: ${tr(vinData.transmission)} ${vinData.transmission_speeds ? `(${vinData.transmission_speeds} ileri)` : ""}`,
+          vinData.drive_type && `Cekis: ${tr(vinData.drive_type)}`,
+          vinData.body_type && `Govde: ${tr(vinData.body_type)} ${vinData.doors ? `(${vinData.doors} Kapi)` : ""}`,
+        ].filter(Boolean);
+
+        specLines.forEach(line => {
+          doc.setFont("helvetica", "normal");
+          doc.text(line, 20, specY);
+          specY += 6;
+        });
+      }
+
       // 4. Maintenance Logs & History Timeline
       doc.setFont("helvetica", "bold");
       doc.setFontSize(12);
@@ -324,6 +352,129 @@ const DigitalPassport = ({ vehicle }) => {
             </div>
           </div>
         </div>
+
+        {/* VIN DECODED TECHNICAL SPECIFICATIONS */}
+        {vehicle?.vin_data && Object.values(vehicle.vin_data).some(v => v) && (
+          <div className="bg-white/80 dark:bg-[#0a0f24]/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 shadow-xl space-y-4 no-print">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary-500/10 flex items-center justify-center shrink-0">
+                <Cog size={20} className="text-primary-500" />
+              </div>
+              <div className="text-left">
+                <h3 className="font-black text-sm uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                  Teknik Özellikler (VIN Decoded)
+                  <span className="text-[8px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full ml-2 uppercase tracking-widest border border-emerald-500/20">NHTSA</span>
+                </h3>
+                <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
+                  Şase numarasından çözümlenen fabrika verileri
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {/* Motor & Güç */}
+              {(vehicle.vin_data.engine_displacement || vehicle.vin_data.engine_hp || vehicle.vin_data.fuel_type) && (
+                <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-4 border border-black/5 dark:border-white/5 space-y-2.5">
+                  <span className="text-[9px] font-black text-primary-500 uppercase tracking-widest block border-b border-black/5 dark:border-white/5 pb-2">Motor & Güç</span>
+                  {vehicle.vin_data.engine_displacement && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Motor Hacmi</span>
+                      <span className="text-[10px] text-slate-900 dark:text-white font-black">{vehicle.vin_data.engine_displacement}L</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.engine_cylinders && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Silindir</span>
+                      <span className="text-[10px] text-slate-900 dark:text-white font-black">{vehicle.vin_data.engine_cylinders} Silindir</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.engine_hp && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Beygir Gücü</span>
+                      <span className="text-[10px] text-slate-900 dark:text-white font-black">{vehicle.vin_data.engine_hp} HP</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.fuel_type && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Yakıt Tipi</span>
+                      <span className="text-[10px] text-emerald-400 font-black">{vehicle.vin_data.fuel_type}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Aktarma Organları */}
+              {(vehicle.vin_data.drive_type || vehicle.vin_data.transmission || vehicle.vin_data.body_type) && (
+                <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-4 border border-black/5 dark:border-white/5 space-y-2.5">
+                  <span className="text-[9px] font-black text-primary-500 uppercase tracking-widest block border-b border-black/5 dark:border-white/5 pb-2">Aktarma & Gövde</span>
+                  {vehicle.vin_data.transmission && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Şanzıman</span>
+                      <span className="text-[10px] text-slate-900 dark:text-white font-black">{vehicle.vin_data.transmission}{vehicle.vin_data.transmission_speeds ? ` (${vehicle.vin_data.transmission_speeds} İleri)` : ''}</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.drive_type && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Çekiş Sistemi</span>
+                      <span className="text-[10px] text-slate-900 dark:text-white font-black">{vehicle.vin_data.drive_type}</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.body_type && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Gövde Tipi</span>
+                      <span className="text-[10px] text-slate-900 dark:text-white font-black">{vehicle.vin_data.body_type}</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.doors && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Kapı Sayısı</span>
+                      <span className="text-[10px] text-slate-900 dark:text-white font-black">{vehicle.vin_data.doors} Kapı</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Güvenlik Donanımları */}
+              {(vehicle.vin_data.abs || vehicle.vin_data.esc || vehicle.vin_data.traction_control) && (
+                <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-4 border border-black/5 dark:border-white/5 space-y-2.5">
+                  <span className="text-[9px] font-black text-primary-500 uppercase tracking-widest block border-b border-black/5 dark:border-white/5 pb-2 flex items-center gap-1.5">
+                    <Shield size={10} /> Güvenlik Donanımları
+                  </span>
+                  {vehicle.vin_data.abs && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">ABS</span>
+                      <span className="text-[10px] text-emerald-400 font-black flex items-center gap-1"><CheckCircle size={10} /> {vehicle.vin_data.abs}</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.esc && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">ESC</span>
+                      <span className="text-[10px] text-emerald-400 font-black flex items-center gap-1"><CheckCircle size={10} /> {vehicle.vin_data.esc}</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.traction_control && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Traction Control</span>
+                      <span className="text-[10px] text-emerald-400 font-black flex items-center gap-1"><CheckCircle size={10} /> {vehicle.vin_data.traction_control}</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.airbags && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Hava Yastıkları</span>
+                      <span className="text-[10px] text-slate-900 dark:text-white font-black">{vehicle.vin_data.airbags}</span>
+                    </div>
+                  )}
+                  {vehicle.vin_data.plant_country && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] text-slate-500 font-bold">Üretim Yeri</span>
+                      <span className="text-[10px] text-slate-900 dark:text-white font-black">{vehicle.vin_data.plant_city ? `${vehicle.vin_data.plant_city}, ` : ''}{vehicle.vin_data.plant_country}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* MANUFACTURER RECALLS & TECHNICAL SERVICE BULLETINS */}
         {vehicle && (

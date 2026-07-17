@@ -48,7 +48,7 @@ const PartnerApplications = () => {
       // 2. Update Profile application_status and escalate role
       const profileUpdates = { application_status: newStatus };
       if (newStatus === "approved") {
-        profileUpdates.role = "partner";
+        profileUpdates.role = selectedApp.business_type || "mechanic";
       }
 
       const { error: profileError } = await supabase

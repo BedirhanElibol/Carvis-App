@@ -190,7 +190,7 @@ const SosRequestScreen = () => {
             </div>
 
             <button 
-              onClick={() => navigate("/app")}
+              onClick={() => navigate("/application/home")}
               className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold p-4 rounded-2xl shadow-xl"
             >
               Ana Sayfaya Dön
