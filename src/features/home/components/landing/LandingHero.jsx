@@ -27,8 +27,9 @@ const LandingHero = memo(({t, language, searchQuery, setSearchQuery, searchLocat
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-7xl font-black tracking-tight uppercase max-w-4xl leading-[1.05] mb-6"
-            dangerouslySetInnerHTML={{ __html: t.landingHeroTitle }}
-          />
+          >
+            {t.landingHeroTitle}
+          </motion.h1>
 
           {/* Subtitle */}
           <motion.p 
