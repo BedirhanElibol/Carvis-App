@@ -156,12 +156,20 @@ const SellerRegistrationModal = ({
       if (!user) throw new Error("Oturum açılamadı.");
 
       const uploadedFiles = {};
+      const uploadPromises = [];
       for (const [docId, file] of Object.entries(formData.files)) {
         if (!file) continue;
         const fileExt = file.name.split(".").pop();
         const filePath = `${user.id}/${docId}_${Date.now()}.${fileExt}`;
-        const { error: uploadError } = await supabase.storage.from("partner-documents").upload(filePath, file);
-        if (uploadError) throw uploadError;
+        uploadPromises.push(
+          supabase.storage.from("partner-documents").upload(filePath, file).then(({ error: uploadError }) => {
+            if (uploadError) throw uploadError;
+            return { docId, filePath };
+          })
+        );
+      }
+      const results = await Promise.all(uploadPromises);
+      for (const { docId, filePath } of results) {
         uploadedFiles[docId] = filePath;
       }
 
