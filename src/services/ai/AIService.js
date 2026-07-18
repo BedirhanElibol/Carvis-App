@@ -39,10 +39,13 @@ export const AIService = {
 
   async diagnoseIssue(userText, carModel = "Araç") {
     try {
-      const prompt = `Görevin: Oto-uzman asistan. Araç: ${carModel}. Şikayet: ${userText}. SADECE JSON döndür: {"title": "Başlık", "description": "Açıklama", "urgency": "low|medium|high|critical", "estimatedCost": "Fiyat", "suggestedPartKeyword": "parça veya null"}`;
+      const systemPrompt = `Görevin: Oto-uzman asistan. Araç: ${carModel}. SADECE JSON döndür: {"title": "Başlık", "description": "Açıklama", "urgency": "low|medium|high|critical", "estimatedCost": "Fiyat", "suggestedPartKeyword": "parça veya null"}`;
       
       const { data, error } = await supabase.functions.invoke('ai-chat', {
-        body: { message: prompt }
+        body: {
+          systemPrompt: systemPrompt,
+          message: userText
+        }
       });
 
       if (error) throw error;

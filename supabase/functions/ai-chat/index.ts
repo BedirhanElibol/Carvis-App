@@ -45,27 +45,20 @@ serve(async (req: Request) => {
         }
 
         // Construct Gemini request payload
-        let endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`
+        let endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`
         let contents = []
 
         if (isVision && imageParams) {
-            endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${apiKey}`
             contents = [
                 {
                     role: "user",
                     parts: [
-                        { text: systemPrompt ? `${systemPrompt}\n\n${message}` : message },
+                        { text: message },
                         { inline_data: { mime_type: imageParams.mimeType, data: imageParams.data } }
                     ]
                 }
             ]
         } else {
-            // Text only chat
-            if (systemPrompt) {
-                contents.push({ role: "user", parts: [{ text: systemPrompt }] })
-                contents.push({ role: "model", parts: [{ text: "Anladım. Size nasıl yardımcı olabilirim?" }] })
-            }
-            
             // Map history
             history.forEach((msg: any) => {
                 contents.push({
@@ -78,10 +71,17 @@ serve(async (req: Request) => {
             contents.push({ role: "user", parts: [{ text: message }] })
         }
 
+        const requestBody: any = { contents }
+        if (systemPrompt) {
+            requestBody.system_instruction = {
+                parts: [{ text: systemPrompt }]
+            }
+        }
+
         const response = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents })
+            body: JSON.stringify(requestBody)
         })
 
         const data = await response.json()
