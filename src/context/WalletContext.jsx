@@ -156,7 +156,14 @@ export const WalletProvider = ({ children }) => {
   const releaseFunds = async (amount, _title = "İşlem Tamamlandı") => {
     try {
       // Security Fix: Replaced with an authorized backend execution trace
-      const { error: walletError } = await supabase.rpc('rpc_release_funds', { p_amount: amount });
+      let walletError;
+      try {
+        const response = await supabase.rpc('rpc_release_funds', { p_amount: amount });
+        walletError = response.error;
+      } catch (innerErr) {
+        console.error("Inner RPC Error:", innerErr);
+        throw innerErr;
+      }
 
       if (walletError) {
         console.error("RPC Wallet Error:", walletError);
