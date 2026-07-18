@@ -38,21 +38,19 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    const allPrices = []
-
-    for (const city of CITIES) {
+    const fetchPromises = CITIES.map(async (city) => {
       try {
         const response = await fetch(`https://api.opet.com.tr/api/fuelprices/prices?provinceCode=${city.code}`)
         
         if (!response.ok) {
           console.error(`Failed to fetch for ${city.name}`)
-          continue
+          return null
         }
 
         const data = await response.json()
         
         if (!Array.isArray(data) || data.length === 0) {
-          continue
+          return null
         }
 
         // Genellikle Merkez veya ilk ilçeyi baz alıyoruz
@@ -63,12 +61,12 @@ serve(async (req) => {
           d.districtName === "KONAK"
         ) || data[0];
 
-        if (!targetDistrict || !targetDistrict.prices) continue;
+        if (!targetDistrict || !targetDistrict.prices) return null;
 
         const benzinObj = targetDistrict.prices.find((p: any) => p.productShortName === "KURS");
         const motorinObj = targetDistrict.prices.find((p: any) => p.productShortName === "MT_ULT");
 
-        if (!benzinObj || !motorinObj) continue;
+        if (!benzinObj || !motorinObj) return null;
 
         const benzin = benzinObj.amount;
         const motorin = motorinObj.amount;
@@ -88,21 +86,22 @@ serve(async (req) => {
             lpg = Math.round((benzin * lpgRatio) * 100) / 100;
         }
 
-        allPrices.push({
+        return {
           province_code: city.code,
           city_name: city.name,
           benzin: benzin,
           motorin: motorin,
           lpg: lpg,
           last_fetched_at: new Date().toISOString()
-        })
+        }
       } catch (err) {
         console.error(`Error processing ${city.name}:`, err)
+        return null
       }
-      
-      // Rate limit yememek için çok kısa bekleme
-      await new Promise(resolve => setTimeout(resolve, 100))
-    }
+    })
+
+    const results = await Promise.all(fetchPromises)
+    const allPrices = results.filter((price) => price !== null)
 
     if (allPrices.length > 0) {
       const { error } = await supabaseClient
