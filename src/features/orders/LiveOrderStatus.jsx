@@ -85,7 +85,7 @@ const LiveOrderStatus = ({ order }) => {
                 (pos) => {
                     setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
                 },
-                (err) => console.log("User location query error:", err),
+                (_err) => {},
                 { timeout: 5000 }
             );
         }
