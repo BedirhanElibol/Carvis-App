@@ -246,7 +246,15 @@ const QuoteDetailScreen = () => {
               onClick={() => {
                 const phone = quote.seller?.phone;
                 if (phone) {
-                  window.location.href = `tel:${phone}`;
+                  if (/^[0-9+]+$/.test(phone)) {
+                    window.location.href = `tel:${phone}`;
+                  } else {
+                    showAlert(
+                      "Hata",
+                      "Geçersiz telefon numarası formatı.",
+                      "error"
+                    );
+                  }
                 } else {
                   showAlert(
                     "Bilgi",
