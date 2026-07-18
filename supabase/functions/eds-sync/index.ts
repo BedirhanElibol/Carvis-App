@@ -84,17 +84,24 @@ serve(async (req) => {
 
     // Step 2: Insert the new live points in chunks to avoid payload limits
     const CHUNK_SIZE = 500;
+    const insertPromises = [];
     for (let i = 0; i < points.length; i += CHUNK_SIZE) {
       const chunk = points.slice(i, i + CHUNK_SIZE);
-      const { error: insertError } = await supabase
-        .from('road_alerts')
-        .insert(chunk);
-        
-      if (insertError) {
-        console.error(`Error inserting chunk ${i}:`, insertError);
-        throw insertError;
-      }
+      insertPromises.push(
+        supabase
+          .from('road_alerts')
+          .insert(chunk)
+          .then(({ error: insertError }) => {
+            if (insertError) {
+              console.error(`Error inserting chunk ${i}:`, insertError);
+              throw insertError;
+            }
+          })
+      );
     }
+
+    // Wait for all chunks to be inserted concurrently
+    await Promise.all(insertPromises);
 
     return new Response(
       JSON.stringify({ 
