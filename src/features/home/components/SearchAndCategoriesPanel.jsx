@@ -43,12 +43,12 @@ const SearchAndCategoriesPanel = memo(({ t, searchQuery, setSearchQuery, service
       </form>
 
       {/* Quick Categories Grid */}
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
+      <div className="flex flex-wrap justify-center gap-3 mb-4">
         {serviceCategories.map((cat, idx) => (
           <div
             key={idx}
             onClick={() => navigate(cat.route)}
-            className={`bg-slate-50 dark:bg-[#030712]/40 border border-black/5 dark:border-white/5 ${cat.border} p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 active-scale cursor-pointer group transition-all duration-300 relative overflow-hidden`}
+            className={`bg-slate-50 dark:bg-[#030712]/40 border border-black/5 dark:border-white/5 ${cat.border} p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 flex-1 min-w-[95px] max-w-[115px] sm:max-w-[140px] active-scale cursor-pointer group transition-all duration-300 relative overflow-hidden`}
           >
             <div className="absolute inset-0 bg-white/[0.01] group-hover:bg-white/[0.03] transition-colors pointer-events-none"></div>
             <div className={`p-3 rounded-xl ${cat.bg} ${cat.color} group-hover:scale-110 transition-transform shadow-inner`}>
