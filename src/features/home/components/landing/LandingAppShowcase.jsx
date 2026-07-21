@@ -25,7 +25,7 @@ const LandingAppShowcase = memo(({t, language}) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left: App Screen Mockup (Sanal Kokpit) */}
-            <div className="lg:col-span-7 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-950 border border-slate-200 dark:border-emerald-500/20 rounded-[3rem] p-6 md:p-10 shadow-2xl dark:shadow-[0_0_50px_-12px_rgba(16,185,129,0.2)] relative overflow-hidden group">
+            <div className="lg:col-span-7 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-950 border border-slate-200 dark:border-emerald-500/20 rounded-[3rem] p-6 md:p-10 shadow-2xl dark:shadow-xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-teal-500/10 dark:bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none"></div>
               
               {/* Virtual App Header */}
@@ -193,7 +193,7 @@ const LandingAppShowcase = memo(({t, language}) => {
               ].map((val, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-white/50 dark:bg-black/40 border border-slate-200 dark:border-emerald-500/10 hover:border-slate-300 dark:hover:border-emerald-500/40 rounded-3xl p-6 transition-all hover:translate-x-1 duration-300 flex items-start gap-4 relative overflow-hidden backdrop-blur-md dark:shadow-[0_0_20px_rgba(16,185,129,0.05)]"
+                  className="bg-white/50 dark:bg-black/40 border border-slate-200 dark:border-emerald-500/10 hover:border-slate-300 dark:hover:border-emerald-500/40 rounded-3xl p-6 transition-all hover:translate-x-1 duration-300 flex items-start gap-4 relative overflow-hidden backdrop-blur-md dark:shadow-xl"
                 >
                   <div className={`w-12 h-12 rounded-2xl ${val.color} border flex items-center justify-center shrink-0`}>
                     <val.icon size={22} />

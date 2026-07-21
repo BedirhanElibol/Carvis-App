@@ -172,7 +172,7 @@ const AIChatScreen = () => {
       <div className="absolute bottom-0 left-[-5%] w-[400px] h-[400px] bg-accent-600/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       {/* Header */}
-      <div className="glass-card px-6 py-7 border-b border-black/5 dark:border-white/5 sticky top-0 z-20 flex justify-between items-center backdrop-blur-3xl shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
+      <div className="glass-card px-6 py-7 border-b border-black/5 dark:border-white/5 sticky top-0 z-20 flex justify-between items-center backdrop-blur-3xl shadow-xl">
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
@@ -204,7 +204,7 @@ const AIChatScreen = () => {
                 </Badge>
               </div>
               <div className="flex items-center gap-1.5 mt-2">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_10px_#22c55e]"></span>
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full shadow-xl"></span>
                 <p className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest font-sans">
                   {currentVehicle
                     ? `${currentVehicle.make} ${currentVehicle.model} BAĞLI`
@@ -311,7 +311,7 @@ const AIChatScreen = () => {
                   {isTyping && (
                     <div className="absolute inset-0 pointer-events-none">
                       <div className="absolute inset-0 bg-primary-500/20 animate-pulse"></div>
-                      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-white to-transparent shadow-[0_0_30px_#fff] animate-scan z-10"></div>
+                      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-white to-transparent shadow-xl animate-scan z-10"></div>
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.6)_100%)]"></div>
                     </div>
                   )}
@@ -388,7 +388,7 @@ const AIChatScreen = () => {
       </div>
 
       {/* Input Overlay */}
-      <div className="p-6 glass-card border-t border-black/5 dark:border-white/5 absolute bottom-0 w-full backdrop-blur-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.8)] z-20 pb-12">
+      <div className="p-6 glass-card border-t border-black/5 dark:border-white/5 absolute bottom-0 w-full backdrop-blur-3xl shadow-xl z-20 pb-12">
         {/* Suggestions */}
         <div className="flex gap-3 overflow-x-auto pb-6 no-scrollbar">
           {messages.length < 3 &&
@@ -435,7 +435,7 @@ const AIChatScreen = () => {
                 "transition-transform group-hover:translate-x-1 group-hover:-translate-y-1",
                 !inputText.trim() || isTyping
                   ? ""
-                  : "drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]",
+                  : "",
               )}
             />
           </button>

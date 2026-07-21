@@ -1,248 +1,206 @@
 import React, { memo } from "react";
-import { ArrowRight, ChevronDown, ChevronRight, Droplets, Fuel, Map, MapPin, RefreshCw, Search, Box, Wrench, TrendingUp, ShieldCheck, HardDrive, Wind, Flame, CheckCircle } from "lucide-react";
+import { ArrowRight, Search, MapPin, Gauge, ShieldCheck, Banknote, Car, Wrench, Truck, Package, Shield, Fuel } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../../assets/logo.png";
 
-const LandingHero = memo(({t, language, searchQuery, setSearchQuery, searchLocation, setSearchLocation, CITIES, fuelPrices, fuelCity, setFuelCity, fuelLastUpdated, isLoadingFuel}) => {
+const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) => {
   const navigate = useNavigate();
-  return (
-    <>
-        <section className="w-full max-w-7xl mx-auto px-6 text-center flex flex-col items-center">
-          {/* Subtle tag badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-emerald-500/10 border border-slate-200 dark:border-emerald-500/30 backdrop-blur-md mb-6 shadow-sm dark:shadow-[0_0_15px_rgba(16,185,129,0.15)]"
-          >
-            <span className="w-2 h-2 rounded-full bg-teal-400 dark:bg-teal-400 animate-ping"></span>
-            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600 dark:text-emerald-300">
-              ⚡ {t.landingHeroTag}
-            </span>
-          </motion.div>
 
-          {/* Heading */}
+  return (
+    <section className="relative w-full pt-20 pb-20 md:pt-28 md:pb-24 bg-transparent overflow-hidden">
+      
+      {/* Background glow matching Adspirer */}
+      <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-blue-500/10 dark:bg-[#1e3a8a] rounded-full blur-[150px] opacity-40 dark:opacity-20 pointer-events-none"></div>
+
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        {/* Left Column: Text & CTA */}
+        <div className="flex flex-col items-start text-left">
+          
+          {/* Adspirer style gradient headline */}
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-7xl font-black tracking-tight uppercase max-w-4xl leading-[1.05] mb-6"
-            dangerouslySetInnerHTML={{ __html: t.landingHeroTitle }}
-          />
-
-          {/* Subtitle */}
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-slate-500 dark:text-slate-400 font-medium text-center max-w-2xl text-base md:text-xl tracking-tight leading-relaxed mb-8"
+            className="text-5xl md:text-6xl lg:text-[76px] font-bold text-slate-900 dark:text-white tracking-tight leading-[1.05] mb-6"
           >
-            {t.landingHeroDesc}
+            {language === "tr" ? "Aracınızı yönetin, " : "Manage your car, "} <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500 dark:from-blue-400 dark:to-blue-500">
+              {language === "tr" ? "Şeffaf " : "Transparent "}
+            </span>
+            <span className="text-slate-900 dark:text-white">
+              {language === "tr" ? "ve" : "and"}
+            </span> <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">
+              {language === "tr" ? "Güvenilir." : "Secure."}
+            </span>
+          </motion.h1>
+
+          {/* Supporting Text */}
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg md:text-[19px] text-slate-600 dark:text-slate-300 max-w-lg mb-10 leading-relaxed font-normal"
+          >
+            {language === "tr" 
+              ? "Sanayi sürprizlerini unutun. Aracınızın arıza, bakım veya parça ihtiyaçları için çevrenizdeki en iyi ustalardan anında teklif alın ve havuz ödeme sistemiyle paranızı güvenceye alın." 
+              : "Forget garage surprises. Get instant quotes from the best local mechanics for repairs, maintenance, or parts needs, and secure your money."}
           </motion.p>
 
-          {/* Hero Search Panel (Mindbody Inspired) */}
+          {/* Buttons */}
           <motion.div 
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="w-full max-w-4xl mx-auto px-2 md:px-0 mb-10 relative"
-          >
-            <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/20 via-teal-500/10 to-emerald-500/20 dark:from-emerald-500/10 dark:via-transparent dark:to-emerald-500/10 blur-2xl rounded-[3rem] -z-10"></div>
-            <div className="bg-white/70 dark:bg-[#0a0f24]/90 backdrop-blur-3xl border border-white dark:border-white/10 rounded-3xl p-3 md:p-4 shadow-[0_20px_50px_rgba(16,185,129,0.05)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-3 relative z-20">
-              
-              {/* Search Query Input */}
-              <div className="flex-1 relative group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-emerald-500/50 group-focus-within:text-emerald-500 dark:group-focus-within:text-teal-400 transition-colors" size={20} />
-                <input 
-                  type="text" 
-                  placeholder={t.landingSearchPlaceholder} 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white/50 dark:bg-black/40 border border-slate-100 dark:border-white/5 rounded-2xl py-4.5 pl-12 pr-4 text-sm font-bold text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500/50 dark:focus:ring-emerald-500 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
-                />
-              </div>
-
-              {/* Location Selector */}
-              <div className="w-full md:w-[240px] relative group">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-emerald-500/50 group-focus-within:text-emerald-500 dark:group-focus-within:text-teal-400 transition-colors" size={20} />
-                <select 
-                  value={searchLocation}
-                  onChange={(e) => setSearchLocation(e.target.value)}
-                  className="w-full bg-white/50 dark:bg-black/40 border border-slate-100 dark:border-transparent py-4.5 pl-11 pr-4 text-sm font-bold text-slate-800 dark:text-white outline-none cursor-pointer appearance-none focus:ring-2 focus:ring-emerald-500/50 dark:focus:ring-emerald-500 transition-all rounded-2xl"
-                >
-                  <option value="all">{t.allTurkey}</option>
-                  {CITIES.map(city => (
-                    <option key={city} value={city.toLowerCase()}>{city}</option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
-              </div>
-
-              {/* Search Button */}
-              <button 
-                onClick={() => navigate("/application/home")}
-                className="w-full md:w-auto bg-gradient-to-r from-teal-500 to-teal-500 dark:from-emerald-500 dark:to-teal-400 text-white dark:text-slate-950 hover:from-emerald-500 hover:to-teal-400 dark:hover:from-teal-400 dark:hover:to-emerald-300 rounded-2xl px-8 py-4.5 font-black uppercase tracking-widest text-sm shadow-[0_10px_30px_rgba(16,185,129,0.3)] dark:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 transition-all flex items-center justify-center gap-2 group whitespace-nowrap border-none"
-              >
-                {t.searchButton}
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-
-            </div>
-
-            {/* Direct Problem-Solution Trust Badges */}
-            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mt-6 py-2 px-4 bg-white/40 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl border border-slate-200/50 dark:border-white/5 max-w-3xl mx-auto shadow-sm">
-              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-700 dark:text-emerald-400">
-                <ShieldCheck size={16} className="text-emerald-500" />
-                <span>{language === "tr" ? "%100 Rapidsy Ödeme Güvencesi" : "100% Secure Payment Guarantee"}</span>
-              </div>
-              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></div>
-              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-700 dark:text-teal-400">
-                <Wrench size={16} className="text-teal-500" />
-                <span>{language === "tr" ? "Doğrulanmış Servis Ağı" : "Verified Mechanic Network"}</span>
-              </div>
-              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></div>
-              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-700 dark:text-indigo-400">
-                <CheckCircle size={16} className="text-indigo-500" />
-                <span>{language === "tr" ? "6 Ay Onarım Garantisi" : "6-Month Repair Warranty"}</span>
-              </div>
-            </div>
-
-            {/* Quick Categories below search */}
-            <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mt-6">
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-emerald-800/50 dark:text-slate-500 mr-2">{t.popularLabel}</span>
-              {[
-                { title: t.smartDiagnosis, icon: Fuel, color: "text-emerald-500 dark:text-teal-400", bg: "bg-emerald-500/10", onClick: () => navigate("/application/home") },
-                { title: t.autoSpareParts, icon: Box, color: "text-teal-500 dark:text-teal-400", bg: "bg-teal-500/10", onClick: () => navigate("/app/parts") },
-                { title: t.expertMechanic, icon: Wrench, color: "text-teal-500 dark:text-emerald-500", bg: "bg-teal-500/10", onClick: () => navigate("/app/mechanics") },
-                { title: t.buyBoxInfo, icon: TrendingUp, color: "text-teal-600 dark:text-teal-500", bg: "bg-teal-600/10", onClick: () => navigate("/application/home") }
-              ].map((cat, idx) => (
-                <button 
-                  key={idx}
-                  onClick={cat.onClick}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-black/30 hover:bg-white dark:hover:bg-emerald-500/10 shadow-[0_4px_15px_rgba(16,185,129,0.05)] border border-emerald-500/10 dark:border-emerald-500/20 hover:border-emerald-500/30 dark:hover:border-emerald-500/50 transition-all cursor-pointer group backdrop-blur-sm"
-                >
-                  <div className={`p-1 rounded-full ${cat.bg} dark:bg-transparent`}>
-                    <cat.icon size={12} className={cat.color} />
-                  </div>
-                  <span className="text-[10px] md:text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-teal-600 dark:group-hover:text-emerald-300">{cat.title}</span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* LIVE FUEL PRICES WIDGET ON LANDING */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="w-full max-w-4xl mx-auto px-2 md:px-0 mb-10 mt-2"
-          >
-            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white dark:border-emerald-500/10 rounded-3xl p-5 shadow-[0_20px_50px_rgba(16,185,129,0.05)] dark:shadow-[0_0_30px_rgba(16,185,129,0.05)] flex flex-col gap-4">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
-                    <Droplets size={20} className="text-teal-500 dark:text-emerald-500" />
-                  </div>
-                  <div className="text-left">
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-black text-sm uppercase tracking-tight text-slate-900 dark:text-white">{t.liveFuel}</h4>
-                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span className="text-[8px] font-black uppercase tracking-widest text-emerald-500">{t.live}</span>
-                      </div>
-                    </div>
-                    <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">{t.lastUpdate}: {isLoadingFuel ? t.loading : fuelLastUpdated}</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-1 w-full md:w-auto gap-2 md:gap-4 justify-between md:justify-end items-center">
-                  <div className="flex flex-col items-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">{t.unleaded95}</span>
-                    <span className="text-sm md:text-base font-black text-slate-900 dark:text-white font-mono">{isLoadingFuel ? "---" : fuelPrices?.benzin} <span className="text-[9px] text-slate-500">₺/L</span></span>
-                  </div>
-                  <div className="w-px h-8 bg-black/10 dark:bg-white/10"></div>
-                  <div className="flex flex-col items-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">{t.diesel}</span>
-                    <span className="text-sm md:text-base font-black text-slate-900 dark:text-white font-mono">{isLoadingFuel ? "---" : fuelPrices?.motorin} <span className="text-[9px] text-slate-500">₺/L</span></span>
-                  </div>
-                  <div className="w-px h-8 bg-black/10 dark:bg-white/10"></div>
-                  <div className="flex flex-col items-center">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">{t.lpg}</span>
-                    <span className="text-sm md:text-base font-black text-slate-900 dark:text-white font-mono">{isLoadingFuel ? "---" : fuelPrices?.lpg} <span className="text-[9px] text-slate-500">₺/L</span></span>
-                  </div>
-                  
-                  <select
-                    value={fuelCity}
-                    onChange={(e) => setFuelCity(e.target.value)}
-                    className="ml-1 md:ml-4 bg-slate-100 dark:bg-[#030712] border border-black/5 dark:border-white/5 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-wider rounded-xl px-2 py-1.5 outline-none cursor-pointer hover:border-black/20 transition-colors"
-                  >
-                    <option value="istanbul">İSTANBUL</option>
-                    <option value="ankara">ANKARA</option>
-                    <option value="izmir">İZMİR</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Station Infrastructure Compliance (Public details normally hard to research) */}
-              <div className="pt-3 border-t border-black/5 dark:border-white/5 flex flex-wrap gap-x-6 gap-y-2 text-[9px] text-slate-500 dark:text-slate-400 font-semibold justify-between">
-                <div className="flex items-center gap-1.5">
-                  <ShieldCheck size={11} className="text-emerald-500" />
-                  <span>EPDK Lisans Durumu: <strong className="text-emerald-500 uppercase">Lisanslı (Cezası Yok)</strong></span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <HardDrive size={11} className="text-blue-500" />
-                  <span>Yeraltı Tank Yaşı: <strong className="text-slate-700 dark:text-slate-300">5 Yıl (Korozyon / Su Sızıntı Testi Geçildi)</strong></span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Wind size={11} className="text-teal-500" />
-                  <span>Gaz Geri Kazanım (VRS): <strong className="text-slate-700 dark:text-slate-300">%99.4 Ekolojik Filtre Uyumlu</strong></span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Flame size={11} className="text-orange-500" />
-                  <span>Parlama Noktası Audit Kontrolü: <strong className="text-emerald-500 uppercase font-bold">Sorunsuz</strong></span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* EDS & Social Map Banner for Guests - Temporarily hidden per user request
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="w-full max-w-4xl mx-auto px-2 md:px-0 mb-10"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-10"
           >
             <button 
-              onClick={() => navigate("/app/map")}
-              className="w-full bg-gradient-to-r from-teal-500/10 to-blue-500/10 dark:from-emerald-500/10 dark:to-teal-500/5 hover:from-teal-500/20 hover:to-blue-500/20 dark:hover:from-emerald-500/20 dark:hover:to-teal-500/10 border border-teal-500/30 dark:border-emerald-500/30 p-5 rounded-[2rem] flex flex-col md:flex-row items-center justify-between group active-scale transition-all cursor-pointer shadow-lg dark:shadow-[0_0_20px_rgba(16,185,129,0.15)]"
+              onClick={() => navigate("/application/home")}
+              className="bg-[#2563eb] hover:bg-blue-600 text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px] shadow-lg shadow-blue-500/20"
             >
-              <div className="flex items-center gap-4">
-                <div className="p-4 bg-teal-500/20 rounded-2xl text-teal-400 group-hover:scale-110 transition-transform shadow-inner relative">
-                  <Map size={28} />
-                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
-                  </span>
-                </div>
-                <div className="text-left">
-                  <h3 className="text-base md:text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight flex items-center gap-2">
-                    EDS & Sosyal Trafik Haritası
-                  </h3>
-                  <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5">
-                    <RefreshCw size={12} className="text-teal-400 animate-spin-slow" />
-                    Her gün güncellenir. Kasis, Radar, Yakıt ve Resmi EDS verileri.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-4 md:mt-0 px-6 py-2.5 rounded-xl bg-teal-500 text-slate-900 font-black uppercase tracking-widest text-[10px] flex items-center gap-2 group-hover:bg-teal-400 transition-colors">
-                Haritayı Aç <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </div>
+              {language === "tr" ? "Hemen Başla" : "Start Now"}
+              <ArrowRight size={16} />
+            </button>
+            <button 
+              onClick={() => navigate("/partner-login")}
+              className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-[#1f2937] text-slate-700 dark:text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px]"
+            >
+              <Wrench size={16} className="text-slate-500 dark:text-slate-400" />
+              {language === "tr" ? "Usta / İş Ortakları" : "Mechanics & Partners"}
             </button>
           </motion.div>
-          */}
-        </section>
+          
+          {/* Concrete App Capabilities (Why they should stay) */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-wrap items-center gap-3 text-[13px] font-medium"
+          >
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 text-blue-600 dark:text-blue-400"><Wrench size={14} /> Oto Servis & Tamir</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/20 text-yellow-700 dark:text-yellow-400"><Fuel size={14} /> Akaryakıt & Şarj</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400"><MapPin size={14} /> Akıllı Otopark</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400"><Package size={14} /> Yedek Parça</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-50 dark:bg-pink-500/10 border border-pink-200 dark:border-pink-500/20 text-pink-600 dark:text-pink-400"><Shield size={14} /> Sigorta & Kasko</span>
+          </motion.div>
 
-    </>
+        </div>
+
+        {/* Right Column: Orbiting Graphics matching Adspirer right side */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="hidden lg:flex relative h-[500px] w-full items-center justify-center"
+        >
+          {/* Orbit Rings */}
+          <div className="absolute w-[450px] h-[450px] rounded-full border border-slate-200 dark:border-white/5"></div>
+          <div className="absolute w-[300px] h-[300px] rounded-full border border-slate-300 dark:border-white/10"></div>
+          
+          {/* Center Logo - Sleek Glass Pill for wide logos */}
+          <div className="absolute px-8 py-5 bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,0.1)] dark:shadow-[0_0_50px_rgba(37,99,235,0.2)] z-10">
+            <img src={logo} alt="Rapidsy" className="h-7 md:h-9 w-auto object-contain block dark:hidden brightness-0" />
+            <img src={logo} alt="Rapidsy" className="h-7 md:h-9 w-auto object-contain hidden dark:block" />
+          </div>
+
+          {/* Floating UI Elements (Simulating App Value) */}
+          
+          {/* Top Floating Card (Bidding) */}
+          <motion.div 
+            animate={{ y: [0, -10, 0] }} 
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[8%] left-[65%] -translate-x-1/2 bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md border border-blue-200 dark:border-blue-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20"
+          >
+            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+              <Wrench size={18} />
+            </div>
+            <div>
+              <div className="text-slate-900 dark:text-white font-bold text-sm">Periyodik Bakım</div>
+              <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">5 Servisten Teklif Geldi</div>
+            </div>
+          </motion.div>
+
+          {/* Bottom Right Floating Card (Spare Parts) */}
+          <motion.div 
+            animate={{ y: [0, 10, 0] }} 
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-[15%] right-[0%] bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md border border-indigo-200 dark:border-indigo-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20"
+          >
+            <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+              <Package size={18} />
+            </div>
+            <div>
+              <div className="text-slate-900 dark:text-white font-bold text-sm">Yedek Parça Siparişi</div>
+              <div className="text-indigo-600 dark:text-indigo-400 text-xs font-medium">Uyum garantili gönderim</div>
+            </div>
+          </motion.div>
+
+          {/* Bottom Left Floating Card (Insurance) */}
+          <motion.div 
+            animate={{ y: [0, -8, 0] }} 
+            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute bottom-[25%] left-[5%] bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md border border-blue-200 dark:border-blue-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20"
+          >
+            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+              <ShieldCheck size={18} />
+            </div>
+            <div>
+              <div className="text-slate-900 dark:text-white font-bold text-sm">Kasko Teklifleri</div>
+              <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">%30 Özel İndirim</div>
+            </div>
+          </motion.div>
+
+        </motion.div>
+
+      </div>
+
+      {/* Fuel Prices Marquee */}
+      {fuelPrices && fuelPrices.length > 0 && !isLoadingFuel && (
+        <div className="absolute bottom-0 left-0 w-full bg-slate-100 dark:bg-white/5 border-t border-slate-200 dark:border-white/10 py-3 flex items-center z-30">
+          
+          {/* Static Label Left */}
+          <div className="absolute left-0 top-0 bottom-0 z-40 bg-slate-100 dark:bg-[#080d19] px-4 md:px-8 flex items-center border-r border-slate-200 dark:border-white/10 shadow-[10px_0_15px_rgba(0,0,0,0.05)] dark:shadow-[10px_0_15px_rgba(0,0,0,0.5)]">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1">
+                <Fuel size={14} className="text-emerald-500" />
+                {fuelCity?.toUpperCase() || "İSTANBUL"}
+              </span>
+            </div>
+          </div>
+
+          <div className="w-full overflow-hidden ml-24 md:ml-40 flex">
+            <motion.div 
+              animate={{ x: [0, -1000] }} 
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="flex items-center whitespace-nowrap"
+            >
+              {[...fuelPrices, ...fuelPrices, ...fuelPrices].map((station, index) => (
+                <div key={index} className="flex items-center gap-3 mx-6 text-[13px]">
+                  <span className="font-bold text-slate-800 dark:text-white">{station.marka || "İstasyon"}</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-slate-500 dark:text-slate-400">Benzin:</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{station.benzin || "-"}₺</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-slate-500 dark:text-slate-400">Motorin:</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-semibold">{station.motorin || "-"}₺</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-slate-500 dark:text-slate-400">LPG:</span>
+                    <span className="text-indigo-600 dark:text-indigo-400 font-semibold">{station.lpg || "-"}₺</span>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+          
+        </div>
+      )}
+
+    </section>
   );
 });
 

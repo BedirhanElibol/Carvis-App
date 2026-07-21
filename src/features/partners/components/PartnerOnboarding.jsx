@@ -141,14 +141,17 @@ const PartnerOnboarding = ({ onComplete }) => {
                 key_exchange_policy: "keyless"
               };
               break;
-            case "tow_truck":
-              tableName = "tow_truck_profiles";
+            case "parking":
+              tableName = "parking_profiles";
               payload = {
                 id: currentUser.id,
-                company_name: businessName,
-                service_types: ["towing"],
-                is_24_7: false,
-                response_time_minutes: 20
+                parking_name: businessName,
+                total_capacity: 100,
+                occupied_count: 0,
+                price_per_hour: 20.00,
+                is_indoor: true,
+                has_security: true,
+                has_valet: false
               };
               break;
             case "insurance":

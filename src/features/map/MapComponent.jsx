@@ -44,7 +44,7 @@ const createProviderIcon = (provider) => {
     html: `
       <div class="relative w-12 h-12 flex items-center justify-center animate-in zoom-in duration-500">
         <!-- Marker Shape -->
-        <div class="absolute inset-0 ${style.bg} rounded-full rotate-45 shadow-[0_0_15px_rgba(0,0,0,0.5)] border-2 border-black/20 dark:border-white/20"></div>
+        <div class="absolute inset-0 ${style.bg} rounded-full rotate-45 shadow-xl border-2 border-black/20 dark:border-white/20"></div>
         <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 ${style.bg} rotate-45 border-r-2 border-b-2 border-black/20 dark:border-white/20"></div>
         
         <!-- Role Indicator Badge -->
@@ -116,7 +116,7 @@ const createAlertIcon = (type) => {
     className: "custom-alert-marker",
     html: `
       <div class="relative w-10 h-10 flex items-center justify-center ${pulse}">
-        <div class="absolute inset-0 ${bgClass} rounded-full rotate-45 shadow-[0_0_10px_rgba(0,0,0,0.3)] border border-white/20"></div>
+        <div class="absolute inset-0 ${bgClass} rounded-full rotate-45 shadow-xl border border-white/20"></div>
         <div class="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-2 h-2 ${bgClass} rotate-45 border-r border-b border-white/20"></div>
         <span class="relative z-10 text-[9px] font-black text-white tracking-tighter uppercase">${symbol}</span>
       </div>
@@ -224,7 +224,7 @@ const MapComponent = ({ userLocation, providers = [], roadAlerts = [], onProvide
       </MapContainer>
 
       {/* Premium Overlay Gradient */}
-      <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_100px_rgba(0,0,0,0.5)] z-[400]"></div>
+      <div className="absolute inset-0 pointer-events-none shadow-xl z-[400]"></div>
     </div>
   );
 };

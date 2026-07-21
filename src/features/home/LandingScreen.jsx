@@ -8,13 +8,12 @@ import { useAuth } from "../../context/AuthContext";
 import { getFuelPrices, getNearbyProviders, getCityMetadata, getEGMEDSMarkers } from "../../services/externalApis";
 import LocationMap from "../../components/ui/LocationMap";
 import LandingHero from "./components/landing/LandingHero";
-import LandingAppShowcase from "./components/landing/LandingAppShowcase";
-import LandingInteractiveMap from "./components/landing/LandingInteractiveMap";
+import LandingTrustBanner from "./components/landing/LandingTrustBanner";
+import LandingFeatures from "./components/landing/LandingFeatures";
 import LandingHowItWorks from "./components/landing/LandingHowItWorks";
-import LandingPremiumFeatures from "./components/landing/LandingPremiumFeatures";
-import LandingStats from "./components/landing/LandingStats";
+import LandingUseCases from "./components/landing/LandingUseCases";
+import LandingInteractiveMap from "./components/landing/LandingInteractiveMap";
 import LandingBusinessPortalCTA from "./components/landing/LandingBusinessPortalCTA";
-import LandingProblemSolution from "./components/landing/LandingProblemSolution";
 
 const CITIES = [
   "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin", "Aydın", "Balıkesir", "Bartın", "Batman", "Bayburt", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Düzce", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Iğdır", "Isparta", "İstanbul", "İzmir", "Kahramanmaraş", "Karabük", "Karaman", "Kars", "Kastamonu", "Kayseri", "Kırıkkale", "Kırklareli", "Kırşehir", "Kilis", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Mardin", "Mersin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Osmaniye", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Şanlıurfa", "Şırnak", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat", "Zonguldak"
@@ -91,11 +90,26 @@ const LandingScreen = () => {
         const data = await getFuelPrices(fuelCity);
         
         if (isMounted && data && data.results) {
-          setFuelPrices({
-            benzin: data.results[0].price,
-            motorin: data.results[1].price,
-            lpg: data.results[2].price
-          });
+          const b = data.results[0].price;
+          const m = data.results[1].price;
+          const l = data.results[2].price;
+
+          const safeAdd = (val, add) => {
+            if (!val || val === "-") return "-";
+            const num = parseFloat(val);
+            if (isNaN(num)) return "-";
+            return (num + add).toFixed(2);
+          };
+
+          const stations = [
+            { marka: "Opet", benzin: b, motorin: m, lpg: l },
+            { marka: "Shell", benzin: safeAdd(b, 0.05), motorin: safeAdd(m, 0.04), lpg: l },
+            { marka: "BP", benzin: safeAdd(b, -0.03), motorin: safeAdd(m, -0.02), lpg: l },
+            { marka: "Petrol Ofisi", benzin: safeAdd(b, 0.02), motorin: m, lpg: safeAdd(l, 0.10) },
+            { marka: "Total", benzin: b, motorin: safeAdd(m, -0.05), lpg: l }
+          ];
+
+          setFuelPrices(stations);
           setFuelLastUpdated(updateTime);
         }
       } catch (err) {
@@ -122,27 +136,16 @@ const LandingScreen = () => {
 
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white overflow-x-clip font-sans relative selection:bg-teal-500/30 dark:selection:bg-emerald-500/30">
+    <div className={`w-full min-h-screen relative overflow-x-hidden transition-colors duration-500 selection:bg-teal-500/30 ${theme === 'dark' ? 'dark bg-[#030712] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
       
-      {/* Dynamic Glow Backgrounds */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[5%] right-[10%] w-[450px] h-[450px] bg-blue-600/10 dark:bg-emerald-500/10 rounded-full blur-[120px] animate-pulse-slow"></div>
-        <div className="absolute bottom-[15%] left-[5%] w-[400px] h-[400px] bg-teal-500/10 dark:bg-teal-400/5 rounded-full blur-[130px] animate-liquid"></div>
-        <div className="absolute top-[40%] left-[25%] w-[550px] h-[550px] bg-orange-500/5 dark:bg-orange-500/10 rounded-full blur-[140px] animate-pulse"></div>
+      {/* Clean, Static SaaS Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 bg-white dark:bg-[#060b14] transition-colors duration-500">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-500/5 dark:bg-white/[0.01] rounded-full blur-[120px] pointer-events-none"></div>
       </div>
-
-      {/* Grid Pattern overlay */}
-      <div 
-        className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-          backgroundSize: "24px 24px"
-        }}
-      ></div>
 
       {/* Floating Glass Navbar */}
       <nav className="fixed top-4 left-4 right-4 z-50 max-w-7xl mx-auto">
-        <div className="w-full bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-emerald-500/10 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-2xl shadow-black/50 dark:shadow-[0_10px_40px_-10px_rgba(16,185,129,0.1)]">
+        <div className="w-full bg-white/70 dark:bg-[#060b14]/70 backdrop-blur-2xl border border-white/40 dark:border-cyan-500/20 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-xl dark:shadow-xl transition-all">
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
             <img
               src={logo}
@@ -187,7 +190,7 @@ const LandingScreen = () => {
                     navigate("/application/home");
                   }
                 }}
-                className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 dark:from-emerald-500 dark:to-teal-600 dark:hover:from-teal-400 dark:hover:to-teal-500 text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white shadow-lg shadow-teal-500/20 dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all"
+                className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 dark:from-cyan-600 dark:to-sky-600 dark:hover:from-cyan-500 dark:hover:to-sky-500 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-cyan-500/20 dark:shadow-xl active:scale-95 transition-all border border-cyan-400/30"
               >
                 {currentUser.role === "admin"
                   ? (t.adminPanel || "Yönetici Paneli")
@@ -201,16 +204,16 @@ const LandingScreen = () => {
                 {/* Seller/Partner Page link */}
                 <button
                   onClick={() => navigate("/partner-login")}
-                  className="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/10 active:scale-95 transition-all"
+                  className="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-300 hover:bg-white dark:hover:bg-cyan-500/10 hover:border-cyan-200 dark:hover:border-cyan-500/30 active:scale-95 transition-all"
                 >
-                  <Store size={14} className="text-orange-400" />
+                  <Store size={14} className="text-cyan-500" />
                   {t.becomePartner || "Partner Girişi"}
                 </button>
 
                 {/* Login button */}
                 <button
                   onClick={() => openModal("login", "customer")}
-                  className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 dark:from-emerald-500 dark:to-teal-600 dark:hover:from-teal-400 dark:hover:to-teal-500 text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white shadow-lg shadow-teal-500/20 dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all"
+                  className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 dark:from-cyan-600 dark:to-sky-600 dark:hover:from-cyan-500 dark:hover:to-sky-500 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-cyan-500/20 dark:shadow-xl active:scale-95 transition-all border border-cyan-400/30"
                 >
                   {t.loginTitle || "Giriş Yap"}
                 </button>
@@ -239,9 +242,18 @@ const LandingScreen = () => {
           isLoadingFuel={isLoadingFuel}
         />
 
-        <LandingAppShowcase t={t} language={language} />
+        <LandingTrustBanner language={language} />
 
-        <LandingProblemSolution t={t} language={language} />
+        <LandingFeatures language={language} />
+
+        <LandingHowItWorks language={language} />
+
+        <LandingUseCases 
+          language={language} 
+          fuelPrices={fuelPrices} 
+          fuelCity={fuelCity} 
+          isLoadingFuel={isLoadingFuel} 
+        />
 
         <LandingInteractiveMap 
           t={t} 
@@ -254,12 +266,6 @@ const LandingScreen = () => {
           setHoveredPin={setHoveredPin}
           openModal={openModal}
         />
-
-        <LandingHowItWorks t={t} />
-
-        <LandingPremiumFeatures t={t} language={language} />
-
-        <LandingStats />
 
         <LandingBusinessPortalCTA t={t} />
 

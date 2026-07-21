@@ -158,7 +158,7 @@ const PredictiveHealth = ({ vehicle }) => {
           initial={{ width: 0 }}
           animate={{ width: `${assessment.score}%` }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className={`h-full ${getBg(assessment.score)} shadow-[0_0_15px_rgba(255,255,255,0.3)]`}
+          className={`h-full ${getBg(assessment.score)} shadow-xl`}
         />
       </div>
 

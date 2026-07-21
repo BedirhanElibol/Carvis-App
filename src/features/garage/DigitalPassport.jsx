@@ -606,7 +606,7 @@ const DigitalPassport = ({ vehicle }) => {
             history.map((record) => (
               <div key={record.id} className="relative break-inside-avoid">
                 {/* Timeline dot */}
-                <div className="absolute -left-[23px] top-1.5 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-4 border-primary-600 shadow-[0_0_10px_rgba(37,99,235,0.4)] print:border-black print:bg-white print:shadow-none"></div>
+                <div className="absolute -left-[23px] top-1.5 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-4 border-primary-600 shadow-xl print:border-black print:bg-white print:shadow-none"></div>
                 
                 <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-all group print:border-black/10">
                   <div className="flex justify-between items-start mb-4">

@@ -271,7 +271,7 @@ const MechanicsScreen = () => {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
           <div className="relative z-10 glass-card p-8 rounded-[2.5rem] text-center shadow-2xl backdrop-blur-2xl border border-black/10 dark:border-white/10 animate-slide-up">
-            <div className="w-16 h-16 bg-primary-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary-500/20 shadow-[0_0_30px_rgba(20,184,166,0.3)]">
+            <div className="w-16 h-16 bg-primary-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary-500/20 shadow-xl">
               <ShieldCheck size={32} className="text-primary-500" />
             </div>
             <p className="font-black text-slate-900 dark:text-white text-xl tracking-tighter mb-1">

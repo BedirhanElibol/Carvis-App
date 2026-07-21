@@ -41,7 +41,7 @@ const FilterModal = ({
 
   return (
     <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 z-[200] flex items-end sm:items-center justify-center backdrop-blur-md animate-in fade-in duration-300">
-      <div className="bg-white dark:bg-slate-900 w-full sm:w-[450px] rounded-t-[3rem] sm:rounded-[3rem] p-8 shadow-[0_20px_100px_rgba(0,0,0,0.8)] animate-in slide-in-from-bottom-full duration-500 border-t sm:border border-black/10 dark:border-white/10 relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 w-full sm:w-[450px] rounded-t-[3rem] sm:rounded-[3rem] p-8 shadow-xl animate-in slide-in-from-bottom-full duration-500 border-t sm:border border-black/10 dark:border-white/10 relative overflow-hidden">
         {/* Background Glow */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
 

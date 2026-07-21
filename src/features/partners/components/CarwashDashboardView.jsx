@@ -70,61 +70,61 @@ export default function CarwashDashboardView({ currentUser }) {
   const myCompletedJobs = requests.filter(r => r.status === "completed" && r.provider_id === currentUser.id);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 font-sans text-slate-100">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Seyyar Yıkama Paneli</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">Bölgenizdeki seyyar / mobil yıkama taleplerini üstlenin.</p>
+          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter glow-orange">Seyyar Yıkama Paneli</h1>
+          <p className="text-slate-400 text-xs mt-1">Bölgenizdeki seyyar / mobil yıkama taleplerini üstlenin.</p>
         </div>
       </div>
 
       {/* KPI Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: "Aktif İşlerim", value: stats.activeWashes, icon: Navigation, color: "text-cyan-500", bg: "bg-cyan-500/10" },
-          { label: "Tamamlanan Yıkama", value: stats.completedToday, icon: CheckCircle, color: "text-emerald-500", bg: "bg-emerald-500/10" },
-          { label: "Su Tankı Kapasitesi", value: stats.waterLevel, icon: Droplet, color: "text-blue-500", bg: "bg-blue-500/10" },
-          { label: "Toplam Hasılat", value: `₺${stats.earnings.toLocaleString("tr-TR")}`, icon: DollarSign, color: "text-yellow-500", bg: "bg-yellow-500/10" },
+          { label: "Aktif İşlerim", value: stats.activeWashes, icon: Navigation, color: "text-cyan-400", bg: "bg-cyan-500/10" },
+          { label: "Tamamlanan Yıkama", value: stats.completedToday, icon: CheckCircle, color: "text-emerald-400", bg: "bg-emerald-500/10" },
+          { label: "Su Tankı Kapasitesi", value: stats.waterLevel, icon: Droplet, color: "text-blue-400", bg: "bg-blue-500/10" },
+          { label: "Toplam Hasılat", value: `₺${stats.earnings.toLocaleString("tr-TR")}`, icon: DollarSign, color: "text-orange-500", bg: "bg-yellow-500/10" },
         ].map((s) => (
-          <div key={s.label} className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-black/5 dark:border-white/5 flex items-center justify-between shadow-sm">
+          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-3xl flex items-center justify-between shadow-sm hover:border-white/10 transition-all duration-300">
             <div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">{s.label}</p>
-              <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">{s.value}</h3>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{s.label}</p>
+              <h3 className="text-2xl font-mono font-black text-white mt-1.5">{s.value}</h3>
             </div>
-            <div className={`p-4 rounded-xl ${s.bg}`}>
-              <s.icon size={24} className={s.color} />
+            <div className={`p-4 rounded-2xl ${s.bg}`}>
+              <s.icon size={22} className={s.color} />
             </div>
           </div>
         ))}
       </div>
 
       {/* Tabs Menu */}
-      <div className="flex border-b border-black/5 dark:border-white/5 pb-px">
+      <div className="flex border-b border-white/5 pb-px">
         <button
           onClick={() => setActiveTab("active")}
-          className={`pb-4 px-6 text-xs font-black uppercase tracking-widest transition-all relative ${
+          className={`pb-4 px-6 text-xs font-black uppercase tracking-widest transition-all cursor-pointer relative ${
             activeTab === "active"
-              ? "text-cyan-500"
-              : "text-slate-400 hover:text-slate-600 dark:hover:text-white"
+              ? "text-orange-500"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Aktif Yıkama Talepleri
           {activeTab === "active" && (
-            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-500 rounded-full" />
+            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 rounded-full" />
           )}
         </button>
         <button
           onClick={() => setActiveTab("history")}
-          className={`pb-4 px-6 text-xs font-black uppercase tracking-widest transition-all relative ${
+          className={`pb-4 px-6 text-xs font-black uppercase tracking-widest transition-all cursor-pointer relative ${
             activeTab === "history"
-              ? "text-cyan-500"
-              : "text-slate-400 hover:text-slate-600 dark:hover:text-white"
+              ? "text-orange-500"
+              : "text-slate-400 hover:text-white"
           }`}
         >
           Geçmiş Yıkama İşlerim
           {activeTab === "history" && (
-            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-500 rounded-full" />
+            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 rounded-full" />
           )}
         </button>
       </div>
@@ -132,41 +132,41 @@ export default function CarwashDashboardView({ currentUser }) {
       {activeTab === "active" ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Available Requests in Area */}
-          <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
             <div className="flex justify-between items-center">
-              <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Bölgenizdeki Yıkama Talepleri</h3>
-              <span className="bg-cyan-500/10 text-cyan-500 px-3 py-1 rounded-full text-[10px] font-bold">HAZIR TALEPLER</span>
+              <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Bölgenizdeki Yıkama Talepleri</h3>
+              <span className="bg-orange-500/10 text-orange-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">HAZIR TALEPLER</span>
             </div>
 
             {loading ? (
-              <div className="py-8 text-center text-slate-500">Yükleniyor...</div>
+              <div className="py-8 text-center text-slate-500 text-xs">Yükleniyor...</div>
             ) : availableRequests.length === 0 ? (
-              <div className="py-12 text-center text-slate-400">
+              <div className="py-12 text-center text-slate-500">
                 <Droplet size={40} className="mx-auto mb-3 opacity-20" />
                 <p className="font-bold text-sm">Bölgenizde açık talep bulunmuyor.</p>
               </div>
             ) : (
               <div className="space-y-4">
                 {availableRequests.map((req) => (
-                  <div key={req.id} className="p-4 rounded-2xl bg-slate-50 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-3">
+                  <div key={req.id} className="p-4 rounded-2xl bg-slate-950/40 border border-white/5 space-y-3 hover:border-white/10 transition-colors">
                     <div className="flex justify-between">
                       <div>
-                        <span className="bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase">
+                        <span className="bg-cyan-500/10 text-cyan-400 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider">
                           {req.wash_type} Yıkama
                         </span>
-                        <h4 className="font-bold text-sm text-slate-900 dark:text-white mt-2">Müşteri: {req.profiles?.full_name || "Gizli Müşteri"}</h4>
+                        <h4 className="font-bold text-sm text-white mt-2.5">Müşteri: {req.profiles?.full_name || "Gizli Müşteri"}</h4>
                       </div>
                       <div className="text-right">
-                        <p className="font-black text-sm text-slate-900 dark:text-white">₺{req.price}</p>
+                        <p className="font-mono font-black text-sm text-white">₺{req.price}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-500">
-                      <MapPin size={14} className="text-slate-400 shrink-0" />
+                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                      <MapPin size={14} className="text-slate-500 shrink-0" />
                       <span className="truncate">{req.address_text}</span>
                     </div>
                     <button
                       onClick={() => handleAccept(req.id)}
-                      className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2.5 rounded-xl text-xs transition-colors"
+                      className="w-full bg-orange-600 hover:bg-orange-500 text-white font-black py-2.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-colors active-scale shadow-lg shadow-orange-500/10"
                     >
                       Görevi Kabul Et
                     </button>
@@ -177,39 +177,39 @@ export default function CarwashDashboardView({ currentUser }) {
           </div>
 
           {/* Active Work Orders */}
-          <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
             <div className="flex justify-between items-center">
-              <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Aktif Yıkama Görevlerim</h3>
-              <span className="bg-emerald-500/10 text-emerald-500 px-3 py-1 rounded-full text-[10px] font-bold">İŞLEMDELER</span>
+              <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Aktif Yıkama Görevlerim</h3>
+              <span className="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">İŞLEMDELER</span>
             </div>
 
             {loading ? (
-              <div className="py-8 text-center text-slate-500">Yükleniyor...</div>
+              <div className="py-8 text-center text-slate-500 text-xs">Yükleniyor...</div>
             ) : myActiveJobs.length === 0 ? (
-              <div className="py-12 text-center text-slate-400">
+              <div className="py-12 text-center text-slate-500">
                 <CheckCircle size={40} className="mx-auto mb-3 opacity-20" />
                 <p className="font-bold text-sm">Üstlendiğiniz aktif görev yok.</p>
               </div>
             ) : (
               <div className="space-y-4">
                 {myActiveJobs.map((job) => (
-                  <div key={job.id} className="p-4 rounded-2xl bg-slate-50 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-3">
+                  <div key={job.id} className="p-4 rounded-2xl bg-slate-950/40 border border-white/5 space-y-3 hover:border-white/10 transition-colors">
                     <div className="flex justify-between">
                       <div>
-                        <h4 className="font-bold text-sm text-slate-900 dark:text-white">{job.profiles?.full_name || "Müşteri"}</h4>
-                        <p className="text-[10px] text-slate-500 mt-0.5">Araç: {job.vehicles?.brand} {job.vehicles?.model} ({job.vehicles?.plate})</p>
+                        <h4 className="font-bold text-sm text-white">{job.profiles?.full_name || "Müşteri"}</h4>
+                        <p className="text-[10px] text-slate-400 mt-0.5">Araç: {job.vehicles?.brand} {job.vehicles?.model} ({job.vehicles?.plate})</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-black text-sm text-slate-900 dark:text-white">₺{job.price}</p>
+                        <p className="font-mono font-black text-sm text-white">₺{job.price}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-500">
-                      <MapPin size={14} className="text-slate-400 shrink-0" />
+                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                      <MapPin size={14} className="text-slate-500 shrink-0" />
                       <span className="truncate">{job.address_text}</span>
                     </div>
                     <button
                       onClick={() => handleComplete(job.id)}
-                      className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs transition-colors"
+                      className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2.5 rounded-xl text-xs uppercase tracking-widest cursor-pointer transition-colors flex items-center justify-center gap-1.5 active-scale shadow-lg shadow-emerald-500/20"
                     >
                       Yıkamayı Tamamla (Escrow Çöz)
                     </button>
@@ -221,34 +221,34 @@ export default function CarwashDashboardView({ currentUser }) {
         </div>
       ) : (
         /* History View */
-        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 space-y-6">
+        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Tamamlanan Yıkama Görevleri</h3>
-            <span className="bg-slate-500/10 text-slate-500 px-3 py-1 rounded-full text-[10px] font-bold">GEÇMİŞ</span>
+            <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Tamamlanan Yıkama Görevleri</h3>
+            <span className="bg-slate-500/10 text-slate-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">GEÇMİŞ</span>
           </div>
 
           {loading ? (
-            <div className="py-8 text-center text-slate-500">Yükleniyor...</div>
+            <div className="py-8 text-center text-slate-500 text-xs">Yükleniyor...</div>
           ) : myCompletedJobs.length === 0 ? (
-            <div className="py-12 text-center text-slate-400">
+            <div className="py-12 text-center text-slate-500">
               <CheckCircle size={40} className="mx-auto mb-3 opacity-20" />
               <p className="font-bold text-sm">Geçmişte tamamladığınız görev bulunmuyor.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {myCompletedJobs.map((job) => (
-                <div key={job.id} className="p-4 rounded-2xl bg-slate-50 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-3">
+                <div key={job.id} className="p-4 rounded-2xl bg-slate-950/40 border border-white/5 space-y-3 hover:border-white/10 transition-colors">
                   <div className="flex justify-between">
                     <div>
-                      <h4 className="font-bold text-sm text-slate-900 dark:text-white">{job.profiles?.full_name || "Müşteri"}</h4>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Araç: {job.vehicles?.brand} {job.vehicles?.model} ({job.vehicles?.plate})</p>
+                      <h4 className="font-bold text-sm text-white">{job.profiles?.full_name || "Müşteri"}</h4>
+                      <p className="text-[10px] text-slate-400 mt-0.5">Araç: {job.vehicles?.brand} {job.vehicles?.model} ({job.vehicles?.plate})</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-black text-sm text-slate-900 dark:text-white">₺{job.price}</p>
+                      <p className="font-mono font-black text-sm text-white">₺{job.price}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-                    <MapPin size={14} className="text-slate-400 shrink-0" />
+                  <div className="flex items-center gap-2 text-xs text-slate-400">
+                    <MapPin size={14} className="text-slate-500 shrink-0" />
                     <span className="truncate">{job.address_text}</span>
                   </div>
                 </div>

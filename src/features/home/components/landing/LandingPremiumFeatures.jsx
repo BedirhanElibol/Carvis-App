@@ -30,9 +30,9 @@ const LandingPremiumFeatures = memo(({t, language}) => {
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
-                  <span className="text-[8px] font-black text-indigo-400 tracking-wider uppercase">GÜVENLİ KARTLI ÖDEME ALTYAPISI</span>
+                  <span className="text-[8px] font-black text-indigo-400 tracking-wider uppercase">GÜVENLİ KORUMALI ÖDEME ALTYAPISI</span>
                   <h4 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                    {language === "tr" ? "PAYTR / İYZİCO GÜVENLİ ÖDEME GEÇİDİ" : "SECURE PAYMENTS POWERED BY PAYTR / IYZICO"}
+                    {language === "tr" ? "GÜVENLİ VE LİSANSLI ÖDEME GEÇİDİ" : "SECURE & LICENSED PAYMENT GATEWAY"}
                   </h4>
                 </div>
                 <ShieldCheck className="text-indigo-400" size={18} />
@@ -41,14 +41,14 @@ const LandingPremiumFeatures = memo(({t, language}) => {
               {/* Escrow Status Mockup */}
               <div className="bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-2xl p-4 shadow-md text-left mb-6">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-[9px] font-black text-slate-400 uppercase">{language === "tr" ? "KARTLI GÜVENLİ ÖDEME" : "SECURE CARD PAYMENT"}</span>
-                  <span className="text-[8px] font-black text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full uppercase">{language === "tr" ? "Kartla Güvende" : "Secured with Card"}</span>
+                  <span className="text-[9px] font-black text-slate-400 uppercase">{language === "tr" ? "GÜVENLİ HAVUZ ÖDEMESİ" : "SECURE ESCROW PAYMENT"}</span>
+                  <span className="text-[8px] font-black text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full uppercase">{language === "tr" ? "Güvende" : "Secured"}</span>
                 </div>
                 <div className="text-2xl font-black text-slate-900 dark:text-white font-mono mb-2">₺4.250</div>
                 <div className="w-full h-1.5 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
                   <div className="h-full bg-emerald-500 rounded-full w-full"></div>
                 </div>
-                <p className="text-[9px] text-slate-500 font-bold mt-2">{language === "tr" ? "Ödemeniz resmi lisanslı PayTR/iyzico altyapısıyla şifrelenmiş olarak gerçekleşir." : "Your payment is processed securely via licensed PayTR/iyzico payment gateways."}</p>
+                <p className="text-[9px] text-slate-500 font-bold mt-2">{language === "tr" ? "Ödemeniz resmi lisanslı altyapılarla şifrelenmiş olarak gerçekleşir." : "Your payment is processed securely via licensed payment gateways."}</p>
               </div>
  
               {/* Legal Documents Mockup */}
@@ -58,7 +58,7 @@ const LandingPremiumFeatures = memo(({t, language}) => {
                     <CheckCircle2 className="text-emerald-500" size={14} />
                     <span className="text-[10px] font-black text-slate-900 dark:text-white">{language === "tr" ? "Carvis Onaylı Hizmet Güvencesi" : "Carvis Approved Service Guarantee"}</span>
                   </div>
-                  <span className="text-[9px] font-bold text-emerald-500 uppercase">{language === "tr" ? "Kartlı Ödemede Geçerli" : "For Card Payments"}</span>
+                  <span className="text-[9px] font-bold text-emerald-500 uppercase">{language === "tr" ? "Güvenli Ödeme" : "Secure Payment"}</span>
                 </div>
                 <div className="flex justify-between items-center p-2.5 bg-white/80 dark:bg-[#070b18]/80 border border-black/5 dark:border-white/10 rounded-xl opacity-80">
                   <div className="flex items-center gap-2">
@@ -75,15 +75,15 @@ const LandingPremiumFeatures = memo(({t, language}) => {
             {/* Right: Pitch copy */}
             <div className="w-full lg:w-1/2 space-y-6 text-left">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[9px] font-black text-indigo-400 tracking-widest uppercase">
-                {language === "tr" ? "KOLAY VE GÜVENLİ KARTLI ÖDEME" : "EASY & SECURE CARD PAYMENTS"}
+                {language === "tr" ? "KOLAY VE GÜVENLİ ÖDEME" : "EASY & SECURE PAYMENTS"}
               </span>
               <h3 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight uppercase">
-                {language === "tr" ? "PAYTR/İYZİCO GÜVENLİ KARTLI ÖDEME SİSTEMİ" : "SECURE CARD PAYMENTS POWERED BY PAYTR/IYZICO"}
+                {language === "tr" ? "GÜVENLİ VE KORUMALI ÖDEME SİSTEMİ" : "SECURE & ESCROWED PAYMENT SYSTEM"}
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base font-semibold leading-relaxed">
                 {language === "tr"
-                  ? "TCMB denetimindeki ödeme kuruluşları (PayTR/iyzico) güvencesiyle, servis bedelini kartınızla güvenle ödeyebilirsiniz. Ustanız işini tamamlayıp faturası kesildiğinde ödeme süreci şeffaf bir şekilde tamamlanır. Esnaf iş teslimi sonrası hak edişini hızla alarak nakit akışı sıkıntısı yaşamaz."
-                  : "Pay securely with your credit or debit card powered by licensed payment providers (PayTR/iyzico). Once your service is finished and invoiced, the transaction completes transparently. Mechanics receive their payouts quickly, keeping their cash flow healthy."}
+                  ? "Resmi denetimli lisanslı ödeme kuruluşları güvencesiyle, servis bedelini kartınızla güvenle ödeyebilirsiniz. Ustanız işini tamamlayıp faturası kesildiğinde ödeme süreci şeffaf bir şekilde tamamlanır. Esnaf iş teslimi sonrası hak edişini hızla alarak nakit akışı sıkıntısı yaşamaz."
+                  : "Pay securely with your credit or debit card powered by licensed payment providers. Once your service is finished and invoiced, the transaction completes transparently. Mechanics receive their payouts quickly, keeping their cash flow healthy."}
               </p>
               <ul className="space-y-3 text-xs font-black text-slate-700 dark:text-slate-300">
                 <li className="flex items-center gap-2.5">

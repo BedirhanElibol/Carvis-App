@@ -15,7 +15,7 @@ const PartnerSettingsScreen = () => {
   const { showAlert } = useUI();
   const [profile, setProfile] = useState({
     businessName:
-      currentUser?.company_name || currentUser?.full_name || "Rapidsy Partner",
+      currentUser?.company_name || currentUser?.full_name || "Carvis Partner",
     contactPhone: currentUser?.phone_number || currentUser?.phone || "",
     serviceRadius: 12,
     payoutIban: "TR00 0000 0000 0000 0000 0000 00",

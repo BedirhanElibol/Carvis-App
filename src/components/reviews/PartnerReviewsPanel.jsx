@@ -86,21 +86,23 @@ const PartnerReviewsPanel = ({ partnerId, partnerName }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <RefreshCw size={24} className="animate-spin text-primary-400" />
+        <RefreshCw size={24} className="animate-spin text-orange-500" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-sans text-slate-100">
       {/* Stats Header */}
       {reviews.length > 0 && (
-        <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5">
+        <div className="glass-card p-6 rounded-3xl border border-white/5 bg-slate-900/40">
           <div className="flex gap-6 items-center">
             <div className="text-center">
-              <p className="text-5xl font-black text-slate-900 dark:text-white tracking-tighter">{stats.avg}</p>
-              <StarDisplay rating={Math.round(parseFloat(stats.avg))} />
-              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">{stats.total} Değerlendirme</p>
+              <p className="text-5xl font-mono font-black text-white tracking-tighter">{stats.avg}</p>
+              <div className="mt-1 flex justify-center">
+                <StarDisplay rating={Math.round(parseFloat(stats.avg))} />
+              </div>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-2">{stats.total} Değerlendirme</p>
             </div>
             <div className="flex-1 space-y-1">
               {[5, 4, 3, 2, 1].map((star) => {
@@ -108,15 +110,15 @@ const PartnerReviewsPanel = ({ partnerId, partnerName }) => {
                 const pct = stats.total > 0 ? Math.round((count / stats.total) * 100) : 0;
                 return (
                   <div key={star} className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold text-slate-500 w-3">{star}</span>
+                    <span className="text-[10px] font-mono font-bold text-slate-500 w-3">{star}</span>
                     <Star size={10} className="text-amber-400 fill-amber-400 shrink-0" />
-                    <div className="flex-1 h-1.5 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
+                    <div className="flex-1 h-1.5 bg-slate-950/40 border border-white/5 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-amber-400 rounded-full transition-all duration-700"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
-                    <span className="text-[10px] font-bold text-slate-500 w-6">{count}</span>
+                    <span className="text-[10px] font-mono font-bold text-slate-400 w-6">{count}</span>
                   </div>
                 );
               })}
@@ -127,12 +129,12 @@ const PartnerReviewsPanel = ({ partnerId, partnerName }) => {
 
       {/* Reviews List */}
       {reviews.length === 0 ? (
-        <div className="text-center py-12">
-          <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
-            <MessageSquare size={28} className="text-slate-400" />
+        <div className="text-center py-12 glass-card border border-white/5 bg-slate-900/40 rounded-3xl">
+          <div className="w-16 h-16 bg-slate-950/40 border border-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+            <MessageSquare size={28} className="text-slate-500" />
           </div>
-          <p className="font-bold text-slate-500">Henüz değerlendirme yok</p>
-          <p className="text-sm text-slate-400 mt-1">İlk hizmeti tamamladıktan sonra yorumlar burada görünecek.</p>
+          <p className="font-bold text-slate-400 text-sm">Henüz değerlendirme yok</p>
+          <p className="text-xs text-slate-500 mt-1">İlk hizmeti tamamladıktan sonra yorumlar burada görünecek.</p>
         </div>
       ) : (
         <AnimatePresence>
@@ -142,16 +144,16 @@ const PartnerReviewsPanel = ({ partnerId, partnerName }) => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="glass-card p-5 rounded-2xl border border-black/5 dark:border-white/5"
+              className="glass-card p-5 rounded-3xl border border-white/5 bg-slate-900/40 hover:border-white/10 transition-all duration-300"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-gradient-to-br from-primary-500 to-accent-600 rounded-full flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 bg-gradient-to-br from-orange-500 to-amber-600 rounded-full flex items-center justify-center shrink-0">
                     <User size={16} className="text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-sm text-slate-900 dark:text-white">{review.reviewerName}</p>
-                    <p className="text-[10px] text-slate-500">
+                    <p className="font-bold text-sm text-white">{review.reviewerName}</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">
                       {new Date(review.createdAt).toLocaleDateString('tr-TR', {
                         day: 'numeric', month: 'long', year: 'numeric'
                       })}
@@ -161,7 +163,7 @@ const PartnerReviewsPanel = ({ partnerId, partnerName }) => {
                 <StarDisplay rating={review.rating} />
               </div>
               {review.comment && (
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed bg-black/5 dark:bg-white/5 rounded-xl p-3">
+                <p className="text-xs text-slate-350 leading-relaxed bg-slate-950/40 border border-white/5 rounded-xl p-3.5 italic">
                   "{review.comment}"
                 </p>
               )}

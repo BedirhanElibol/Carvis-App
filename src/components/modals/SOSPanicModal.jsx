@@ -43,7 +43,7 @@ const SOSPanicModal = ({ show, onClose }) => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-600/20 via-transparent to-transparent animate-pulse-slow"></div>
       </div>
 
-      <div className="bg-slate-50 dark:bg-slate-950 w-full max-w-lg rounded-[3rem] border-2 border-red-500/50 shadow-[0_0_100px_rgba(239,68,68,0.4)] overflow-hidden relative animate-in zoom-in-95 duration-300">
+      <div className="bg-slate-50 dark:bg-slate-950 w-full max-w-lg rounded-[3rem] border-2 border-red-500/50 shadow-xl overflow-hidden relative animate-in zoom-in-95 duration-300">
         {/* Header Section */}
         <div className="bg-red-600 p-8 text-center relative">
           <button

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { FileCheck, LayoutDashboard, LogOut, Menu, Settings, ShieldAlert, Users, Wallet, X } from "lucide-react";
+import { FileCheck, LayoutDashboard, LogOut, Menu, Settings, ShieldAlert, Users, Wallet, X, Scale } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
 
@@ -45,6 +45,12 @@ const AdminLayout = () => {
       label: t.adminPartners,
       icon: FileCheck,
       path: "/admin/partners",
+    },
+    {
+      key: "disputes",
+      label: "Anlaşmazlıklar",
+      icon: Scale,
+      path: "/admin/disputes",
     },
     {
       key: "finance",

@@ -67,7 +67,7 @@ const ServiceTimeline = ({ status, evidencePhotos = [] }) => {
               <div
                 className={` w-12 h-12 rounded-full flex items-center justify-center shrink-0 z-10 border-4 transition-all duration-500 ${
                   isActive
-                    ? "bg-primary-600 border-slate-950 text-slate-900 dark:text-white shadow-[0_0_20px_rgba(37,99,235,0.5)] scale-110"
+                    ? "bg-primary-600 border-slate-950 text-slate-900 dark:text-white shadow-xl scale-110"
                     : isCompleted
                       ? "bg-emerald-500 border-slate-950 text-slate-900 dark:text-white"
                       : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600"

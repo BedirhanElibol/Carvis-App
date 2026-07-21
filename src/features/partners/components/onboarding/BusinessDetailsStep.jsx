@@ -83,7 +83,7 @@ const BusinessDetailsStep = ({
         </button>
         <button 
           onClick={handleNext}
-          className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(37,99,235,0.2)] active-scale"
+          className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl active-scale"
         >
           DEVAM ET
         </button>

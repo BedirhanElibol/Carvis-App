@@ -48,7 +48,7 @@ const AdvancedPaymentModal = ({
 
   const handlePayment = async () => {
     setStep("processing");
-    // Simulate PayTR / Iyzico delay
+    // Simulate payment gateway delay
     setTimeout(() => {
       setStep("success");
       setTimeout(() => {

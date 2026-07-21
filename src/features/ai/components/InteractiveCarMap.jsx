@@ -23,7 +23,7 @@ const InteractiveCarMap = ({ activeZones = [], onZoneClick }) => {
       <div className="absolute inset-0 bg-gradient-to-b from-primary-500/5 to-transparent opacity-30"></div>
 
       {/* The Car Silhouette (Simplified Top-Down) */}
-      <svg viewBox="0 0 100 200" className="w-full h-full drop-shadow-[0_0_20px_rgba(59,130,246,0.1)]">
+      <svg viewBox="0 0 100 200" className="w-full h-full ">
         {/* Main Body */}
         <motion.path
           d="M30,20 Q50,15 70,20 L75,50 L80,100 L75,170 Q50,185 25,170 L20,100 L25,50 Z"
@@ -99,7 +99,7 @@ const InteractiveCarMap = ({ activeZones = [], onZoneClick }) => {
             style={{ left: zone.x, top: zone.y }}
             className={`absolute -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500 ${
               isActive
-                ? "bg-red-500 border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.5)]"
+                ? "bg-red-500 border-red-400 shadow-xl"
                 : "bg-slate-100 dark:bg-slate-800/80 border-black/10 dark:border-white/10 hover:bg-slate-700"
             } border `}
             whileHover={{ scale: 1.2 }}

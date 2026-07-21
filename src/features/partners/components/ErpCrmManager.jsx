@@ -446,7 +446,7 @@ const ErpCrmManager = () => {
                       <CheckCircle size={12} /> YÜKLENDİ (GÖRÜNTÜLE)
                     </a>
                   ) : (
-                    <label className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.2)] active-scale transition-all cursor-pointer">
+                    <label className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-xl active-scale transition-all cursor-pointer">
                       <Upload size={12} /> RESMİ FATURA YÜKLE
                       <input 
                         type="file" 

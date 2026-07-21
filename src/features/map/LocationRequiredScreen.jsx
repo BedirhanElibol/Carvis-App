@@ -32,7 +32,7 @@ const LocationRequiredScreen = ({ onRetry }) => {
 
         {/* Icon Cluster */}
         <div className="relative mb-10">
-          <div className="w-24 h-24 bg-gradient-to-tr from-primary-600 to-primary-600 rounded-[2.5rem] flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,0.4)] rotate-12 group-hover:rotate-0 transition-transform duration-500">
+          <div className="w-24 h-24 bg-gradient-to-tr from-primary-600 to-primary-600 rounded-[2.5rem] flex items-center justify-center shadow-xl rotate-12 group-hover:rotate-0 transition-transform duration-500">
             <MapPin size={48} className="text-slate-900 dark:text-white -rotate-12" />
           </div>
           <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-full flex items-center justify-center shadow-xl animate-bounce">

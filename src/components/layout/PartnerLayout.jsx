@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Calendar, Car, Key, LayoutDashboard, LogOut, Menu, Package, ParkingCircle, Settings, ShieldAlert, Shield, Tag, Truck, Droplets, User, Wrench, X, FileText, ClipboardList, Percent, Wallet, DollarSign, Landmark } from "lucide-react";
+import { Calendar, Car, Key, LayoutDashboard, LogOut, Menu, Package, ParkingCircle, Settings, ShieldAlert, Shield, Tag, Truck, Droplets, User, Wrench, X, FileText, ClipboardList, Percent, Wallet, DollarSign, Landmark, Star, RotateCcw, BarChart3 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 // Import High-Fidelity Views
@@ -11,6 +11,9 @@ import PartnerLoanView from "../../features/partners/components/PartnerLoanView"
 import CommissionTariffsView from "../../features/partners/components/CommissionTariffsView";
 import PromotionsView from "../../features/partners/components/PromotionsView";
 import ContractsView from "../../features/partners/components/ContractsView";
+import PartnerReviewsPanel from "../../components/reviews/PartnerReviewsPanel";
+import ReturnRequestsView from "../../features/partners/components/ReturnRequestsView";
+import PerformanceScoreView from "../../features/partners/components/PerformanceScoreView";
 
 const PartnerLayout = () => {
   const { currentUser, handleLogout: logout } = useAuth();
@@ -101,6 +104,15 @@ const PartnerLayout = () => {
     { key: "promotions", label: "Kuponlar & Kampanyalar", icon: Tag, viewKey: "promotions" }
   ];
 
+  const customerItems = [
+    { key: "reviews", label: "Müşteri Yorumları", icon: Star, viewKey: "reviews" },
+    { key: "returns", label: "İade Talepleri", icon: RotateCcw, viewKey: "returns", badge: "Yeni" }
+  ];
+
+  const analyticsItems = [
+    { key: "performance", label: "Performans Karnesi", icon: BarChart3, viewKey: "performance", badge: "Yeni" }
+  ];
+
   const legalItems = [
     { key: "sozlesmeler", label: "Sözleşmeler & Kurallar", icon: Shield, viewKey: "sozlesmeler" }
   ];
@@ -120,10 +132,10 @@ const PartnerLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white flex">
+    <div className="min-h-screen bg-slate-950 premium-gradient text-slate-100 flex font-sans">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 border-r border-black/5 dark:border-white/5 transform transition-transform duration-300 md:translate-x-0 overflow-y-auto ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900/60 border-r border-white/5 backdrop-blur-xl transform transition-transform duration-300 md:translate-x-0 overflow-y-auto ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -158,10 +170,10 @@ const PartnerLayout = () => {
                 <button
                   key={item.key}
                   onClick={() => handleMenuClick(item)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
                     isActive
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/30 font-bold"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <item.icon size={18} />
@@ -180,10 +192,10 @@ const PartnerLayout = () => {
                 <button
                   key={item.key}
                   onClick={() => handleMenuClick(item)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
                     isActive
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/30 font-bold"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <item.icon size={18} />
@@ -203,10 +215,10 @@ const PartnerLayout = () => {
                 <button
                   key={item.key}
                   onClick={() => handleMenuClick(item)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
                     isActive
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/30 font-bold"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <item.icon size={18} />
@@ -225,10 +237,10 @@ const PartnerLayout = () => {
                 <button
                   key={item.key}
                   onClick={() => handleMenuClick(item)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
                     isActive
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/30 font-bold"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <item.icon size={18} />
@@ -248,10 +260,10 @@ const PartnerLayout = () => {
                 <button
                   key={item.key}
                   onClick={() => handleMenuClick(item)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
                     isActive
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/30 font-bold"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <item.icon size={18} />
@@ -262,7 +274,53 @@ const PartnerLayout = () => {
             })}
           </div>
 
-          {/* Group 6: Promosyon */}
+          {/* Group 6: Müşteri Yönetimi */}
+          <div className="space-y-1">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Müşteri Yönetimi</p>
+            {customerItems.map((item) => {
+              const isActive = activeView === item.viewKey;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleMenuClick(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
+                    isActive
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/30 font-bold"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  <item.icon size={18} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                  {renderBadge(item.badge)}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Group 7: Analitik */}
+          <div className="space-y-1">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Analitik</p>
+            {analyticsItems.map((item) => {
+              const isActive = activeView === item.viewKey;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleMenuClick(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
+                    isActive
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/30 font-bold"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  <item.icon size={18} />
+                  <span className="font-medium text-xs">{item.label}</span>
+                  {renderBadge(item.badge)}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Group 8: Promosyon */}
           <div className="space-y-1">
             <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2">Promosyon</p>
             {promoItems.map((item) => {
@@ -271,10 +329,10 @@ const PartnerLayout = () => {
                 <button
                   key={item.key}
                   onClick={() => handleMenuClick(item)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
                     isActive
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/30 font-bold"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <item.icon size={18} />
@@ -293,10 +351,10 @@ const PartnerLayout = () => {
                 <button
                   key={item.key}
                   onClick={() => handleMenuClick(item)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
                     isActive
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-500/20"
-                      : "text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white"
+                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/30 font-bold"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <item.icon size={18} />
@@ -307,11 +365,11 @@ const PartnerLayout = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-white dark:bg-slate-900 border-t border-black/5 dark:border-white/5">
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-slate-950/20 border-t border-white/5">
           <button
             onClick={() => handleMenuClick({ key: "settings", path: "/partner/settings" })}
-            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:bg-white/5 hover:text-slate-900 dark:text-white ${
-              location.pathname === "/partner/settings" && activeView === "dashboard" ? "bg-orange-600 text-white" : ""
+            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all text-slate-400 hover:bg-white/5 hover:text-white cursor-pointer ${
+              location.pathname === "/partner/settings" && activeView === "dashboard" ? "bg-orange-600 text-white font-bold" : ""
             }`}
           >
             <Settings size={18} />
@@ -319,7 +377,7 @@ const PartnerLayout = () => {
           </button>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 transition-all mt-1"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 transition-all mt-1 cursor-pointer"
           >
             <LogOut size={18} />
             <span className="font-medium text-xs">Çıkış Yap</span>
@@ -328,10 +386,10 @@ const PartnerLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 relative bg-slate-50 dark:bg-slate-950">
+      <main className="flex-1 md:ml-64 relative bg-slate-950">
         {/* Header for Mobile */}
-        <div className="md:hidden p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
-          <button onClick={() => setIsSidebarOpen(true)} className="text-slate-900 dark:text-white">
+        <div className="md:hidden p-4 border-b border-white/5 flex items-center justify-between bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
+          <button onClick={() => setIsSidebarOpen(true)} className="text-white">
             <Menu size={24} />
           </button>
           <span className="font-bold text-xs uppercase tracking-wider">
@@ -390,6 +448,9 @@ const PartnerLayout = () => {
           {activeView === "komisyon_tarifeleri" && <CommissionTariffsView />}
           {activeView === "promotions" && <PromotionsView currentUser={currentUser} />}
           {activeView === "sozlesmeler" && <ContractsView currentUser={currentUser} />}
+          {activeView === "reviews" && <PartnerReviewsPanel partnerId={currentUser?.id} partnerName={currentUser?.company_name || currentUser?.full_name} />}
+          {activeView === "returns" && <ReturnRequestsView currentUser={currentUser} />}
+          {activeView === "performance" && <PerformanceScoreView currentUser={currentUser} />}
         </div>
       </main>
     </div>

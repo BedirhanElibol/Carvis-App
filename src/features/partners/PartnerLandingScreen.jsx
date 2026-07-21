@@ -113,7 +113,7 @@ const PartnerLandingScreen = () => {
           >
             <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping"></span>
             <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">
-              RAPIDSY BUSINESS PORTAL
+              CARVIS BUSINESS PORTAL
             </span>
           </motion.div>
 
@@ -123,8 +123,8 @@ const PartnerLandingScreen = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-5xl md:text-6xl font-black font-sans text-slate-900 dark:text-white mb-6 tracking-tight uppercase"
           >
-            RAPIDSY{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400 tracking-tighter drop-shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+            CARVIS{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400 tracking-tighter ">
               ENTERPRISE
             </span>
           </motion.h1>
@@ -169,11 +169,11 @@ const PartnerLandingScreen = () => {
             onClick={() => navigate("/partner-login/carwash")}
           />
           <RoleCard
-            title="Acil Çekici"
-            desc="Yol yardım talepleri, güvenli Escrow ödemeleri ve canlı konum takibi."
-            icon={ShieldAlert}
+            title="Otopark İşletmesi"
+            desc="Otopark doluluk kapasitenizi, saatlik ücretlerinizi ve Rapidsy rezervasyonlarını yönetin."
+            icon={Car}
             color="amber"
-            onClick={() => navigate("/partner-login/tow_truck")}
+            onClick={() => navigate("/partner-login/parking")}
           />
           <RoleCard
             title="Sigorta Şirketi"

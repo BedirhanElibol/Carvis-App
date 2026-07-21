@@ -44,7 +44,7 @@ const LocationSelectModal = ({
 
   return (
     <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/60 z-[200] flex items-end sm:items-center justify-center backdrop-blur-md animate-in fade-in duration-300">
-      <div className="bg-white dark:bg-slate-900 w-full sm:w-[450px] p-8 rounded-t-[3rem] sm:rounded-[3rem] border-t sm:border border-black/10 dark:border-white/10 animate-in slide-in-from-bottom-full duration-500 shadow-[0_20px_100px_rgba(0,0,0,0.8)] relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 w-full sm:w-[450px] p-8 rounded-t-[3rem] sm:rounded-[3rem] border-t sm:border border-black/10 dark:border-white/10 animate-in slide-in-from-bottom-full duration-500 shadow-xl relative overflow-hidden">
         {/* Background Glow */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
 
@@ -86,7 +86,7 @@ const LocationSelectModal = ({
             }}
             className="w-full bg-gradient-to-r from-primary-600/20 to-primary-900/10 border border-primary-500/20 p-5 rounded-3xl flex items-center gap-5 hover:bg-primary-500/20 transition-all group active-scale shadow-lg"
           >
-            <div className="bg-primary-500 p-3.5 rounded-2xl shadow-[0_5px_15px_rgba(59,130,246,0.3)] group-hover:scale-110 transition-transform">
+            <div className="bg-primary-500 p-3.5 rounded-2xl shadow-xl group-hover:scale-110 transition-transform">
               <Crosshair size={24} className="text-slate-900 dark:text-white" />
             </div>
             <div className="text-left">

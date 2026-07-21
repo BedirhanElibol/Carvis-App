@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Fira Sans', system-ui, sans-serif;
+  --font-mono: 'Fira Code', monospace;
 
   /* Primary (Blue) in OKLCH (Tailwind v4 Native) */
   --color-primary-50: oklch(0.97 0.01 250);
@@ -183,4 +184,24 @@
 
 @utility animate-delay-300 {
   animation-delay: 300ms;
+}
+
+@utility glow-orange {
+  text-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+}
+
+@utility glow-cyan {
+  text-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+}
+
+@utility glow-sky {
+  text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+}
+
+@utility premium-gradient {
+  background: radial-gradient(100% 100% at 50% 0%, rgba(249, 115, 22, 0.08) 0%, rgba(0, 0, 0, 0) 100%), #020617;
+}
+
+@utility premium-cyan-gradient {
+  background: radial-gradient(100% 100% at 50% 0%, rgba(6, 182, 212, 0.08) 0%, rgba(0, 0, 0, 0) 100%), #030712;
 }

@@ -241,7 +241,7 @@ const MapScreen = () => {
             onClick={() => setIsDriveMode(!isDriveMode)}
             className={`w-16 h-16 rounded-[2rem] flex flex-col items-center justify-center active-scale border-4 transition-all shadow-xl group ${
               isDriveMode 
-                ? "bg-emerald-500 text-slate-900 border-black/20 dark:border-white/20 shadow-[0_0_30px_rgba(16,185,129,0.5)]" 
+                ? "bg-emerald-500 text-slate-900 border-black/20 dark:border-white/20 shadow-xl" 
                 : "bg-black/80 dark:bg-white/10 text-white border-transparent backdrop-blur-xl hover:bg-black"
             }`}
           >
@@ -251,7 +251,7 @@ const MapScreen = () => {
 
           <button
             onClick={() => setShowSOSPanel(true)}
-            className="w-16 h-16 bg-red-600 text-slate-900 dark:text-white rounded-[2rem] shadow-[0_0_30px_rgba(220,38,38,0.5)] flex flex-col items-center justify-center active-scale border-4 border-black/20 dark:border-white/20 group hover:bg-red-500 transition-all"
+            className="w-16 h-16 bg-red-600 text-slate-900 dark:text-white rounded-[2rem] shadow-xl flex flex-col items-center justify-center active-scale border-4 border-black/20 dark:border-white/20 group hover:bg-red-500 transition-all"
           >
             <AlertTriangle size={20} className="group-hover:animate-bounce" />
             <span className="text-[10px] font-black mt-1">SOS</span>
@@ -270,10 +270,10 @@ const MapScreen = () => {
           >
             <div className={`glass-card rounded-[2rem] px-6 py-4 border-2 flex items-center justify-between gap-6 backdrop-blur-3xl shadow-2xl transition-colors duration-500 ${
               closestEDS && closestEDS.distanceMeters < 500 
-                ? "border-red-500 bg-red-500/10 shadow-[0_0_40px_rgba(239,68,68,0.4)]" 
+                ? "border-red-500 bg-red-500/10 shadow-xl" 
                 : closestEDS && closestEDS.distanceMeters < 1000 
-                ? "border-orange-500 bg-orange-500/10 shadow-[0_0_40px_rgba(249,115,22,0.4)]"
-                : "border-emerald-500/30 bg-emerald-500/5 shadow-[0_0_30px_rgba(16,185,129,0.2)]"
+                ? "border-orange-500 bg-orange-500/10 shadow-xl"
+                : "border-emerald-500/30 bg-emerald-500/5 shadow-xl"
             }`}>
               
               <div className="flex flex-col items-center justify-center border-r border-black/10 dark:border-white/10 pr-6">
@@ -318,7 +318,7 @@ const MapScreen = () => {
             
             {/* Screen edge glowing warning if extremely close */}
             {closestEDS && closestEDS.distanceMeters < 500 && (
-              <div className="fixed inset-0 pointer-events-none shadow-[inset_0_0_100px_rgba(239,68,68,0.3)] z-0 animate-pulse" />
+              <div className="fixed inset-0 pointer-events-none shadow-xl z-0 animate-pulse" />
             )}
           </motion.div>
         )}
@@ -426,7 +426,7 @@ const MapScreen = () => {
             className="absolute inset-0 bg-red-950/20 backdrop-blur-md"
             onClick={() => setShowSOSPanel(false)}
           ></div>
-          <div className="w-full bg-white dark:bg-slate-900 border-t-4 border-red-600 rounded-t-[3rem] p-8 pb-12 relative shadow-[0_-20px_100px_rgba(220,38,38,0.3)] z-10 animate-in slide-in-from-bottom-20 duration-500">
+          <div className="w-full bg-white dark:bg-slate-900 border-t-4 border-red-600 rounded-t-[3rem] p-8 pb-12 relative shadow-xl z-10 animate-in slide-in-from-bottom-20 duration-500">
             <div className="w-12 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full mx-auto mb-8 opacity-50"></div>
             <h2 className="text-2xl font-black tracking-tighter uppercase text-center mb-2">
               ACİL YARDIM ÇAĞRISI

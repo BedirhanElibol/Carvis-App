@@ -39,7 +39,7 @@ export const BottomNav = () => {
           <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/5 via-primary-500/10 to-primary-500/5 blur-2xl pointer-events-none rounded-[3rem]"></div>
           
           {/* Main Nav Container */}
-          <div className="relative bg-white/95 dark:bg-[#0c101a]/95 backdrop-blur-2xl border border-slate-200/50 dark:border-white/5 px-3 py-2.5 flex justify-between items-center rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
+          <div className="relative bg-white/95 dark:bg-[#0c101a]/95 backdrop-blur-2xl border border-slate-200/50 dark:border-white/5 px-3 py-2.5 flex justify-between items-center rounded-[3rem] shadow-xl dark:shadow-xl">
             {tabs.map((tab) => {
               const isActive = tab.id === "/" 
                 ? location.pathname === "/" 

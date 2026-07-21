@@ -243,7 +243,7 @@ const LiveOrderStatus = ({ order }) => {
                                     </MapContainer>
                                     
                                     {/* Premium Map Edge Shadow Overlay */}
-                                    <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] z-[400]"></div>
+                                    <div className="absolute inset-0 pointer-events-none shadow-xl z-[400]"></div>
                                 </div>
                             </motion.div>
                         )}

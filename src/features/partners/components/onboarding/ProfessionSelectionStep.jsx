@@ -34,10 +34,10 @@ const professions = [
     iconBg: "bg-cyan-500/10 text-cyan-500",
   },
   {
-    id: "tow_truck",
-    title: "Çekici & Yol Yardım",
-    icon: Truck,
-    desc: "Yol üzeri müdahale, akü takviyesi, lastik değişimi ve araç nakliye hizmetleri sunun.",
+    id: "parking",
+    title: "Otopark İşletmesi",
+    icon: Car,
+    desc: "Otopark doluluk kapasitenizi, saatlik ücretlerinizi ve Rapidsy rezervasyonlarını yönetin.",
     color: "amber",
     gradient: "from-amber-500/10 to-orange-500/5",
     border: "hover:border-amber-500/30",
@@ -84,7 +84,7 @@ const ProfessionSelectionStep = ({ profession, setProfession, handleNext }) => {
               onClick={() => setProfession(prof.id)}
               className={`p-5 rounded-2xl border transition-all text-left flex items-start gap-4 ${prof.border} ${
                 isSelected
-                  ? "border-primary-500 bg-primary-500/5 shadow-[0_0_15px_rgba(37,99,235,0.05)]"
+                  ? "border-primary-500 bg-primary-500/5 shadow-xl"
                   : "border-black/5 dark:border-white/5 bg-slate-50 dark:bg-slate-950/30 hover:bg-white dark:hover:bg-slate-900/50"
               }`}
             >
@@ -114,7 +114,7 @@ const ProfessionSelectionStep = ({ profession, setProfession, handleNext }) => {
       <div className="pt-4 flex justify-end">
         <button
           onClick={handleNext}
-          className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(37,99,235,0.2)] active-scale"
+          className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl active-scale"
         >
           DEVAM ET
         </button>

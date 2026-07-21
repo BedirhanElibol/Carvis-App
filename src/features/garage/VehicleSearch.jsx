@@ -171,7 +171,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                 className="text-primary-500/20 animate-pulse"
               />
             </div>
-            <div className="absolute top-0 left-0 w-full h-1 bg-primary-500 shadow-[0_0_15px_#3b82f6] animate-scanline"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-primary-500 shadow-xl animate-scanline"></div>
           </div>
           <div className="text-center">
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-500 animate-pulse mb-1">

@@ -130,14 +130,14 @@ const PaymentScreen = () => {
                 %100 Rapidsy Ödeme Güvencesi
               </p>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-tight">
-                Ödemeniz, **BDDK denetimli PayTR / iyzico** lisanslı korumalı havuz hesabında bloke edilir. Hizmet tamamlanıp siz onay verene kadar para satıcıya aktarılmaz.
+                Ödemeniz, korumalı havuz hesabında bloke edilir. Hizmet tamamlanıp siz onay verene kadar para satıcıya aktarılmaz.
               </p>
             </div>
           </div>
           <div className="pt-3 border-t border-green-500/10 text-[11px] text-slate-500 dark:text-slate-400 space-y-2">
             <p className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
-              <strong>Mevzuata Uygun:</strong> 6493 sayılı kanun kapsamında yetkilendirilmiş ödeme kuruluşu güvencesiyle split-payment.
+              <strong>Güvenceli Altyapı:</strong> Korumalı ödeme havuzu altyapısı güvencesiyle esnek ödeme.
             </p>
             <p className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>

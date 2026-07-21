@@ -87,6 +87,7 @@ const MarketingDashboard = lazy(() => import("./features/marketing/MarketingDash
 const PartnerApplications = lazy(
   () => import("./features/admin/PartnerApplications"),
 );
+const AdminDisputes = lazy(() => import("./features/admin/AdminDisputes"));
 const NotificationScreen = lazy(
   () => import("./features/notifications/NotificationScreen"),
 );
@@ -465,6 +466,7 @@ export const AppRoutes = () => {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="partners" element={<PartnerApplications />} />
+          <Route path="disputes" element={<AdminDisputes />} />
           <Route path="finance" element={<AdminFinance />} />
           <Route path="marketing" element={<MarketingDashboard />} />
           <Route path="settings" element={<AdminSettings />} />

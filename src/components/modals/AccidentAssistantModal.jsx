@@ -35,7 +35,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-50 dark:bg-slate-950/40 backdrop-blur-2xl animate-in fade-in duration-500">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-xl rounded-t-[2.5rem] sm:rounded-[3rem] border border-black/10 dark:border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.6)] overflow-hidden relative animate-in slide-in-from-bottom-full sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-300 pb-safe max-h-[90vh] flex flex-col">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-xl rounded-t-[2.5rem] sm:rounded-[3rem] border border-black/10 dark:border-white/10 shadow-xl overflow-hidden relative animate-in slide-in-from-bottom-full sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-300 pb-safe max-h-[90vh] flex flex-col">
         {/* Touch Drag Indicator (Mobile Only) */}
         <div className="w-12 h-1.5 bg-black/10 dark:bg-white/10 rounded-full mx-auto mt-4 mb-2 sm:hidden shrink-0"></div>
 
@@ -71,7 +71,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
                   className={cn(
                     "w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-500",
                     step >= s.id
-                      ? "bg-primary-600 border-primary-400 text-slate-900 dark:text-white shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+                      ? "bg-primary-600 border-primary-400 text-slate-900 dark:text-white shadow-xl"
                       : "bg-slate-100 dark:bg-slate-800 border-black/10 dark:border-white/10 text-slate-500",
                   )}
                 >

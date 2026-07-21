@@ -122,9 +122,9 @@ const SosRequestScreen = () => {
             <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-red-500">
               <CreditCard size={32} />
             </div>
-            <h2 className="text-2xl font-black mb-2">Güvenli Kartlı Ödeme</h2>
+            <h2 className="text-2xl font-black mb-2">Güvenli Ödeme</h2>
             <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm leading-relaxed">
-              Çekici ücretiniz PayTR/iyzico altyapısıyla güvenli şekilde tahsil edilir. Hizmetiniz tamamlanana ve faturalandırılana kadar işlem güvence altındadır. İletişim bilgileriniz ödeme sonrası paylaşılır.
+              Çekici ücretiniz Rapidsy altyapısıyla güvenli şekilde tahsil edilir. Hizmetiniz tamamlanana ve faturalandırılana kadar işlem güvence altındadır. İletişim bilgileriniz ödeme sonrası paylaşılır.
             </p>
             
             <div className="bg-slate-50 dark:bg-black/20 rounded-2xl p-6 mb-8 border border-slate-200 dark:border-white/10">

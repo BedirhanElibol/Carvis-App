@@ -435,7 +435,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               >
                 <div className="flex items-center justify-between">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.myDigitalDocs || "Dijital Belgelerim"}</h4>
-                  <button className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.2)] flex items-center gap-2 border-none cursor-pointer">
+                  <button className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center gap-2 border-none cursor-pointer">
                     <Plus size={14} /> Yeni Belge Yükle
                   </button>
                 </div>
@@ -486,7 +486,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   </div>
                   <button 
                     onClick={() => setShowAddForm(!showAddForm)}
-                    className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_15px_rgba(20,184,166,0.2)] flex items-center gap-2 border-none cursor-pointer"
+                    className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center gap-2 border-none cursor-pointer"
                   >
                     <Plus size={14} /> Bakım Kaydı Ekle
                   </button>
@@ -534,7 +534,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                         <div className="space-y-6 w-full py-8">
                           <div className="relative w-24 h-24 mx-auto">
                             <div className="absolute inset-0 border-4 border-slate-200 dark:border-white/10 rounded-2xl"></div>
-                            <div className="absolute top-0 left-0 w-full h-1 bg-teal-500 rounded-full shadow-[0_0_15px_rgba(20,184,166,0.8)] animate-[scan_2s_ease-in-out_infinite]"></div>
+                            <div className="absolute top-0 left-0 w-full h-1 bg-teal-500 rounded-full shadow-xl animate-[scan_2s_ease-in-out_infinite]"></div>
                             <ScanText size={40} className="text-teal-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
                           </div>
                           <div>

@@ -13,7 +13,6 @@ import AuthLoginModal from "../../components/modals/AuthLoginModal";
 import DeleteAccountModal from "../../components/modals/DeleteAccountModal";
 const VehicleSearch = React.lazy(() => import("../garage/VehicleSearch"));
 import VehicleProSettings from "../garage/VehicleProSettings";
-import WalletCard from "./WalletCard";
 import ActivityCenter from "./ActivityCenter";
 import ReferralCard from "./ReferralCard";
 
@@ -124,10 +123,6 @@ const ProfileScreen = () => {
           )}
         </div>
       </div>
-      
-      {/* Fintech Hub: Wallet & Credit Card */}
-      {!currentUser?.isAnonymous && <WalletCard />}
-
       {/* Referral Program */}
       {!currentUser?.isAnonymous && <ReferralCard />}
 

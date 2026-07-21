@@ -64,18 +64,15 @@ const CheckoutScreen = () => {
   };
 
   const handlePaymentSubmit = async () => {
-    if (
-      paymentMethod === "card" &&
-      (!cardData.number || !cardData.cvv || !cardData.expiry)
-    ) {
+    if (!cardData.number || !cardData.cvv || !cardData.expiry) {
       return showAlert("Hata", "Kart bilgileri eksik.", "error");
     }
     try {
       await checkout({
-        useWallet: paymentMethod === "wallet",
-        installment: paymentMethod === "wallet" ? 1 : installment,
+        useWallet: false,
+        installment: installment,
       });
-      setStep(4); // Move to Success
+      setStep(4);
     } catch (err) {
       console.error(err);
     }
@@ -268,11 +265,8 @@ const CheckoutScreen = () => {
                 </div>
                 <button
                   onClick={handlePaymentSubmit}
-                  disabled={
-                    isProcessingCheckout ||
-                    (paymentMethod === "wallet" && balance < currentTotal)
-                  }
-                  className={`w-full text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${paymentMethod === "wallet" ? "bg-primary-600 hover:bg-primary-500" : "bg-green-600 hover:bg-green-500"}`}
+                  disabled={isProcessingCheckout}
+                  className="w-full bg-green-600 hover:bg-green-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isProcessingCheckout ? (
                     <RefreshCw className="animate-spin" />
@@ -280,9 +274,7 @@ const CheckoutScreen = () => {
                     <Lock size={18} />
                   )}
                   <span className="flex-1 text-center">
-                    {paymentMethod === "wallet"
-                      ? "Cüzdan İle Öde / Bloke Et"
-                      : "Ödemeyi Tamamla"}
+                    Ödemeyi Tamamla
                   </span>
                   <span className="bg-black/20 px-2 py-0.5 rounded text-xs">
                     {currentTotal.toLocaleString()} ₺

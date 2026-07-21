@@ -119,7 +119,7 @@ const AdminDashboard = () => {
           </p>
         </div>
         <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 p-2 px-4 rounded-2xl">
-          <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]"></span>
+          <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-xl"></span>
           <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest font-sans">
             Sistem Operasyonel
           </span>
