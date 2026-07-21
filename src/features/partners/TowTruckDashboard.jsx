@@ -119,7 +119,7 @@ const TowTruckDashboard = () => {
                 <div className="mt-auto space-y-3">
                   <div className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 p-3 rounded-xl text-sm font-bold flex items-center justify-between">
                     <span>Müşteri: {req.profiles?.full_name || 'Gizli Müşteri'}</span>
-                    <span>{req.profiles?.phone || '05xx xxx xx xx'}</span>
+                    <span>{req.profiles?.phone || 'Belirtilmemiş'}</span>
                   </div>
                   <button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl transition-all flex justify-center items-center gap-2">
                     <CheckCircle size={18} />
