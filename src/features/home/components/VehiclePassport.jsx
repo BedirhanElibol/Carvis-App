@@ -78,7 +78,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
       const { data: { text } } = await Tesseract.recognize(
         file,
         'tur',
-        { logger: m => console.log("OCR Progress:", m) }
+        {}
       );
       
       const rawText = text.toLowerCase();
