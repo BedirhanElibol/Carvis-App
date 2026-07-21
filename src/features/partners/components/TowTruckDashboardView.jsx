@@ -202,7 +202,7 @@ export default function TowTruckDashboardView({ currentUser }) {
                     </div>
                     <div className="flex justify-between items-center bg-slate-950/40 border border-white/5 p-3 rounded-xl text-xs">
                       <span className="font-bold text-slate-400">İletişim:</span>
-                      <span className="font-mono font-bold text-white">{job.profiles?.phone || "05xx xxx xx xx"}</span>
+                      <span className="font-mono font-bold text-white">{job.profiles?.phone || "Belirtilmemiş"}</span>
                     </div>
                     <button
                       onClick={() => handleComplete(job.id)}
