@@ -116,14 +116,23 @@ Deno.serve(async (req: Request) => {
     { name: "petrolofisi", fn: () => fetchPOPrices(provinceCode) }
   ];
 
-  for (const source of sources) {
-    const results = await source.fn();
-    if (results) {
-      return new Response(
-        JSON.stringify({ source: source.name, results, updatedAt: new Date().toISOString(), city }),
-        { headers: CORS_HEADERS }
-      );
-    }
+  try {
+    const fastestResult = await Promise.any(
+      sources.map(async (source) => {
+        const results = await source.fn();
+        if (results) {
+          return { source: source.name, results };
+        }
+        throw new Error(`${source.name} failed`);
+      })
+    );
+
+    return new Response(
+      JSON.stringify({ source: fastestResult.source, results: fastestResult.results, updatedAt: new Date().toISOString(), city }),
+      { headers: CORS_HEADERS }
+    );
+  } catch (err) {
+    // Both sources failed, fall through to fallback
   }
 
   // Absolute last resort - 2026 calibrated fallback
