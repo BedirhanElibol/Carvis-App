@@ -42,8 +42,6 @@ const usePushNotifications = () => {
 
       // Listen for token registration
       PushNotifications.addListener('registration', async (token) => {
-        console.log('[Push] FCM Token:', token.value);
-
         // Save FCM token to Supabase profile
         const { error } = await supabase.auth.updateUser({
           data: { fcm_token: token.value }
