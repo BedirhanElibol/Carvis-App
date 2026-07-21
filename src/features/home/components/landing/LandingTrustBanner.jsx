@@ -4,7 +4,7 @@ import { Zap, Target, BarChart3, TrendingUp, CheckCircle2 } from 'lucide-react';
 const APP_FEATURES = [
   "Periyodik Bakım",
   "Orijinal Yedek Parça",
-  "Akıllı Otopark",
+  "Yol Yardım & Akü",
   "Kasko & Sigorta",
   "Oto Kuaför",
   "Ekspertiz",

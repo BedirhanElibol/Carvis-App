@@ -347,11 +347,7 @@ export const AppRoutes = () => {
         />
         <Route
           path="/app/parking"
-          element={
-            <ProtectedRoute allowedRoles={["customer", "admin"]}>
-              <ParkingScreen />
-            </ProtectedRoute>
-          }
+          element={<Navigate to="/application/home" replace />}
         />
         <Route
           path="/app/product/:id"
@@ -432,15 +428,15 @@ export const AppRoutes = () => {
         <Route
           path="/partner"
           element={
-            <ProtectedRoute allowedRoles={["partner", "admin", "provider", "mechanic", "valet", "parking", "parts", "tow_truck", "insurance", "carwash"]}>
+            <ProtectedRoute allowedRoles={["partner", "admin", "provider", "mechanic", "parts", "tow_truck", "insurance", "carwash"]}>
               <PartnerLayout />
             </ProtectedRoute>
           }
         >
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<PartnerDashboard />} />
-          <Route path="parking/capacity" element={<ParkingCapacity />} />
-          <Route path="valet/requests" element={<ValetRequests />} />
+          <Route path="parking/capacity" element={<Navigate to="../dashboard" replace />} />
+          <Route path="valet/requests" element={<Navigate to="../dashboard" replace />} />
           <Route path="mechanic/jobs" element={<MechanicJobs />} />
           <Route path="mechanic/services" element={<MechanicServices />} />
           <Route path="products" element={<SellerProducts />} />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Wrench, Shield, Car, Truck, Package, Sparkles, MapPin } from "lucide-react";
+import { Wrench, Shield, Car, Truck, Package, Sparkles, MapPin, SearchCheck } from "lucide-react";
 
 const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
   return (
@@ -15,8 +15,8 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl leading-relaxed">
             {language === "tr" 
-              ? "Sadece tamir değil; oto yıkamadan yedek parçaya, otoparktan sigortaya kadar aracınızın tüm ihtiyaçlarını güvenilir partnerlerimizle tek platformdan yönetin." 
-              : "Not just repairs; manage all your vehicle's needs from car wash to spare parts, parking to insurance with our reliable partners on a single platform."}
+              ? "Sadece tamir değil; oto yıkamadan yedek parçaya, ekspertizden sigortaya kadar aracınızın tüm ihtiyaçlarını güvenilir partnerlerimizle tek platformdan yönetin." 
+              : "Not just repairs; manage all your vehicle's needs from car wash to spare parts, appraisal to insurance with our reliable partners on a single platform."}
           </p>
         </div>
 
@@ -139,19 +139,19 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
             </div>
           </div>
 
-          {/* Card 5: Akıllı Otopark (Span 1) */}
+          {/* Card 5: Mobil Ekspertiz (Span 1) */}
           <div className="col-span-1 bg-white dark:bg-[#0f1423] border border-slate-200 dark:border-white/5 rounded-3xl p-8 flex flex-col relative overflow-hidden group hover:border-emerald-300 dark:hover:border-emerald-500/30 shadow-sm dark:shadow-none transition-colors">
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-emerald-100 dark:bg-emerald-500/10 rounded-full blur-[60px] pointer-events-none"></div>
             <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6">
-              <MapPin size={24} />
+              <SearchCheck size={24} />
             </div>
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
-              {language === "tr" ? "Akıllı Otopark" : "Smart Parking"}
+              {language === "tr" ? "Mobil Ekspertiz" : "Mobile Appraisal"}
             </h3>
             <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
               {language === "tr" 
-                ? "Şehir içi anlaşmalı özel otoparklar, doluluk oranları ve entegre mobil ödeme çözümleri." 
-                : "Contracted private parking lots, real-time occupancy tracking, and integrated mobile payments."}
+                ? "İkinci el araç alım satımlarında Rapidsy garantili mobil ekspertiz ve detaylı durum raporları." 
+                : "Rapidsy-guaranteed mobile appraisal and detailed condition reports for pre-owned car transactions."}
             </p>
           </div>
 

@@ -168,13 +168,7 @@ const PartnerLandingScreen = () => {
             color="cyan"
             onClick={() => navigate("/partner-login/carwash")}
           />
-          <RoleCard
-            title="Otopark İşletmesi"
-            desc="Otopark doluluk kapasitenizi, saatlik ücretlerinizi ve Rapidsy rezervasyonlarını yönetin."
-            icon={Car}
-            color="amber"
-            onClick={() => navigate("/partner-login/parking")}
-          />
+
           <RoleCard
             title="Sigorta Şirketi"
             desc="Kasko, trafik ve roadside poliçe teklifleri yönetimi ve Rapidsy entegrasyonu."

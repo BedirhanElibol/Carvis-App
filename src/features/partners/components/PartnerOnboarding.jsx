@@ -141,19 +141,6 @@ const PartnerOnboarding = ({ onComplete }) => {
                 key_exchange_policy: "keyless"
               };
               break;
-            case "parking":
-              tableName = "parking_profiles";
-              payload = {
-                id: currentUser.id,
-                parking_name: businessName,
-                total_capacity: 100,
-                occupied_count: 0,
-                price_per_hour: 20.00,
-                is_indoor: true,
-                has_security: true,
-                has_valet: false
-              };
-              break;
             case "insurance":
               tableName = "insurance_company_profiles";
               payload = {

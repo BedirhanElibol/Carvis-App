@@ -27,7 +27,7 @@ const PartnerLayout = () => {
 
   useEffect(() => {
     if (currentUser) {
-      const allowedRoles = ["parking", "valet", "mechanic", "parts", "insurance", "tow_truck", "carwash", "admin", "partner"];
+      const allowedRoles = ["mechanic", "parts", "insurance", "tow_truck", "carwash", "admin", "partner"];
       if (!allowedRoles.includes(currentUser.role)) {
         navigate("/partner-login");
       } else {
@@ -59,11 +59,7 @@ const PartnerLayout = () => {
   ];
 
   // Add role-specific items to general group
-  if (role === "parking") {
-    generalItems.push({ key: "capacity", label: "Otopark Yönetimi", icon: ParkingCircle, path: "/partner/parking/capacity" });
-  } else if (role === "valet") {
-    generalItems.push({ key: "requests", label: "Vale Çağrıları", icon: Key, path: "/partner/valet/requests" });
-  } else if (role === "mechanic") {
+  if (role === "mechanic") {
     generalItems.push({ key: "jobs", label: "İş Takibi", icon: Wrench, path: "/partner/mechanic/jobs" });
     generalItems.push({ key: "services", label: "Hizmet Paketleri", icon: Settings, path: "/partner/mechanic/services" });
   } else if (role === "parts") {
@@ -77,7 +73,7 @@ const PartnerLayout = () => {
     generalItems.push({ key: "slots", label: "Randevu Takvimleri", icon: Droplets, path: "/partner/carwash/slots" });
   }
 
-  const appointmentRoles = ["mechanic", "valet", "carwash", "parking", "tow_truck"];
+  const appointmentRoles = ["mechanic", "carwash", "tow_truck"];
   if (appointmentRoles.includes(role)) {
     generalItems.push({ key: "appointments", label: "Randevularım", icon: Calendar, path: "/partner/appointments" });
   }

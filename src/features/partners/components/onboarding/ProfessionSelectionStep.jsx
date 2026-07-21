@@ -33,16 +33,7 @@ const professions = [
     border: "hover:border-cyan-500/30",
     iconBg: "bg-cyan-500/10 text-cyan-500",
   },
-  {
-    id: "parking",
-    title: "Otopark İşletmesi",
-    icon: Car,
-    desc: "Otopark doluluk kapasitenizi, saatlik ücretlerinizi ve Rapidsy rezervasyonlarını yönetin.",
-    color: "amber",
-    gradient: "from-amber-500/10 to-orange-500/5",
-    border: "hover:border-amber-500/30",
-    iconBg: "bg-amber-500/10 text-amber-500",
-  },
+
   {
     id: "insurance",
     title: "Sigorta Şirketi",
