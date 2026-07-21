@@ -144,8 +144,16 @@ export const WalletProvider = ({ children }) => {
     }
     try {
       // Security Fix: Prevent direct raw DB updates
-      // Replaced with RPC placeholder
-      await new Promise(res => setTimeout(res, 500));
+      try {
+        const { error: walletError } = await supabase.rpc('rpc_block_wallet_funds', { p_amount: amount });
+        if (walletError) {
+          throw walletError;
+        }
+      } catch (innerError) {
+        console.error("Inner block funds error:", innerError);
+        throw innerError;
+      }
+      await fetchWalletData();
       return true;
     } catch (error) {
       console.error("Block funds error:", error);
