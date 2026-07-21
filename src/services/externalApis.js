@@ -423,80 +423,135 @@ export const getNearbyProviders = async (lat, lng, radius = 5000) => {
   }
 
   const fetchPromise = (async () => {
-    const controller = new AbortController();
-    
-    // ROOT FIX: Overpass API siber koruması (429/504) sebebiyle konsolda kırmızı hatalar oluşuyor.
-    // Bu hatalar tarayıcı seviyesinde loglandığı için catch ile gizlenemiyor.
-    // Tamamen kök çözüm olarak: Canlı API yerine doğrudan yüksek kaliteli statik veri dönüyoruz.
-    // (Prod ortamında bu işlem bir backend proxy üzerinden yapılmalıdır).
-    
-    const results = [
-      {
-        id: "mock-1",
-        name: "Güven Oto Servis",
-        type: "Oto Servis",
-        rating: 4.8,
-        distance: "1.2 km",
-        distNum: 1.2,
-        lat: lat + 0.01,
-        lng: lng + 0.01,
-        address: "Merkez Mah. Sanayi Cad. No:12",
-        features: ["Bakım", "Onarım"],
-        compliance: {
-          mersis: "0123456789000015",
-          wasteOilCert: "Atık Yağ Bertarafı Çevre Lisanslı (Geri Dönüşüm Onaylı)",
-          fireLicense: "İtfaiye Yangın Güvenlik Raporu Onaylı (2025/11)",
-          insuranceLimit: "₺2.000.000",
-          clearanceHeight: "2.80m",
-          cameraCount: 12,
-          isCompliant: true
-        }
-      },
-      {
-        id: "mock-2",
-        name: "Pırıl Oto Yıkama",
-        type: "Oto Yıkama",
-        rating: 4.5,
-        distance: "2.4 km",
-        distNum: 2.4,
-        lat: lat - 0.015,
-        lng: lng + 0.005,
-        address: "Cumhuriyet Mah. Atatürk Blv. No:45",
-        features: ["İç Dış Yıkama", "Seramik Kaplama"],
-        compliance: {
-          mersis: "0987654321000015",
-          wasteOilCert: "Çevre Yönetim Ruhsatı Beklemede (Geçici Kayıtlı)",
-          fireLicense: "İtfaiye Uygunluk Süresi Dolan (Yenilenme Aşamasında)",
-          insuranceLimit: "₺1.000.000",
-          clearanceHeight: "2.40m",
-          cameraCount: 6,
-          isCompliant: false
-        }
-      },
-      {
-        id: "mock-3",
-        name: "Master Garage",
-        type: "Oto Servis",
-        rating: 4.9,
-        distance: "3.1 km",
-        distNum: 3.1,
-        lat: lat + 0.02,
-        lng: lng - 0.01,
-        address: "Yeni Sanayi Sitesi 4. Blok No:8",
-        features: ["Bakım", "Onarım", "Motor"],
-        compliance: {
-          mersis: "0456123789000015",
-          wasteOilCert: "Atık Yağ Bertarafı Çevre Lisanslı (Geri Dönüşüm Onaylı)",
-          fireLicense: "İtfaiye Yangın Güvenlik Raporu Onaylı (2026/02)",
-          insuranceLimit: "₺5.000.000",
-          clearanceHeight: "3.20m",
-          cameraCount: 16,
-          isCompliant: true
-        }
+    try {
+      // PROXY FIX: Proxy request via Supabase Edge Function to avoid
+      // CORS and rate-limiting (429/504) errors in the browser console.
+      const { data, error } = await supabase.functions.invoke("overpass-proxy", {
+        body: { lat, lng, radius }
+      });
+
+      if (error) {
+        throw error;
       }
-    ].sort((a, b) => a.distNum - b.distNum);
-    
-    return results;
+
+      if (data && data.success && data.data && data.data.elements && data.data.elements.length > 0) {
+        // Parse and format the real API data here if necessary
+        // Overpass format: { elements: [{ id, type, tags: {...}, lat, lon, center: {lat, lon} }] }
+        return data.data.elements.map(el => {
+          const elLat = el.lat || (el.center && el.center.lat) || lat;
+          const elLng = el.lon || (el.center && el.center.lon) || lng;
+          const name = el.tags?.name || "Bilinmeyen Sağlayıcı";
+          const type = el.tags?.shop === "car_repair" ? "Oto Servis" :
+                       el.tags?.amenity === "car_wash" ? "Oto Yıkama" :
+                       el.tags?.amenity === "fuel" ? "Akaryakıt" : "Hizmet Noktası";
+
+          // Basic Haversine approximation for distance calculation
+          const R = 6371; // Earth radius in km
+          const dLat = (elLat - lat) * Math.PI / 180;
+          const dLon = (elLng - lng) * Math.PI / 180;
+          const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat * Math.PI / 180) * Math.cos(elLat * Math.PI / 180) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          const distKm = parseFloat((R * c).toFixed(1));
+
+          return {
+            id: `real-${el.id}`,
+            name,
+            type,
+            rating: 4.0 + (Math.random() * 1.0), // Mock rating since OSM doesn't typically provide them natively in this format
+            distance: `${distKm} km`,
+            distNum: distKm,
+            lat: elLat,
+            lng: elLng,
+            address: el.tags?.["addr:street"] ? `${el.tags?.["addr:street"]} ${el.tags?.["addr:housenumber"] || ""}`.trim() : "Adres Bilinmiyor",
+            features: [type], // Basic feature
+            compliance: {
+              mersis: `M-${el.id}`,
+              wasteOilCert: "Bilgi Yok",
+              fireLicense: "Bilgi Yok",
+              insuranceLimit: "Bilgi Yok",
+              clearanceHeight: "Bilgi Yok",
+              cameraCount: 0,
+              isCompliant: false
+            }
+          };
+        }).sort((a, b) => a.distNum - b.distNum);
+      }
+
+      // If success is false or data is empty, fall back to mock data
+      throw new Error(data?.error || "No elements found");
+
+    } catch (_err) {
+      console.warn("Falling back to static high-quality mock data for nearby providers", _err);
+      const results = [
+        {
+          id: "mock-1",
+          name: "Güven Oto Servis",
+          type: "Oto Servis",
+          rating: 4.8,
+          distance: "1.2 km",
+          distNum: 1.2,
+          lat: lat + 0.01,
+          lng: lng + 0.01,
+          address: "Merkez Mah. Sanayi Cad. No:12",
+          features: ["Bakım", "Onarım"],
+          compliance: {
+            mersis: "0123456789000015",
+            wasteOilCert: "Atık Yağ Bertarafı Çevre Lisanslı (Geri Dönüşüm Onaylı)",
+            fireLicense: "İtfaiye Yangın Güvenlik Raporu Onaylı (2025/11)",
+            insuranceLimit: "₺2.000.000",
+            clearanceHeight: "2.80m",
+            cameraCount: 12,
+            isCompliant: true
+          }
+        },
+        {
+          id: "mock-2",
+          name: "Pırıl Oto Yıkama",
+          type: "Oto Yıkama",
+          rating: 4.5,
+          distance: "2.4 km",
+          distNum: 2.4,
+          lat: lat - 0.015,
+          lng: lng + 0.005,
+          address: "Cumhuriyet Mah. Atatürk Blv. No:45",
+          features: ["İç Dış Yıkama", "Seramik Kaplama"],
+          compliance: {
+            mersis: "0987654321000015",
+            wasteOilCert: "Çevre Yönetim Ruhsatı Beklemede (Geçici Kayıtlı)",
+            fireLicense: "İtfaiye Uygunluk Süresi Dolan (Yenilenme Aşamasında)",
+            insuranceLimit: "₺1.000.000",
+            clearanceHeight: "2.40m",
+            cameraCount: 6,
+            isCompliant: false
+          }
+        },
+        {
+          id: "mock-3",
+          name: "Master Garage",
+          type: "Oto Servis",
+          rating: 4.9,
+          distance: "3.1 km",
+          distNum: 3.1,
+          lat: lat + 0.02,
+          lng: lng - 0.01,
+          address: "Yeni Sanayi Sitesi 4. Blok No:8",
+          features: ["Bakım", "Onarım", "Motor"],
+          compliance: {
+            mersis: "0456123789000015",
+            wasteOilCert: "Atık Yağ Bertarafı Çevre Lisanslı (Geri Dönüşüm Onaylı)",
+            fireLicense: "İtfaiye Yangın Güvenlik Raporu Onaylı (2026/02)",
+            insuranceLimit: "₺5.000.000",
+            clearanceHeight: "3.20m",
+            cameraCount: 16,
+            isCompliant: true
+          }
+        }
+      ].sort((a, b) => a.distNum - b.distNum);
+
+      return results;
+    }
   })();
 
   // Cache the pending promise immediately
