@@ -213,26 +213,42 @@ const CustomerHome = () => {
     return alerts.slice(0, 2);
   }, [activeVehicle, activeQuotes, navigate, t]);
 
-  const nextInspectionDateFormatted = useMemo(() => {
-    if (!activeVehicle?.last_inspection_date) return null;
-    const date = new Date(activeVehicle.last_inspection_date);
-    date.setFullYear(date.getFullYear() + 2);
-    return date.toLocaleDateString("tr-TR", { day: "numeric", month: "short", year: "numeric" }).toUpperCase();
+  const isCommercialVehicle = useMemo(() => {
+    if (!activeVehicle) return false;
+    return (
+      activeVehicle.is_commercial === true ||
+      activeVehicle.vehicle_type === "commercial" ||
+      (activeVehicle.type && String(activeVehicle.type).toLowerCase().includes("commercial")) ||
+      ["doblo", "fiorino", "caddy", "transit", "transporter", "kangoo", "ducato", "crafter", "sprinter", "kamyonet", "taksi", "minibus"].some(m =>
+        String(activeVehicle.model || "").toLowerCase().includes(m)
+      )
+    );
   }, [activeVehicle]);
 
+  const nextInspectionDateFormatted = useMemo(() => {
+    const baseDateStr = activeVehicle?.last_inspection_date || activeVehicle?.inspection_date;
+    if (!baseDateStr) return null;
+    const date = new Date(baseDateStr);
+    // Ticari araçlar her 1 yılda bir (Yıllık muayene zorunlu), Hususi araçlar 2 yılda bir muayeneye girer!
+    const addYears = isCommercialVehicle ? 1 : 2;
+    date.setFullYear(date.getFullYear() + addYears);
+    return date.toLocaleDateString("tr-TR", { day: "numeric", month: "short", year: "numeric" }).toUpperCase();
+  }, [activeVehicle, isCommercialVehicle]);
+
   const nextInsuranceDateFormatted = useMemo(() => {
-    if (!activeVehicle?.last_insurance_date) return null;
-    const date = new Date(activeVehicle.last_insurance_date);
+    const baseDateStr = activeVehicle?.last_insurance_date || activeVehicle?.insurance_expiry_date;
+    if (!baseDateStr) return null;
+    const date = new Date(baseDateStr);
     date.setFullYear(date.getFullYear() + 1);
     return date.toLocaleDateString("tr-TR", { day: "numeric", month: "short", year: "numeric" }).toUpperCase();
   }, [activeVehicle]);
 
   const nextMaintenanceKm = useMemo(() => {
-    if (!activeVehicle?.km) return 15000;
-    const km = Number(activeVehicle.km) || 0;
-    const maintenanceInterval = 15000;
+    const km = Number(activeVehicle?.km) || 0;
+    // Ticari araçlar için 10.000 KM, Hususi araçlar için 15.000 KM periyodu
+    const maintenanceInterval = isCommercialVehicle ? 10000 : 15000;
     return (Math.floor(km / maintenanceInterval) + 1) * maintenanceInterval;
-  }, [activeVehicle]);
+  }, [activeVehicle, isCommercialVehicle]);
 
   const handleVehicleFound = async (data) => {
     const { error } = await addVehicle({

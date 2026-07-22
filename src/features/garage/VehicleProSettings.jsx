@@ -70,6 +70,13 @@ const VehicleProSettings = ({ isOpen, onClose, vehicle }) => {
 
   useEffect(() => {
     if (vehicle) {
+      const isComm =
+        vehicle.is_commercial === true ||
+        vehicle.vehicle_type === "commercial" ||
+        ["doblo", "fiorino", "caddy", "transit", "transporter", "kangoo", "ducato", "crafter", "sprinter", "kamyonet", "taksi", "minibus"].some(m =>
+          String(vehicle.model || "").toLowerCase().includes(m)
+        );
+
       setFormData({
         inspectionDate: vehicle.inspection_expiry_date || vehicle.inspection_date || "",
         insuranceExpiry: vehicle.insurance_expiry_date || vehicle.insurance_expiry || "",
@@ -80,6 +87,7 @@ const VehicleProSettings = ({ isOpen, onClose, vehicle }) => {
         lastTireChange: vehicle.last_tire_change || "",
         lastBatteryChange: vehicle.last_battery_change || "",
         lastOilChange: vehicle.last_oil_change || "",
+        isCommercial: isComm,
         healthScore: vehicle.health_score || 100,
       });
     }

@@ -389,6 +389,8 @@ export const GarageProvider = ({ children }) => {
           last_tire_change: dates.lastTireChange || null,
           last_battery_change: dates.lastBatteryChange || null,
           last_oil_change: dates.lastOilChange || null,
+          is_commercial: dates.isCommercial === true,
+          vehicle_type: dates.isCommercial ? "commercial" : "passenger",
         })
         .eq("id", id);
 
@@ -408,6 +410,8 @@ export const GarageProvider = ({ children }) => {
         last_tire_change: dates.lastTireChange || null,
         last_battery_change: dates.lastBatteryChange || null,
         last_oil_change: dates.lastOilChange || null,
+        is_commercial: dates.isCommercial === true,
+        vehicle_type: dates.isCommercial ? "commercial" : "passenger",
       };
 
       setVehicles(prev => prev.map(v => v.id === id ? updatedVehicle : v));
@@ -439,8 +443,20 @@ export const GarageProvider = ({ children }) => {
     if (!vehicle) return null;
     const currentKm = Number(vehicle.km) || 0;
 
-    // Intervals (Industry Standards)
-    const intervals = { oil: 10000, brakes: 30000, tires: 50000 };
+    // Distinguish Commercial vs Passenger vehicle (Turkey TÜVTÜK & Maintenance Regulations)
+    const isCommercial =
+      vehicle.is_commercial === true ||
+      vehicle.vehicle_type === "commercial" ||
+      (vehicle.type && String(vehicle.type).toLowerCase().includes("commercial")) ||
+      ["doblo", "fiorino", "caddy", "transit", "transporter", "kangoo", "ducato", "crafter", "sprinter", "kamyonet", "taksi", "minibus"].some(m =>
+        String(vehicle.model || "").toLowerCase().includes(m)
+      );
+
+    // Commercial: 10,000 km oil / 1 yr inspection
+    // Passenger: 15,000 km oil / 2 yr inspection
+    const intervals = isCommercial
+      ? { oil: 10000, brakes: 25000, tires: 40000, inspectionYears: 1 }
+      : { oil: 15000, brakes: 30000, tires: 50000, inspectionYears: 2 };
 
     const calcLife = (km, interval) => {
       const remaining = interval - (km % interval);
@@ -450,21 +466,24 @@ export const GarageProvider = ({ children }) => {
     return [
       {
         id: "oil",
-        label: "Motor Yağı",
+        label: isCommercial ? "Motor Yağı (Ticari 10k KM)" : "Motor Yağı (Hususi 15k KM)",
         value: calcLife(currentKm, intervals.oil),
         color: "text-primary-400",
+        isCommercial,
       },
       {
         id: "brakes",
         label: "Fren Balataları",
         value: calcLife(currentKm, intervals.brakes),
         color: "text-accent-400",
+        isCommercial,
       },
       {
         id: "tires",
         label: "Lastik Ömrü",
         value: calcLife(currentKm, intervals.tires),
         color: "text-teal-400",
+        isCommercial,
       },
     ];
   };

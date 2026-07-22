@@ -118,6 +118,41 @@ const VehicleSettingsTab = ({ formData, setFormData, dynamicScore, isSaving, han
         </div>
       </div>
 
+      {/* Vehicle Type (Ticari / Hususi) Rule Selector */}
+      <div className="p-5 bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-white/10 space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs font-black text-white uppercase tracking-tight">Ruhsat & Kullanım Tipi (Muayene Kuralı)</p>
+            <p className="text-[10px] text-slate-400 font-semibold">TÜVTÜK mevzuatına göre muayene ve bakım periyotlarını belirler.</p>
+          </div>
+          <span className={`text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider ${formData.isCommercial ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'}`}>
+            {formData.isCommercial ? 'TİCARİ ARAÇ (YILLIK)' : 'HUSUSİ OTOMOBİL (2 YILLIK)'}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 pt-1">
+          <button
+            type="button"
+            onClick={() => setFormData({ ...formData, isCommercial: false })}
+            className={`p-3.5 rounded-2xl border text-left transition-all ${!formData.isCommercial ? 'bg-cyan-500/10 border-cyan-500/50 text-white' : 'bg-slate-900/60 border-white/5 text-slate-500'}`}
+          >
+            <p className="text-xs font-black">🚗 Hususi Otomobil</p>
+            <p className="text-[9px] text-slate-400 mt-1">Muayene: <strong className="text-cyan-400">2 Yılda Bir</strong></p>
+            <p className="text-[9px] text-slate-400">Bakım: <strong className="text-cyan-400">15.000 KM</strong></p>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setFormData({ ...formData, isCommercial: true })}
+            className={`p-3.5 rounded-2xl border text-left transition-all ${formData.isCommercial ? 'bg-amber-500/10 border-amber-500/50 text-white' : 'bg-slate-900/60 border-white/5 text-slate-500'}`}
+          >
+            <p className="text-xs font-black">🚚 Ticari Araç / Kamyonet</p>
+            <p className="text-[9px] text-slate-400 mt-1">Muayene: <strong className="text-amber-400">Her 1 Yılda Bir</strong></p>
+            <p className="text-[9px] text-slate-400">Bakım: <strong className="text-amber-400">10.000 KM</strong></p>
+          </button>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <label className="text-[10px] font-black text-primary-500 uppercase tracking-widest flex items-center gap-1.5">
