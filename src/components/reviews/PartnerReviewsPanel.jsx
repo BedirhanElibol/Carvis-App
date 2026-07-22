@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Star, MessageSquare, User, ThumbsUp, RefreshCw } from 'lucide-react';
 import { supabase } from '../../supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,17 +15,13 @@ const StarDisplay = ({ rating }) => (
   </div>
 );
 
-const PartnerReviewsPanel = ({ partnerId, partnerName }) => {
+const PartnerReviewsPanel = ({ partnerId }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ avg: 0, total: 0, dist: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 } });
 
-  useEffect(() => {
+  const fetchReviews = useCallback(async () => {
     if (!partnerId) return;
-    fetchReviews();
-  }, [partnerId]);
-
-  const fetchReviews = async () => {
     setLoading(true);
     try {
       // Fetch from dedicated reviews table
@@ -81,7 +77,11 @@ const PartnerReviewsPanel = ({ partnerId, partnerName }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [partnerId]);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [fetchReviews]);
 
   if (loading) {
     return (

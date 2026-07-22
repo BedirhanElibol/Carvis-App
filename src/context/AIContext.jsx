@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo } from "react";
+import React, { createContext, useContext, useState, useMemo, useCallback } from "react";
 import { callRealGeminiAPI, analyzeVehicleDamage } from "../utils/aiUtils";
 import { useGarage } from "./GarageContext";
 import { useUI } from "./UIContext";
@@ -29,7 +29,7 @@ export const AIProvider = ({ children }) => {
   const [analysisStatus, setAnalysisStatus] = useState(null); // 'uploading', 'detecting', 'analyzing', 'finalizing'
   const [isTyping, setIsTyping] = useState(false);
 
-  const sendMessage = async (text) => {
+  const sendMessage = useCallback(async (text) => {
     if (!text.trim()) return;
 
     const userMessage = {
@@ -41,12 +41,12 @@ export const AIProvider = ({ children }) => {
     setMessages((prev) => [...prev, userMessage]);
     setIsTyping(true);
 
-    let botContext = "";
     const lowerText = text.toLowerCase();
-    
-    // Simple Keyword based Intent Detection (Robust pop)
-    const words = text.trim().split(/\s+/);
-    const searchKeyword = words.length > 0 ? words[words.length - 1] : "";
+    let botContext = "";
+    let searchKeyword = "";
+    if (lowerText.includes("fren") || lowerText.includes("balata")) searchKeyword = "fren";
+    else if (lowerText.includes("yağ")) searchKeyword = "yağ";
+    else if (lowerText.includes("akü")) searchKeyword = "akü";
 
     if (searchKeyword && (lowerText.includes("balata") || lowerText.includes("yağ") || lowerText.includes("akü") || lowerText.includes("parça"))) {
       const { data: partData } = await supabase.from("products").select("name, brand, price").ilike("name", `%${searchKeyword}%`).limit(3);
@@ -93,9 +93,9 @@ export const AIProvider = ({ children }) => {
     } finally {
       setIsTyping(false);
     }
-  };
+  }, [currentVehicle, messages, showAlert]);
 
-  const analyzeDamage = async (imageUrl) => {
+  const analyzeDamage = useCallback(async (imageUrl) => {
     setIsTyping(true);
     setAnalysisStatus("uploading");
     setMessages((prev) => [
@@ -129,9 +129,9 @@ export const AIProvider = ({ children }) => {
       setAnalysisStatus(null);
       setIsTyping(false);
     }
-  };
+  }, [currentVehicle, showAlert]);
 
-  const clearHistory = () => {
+  const clearHistory = useCallback(() => {
     setMessages([
       {
         id: "welcome",
@@ -140,7 +140,7 @@ export const AIProvider = ({ children }) => {
         timestamp: new Date(),
       },
     ]);
-  };
+  }, []);
 
   const value = useMemo(() => ({
     messages,
@@ -149,7 +149,7 @@ export const AIProvider = ({ children }) => {
     sendMessage,
     analyzeDamage,
     clearHistory,
-  }), [messages, isTyping, analysisStatus]);
+  }), [messages, isTyping, analysisStatus, sendMessage, analyzeDamage, clearHistory]);
 
   return (
     <AIContext.Provider value={value}>
