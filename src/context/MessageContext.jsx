@@ -4,6 +4,8 @@ import { supabase } from "../supabaseClient";
 import { useAuth } from "./AuthContext";
 import { useUI } from "./UIContext";
 
+import { filterMessage } from "../utils/antiLeakage";
+
 const MessageContext = createContext();
 
 export const useMessage = () => {
@@ -129,7 +131,7 @@ export const MessageProvider = ({ children }) => {
     }
   }, [currentUser, fetchConversations, subscribeToMessages]);
 
-  const fetchMessages = async (otherUserId) => {
+  const fetchMessages = useCallback(async (otherUserId) => {
     if (!currentUser?.id) return;
     try {
       const { data, error } = await supabase
@@ -153,10 +155,22 @@ export const MessageProvider = ({ children }) => {
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
-  };
+  }, [currentUser?.id, markAsRead]);
 
-  const sendMessage = async (receiverId, content) => {
+  const sendMessage = useCallback(async (receiverId, content) => {
     if (!currentUser?.id) return { error: "Auth required" };
+
+    // Anti-leakage / Güvenlik Filtresi
+    const filterResult = filterMessage(content);
+    if (filterResult.flagged) {
+      showAlert(
+        "Güvenlik Uyarısı",
+        "İletişiminiz Carvis platform güvencesi altındadır. Mesajınızdaki telefon, IBAN, e-posta veya harici bağlantı bilgileri otomatik olarak maskelenmiştir.",
+        "warning"
+      );
+    }
+    const finalContent = filterResult.text;
+
     try {
       const { data, error } = await supabase
         .from("messages")
@@ -164,7 +178,7 @@ export const MessageProvider = ({ children }) => {
           {
             sender_id: currentUser.id,
             receiver_id: receiverId,
-            content,
+            content: finalContent,
             is_read: false,
           },
         ])
@@ -180,7 +194,7 @@ export const MessageProvider = ({ children }) => {
       showAlert("Hata", "Mesaj gönderilemedi.", "error");
       return { data: null, error };
     }
-  };
+  }, [currentUser?.id, fetchConversations, showAlert]);
 
   const value = useMemo(() => ({
 
