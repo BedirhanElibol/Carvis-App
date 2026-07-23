@@ -251,7 +251,12 @@ const ProfileScreen = () => {
 
       <div className="pt-4 px-4 space-y-4">
         <button
-          onClick={() => { handleLogout(); navigate("/"); }}
+          onClick={async () => {
+            triggerHaptic("impact");
+            await handleLogout();
+            showAlert("Çıkış Yapıldı", "Hesabınızdan güvenle çıkış yapıldı.", "info");
+            navigate("/", { replace: true });
+          }}
           className="w-full glass-card border-slate-500/30 text-slate-500 dark:text-slate-400 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-black/5 dark:bg-white/5 transition-all active-scale shadow-2xl flex items-center justify-center gap-3"
         >
           <LogOut size={20} /> {t.logout}

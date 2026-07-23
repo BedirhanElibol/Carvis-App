@@ -83,8 +83,15 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.warn("SignOut error:", err);
+    }
     setCurrentUser(null);
+    localStorage.removeItem("carvis_guest");
+    localStorage.removeItem("rapidsy_guest");
+    sessionStorage.clear();
   };
 
   const loginAsGuest = () => {
