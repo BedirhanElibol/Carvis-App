@@ -50,6 +50,7 @@ const badgeConfig = {
 export default function ValetScreen() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
+  const [includeWash, setIncludeWash] = useState(false);
   const [booked, setBooked] = useState(false);
 
   const handleBook = () => {
@@ -114,7 +115,7 @@ export default function ValetScreen() {
       </div>
 
       {/* How It Works */}
-      <div className="px-5 py-5">
+      <div className="px-5 py-3 space-y-3">
         <div className="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-4 flex items-start gap-3">
           <Shield size={18} className="text-amber-500 flex-shrink-0 mt-0.5" />
           <div>
@@ -123,6 +124,37 @@ export default function ValetScreen() {
               Ücret araç teslim edilene kadar Escrow havuzunda tutulur. Teslim fotoğrafı alınır, GPS ile takip edilir.
             </p>
           </div>
+        </div>
+
+        {/* VALE + EKO YIKAMA UPSELL BANNER */}
+        <div
+          onClick={() => setIncludeWash(!includeWash)}
+          className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between active-scale ${
+            includeWash
+              ? "bg-cyan-500/10 border-cyan-500/50 ring-2 ring-cyan-500/20"
+              : "bg-white dark:bg-[#0a0f24]/85 border-black/5 dark:border-white/10 hover:border-cyan-500/30"
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${includeWash ? "bg-cyan-500 text-slate-950" : "bg-cyan-500/10 text-cyan-400"}`}>
+              🧼
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="text-xs font-black uppercase text-slate-900 dark:text-white">Vale + Eko Yıkama Ekleyin</h4>
+                <span className="text-[9px] bg-cyan-500/20 text-cyan-300 font-bold px-2 py-0.5 rounded-full border border-cyan-500/30">+200 TL</span>
+              </div>
+              <p className="text-[10px] text-slate-500 mt-0.5">Aracınız valedeyken otoparkta susuz bio-cila ile pırıl pırıl temizlensin.</p>
+            </div>
+          </div>
+          <label aria-label="Vale + Eko Yıkama Ekleyin" className="cursor-pointer">
+            <input
+              type="checkbox"
+              checked={includeWash}
+              onChange={() => {}}
+              className="w-5 h-5 accent-cyan-500 rounded cursor-pointer"
+            />
+          </label>
         </div>
       </div>
 

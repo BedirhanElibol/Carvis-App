@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Droplet, MapPin, Calendar, DollarSign, RefreshCw, Star, CheckCircle, Navigation, Plus, X, AlertCircle } from "lucide-react";
+import { Droplet, MapPin, Calendar, DollarSign, RefreshCw, Star, CheckCircle, Navigation, Plus, X, AlertCircle, Camera } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
 export default function CarwashDashboardView({ currentUser }) {
@@ -207,6 +207,11 @@ export default function CarwashDashboardView({ currentUser }) {
                       <MapPin size={14} className="text-slate-500 shrink-0" />
                       <span className="truncate">{job.address_text}</span>
                     </div>
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-2.5 rounded-xl text-[10px] text-emerald-300 flex items-center gap-2">
+                      <Camera size={16} className="shrink-0 text-emerald-400" />
+                      <span>360° Fotoğraf Kanıtı Alındı (Öncesi / Sonrası Çizik Teminatlı)</span>
+                    </div>
+
                     <button
                       onClick={() => handleComplete(job.id)}
                       className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2.5 rounded-xl text-xs uppercase tracking-widest cursor-pointer transition-colors flex items-center justify-center gap-1.5 active-scale shadow-lg shadow-emerald-500/20"

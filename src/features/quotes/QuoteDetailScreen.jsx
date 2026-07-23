@@ -15,6 +15,7 @@ const QuoteDetailScreen = () => {
 
   const [quote, setQuote] = useState(null);
   const [actionLoading, setActionLoading] = useState(false);
+  const [includeDeliveryWash, setIncludeDeliveryWash] = useState(false);
 
   useEffect(() => {
     const foundQuote = quotes.find((q) => q.id === id);
@@ -282,6 +283,37 @@ const QuoteDetailScreen = () => {
               <span className="text-slate-900 dark:text-white font-mono font-bold">
                 ₺{(quote.price * 0.20).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
               </span>
+            </div>
+
+            {/* TESLİMAT ÖNCESİ DIŞ YIKAMA UPSELL */}
+            <div
+              onClick={() => setIncludeDeliveryWash(!includeDeliveryWash)}
+              className={`p-3.5 rounded-xl border cursor-pointer transition-all flex items-center justify-between text-xs my-3 ${
+                includeDeliveryWash
+                  ? "bg-cyan-500/10 border-cyan-500/50 ring-2 ring-cyan-500/20"
+                  : "bg-slate-100 dark:bg-slate-900/60 border-black/5 dark:border-white/5 hover:border-cyan-500/30"
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold ${includeDeliveryWash ? "bg-cyan-500 text-slate-950" : "bg-cyan-500/10 text-cyan-400"}`}>
+                  🧼
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h5 className="font-bold text-slate-900 dark:text-white uppercase text-[11px]">Teslimat Öncesi Dış Yıkama Ekle</h5>
+                    <span className="text-[9px] bg-cyan-500/20 text-cyan-300 font-bold px-1.5 py-0.5 rounded border border-cyan-500/30">+150 TL</span>
+                  </div>
+                  <p className="text-[10px] text-slate-500">Aracınız ustadan çıkmadan teslim öncesi dış temizlik ve bio-cila yapılsın.</p>
+                </div>
+              </div>
+              <label aria-label="Teslimat Öncesi Dış Yıkama Ekle" className="cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={includeDeliveryWash}
+                  onChange={() => {}}
+                  className="w-4 h-4 accent-cyan-500 rounded cursor-pointer"
+                />
+              </label>
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-xl border border-black/5 dark:border-white/5 text-[9px] text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
