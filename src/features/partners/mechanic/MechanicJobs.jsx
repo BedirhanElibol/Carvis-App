@@ -6,6 +6,7 @@ import { supabase } from "../../../supabaseClient";
 
 
 import { calculateLaborCeiling, validateQuoteLaborPrice } from "../../../utils/laborStandards";
+import { validatePartPriceMarkup } from "../../../utils/partPriceChecker";
 
 const MechanicJobs = () => {
   const { showAlert } = useUI();
@@ -475,6 +476,24 @@ const MechanicJobs = () => {
                   />
                   <span className="text-xs text-slate-500 font-bold font-sans">TL</span>
                 </div>
+                {bidPartsPrice > 0 && selectedJobForBid && (() => {
+                  const check = validatePartPriceMarkup(selectedJobForBid.issue, bidPartsPrice);
+                  return (
+                    <div className={`mt-2 p-2.5 rounded-xl border text-[11px] font-mono flex items-center justify-between ${
+                      check.isOverpriced
+                        ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                        : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                    }`}>
+                      <span>
+                        {check.isOverpriced ? '⚠️ Piyasa Tavanı Aşıldı:' : '🟢 Piyasa Perakende Fiyatı:'}{' '}
+                        <strong>{check.fairMin.toLocaleString('tr-TR')} TL – {check.fairMax.toLocaleString('tr-TR')} TL</strong>
+                      </span>
+                      {check.isOverpriced && (
+                        <span className="font-bold text-red-400">+{check.markupPercent}% Fiyat Farkı</span>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
 
               <div>

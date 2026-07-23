@@ -4978,6 +4978,37 @@ ON CONFLICT (category_code) DO UPDATE SET
     items = EXCLUDED.items,
     icon_slug = EXCLUDED.icon_slug;
 
+-- =========================================================
+-- CARVIS FAIR PART PRICE WALL & MARKET BENCHMARKS v1.0
+-- Stores Retail Market Ranges & Customer Direct Purchase Options
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS public.part_price_benchmarks (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    part_keywords TEXT[] NOT NULL,
+    min_retail_price DECIMAL(12,2) NOT NULL,
+    max_retail_price DECIMAL(12,2) NOT NULL,
+    avg_retail_price DECIMAL(12,2) NOT NULL,
+    category TEXT,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='parts_market_min') THEN
+        ALTER TABLE public.quotes ADD COLUMN parts_market_min DECIMAL(12,2);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='parts_market_max') THEN
+        ALTER TABLE public.quotes ADD COLUMN parts_market_max DECIMAL(12,2);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='is_part_overpriced') THEN
+        ALTER TABLE public.quotes ADD COLUMN is_part_overpriced BOOLEAN DEFAULT false;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='customer_provides_parts') THEN
+        ALTER TABLE public.quotes ADD COLUMN customer_provides_parts BOOLEAN DEFAULT false;
+    END IF;
+END $$;
+
+
 
 
 

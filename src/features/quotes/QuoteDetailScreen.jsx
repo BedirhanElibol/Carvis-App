@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuote } from "../../context/QuoteContext";
 import { useUI } from "../../context/UIContext";
+import { useShop } from "../../context/ShopContext";
+import { validatePartPriceMarkup } from "../../utils/partPriceChecker";
 import { ArrowLeft, Calendar, CheckCircle, Clock, Layers, MessageCircle, Package, Percent, Phone, Shield, ShieldCheck, Star, Truck, Wrench, XCircle } from "lucide-react";
 
 const QuoteDetailScreen = () => {
@@ -9,6 +11,7 @@ const QuoteDetailScreen = () => {
   const navigate = useNavigate();
   const { quotes, acceptQuote, rejectQuote, loading } = useQuote();
   const { showAlert } = useUI();
+  const { products } = useShop();
 
   const [quote, setQuote] = useState(null);
   const [actionLoading, setActionLoading] = useState(false);
@@ -167,6 +170,47 @@ const QuoteDetailScreen = () => {
               </div>
             </div>
 
+            {/* Carvis Fair Part Price Wall & Retail Range Warning */}
+            {(() => {
+              const partsPriceNum = quote.parts_price || quote.price * 0.55;
+              const issueName = quote.service_request?.demand_type || quote.description || "";
+              const check = validatePartPriceMarkup(issueName, partsPriceNum, products);
+
+              return (
+                <div className={`p-4 rounded-xl border text-xs space-y-2.5 ${
+                  check.isOverpriced
+                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-200'
+                    : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-200'
+                }`}>
+                  <div className="flex items-center justify-between font-black text-[11px] uppercase tracking-wider">
+                    <span className="flex items-center gap-1.5">
+                      <ShieldCheck size={15} className={check.isOverpriced ? 'text-amber-400' : 'text-emerald-400'} />
+                      {check.isOverpriced ? '⚠️ PARÇA FİYATİ PİYASA UYARISI' : '🟢 ŞEFFAF PARÇA FİYATI GÜVENCESİ'}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${check.isOverpriced ? 'bg-amber-500/20 text-amber-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
+                      {check.isOverpriced ? 'PİYASA ÜZERİNDE' : 'MAKUL PARÇA FİYATI'}
+                    </span>
+                  </div>
+
+                  <p className="text-[11px] leading-relaxed opacity-90 font-sans">
+                    Bu yedek parçanın Türkiye piyasasındaki ortalama perakende satış fiyatı:{' '}
+                    <strong className="text-white font-mono">₺{check.fairMin.toLocaleString('tr-TR')} – ₺{check.fairMax.toLocaleString('tr-TR')}</strong> arasındadır.
+                  </p>
+
+                  {check.isOverpriced && (
+                    <div className="pt-1">
+                      <button
+                        onClick={() => navigate(`/parts?search=${encodeURIComponent(issueName)}`)}
+                        className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition active-scale shadow-lg"
+                      >
+                        🛒 Parçayı Carvis Pazaryerinden ₺{check.fairMin.toLocaleString('tr-TR')}'ye Al (Sadece İşçilik Öde)
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
                 <Package size={13} className="text-slate-500" /> Yedek Parça Bedeli <span className="text-[10px] bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-600 dark:text-slate-300 ml-1">(Orijinal / Sertifikalı)</span>
@@ -187,7 +231,7 @@ const QuoteDetailScreen = () => {
 
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Layers size={13} className="text-slate-500" /> Rapidsy Hizmet Bedeli (%10)
+                <Layers size={13} className="text-slate-500" /> Carvis Hizmet Bedeli (%10)
               </span>
               <span className="text-teal-400 font-mono font-bold">
                 ₺{(quote.price * 0.10).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
@@ -205,7 +249,7 @@ const QuoteDetailScreen = () => {
 
             <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-xl border border-black/5 dark:border-white/5 text-[9px] text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
               <span className="font-bold text-slate-900 dark:text-white uppercase block mb-1">Müşteri ve Ortak Şeffaflık İlkesi:</span>
-              Rapidsy, fabrika standart işçilik saatlerini (OEM FRT) esas alır. Usta keyfi yüksek işçilik yazamaz. %10 Rapidsy bedeli; usta eğitimleri, yol yardımı sigortası ve 1 Yıl / 20.000 KM parça garantisi için kullanılır.
+              Carvis, fabrika standart işçilik saatlerini (OEM FRT) ve parça piyasa tavan fiyatlarını esas alır. Usta gizli kar marjı ekleyemez. %10 Carvis bedeli; usta eğitimleri, yol yardımı sigortası ve 1 Yıl / 20.000 KM parça garantisi için kullanılır.
             </div>
           </div>
 
