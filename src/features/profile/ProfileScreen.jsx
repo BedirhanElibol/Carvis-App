@@ -36,10 +36,9 @@ const ProfileScreen = () => {
 
   const userPhoto =
     currentUser?.user_metadata?.avatar_url || currentUser?.photoURL;
-  const userName =
-    currentUser?.user_metadata?.full_name ||
-    currentUser?.displayName ||
-    t.welcome;
+  const userName = (!currentUser || currentUser.isAnonymous)
+    ? "Misafir Ziyaretçi"
+    : (currentUser?.user_metadata?.full_name || currentUser?.displayName || t.welcome);
   const vehicleCount = vehicles?.length || 0;
 
   const handleVehicleFound = async (data) => {
@@ -103,7 +102,7 @@ const ProfileScreen = () => {
             {userName}
           </h4>
           <p className="text-xs text-slate-500 font-medium mb-2">
-            {currentUser?.email || "Misafir Kullanıcı"}
+            {currentUser && !currentUser.isAnonymous ? currentUser.email : "Oturum Açılmadı"}
           </p>
           {!currentUser || currentUser.isAnonymous ? (
             <button
@@ -250,17 +249,29 @@ const ProfileScreen = () => {
       </div>
 
       <div className="pt-4 px-4 space-y-4">
-        <button
-          onClick={async () => {
-            triggerHaptic("impact");
-            await handleLogout();
-            showAlert("Çıkış Yapıldı", "Hesabınızdan güvenle çıkış yapıldı.", "info");
-            navigate("/", { replace: true });
-          }}
-          className="w-full glass-card border-slate-500/30 text-slate-500 dark:text-slate-400 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-black/5 dark:bg-white/5 transition-all active-scale shadow-2xl flex items-center justify-center gap-3"
-        >
-          <LogOut size={20} /> {t.logout}
-        </button>
+        {currentUser && !currentUser.isAnonymous ? (
+          <button
+            onClick={async () => {
+              triggerHaptic("impact");
+              await handleLogout();
+              showAlert("Çıkış Yapıldı", "Hesabınızdan güvenle çıkış yapıldı.", "info");
+              navigate("/", { replace: true });
+            }}
+            className="w-full glass-card border-slate-500/30 text-slate-500 dark:text-slate-400 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-black/5 dark:bg-white/5 transition-all active-scale shadow-2xl flex items-center justify-center gap-3"
+          >
+            <LogOut size={20} /> {t.logout}
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              triggerHaptic("impact");
+              setShowLoginModal(true);
+            }}
+            className="w-full bg-primary-600 hover:bg-primary-500 text-slate-950 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest transition-all active-scale shadow-2xl flex items-center justify-center gap-3"
+          >
+            <LogIn size={20} /> GİRİŞ YAP / KAYIT OL
+          </button>
+        )}
         
         {!currentUser?.isAnonymous && (
           <button
