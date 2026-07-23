@@ -92,6 +92,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("carvis_guest");
     localStorage.removeItem("rapidsy_guest");
     sessionStorage.clear();
+    // Full page reload to clear all React state and prevent stale guest mode
+    window.location.href = "/";
   };
 
   const loginAsGuest = () => {

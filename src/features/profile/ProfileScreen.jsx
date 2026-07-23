@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CalendarDays, Car, ClipboardList, Heart, Loader2, LogIn, LogOut, Package, Settings, ShoppingBag, Trash2, User, X } from "lucide-react";
+import { CalendarDays, Car, ClipboardList, Heart, Loader2, LogIn, LogOut, MapPin, Package, Phone, Settings, ShoppingBag, Trash2, User, X, Mail, Edit3 } from "lucide-react";
 import { triggerHaptic } from "../../utils/haptics";
 import { Badge } from "../../components/Core";
 import { useUI } from "../../context/UIContext";
@@ -34,11 +34,13 @@ const ProfileScreen = () => {
 
   if (!t) return null;
 
+  const isLoggedIn = currentUser && !currentUser.isAnonymous;
+
   const userPhoto =
     currentUser?.user_metadata?.avatar_url || currentUser?.photoURL;
-  const userName = (!currentUser || currentUser.isAnonymous)
-    ? "Misafir Ziyaretçi"
-    : (currentUser?.user_metadata?.full_name || currentUser?.displayName || t.welcome);
+  const userName = isLoggedIn
+    ? (currentUser?.user_metadata?.full_name || currentUser?.displayName || t.welcome)
+    : "Misafir Ziyaretçi";
   const vehicleCount = vehicles?.length || 0;
 
   const handleVehicleFound = async (data) => {
@@ -59,8 +61,35 @@ const ProfileScreen = () => {
     }
   };
 
+  // Personal info items for logged-in users
+  const personalInfoItems = [
+    { icon: Mail, label: "E-posta", value: currentUser?.email || "—" },
+    { icon: Phone, label: "Telefon", value: currentUser?.phone || currentUser?.user_metadata?.phone || "Belirtilmemiş" },
+    { icon: MapPin, label: "Adres", value: currentUser?.address || currentUser?.user_metadata?.address || "Belirtilmemiş" },
+    { icon: CalendarDays, label: "Doğum Tarihi", value: currentUser?.birth_date || currentUser?.user_metadata?.birth_date || "Belirtilmemiş" },
+  ];
+
+  // Management action cards
+  const actionCards = [
+    { icon: Car, label: t.myGarage, subtitle: `${vehicleCount} Araç`, color: "accent", onClick: () => { if (currentVehicle) { setSelectedVehicleForEdit(currentVehicle); setShowProSettings(true); } else { setShowVehicleSelector(true); } } },
+    { icon: ClipboardList, label: t.serviceHistory, subtitle: `${serviceHistoryCount} Kayıt`, color: "primary", onClick: () => setShowServiceHistoryModal(true) },
+    { icon: Package, label: t.myQuotes, subtitle: "Teklifleri Gör", color: "blue", onClick: () => navigate("/quotes") },
+    { icon: CalendarDays, label: t.myAppointments, subtitle: "Takip Et", color: "emerald", onClick: () => navigate("/appointments") },
+    { icon: ShoppingBag, label: t.myOrders, subtitle: "Takip Et", color: "green", onClick: () => { navigate("/orders"); triggerHaptic("light"); } },
+    { icon: Heart, label: "Favorilerim", subtitle: "Kaydedilenler", color: "red", onClick: () => { navigate("/app/favorites"); triggerHaptic("light"); } },
+  ];
+
+  const colorMap = {
+    accent: { bg: "bg-accent-500/10", border: "border-accent-500/10", text: "text-accent-500", hover: "hover:border-accent-500/30" },
+    primary: { bg: "bg-primary-500/10", border: "border-primary-500/10", text: "text-primary-500", hover: "hover:border-primary-500/30" },
+    blue: { bg: "bg-blue-500/10", border: "border-blue-500/10", text: "text-blue-400", hover: "hover:border-blue-500/30" },
+    emerald: { bg: "bg-emerald-500/10", border: "border-emerald-500/10", text: "text-teal-400", hover: "hover:border-emerald-500/30" },
+    green: { bg: "bg-green-500/10", border: "border-green-500/10", text: "text-green-400", hover: "hover:border-green-500/30" },
+    red: { bg: "bg-red-500/10", border: "border-red-500/10", text: "text-red-400", hover: "hover:border-red-500/30" },
+  };
+
   return (
-    <div className="p-5 space-y-6 pb-32 animate-fade-in relative">
+    <div className="p-5 space-y-5 pb-32 animate-fade-in relative">
       <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-primary-600/10 rounded-full blur-[80px] pointer-events-none"></div>
 
       <VehicleProSettings 
@@ -72,10 +101,14 @@ const ProfileScreen = () => {
         vehicle={selectedVehicleForEdit}
       />
 
+      {/* HEADER */}
       <div className="flex justify-between items-center">
-        <h3 className="font-black text-3xl text-slate-900 dark:text-white tracking-tighter">
-          {t.profile}
-        </h3>
+        <div>
+          <p className="text-[9px] uppercase tracking-[0.25em] text-cyan-400 font-black leading-none font-mono">Rapidsy</p>
+          <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter mt-1">
+            Profil & Kokpit
+          </h3>
+        </div>
         <button
           onClick={() => setShowSettings(true)}
           className="p-3 glass-card rounded-2xl hover:bg-black/10 dark:bg-white/10 shadow-2xl transition-all border border-black/10 dark:border-white/10 active-scale"
@@ -84,9 +117,10 @@ const ProfileScreen = () => {
         </button>
       </div>
 
+      {/* PROFILE CARD */}
       <div className="glass-card p-6 rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl flex items-center gap-5 relative overflow-hidden group">
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-        <div className="w-20 h-20 bg-gradient-to-tr from-primary-600 to-accent-600 rounded-[2rem] flex items-center justify-center text-slate-900 dark:text-white shadow-xl p-0.5 border border-black/20 dark:border-white/20 relative">
+        <div className="w-20 h-20 bg-gradient-to-tr from-primary-600 to-accent-600 rounded-[2rem] flex items-center justify-center text-slate-900 dark:text-white shadow-xl p-0.5 border border-black/20 dark:border-white/20 relative shrink-0">
           {userPhoto ? (
             <img
               src={userPhoto}
@@ -97,14 +131,18 @@ const ProfileScreen = () => {
             <User size={40} className="relative z-10" />
           )}
         </div>
-        <div>
-          <h4 className="font-black text-xl text-slate-900 dark:text-white leading-none mb-1">
+        <div className="min-w-0">
+          <h4 className="font-black text-xl text-slate-900 dark:text-white leading-none mb-1 truncate">
             {userName}
           </h4>
-          <p className="text-xs text-slate-500 font-medium mb-2">
-            {currentUser && !currentUser.isAnonymous ? currentUser.email : "Oturum Açılmadı"}
+          <p className="text-xs text-slate-500 font-medium mb-2 truncate">
+            {isLoggedIn ? currentUser.email : "Oturum Açılmadı"}
           </p>
-          {!currentUser || currentUser.isAnonymous ? (
+          {isLoggedIn ? (
+            <Badge type="success" className="text-[9px] px-3 py-1 font-black">
+              Giriş Yapıldı
+            </Badge>
+          ) : (
             <button
               onClick={() => {
                 setShowLoginModal(true);
@@ -115,21 +153,63 @@ const ProfileScreen = () => {
               <LogIn size={12} />
               {t.loginTitle}
             </button>
-          ) : (
-            <Badge type="success" className="text-[9px] px-3 py-1 font-black">
-              Giriş Yapıldı
-            </Badge>
           )}
         </div>
       </div>
-      {/* Referral Program */}
-      {!currentUser?.isAnonymous && <ReferralCard />}
 
-      {/* Activity Center: Bids, Consultations, Insurances */}
-      {!currentUser?.isAnonymous && <ActivityCenter />}
+      {/* PERSONAL INFO SECTION — only for logged-in users */}
+      {isLoggedIn && (
+        <div className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 shadow-xl space-y-1">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-[9px] font-black uppercase tracking-widest text-cyan-400 font-mono">KİŞİSEL BİLGİLER</span>
+            <button
+              onClick={() => setShowSettings(true)}
+              className="text-[10px] font-black text-cyan-400 flex items-center gap-1 hover:text-cyan-300 transition-colors uppercase tracking-wider"
+            >
+              <Edit3 size={12} /> Düzenle
+            </button>
+          </div>
+          {personalInfoItems.map((item, idx) => (
+            <div key={idx} className="flex items-center gap-3 py-2.5 border-b border-black/5 dark:border-white/5 last:border-0">
+              <div className="w-9 h-9 bg-white/5 dark:bg-white/5 rounded-xl flex items-center justify-center shrink-0 border border-black/5 dark:border-white/5">
+                <item.icon size={16} className="text-slate-400" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
+                <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{item.value}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* GUEST CTA — only for non-logged-in users */}
+      {!isLoggedIn && (
+        <div className="glass-card p-6 rounded-[2rem] border border-accent-500/20 shadow-xl text-center space-y-4 bg-gradient-to-br from-accent-500/5 to-transparent">
+          <div className="w-16 h-16 bg-accent-500/10 rounded-2xl flex items-center justify-center mx-auto border border-accent-500/20">
+            <LogIn size={28} className="text-accent-500" />
+          </div>
+          <div>
+            <h4 className="font-black text-lg text-slate-900 dark:text-white">Hesabınıza Giriş Yapın</h4>
+            <p className="text-xs text-slate-500 mt-1">Araç garajı, servis geçmişi, randevular ve tüm özelliklere erişmek için giriş yapın.</p>
+          </div>
+          <button
+            onClick={() => setShowLoginModal(true)}
+            className="w-full bg-accent-600 hover:bg-accent-500 text-white py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active-scale shadow-xl flex items-center justify-center gap-2"
+          >
+            <LogIn size={18} /> GİRİŞ YAP / KAYIT OL
+          </button>
+        </div>
+      )}
+
+      {/* Referral Program — logged in only */}
+      {isLoggedIn && <ReferralCard />}
+
+      {/* Activity Center — logged in only */}
+      {isLoggedIn && <ActivityCenter />}
 
       {/* ACTIVE VEHICLE COCKPIT CARD */}
-      {currentVehicle && (
+      {isLoggedIn && currentVehicle && (
         <div className="glass-card p-5 rounded-[2rem] border border-black/10 dark:border-white/10 shadow-xl bg-gradient-to-r from-cyan-500/10 via-sky-500/5 to-transparent relative overflow-hidden">
           <div className="flex justify-between items-center">
             <div>
@@ -147,115 +227,39 @@ const ProfileScreen = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-4">
-        <button
-          onClick={() => {
-            if (currentVehicle) {
-              setSelectedVehicleForEdit(currentVehicle);
-              setShowProSettings(true);
-            } else {
-              setShowVehicleSelector(true);
-            }
-          }}
-          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-accent-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
-        >
-          <div className="bg-accent-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-accent-500/10">
-            <Car size={24} className="text-accent-500" />
-          </div>
-          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
-            {t.myGarage}
-          </h4>
-          <p className="text-[10px] text-slate-500 mt-1 font-bold">
-            {vehicleCount} Araç
-          </p>
-        </button>
+      {/* MANAGEMENT ACTION CARDS */}
+      {isLoggedIn && (
+        <div className="grid grid-cols-2 gap-4">
+          {actionCards.map((card, idx) => {
+            const colors = colorMap[card.color];
+            return (
+              <button
+                key={idx}
+                onClick={card.onClick}
+                className={`glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 ${colors.hover} transition-all text-left group shadow-xl active-scale relative overflow-hidden`}
+              >
+                <div className={`${colors.bg} w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border ${colors.border}`}>
+                  <card.icon size={24} className={colors.text} />
+                </div>
+                <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
+                  {card.label}
+                </h4>
+                <p className="text-[10px] text-slate-500 mt-1 font-bold">
+                  {card.subtitle}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
-        <button
-          onClick={() => setShowServiceHistoryModal(true)}
-          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-primary-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
-        >
-          <div className="bg-primary-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-primary-500/10">
-            <ClipboardList size={24} className="text-primary-500" />
-          </div>
-          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
-            {t.serviceHistory}
-          </h4>
-          <p className="text-[10px] text-slate-500 mt-1 font-bold">
-            {serviceHistoryCount} Kayıt
-          </p>
-        </button>
-
-        <button
-          onClick={() => navigate("/quotes")}
-          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-blue-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
-        >
-          <div className="bg-blue-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-blue-500/10">
-            <Package size={24} className="text-blue-400" />
-          </div>
-          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
-            {t.myQuotes}
-          </h4>
-          <p className="text-[10px] text-slate-500 mt-1 font-bold">
-            Teklifleri Gör
-          </p>
-        </button>
-
-        <button
-          onClick={() => navigate("/appointments")}
-          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-emerald-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
-        >
-          <div className="bg-emerald-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-emerald-500/10">
-            <CalendarDays size={24} className="text-teal-400" />
-          </div>
-          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
-            {t.myAppointments}
-          </h4>
-          <p className="text-[10px] text-slate-500 mt-1 font-bold">Takip Et</p>
-        </button>
-
-        <button
-          onClick={() => {
-            navigate("/orders");
-            triggerHaptic("light");
-          }}
-          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-green-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
-        >
-          <div className="bg-green-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-green-500/10">
-            <ShoppingBag size={24} className="text-green-400" />
-          </div>
-          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
-            {t.myOrders}
-          </h4>
-          <p className="text-[10px] text-slate-500 mt-1 font-bold">Takip Et</p>
-        </button>
-
-        <button
-          onClick={() => {
-            navigate("/app/favorites");
-            triggerHaptic("light");
-          }}
-          className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-red-500/30 transition-all text-left group shadow-xl active-scale relative overflow-hidden"
-        >
-          <div className="bg-red-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border border-red-500/10">
-            <Heart size={24} className="text-red-400" />
-          </div>
-          <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-widest">
-            Favorilerim
-          </h4>
-          <p className="text-[10px] text-slate-500 mt-1 font-bold">
-            Kaydedilenler
-          </p>
-        </button>
-      </div>
-
-      <div className="pt-4 px-4 space-y-4">
-        {currentUser && !currentUser.isAnonymous ? (
+      {/* LOGOUT / LOGIN SECTION */}
+      <div className="pt-2 px-2 space-y-4">
+        {isLoggedIn ? (
           <button
-            onClick={async () => {
+            onClick={() => {
               triggerHaptic("impact");
-              await handleLogout();
-              showAlert("Çıkış Yapıldı", "Hesabınızdan güvenle çıkış yapıldı.", "info");
-              navigate("/", { replace: true });
+              handleLogout();
             }}
             className="w-full glass-card border-slate-500/30 text-slate-500 dark:text-slate-400 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-black/5 dark:bg-white/5 transition-all active-scale shadow-2xl flex items-center justify-center gap-3"
           >
@@ -273,7 +277,7 @@ const ProfileScreen = () => {
           </button>
         )}
         
-        {!currentUser?.isAnonymous && (
+        {isLoggedIn && (
           <button
             onClick={() => setShowDeleteModal(true)}
             className="w-full text-red-500/50 hover:text-red-500 py-2 font-bold text-[10px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2"

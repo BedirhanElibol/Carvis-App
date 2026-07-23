@@ -114,15 +114,13 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
     );
   }
 
-  // Customer routes: allow anonymous guests (they see limited UI via isAnonymous check inside component)
-  const isCustomerRoute = allowedRoles.length === 0 || allowedRoles.includes("customer");
+  // If user is completely null (logged out), always redirect to landing
   if (!currentUser) {
-    if (isCustomerRoute) {
-      // Let them through — CustomerHome handles the empty/anonymous state internally
-      return children;
-    }
     return <Navigate to="/" replace state={{ from: location }} />;
   }
+
+  // Anonymous guests (created via loginAsGuest) can access customer routes
+  const isCustomerRoute = allowedRoles.length === 0 || allowedRoles.includes("customer");
 
   const userRole = currentUser.role || "customer";
 

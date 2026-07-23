@@ -139,26 +139,51 @@ const AppHeader = () => {
                 className="fixed inset-0 z-[90]"
                 onClick={() => setShowUserMenu(false)}
               ></div>
-              <div className="absolute top-12 right-0 w-48 glass-card border border-black/10 dark:border-white/10 rounded-2xl z-[100] py-2 animate-slide-up shadow-2xl backdrop-blur-3xl">
+              <div className="absolute top-12 right-0 w-52 glass-card border border-black/10 dark:border-white/10 rounded-2xl z-[100] py-2 animate-slide-up shadow-2xl backdrop-blur-3xl">
                 <div className="px-4 py-2 border-b border-black/5 dark:border-white/5 mb-1">
                   <p className="text-[10px] font-black text-primary-400 uppercase tracking-widest">
                     {t.myAccount}
                   </p>
                   <p className="font-bold text-slate-900 dark:text-white text-xs truncate">
-                    {currentUser?.email || t.guest}
+                    {currentUser && !currentUser.isAnonymous ? currentUser.email : "Oturum Açılmadı"}
                   </p>
                 </div>
-                <button
-                  onClick={() => {
-                    setShowUserMenu(false);
-                    handleLogout();
-                    navigate("/");
-                  }}
-                  className="w-full text-left px-4 py-2.5 text-xs text-red-400 hover:bg-red-500/10 flex items-center gap-2 font-bold font-sans"
-                >
-                  <LogOut size={16} />
-                  {t.logout}
-                </button>
+
+                {currentUser && !currentUser.isAnonymous ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        setShowUserMenu(false);
+                        navigate("/app/profile");
+                      }}
+                      className="w-full text-left px-4 py-2.5 text-xs text-slate-600 dark:text-slate-300 hover:bg-primary-500/10 flex items-center gap-2 font-bold font-sans"
+                    >
+                      <User size={16} />
+                      Profil & Kokpit
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowUserMenu(false);
+                        handleLogout();
+                      }}
+                      className="w-full text-left px-4 py-2.5 text-xs text-red-400 hover:bg-red-500/10 flex items-center gap-2 font-bold font-sans"
+                    >
+                      <LogOut size={16} />
+                      {t.logout}
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setShowUserMenu(false);
+                      navigate("/");
+                    }}
+                    className="w-full text-left px-4 py-2.5 text-xs text-primary-400 hover:bg-primary-500/10 flex items-center gap-2 font-bold font-sans"
+                  >
+                    <User size={16} />
+                    Giriş Yap / Kayıt Ol
+                  </button>
+                )}
               </div>
             </>
           )}

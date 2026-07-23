@@ -332,10 +332,10 @@ const CustomerHome = () => {
                 navigate("/app/profile");
               }
             }}
-            className="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-black uppercase tracking-wider hover:bg-cyan-500/20 transition-all flex items-center gap-1.5 active-scale cursor-pointer"
+            className="w-10 h-10 rounded-xl bg-white/5 shadow-xl border border-white/10 flex items-center justify-center text-cyan-400 hover:text-cyan-300 hover:border-cyan-400 transition-all active-scale cursor-pointer"
             title="Profil & Kokpit"
           >
-            <User size={14} /> Profil & Kokpit
+            <User size={18} />
           </button>
         </div>
       </div>
@@ -480,9 +480,9 @@ const CustomerHome = () => {
                           navigate("/app/profile");
                         }
                       }}
-                      className="px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs font-black uppercase tracking-wider transition-all active-scale cursor-pointer flex items-center gap-2"
+                      className="w-10 h-10 rounded-xl bg-cyan-500/5 shadow-xl border border-white/10 flex items-center justify-center text-cyan-400 hover:text-cyan-300 hover:border-cyan-400 hover:shadow-xl transition-all active-scale cursor-pointer"
                     >
-                      <User size={16} /> Profil & Kokpit →
+                      <User size={18} />
                     </button>
                   </div>
 
