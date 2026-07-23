@@ -44,30 +44,30 @@ const DeleteAccountModal = ({ show, onClose, showAlert }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/90 backdrop-blur-xl z-[200] flex items-center justify-center p-4 animate-in fade-in duration-300">
-      <div className="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl relative overflow-hidden p-8 border border-black/10 dark:border-white/10">
+    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-xl z-[200] flex items-center justify-center p-4 animate-in fade-in duration-300">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-[2.5rem] shadow-2xl relative overflow-hidden p-8 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white">
         <div className="flex flex-col items-center text-center">
-          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6 text-red-600 shadow-lg shadow-red-500/20">
+          <div className="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mb-6 text-red-500 border border-red-500/20 shadow-lg">
             <Trash2 size={40} />
           </div>
           
-          <h2 className="text-2xl font-black text-slate-900 tracking-tighter uppercase mb-4">
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase mb-4">
             HESABINI SİLMEK İSTEDİĞİNE EMİN MİSİN?
           </h2>
           
-          <div className="bg-red-50 border border-red-100 p-4 rounded-2xl mb-8 text-left">
-            <h4 className="text-red-800 font-bold text-xs uppercase mb-2 flex items-center gap-2">
+          <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-2xl mb-8 text-left">
+            <h4 className="text-red-500 font-bold text-xs uppercase mb-2 flex items-center gap-2">
               <AlertTriangle size={14} /> Bu İşlem Geri Alınamaz!
             </h4>
-            <ul className="text-[10px] text-red-700 space-y-1 font-medium">
+            <ul className="text-[10px] text-red-400 space-y-1 font-medium">
               <li>• Tüm araç bilgileriniz ve bakım geçmişiniz silinir.</li>
               <li>• Aktif siparişleriniz ve cüzdan bakiyeniz iptal edilir.</li>
               <li>• KVKK kapsamında verileriniz kalıcı olarak temizlenir.</li>
             </ul>
           </div>
 
-          <p className="text-xs text-slate-500 font-bold mb-4 uppercase tracking-widest">
-            Onaylamak için aşağıya <span className="text-red-600">"{EXPECTED_TEXT}"</span> yazın:
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-bold mb-4 uppercase tracking-widest">
+            Onaylamak için aşağıya <span className="text-red-500 font-black">"{EXPECTED_TEXT}"</span> yazın:
           </p>
 
           <input
@@ -75,20 +75,20 @@ const DeleteAccountModal = ({ show, onClose, showAlert }) => {
             value={confirmText}
             onChange={(e) => setConfirmText(e.target.value.toUpperCase())}
             placeholder={EXPECTED_TEXT}
-            className="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl mb-6 text-center font-black text-slate-900 outline-none focus:border-red-500 transition-all uppercase"
+            className="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-white/10 p-4 rounded-2xl mb-6 text-center font-black text-slate-900 dark:text-white outline-none focus:border-red-500 transition-all uppercase"
           />
 
           <div className="grid grid-cols-2 gap-4 w-full">
             <button
               onClick={onClose}
-              className="p-4 rounded-2xl bg-slate-100 text-slate-500 font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all active-scale"
+              className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-black text-xs uppercase tracking-widest hover:bg-slate-200 dark:hover:bg-slate-700 transition-all active-scale"
             >
               Vazgeç
             </button>
             <button
               onClick={handleDelete}
               disabled={loading || confirmText !== EXPECTED_TEXT}
-              className="p-4 rounded-2xl bg-red-600 text-slate-900 dark:text-white font-black text-xs uppercase tracking-widest hover:bg-red-500 shadow-xl shadow-red-900/20 transition-all active-scale disabled:opacity-30 disabled:grayscale"
+              className="p-4 rounded-2xl bg-red-600 text-white font-black text-xs uppercase tracking-widest hover:bg-red-500 shadow-xl shadow-red-900/20 transition-all active-scale disabled:opacity-30 disabled:grayscale"
             >
               {loading ? <Loader2 className="animate-spin mx-auto" size={18} /> : "HESABIMI SİL"}
             </button>

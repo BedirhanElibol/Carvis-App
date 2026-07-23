@@ -86,12 +86,12 @@ const AdvancedPaymentModal = ({
   ];
 
   return (
-    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/90 backdrop-blur-md z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-[#fcfcfc] w-full max-w-5xl h-[90vh] md:h-auto md:max-h-[90vh] rounded-xl shadow-2xl overflow-hidden relative flex flex-col md:flex-row text-slate-800">
+    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-5xl h-[90vh] md:h-auto md:max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden relative flex flex-col md:flex-row text-slate-900 dark:text-white">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors"
+          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
         >
           <X size={18} />
         </button>
@@ -99,15 +99,15 @@ const AdvancedPaymentModal = ({
         {step === "payment" ? (
           <>
             {/* LEFT COLUMN: Payment Methods */}
-            <div className="flex-1 p-6 md:p-8 overflow-y-auto bg-white">
-              <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2 font-sans">
+            <div className="flex-1 p-6 md:p-8 overflow-y-auto bg-white dark:bg-slate-900">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 font-sans">
                 <CreditCard className="text-primary-600" /> Ödeme
                 Seçenekleri
               </h2>
 
               {/* Saved Cards Header */}
               <div className="mb-4">
-                <h3 className="text-sm font-bold text-slate-700 mb-3 font-sans">
+                <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 font-sans">
                   Kayıtlı Kartlarım
                 </h3>
                 <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
@@ -169,19 +169,19 @@ const AdvancedPaymentModal = ({
                     : ""
                 }`}
               >
-                <div className="bg-slate-50 border border-slate-200 p-6 rounded-xl relative overflow-hidden">
+                <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-white/10 p-6 rounded-xl relative overflow-hidden">
                   {/* Card Visual (Simple) */}
                   <div className="absolute top-0 right-0 p-4 opacity-10">
                     <CreditCard size={120} />
                   </div>
                   <div className="relative z-10 space-y-4">
                     <div>
-                      <label className="text-xs font-bold text-slate-600 block mb-1.5">
+                      <label className="text-xs font-bold text-slate-600 dark:text-slate-400 block mb-1.5">
                         Kart Numarası
                       </label>
                       <div className="relative group">
                         <input
-                          className="w-full bg-white border border-slate-300 text-slate-900 rounded-lg px-4 py-3 text-sm outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600 transition-all font-mono"
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-lg px-4 py-3 text-sm outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600 transition-all font-mono"
                           placeholder="0000 0000 0000 0000"
                           value={cardData.number}
                           onChange={(e) =>
@@ -198,11 +198,11 @@ const AdvancedPaymentModal = ({
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="text-xs font-bold text-slate-600 block mb-1.5 font-sans">
+                        <label className="text-xs font-bold text-slate-600 dark:text-slate-400 block mb-1.5 font-sans">
                           Son Kullanma Tarihi
                         </label>
                         <input
-                          className="w-full bg-white border border-slate-300 text-slate-900 rounded-lg px-4 py-3 text-sm outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600 transition-all text-center"
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-lg px-4 py-3 text-sm outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600 transition-all text-center"
                           placeholder="AA / YY"
                           value={cardData.expiry}
                           onChange={(e) =>
@@ -212,14 +212,14 @@ const AdvancedPaymentModal = ({
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-slate-600 block mb-1.5 flex items-center gap-1">
+                        <label className="text-xs font-bold text-slate-600 dark:text-slate-400 block mb-1.5 flex items-center gap-1">
                           CVV{" "}
                           <Info size={12} className="text-slate-500 dark:text-slate-400" />
                         </label>
                         <input
                           type="password"
                           maxLength={3}
-                          className="w-full bg-white border border-slate-300 text-slate-900 rounded-lg px-4 py-3 text-sm outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600 transition-all text-center"
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-lg px-4 py-3 text-sm outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600 transition-all text-center"
                           placeholder="***"
                           value={cardData.cvv}
                           onChange={(e) =>
@@ -235,7 +235,7 @@ const AdvancedPaymentModal = ({
                           type="checkbox"
                           className="w-4 h-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
                         />
-                        <span className="text-xs text-slate-600 font-medium group-hover:text-primary-600 transition-colors">
+                        <span className="text-xs text-slate-600 dark:text-slate-400 font-medium group-hover:text-primary-600 transition-colors">
                           Kartımı sonraki alışverişler için Masterpass'e kaydet.
                         </span>
                       </label>

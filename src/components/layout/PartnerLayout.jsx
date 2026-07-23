@@ -128,10 +128,10 @@ const PartnerLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 premium-gradient text-slate-100 flex font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 premium-gradient text-slate-900 dark:text-slate-100 flex font-sans">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900/60 border-r border-white/5 backdrop-blur-xl transform transition-transform duration-300 md:translate-x-0 overflow-y-auto ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white/80 dark:bg-slate-900/60 border-r border-black/10 dark:border-white/5 backdrop-blur-xl transform transition-transform duration-300 md:translate-x-0 overflow-y-auto ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -382,10 +382,10 @@ const PartnerLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 relative bg-slate-950">
+      <main className="flex-1 md:ml-64 relative bg-slate-50 dark:bg-slate-950">
         {/* Header for Mobile */}
-        <div className="md:hidden p-4 border-b border-white/5 flex items-center justify-between bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
-          <button onClick={() => setIsSidebarOpen(true)} className="text-white">
+        <div className="md:hidden p-4 border-b border-black/10 dark:border-white/5 flex items-center justify-between bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
+          <button onClick={() => setIsSidebarOpen(true)} className="text-slate-900 dark:text-white">
             <Menu size={24} />
           </button>
           <span className="font-bold text-xs uppercase tracking-wider">

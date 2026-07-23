@@ -76,14 +76,14 @@ const IssueReportingModal = ({ isOpen, onClose, t }) => {
           <div className="p-6 border-b border-black/5 dark:border-white/5 relative bg-slate-50 dark:bg-slate-900/50">
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 dark:bg-white/10 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+              className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               <X size={16} />
             </button>
             <h2 className="text-xl font-black text-slate-900 dark:text-white tracking-tight uppercase leading-none">
               Sorun Bildir
             </h2>
-            <p className="text-xs text-slate-500 mt-2 font-medium">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 font-medium">
               Aracınızla ilgili nasıl bir işlem yaptırmak istiyorsunuz?
             </p>
           </div>
@@ -101,9 +101,9 @@ const IssueReportingModal = ({ isOpen, onClose, t }) => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-sm font-black text-slate-900 dark:text-white mb-0.5">{service.title}</h3>
-                  <p className="text-[10px] text-slate-500">{service.desc}</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">{service.desc}</p>
                 </div>
-                <ChevronRight size={18} className="text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
+                <ChevronRight size={18} className="text-slate-400 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
               </button>
             ))}
           </div>
