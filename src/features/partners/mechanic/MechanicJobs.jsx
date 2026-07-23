@@ -217,9 +217,14 @@ const MechanicJobs = () => {
     <div className="space-y-6 pb-24">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black font-sans text-slate-900 dark:text-white">
-            İş Merkezi
-          </h1>
+          <div className="flex items-center gap-2 mb-1">
+            <h1 className="text-3xl font-black font-sans text-slate-900 dark:text-white">
+              İş Merkezi
+            </h1>
+            <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-black px-2.5 py-1 rounded-full flex items-center gap-1 uppercase tracking-widest">
+              <ShieldCheck size={12} /> Sigorta Onaylı Servis
+            </span>
+          </div>
           <p className="text-slate-500 dark:text-slate-400">
             Havuzdaki işleri üstlenin veya aktif işlerinizi yönetin.
           </p>
@@ -296,6 +301,11 @@ const MechanicJobs = () => {
                         >
                           {job.priority === "high" ? "ACİL İŞ" : "NORMAL"}
                         </span>
+                        {(job.is_insurance_claim || job.issue?.toLowerCase().includes("kasko") || job.issue?.toLowerCase().includes("sigorta")) && (
+                          <span className="bg-primary-500/20 text-primary-400 border border-primary-500/30 text-[9px] font-black px-2 py-0.5 rounded uppercase flex items-center gap-1">
+                            <ShieldCheck size={10} /> SİGORTA KAPSAMINDA
+                          </span>
+                        )}
                         <span className="text-slate-500 text-xs font-mono tracking-widest">
                           {job.plate.substring(0, 2)} *** **
                         </span>

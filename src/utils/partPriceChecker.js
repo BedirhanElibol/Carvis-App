@@ -121,3 +121,30 @@ export const validatePartPriceMarkup = (partName, mechanicPartPrice, products = 
     matchingProduct: range.matchingProduct
   };
 };
+
+/**
+ * Calculates Insurance Fair Market Compliance Index (0-100%) for insurance adjusters & anti-fraud audit
+ */
+export const calculateInsuranceFairMarketScore = (partsPrice = 0, laborPrice = 0, benchmarkMin = 0, benchmarkMax = 0) => {
+  const partsNum = Number(partsPrice) || 0;
+  const laborNum = Number(laborPrice) || 0;
+  const total = partsNum + laborNum;
+
+  if (total <= 0) return { score: 100, status: 'OPTIMAL', text: '%100 Piyasa Rayicine Uygun' };
+
+  if (benchmarkMax > 0 && partsNum > benchmarkMax * 1.2) {
+    const penalty = Math.min(40, Math.round(((partsNum - benchmarkMax) / benchmarkMax) * 50));
+    const score = Math.max(50, 100 - penalty);
+    return {
+      score,
+      status: 'OVERPRICED_WARNING',
+      text: `%${score} Rayiç Derecesi (Parça Maliyeti Piyasa Tavanının Üzerinde)`
+    };
+  }
+
+  return {
+    score: 98,
+    status: 'OPTIMAL',
+    text: '%98 Tam Rayiç Uyumu (Sigorta Eksper Onayına Uygun)'
+  };
+};

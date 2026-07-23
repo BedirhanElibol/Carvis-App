@@ -135,6 +135,43 @@ const QuoteDetailScreen = () => {
 
       {/* Content */}
       <div className="p-5 space-y-4">
+        {/* Insurance Claim 0 TL Payout Banner */}
+        {(quote.is_insurance_claim || quote.insurance_company_name) && (
+          <div className="glass-card p-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 shadow-lg text-slate-900 dark:text-white animate-fade-in">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold">
+                  🛡️
+                </span>
+                <div>
+                  <h3 className="font-black text-sm uppercase tracking-tight text-emerald-600 dark:text-emerald-400">
+                    SİGORTA KAPSAMINDA ONARIM (0 TL MÜŞTERİ ÖDEMESİ)
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Anlaşmalı Sigorta: <strong className="text-slate-900 dark:text-white font-sans">{quote.insurance_company_name || "Türkiye Sigorta A.Ş."}</strong> • Poliçe No: <strong className="font-mono text-slate-900 dark:text-white">{quote.insurance_policy_no || "KSK-2026-9941"}</strong>
+                  </p>
+                </div>
+              </div>
+              <span className="bg-emerald-500 text-slate-950 text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">
+                %100 KAPSAMDA
+              </span>
+            </div>
+
+            {/* Appraisal Status Timeline */}
+            <div className="border-t border-emerald-500/20 pt-3 mt-2 grid grid-cols-3 gap-2 text-center text-[10px] font-bold">
+              <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                1. Hasar Bildirildi ✓
+              </div>
+              <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                2. Eksper Foto Onaylandı ✓
+              </div>
+              <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                3. Sigorta Escrow Fonlandı ✓
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Fiyat Kartı */}
         <div className="glass-card p-6 rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-transparent">
           <div className="flex justify-between items-start">

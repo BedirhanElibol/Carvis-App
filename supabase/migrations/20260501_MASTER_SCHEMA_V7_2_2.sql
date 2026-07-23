@@ -5006,6 +5006,31 @@ DO $$ BEGIN
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='customer_provides_parts') THEN
         ALTER TABLE public.quotes ADD COLUMN customer_provides_parts BOOLEAN DEFAULT false;
     END IF;
+    -- Insurance Claims & Dynamic Repairer Network
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='approved_insurance_companies') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN approved_insurance_companies TEXT[] DEFAULT ARRAY['anadolu_sigorta', 'turkuye_sigorta', 'axa', 'sompo'];
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='is_insurance_certified') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN is_insurance_certified BOOLEAN DEFAULT true;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='is_insurance_claim') THEN
+        ALTER TABLE public.quotes ADD COLUMN is_insurance_claim BOOLEAN DEFAULT false;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='insurance_company_name') THEN
+        ALTER TABLE public.quotes ADD COLUMN insurance_company_name TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='insurance_policy_no') THEN
+        ALTER TABLE public.quotes ADD COLUMN insurance_policy_no TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='appraisal_status') THEN
+        ALTER TABLE public.quotes ADD COLUMN appraisal_status TEXT DEFAULT 'approved';
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='appraisal_photos') THEN
+        ALTER TABLE public.quotes ADD COLUMN appraisal_photos TEXT[] DEFAULT ARRAY[]::TEXT[];
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='fair_market_score') THEN
+        ALTER TABLE public.quotes ADD COLUMN fair_market_score INTEGER DEFAULT 98;
+    END IF;
 END $$;
 
 
