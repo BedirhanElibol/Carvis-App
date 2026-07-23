@@ -277,17 +277,6 @@ CREATE TABLE IF NOT EXISTS public.quotes (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- DUPLICATE PREVENTION CONSTRAINTS
-DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'unique_seller_product') THEN
-        ALTER TABLE public.products ADD CONSTRAINT unique_seller_product UNIQUE (seller_id, name, brand);
-    END IF;
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'unique_seller_quote') THEN
-        ALTER TABLE public.quotes ADD CONSTRAINT unique_seller_quote UNIQUE (service_request_id, seller_id);
-    END IF;
-END $$;
-
-
 -- APPOINTMENTS
 CREATE TABLE IF NOT EXISTS public.appointments (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -401,6 +390,40 @@ CREATE TABLE IF NOT EXISTS public.coupons (
     usage_limit INTEGER DEFAULT 100,
     created_at TIMESTAMPTZ DEFAULT now()
 );
+
+-- =========================================================
+-- SAFE COLUMN REPAIRS: Ensure seller_id exists on all pre-existing tables
+-- =========================================================
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='products' AND column_name='seller_id') THEN
+        ALTER TABLE public.products ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='mechanic_shops' AND column_name='seller_id') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='quotes' AND column_name='seller_id') THEN
+        ALTER TABLE public.quotes ADD COLUMN seller_id UUID REFERENCES public.profiles(id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='appointments' AND column_name='seller_id') THEN
+        ALTER TABLE public.appointments ADD COLUMN seller_id UUID REFERENCES public.profiles(id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='seller_id') THEN
+        ALTER TABLE public.orders ADD COLUMN seller_id UUID REFERENCES public.profiles(id);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='reviews' AND column_name='seller_id') THEN
+        ALTER TABLE public.reviews ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE;
+    END IF;
+END $$;
+
+-- DUPLICATE PREVENTION CONSTRAINTS
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'unique_seller_product') THEN
+        ALTER TABLE public.products ADD CONSTRAINT unique_seller_product UNIQUE (seller_id, name, brand);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'unique_seller_quote') THEN
+        ALTER TABLE public.quotes ADD CONSTRAINT unique_seller_quote UNIQUE (service_request_id, seller_id);
+    END IF;
+END $$;
 
 -- =========================================================
 -- 4. INDEXES & FUNCTIONS (OR REPLACE)
