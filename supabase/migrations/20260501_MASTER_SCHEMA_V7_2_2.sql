@@ -4921,3 +4921,224 @@ BEGIN
 
 END $$;
 
+-- =========================================================
+-- CARVIS OEM LABOR STANDARDS & MAX CEILING SYSTEM v1.0
+-- Enforces OEM Flat Rate Times & Labor Pricing Cap
+-- =========================================================
+
+-- 1. Create labor_standards table
+CREATE TABLE IF NOT EXISTS public.labor_standards (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    service_type TEXT NOT NULL,
+    vehicle_segment TEXT NOT NULL,
+    standard_hours DECIMAL(4,2) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    UNIQUE(service_type, vehicle_segment)
+);
+
+-- 2. Add hourly_labor_rate column to profiles and mechanic_shops
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='hourly_labor_rate') THEN
+        ALTER TABLE public.profiles ADD COLUMN hourly_labor_rate DECIMAL(10,2) DEFAULT 1000.00;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='mechanic_shops' AND column_name='hourly_labor_rate') THEN
+        ALTER TABLE public.mechanic_shops ADD COLUMN hourly_labor_rate DECIMAL(10,2) DEFAULT 1000.00;
+    END IF;
+END $$;
+
+-- 3. Add OEM compliance columns to quotes table
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='standard_hours') THEN
+        ALTER TABLE public.quotes ADD COLUMN standard_hours DECIMAL(4,2);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='max_labor_ceiling') THEN
+        ALTER TABLE public.quotes ADD COLUMN max_labor_ceiling DECIMAL(12,2);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='labor_price') THEN
+        ALTER TABLE public.quotes ADD COLUMN labor_price DECIMAL(12,2);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='parts_price') THEN
+        ALTER TABLE public.quotes ADD COLUMN parts_price DECIMAL(12,2);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='quotes' AND column_name='is_oem_compliant') THEN
+        ALTER TABLE public.quotes ADD COLUMN is_oem_compliant BOOLEAN DEFAULT true;
+    END IF;
+END $$;
+
+-- 4. Enable RLS on labor_standards
+ALTER TABLE public.labor_standards ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Everyone can read labor standards" ON public.labor_standards;
+CREATE POLICY "Everyone can read labor standards" ON public.labor_standards
+    FOR SELECT USING (true);
+
+-- 5. Seed default OEM Labor Standards (OEM Factory Standard Times in Hours)
+INSERT INTO public.labor_standards (service_type, vehicle_segment, standard_hours, description)
+VALUES
+    -- 1. MOTOR VE MEKANİK SİSTEMLER
+    ('oil_change', 'hatchback', 0.60, 'Periyodik Yağ & Filtre Bakımı'),
+    ('oil_change', 'sedan', 0.80, 'Periyodik Yağ & Filtre Bakımı'),
+    ('oil_change', 'suv', 1.00, 'Periyodik Yağ & Filtre Bakımı'),
+    ('oil_change', 'commercial', 0.80, 'Periyodik Yağ & Filtre Bakımı'),
+
+    ('timing_belt', 'hatchback', 2.50, 'Triger Kayışı / Seti Değişimi'),
+    ('timing_belt', 'sedan', 3.20, 'Triger Kayışı / Seti Değişimi'),
+    ('timing_belt', 'suv', 4.00, 'Triger Kayışı / Seti Değişimi'),
+    ('timing_belt', 'commercial', 3.50, 'Triger Kayışı / Seti Değişimi'),
+
+    ('engine_overhaul', 'hatchback', 12.00, 'Motor Rektifiye & Genel Revizyon'),
+    ('engine_overhaul', 'sedan', 14.00, 'Motor Rektifiye & Genel Revizyon'),
+    ('engine_overhaul', 'suv', 16.00, 'Motor Rektifiye & Genel Revizyon'),
+    ('engine_overhaul', 'commercial', 15.00, 'Motor Rektifiye & Genel Revizyon'),
+
+    ('cylinder_head', 'hatchback', 4.00, 'Subap Ayarı & Silindir Kapak Contası'),
+    ('cylinder_head', 'sedan', 5.00, 'Subap Ayarı & Silindir Kapak Contası'),
+    ('cylinder_head', 'suv', 6.00, 'Subap Ayarı & Silindir Kapak Contası'),
+    ('cylinder_head', 'commercial', 5.50, 'Subap Ayarı & Silindir Kapak Contası'),
+
+    ('clutch', 'hatchback', 3.50, 'Debriyaj Baskı Balata Değişimi'),
+    ('clutch', 'sedan', 4.50, 'Debriyaj Baskı Balata Değişimi'),
+    ('clutch', 'suv', 5.50, 'Debriyaj Baskı Balata Değişimi'),
+    ('clutch', 'commercial', 4.50, 'Debriyaj Baskı Balata Değişimi'),
+
+    ('transmission_overhaul', 'hatchback', 6.00, 'Şanzıman Revizyonu & Mechatronic Tamiri'),
+    ('transmission_overhaul', 'sedan', 7.50, 'Şanzıman Revizyonu & Mechatronic Tamiri'),
+    ('transmission_overhaul', 'suv', 9.00, 'Şanzıman Revizyonu & Mechatronic Tamiri'),
+    ('transmission_overhaul', 'commercial', 8.00, 'Şanzıman Revizyonu & Mechatronic Tamiri'),
+
+    ('injectors', 'hatchback', 1.50, 'Yakıt Pompası & Enjektör Bakımı'),
+    ('injectors', 'sedan', 2.00, 'Yakıt Pompası & Enjektör Bakımı'),
+    ('injectors', 'suv', 2.50, 'Yakıt Pompası & Enjektör Bakımı'),
+    ('injectors', 'commercial', 2.20, 'Yakıt Pompası & Enjektör Bakımı'),
+
+    ('dpf_egr', 'hatchback', 2.00, 'DPF Partikül Filtresi & EGR Temizliği'),
+    ('dpf_egr', 'sedan', 2.50, 'DPF Partikül Filtresi & EGR Temizliği'),
+    ('dpf_egr', 'suv', 3.00, 'DPF Partikül Filtresi & EGR Temizliği'),
+    ('dpf_egr', 'commercial', 2.80, 'DPF Partikül Filtresi & EGR Temizliği'),
+
+    -- 2. ELEKTRİK VE ELEKTRONİK SİSTEMLER
+    ('battery', 'hatchback', 0.30, 'Akü Değişimi & Kodlama'),
+    ('battery', 'sedan', 0.40, 'Akü Değişimi & Kodlama'),
+    ('battery', 'suv', 0.50, 'Akü Değişimi & Kodlama'),
+    ('battery', 'commercial', 0.40, 'Akü Değişimi & Kodlama'),
+
+    ('alternator_starter', 'hatchback', 1.50, 'Şarj Dinamosu & Marş Motoru Tamiri'),
+    ('alternator_starter', 'sedan', 2.00, 'Şarj Dinamosu & Marş Motoru Tamiri'),
+    ('alternator_starter', 'suv', 2.50, 'Şarj Dinamosu & Marş Motoru Tamiri'),
+    ('alternator_starter', 'commercial', 2.00, 'Şarj Dinamosu & Marş Motoru Tamiri'),
+
+    ('wiring_lights', 'hatchback', 1.00, 'Tesisat, Far & Silecek Motoru Tamiri'),
+    ('wiring_lights', 'sedan', 1.20, 'Tesisat, Far & Silecek Motoru Tamiri'),
+    ('wiring_lights', 'suv', 1.50, 'Tesisat, Far & Silecek Motoru Tamiri'),
+    ('wiring_lights', 'commercial', 1.20, 'Tesisat, Far & Silecek Motoru Tamiri'),
+
+    ('ecu_repair', 'hatchback', 1.50, 'Oto Beyin (ECU/ABS/Airbag) & Yazılım'),
+    ('ecu_repair', 'sedan', 2.00, 'Oto Beyin (ECU/ABS/Airbag) & Yazılım'),
+    ('ecu_repair', 'suv', 2.50, 'Oto Beyin (ECU/ABS/Airbag) & Yazılım'),
+    ('ecu_repair', 'commercial', 2.00, 'Oto Beyin (ECU/ABS/Airbag) & Yazılım'),
+
+    -- 3. GÖVDE VE DIŞ AKSAM
+    ('body_repair', 'hatchback', 3.00, 'Kaporta Düzeltme & Parça Değişimi'),
+    ('body_repair', 'sedan', 4.00, 'Kaporta Düzeltme & Parça Değişimi'),
+    ('body_repair', 'suv', 5.00, 'Kaporta Düzeltme & Parça Değişimi'),
+    ('body_repair', 'commercial', 4.50, 'Kaporta Düzeltme & Parça Değişimi'),
+
+    ('chassis_alignment', 'hatchback', 6.00, 'Şasi Düzeltme & Çektirme İşlemi'),
+    ('chassis_alignment', 'sedan', 8.00, 'Şasi Düzeltme & Çektirme İşlemi'),
+    ('chassis_alignment', 'suv', 10.00, 'Şasi Düzeltme & Çektirme İşlemi'),
+    ('chassis_alignment', 'commercial', 9.00, 'Şasi Düzeltme & Çektirme İşlemi'),
+
+    ('panel_painting', 'hatchback', 2.50, 'Parça Başı Fırınlı Boya & Cila'),
+    ('panel_painting', 'sedan', 3.00, 'Parça Başı Fırınlı Boya & Cila'),
+    ('panel_painting', 'suv', 3.50, 'Parça Başı Fırınlı Boya & Cila'),
+    ('panel_painting', 'commercial', 3.20, 'Parça Başı Fırınlı Boya & Cila'),
+
+    ('full_painting', 'hatchback', 20.00, 'Komple Fırınlı Boya Kabini'),
+    ('full_painting', 'sedan', 24.00, 'Komple Fırınlı Boya Kabini'),
+    ('full_painting', 'suv', 28.00, 'Komple Fırınlı Boya Kabini'),
+    ('full_painting', 'commercial', 26.00, 'Komple Fırınlı Boya Kabini'),
+
+    ('pdr_dents', 'hatchback', 1.00, 'Boyasız Göçük Düzeltme (PDR)'),
+    ('pdr_dents', 'sedan', 1.50, 'Boyasız Göçük Düzeltme (PDR)'),
+    ('pdr_dents', 'suv', 2.00, 'Boyasız Göçük Düzeltme (PDR)'),
+    ('pdr_dents', 'commercial', 1.80, 'Boyasız Göçük Düzeltme (PDR)'),
+
+    -- 4. YÜRÜYEN AKSAM VE SÜSPANSİYON
+    ('wheel_alignment', 'hatchback', 0.50, 'Rot-Balans & Direksiyon Ayarı'),
+    ('wheel_alignment', 'sedan', 0.60, 'Rot-Balans & Direksiyon Ayarı'),
+    ('wheel_alignment', 'suv', 0.80, 'Rot-Balans & Direksiyon Ayarı'),
+    ('wheel_alignment', 'commercial', 0.70, 'Rot-Balans & Direksiyon Ayarı'),
+
+    ('brakes', 'hatchback', 0.80, 'Ön Fren Balatası & Disk Değişimi'),
+    ('brakes', 'sedan', 1.00, 'Ön Fren Balatası & Disk Değişimi'),
+    ('brakes', 'suv', 1.20, 'Ön Fren Balatası & Disk Değişimi'),
+    ('brakes', 'commercial', 1.10, 'Ön Fren Balatası & Disk Değişimi'),
+
+    ('suspension', 'hatchback', 1.50, 'Ön Amortisör & Salıncak Değişimi'),
+    ('suspension', 'sedan', 1.80, 'Ön Amortisör & Salıncak Değişimi'),
+    ('suspension', 'suv', 2.20, 'Ön Amortisör & Salıncak Değişimi'),
+    ('suspension', 'commercial', 2.00, 'Ön Amortisör & Salıncak Değişimi'),
+
+    ('tire_change', 'hatchback', 0.50, 'Mevsimsel 4 Lastik Değişimi & Balans'),
+    ('tire_change', 'sedan', 0.60, 'Mevsimsel 4 Lastik Değişimi & Balans'),
+    ('tire_change', 'suv', 0.80, 'Mevsimsel 4 Lastik Değişimi & Balans'),
+    ('tire_change', 'commercial', 0.70, 'Mevsimsel 4 Lastik Değişimi & Balans'),
+
+    ('tire_repair', 'hatchback', 0.30, 'Lastik Patlak Tamiri & Jant Düzeltme'),
+    ('tire_repair', 'sedan', 0.40, 'Lastik Patlak Tamiri & Jant Düzeltme'),
+    ('tire_repair', 'suv', 0.50, 'Lastik Patlak Tamiri & Jant Düzeltme'),
+    ('tire_repair', 'commercial', 0.40, 'Lastik Patlak Tamiri & Jant Düzeltme'),
+
+    -- 5. İÇ AKSAM, KONFOR VE DİĞERLERİ
+    ('upholstery_repair', 'hatchback', 2.00, 'Döşeme Yenileme (Koltuk / Tavan)'),
+    ('upholstery_repair', 'sedan', 2.50, 'Döşeme Yenileme (Koltuk / Tavan)'),
+    ('upholstery_repair', 'suv', 3.00, 'Döşeme Yenileme (Koltuk / Tavan)'),
+    ('upholstery_repair', 'commercial', 2.80, 'Döşeme Yenileme (Koltuk / Tavan)'),
+
+    ('ac_service', 'hatchback', 0.80, 'Klima Gazı Dolumu & Kaçak Tespiti'),
+    ('ac_service', 'sedan', 1.00, 'Klima Gazı Dolumu & Kaçak Tespiti'),
+    ('ac_service', 'suv', 1.20, 'Klima Gazı Dolumu & Kaçak Tespiti'),
+    ('ac_service', 'commercial', 1.00, 'Klima Gazı Dolumu & Kaçak Tespiti'),
+
+    ('ac_compressor', 'hatchback', 2.00, 'Klima Kompresörü & Polen Filtresi'),
+    ('ac_compressor', 'sedan', 2.50, 'Klima Kompresörü & Polen Filtresi'),
+    ('ac_compressor', 'suv', 3.00, 'Klima Kompresörü & Polen Filtresi'),
+    ('ac_compressor', 'commercial', 2.80, 'Klima Kompresörü & Polen Filtresi'),
+
+    ('exhaust_service', 'hatchback', 1.00, 'Egzoz Borusu & Susturucu / Katalizör Tamiri'),
+    ('exhaust_service', 'sedan', 1.20, 'Egzoz Borusu & Susturucu / Katalizör Tamiri'),
+    ('exhaust_service', 'suv', 1.50, 'Egzoz Borusu & Susturucu / Katalizör Tamiri'),
+    ('exhaust_service', 'commercial', 1.40, 'Egzoz Borusu & Susturucu / Katalizör Tamiri'),
+
+    ('glass_replacement', 'hatchback', 1.50, 'Ön Cam Değişimi & Cam Filmi'),
+    ('glass_replacement', 'sedan', 1.80, 'Ön Cam Değişimi & Cam Filmi'),
+    ('glass_replacement', 'suv', 2.20, 'Ön Cam Değişimi & Cam Filmi'),
+    ('glass_replacement', 'commercial', 2.00, 'Ön Cam Değişimi & Cam Filmi'),
+
+    -- 6. YAKIT SİSTEMLERİ VE GÜVENLİK
+    ('lpg_install', 'hatchback', 4.00, 'LPG Sistem Montajı & AFR Ayarı'),
+    ('lpg_install', 'sedan', 5.00, 'LPG Sistem Montajı & AFR Ayarı'),
+    ('lpg_install', 'suv', 6.00, 'LPG Sistem Montajı & AFR Ayarı'),
+    ('lpg_install', 'commercial', 5.50, 'LPG Sistem Montajı & AFR Ayarı'),
+
+    ('lpg_maintenance', 'hatchback', 0.50, 'LPG Gaz Kaçağı & Regülatör Bakımı'),
+    ('lpg_maintenance', 'sedan', 0.60, 'LPG Gaz Kaçağı & Regülatör Bakımı'),
+    ('lpg_maintenance', 'suv', 0.80, 'LPG Gaz Kaçağı & Regülatör Bakımı'),
+    ('lpg_maintenance', 'commercial', 0.70, 'LPG Gaz Kaçağı & Regülatör Bakımı'),
+
+    ('key_copy_unlock', 'hatchback', 0.40, 'Kapı Açma & İmmobilizer Anahtar Kopyalama'),
+    ('key_copy_unlock', 'sedan', 0.50, 'Kapı Açma & İmmobilizer Anahtar Kopyalama'),
+    ('key_copy_unlock', 'suv', 0.60, 'Kapı Açma & İmmobilizer Anahtar Kopyalama'),
+    ('key_copy_unlock', 'commercial', 0.50, 'Kapı Açma & İmmobilizer Anahtar Kopyalama'),
+
+    ('general', 'hatchback', 1.00, 'Genel Arıza Teşhisi & Kontrol'),
+    ('general', 'sedan', 1.00, 'Genel Arıza Teşhisi & Kontrol'),
+    ('general', 'suv', 1.20, 'Genel Arıza Teşhisi & Kontrol'),
+    ('general', 'commercial', 1.20, 'Genel Arıza Teşhisi & Kontrol')
+ON CONFLICT (service_type, vehicle_segment) DO UPDATE SET
+    standard_hours = EXCLUDED.standard_hours,
+    description = EXCLUDED.description;
+
+
+

@@ -127,6 +127,18 @@ const QuoteCard = ({ quote }) => {
         </div>
       </div>
 
+      {/* OEM Labor Ceiling Badge */}
+      {quote.standard_hours && (
+        <div className="mb-3 px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-between text-xs font-mono">
+          <span className="text-cyan-400 font-bold flex items-center gap-1.5 text-[10px]">
+            ⚡ OEM Standart Süre: <strong>{quote.standard_hours} Saat</strong>
+          </span>
+          <span className="text-emerald-400 font-bold text-[10px]">
+            Tavan Limit: ₺{quote.max_labor_ceiling?.toLocaleString("tr-TR") || quote.price}
+          </span>
+        </div>
+      )}
+
       {/* Description */}
       {quote.description && (
         <p className="text-sm text-slate-600 dark:text-slate-300 mb-3 line-clamp-2">

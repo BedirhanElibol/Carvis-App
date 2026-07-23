@@ -5,6 +5,8 @@ import { useAuth } from "../../../context/AuthContext";
 import { supabase } from "../../../supabaseClient";
 
 
+import { calculateLaborCeiling, validateQuoteLaborPrice } from "../../../utils/laborStandards";
+
 const MechanicJobs = () => {
   const { showAlert } = useUI();
   const { currentUser } = useAuth();
@@ -14,8 +16,10 @@ const MechanicJobs = () => {
   const [showBidModal, setShowBidModal] = useState(false);
   const [selectedJobForBid, setSelectedJobForBid] = useState(null);
   const [bidPrice, setBidPrice] = useState("");
+  const [bidPartsPrice, setBidPartsPrice] = useState("");
   const [bidNote, setBidNote] = useState("");
   const [bidDeliveryDays, setBidDeliveryDays] = useState("2");
+  const [hourlyLaborRate, setHourlyLaborRate] = useState(1000);
 
   const fetchJobs = useCallback(async () => {
     if (!currentUser) {
@@ -24,6 +28,17 @@ const MechanicJobs = () => {
     }
     setLoading(true);
     try {
+      // Fetch partner hourly labor rate from profile
+      const { data: profileData } = await supabase
+        .from("profiles")
+        .select("hourly_labor_rate")
+        .eq("id", currentUser.id)
+        .maybeSingle();
+
+      if (profileData?.hourly_labor_rate) {
+        setHourlyLaborRate(parseFloat(profileData.hourly_labor_rate));
+      }
+
       let combinedJobs = [];
       // 1. HAVUZ (Tender) sorgusu: service_requests tablosundan pending olanlar
       const { data: reqData, error: reqError } = await supabase
@@ -102,6 +117,7 @@ const MechanicJobs = () => {
   const openBidModal = (job) => {
     setSelectedJobForBid(job);
     setBidPrice("");
+    setBidPartsPrice("");
     setBidNote("");
     setBidDeliveryDays("2");
     setShowBidModal(true);
@@ -115,13 +131,21 @@ const MechanicJobs = () => {
 
     setLoading(true);
     try {
+      const oemInfo = calculateLaborCeiling(selectedJobForBid.issue, { model: selectedJobForBid.car }, hourlyLaborRate);
+      const validation = validateQuoteLaborPrice(bidPrice, selectedJobForBid.issue, { model: selectedJobForBid.car }, hourlyLaborRate, bidPartsPrice);
+
       const { error: quoteError } = await supabase.from("quotes").insert([
         {
           service_request_id: selectedJobForBid.dbId,
           seller_id: currentUser.id,
           customer_id: selectedJobForBid.customerId,
           price: parseFloat(bidPrice),
-          description: bidNote.trim() || `${selectedJobForBid.car} için usta teklifi`,
+          labor_price: validation.estimatedLaborPrice,
+          parts_price: validation.estimatedPartsPrice,
+          standard_hours: oemInfo.standardHours,
+          max_labor_ceiling: oemInfo.maxLaborCeiling,
+          is_oem_compliant: validation.isCompliant,
+          description: bidNote.trim() || `${selectedJobForBid.car} için OEM standartlarına uygun usta teklifi`,
           warranty_months: 12,
           estimated_delivery_days: parseInt(bidDeliveryDays) || 2,
           status: "pending",
@@ -401,10 +425,27 @@ const MechanicJobs = () => {
               </button>
             </div>
 
+            {/* OEM Labor Standards Info Card */}
+            {selectedJobForBid && (() => {
+              const oem = calculateLaborCeiling(selectedJobForBid.issue, { model: selectedJobForBid.car }, hourlyLaborRate);
+              return (
+                <div className="p-3.5 bg-gradient-to-r from-cyan-950/40 to-blue-950/40 rounded-2xl border border-cyan-500/30 text-xs space-y-1.5">
+                  <div className="flex items-center justify-between text-cyan-400 font-black uppercase tracking-wider text-[10px]">
+                    <span className="flex items-center gap-1.5"><ShieldCheck size={14} /> OEM Standart İşçilik Güvencesi</span>
+                    <span className="text-slate-400 font-normal">{oem.categoryName}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-slate-300 font-mono text-[11px] pt-0.5">
+                    <span>Fabrika Süresi: <strong className="text-white">{oem.standardHours} Saat</strong></span>
+                    <span>Azami İşçilik Tavanı: <strong className="text-emerald-400 font-bold">{oem.maxLaborCeiling.toLocaleString('tr-TR')} TL</strong></span>
+                  </div>
+                </div>
+              );
+            })()}
+
             <div className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-slate-500 uppercase tracking-widest font-sans">
-                  Teklif Tutarı (TL)
+                  Toplam Teklif Tutarı (TL)
                 </label>
                 <div className="mt-2 flex items-center gap-3 bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3">
                   <Banknote size={18} className="text-primary-400" />
@@ -413,6 +454,23 @@ const MechanicJobs = () => {
                     value={bidPrice}
                     onChange={(e) => setBidPrice(e.target.value)}
                     placeholder="Örn: 2500"
+                    className="w-full bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-600 font-mono"
+                  />
+                  <span className="text-xs text-slate-500 font-bold font-sans">TL</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest font-sans">
+                  Tahmini Parça Maliyeti (Varsa)
+                </label>
+                <div className="mt-2 flex items-center gap-3 bg-white dark:bg-slate-900/80 rounded-2xl border border-black/10 dark:border-white/10 px-4 py-3">
+                  <Banknote size={18} className="text-teal-400" />
+                  <input
+                    type="number"
+                    value={bidPartsPrice}
+                    onChange={(e) => setBidPartsPrice(e.target.value)}
+                    placeholder="Örn: 1200 (Kalanı işçilik sayılır)"
                     className="w-full bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-600 font-mono"
                   />
                   <span className="text-xs text-slate-500 font-bold font-sans">TL</span>

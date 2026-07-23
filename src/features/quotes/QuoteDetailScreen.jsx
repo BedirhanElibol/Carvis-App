@@ -155,21 +155,33 @@ const QuoteDetailScreen = () => {
 
           {/* Şeffaf Maliyet Kırılımı Tablosu */}
           <div className="mt-6 border-t border-black/5 dark:border-white/5 pt-4 space-y-2.5">
+            {/* OEM Standard Hours & Ceiling Card */}
+            <div className="p-3.5 bg-gradient-to-r from-cyan-950/40 to-slate-900/40 rounded-xl border border-cyan-500/30 text-xs mb-3 space-y-1">
+              <div className="flex items-center justify-between text-cyan-400 font-black uppercase text-[10px] tracking-wider">
+                <span className="flex items-center gap-1.5"><ShieldCheck size={14} /> OEM FABRİKA STANDART İŞÇİLİK KORUMASI</span>
+                <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">SABİTLENMİŞ TAVAN</span>
+              </div>
+              <div className="flex justify-between items-center text-slate-300 font-mono text-[11px] pt-1">
+                <span>Fabrika Standart Süresi: <strong className="text-white">{quote.standard_hours || "1.0"} Saat</strong></span>
+                <span>Tavan İşçilik Limiti: <strong className="text-emerald-400 font-bold">₺{(quote.max_labor_ceiling || (quote.price * 0.4)).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}</strong></span>
+              </div>
+            </div>
+
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
                 <Package size={13} className="text-slate-500" /> Yedek Parça Bedeli <span className="text-[10px] bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-600 dark:text-slate-300 ml-1">(Orijinal / Sertifikalı)</span>
               </span>
               <span className="text-slate-900 dark:text-white font-mono font-bold">
-                ₺{(quote.price * 0.45).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
+                ₺{(quote.parts_price || quote.price * 0.55).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
               </span>
             </div>
             
             <div className="flex justify-between items-center text-xs">
               <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Wrench size={13} className="text-slate-500" /> İşçilik & Kalibrasyon <span className="text-[10px] bg-green-500/10 text-green-600 dark:text-green-400 px-1 rounded ml-1 border border-green-500/20">(Garantili)</span>
+                <Wrench size={13} className="text-slate-500" /> OEM İşçilik & Kalibrasyon <span className="text-[10px] bg-cyan-500/10 text-cyan-400 px-1 rounded ml-1 border border-cyan-500/20">(Tavan Korumalı)</span>
               </span>
               <span className="text-slate-900 dark:text-white font-mono font-bold">
-                ₺{(quote.price * 0.25).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
+                ₺{(quote.labor_price || quote.price * 0.25).toLocaleString("tr-TR", { minimumFractionDigits: 2 })}
               </span>
             </div>
 
@@ -193,7 +205,7 @@ const QuoteDetailScreen = () => {
 
             <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-xl border border-black/5 dark:border-white/5 text-[9px] text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
               <span className="font-bold text-slate-900 dark:text-white uppercase block mb-1">Müşteri ve Ortak Şeffaflık İlkesi:</span>
-              Rapidsy, şeffaf oto servis modeli gereği tüm parça ve işçilik maliyetlerini açıkça gösterir. %10 Rapidsy bedeli; usta eğitimleri, yol yardımı sigortası ve 1 Yıl / 20.000 KM parça garantisi için kullanılır.
+              Rapidsy, fabrika standart işçilik saatlerini (OEM FRT) esas alır. Usta keyfi yüksek işçilik yazamaz. %10 Rapidsy bedeli; usta eğitimleri, yol yardımı sigortası ve 1 Yıl / 20.000 KM parça garantisi için kullanılır.
             </div>
           </div>
 

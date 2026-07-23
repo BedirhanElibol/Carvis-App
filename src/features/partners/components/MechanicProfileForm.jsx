@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { Award, CheckCircle2, Plus, Users2, Wrench, X, Cpu, Car, Shield } from "lucide-react";
 
 const VEHICLE_TYPES = [
@@ -128,7 +128,7 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
         </label>
 
         <label className="space-y-2">
-          <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Standart Garanti (GÃ¼n)</span>
+          <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Standart Garanti (Gün)</span>
           <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3">
             <Shield size={18} className="text-primary-400" />
             <input
@@ -139,6 +139,29 @@ const MechanicProfileForm = ({ data, onUpdate }) => {
               min="0"
             />
           </div>
+        </label>
+
+        {/* Saatlik İşçilik Ücreti (OEM Standart Tavan Hesabı İçin) */}
+        <label className="space-y-2">
+          <span className="text-xs font-black uppercase tracking-[0.2em] text-cyan-400 flex items-center gap-1.5">
+            <Cpu size={14} /> Saatlik İşçilik Ücreti (TL/Saat)
+          </span>
+          <div className="flex items-center gap-3 bg-white dark:bg-slate-900/80 border border-cyan-500/30 rounded-2xl px-4 py-3">
+            <span className="text-sm font-black text-cyan-400 font-mono">₺</span>
+            <input
+              type="number"
+              value={mechanicData.hourly_labor_rate || 1000}
+              onChange={(e) => handleChange("hourly_labor_rate", Number(e.target.value))}
+              className="w-full bg-transparent text-sm font-black text-slate-900 dark:text-white outline-none font-mono"
+              placeholder="Örn: 1000"
+              min="100"
+              step="50"
+            />
+            <span className="text-xs text-slate-500 font-bold">TL / Saat</span>
+          </div>
+          <p className="text-[9px] text-slate-400 font-semibold italic">
+            * OEM fabrika standart saatleriyle çarpılarak teklif verirken azami tavan fiyatınızı belirler.
+          </p>
         </label>
 
         {/* Servis Konumu */}
