@@ -17,7 +17,7 @@ export const BottomNav = () => {
   );
 
   const tabs = [
-    { id: "/", icon: Home, label: "Ana Sayfa" },
+    { id: "/application/home", icon: Home, label: "Kokpit" },
     { id: "/app/parts", icon: ShoppingCart, label: "Market" },
     {
       id: "/messages",
@@ -40,9 +40,7 @@ export const BottomNav = () => {
           {/* Main Nav Container */}
           <div className="relative bg-white/95 dark:bg-[#0c101a]/95 backdrop-blur-2xl border border-slate-200/50 dark:border-white/5 px-3 py-2.5 flex justify-between items-center rounded-[3rem] shadow-xl dark:shadow-xl">
             {tabs.map((tab) => {
-              const isActive = tab.id === "/" 
-                ? location.pathname === "/" 
-                : location.pathname.startsWith(tab.id);
+              const isActive = location.pathname === tab.id || (tab.id === "/application/home" && (location.pathname === "/" || location.pathname === "/application/home"));
                 
               return (
                 <Link

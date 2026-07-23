@@ -42,7 +42,7 @@ const CustomerHome = () => {
   // States
   const serviceCategories = useMemo(() => [
     { name: t.periodicMaintenance, icon: Wrench, color: "text-cyan-500 dark:text-cyan-400", bg: "bg-white/5", border: "hover:border-white/10", route: "/app/mechanics" },
-    { name: "Acil Çekici", icon: Truck, color: "text-red-500 dark:text-red-400", bg: "bg-red-500/10", border: "hover:border-red-500/30", route: "/app/sos" },
+    { name: t.brakeSystem, icon: Activity, color: "text-sky-500 dark:text-sky-400", bg: "bg-sky-500/10", border: "hover:border-sky-500/30", route: "/app/mechanics" },
     { name: t.tireAndAlignment, icon: Disc, color: "text-blue-500 dark:text-blue-400", bg: "bg-blue-500/10", border: "hover:border-blue-500/30", route: "/app/mechanics" },
     { name: t.smartValet, icon: ShieldCheck, color: "text-cyan-500 dark:text-cyan-400", bg: "bg-white/5", border: "hover:border-white/10", route: "/app/insurance" },
     { name: t.spareParts, icon: Package, color: "text-sky-500 dark:text-sky-400", bg: "bg-sky-500/10", border: "hover:border-sky-500/30", route: "/app/parts" },
@@ -308,20 +308,36 @@ const CustomerHome = () => {
           </div>
         </div>
 
-        {activeVehicle && (
+        <div className="flex items-center gap-2">
+          {activeVehicle && (
+            <button
+              onClick={() => {
+                if (isGuest) {
+                  openModal("login");
+                } else {
+                  setShowVehicleSelector(true);
+                }
+              }}
+              className="px-3.5 py-2 rounded-xl border border-white/10 bg-cyan-500/5 shadow-xl text-[10px] font-black uppercase tracking-wider hover:bg-cyan-500/20 hover:border-cyan-400 text-cyan-300 transition-all flex items-center gap-1.5 active-scale cursor-pointer"
+            >
+              <RefreshCw size={11} className="text-cyan-400" /> {t.changeVehicle}
+            </button>
+          )}
+
           <button
             onClick={() => {
               if (isGuest) {
                 openModal("login");
               } else {
-                setShowVehicleSelector(true);
+                navigate("/app/profile");
               }
             }}
-            className="px-3.5 py-2 rounded-xl border border-white/10 bg-cyan-500/5 shadow-xl text-[10px] font-black uppercase tracking-wider hover:bg-cyan-500/20 hover:border-cyan-400 text-cyan-300 transition-all flex items-center gap-1.5 active-scale cursor-pointer"
+            className="w-10 h-10 rounded-xl bg-white/5 shadow-xl border border-white/10 flex items-center justify-center text-cyan-400 hover:text-cyan-300 hover:border-cyan-400 transition-all active-scale cursor-pointer"
+            title="Profil & Ayarlar"
           >
-            <RefreshCw size={11} className="text-cyan-400" /> {t.changeVehicle}
+            <User size={18} />
           </button>
-        )}
+        </div>
       </div>
 
       {/* Floating Warning Banner for Demo Mode was removed */}
@@ -950,8 +966,8 @@ const CustomerHome = () => {
               <div className="grid grid-cols-4 gap-3">
                 {[
                   { icon: Wrench, label: t.getService, route: "/app/mechanics" },
-                  { icon: Truck, label: "ACİL ÇEKİCİ", route: "/app/sos" },
                   { icon: Package, label: t.autoParts, route: "/app/parts" },
+                  { icon: Droplets, label: t.detailing || "Oto Yıkama", route: "/app/carwash" },
                   { icon: Key, label: t.callValet, route: "/app/valet" },
                 ].map((item, idx) => (
                   <div

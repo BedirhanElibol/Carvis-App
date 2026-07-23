@@ -147,6 +147,26 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   return children;
 };
 
+const RootRoute = () => {
+  const { currentUser, loading } = useAuth();
+  if (loading) return null;
+  if (currentUser && !currentUser.isAnonymous) {
+    if (currentUser.role === "partner") {
+      return <Navigate to="/partner/dashboard" replace />;
+    }
+    return <Navigate to="/application/home" replace />;
+  }
+  return (
+    <>
+      <SEO
+        title="Oto Servis & Bakım Asistanı"
+        description="Carvis ile en iyi ustaları bulun, bakım takibi yapın."
+      />
+      <LandingScreen />
+    </>
+  );
+};
+
 export const AppRoutes = () => {
   return (
     <Suspense
@@ -160,15 +180,7 @@ export const AppRoutes = () => {
         {/* Public Routes */}
         <Route
           path="/"
-          element={
-            <>
-              <SEO
-                title="Oto Servis & Bakım Asistanı"
-                description="Carvis ile en iyi ustaları bulun, bakım takibi yapın."
-              />
-              <LandingScreen />
-            </>
-          }
+          element={<RootRoute />}
         />
         <Route
           path="/partner-login"
