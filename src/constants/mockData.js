@@ -17,19 +17,19 @@ export const DETAILED_PARTS_TAXONOMY = [
     name: "Motor ve Mekanik (Kaput Altı)",
     subcategories: [
       {
-        name: "1.1 Motor Bloğu ve Temel Bileşenler",
+        name: "Motor Bloğu ve Temel Bileşenler",
         items: ["Silindir Bloğu", "Silindir Kapağı", "Karter", "Motor Kulakları", "Pistonlar & Segmanlar", "Biyel Kolları", "Krank Mili", "Eksantrik Mili", "Subaplar & Subap Yayı/Fincanı"]
       },
       {
-        name: "1.2 Yakıt ve Hava Emme Sistemi",
+        name: "Yakıt ve Hava Emme Sistemi",
         items: ["Yakıt Pompası", "Enjektörler & Yakıt Kütüğü", "Yakıt Filtresi", "Turboşarj & Intercooler", "Hava Filtresi Kutusu", "Gaz Kelebeği", "Emme Manifoldu", "MAF Kütle Hava Akış Sensörü", "MAP Sensörü"]
       },
       {
-        name: "1.3 Soğutma ve Egzoz Sistemi",
+        name: "Soğutma ve Egzoz Sistemi",
         items: ["Su Radyatörü & Termostat", "Devirdaim Su Pompası", "Genleşme Kabı & Fan Motoru", "Egzoz Manifoldu", "EGR Valfi", "Katalitik Konvertör", "DPF Partikül Filtresi", "Oksijen / Lambda Sensörü", "Egzoz Susturucuları"]
       },
       {
-        name: "1.4 Şanzıman ve Aktarma",
+        name: "Şanzıman ve Aktarma",
         items: ["Manuel / Otomatik Şanzıman Kutusu", "Tork Konvertörü", "Mechatronic Şanzıman Beyni", "Baskı, Balata & Volant", "Debriyaj Rulmanı & Merkezi", "Şaft & Diferansiyel", "Aks Millere & Laleler/Körükler"]
       }
     ]
@@ -39,11 +39,11 @@ export const DETAILED_PARTS_TAXONOMY = [
     name: "Dış Karoser, Kaporta & Gövde",
     subcategories: [
       {
-        name: "2.1 Ön ve Arka Gövde Aksamı",
+        name: "Ön ve Arka Gövde Aksamı",
         items: ["Ön / Arka Tamponlar", "Tampon Izgaraları & Lip/Difüzör", "Motor Kaputu", "Bagaj Kapağı", "Ön Panjur Izgara", "Çeki Demiri", "Amblem, Logo & Plakalıklar"]
       },
       {
-        name: "2.2 Yan Gövde ve Camlar",
+        name: "Yan Gövde ve Camlar",
         items: ["Ön / Arka Çamurluklar & Davlumbazlar", "Kapı Sacları & Kilit Mekanizmaları", "Yan Aynalar (Cam, Kapak, Sinyal, Motor)", "Ön / Arka Cam (Rezistanslı)", "Yan Kapı & Kelebek Camları", "Cam Fitilleri & Marşpiyel", "Kapı Kolları & Tavan Çıtaları"]
       }
     ]
@@ -53,11 +53,11 @@ export const DETAILED_PARTS_TAXONOMY = [
     name: "Yürüyen Aksam, Süspansiyon & Fren",
     subcategories: [
       {
-        name: "3.1 Süspansiyon ve Direksiyon",
+        name: "Süspansiyon ve Direksiyon",
         items: ["Amortisörler & Helezon Yaylar", "Amortisör Takozları & Bilyaları", "Salıncaklar", "Rot Başı & Rot Mili", "Z-Rot (Viraj Askı Rotu)", "Viraj Demir Uç Lastikleri", "Direksiyon Kutusu & Pompası", "Direksiyon Mafsalları"]
       },
       {
-        name: "3.2 Fren ve Tekerlek Sistemi",
+        name: "Fren ve Tekerlek Sistemi",
         items: ["Fren Diskleri", "Fren Balataları", "Fren Kaliperleri & Pimler", "Fren Merkez Silindiri & Westinghouse", "ABS Beyni & Sensörleri", "Çelik / Alüminyum Jantlar", "Poyra (Tekerlek) Bilyası", "Bijon Saplamaları & Lastikler"]
       }
     ]
@@ -67,15 +67,15 @@ export const DETAILED_PARTS_TAXONOMY = [
     name: "İç Aksam, Konfor & Kokpit",
     subcategories: [
       {
-        name: "4.1 Döşeme ve Koltuklar",
+        name: "Döşeme ve Koltuklar",
         items: ["Ön / Arka Koltuklar & Kızaklar", "Koltuk Isıtma Pedleri", "Tavan Döşemesi & Taban Halısı", "Kapı İçi & Bagaj Pandizotları", "Bagaj Havuzu & Paspaslar", "Emniyet Kemerleri & Tokaları"]
       },
       {
-        name: "4.2 Konsol ve Kumanda Elemanları",
+        name: "Konsol ve Kumanda Elemanları",
         items: ["Torpido & Direksiyon Simidi", "Airbag Kapakları", "Vites Topuzu & Körüğü", "Gösterge Paneli (Kadran)", "Klima Kumanda Paneli", "Silecek & Sinyal Kolları", "Kolçak, Küllük & Bardaklık", "Güneşlik Siperlikler", "Cam Açma Düğmeleri & Ayna Joystick"]
       },
       {
-        name: "4.3 Multimedya ve İklimlendirme",
+        name: "Multimedya ve İklimlendirme",
         items: ["Teyp / Multimedya Ekranı", "Hoparlörler (Midrange/Tweeter)", "Navigasyon Modülü", "Klima Kompresörü", "Klima Radyatörü (Kondenser)", "Kalorifer Peteği", "Polen Filtresi & Havalandırma Menfezleri", "Kalorifer Fan Motoru"]
       }
     ]
@@ -85,11 +85,11 @@ export const DETAILED_PARTS_TAXONOMY = [
     name: "Elektrik, Aydınlatma & Elektronik",
     subcategories: [
       {
-        name: "5.1 Aydınlatma ve Uyarı Sistemleri",
+        name: "Aydınlatma ve Uyarı Sistemleri",
         items: ["Ön Farlar (LED/Xenon/Halojen)", "Far Camları & Far Beyinleri", "Arka Stop Lambaları", "Sis Farları & Sinyaller", "Gündüz LED'leri & Plaka Aydınlatması", "İç Tavan & Ambiyans Lambaları", "Korna"]
       },
       {
-        name: "5.2 Güç Kaynağı ve Beyinler (ECU)",
+        name: "Güç Kaynağı ve Beyinler (ECU)",
         items: ["Akü", "Şarj Dinamosu & Marş Motoru", "Ateşleme Bobinleri & Bujiler", "Motor Beyni (ECU)", "BSI / Konfor Beyni", "Sigorta Kutusu & Röleler", "Krank & Kam Mili Sensörleri", "Vuruntu & Yağ Basınç Sensörü", "Park Sensörleri & Geri Görüş Kamerası", "Kör Nokta Uyarı Radarları"]
       }
     ]

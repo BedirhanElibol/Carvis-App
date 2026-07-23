@@ -218,18 +218,19 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
                     </button>
                     {activeTaxonomy.subcategories.map((sub, idx) => {
                         const subName = typeof sub === 'string' ? sub : sub.name;
+                        const cleanSubName = subName.replace(/^\d+(\.\d+)?\s*/, '');
                         const isSubSelected = selectedSubcategory === subName;
                         return (
                             <button
                                 key={idx}
                                 onClick={() => setSelectedSubcategory(isSubSelected ? null : subName)}
-                                className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-[11px] font-bold border transition ${
+                                className={`whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs font-bold border transition ${
                                     isSubSelected
-                                        ? 'bg-cyan-500 text-slate-900 font-black border-cyan-400'
-                                        : 'bg-black/5 dark:bg-white/5 text-slate-400 border-black/5 dark:border-white/5 hover:text-slate-900 dark:hover:text-white'
+                                        ? 'bg-cyan-500 text-slate-950 font-black border-cyan-400 shadow-md shadow-cyan-500/20'
+                                        : 'bg-black/5 dark:bg-white/5 text-slate-600 dark:text-slate-300 border-black/5 dark:border-white/5 hover:text-slate-900 dark:hover:text-white'
                                 }`}
                             >
-                                {subName}
+                                {cleanSubName}
                             </button>
                         );
                     })}
