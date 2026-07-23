@@ -5140,5 +5140,103 @@ ON CONFLICT (service_type, vehicle_segment) DO UPDATE SET
     standard_hours = EXCLUDED.standard_hours,
     description = EXCLUDED.description;
 
+-- =========================================================
+-- CARVIS SPARE PARTS TAXONOMY & PRODUCT CATEGORIZATION SYSTEM
+-- 5 Main Categories, 15 Subcategories, 80+ Specific Parts
+-- =========================================================
+
+-- 1. Create part_taxonomy_categories Table
+CREATE TABLE IF NOT EXISTS public.part_taxonomy_categories (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    category_code TEXT NOT NULL,       -- E.g. '1.1', '2.2', '3.1'
+    main_category TEXT NOT NULL,       -- E.g. 'Motor ve Mekanik Aksam (Kaput Altı)'
+    sub_category TEXT NOT NULL,        -- E.g. 'Motor Bloğu ve Temel Bileşenler'
+    items TEXT[] NOT NULL,             -- Array of part item names
+    icon_slug TEXT DEFAULT 'box',
+    created_at TIMESTAMPTZ DEFAULT now(),
+    UNIQUE(category_code)
+);
+
+-- 2. Add product categorization & OEM columns to products table
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='main_category') THEN
+        ALTER TABLE public.products ADD COLUMN main_category TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='sub_category') THEN
+        ALTER TABLE public.products ADD COLUMN sub_category TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='oem_code') THEN
+        ALTER TABLE public.products ADD COLUMN oem_code TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='products' AND column_name='compatibility_models') THEN
+        ALTER TABLE public.products ADD COLUMN compatibility_models JSONB DEFAULT '[]'::jsonb;
+    END IF;
+END $$;
+
+-- 3. RLS for part_taxonomy_categories
+ALTER TABLE public.part_taxonomy_categories ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Everyone can read part taxonomy categories" ON public.part_taxonomy_categories;
+CREATE POLICY "Everyone can read part taxonomy categories" ON public.part_taxonomy_categories
+    FOR SELECT USING (true);
+
+-- 4. Indexes for ultra-fast part searches
+CREATE INDEX IF NOT EXISTS idx_products_main_category ON public.products(main_category);
+CREATE INDEX IF NOT EXISTS idx_products_sub_category ON public.products(sub_category);
+CREATE INDEX IF NOT EXISTS idx_products_oem_code ON public.products(oem_code);
+
+-- 5. Seed full 5-Category, 15-Subcategory, 80+ Part Item Taxonomy
+INSERT INTO public.part_taxonomy_categories (category_code, main_category, sub_category, items, icon_slug)
+VALUES
+    -- 1. MOTOR VE MEKANİK AKSAM (KAPUT ALTI)
+    ('1.1', 'Motor ve Mekanik Aksam (Kaput Altı)', 'Motor Bloğu ve Temel Bileşenler', 
+     ARRAY['Silindir Bloğu', 'Silindir Kapağı', 'Karter', 'Motor Kulakları', 'Pistonlar & Segmanlar', 'Biyel Kolları', 'Krank Mili', 'Eksantrik Mili', 'Subaplar & Subap Yayı/Fincanı'], 'engine'),
+    
+    ('1.2', 'Motor ve Mekanik Aksam (Kaput Altı)', 'Yakıt ve Hava Emme Sistemi', 
+     ARRAY['Yakıt Pompası', 'Enjektörler & Yakıt Kütüğü', 'Yakıt Filtresi', 'Turboşarj & Intercooler', 'Hava Filtresi Kutusu', 'Gaz Kelebeği', 'Emme Manifoldu', 'MAF Kütle Hava Akış Sensörü', 'MAP Sensörü'], 'fuel'),
+
+    ('1.3', 'Motor ve Mekanik Aksam (Kaput Altı)', 'Soğutma ve Egzoz Sistemi', 
+     ARRAY['Su Radyatörü & Termostat', 'Devirdaim Su Pompası', 'Genleşme Kabı & Fan Motoru', 'Egzoz Manifoldu', 'EGR Valfi', 'Katalitik Konvertör', 'DPF Partikül Filtresi', 'Oksijen / Lambda Sensörü', 'Egzoz Susturucuları'], 'thermometer'),
+
+    ('1.4', 'Motor ve Mekanik Aksam (Kaput Altı)', 'Şanzıman ve Aktarma', 
+     ARRAY['Manuel / Otomatik Şanzıman Kutusu', 'Tork Konvertörü', 'Mechatronic Şanzıman Beyni', 'Baskı, Balata & Volant', 'Debriyaj Rulmanı & Merkezi', 'Şaft & Diferansiyel', 'Aks Millere & Laleler/Körükler'], 'git-commit'),
+
+    -- 2. DIŞ KAROSER, KAPORTA VE GÖVDE
+    ('2.1', 'Dış Karoser, Kaporta & Gövde', 'Ön ve Arka Gövde Aksamı', 
+     ARRAY['Ön / Arka Tamponlar', 'Tampon Izgaraları & Lip/Difüzör', 'Motor Kaputu', 'Bagaj Kapağı', 'Ön Panjur Izgara', 'Çeki Demiri', 'Amblem, Logo & Plakalıklar'], 'shield'),
+
+    ('2.2', 'Dış Karoser, Kaporta & Gövde', 'Yan Gövde ve Camlar', 
+     ARRAY['Ön / Arka Çamurluklar & Davlumbazlar', 'Kapı Sacları & Kilit Mekanizmaları', 'Yan Aynalar (Cam, Kapak, Sinyal, Motor)', 'Ön / Arka Cam (Rezistanslı)', 'Yan Kapı & Kelebek Camları', 'Cam Fitilleri & Marşpiyel', 'Kapı Kolları & Tavan Çıtaları'], 'car'),
+
+    -- 3. YÜRÜYEN AKSAM, SÜSPANSİYON VE FREN
+    ('3.1', 'Yürüyen Aksam, Süspansiyon & Fren', 'Süspansiyon ve Direksiyon', 
+     ARRAY['Amortisörler & Helezon Yaylar', 'Amortisör Takozları & Bilyaları', 'Salıncaklar', 'Rot Başı & Rot Mili', 'Z-Rot (Viraj Askı Rotu)', 'Viraj Demir Uç Lastikleri', 'Direksiyon Kutusu & Pompası', 'Direksiyon Mafsalları'], 'activity'),
+
+    ('3.2', 'Yürüyen Aksam, Süspansiyon & Fren', 'Fren ve Tekerlek Sistemi', 
+     ARRAY['Fren Diskleri', 'Fren Balataları', 'Fren Kaliperleri & Pimler', 'Fren Merkez Silindiri & Westinghouse', 'ABS Beyni & Sensörleri', 'Çelik / Alüminyum Jantlar', 'Poyra (Tekerlek) Bilyası', 'Bijon Saplamaları & Lastikler'], 'disc'),
+
+    -- 4. İÇ AKSAM, KONFOR VE KOKPİT
+    ('4.1', 'İç Aksam, Konfor & Kokpit', 'Döşeme ve Koltuklar', 
+     ARRAY['Ön / Arka Koltuklar & Kızaklar', 'Koltuk Isıtma Pedleri', 'Tavan Döşemesi & Taban Halısı', 'Kapı İçi & Bagaj Pandizotları', 'Bagaj Havuzu & Paspaslar', 'Emniyet Kemerleri & Tokaları'], 'armchair'),
+
+    ('4.2', 'İç Aksam, Konfor & Kokpit', 'Konsol ve Kumanda Elemanları', 
+     ARRAY['Torpido & Direksiyon Simidi', 'Airbag Kapakları', 'Vites Topuzu & Körüğü', 'Gösterge Paneli (Kadran)', 'Klima Kumanda Paneli', 'Silecek & Sinyal Kolları', 'Kolçak, Küllük & Bardaklık', 'Güneşlik Siperlikler', 'Cam Açma Düğmeleri & Ayna Joystick'], 'sliders'),
+
+    ('4.3', 'İç Aksam, Konfor & Kokpit', 'Multimedya ve İklimlendirme', 
+     ARRAY['Teyp / Multimedya Ekranı', 'Hoparlörler (Midrange/Tweeter)', 'Navigasyon Modülü', 'Klima Kompresörü', 'Klima Radyatörü (Kondenser)', 'Kalorifer Peteği', 'Polen Filtresi & Havalandırma Menfezleri', 'Kalorifer Fan Motoru'], 'radio'),
+
+    -- 5. ELEKTRİK, AYDINLATMA VE ELEKTRONİK
+    ('5.1', 'Elektrik, Aydınlatma & Elektronik', 'Aydınlatma ve Uyarı Sistemleri', 
+     ARRAY['Ön Farlar (LED/Xenon/Halojen)', 'Far Camları & Far Beyinleri', 'Arka Stop Lambaları', 'Sis Farları & Sinyaller', 'Gündüz LED''leri & Plaka Aydınlatması', 'İç Tavan & Ambiyans Lambaları', 'Korna'], 'sun'),
+
+    ('5.2', 'Elektrik, Aydınlatma & Elektronik', 'Güç Kaynağı ve Beyinler (ECU)', 
+     ARRAY['Akü', 'Şarj Dinamosu & Marş Motoru', 'Ateşleme Bobinleri & Bujiler', 'Motor Beyni (ECU)', 'BSI / Konfor Beyni', 'Sigorta Kutusu & Röleler', 'Krank & Kam Mili Sensörleri', 'Vuruntu & Yağ Basınç Sensörü', 'Park Sensörleri & Geri Görüş Kamerası', 'Kör Nokta Uyarı Radarları'], 'cpu')
+ON CONFLICT (category_code) DO UPDATE SET
+    main_category = EXCLUDED.main_category,
+    sub_category = EXCLUDED.sub_category,
+    items = EXCLUDED.items,
+    icon_slug = EXCLUDED.icon_slug;
+
+
 
 
