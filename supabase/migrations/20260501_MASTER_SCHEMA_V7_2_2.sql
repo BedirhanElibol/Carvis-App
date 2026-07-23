@@ -4651,6 +4651,7 @@ CREATE POLICY "Claims are viewable by customer or company" ON public.insurance_c
     );
 
 DROP POLICY IF EXISTS "Claims can be updated by customer or company" ON public.insurance_claims;
+DROP POLICY IF EXISTS "Claims can be updated by company or customer" ON public.insurance_claims;
 CREATE POLICY "Claims can be updated by company or customer" ON public.insurance_claims
     FOR UPDATE USING (
         auth.uid() = customer_id OR 
