@@ -202,36 +202,60 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
                 })}
             </div>
 
-            {/* Subcategory Bar (Rendered when an active category with subcategories is selected) */}
+            {/* Subcategory Bar (Rendered when active category is selected) */}
             {activeTaxonomy && activeTaxonomy.subcategories?.length > 0 && (
-                <div className="flex gap-1.5 overflow-x-auto no-scrollbar py-1 animate-fade-in">
+              <div className="space-y-2 py-1 animate-fade-in">
+                <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
                     <button
                         onClick={() => setSelectedSubcategory(null)}
-                        className={`whitespace-nowrap px-3 py-1 rounded-lg text-[11px] font-bold border transition ${
+                        className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-[11px] font-bold border transition ${
                             selectedSubcategory === null
                                 ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40'
                                 : 'bg-black/5 dark:bg-white/5 text-slate-500 border-transparent hover:text-white'
                         }`}
                     >
-                        Tüm {activeTaxonomy.name}
+                        Tüm Alt Gruplar
                     </button>
                     {activeTaxonomy.subcategories.map((sub, idx) => {
-                        const isSubSelected = selectedSubcategory === sub;
+                        const subName = typeof sub === 'string' ? sub : sub.name;
+                        const isSubSelected = selectedSubcategory === subName;
                         return (
                             <button
                                 key={idx}
-                                onClick={() => setSelectedSubcategory(isSubSelected ? null : sub)}
-                                className={`whitespace-nowrap px-3 py-1 rounded-lg text-[11px] font-bold border transition ${
+                                onClick={() => setSelectedSubcategory(isSubSelected ? null : subName)}
+                                className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-[11px] font-bold border transition ${
                                     isSubSelected
                                         ? 'bg-cyan-500 text-slate-900 font-black border-cyan-400'
                                         : 'bg-black/5 dark:bg-white/5 text-slate-400 border-black/5 dark:border-white/5 hover:text-slate-900 dark:hover:text-white'
                                 }`}
                             >
-                                {sub}
+                                {subName}
                             </button>
                         );
                     })}
                 </div>
+
+                {/* Specific Item Chips when a subcategory group is selected */}
+                {selectedSubcategory && (() => {
+                  const subObj = activeTaxonomy.subcategories.find(s => (typeof s === 'string' ? s : s.name) === selectedSubcategory);
+                  if (subObj && subObj.items?.length > 0) {
+                    return (
+                      <div className="flex gap-1.5 overflow-x-auto no-scrollbar pt-1">
+                        {subObj.items.map((item, itemIdx) => (
+                          <button
+                            key={itemIdx}
+                            onClick={() => setSearchQuery(item)}
+                            className="whitespace-nowrap px-2.5 py-1 rounded-lg text-[10px] font-medium bg-white/5 border border-white/10 text-cyan-300 hover:bg-cyan-500/10 transition"
+                          >
+                            🔍 {item}
+                          </button>
+                        ))}
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
+              </div>
             )}
 
             <div className="grid grid-cols-2 gap-4">
