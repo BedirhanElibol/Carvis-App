@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, ShoppingBag, Car, CircleCheck, Filter, CirclePlus, Heart, ShieldCheck } from 'lucide-react';
 import { getBuyBoxWinner } from '../../utils/productUtils';
-import { PART_CATEGORIES } from '../../constants/mockData';
+import { PART_CATEGORIES, DETAILED_PARTS_TAXONOMY } from '../../constants/mockData';
 import { useShop } from '../../context/ShopContext';
 import { useUI } from '../../context/UIContext';
 import { useGarage } from '../../context/GarageContext';
@@ -83,11 +83,16 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
 
     const [showFilterModal, setShowFilterModal] = useState(false);
     const [filterCriteria, setFilterCriteria] = useState({ min: '', max: '', stock: false, brand: '', model: '' });
+    const [selectedCategory, setSelectedCategory] = useState("Tümü");
+    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
 
     // Ensure cartCount is derived from cart length
     const cartCount = cart.length;
 
     if (!t) return null;
+
+    // Active category taxonomy detail
+    const activeTaxonomy = DETAILED_PARTS_TAXONOMY.find(item => item.name === selectedCategory);
 
     const filteredProducts = products.filter(p => {
         const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -97,6 +102,22 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
         const matchesMinPrice = filterCriteria.min ? price >= Number(filterCriteria.min) : true;
         const matchesMaxPrice = filterCriteria.max ? price <= Number(filterCriteria.max) : true;
         const matchesStock = filterCriteria.stock ? (winnerOffer?.stock > 0) : true;
+
+        // Category Filter
+        let matchesCategory = true;
+        if (selectedCategory && selectedCategory !== "Tümü") {
+            const catName = p.category?.toLowerCase() || "";
+            const pName = p.name?.toLowerCase() || "";
+            const selectedLower = selectedCategory.toLowerCase();
+            matchesCategory = catName.includes(selectedLower) || pName.includes(selectedLower);
+        }
+
+        // Subcategory Filter
+        let matchesSubcategory = true;
+        if (selectedSubcategory) {
+            const subLower = selectedSubcategory.toLowerCase();
+            matchesSubcategory = p.name.toLowerCase().includes(subLower) || p.category?.toLowerCase().includes(subLower);
+        }
 
         // Compatibility Check (Garage Vehicle OR Manual Filter)
         const filterBrand = filterCriteria.brand || currentVehicle?.brand;
@@ -111,7 +132,7 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
             });
         }
 
-        return matchesSearch && matchesMinPrice && matchesMaxPrice && matchesStock && matchesVehicle;
+        return matchesSearch && matchesMinPrice && matchesMaxPrice && matchesStock && matchesVehicle && matchesCategory && matchesSubcategory;
     });
 
     const isManualFiltering = filterCriteria.brand || filterCriteria.model;
@@ -158,13 +179,60 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
                 </button>
             </div>
 
+            {/* Main Category Bar */}
             <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-                {PART_CATEGORIES.map((cat, i) => (
-                    <button key={i} className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold border transition shadow-md ${i === 0 ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'}`}>
-                        {cat}
-                    </button>
-                ))}
+                {PART_CATEGORIES.map((cat, i) => {
+                    const isSelected = selectedCategory === cat;
+                    return (
+                        <button
+                            key={i}
+                            onClick={() => {
+                                setSelectedCategory(cat);
+                                setSelectedSubcategory(null);
+                            }}
+                            className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold border transition shadow-md ${
+                                isSelected
+                                    ? 'bg-primary-600 text-slate-900 dark:text-white border-primary-500 shadow-primary-500/20'
+                                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-black/5 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-slate-800'
+                            }`}
+                        >
+                            {cat}
+                        </button>
+                    );
+                })}
             </div>
+
+            {/* Subcategory Bar (Rendered when an active category with subcategories is selected) */}
+            {activeTaxonomy && activeTaxonomy.subcategories?.length > 0 && (
+                <div className="flex gap-1.5 overflow-x-auto no-scrollbar py-1 animate-fade-in">
+                    <button
+                        onClick={() => setSelectedSubcategory(null)}
+                        className={`whitespace-nowrap px-3 py-1 rounded-lg text-[11px] font-bold border transition ${
+                            selectedSubcategory === null
+                                ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40'
+                                : 'bg-black/5 dark:bg-white/5 text-slate-500 border-transparent hover:text-white'
+                        }`}
+                    >
+                        Tüm {activeTaxonomy.name}
+                    </button>
+                    {activeTaxonomy.subcategories.map((sub, idx) => {
+                        const isSubSelected = selectedSubcategory === sub;
+                        return (
+                            <button
+                                key={idx}
+                                onClick={() => setSelectedSubcategory(isSubSelected ? null : sub)}
+                                className={`whitespace-nowrap px-3 py-1 rounded-lg text-[11px] font-bold border transition ${
+                                    isSubSelected
+                                        ? 'bg-cyan-500 text-slate-900 font-black border-cyan-400'
+                                        : 'bg-black/5 dark:bg-white/5 text-slate-400 border-black/5 dark:border-white/5 hover:text-slate-900 dark:hover:text-white'
+                                }`}
+                            >
+                                {sub}
+                            </button>
+                        );
+                    })}
+                </div>
+            )}
 
             <div className="grid grid-cols-2 gap-4">
                 {filteredProducts.map(product => {

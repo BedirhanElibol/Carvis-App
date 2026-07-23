@@ -4,13 +4,93 @@
 
 export const PART_CATEGORIES = [
   "Tümü",
-  "Fren",
-  "Yağ",
-  "Filtre",
-  "Motor",
-  "Şanzıman",
-  "Aksesuar",
-  "Lastik",
+  "Bakım & Sıvı Grubu",
+  "Fren & Güvenlik",
+  "Motor & Mekanik",
+  "Şanzıman & Aktarma",
+  "Yürüyen Aksam & Süspansiyon",
+  "Elektrik & Elektronik",
+  "Gövde, Kaporta & Dış Aksam",
+  "İç Aksam & Konfor",
+  "Egzoz & Emisyon",
+  "LPG & Otogaz",
+  "Lastik & Jant",
+  "Oto Bakım & Aksesuar"
+];
+
+export const DETAILED_PARTS_TAXONOMY = [
+  {
+    id: "maintenance",
+    name: "Bakım & Sıvı Grubu",
+    icon: "Droplet",
+    subcategories: ["Motor Yağı", "Yağ Filtresi", "Hava Filtresi", "Polen / Kabin Filtresi", "Yakıt Filtresi", "Antifriz", "Fren Hidroliği", "Şanzıman Yağı"]
+  },
+  {
+    id: "brakes",
+    name: "Fren & Güvenlik",
+    icon: "ShieldAlert",
+    subcategories: ["Ön Fren Balatası", "Arka Fren Balatası", "Fren Diski (Ön/Arka)", "Fren Hortumu", "Fren Kaliperi", "ABS Sensörü", "Fren Ana Merkezi"]
+  },
+  {
+    id: "engine",
+    name: "Motor & Mekanik",
+    icon: "Cog",
+    subcategories: ["Triger Kayış Seti / Zincir", "V Kayışı & Gergiler", "Buji & Kızdırma Bujisi", "Ateşleme Bobini", "Enjektör & Yakıt Pompası", "Devirdaim / Su Pompası", "Turboşarj & Intercooler", "Conta & Kelepçe Setleri"]
+  },
+  {
+    id: "transmission",
+    name: "Şanzıman & Aktarma",
+    icon: "GitCommit",
+    subcategories: ["Baskı Balata Seti", "Volant", "Aks & Aks Kafası", "Şaft & Diferansiyel", "Otomatik Şanzıman Filtresi & Yağı", "Mechatronic Beyin"]
+  },
+  {
+    id: "suspension",
+    name: "Yürüyen Aksam & Süspansiyon",
+    icon: "Activity",
+    subcategories: ["Ön / Arka Amortisör", "Amortisör Takozu & Bilyası", "Salıncak", "Rot Başı & Rot Mili", "Z Rot (Askı Rotu)", "Porya Bilyası / Teker Rulmanı", "Helezon Yay"]
+  },
+  {
+    id: "electronics",
+    name: "Elektrik & Elektronik",
+    icon: "Zap",
+    subcategories: ["Akü (AGM/EFB/Standart)", "Şarj Dinamosu", "Marş Motoru", "Krank & Eksantrik Sensörleri", "Oksijen / Lambda Sensörü", "Farlar & Stop Lambaları", "Ampul & Xenon/LED"]
+  },
+  {
+    id: "bodywork",
+    name: "Gövde, Kaporta & Dış Aksam",
+    icon: "Car",
+    subcategories: ["Ön / Arka Tampon", "Çamurluk & Kaput", "Radyatör Izgarası", "Yan Aynalar & Dikiz Aynası", "Silecek Takımı & Motoru", "Kapı Fitilleri & Yalıtım"]
+  },
+  {
+    id: "interior",
+    name: "İç Aksam & Konfor",
+    icon: "Armchair",
+    subcategories: ["Klima Kompresörü", "Klima Radyatörü / Evaporatör", "Koltuk Kılıfı & Döşeme", "Oto Paspas Seti", "Bagaj Havuzu", "Multimedya & Park Sensörü"]
+  },
+  {
+    id: "exhaust",
+    name: "Egzoz & Emisyon",
+    icon: "Wind",
+    subcategories: ["Egzoz Susturucusu", "Katalitik Konvertör", "DPF Partikül Filtresi", "EGR Valfi", "Egzoz Esnek Borusu / Spiral"]
+  },
+  {
+    id: "lpg",
+    name: "LPG & Otogaz",
+    icon: "Flame",
+    subcategories: ["LPG Filtresi", "LPG Regülatörü / Beyni", "Gaz Enjektörleri", "AFR Sensörü", "LPG Solenoid Valfi"]
+  },
+  {
+    id: "tires",
+    name: "Lastik & Jant",
+    icon: "Disc",
+    subcategories: ["Yaz Lastiği", "Kış Lastiği", "4 Mevsim Lastik", "Alüminyum Jant Seti", "Sibop & Balans Takozları", "Bijon Cıvataları"]
+  },
+  {
+    id: "accessories",
+    name: "Oto Bakım & Aksesuar",
+    icon: "Sparkles",
+    subcategories: ["Seramik Kaplama & Cilalar", "Araç İçi Temizlik Ürünleri", "Trafik & İlkyardım Seti", "Yangın Söndürücü", "Oto Şampuanı & Torpido Sütü"]
+  }
 ];
 
 export const CAR_DATA = [
