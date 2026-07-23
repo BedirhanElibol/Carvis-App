@@ -331,28 +331,7 @@ const CustomerHome = () => {
       {/* CORE CONTAINER: Responsive 3-Column Layout on Desktop */}
       <div className="max-w-7xl mx-auto px-6 py-8 relative z-10">
         
-        {/* SOS EMERGENCY BUTTON */}
-        <div className="mb-6 relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-rose-600 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
-          <button 
-            onClick={() => navigate("/app/sos")}
-            className="relative w-full bg-[#0a0f24]/90 border border-red-500/30 hover:border-red-500/50 p-4 rounded-3xl flex items-center justify-between transition-all cursor-pointer active-scale overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-rose-600/10 pointer-events-none"></div>
-            <div className="flex items-center gap-4 relative z-10">
-              <div className="w-12 h-12 bg-red-500/20 border border-red-500/50 rounded-2xl flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform shadow-xl">
-                <ShieldAlert size={24} className="text-red-400" />
-              </div>
-              <div className="text-left font-sans">
-                <h3 className="font-mono font-black text-lg uppercase tracking-wider text-white ">ACİL YOL YARDIM & AKÜ</h3>
-                <p className="text-red-200/80 text-xs font-semibold mt-0.5">Yolda mı kaldınız? Hemen acil yardım veya akü takviyesi çağırın.</p>
-              </div>
-            </div>
-            <div className="w-10 h-10 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center relative z-10">
-              <ChevronRight size={20} className="text-red-400" />
-            </div>
-          </button>
-        </div>
+
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           
