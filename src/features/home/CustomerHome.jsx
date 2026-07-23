@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Activity, Zap, AlertCircle, AlertTriangle, Calendar, CalendarDays, Car, CheckCircle, ChevronRight, ClipboardList, Disc, Droplets, FileText, Flame, HardDrive, Heart, HeartHandshake, Key, Layers, Loader2, Map, MapPin, Maximize, Navigation, Package, Plus, RefreshCw, Search, ShieldAlert, ShieldCheck, ShoppingBag, Star, TrendingDown, User, UserCheck, Video, Wind, Wrench, X, Clock, Lightbulb, TrendingUp } from "lucide-react";
+import { Activity, Zap, AlertCircle, AlertTriangle, Calendar, CalendarDays, Car, CheckCircle, ChevronRight, ClipboardList, Disc, Droplets, FileText, Flame, HardDrive, Heart, HeartHandshake, Key, Layers, Loader2, Map, MapPin, Maximize, Navigation, Package, Plus, RefreshCw, Search, ShieldAlert, ShieldCheck, ShoppingBag, Star, TrendingDown, Truck, User, UserCheck, Video, Wind, Wrench, X, Clock, Lightbulb, TrendingUp } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { Badge } from "../../components/Core";
 import { useUI } from "../../context/UIContext";
@@ -42,7 +42,7 @@ const CustomerHome = () => {
   // States
   const serviceCategories = useMemo(() => [
     { name: t.periodicMaintenance, icon: Wrench, color: "text-cyan-500 dark:text-cyan-400", bg: "bg-white/5", border: "hover:border-white/10", route: "/app/mechanics" },
-    { name: t.brakeSystem, icon: Activity, color: "text-sky-500 dark:text-sky-400", bg: "bg-sky-500/10", border: "hover:border-sky-500/30", route: "/app/mechanics" },
+    { name: "Acil Çekici", icon: Truck, color: "text-red-500 dark:text-red-400", bg: "bg-red-500/10", border: "hover:border-red-500/30", route: "/app/sos" },
     { name: t.tireAndAlignment, icon: Disc, color: "text-blue-500 dark:text-blue-400", bg: "bg-blue-500/10", border: "hover:border-blue-500/30", route: "/app/mechanics" },
     { name: t.smartValet, icon: ShieldCheck, color: "text-cyan-500 dark:text-cyan-400", bg: "bg-white/5", border: "hover:border-white/10", route: "/app/insurance" },
     { name: t.spareParts, icon: Package, color: "text-sky-500 dark:text-sky-400", bg: "bg-sky-500/10", border: "hover:border-sky-500/30", route: "/app/parts" },
@@ -950,7 +950,7 @@ const CustomerHome = () => {
               <div className="grid grid-cols-4 gap-3">
                 {[
                   { icon: Wrench, label: t.getService, route: "/app/mechanics" },
-                  { icon: AlertCircle, label: t.emergencySOS, route: "/app/sos" },
+                  { icon: Truck, label: "ACİL ÇEKİCİ", route: "/app/sos" },
                   { icon: Package, label: t.autoParts, route: "/app/parts" },
                   { icon: Key, label: t.callValet, route: "/app/valet" },
                 ].map((item, idx) => (
