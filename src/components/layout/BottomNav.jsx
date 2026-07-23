@@ -17,7 +17,7 @@ export const BottomNav = () => {
   );
 
   const tabs = [
-    { id: "/application/home", icon: Home, label: "Kokpit" },
+    { id: "/application/home", icon: Home, label: "Ana Sayfa" },
     { id: "/app/parts", icon: ShoppingCart, label: "Market" },
     {
       id: "/messages",
@@ -25,7 +25,7 @@ export const BottomNav = () => {
       label: "Mesajlar",
       badge: unreadCount,
     },
-    { id: "/app/profile", icon: User, label: t.profile },
+    { id: "/app/profile", icon: User, label: "Profil & Kokpit" },
   ];
 
   if (!t) return null;

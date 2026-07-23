@@ -44,7 +44,7 @@ const CustomerHome = () => {
     { name: t.periodicMaintenance, icon: Wrench, color: "text-cyan-500 dark:text-cyan-400", bg: "bg-white/5", border: "hover:border-white/10", route: "/app/mechanics" },
     { name: t.brakeSystem, icon: Activity, color: "text-sky-500 dark:text-sky-400", bg: "bg-sky-500/10", border: "hover:border-sky-500/30", route: "/app/mechanics" },
     { name: t.tireAndAlignment, icon: Disc, color: "text-blue-500 dark:text-blue-400", bg: "bg-blue-500/10", border: "hover:border-blue-500/30", route: "/app/mechanics" },
-    { name: t.smartValet, icon: ShieldCheck, color: "text-cyan-500 dark:text-cyan-400", bg: "bg-white/5", border: "hover:border-white/10", route: "/app/insurance" },
+    { name: "Kasko & Sigorta", icon: ShieldCheck, color: "text-cyan-500 dark:text-cyan-400", bg: "bg-white/5", border: "hover:border-white/10", route: "/app/insurance" },
     { name: t.spareParts, icon: Package, color: "text-sky-500 dark:text-sky-400", bg: "bg-sky-500/10", border: "hover:border-sky-500/30", route: "/app/parts" },
     { name: t.detailing, icon: Droplets, color: "text-blue-500 dark:text-blue-400", bg: "bg-blue-500/10", border: "hover:border-blue-500/30", route: "/app/carwash" },
   ], [t]);
@@ -968,7 +968,7 @@ const CustomerHome = () => {
                   { icon: Wrench, label: t.getService, route: "/app/mechanics" },
                   { icon: Package, label: t.autoParts, route: "/app/parts" },
                   { icon: Droplets, label: t.detailing || "Oto Yıkama", route: "/app/carwash" },
-                  { icon: Key, label: t.callValet, route: "/app/valet" },
+                  { icon: ShieldCheck, label: "Sigorta & Kasko", route: "/app/insurance" },
                 ].map((item, idx) => (
                   <div
                     key={idx}

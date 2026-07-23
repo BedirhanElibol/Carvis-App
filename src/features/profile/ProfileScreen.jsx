@@ -129,6 +129,25 @@ const ProfileScreen = () => {
       {/* Activity Center: Bids, Consultations, Insurances */}
       {!currentUser?.isAnonymous && <ActivityCenter />}
 
+      {/* ACTIVE VEHICLE COCKPIT CARD */}
+      {currentVehicle && (
+        <div className="glass-card p-5 rounded-[2rem] border border-black/10 dark:border-white/10 shadow-xl bg-gradient-to-r from-cyan-500/10 via-sky-500/5 to-transparent relative overflow-hidden">
+          <div className="flex justify-between items-center">
+            <div>
+              <span className="text-[9px] font-black uppercase tracking-widest text-cyan-400 font-mono">SEÇİLİ ARAÇ KOKPİTİ</span>
+              <h4 className="text-lg font-black text-slate-900 dark:text-white mt-0.5">{currentVehicle.brand} {currentVehicle.model}</h4>
+              <p className="text-xs font-mono text-slate-500 font-bold mt-0.5">{currentVehicle.plate} • {currentVehicle.km ? `${currentVehicle.km} KM` : "KM Belirtilmemiş"}</p>
+            </div>
+            <button
+              onClick={() => setShowVehicleSelector(true)}
+              className="px-3.5 py-2 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs font-black uppercase tracking-wider hover:bg-cyan-500/30 transition-all active-scale"
+            >
+              Değiştir
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 gap-4">
         <button
           onClick={() => {
