@@ -591,15 +591,22 @@ CREATE OR REPLACE FUNCTION public.prevent_role_escalation()
 RETURNS TRIGGER AS $$
 BEGIN
     -- Check if role or suspension status is being changed
-    IF (NEW.role IS DISTINCT FROM OLD.role OR NEW.is_suspended IS DISTINCT FROM OLD.is_suspended) THEN
-        -- If user is NOT an admin, block the operation
-        IF NOT public.is_admin() THEN
-            -- Allow if it's the service_role key bypassing RLS
-            IF current_setting('request.jwt.claims', true)::jsonb->>'role' = 'service_role' THEN
-                RETURN NEW;
-            END IF;
-            RAISE EXCEPTION 'Security Violation: Yetki yÃ¼kseltme veya statÃ¼ deÄŸiÅŸtirme izniniz yok.';
+    IF (NEW.role IS DISTINCT FROM OLD.role OR 
+        NEW.is_suspended IS DISTINCT FROM OLD.is_suspended OR
+        NEW.application_status IS DISTINCT FROM OLD.application_status OR
+        NEW.is_approved_partner IS DISTINCT FROM OLD.is_approved_partner OR
+        NEW.is_active_provider IS DISTINCT FROM OLD.is_active_provider) THEN
+        
+        -- Allow direct SQL migrations / SQL Editor (auth.uid() is null), superusers, service_role, or admin users
+        IF auth.uid() IS NULL OR 
+           current_user IN ('postgres', 'supabase_admin', 'service_role') OR
+           (current_setting('request.jwt.claims', true)::jsonb->>'role') IN ('service_role', 'supabase_admin') OR
+           public.is_admin() THEN
+            RETURN NEW;
         END IF;
+
+        -- Otherwise block unauthorized role escalation attempts by regular users via API
+        RAISE EXCEPTION 'Security Violation: Yetki yükseltme veya statü değiştirme izniniz yok.';
     END IF;
     RETURN NEW;
 END;
