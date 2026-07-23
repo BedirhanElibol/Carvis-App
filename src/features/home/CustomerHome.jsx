@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Activity, Zap, AlertCircle, AlertTriangle, Calendar, Car, CheckCircle, ChevronRight, Disc, Droplets, FileText, Flame, HardDrive, HeartHandshake, Key, Layers, Loader2, Map, MapPin, Maximize, Navigation, Package, Plus, RefreshCw, Search, ShieldAlert, ShieldCheck, ShoppingBag, Star, TrendingDown, User, UserCheck, Video, Wind, Wrench, X, Clock, Lightbulb, TrendingUp } from "lucide-react";
+import { Activity, Zap, AlertCircle, AlertTriangle, Calendar, CalendarDays, Car, CheckCircle, ChevronRight, ClipboardList, Disc, Droplets, FileText, Flame, HardDrive, Heart, HeartHandshake, Key, Layers, Loader2, Map, MapPin, Maximize, Navigation, Package, Plus, RefreshCw, Search, ShieldAlert, ShieldCheck, ShoppingBag, Star, TrendingDown, User, UserCheck, Video, Wind, Wrench, X, Clock, Lightbulb, TrendingUp } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { Badge } from "../../components/Core";
 import { useUI } from "../../context/UIContext";
@@ -396,8 +396,7 @@ const CustomerHome = () => {
               </>
             )}
 
-            {/* PROACTIVE ALERTS */}
-            {activeVehicle && <ProactiveAlerts vehicle={activeVehicle} mapCenter={mapCenter} />}
+            {/* PROACTIVE ALERTS REMOVED (NO FAKE RADAR DATA) */}
 
             {/* DIRECT ACTION CTA (LINEAR UX) */}
             {activeVehicle && (
@@ -528,6 +527,101 @@ const CustomerHome = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* UNIFIED CUSTOMER MANAGEMENT COCKPIT GRID */}
+            {activeVehicle && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <button
+                  onClick={() => setShowVehicleSelector(true)}
+                  className="bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-xl active-scale relative overflow-hidden backdrop-blur-xl"
+                >
+                  <div className="bg-cyan-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-cyan-500/20 text-cyan-400">
+                    <Car size={24} />
+                  </div>
+                  <h4 className="font-mono font-black text-white text-xs uppercase tracking-wider">
+                    GARAJIM
+                  </h4>
+                  <p className="text-[10px] text-cyan-200/50 mt-1 font-sans">
+                    Araç Yönetimi
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => setShowServiceHistory(true)}
+                  className="bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-xl active-scale relative overflow-hidden backdrop-blur-xl"
+                >
+                  <div className="bg-sky-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-sky-500/20 text-sky-400">
+                    <ClipboardList size={24} />
+                  </div>
+                  <h4 className="font-mono font-black text-white text-xs uppercase tracking-wider">
+                    SERVİS GEÇMİŞİ
+                  </h4>
+                  <p className="text-[10px] text-cyan-200/50 mt-1 font-sans">
+                    Dijital Pasaport
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => navigate("/quotes")}
+                  className="bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-white/10 hover:border-blue-500/50 transition-all text-left group shadow-xl active-scale relative overflow-hidden backdrop-blur-xl"
+                >
+                  <div className="bg-blue-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-blue-500/20 text-blue-400">
+                    <Package size={24} />
+                  </div>
+                  <h4 className="font-mono font-black text-white text-xs uppercase tracking-wider">
+                    TALEPLERİM
+                  </h4>
+                  <p className="text-[10px] text-blue-200/50 mt-1 font-sans">
+                    Teklifleri Gör
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => navigate("/appointments")}
+                  className="bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-white/10 hover:border-emerald-500/50 transition-all text-left group shadow-xl active-scale relative overflow-hidden backdrop-blur-xl"
+                >
+                  <div className="bg-emerald-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-emerald-500/20 text-emerald-400">
+                    <CalendarDays size={24} />
+                  </div>
+                  <h4 className="font-mono font-black text-white text-xs uppercase tracking-wider">
+                    RANDEVULARIM
+                  </h4>
+                  <p className="text-[10px] text-emerald-200/50 mt-1 font-sans">
+                    Takip Et
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => navigate("/orders")}
+                  className="bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-white/10 hover:border-amber-500/50 transition-all text-left group shadow-xl active-scale relative overflow-hidden backdrop-blur-xl"
+                >
+                  <div className="bg-amber-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-amber-500/20 text-amber-400">
+                    <ShoppingBag size={24} />
+                  </div>
+                  <h4 className="font-mono font-black text-white text-xs uppercase tracking-wider">
+                    SİPARİŞLERİM
+                  </h4>
+                  <p className="text-[10px] text-amber-200/50 mt-1 font-sans">
+                    Sipariş Takibi
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => navigate("/app/favorites")}
+                  className="bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-white/10 hover:border-rose-500/50 transition-all text-left group shadow-xl active-scale relative overflow-hidden backdrop-blur-xl"
+                >
+                  <div className="bg-rose-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-rose-500/20 text-rose-400">
+                    <Heart size={24} />
+                  </div>
+                  <h4 className="font-mono font-black text-white text-xs uppercase tracking-wider">
+                    FAVORİLERİM
+                  </h4>
+                  <p className="text-[10px] text-rose-200/50 mt-1 font-sans">
+                    Kaydedilenler
+                  </p>
+                </button>
               </div>
             )}
 

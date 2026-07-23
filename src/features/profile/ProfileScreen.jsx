@@ -6,7 +6,7 @@ import { Badge } from "../../components/Core";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 import { useGarage } from "../../context/GarageContext";
-import PredictiveHealth from "../ai/PredictiveHealth"; // Modals
+
 import SettingsModal from "../../components/modals/SettingsModal";
 import ServiceHistoryModal from "../../components/modals/ServiceHistoryModal";
 import AuthLoginModal from "../../components/modals/AuthLoginModal";
@@ -128,9 +128,6 @@ const ProfileScreen = () => {
 
       {/* Activity Center: Bids, Consultations, Insurances */}
       {!currentUser?.isAnonymous && <ActivityCenter />}
-
-      {/* AI Predictive Maintenance Module */}
-      {currentVehicle && <PredictiveHealth vehicle={currentVehicle} />}
 
       <div className="grid grid-cols-2 gap-4">
         <button
