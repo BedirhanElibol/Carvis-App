@@ -28,6 +28,7 @@ const AppointmentsScreen = lazy(
 // --- SECONDARY FEATURES ---
 const CampaignsScreen = lazy(() => import("./features/extras/CampaignsScreen"));
 const FuelScreen = lazy(() => import("./features/extras/FuelScreen"));
+const EVChargingScreen = lazy(() => import("./features/extras/EVChargingScreen"));
 const ParkingScreen = lazy(() => import("./features/extras/ParkingScreen"));
 const ValetScreen = lazy(() => import("./features/extras/ValetScreen"));
 const ProductDetailScreen = lazy(
@@ -352,6 +353,14 @@ export const AppRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={["customer", "admin"]}>
               <FuelScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/app/ev-charging"
+          element={
+            <ProtectedRoute allowedRoles={["customer", "admin"]}>
+              <EVChargingScreen />
             </ProtectedRoute>
           }
         />
