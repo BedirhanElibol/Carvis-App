@@ -381,6 +381,7 @@ CREATE TABLE IF NOT EXISTS public.emergency_requests (
 -- COUPONS
 CREATE TABLE IF NOT EXISTS public.coupons (
     id SERIAL PRIMARY KEY,
+    seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
     code TEXT UNIQUE NOT NULL,
     description TEXT,
     discount_type TEXT CHECK (discount_type IN ('percentage', 'fixed')),
@@ -395,23 +396,60 @@ CREATE TABLE IF NOT EXISTS public.coupons (
 -- SAFE COLUMN REPAIRS: Ensure seller_id exists on all pre-existing tables
 -- =========================================================
 DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='products' AND column_name='seller_id') THEN
-        ALTER TABLE public.products ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='products') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='products' AND column_name='seller_id') THEN
+            ALTER TABLE public.products ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
+        END IF;
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='mechanic_shops' AND column_name='seller_id') THEN
-        ALTER TABLE public.mechanic_shops ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='mechanic_shops') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='mechanic_shops' AND column_name='seller_id') THEN
+            ALTER TABLE public.mechanic_shops ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
+        END IF;
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='quotes' AND column_name='seller_id') THEN
-        ALTER TABLE public.quotes ADD COLUMN seller_id UUID REFERENCES public.profiles(id);
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='quotes') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='quotes' AND column_name='seller_id') THEN
+            ALTER TABLE public.quotes ADD COLUMN seller_id UUID REFERENCES public.profiles(id);
+        END IF;
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='appointments' AND column_name='seller_id') THEN
-        ALTER TABLE public.appointments ADD COLUMN seller_id UUID REFERENCES public.profiles(id);
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='appointments') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='appointments' AND column_name='seller_id') THEN
+            ALTER TABLE public.appointments ADD COLUMN seller_id UUID REFERENCES public.profiles(id);
+        END IF;
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='seller_id') THEN
-        ALTER TABLE public.orders ADD COLUMN seller_id UUID REFERENCES public.profiles(id);
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='orders') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='orders' AND column_name='seller_id') THEN
+            ALTER TABLE public.orders ADD COLUMN seller_id UUID REFERENCES public.profiles(id);
+        END IF;
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='reviews' AND column_name='seller_id') THEN
-        ALTER TABLE public.reviews ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='reviews') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='reviews' AND column_name='seller_id') THEN
+            ALTER TABLE public.reviews ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE;
+        END IF;
+    END IF;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='coupons') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='coupons' AND column_name='seller_id') THEN
+            ALTER TABLE public.coupons ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE;
+        END IF;
+    END IF;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='carwash_profiles') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='carwash_profiles' AND column_name='seller_id') THEN
+            ALTER TABLE public.carwash_profiles ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE;
+        END IF;
+    END IF;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='campaigns') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='campaigns' AND column_name='seller_id') THEN
+            ALTER TABLE public.campaigns ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE;
+        END IF;
+    END IF;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='partner_loans') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='partner_loans' AND column_name='seller_id') THEN
+            ALTER TABLE public.partner_loans ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE;
+        END IF;
+    END IF;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name='invoices') THEN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='invoices' AND column_name='seller_id') THEN
+            ALTER TABLE public.invoices ADD COLUMN seller_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE;
+        END IF;
     END IF;
 END $$;
 
@@ -4757,6 +4795,19 @@ CREATE POLICY "Carwash requests can be created by authenticated users" ON public
 
 
 -- 9. INSURANCE QUOTES
+CREATE TABLE IF NOT EXISTS public.insurance_quotes (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    insurance_company_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE SET NULL,
+    policy_type TEXT DEFAULT 'kasko',
+    offer_price DECIMAL(12,2) NOT NULL,
+    coverage_details JSONB DEFAULT '{}'::jsonb,
+    valid_until TIMESTAMPTZ,
+    status TEXT DEFAULT 'pending',
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
 ALTER TABLE public.insurance_quotes ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Quotes are viewable by customer or company" ON public.insurance_quotes;
@@ -4781,6 +4832,20 @@ CREATE POLICY "Quotes can be updated by customer or company" ON public.insurance
 
 
 -- 10. INSURANCE CLAIMS
+CREATE TABLE IF NOT EXISTS public.insurance_claims (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    insurance_company_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE SET NULL,
+    accident_date TIMESTAMPTZ DEFAULT now(),
+    description TEXT,
+    estimated_damage_amount DECIMAL(12,2) DEFAULT 0.00,
+    approved_amount DECIMAL(12,2) DEFAULT 0.00,
+    photos TEXT[] DEFAULT ARRAY[]::TEXT[],
+    status TEXT DEFAULT 'reported',
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
 ALTER TABLE public.insurance_claims ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Claims are viewable by customer or company" ON public.insurance_claims;
