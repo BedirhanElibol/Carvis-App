@@ -303,7 +303,7 @@ const CustomerHome = () => {
               Rapidsy
             </p>
             <h2 className="text-sm font-mono font-black tracking-tight mt-1 text-white uppercase ">
-              KÖKPİT PANELİ
+              ANA SAYFA
             </h2>
           </div>
         </div>
