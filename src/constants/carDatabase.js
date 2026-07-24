@@ -23,6 +23,14 @@ export const CAR_DATABASE = [
               "S",
               "Standart"
             ]
+          },
+          {
+            "name": "1.4",
+            "engine_code": "160 A1.000",
+            "fuel": "LPG",
+            "trims": [
+              "Standart"
+            ]
           }
         ]
       },
@@ -91,6 +99,50 @@ export const CAR_DATABASE = [
             "fuel": "Benzin",
             "trims": [
               "Standart"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Anadol",
+    "series": [
+      {
+        "name": "A1",
+        "models": [
+          {
+            "name": "1.2 MK1",
+            "engine_code": "Ford Kent 1.2",
+            "fuel": "Benzin",
+            "trims": [
+              "Klasik"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "A2",
+        "models": [
+          {
+            "name": "1.3 SL",
+            "engine_code": "Ford Kent 1.3",
+            "fuel": "Benzin",
+            "trims": [
+              "SL"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "STC-16",
+        "models": [
+          {
+            "name": "1.6 Sport",
+            "engine_code": "Ford Kent 1.6",
+            "fuel": "Benzin",
+            "trims": [
+              "STC Coupe"
             ]
           }
         ]
@@ -300,6 +352,29 @@ export const CAR_DATABASE = [
         ]
       },
       {
+        "name": "Uno",
+        "models": [
+          {
+            "name": "70 S / SX",
+            "engine_code": "146 A9.000",
+            "fuel": "Benzin",
+            "trims": [
+              "70 S",
+              "70 SX",
+              "70 SX ie"
+            ]
+          },
+          {
+            "name": "60 S",
+            "engine_code": "160 A1.000",
+            "fuel": "Benzin",
+            "trims": [
+              "60 S"
+            ]
+          }
+        ]
+      },
+      {
         "name": "Doblo",
         "models": [
           {
@@ -368,6 +443,22 @@ export const CAR_DATABASE = [
               "Pop",
               "Safeline",
               "Premio"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ducato",
+        "models": [
+          {
+            "name": "2.3 Multijet 120/140",
+            "engine_code": "F1AE3481D / F1AGL411D",
+            "fuel": "Dizel",
+            "trims": [
+              "City Van",
+              "Cargo",
+              "Jumbo",
+              "Minibüs"
             ]
           }
         ]
@@ -583,6 +674,21 @@ export const CAR_DATABASE = [
               "Confort",
               "Authentique",
               "Multix"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Master / Trafic",
+        "models": [
+          {
+            "name": "2.3 dCi / 2.0 dCi",
+            "engine_code": "M9T 702 / M9R 710",
+            "fuel": "Dizel",
+            "trims": [
+              "Panelvan",
+              "Şasi",
+              "Otobüs"
             ]
           }
         ]
@@ -1728,6 +1834,112 @@ export const CAR_DATABASE = [
               "Comfort",
               "Luxury",
               "Excellent"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "BMC",
+    "series": [
+      {
+        "name": "Tuğra",
+        "models": [
+          {
+            "name": "1844 Çekici / 2542",
+            "engine_code": "FPT Cursor 11 440 HP",
+            "fuel": "Dizel",
+            "trims": [
+              "Elegance",
+              "Standart"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Megastar",
+        "models": [
+          {
+            "name": "2.8 TD",
+            "engine_code": "VM Motori 2.8",
+            "fuel": "Dizel",
+            "trims": [
+              "Panelvan",
+              "Şasi"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Ford Trucks",
+    "series": [
+      {
+        "name": "F-MAX",
+        "models": [
+          {
+            "name": "1850T",
+            "engine_code": "Ecotorq 12.7L 500 HP",
+            "fuel": "Dizel",
+            "trims": [
+              "Comfort",
+              "Luxury",
+              "L-Cab"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "1846T / 1848T Cargo",
+        "models": [
+          {
+            "name": "1846T Tractor",
+            "engine_code": "Ecotorq 10.3L",
+            "fuel": "Dizel",
+            "trims": [
+              "Low Roof",
+              "High Roof"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Scania",
+    "series": [
+      {
+        "name": "R Serisi / S Serisi",
+        "models": [
+          {
+            "name": "R 450 / S 500",
+            "engine_code": "DC13 148 / DC13 155",
+            "fuel": "Dizel",
+            "trims": [
+              "Highline",
+              "Streamline",
+              "V8"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "MAN",
+    "series": [
+      {
+        "name": "TGX / TGS",
+        "models": [
+          {
+            "name": "18.440 / 18.480",
+            "engine_code": "D2676 LF46",
+            "fuel": "Dizel",
+            "trims": [
+              "EfficientLine",
+              "XXL"
             ]
           }
         ]

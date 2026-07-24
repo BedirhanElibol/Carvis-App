@@ -5,11 +5,29 @@ car_database = [
     {
         "brand": "Tofaş",
         "series": [
-            {"name": "Şahin", "models": [{"name": "1.6 ie", "engine_code": "159 A3.000", "fuel": "LPG", "trims": ["1.6 ie", "1.6 S", "1.4"]}, {"name": "1.6 S", "engine_code": "131 A1.000", "fuel": "LPG", "trims": ["S", "Standart"]}]},
-            {"name": "Doğan", "models": [{"name": "1.6 SLX", "engine_code": "159 A3.000", "fuel": "LPG", "trims": ["SLX ie", "SLX", "SL", "L"]}, {"name": "1.6 ie", "engine_code": "158 A2.000", "fuel": "LPG", "trims": ["1.6 ie", "SLX"]}]},
-            {"name": "Kartal", "models": [{"name": "1.6 SLX", "engine_code": "159 A3.000", "fuel": "LPG", "trims": ["SLX ie", "SLX", "S", "5 Vites"]}]},
+            {"name": "Şahin", "models": [
+                {"name": "1.6 ie", "engine_code": "159 A3.000", "fuel": "LPG", "trims": ["1.6 ie", "1.6 S", "1.4"]},
+                {"name": "1.6 S", "engine_code": "131 A1.000", "fuel": "LPG", "trims": ["S", "Standart"]},
+                {"name": "1.4", "engine_code": "160 A1.000", "fuel": "LPG", "trims": ["Standart"]}
+            ]},
+            {"name": "Doğan", "models": [
+                {"name": "1.6 SLX", "engine_code": "159 A3.000", "fuel": "LPG", "trims": ["SLX ie", "SLX", "SL", "L"]},
+                {"name": "1.6 ie", "engine_code": "158 A2.000", "fuel": "LPG", "trims": ["1.6 ie", "SLX"]}
+            ]},
+            {"name": "Kartal", "models": [
+                {"name": "1.6 SLX", "engine_code": "159 A3.000", "fuel": "LPG", "trims": ["SLX ie", "SLX", "S", "5 Vites"]}
+            ]},
             {"name": "Murat 131", "models": [{"name": "1.3", "engine_code": "131 A.000", "fuel": "LPG", "trims": ["Şahin", "Doğan", "T-131"]}]},
             {"name": "Murat 124", "models": [{"name": "1.2 Hacı Murat", "engine_code": "124 A.000", "fuel": "Benzin", "trims": ["Standart"]}]}
+        ]
+    },
+    # ANADOL
+    {
+        "brand": "Anadol",
+        "series": [
+            {"name": "A1", "models": [{"name": "1.2 MK1", "engine_code": "Ford Kent 1.2", "fuel": "Benzin", "trims": ["Klasik"]}]},
+            {"name": "A2", "models": [{"name": "1.3 SL", "engine_code": "Ford Kent 1.3", "fuel": "Benzin", "trims": ["SL"]}]},
+            {"name": "STC-16", "models": [{"name": "1.6 Sport", "engine_code": "Ford Kent 1.6", "fuel": "Benzin", "trims": ["STC Coupe"]}]}
         ]
     },
     # FIAT
@@ -42,6 +60,10 @@ car_database = [
                 {"name": "1.3 Multijet", "engine_code": "199A2000 / 199B1000", "fuel": "Dizel", "trims": ["Pop", "Easy", "Lounge", "Dynamic", "Evo", "Grande"]},
                 {"name": "1.4 Fire", "engine_code": "350A1000 / 199A6000", "fuel": "Benzin", "trims": ["Pop", "Easy", "Lounge", "S&S"]}
             ]},
+            {"name": "Uno", "models": [
+                {"name": "70 S / SX", "engine_code": "146 A9.000", "fuel": "Benzin", "trims": ["70 S", "70 SX", "70 SX ie"]},
+                {"name": "60 S", "engine_code": "160 A1.000", "fuel": "Benzin", "trims": ["60 S"]}
+            ]},
             {"name": "Doblo", "models": [
                 {"name": "1.3 Multijet", "engine_code": "223A9000 / 199A3000", "fuel": "Dizel", "trims": ["Easy", "Safeline", "Premio", "Urban", "Cargo"]},
                 {"name": "1.6 Multijet", "engine_code": "263A8000 / 198A3000", "fuel": "Dizel", "trims": ["Premio Plus", "Urban", "Elegance", "Trekking"]},
@@ -51,6 +73,9 @@ car_database = [
                 {"name": "1.3 Multijet", "engine_code": "199A2000 / 199B1000", "fuel": "Dizel", "trims": ["Pop", "Safeline", "Premio", "Titanium"]},
                 {"name": "1.4 Fire", "engine_code": "350A1000", "fuel": "Benzin", "trims": ["Pop", "Safeline", "Premio"]},
                 {"name": "1.4 Eco (LPG)", "engine_code": "350A1000 LPG", "fuel": "LPG", "trims": ["Pop", "Safeline", "Premio"]}
+            ]},
+            {"name": "Ducato", "models": [
+                {"name": "2.3 Multijet 120/140", "engine_code": "F1AE3481D / F1AGL411D", "fuel": "Dizel", "trims": ["City Van", "Cargo", "Jumbo", "Minibüs"]}
             ]}
         ]
     },
@@ -89,6 +114,9 @@ car_database = [
             ]},
             {"name": "Kangoo", "models": [
                 {"name": "1.5 dCi", "engine_code": "K9K 702 / K9K 802 / K9K 612", "fuel": "Dizel", "trims": ["Confort", "Authentique", "Multix"]}
+            ]},
+            {"name": "Master / Trafic", "models": [
+                {"name": "2.3 dCi / 2.0 dCi", "engine_code": "M9T 702 / M9R 710", "fuel": "Dizel", "trims": ["Panelvan", "Şasi", "Otobüs"]}
             ]}
         ]
     },
@@ -347,6 +375,36 @@ car_database = [
         "series": [
             {"name": "Omoda 5 / Tiggo 7 Pro / Tiggo 8 Pro", "models": [{"name": "1.6 TGDI 183", "engine_code": "SQRF4J16", "fuel": "Benzin", "trims": ["Comfort", "Luxury", "Excellent"]}]}
         ]
+    },
+    # BMC (Ticari)
+    {
+        "brand": "BMC",
+        "series": [
+            {"name": "Tuğra", "models": [{"name": "1844 Çekici / 2542", "engine_code": "FPT Cursor 11 440 HP", "fuel": "Dizel", "trims": ["Elegance", "Standart"]}]},
+            {"name": "Megastar", "models": [{"name": "2.8 TD", "engine_code": "VM Motori 2.8", "fuel": "Dizel", "trims": ["Panelvan", "Şasi"]}]}
+        ]
+    },
+    # FORD TRUCKS (Ağır Vasıta)
+    {
+        "brand": "Ford Trucks",
+        "series": [
+            {"name": "F-MAX", "models": [{"name": "1850T", "engine_code": "Ecotorq 12.7L 500 HP", "fuel": "Dizel", "trims": ["Comfort", "Luxury", "L-Cab"]}]},
+            {"name": "1846T / 1848T Cargo", "models": [{"name": "1846T Tractor", "engine_code": "Ecotorq 10.3L", "fuel": "Dizel", "trims": ["Low Roof", "High Roof"]}]}
+        ]
+    },
+    # SCANIA
+    {
+        "brand": "Scania",
+        "series": [
+            {"name": "R Serisi / S Serisi", "models": [{"name": "R 450 / S 500", "engine_code": "DC13 148 / DC13 155", "fuel": "Dizel", "trims": ["Highline", "Streamline", "V8"]}]}
+        ]
+    },
+    # MAN
+    {
+        "brand": "MAN",
+        "series": [
+            {"name": "TGX / TGS", "models": [{"name": "18.440 / 18.480", "engine_code": "D2676 LF46", "fuel": "Dizel", "trims": ["EfficientLine", "XXL"]}]}
+        ]
     }
 ]
 
@@ -355,4 +413,4 @@ code_content = f"export const CAR_DATABASE = {json.dumps(car_database, ensure_as
 with open("src/constants/carDatabase.js", "w", encoding="utf-8") as f:
     f.write(code_content)
 
-print("Generated carDatabase.js successfully with engine codes for", len(car_database), "brands.")
+print("Generated carDatabase.js successfully with engine codes and complete Turkish catalog.")
