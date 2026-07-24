@@ -1535,17 +1535,155 @@ export const CAR_DATABASE = [
     brand: "Maserati",
     series: [
       {
-        name: "Ghibli",
-        models: [
-          { name: "3.0 V6 Diesel 275", fuel: "Dizel", trims: ["GranSport", "GranLusso"] },
-          { name: "2.0 Mild Hybrid 330", fuel: "Hibrit", trims: ["Modena", "GranLusso"] }
-        ]
-      },
-      {
         name: "Levante",
         models: [
           { name: "3.0 V6 Diesel 275", fuel: "Dizel", trims: ["GranLusso", "GranSport"] },
           { name: "2.0 Mild Hybrid 330", fuel: "Hibrit", trims: ["Modena", "GT"] }
+        ]
+      }
+    ]
+  },
+  {
+    brand: "Chery",
+    series: [
+      {
+        name: "Omoda 5",
+        models: [
+          { name: "1.6 TGDI 183", fuel: "Benzin", trims: ["Comfort", "Luxury", "Excellent"] }
+        ]
+      },
+      {
+        name: "Tiggo 7 Pro",
+        models: [
+          { name: "1.6 TGDI 183", fuel: "Benzin", trims: ["Comfort", "Luxury", "Excellent"] }
+        ]
+      },
+      {
+        name: "Tiggo 8 Pro",
+        models: [
+          { name: "1.6 TGDI 183", fuel: "Benzin", trims: ["Luxury", "Excellent"] }
+        ]
+      }
+    ]
+  },
+  {
+    brand: "Cupra",
+    series: [
+      {
+        name: "Formentor",
+        models: [
+          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Base", "VZ", "VZ5"] },
+          { name: "1.4 e-Hybrid 245", fuel: "Hibrit", trims: ["VZ"] },
+          { name: "2.0 TSI 310", fuel: "Benzin", trims: ["VZ"] }
+        ]
+      },
+      {
+        name: "Leon",
+        models: [
+          { name: "1.5 eTSI 150", fuel: "Hibrit", trims: ["Base", "VZ"] },
+          { name: "2.0 TSI 300", fuel: "Benzin", trims: ["VZ"] }
+        ]
+      },
+      {
+        name: "Born",
+        models: [
+          { name: "58kWh 204", fuel: "Elektrik", trims: ["Base", "e-Boost"] },
+          { name: "77kWh 231", fuel: "Elektrik", trims: ["e-Boost"] }
+        ]
+      }
+    ]
+  },
+  {
+    brand: "SsangYong / KGM",
+    series: [
+      {
+        name: "Torres",
+        models: [
+          { name: "1.5 GDI Turbo 163", fuel: "Benzin", trims: ["Limited", "Platinum"] },
+          { name: "EVX (Elektrik)", fuel: "Elektrik", trims: ["Platinum"] }
+        ]
+      },
+      {
+        name: "Korando",
+        models: [
+          { name: "1.5 GDI Turbo 163", fuel: "Benzin", trims: ["Limited", "Platinum"] },
+          { name: "1.6 e-XDi 136", fuel: "Dizel", trims: ["Limited", "Platinum"] }
+        ]
+      },
+      {
+        name: "Musso Grand",
+        models: [
+          { name: "2.2 e-XDi 202", fuel: "Dizel", trims: ["Platinum", "Titanium"] }
+        ]
+      }
+    ]
+  },
+  {
+    brand: "Mini",
+    series: [
+      {
+        name: "Cooper",
+        models: [
+          { name: "1.5 Cooper 136", fuel: "Benzin", trims: ["Classic", "Favoured", "JCW"] },
+          { name: "2.0 Cooper S 178", fuel: "Benzin", trims: ["S", "JCW"] },
+          { name: "Cooper SE (Elektrik)", fuel: "Elektrik", trims: ["E", "SE"] }
+        ]
+      },
+      {
+        name: "Countryman",
+        models: [
+          { name: "1.5 Cooper 136", fuel: "Benzin", trims: ["Classic", "Favoured", "JCW"] },
+          { name: "2.0 Cooper D 150", fuel: "Dizel", trims: ["ALL4", "Favoured"] },
+          { name: "SE ALL4 (Elektrik)", fuel: "Elektrik", trims: ["Favoured", "JCW"] }
+        ]
+      }
+    ]
+  },
+  {
+    brand: "DS Automobiles",
+    series: [
+      {
+        name: "DS 4",
+        models: [
+          { name: "1.2 PureTech 130", fuel: "Benzin", trims: ["Bastille", "Trocadero", "Rivoli", "Performance Line"] },
+          { name: "1.5 BlueHDi 130", fuel: "Dizel", trims: ["Trocadero", "Rivoli"] }
+        ]
+      },
+      {
+        name: "DS 7",
+        models: [
+          { name: "1.5 BlueHDi 130", fuel: "Dizel", trims: ["Bastille", "Trocadero", "Rivoli", "Opera"] },
+          { name: "E-TENSE 4x4 300", fuel: "Hibrit", trims: ["Rivoli", "Opera"] }
+        ]
+      }
+    ]
+  },
+  {
+    brand: "Isuzu",
+    series: [
+      {
+        name: "D-Max",
+        models: [
+          { name: "1.9 Ddi 163", fuel: "Dizel", trims: ["V-Cross", "V-Life", "V-Joy", "V-Go"] }
+        ]
+      },
+      {
+        name: "N-Series",
+        models: [
+          { name: "NLR 3.0", fuel: "Dizel", trims: ["Standart", "Şasi"] },
+          { name: "NPR 5.2", fuel: "Dizel", trims: ["Şasi", "Kamyon"] }
+        ]
+      }
+    ]
+  },
+  {
+    brand: "IVECO",
+    series: [
+      {
+        name: "Daily",
+        models: [
+          { name: "2.3 HPI 136", fuel: "Dizel", trims: ["35S13", "35C15", "50C15"] },
+          { name: "3.0 HPI 180", fuel: "Dizel", trims: ["35S18", "70C18"] }
         ]
       }
     ]
