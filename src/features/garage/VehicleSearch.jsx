@@ -130,6 +130,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
         model: `${selection.series} ${selection.model || ""}`.trim(),
         year: selection.year,
         engine: `${selection.trim || ""} - ${selection.fuel || ""}`.trim().replace(/^-\s*|\s*-$/, ""),
+        engine_code: selectedModelData?.engine_code || "",
         plate: selection.plate ? selection.plate.toUpperCase().replace(/\s+/g, '') : "34" + (Math.random() + 1).toString(36).substring(7).toUpperCase(),
         km: selection.km,
       });
@@ -400,6 +401,11 @@ const VehicleSearch = ({ onVehicleFound }) => {
                         <p className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors">
                           {mod.name}
                         </p>
+                        {mod.engine_code && (
+                          <p className="text-[9px] font-mono text-primary-500 font-bold mt-0.5 tracking-wider">
+                            ⚙️ Motor Kodu: {mod.engine_code}
+                          </p>
+                        )}
                       </div>
                       <div className="flex items-center gap-2">
                         <span className={`px-2.5 py-0.5 rounded-full text-[8px] font-black uppercase border ${getFuelBadgeColor(mod.fuel)}`}>
@@ -466,10 +472,15 @@ const VehicleSearch = ({ onVehicleFound }) => {
                     <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
                       {selection.model} • <span className="text-primary-400">{selection.trim}</span>
                     </p>
-                    <div className="flex gap-2 pt-1.5">
+                    <div className="flex flex-wrap gap-2 pt-1.5">
                       <span className="bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-full text-[8px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest border border-black/5 dark:border-white/5">
                         {selection.fuel}
                       </span>
+                      {selectedModelData?.engine_code && (
+                        <span className="bg-primary-500/10 text-primary-400 px-2.5 py-0.5 rounded-full text-[8px] font-mono font-bold uppercase tracking-widest border border-primary-500/20">
+                          ⚙️ Motor: {selectedModelData.engine_code}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
