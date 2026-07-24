@@ -8,13 +8,9 @@ import { useUI } from '../../context/UIContext';
 import { useGarage } from '../../context/GarageContext';
 import FilterModal from '../../components/modals/FilterModal';
 
-const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFavorite, addToCart, setSelectedProduct, winnerOffer }) => {
-    const isCompatible = currentVehicle && product.compatibility?.some(comp => {
-        const brandMatch = comp.brand.toLowerCase() === currentVehicle.brand.toLowerCase();
-        const modelMatch = comp.model ? (comp.model.toLowerCase().includes(currentVehicle.model.toLowerCase()) || currentVehicle.model.toLowerCase().includes(comp.model.toLowerCase())) : true;
-        return brandMatch && modelMatch;
-    });
+import PartCompatibilityBadge from './components/PartCompatibilityBadge';
 
+const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFavorite, addToCart, setSelectedProduct, winnerOffer }) => {
     return (
         <div onClick={() => setSelectedProduct(product)} className="glass-card p-3 rounded-[2rem] border border-black/5 dark:border-white/5 shadow-2xl hover:border-primary-500/30 transition-all cursor-pointer group relative active-scale overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -25,10 +21,8 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
                         <ShieldCheck size={8} /> ONAYLI
                     </div>
                 )}
-                {isCompatible && (
-                    <div className="bg-green-600 text-slate-900 dark:text-white text-[8px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg border border-green-400/20 uppercase tracking-widest">
-                        <CircleCheck size={8} /> %100 UYUMLU
-                    </div>
+                {currentVehicle && (
+                    <PartCompatibilityBadge part={product} vehicle={currentVehicle} />
                 )}
             </div>
 

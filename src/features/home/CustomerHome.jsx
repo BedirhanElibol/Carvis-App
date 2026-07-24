@@ -15,6 +15,7 @@ import OnboardingSlides from "../../components/onboarding/OnboardingSlides";
 import VehiclePassport from "./components/VehiclePassport";
 import ProactiveAlerts from "../../components/home/ProactiveAlerts";
 import FinancialCockpit from "../../components/home/FinancialCockpit";
+import SmartMaintenanceTimeline from "../garage/components/SmartMaintenanceTimeline";
 import { triggerHaptic } from "../../utils/haptics";
 import Footer from "../../components/layout/Footer";
 import { getNearbyProviders, getCityMetadata, getEGMEDSMarkers } from "../../services/externalApis";
@@ -566,6 +567,17 @@ const CustomerHome = () => {
                   </div>
                 </div>
               </div>
+            )}
+
+            {/* FINANCIAL COCKPIT & SMART MAINTENANCE TIMELINE */}
+            {activeVehicle && (
+              <>
+                <FinancialCockpit vehicle={activeVehicle} />
+                <SmartMaintenanceTimeline
+                  vehicle={activeVehicle}
+                  onBookMaintenance={() => navigate("/app/mechanics")}
+                />
+              </>
             )}
 
             {/* UNIFIED CUSTOMER MANAGEMENT COCKPIT GRID */}
