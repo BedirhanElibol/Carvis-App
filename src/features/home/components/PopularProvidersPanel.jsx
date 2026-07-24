@@ -2,8 +2,11 @@ import React, { useState, memo } from "react";
 import { ChevronRight, FileText, Flame, HeartHandshake, Loader2, MapPin, Maximize, Navigation, ShieldCheck, Star, Video } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import LocationMap from "../../../components/ui/LocationMap";
+import { useGarage } from "../../../context/GarageContext";
 
-const PopularProvidersPanel = memo(({ t, isLoadingProviders, nearbyProviders, edsMarkers, mapCenter }) => {
+const PopularProvidersPanel = memo(({ t, isLoadingProviders, nearbyProviders, edsMarkers, mapCenter, activeVehicle }) => {
+  const { currentVehicle } = useGarage();
+  const targetVehicle = activeVehicle || currentVehicle;
   const [hoveredPin, setHoveredPin] = useState(null);
   const navigate = useNavigate();
 
@@ -63,6 +66,14 @@ const PopularProvidersPanel = memo(({ t, isLoadingProviders, nearbyProviders, ed
                 </div>
 
                 <div>
+                  {targetVehicle && targetVehicle.brand && (
+                    <div className="mb-2">
+                      <span className="text-[9px] bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-black tracking-widest uppercase flex items-center gap-1 w-fit shadow-sm">
+                        🏷️ {targetVehicle.brand} Özel Servis Uzmanı
+                      </span>
+                    </div>
+                  )}
+
                   <div className="flex flex-wrap gap-2 mt-2">
                     {prov.features && prov.features.map((feat, idx) => (
                       <span key={idx} className="text-[9px] bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 px-2 py-1 rounded-full font-bold tracking-widest uppercase border border-black/5 dark:border-white/5">

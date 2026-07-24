@@ -24,6 +24,7 @@ import PopularProvidersPanel from "./components/PopularProvidersPanel";
 import FeaturedDealsPanel from "./components/FeaturedDealsPanel";
 import HowItWorksPanel from "./components/HowItWorksPanel";
 import IssueReportingModal from "../../components/home/IssueReportingModal";
+import OBDSearchModal from "../../components/modals/OBDSearchModal";
 import { useFuelPrices } from "../../hooks/useFuelPrices";
 
 // Service Categories and Featured Deals moved inside the component to use t
@@ -119,6 +120,7 @@ const CustomerHome = () => {
 
 
 
+  const [showOBDModal, setShowOBDModal] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(() => {
     try {
       return !localStorage.getItem("__SAFE_TOKEN_6__rapidsy_onboarding__END_TOKEN_6___seen");
@@ -630,6 +632,21 @@ const CustomerHome = () => {
                 </button>
 
                 <button
+                  onClick={() => setShowOBDModal(true)}
+                  className="bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-cyan-500/30 hover:border-cyan-400 transition-all text-left group shadow-xl active-scale relative overflow-hidden backdrop-blur-xl"
+                >
+                  <div className="bg-cyan-500/20 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-cyan-500/40 text-cyan-400">
+                    <Activity size={24} className="animate-pulse" />
+                  </div>
+                  <h4 className="font-mono font-black text-white text-xs uppercase tracking-wider">
+                    OBD-II KODU ARAMA
+                  </h4>
+                  <p className="text-[10px] text-cyan-200/50 mt-1 font-sans">
+                    Arıza Kodu Sorgula
+                  </p>
+                </button>
+
+                <button
                   onClick={() => navigate("/orders")}
                   className="bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-white/10 hover:border-amber-500/50 transition-all text-left group shadow-xl active-scale relative overflow-hidden backdrop-blur-xl"
                 >
@@ -1089,6 +1106,11 @@ const CustomerHome = () => {
         isOpen={showIssueModal} 
         onClose={() => setShowIssueModal(false)}
         t={t}
+      />
+
+      <OBDSearchModal
+        isOpen={showOBDModal}
+        onClose={() => setShowOBDModal(false)}
       />
 
       <Footer />

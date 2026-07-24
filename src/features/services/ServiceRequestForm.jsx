@@ -9,6 +9,7 @@ import { AlertCircle, Banknote, Camera, Car, ChevronLeft, FileText, HelpCircle, 
 const Icons = { Activity, Volume2, Flame, ChevronsDown, CircleSlash, Droplets, Wind, ZapOff };
 
 const SYMPTOMS_LIST = [
+  { id: "obd_code", label: "OBD Arıza Kodu", icon: "Activity", desc: "Göstergede yanan DTC motor arıza kodu", color: "text-cyan-400" },
   { id: "vibration", label: "Titreme / Sarsıntı", icon: "Activity", desc: "Pedalda veya direksiyonda sarsıntı", color: "text-amber-400" },
   { id: "noise", label: "Garip Sesler", icon: "Volume2", desc: "Motordan veya tekerden tıkırtı/ıslık", color: "text-blue-400" },
   { id: "overheating", label: "Hararet / Isınma", icon: "Flame", desc: "Hararet göstergesi yüksek seviyede", color: "text-red-400" },
