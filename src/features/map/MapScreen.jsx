@@ -477,11 +477,25 @@ const MapScreen = () => {
                 </button>
               ))}
             </div>
-            <div className="mt-8 flex items-center justify-center gap-2 bg-emerald-500/10 p-4 rounded-2xl border border-emerald-500/20">
-              <ShieldCheck size={18} className="text-emerald-500" />
-              <span className="text-[10px] font-black text-emerald-500 uppercase">
-                Resmi Rapidsy Güvencesi Altındasınız
-              </span>
+
+            <div className="mt-6 flex flex-col gap-3">
+              <a
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                  `🚨 ACİL YOL YARDIM / SOS UYARISI!\nYoldayım ve yardıma ihtiyacım var. Canlı Konumum: https://maps.google.com/?q=${userLocation?.lat || 41.0082},${userLocation?.lng || 28.9784}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-widest py-3.5 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 transition-all active-scale"
+              >
+                📱 Canlı GPS Konumumu Yakınlarıma Gönder (WhatsApp)
+              </a>
+
+              <div className="flex items-center justify-center gap-2 bg-emerald-500/10 p-3.5 rounded-2xl border border-emerald-500/20">
+                <ShieldCheck size={18} className="text-emerald-500" />
+                <span className="text-[10px] font-black text-emerald-500 uppercase">
+                  Resmi Rapidsy Güvencesi Altındasınız
+                </span>
+              </div>
             </div>
           </div>
         </div>

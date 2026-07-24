@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Heart, ShieldCheck, Truck, PackageCheck, FileBadge, ChevronRight, ArrowRight } from 'lucide-react';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { useShop } from '../../../context/ShopContext';
+import { useGarage } from '../../../context/GarageContext';
 
 const ProductHero = ({ product, winnerOffer, buyBoxPrice, t }) => {
     const navigate = useNavigate();
     const { addToCart, toggleFavorite, favorites } = useShop();
+    const { currentVehicle } = useGarage();
     const [showCert, setShowCert] = useState(false);
 
     const handleBuyNow = async () => {
@@ -52,6 +54,28 @@ const ProductHero = ({ product, winnerOffer, buyBoxPrice, t }) => {
                             <div className="h-px bg-black/10 dark:bg-white/10 flex-1"></div>
                         </div>
                         <h3 className="font-black text-3xl text-slate-900 dark:text-white italic tracking-tighter leading-none mb-3">{product.name}</h3>
+                        
+                        {/* VEHICLE COMPATIBILITY SHIELD */}
+                        {currentVehicle && (
+                          <div className={`p-4 rounded-2xl border mb-4 flex items-center gap-3 shadow-lg ${
+                            !product.compatibility_tags || product.compatibility_tags.length === 0 || product.compatibility_tags.some(comp => comp.toLowerCase().includes(currentVehicle.brand?.toLowerCase()) || comp.toLowerCase().includes(currentVehicle.model?.toLowerCase()))
+                              ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                              : "bg-amber-500/10 border-amber-500/30 text-amber-400"
+                          }`}>
+                            <ShieldCheck size={24} className="shrink-0" />
+                            <div>
+                              <p className="text-[10px] font-black uppercase tracking-widest leading-none">
+                                {!product.compatibility_tags || product.compatibility_tags.length === 0 || product.compatibility_tags.some(comp => comp.toLowerCase().includes(currentVehicle.brand?.toLowerCase()) || comp.toLowerCase().includes(currentVehicle.model?.toLowerCase()))
+                                  ? "✅ %100 ARAÇ UYUMLULUK KALKANI"
+                                  : "⚠️ UYUMLULUK KONTROL EDİLMELİ"}
+                              </p>
+                              <p className="text-xs font-bold mt-1 text-slate-900 dark:text-white">
+                                Seçili Aracınız: <strong className="text-emerald-400">{currentVehicle.brand} {currentVehicle.model} ({currentVehicle.plate})</strong>
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
                         <div className="flex flex-wrap gap-4 text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
                             <div className="flex items-center gap-2 bg-black/5 dark:bg-white/5 px-3 py-1.5 rounded-full border border-black/5 dark:border-white/5">
                                 <PackageCheck size={14} className="text-green-500" />

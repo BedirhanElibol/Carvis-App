@@ -483,17 +483,26 @@ const QuoteDetailScreen = () => {
                     Teklif Kabul Edildi
                   </p>
                   <p className="text-sm text-slate-600 dark:text-slate-300">
-                    Satıcı ile iletişime geçebilirsiniz.
+                    Satıcı ile iletişime geçebilir veya servise geliş tarihinizi randevulaştırabilirsiniz.
                   </p>
                 </div>
               </div>
             </div>
-            <button
-              onClick={() => navigate(`/payment/${quote.id}`)}
-              className="w-full bg-primary-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-slate-900 dark:text-white active-scale"
-            >
-              💳 Ödeme Yap
-            </button>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => navigate(`/payment/${quote.id}`)}
+                className="bg-primary-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-slate-900 dark:text-white active-scale"
+              >
+                💳 Ödeme Yap
+              </button>
+              <button
+                onClick={() => navigate("/appointments")}
+                className="glass-card border border-primary-500/30 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-primary-400 hover:bg-primary-500/10 transition-all active-scale"
+              >
+                📅 Randevu Oluştur
+              </button>
+            </div>
           </div>
         )}
       </div>

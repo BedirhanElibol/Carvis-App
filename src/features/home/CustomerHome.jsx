@@ -236,12 +236,31 @@ const CustomerHome = () => {
     return date.toLocaleDateString("tr-TR", { day: "numeric", month: "short", year: "numeric" }).toUpperCase();
   }, [activeVehicle, isCommercialVehicle]);
 
+  const daysUntilInspection = useMemo(() => {
+    const baseDateStr = activeVehicle?.last_inspection_date || activeVehicle?.inspection_date;
+    if (!baseDateStr) return null;
+    const date = new Date(baseDateStr);
+    const addYears = isCommercialVehicle ? 1 : 2;
+    date.setFullYear(date.getFullYear() + addYears);
+    const diffMs = date - new Date();
+    return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+  }, [activeVehicle, isCommercialVehicle]);
+
   const nextInsuranceDateFormatted = useMemo(() => {
     const baseDateStr = activeVehicle?.last_insurance_date || activeVehicle?.insurance_expiry_date;
     if (!baseDateStr) return null;
     const date = new Date(baseDateStr);
     date.setFullYear(date.getFullYear() + 1);
     return date.toLocaleDateString("tr-TR", { day: "numeric", month: "short", year: "numeric" }).toUpperCase();
+  }, [activeVehicle]);
+
+  const daysUntilInsurance = useMemo(() => {
+    const baseDateStr = activeVehicle?.last_insurance_date || activeVehicle?.insurance_expiry_date;
+    if (!baseDateStr) return null;
+    const date = new Date(baseDateStr);
+    date.setFullYear(date.getFullYear() + 1);
+    const diffMs = date - new Date();
+    return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
   }, [activeVehicle]);
 
   const nextMaintenanceKm = useMemo(() => {
@@ -679,13 +698,26 @@ const CustomerHome = () => {
 
                   {nextInspectionDateFormatted && (
                     <div className="relative">
-                      <div className="absolute -left-[25px] top-1 w-2.5 h-2.5 rounded-full bg-sky-400 border-2 border-[#0a0f24] shadow-xl"></div>
+                      <div className={`absolute -left-[25px] top-1 w-2.5 h-2.5 rounded-full border-2 border-[#0a0f24] shadow-xl ${
+                        daysUntilInspection !== null && daysUntilInspection <= 30 ? "bg-red-500 animate-ping" : "bg-sky-400"
+                      }`}></div>
                       <div className="flex justify-between items-start">
                         <div>
-                          <h4 className="text-xs font-sans font-black text-white uppercase leading-none">{t.tuvturkInspection}</h4>
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-xs font-sans font-black text-white uppercase leading-none">{t.tuvturkInspection}</h4>
+                            {daysUntilInspection !== null && (
+                              <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full ${
+                                daysUntilInspection <= 0 ? "bg-red-500 text-white" :
+                                daysUntilInspection <= 30 ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" :
+                                "bg-sky-500/20 text-sky-400"
+                              }`}>
+                                {daysUntilInspection <= 0 ? "GÜNÜ GEÇTİ!" : `${daysUntilInspection} GÜN KALDI`}
+                              </span>
+                            )}
+                          </div>
                           <p className="text-[10px] text-cyan-100/50 mt-1">{t.inspectionApproaching}</p>
                         </div>
-                        <span className="text-[10px] font-mono font-black text-sky-400 uppercase ">
+                        <span className="text-[10px] font-mono font-black text-sky-400 uppercase">
                           {nextInspectionDateFormatted}
                         </span>
                       </div>
@@ -694,10 +726,23 @@ const CustomerHome = () => {
 
                   {nextInsuranceDateFormatted && (
                     <div className="relative">
-                      <div className="absolute -left-[25px] top-1 w-2.5 h-2.5 rounded-full bg-slate-400 border-2 border-[#0a0f24] shadow-xl"></div>
+                      <div className={`absolute -left-[25px] top-1 w-2.5 h-2.5 rounded-full border-2 border-[#0a0f24] shadow-xl ${
+                        daysUntilInsurance !== null && daysUntilInsurance <= 30 ? "bg-amber-500 animate-ping" : "bg-slate-400"
+                      }`}></div>
                       <div className="flex justify-between items-start">
                         <div>
-                          <h4 className="text-xs font-sans font-black text-white uppercase leading-none">{t.trafficInsurance}</h4>
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-xs font-sans font-black text-white uppercase leading-none">{t.trafficInsurance}</h4>
+                            {daysUntilInsurance !== null && (
+                              <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full ${
+                                daysUntilInsurance <= 0 ? "bg-red-500 text-white" :
+                                daysUntilInsurance <= 30 ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" :
+                                "bg-emerald-500/20 text-emerald-400"
+                              }`}>
+                                {daysUntilInsurance <= 0 ? "YENİLEME GEREKİKLİ" : `${daysUntilInsurance} GÜN KALDI`}
+                              </span>
+                            )}
+                          </div>
                           <p className="text-[10px] text-cyan-100/50 mt-1">{t.policyRenewal}</p>
                         </div>
                         <span className="text-[10px] font-mono font-black text-slate-400 uppercase">
