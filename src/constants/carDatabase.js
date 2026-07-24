@@ -1,1689 +1,3067 @@
 export const CAR_DATABASE = [
   {
-    brand: "Fiat",
-    series: [
+    "brand": "Tofaş",
+    "series": [
       {
-        name: "Egea",
-        models: [
-          { name: "1.3 Multijet", fuel: "Dizel", trims: ["Easy", "Urban", "Lounge", "Street", "Pop", "Popstar"] },
-          { name: "1.4 Fire", fuel: "Benzin", trims: ["Easy", "Urban", "Lounge", "Street"] },
-          { name: "1.6 Multijet", fuel: "Dizel", trims: ["Urban", "Lounge", "Easy", "Executive"] },
-          { name: "1.5 T4 Hybrid", fuel: "Hibrit", trims: ["Urban", "Lounge", "Premium"] },
-          { name: "1.6 E-Torq", fuel: "Benzin", trims: ["Urban", "Lounge"] }
+        "name": "Şahin",
+        "models": [
+          {
+            "name": "1.6 ie",
+            "fuel": "LPG",
+            "trims": [
+              "1.6 ie",
+              "1.6 S",
+              "1.4"
+            ]
+          },
+          {
+            "name": "1.6 S",
+            "fuel": "LPG",
+            "trims": [
+              "S",
+              "Standart"
+            ]
+          }
         ]
       },
       {
-        name: "Tipo",
-        models: [
-          { name: "1.3 Multijet", fuel: "Dizel", trims: ["Easy", "Urban", "Lounge", "Mirror"] },
-          { name: "1.6 Multijet", fuel: "Dizel", trims: ["Easy", "Urban", "Lounge", "City Life", "Cross"] },
-          { name: "1.4 Fire", fuel: "Benzin", trims: ["Easy", "Urban"] }
+        "name": "Doğan",
+        "models": [
+          {
+            "name": "1.6 SLX",
+            "fuel": "LPG",
+            "trims": [
+              "SLX ie",
+              "SLX",
+              "SL",
+              "L"
+            ]
+          },
+          {
+            "name": "1.6 ie",
+            "fuel": "LPG",
+            "trims": [
+              "1.6 ie",
+              "SLX"
+            ]
+          }
         ]
       },
       {
-        name: "Doblo",
-        models: [
-          { name: "1.3 Multijet", fuel: "Dizel", trims: ["Easy", "Safeline", "Premio", "Urban", "Cargo"] },
-          { name: "1.6 Multijet", fuel: "Dizel", trims: ["Premio Plus", "Urban", "Elegance", "Trekking"] },
-          { name: "2.0 Multijet", fuel: "Dizel", trims: ["Premio", "Elegance"] }
+        "name": "Kartal",
+        "models": [
+          {
+            "name": "1.6 SLX",
+            "fuel": "LPG",
+            "trims": [
+              "SLX ie",
+              "SLX",
+              "S",
+              "5 Vites"
+            ]
+          }
         ]
       },
       {
-        name: "Fiorino",
-        models: [
-          { name: "1.3 Multijet", fuel: "Dizel", trims: ["Pop", "Safeline", "Premio", "Titanium"] },
-          { name: "1.4 Fire", fuel: "Benzin", trims: ["Pop", "Safeline", "Premio"] },
-          { name: "1.4 Eco (LPG)", fuel: "LPG", trims: ["Pop", "Safeline", "Premio"] }
+        "name": "Murat 131",
+        "models": [
+          {
+            "name": "1.3",
+            "fuel": "LPG",
+            "trims": [
+              "Şahin",
+              "Doğan",
+              "T-131"
+            ]
+          }
         ]
       },
       {
-        name: "Linea",
-        models: [
-          { name: "1.3 Multijet", fuel: "Dizel", trims: ["Active Plus", "Easy", "Pop", "Urban", "Emotion Plus"] },
-          { name: "1.4 Fire", fuel: "Benzin", trims: ["Active Plus", "Actual", "Easy"] },
-          { name: "1.6 Multijet", fuel: "Dizel", trims: ["Urban", "Lounge", "Emotion"] }
-        ]
-      },
-      {
-        name: "500",
-        models: [
-          { name: "1.2 Lounge", fuel: "Benzin", trims: ["Lounge", "Pop", "Cult", "Dolcevita"] },
-          { name: "1.0 Hybrid", fuel: "Hibrit", trims: ["Cult", "Dolcevita", "Club"] },
-          { name: "500e (Elektrik)", fuel: "Elektrik", trims: ["La Prima", "Icon", "Red"] }
-        ]
-      },
-      {
-        name: "Panda",
-        models: [
-          { name: "1.0 Mild Hybrid", fuel: "Hibrit", trims: ["Base", "Sport", "Cross"] },
-          { name: "1.2 Fire", fuel: "Benzin", trims: ["Pop", "Easy"] }
-        ]
-      },
-      {
-        name: "Tempra",
-        models: [
-          { name: "1.6 SXS", fuel: "Benzin", trims: ["SXS", "SX", "S", "SLX"] },
-          { name: "2.0 16V", fuel: "Benzin", trims: ["Cat", "16V"] }
-        ]
-      },
-      {
-        name: "Ducato",
-        models: [
-          { name: "2.3 Multijet 120", fuel: "Dizel", trims: ["City Van", "Cargo"] },
-          { name: "2.3 Multijet 140", fuel: "Dizel", trims: ["Jumbo", "Cargo XL"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Renault",
-    series: [
-      {
-        name: "Clio",
-        models: [
-          { name: "1.5 dCi", fuel: "Dizel", trims: ["Joy", "Touch", "Icon", "Techno"] },
-          { name: "1.0 TCe", fuel: "Benzin", trims: ["Joy", "Touch", "Icon", "Techno", "Evolution", "R.S. Line"] },
-          { name: "1.2 16V", fuel: "Benzin", trims: ["Authentique", "Joy", "Touch", "Extreme"] },
-          { name: "0.9 TCe", fuel: "Benzin", trims: ["Joy", "Touch", "Icon"] },
-          { name: "1.6 E-Tech Hybrid", fuel: "Hibrit", trims: ["Techno", "Esprit Alpine", "Evolution"] }
-        ]
-      },
-      {
-        name: "Megane",
-        models: [
-          { name: "1.5 dCi", fuel: "Dizel", trims: ["Joy", "Touch", "Icon", "Privilege", "Dynamique"] },
-          { name: "1.3 TCe", fuel: "Benzin", trims: ["Joy", "Touch", "Icon", "Techno", "R.S. Line", "Esprit Alpine"] },
-          { name: "1.6 16V", fuel: "Benzin", trims: ["Joy", "Touch", "Expression", "Authentique"] },
-          { name: "E-Tech (Elektrik)", fuel: "Elektrik", trims: ["Evolution", "Techno", "Iconic"] }
-        ]
-      },
-      {
-        name: "Taliant",
-        models: [
-          { name: "1.0 SCe", fuel: "Benzin", trims: ["Joy", "Touch", "Icon", "Techno"] },
-          { name: "1.3 TCe", fuel: "Benzin", trims: ["Techno", "Esprit Alpine"] }
-        ]
-      },
-      {
-        name: "Fluence",
-        models: [
-          { name: "1.5 dCi", fuel: "Dizel", trims: ["Joy", "Touch", "Icon", "Privilege", "Business", "Extreme"] },
-          { name: "1.6 16V", fuel: "Benzin", trims: ["Extreme", "Dynamique", "Touch", "Joy"] }
-        ]
-      },
-      {
-        name: "Symbol",
-        models: [
-          { name: "1.5 dCi", fuel: "Dizel", trims: ["Joy", "Touch", "Authentique", "Expression"] },
-          { name: "1.2 16V", fuel: "Benzin", trims: ["Joy", "Touch", "Authentique"] },
-          { name: "0.9 TCe", fuel: "Benzin", trims: ["Joy", "Touch"] }
-        ]
-      },
-      {
-        name: "Captur",
-        models: [
-          { name: "1.0 TCe", fuel: "Benzin", trims: ["Joy", "Touch", "Icon", "Techno"] },
-          { name: "1.3 TCe", fuel: "Benzin", trims: ["Techno", "Esprit Alpine"] },
-          { name: "1.5 dCi", fuel: "Dizel", trims: ["Joy", "Touch", "Icon"] },
-          { name: "E-Tech Plug-in", fuel: "Hibrit", trims: ["Edition One", "Esprit Alpine"] }
-        ]
-      },
-      {
-        name: "Austral",
-        models: [
-          { name: "1.2 Mild Hybrid", fuel: "Hibrit", trims: ["Techno", "Esprit Alpine"] },
-          { name: "1.3 Mild Hybrid", fuel: "Hibrit", trims: ["Techno", "Esprit Alpine"] }
-        ]
-      },
-      {
-        name: "Kangoo",
-        models: [
-          { name: "1.5 dCi", fuel: "Dizel", trims: ["Confort", "Authentique"] },
-          { name: "1.0 TCe", fuel: "Benzin", trims: ["Confort", "Equilibre"] },
-          { name: "E-Tech (Elektrik)", fuel: "Elektrik", trims: ["Techno"] }
-        ]
-      },
-      {
-        name: "Zoe",
-        models: [
-          { name: "R110 (Elektrik)", fuel: "Elektrik", trims: ["Life", "Zen", "Iconic"] },
-          { name: "R135 (Elektrik)", fuel: "Elektrik", trims: ["Iconic", "R135"] }
+        "name": "Murat 124",
+        "models": [
+          {
+            "name": "1.2 Hacı Murat",
+            "fuel": "Benzin",
+            "trims": [
+              "Standart"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Volkswagen",
-    series: [
+    "brand": "Anadol",
+    "series": [
       {
-        name: "Golf",
-        models: [
-          { name: "1.6 TDI", fuel: "Dizel", trims: ["Trendline", "Comfortline", "Highline"] },
-          { name: "1.5 TSI eTSI", fuel: "Benzin", trims: ["Life", "Style", "R-Line"] },
-          { name: "1.0 TSI", fuel: "Benzin", trims: ["Impression", "Life", "Style", "R-Line"] },
-          { name: "2.0 GTI", fuel: "Benzin", trims: ["GTI", "GTI Clubsport"] },
-          { name: "GTE Plug-in", fuel: "Hibrit", trims: ["GTE"] }
+        "name": "A1",
+        "models": [
+          {
+            "name": "1.2 MK1",
+            "fuel": "Benzin",
+            "trims": [
+              "Klasik"
+            ]
+          }
         ]
       },
       {
-        name: "Passat",
-        models: [
-          { name: "1.6 TDI", fuel: "Dizel", trims: ["Trendline", "Comfortline", "Highline", "Impression", "Business", "Elegance"] },
-          { name: "2.0 TDI", fuel: "Dizel", trims: ["Highline", "Elegance", "Business", "Comfortline"] },
-          { name: "1.5 TSI", fuel: "Benzin", trims: ["Business", "Elegance", "Impression"] }
+        "name": "A2",
+        "models": [
+          {
+            "name": "1.3 SL",
+            "fuel": "Benzin",
+            "trims": [
+              "SL"
+            ]
+          }
         ]
       },
       {
-        name: "Polo",
-        models: [
-          { name: "1.0 TSI", fuel: "Benzin", trims: ["Trendline", "Comfortline", "Highline", "Life", "Style"] },
-          { name: "1.4 TDI", fuel: "Dizel", trims: ["Trendline", "Comfortline", "Highline"] },
-          { name: "1.0 MPI", fuel: "Benzin", trims: ["Impression", "Life"] }
-        ]
-      },
-      {
-        name: "Tiguan",
-        models: [
-          { name: "1.5 TSI", fuel: "Benzin", trims: ["Life", "Style", "R-Line", "Elegance"] },
-          { name: "2.0 TDI", fuel: "Dizel", trims: ["Life", "Style", "Elegance", "R-Line"] },
-          { name: "1.4 eHybrid", fuel: "Hibrit", trims: ["eHybrid", "R-Line"] }
-        ]
-      },
-      {
-        name: "T-Roc",
-        models: [
-          { name: "1.5 TSI", fuel: "Benzin", trims: ["Life", "Style", "R-Line"] },
-          { name: "1.0 TSI", fuel: "Benzin", trims: ["Impression", "Life"] },
-          { name: "2.0 TDI", fuel: "Dizel", trims: ["Style", "R-Line"] }
-        ]
-      },
-      {
-        name: "ID.4",
-        models: [
-          { name: "Pro RWD", fuel: "Elektrik", trims: ["Pure", "Pro", "GTX"] },
-          { name: "Pro S AWD", fuel: "Elektrik", trims: ["GTX", "Pro S"] }
-        ]
-      },
-      {
-        name: "Jetta",
-        models: [
-          { name: "1.6 TDI", fuel: "Dizel", trims: ["Trendline", "Comfortline", "Highline"] },
-          { name: "1.4 TSI", fuel: "Benzin", trims: ["Trendline", "Comfortline", "Highline"] }
-        ]
-      },
-      {
-        name: "Transporter",
-        models: [
-          { name: "2.0 TDI 102", fuel: "Dizel", trims: ["Caravelle", "Multivan", "City Van"] },
-          { name: "2.0 TDI 150", fuel: "Dizel", trims: ["Caravelle Business", "Multivan"] }
-        ]
-      },
-      {
-        name: "Caddy",
-        models: [
-          { name: "2.0 TDI", fuel: "Dizel", trims: ["Life", "Style", "Cargo"] },
-          { name: "1.5 TSI", fuel: "Benzin", trims: ["Life", "Style"] }
+        "name": "STC-16",
+        "models": [
+          {
+            "name": "1.6 Sport",
+            "fuel": "Benzin",
+            "trims": [
+              "STC Coupe"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Ford",
-    series: [
+    "brand": "Fiat",
+    "series": [
       {
-        name: "Focus",
-        models: [
-          { name: "1.5 EcoBlue", fuel: "Dizel", trims: ["Trend X", "Titanium", "Active", "Active X", "ST-Line"] },
-          { name: "1.5 EcoBoost", fuel: "Benzin", trims: ["Trend X", "Titanium", "ST-Line"] },
-          { name: "1.0 EcoBoost", fuel: "Benzin", trims: ["Trend X", "Titanium"] }
+        "name": "Egea",
+        "models": [
+          {
+            "name": "1.3 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Easy",
+              "Urban",
+              "Lounge",
+              "Street",
+              "Pop",
+              "Cross"
+            ]
+          },
+          {
+            "name": "1.4 Fire",
+            "fuel": "Benzin",
+            "trims": [
+              "Easy",
+              "Urban",
+              "Lounge",
+              "Street",
+              "Cross"
+            ]
+          },
+          {
+            "name": "1.6 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Urban",
+              "Lounge",
+              "Easy",
+              "Cross",
+              "DCT"
+            ]
+          },
+          {
+            "name": "1.5 T4 Hybrid",
+            "fuel": "Hibrit",
+            "trims": [
+              "Urban",
+              "Lounge",
+              "Cross",
+              "Limited"
+            ]
+          },
+          {
+            "name": "1.6 E-Torq",
+            "fuel": "Benzin",
+            "trims": [
+              "Urban",
+              "Lounge"
+            ]
+          }
         ]
       },
       {
-        name: "Fiesta",
-        models: [
-          { name: "1.0 EcoBoost", fuel: "Benzin", trims: ["Titanium", "ST-Line", "Vignale"] },
-          { name: "1.4 TDCi", fuel: "Dizel", trims: ["Trend", "Comfort", "Titanium"] },
-          { name: "1.25 VCT", fuel: "Benzin", trims: ["Trend", "MyFiesta"] }
+        "name": "Linea",
+        "models": [
+          {
+            "name": "1.3 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Active Plus",
+              "Easy",
+              "Pop",
+              "Urban",
+              "Emotion Plus"
+            ]
+          },
+          {
+            "name": "1.4 Fire",
+            "fuel": "Benzin",
+            "trims": [
+              "Active Plus",
+              "Actual",
+              "Easy"
+            ]
+          },
+          {
+            "name": "1.6 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Urban",
+              "Lounge",
+              "Emotion"
+            ]
+          }
         ]
       },
       {
-        name: "Puma",
-        models: [
-          { name: "1.0 EcoBoost Hybrid", fuel: "Hibrit", trims: ["Trend X", "Titanium", "ST-Line", "ST-Line X", "Gold"] },
-          { name: "1.0 EcoBoost", fuel: "Benzin", trims: ["Trend X", "Titanium"] }
+        "name": "Albea",
+        "models": [
+          {
+            "name": "1.3 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Sole",
+              "Active",
+              "Dynamic",
+              "Premio"
+            ]
+          },
+          {
+            "name": "1.4 Fire",
+            "fuel": "Benzin",
+            "trims": [
+              "Sole",
+              "Active",
+              "Dynamic"
+            ]
+          },
+          {
+            "name": "1.2 16V",
+            "fuel": "Benzin",
+            "trims": [
+              "EL",
+              "HL",
+              "Dynamic"
+            ]
+          }
         ]
       },
       {
-        name: "Kuga",
-        models: [
-          { name: "2.5 PHEV", fuel: "Hibrit", trims: ["Trend", "Titanium", "ST-Line", "Vignale"] },
-          { name: "1.5 EcoBoost", fuel: "Benzin", trims: ["Trend X", "Titanium"] },
-          { name: "2.0 EcoBlue", fuel: "Dizel", trims: ["ST-Line", "Titanium", "Vignale"] }
+        "name": "Palio",
+        "models": [
+          {
+            "name": "1.3 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Sole",
+              "Active",
+              "Dynamic"
+            ]
+          },
+          {
+            "name": "1.2 16V",
+            "fuel: ": "Benzin",
+            "trims": [
+              "EL",
+              "SL",
+              "Go"
+            ]
+          },
+          {
+            "name": "1.4 EL",
+            "fuel": "Benzin",
+            "trims": [
+              "EL",
+              "SL",
+              "Weekend"
+            ]
+          }
         ]
       },
       {
-        name: "Mondeo",
-        models: [
-          { name: "2.0 TDCi", fuel: "Dizel", trims: ["Trend", "Titanium", "Selective"] },
-          { name: "1.5 EcoBoost", fuel: "Benzin", trims: ["Titanium"] }
+        "name": "Punto",
+        "models": [
+          {
+            "name": "1.3 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Pop",
+              "Easy",
+              "Lounge",
+              "Dynamic",
+              "Evo",
+              "Grande"
+            ]
+          },
+          {
+            "name": "1.4 Fire",
+            "fuel": "Benzin",
+            "trims": [
+              "Pop",
+              "Easy",
+              "Lounge",
+              "S&S"
+            ]
+          }
         ]
       },
       {
-        name: "Transit",
-        models: [
-          { name: "2.0 EcoBlue", fuel: "Dizel", trims: ["Kombi", "Custom", "Van", "Courier"] },
-          { name: "Transit Custom 2.0 TDCi", fuel: "Dizel", trims: ["Limited", "Trend", "Active"] }
+        "name": "Uno",
+        "models": [
+          {
+            "name": "70 S / SX",
+            "fuel": "Benzin",
+            "trims": [
+              "70 S",
+              "70 SX",
+              "70 SX ie"
+            ]
+          },
+          {
+            "name": "60 S",
+            "fuel": "Benzin",
+            "trims": [
+              "60 S"
+            ]
+          }
         ]
       },
       {
-        name: "Ranger",
-        models: [
-          { name: "2.0 EcoBlue", fuel: "Dizel", trims: ["XLT", "Wildtrak", "Raptor", "Platinum"] },
-          { name: "3.2 TDCI", fuel: "Dizel", trims: ["XLT", "Limited", "Wildtrak"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "BMW",
-    series: [
-      {
-        name: "1 Serisi",
-        models: [
-          { name: "116d", fuel: "Dizel", trims: ["Joy", "Sport Line", "M Sport", "Urban"] },
-          { name: "118i", fuel: "Benzin", trims: ["Sport Line", "M Sport", "Joy"] },
-          { name: "120i", fuel: "Benzin", trims: ["M Sport", "Sport Line", "Luxury Line"] }
-        ]
-      },
-      {
-        name: "3 Serisi",
-        models: [
-          { name: "320d", fuel: "Dizel", trims: ["Prestige", "Sport Line", "Luxury Line", "M Sport", "Premium"] },
-          { name: "320i", fuel: "Benzin", trims: ["M Sport", "Sport Line", "Luxury Line"] },
-          { name: "330e", fuel: "Hibrit", trims: ["M Sport", "Luxury Line"] },
-          { name: "318d", fuel: "Dizel", trims: ["Comfort", "Prestige", "Sport Line"] }
-        ]
-      },
-      {
-        name: "5 Serisi",
-        models: [
-          { name: "520d", fuel: "Dizel", trims: ["Premium", "M Sport", "Executive", "Luxury Line"] },
-          { name: "520i", fuel: "Benzin", trims: ["Premium", "M Sport", "Executive"] },
-          { name: "530e", fuel: "Hibrit", trims: ["M Sport", "Luxury Line"] }
+        "name": "Doblo",
+        "models": [
+          {
+            "name": "1.3 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Easy",
+              "Safeline",
+              "Premio",
+              "Urban",
+              "Cargo"
+            ]
+          },
+          {
+            "name": "1.6 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Premio Plus",
+              "Urban",
+              "Elegance",
+              "Trekking"
+            ]
+          },
+          {
+            "name": "2.0 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Premio",
+              "Elegance"
+            ]
+          }
         ]
       },
       {
-        name: "7 Serisi",
-        models: [
-          { name: "730d", fuel: "Dizel", trims: ["Pure Excellence", "M Sport"] },
-          { name: "740i", fuel: "Benzin", trims: ["Pure Excellence", "M Sport"] },
-          { name: "745e", fuel: "Hibrit", trims: ["Pure Excellence", "M Sport"] }
+        "name": "Fiorino",
+        "models": [
+          {
+            "name": "1.3 Multijet",
+            "fuel": "Dizel",
+            "trims": [
+              "Pop",
+              "Safeline",
+              "Premio",
+              "Titanium"
+            ]
+          },
+          {
+            "name": "1.4 Fire",
+            "fuel": "Benzin",
+            "trims": [
+              "Pop",
+              "Safeline",
+              "Premio"
+            ]
+          },
+          {
+            "name": "1.4 Eco (LPG)",
+            "fuel": "LPG",
+            "trims": [
+              "Pop",
+              "Safeline",
+              "Premio"
+            ]
+          }
         ]
       },
       {
-        name: "X1",
-        models: [
-          { name: "sDrive18i", fuel: "Benzin", trims: ["xLine", "M Sport"] },
-          { name: "sDrive18d", fuel: "Dizel", trims: ["xLine", "M Sport"] },
-          { name: "xDrive23e", fuel: "Hibrit", trims: ["M Sport", "xLine"] }
-        ]
-      },
-      {
-        name: "X3",
-        models: [
-          { name: "xDrive20d", fuel: "Dizel", trims: ["xLine", "M Sport", "Luxury Line"] },
-          { name: "xDrive20i", fuel: "Benzin", trims: ["xLine", "M Sport"] },
-          { name: "xDrive30e", fuel: "Hibrit", trims: ["M Sport"] }
-        ]
-      },
-      {
-        name: "X5",
-        models: [
-          { name: "xDrive30d", fuel: "Dizel", trims: ["xLine", "M Sport", "Luxury"] },
-          { name: "45e", fuel: "Hibrit", trims: ["M Sport", "xLine"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Mercedes-Benz",
-    series: [
-      {
-        name: "A Serisi",
-        models: [
-          { name: "A 180 d", fuel: "Dizel", trims: ["Style", "Urban", "AMG"] },
-          { name: "A 200", fuel: "Benzin", trims: ["AMG", "Progressive", "Style"] },
-          { name: "A 180", fuel: "Benzin", trims: ["Style", "Urban", "AMG"] }
-        ]
-      },
-      {
-        name: "C Serisi",
-        models: [
-          { name: "C 200 d", fuel: "Dizel", trims: ["AMG", "Avantgarde", "Exclusive", "Style"] },
-          { name: "C 180", fuel: "Benzin", trims: ["Fascination", "AMG", "Style", "Exclusive"] },
-          { name: "C 300 e", fuel: "Hibrit", trims: ["AMG", "Exclusive"] }
-        ]
-      },
-      {
-        name: "E Serisi",
-        models: [
-          { name: "E 220 d", fuel: "Dizel", trims: ["AMG", "Exclusive", "Avantgarde", "Fascination"] },
-          { name: "E 180", fuel: "Benzin", trims: ["Elite", "Edition", "Avantgarde", "AMG"] },
-          { name: "E 300 e", fuel: "Hibrit", trims: ["Exclusive", "AMG"] }
-        ]
-      },
-      {
-        name: "GLA",
-        models: [
-          { name: "GLA 180 d", fuel: "Dizel", trims: ["Style", "Progressive", "AMG"] },
-          { name: "GLA 200", fuel: "Benzin", trims: ["AMG", "Progressive", "Style"] }
-        ]
-      },
-      {
-        name: "GLC",
-        models: [
-          { name: "GLC 200 d", fuel: "Dizel", trims: ["AMG", "Style", "Exclusive"] },
-          { name: "GLC 200", fuel: "Benzin", trims: ["AMG", "Style", "Exclusive"] },
-          { name: "GLC 300 e", fuel: "Hibrit", trims: ["AMG", "Style"] }
-        ]
-      },
-      {
-        name: "S Serisi",
-        models: [
-          { name: "S 350 d", fuel: "Dizel", trims: ["Exclusive", "AMG"] },
-          { name: "S 450", fuel: "Benzin", trims: ["Exclusive", "Maybach"] },
-          { name: "S 580 e", fuel: "Hibrit", trims: ["Exclusive", "Maybach"] }
-        ]
-      },
-      {
-        name: "Vito",
-        models: [
-          { name: "110 CDI", fuel: "Dizel", trims: ["Tourer", "Cargo"] },
-          { name: "119 CDI", fuel: "Dizel", trims: ["Tourer", "Cargo"] }
-        ]
-      },
-      {
-        name: "Sprinter",
-        models: [
-          { name: "314 CDI", fuel: "Dizel", trims: ["City Van", "Cargo"] },
-          { name: "319 CDI", fuel: "Dizel", trims: ["City Van", "Cargo XL"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Audi",
-    series: [
-      {
-        name: "A1",
-        models: [
-          { name: "25 TFSI", fuel: "Benzin", trims: ["Advanced", "S Line"] },
-          { name: "30 TFSI", fuel: "Benzin", trims: ["Advanced", "S Line", "edition one"] }
-        ]
-      },
-      {
-        name: "A3",
-        models: [
-          { name: "35 TFSI", fuel: "Benzin", trims: ["Advanced", "S Line", "Design", "Sport"] },
-          { name: "35 TDI", fuel: "Dizel", trims: ["Advanced", "S Line", "Design"] },
-          { name: "40 TFSI e", fuel: "Hibrit", trims: ["S Line"] }
-        ]
-      },
-      {
-        name: "A4",
-        models: [
-          { name: "40 TDI", fuel: "Dizel", trims: ["Advanced", "S Line", "Design"] },
-          { name: "35 TFSI", fuel: "Benzin", trims: ["Dynamic", "Sport", "S Line"] },
-          { name: "50 TFSIe", fuel: "Hibrit", trims: ["S Line"] }
-        ]
-      },
-      {
-        name: "A6",
-        models: [
-          { name: "40 TDI", fuel: "Dizel", trims: ["Prestige", "Exclusive", "S Line"] },
-          { name: "45 TFSI", fuel: "Benzin", trims: ["Design", "Sport", "S Line"] }
-        ]
-      },
-      {
-        name: "Q2",
-        models: [
-          { name: "30 TFSI", fuel: "Benzin", trims: ["Advanced", "S Line"] },
-          { name: "35 TFSI", fuel: "Benzin", trims: ["S Line", "edition one"] }
-        ]
-      },
-      {
-        name: "Q3",
-        models: [
-          { name: "35 TFSI", fuel: "Benzin", trims: ["Advanced", "S Line"] },
-          { name: "35 TDI", fuel: "Dizel", trims: ["Advanced", "S Line"] },
-          { name: "45 TFSI e", fuel: "Hibrit", trims: ["S Line"] }
-        ]
-      },
-      {
-        name: "Q5",
-        models: [
-          { name: "35 TDI", fuel: "Dizel", trims: ["Advanced", "S Line"] },
-          { name: "40 TDI", fuel: "Dizel", trims: ["S Line", "Sport"] },
-          { name: "50 TFSIe", fuel: "Hibrit", trims: ["S Line"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Toyota",
-    series: [
-      {
-        name: "Corolla",
-        models: [
-          { name: "1.8 Hybrid", fuel: "Hibrit", trims: ["Dream", "Flame", "Passion", "Passion X-Pack"] },
-          { name: "2.0 Hybrid", fuel: "Hibrit", trims: ["GR Sport", "Passion"] },
-          { name: "1.5 Vision", fuel: "Benzin", trims: ["Vision", "Dream", "Flame", "Passion"] },
-          { name: "1.4 D-4D", fuel: "Dizel", trims: ["Active", "Touch", "Elegant", "Premium", "Comfort"] }
-        ]
-      },
-      {
-        name: "Yaris",
-        models: [
-          { name: "1.5 Hybrid", fuel: "Hibrit", trims: ["Dream", "Flame", "Style", "Cool"] },
-          { name: "1.33 Cool", fuel: "Benzin", trims: ["Terra", "Cool", "Style"] }
-        ]
-      },
-      {
-        name: "Yaris Cross",
-        models: [
-          { name: "1.5 Hybrid", fuel: "Hibrit", trims: ["Dream", "Flame", "Style", "GR Sport"] }
-        ]
-      },
-      {
-        name: "C-HR",
-        models: [
-          { name: "2.0 Hybrid", fuel: "Hibrit", trims: ["Flame", "Passion", "GR Sport", "Style"] },
-          { name: "1.8 Hybrid", fuel: "Hibrit", trims: ["Flame", "Passion"] }
-        ]
-      },
-      {
-        name: "RAV4",
-        models: [
-          { name: "2.5 Hybrid", fuel: "Hibrit", trims: ["Dream", "Flame", "Passion", "Adventure"] },
-          { name: "2.5 Plug-in", fuel: "Hibrit", trims: ["Dream", "Passion"] }
-        ]
-      },
-      {
-        name: "Land Cruiser",
-        models: [
-          { name: "2.8 D-4D", fuel: "Dizel", trims: ["GX", "GXL", "VX", "VXL", "Prado"] },
-          { name: "3.3 TD", fuel: "Dizel", trims: ["GX", "GXL", "300 VX"] }
-        ]
-      },
-      {
-        name: "Hilux",
-        models: [
-          { name: "2.4 D-4D 150", fuel: "Dizel", trims: ["Comfort", "Style", "Adventure", "Executive"] },
-          { name: "2.8 D-4D 204", fuel: "Dizel", trims: ["Executive", "Adventure", "GR Sport"] }
-        ]
-      },
-      {
-        name: "Proace City",
-        models: [
-          { name: "1.5D 100", fuel: "Dizel", trims: ["Comfort", "Active", "Shuttle"] },
-          { name: "Electric", fuel: "Elektrik", trims: ["Active", "Shuttle"] }
+        "name": "Ducato",
+        "models": [
+          {
+            "name": "2.3 Multijet 120/140",
+            "fuel": "Dizel",
+            "trims": [
+              "City Van",
+              "Cargo",
+              "Jumbo",
+              "Minibüs"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Peugeot",
-    series: [
+    "brand": "Renault",
+    "series": [
       {
-        name: "208",
-        models: [
-          { name: "1.2 PureTech 100", fuel: "Benzin", trims: ["Active", "Allure", "GT", "Prime"] },
-          { name: "1.5 BlueHDi 100", fuel: "Dizel", trims: ["Active", "Allure", "GT"] },
-          { name: "e-208 (Elektrik)", fuel: "Elektrik", trims: ["Active", "Allure", "GT"] }
+        "name": "Clio",
+        "models": [
+          {
+            "name": "1.5 dCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Icon",
+              "Techno",
+              "Extreme",
+              "Authentique"
+            ]
+          },
+          {
+            "name": "1.0 TCe",
+            "fuel": "Benzin",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Icon",
+              "Techno",
+              "Evolution",
+              "R.S. Line"
+            ]
+          },
+          {
+            "name": "1.2 16V",
+            "fuel": "Benzin",
+            "trims": [
+              "Authentique",
+              "Joy",
+              "Touch",
+              "Extreme"
+            ]
+          },
+          {
+            "name": "0.9 TCe",
+            "fuel": "Benzin",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Icon"
+            ]
+          },
+          {
+            "name": "1.6 E-Tech Hybrid",
+            "fuel": "Hibrit",
+            "trims": [
+              "Techno",
+              "Esprit Alpine",
+              "Evolution"
+            ]
+          }
         ]
       },
       {
-        name: "308",
-        models: [
-          { name: "1.2 PureTech 130", fuel: "Benzin", trims: ["Active", "Allure", "GT", "Style"] },
-          { name: "1.5 BlueHDi 130", fuel: "Dizel", trims: ["Allure", "GT-Line", "GT"] },
-          { name: "1.6 Plug-in", fuel: "Hibrit", trims: ["GT", "GT Pack"] }
+        "name": "Megane",
+        "models": [
+          {
+            "name": "1.5 dCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Icon",
+              "Privilege",
+              "Dynamique",
+              "GT-Line"
+            ]
+          },
+          {
+            "name": "1.3 TCe",
+            "fuel": "Benzin",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Icon",
+              "Techno",
+              "R.S. Line",
+              "Esprit Alpine"
+            ]
+          },
+          {
+            "name": "1.6 16V",
+            "fuel": "Benzin",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Expression",
+              "Authentique"
+            ]
+          },
+          {
+            "name": "E-Tech (Elektrik)",
+            "fuel": "Elektrik",
+            "trims": [
+              "Evolution",
+              "Techno",
+              "Iconic"
+            ]
+          }
         ]
       },
       {
-        name: "2008",
-        models: [
-          { name: "1.2 PureTech 100", fuel: "Benzin", trims: ["Active", "Allure", "GT"] },
-          { name: "1.5 BlueHDi 100", fuel: "Dizel", trims: ["Active", "Allure", "GT"] },
-          { name: "e-2008 (Elektrik)", fuel: "Elektrik", trims: ["Active", "Allure", "GT"] }
+        "name": "Fluence",
+        "models": [
+          {
+            "name": "1.5 dCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Icon",
+              "Privilege",
+              "Business",
+              "Extreme"
+            ]
+          },
+          {
+            "name": "1.6 16V",
+            "fuel": "Benzin",
+            "trims": [
+              "Extreme",
+              "Dynamique",
+              "Touch",
+              "Joy"
+            ]
+          }
         ]
       },
       {
-        name: "3008",
-        models: [
-          { name: "1.2 PureTech 130", fuel: "Benzin", trims: ["Active Prime", "Allure", "GT-Line", "GT"] },
-          { name: "1.5 BlueHDi 130", fuel: "Dizel", trims: ["Allure", "GT-Line", "GT"] },
-          { name: "1.6 HYbrid 225", fuel: "Hibrit", trims: ["GT", "GT Pack"] }
+        "name": "Symbol",
+        "models": [
+          {
+            "name": "1.5 dCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Authentique",
+              "Expression"
+            ]
+          },
+          {
+            "name": "1.2 16V",
+            "fuel": "Benzin",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Authentique"
+            ]
+          },
+          {
+            "name": "0.9 TCe",
+            "fuel": "Benzin",
+            "trims": [
+              "Joy",
+              "Touch"
+            ]
+          }
         ]
       },
       {
-        name: "5008",
-        models: [
-          { name: "1.2 PureTech 130", fuel: "Benzin", trims: ["Active Prime", "Allure", "GT"] },
-          { name: "1.5 BlueHDi 130", fuel: "Dizel", trims: ["Allure", "GT"] }
+        "name": "Toros / R12",
+        "models": [
+          {
+            "name": "1.4 Toros SW",
+            "fuel": "LPG",
+            "trims": [
+              "Toros",
+              "TS",
+              "GTL"
+            ]
+          },
+          {
+            "name": "1.4 Toros Sedan",
+            "fuel": "LPG",
+            "trims": [
+              "Toros",
+              "GTS"
+            ]
+          }
         ]
       },
       {
-        name: "Partner",
-        models: [
-          { name: "1.5 BlueHDi 100", fuel: "Dizel", trims: ["Comfort", "Active", "Style"] }
+        "name": "R9 Broadway / Fairway",
+        "models": [
+          {
+            "name": "1.4 Broadway",
+            "fuel": "LPG",
+            "trims": [
+              "GTE",
+              "RL",
+              "RN",
+              "RNi"
+            ]
+          },
+          {
+            "name": "1.4 Fairway",
+            "fuel": "LPG",
+            "trims": [
+              "Fairway",
+              "Spring"
+            ]
+          }
         ]
       },
       {
-        name: "408",
-        models: [
-          { name: "1.2 PureTech 130", fuel: "Benzin", trims: ["Allure", "GT"] },
-          { name: "1.6 Plug-in", fuel: "Hibrit", trims: ["Allure", "GT"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Opel",
-    series: [
-      {
-        name: "Astra",
-        models: [
-          { name: "1.2 Turbo", fuel: "Benzin", trims: ["Edition", "Elegance", "GS", "Ultimate"] },
-          { name: "1.5 D 122", fuel: "Dizel", trims: ["Edition", "Elegance", "GS"] },
-          { name: "1.6 Plug-in", fuel: "Hibrit", trims: ["GS", "Ultimate"] }
+        "name": "R11 Flash / Flash S",
+        "models": [
+          {
+            "name": "1.7 Flash S",
+            "fuel": "LPG",
+            "trims": [
+              "Flash",
+              "Flash S",
+              "GTS"
+            ]
+          }
         ]
       },
       {
-        name: "Corsa",
-        models: [
-          { name: "1.2 PureTech", fuel: "Benzin", trims: ["Essential", "Edition", "Elegance", "Ultimate", "GS"] },
-          { name: "1.5D 100", fuel: "Dizel", trims: ["Edition", "Elegance", "GS"] },
-          { name: "e-Corsa (Elektrik)", fuel: "Elektrik", trims: ["Elegance", "GS", "Ultimate"] }
+        "name": "R19 Europa",
+        "models": [
+          {
+            "name": "1.6 RT / RNE",
+            "fuel": "LPG",
+            "trims": [
+              "RT",
+              "RNE",
+              "RN",
+              "Alize"
+            ]
+          },
+          {
+            "name": "1.4 RNA",
+            "fuel": "LPG",
+            "trims": [
+              "RNA",
+              "RL"
+            ]
+          }
         ]
       },
       {
-        name: "Grandland",
-        models: [
-          { name: "1.2 Turbo", fuel: "Benzin", trims: ["Edition", "Elegance", "GS", "Ultimate"] },
-          { name: "1.5D 130", fuel: "Dizel", trims: ["Elegance", "GS"] },
-          { name: "Plug-in Hybrid", fuel: "Hibrit", trims: ["GS", "Ultimate"] }
+        "name": "Taliant",
+        "models": [
+          {
+            "name": "1.0 SCe 65",
+            "fuel": "Benzin",
+            "trims": [
+              "Joy",
+              "Touch"
+            ]
+          },
+          {
+            "name": "1.0 TCe 90",
+            "fuel": "Benzin",
+            "trims": [
+              "Touch",
+              "Icon"
+            ]
+          }
         ]
       },
       {
-        name: "Crossland",
-        models: [
-          { name: "1.2 Turbo", fuel: "Benzin", trims: ["Edition", "Elegance", "GS Line", "Ultimate"] },
-          { name: "1.5D 110", fuel: "Dizel", trims: ["Edition", "Elegance", "GS Line"] }
+        "name": "Captur",
+        "models": [
+          {
+            "name": "1.0 TCe",
+            "fuel": "Benzin",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Icon",
+              "Techno"
+            ]
+          },
+          {
+            "name": "1.3 TCe",
+            "fuel": "Benzin",
+            "trims": [
+              "Techno",
+              "Esprit Alpine"
+            ]
+          },
+          {
+            "name": "1.5 dCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Joy",
+              "Touch",
+              "Icon"
+            ]
+          }
         ]
       },
       {
-        name: "Mokka",
-        models: [
-          { name: "1.2 Turbo 100", fuel: "Benzin", trims: ["Edition", "Elegance", "GS", "Ultimate"] },
-          { name: "e-Mokka (Elektrik)", fuel: "Elektrik", trims: ["Elegance", "GS", "Ultimate"] }
+        "name": "Kangoo",
+        "models": [
+          {
+            "name": "1.5 dCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Confort",
+              "Authentique",
+              "Multix",
+              "Express"
+            ]
+          },
+          {
+            "name": "E-Tech (Elektrik)",
+            "fuel": "Elektrik",
+            "trims": [
+              "Techno"
+            ]
+          }
         ]
       },
       {
-        name: "Insignia",
-        models: [
-          { name: "1.5 CDTi 122", fuel: "Dizel", trims: ["Edition", "Elegance", "GS Line"] },
-          { name: "2.0 CDTi 170", fuel: "Dizel", trims: ["GS Line", "Elite"] }
-        ]
-      },
-      {
-        name: "Vivaro",
-        models: [
-          { name: "1.5D 100", fuel: "Dizel", trims: ["Edition", "Cargo", "Combi"] },
-          { name: "Vivaro-e (Elektrik)", fuel: "Elektrik", trims: ["Edition", "Cargo"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Hyundai",
-    series: [
-      {
-        name: "i10",
-        models: [
-          { name: "1.0 MPi", fuel: "Benzin", trims: ["Jump", "Style", "Elite"] },
-          { name: "1.2 MPi", fuel: "Benzin", trims: ["Style", "Elite"] }
-        ]
-      },
-      {
-        name: "i20",
-        models: [
-          { name: "1.0 T-GDi 100", fuel: "Benzin", trims: ["Style", "Elite", "Elite Plus", "N-Line"] },
-          { name: "1.4 MPi", fuel: "Benzin", trims: ["Jump", "Style", "Elite"] },
-          { name: "1.0 T-GDi 48V", fuel: "Hibrit", trims: ["Elite Plus", "N-Line"] }
-        ]
-      },
-      {
-        name: "i30",
-        models: [
-          { name: "1.5 T-GDi 160", fuel: "Benzin", trims: ["Prime", "N-Line", "Elite Plus"] },
-          { name: "1.6 CRDi 136", fuel: "Dizel", trims: ["Elite", "N-Line"] }
-        ]
-      },
-      {
-        name: "Tucson",
-        models: [
-          { name: "1.6 T-GDi 150", fuel: "Benzin", trims: ["Elite", "Elite Plus", "Prime", "N-Line"] },
-          { name: "1.6 CRDi 136", fuel: "Dizel", trims: ["Comfort", "Elite", "N-Line"] },
-          { name: "1.6 T-GDi 265 Hybrid", fuel: "Hibrit", trims: ["Elite Plus", "N-Line", "Plug-in"] }
-        ]
-      },
-      {
-        name: "Kona",
-        models: [
-          { name: "1.0 T-GDi 120", fuel: "Benzin", trims: ["Style", "Elite", "N-Line"] },
-          { name: "Electric 64kWh", fuel: "Elektrik", trims: ["Comfort", "Passion", "Bose"] }
-        ]
-      },
-      {
-        name: "Santa Fe",
-        models: [
-          { name: "1.6 T-GDi 265 Hybrid", fuel: "Hibrit", trims: ["Style", "Elite", "Prime"] },
-          { name: "1.6 T-GDi 300 PHEV", fuel: "Hibrit", trims: ["Prime", "Elite"] },
-          { name: "2.2 CRDi 202", fuel: "Dizel", trims: ["Elite", "Prime"] }
-        ]
-      },
-      {
-        name: "Accent Blue",
-        models: [
-          { name: "1.6 CRDi", fuel: "Dizel", trims: ["Biz", "Mode", "Mode Plus", "Prime"] },
-          { name: "1.4 D-CVVT", fuel: "Benzin", trims: ["Biz", "Mode", "Mode Plus"] }
-        ]
-      },
-      {
-        name: "Bayon",
-        models: [
-          { name: "1.0 T-GDi 100", fuel: "Benzin", trims: ["Jump", "Style", "Elite"] },
-          { name: "1.4 MPi", fuel: "Benzin", trims: ["Jump", "Style"] }
-        ]
-      },
-      {
-        name: "IONIQ 5",
-        models: [
-          { name: "RWD 58kWh", fuel: "Elektrik", trims: ["Standard Range", "Long Range"] },
-          { name: "AWD 72.6kWh", fuel: "Elektrik", trims: ["Long Range", "N"] }
-        ]
-      },
-      {
-        name: "IONIQ 6",
-        models: [
-          { name: "RWD 77.4kWh", fuel: "Elektrik", trims: ["Standard", "Long Range"] },
-          { name: "AWD 77.4kWh", fuel: "Elektrik", trims: ["Long Range", "Edition 1"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Kia",
-    series: [
-      {
-        name: "Sportage",
-        models: [
-          { name: "1.6 CRDi 136", fuel: "Dizel", trims: ["Cool", "Elegant", "Prestige"] },
-          { name: "1.6 T-GDi 150", fuel: "Benzin", trims: ["Concept", "Premium", "X-Line"] },
-          { name: "1.6 T-GDi 265 Hybrid", fuel: "Hibrit", trims: ["Prestige", "X-Line"] }
-        ]
-      },
-      {
-        name: "Ceed",
-        models: [
-          { name: "1.5 T-GDi 160", fuel: "Benzin", trims: ["Cool", "Concept", "GT-Line"] },
-          { name: "1.6 CRDi 136", fuel: "Dizel", trims: ["Cool", "Concept", "Premium"] }
-        ]
-      },
-      {
-        name: "Rio",
-        models: [
-          { name: "1.4 MPI 100", fuel: "Benzin", trims: ["Cool", "Elegant", "Prestige"] },
-          { name: "1.0 T-GDi 100", fuel: "Benzin", trims: ["GT-Line", "Prestige"] }
-        ]
-      },
-      {
-        name: "Stonic",
-        models: [
-          { name: "1.0 T-GDi 100", fuel: "Benzin", trims: ["Cool", "Concept", "Prestige", "GT-Line"] },
-          { name: "1.4 MPI 100", fuel: "Benzin", trims: ["Cool", "Concept"] }
-        ]
-      },
-      {
-        name: "Niro",
-        models: [
-          { name: "1.6 Hybrid", fuel: "Hibrit", trims: ["Cool", "Concept", "Prestige"] },
-          { name: "Plug-in 1.6", fuel: "Hibrit", trims: ["Concept", "Prestige"] },
-          { name: "EV (Elektrik)", fuel: "Elektrik", trims: ["Prestige", "Spirit"] }
-        ]
-      },
-      {
-        name: "EV6",
-        models: [
-          { name: "RWD 77.4kWh", fuel: "Elektrik", trims: ["Air", "Wind", "Earth"] },
-          { name: "AWD 77.4kWh", fuel: "Elektrik", trims: ["Earth", "GT"] }
-        ]
-      },
-      {
-        name: "Sorento",
-        models: [
-          { name: "1.6 T-GDi 265 Hybrid", fuel: "Hibrit", trims: ["Prestige", "Platinum"] },
-          { name: "1.6 T-GDi 265 PHEV", fuel: "Hibrit", trims: ["Prestige", "Platinum"] },
-          { name: "2.2 CRDi 202", fuel: "Dizel", trims: ["Prestige", "Platinum"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Honda",
-    series: [
-      {
-        name: "Civic",
-        models: [
-          { name: "1.5 VTEC Turbo", fuel: "Benzin", trims: ["Elegance", "Executive+", "Sport", "Sensing"] },
-          { name: "e:HEV (Hybrid)", fuel: "Hibrit", trims: ["Advance", "Style", "Style Plus"] },
-          { name: "1.6 i-DTEC", fuel: "Dizel", trims: ["Elegance", "Executive"] }
-        ]
-      },
-      {
-        name: "HR-V",
-        models: [
-          { name: "1.5 i-VTEC", fuel: "Benzin", trims: ["Elegance", "Executive"] },
-          { name: "e:HEV (Hybrid)", fuel: "Hibrit", trims: ["Elegance", "Advance", "Style"] }
-        ]
-      },
-      {
-        name: "CR-V",
-        models: [
-          { name: "e:HEV (Hybrid)", fuel: "Hibrit", trims: ["Elegance", "Executive", "Advance"] },
-          { name: "1.5 VTEC Turbo", fuel: "Benzin", trims: ["Elegance", "Executive"] }
-        ]
-      },
-      {
-        name: "Jazz",
-        models: [
-          { name: "e:HEV (Hybrid)", fuel: "Hibrit", trims: ["Comfort", "Elegance", "Advance"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Dacia",
-    series: [
-      {
-        name: "Duster",
-        models: [
-          { name: "1.3 TCe 150", fuel: "Benzin", trims: ["Comfort", "Prestige", "Journey", "Extreme"] },
-          { name: "1.0 ECO-G 100 (LPG)", fuel: "LPG", trims: ["Essential", "Expression", "Journey"] },
-          { name: "1.5 dCi 115", fuel: "Dizel", trims: ["Comfort", "Prestige"] }
-        ]
-      },
-      {
-        name: "Sandero",
-        models: [
-          { name: "1.0 ECO-G 100 (LPG)", fuel: "LPG", trims: ["Essential", "Expression", "Stepway"] },
-          { name: "1.0 SCe 65", fuel: "Benzin", trims: ["Access", "Essential"] },
-          { name: "1.5 dCi 90", fuel: "Dizel", trims: ["Ambiance", "Stepway"] }
-        ]
-      },
-      {
-        name: "Logan",
-        models: [
-          { name: "1.0 SCe 75", fuel: "Benzin", trims: ["Access", "Essential", "Expression"] },
-          { name: "1.5 dCi 90", fuel: "Dizel", trims: ["Comfort", "Expression"] }
-        ]
-      },
-      {
-        name: "Jogger",
-        models: [
-          { name: "1.0 TCe 110", fuel: "Benzin", trims: ["Essential", "Expression", "Extreme"] },
-          { name: "1.6 Hybrid 140", fuel: "Hibrit", trims: ["Expression", "Extreme"] }
-        ]
-      },
-      {
-        name: "Spring",
-        models: [
-          { name: "Electric 45", fuel: "Elektrik", trims: ["Essential", "Expression", "Extreme"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Citroën",
-    series: [
-      {
-        name: "C3",
-        models: [
-          { name: "1.2 PureTech 83", fuel: "Benzin", trims: ["Feel", "Feel Bold", "Shine", "Elle"] },
-          { name: "1.2 PureTech 110", fuel: "Benzin", trims: ["Shine", "Max"] },
-          { name: "1.4 HDi 70", fuel: "Dizel", trims: ["Confort", "Attractive"] }
-        ]
-      },
-      {
-        name: "C4",
-        models: [
-          { name: "1.2 PureTech 130", fuel: "Benzin", trims: ["Feel", "Shine", "Max"] },
-          { name: "ë-C4 (Elektrik)", fuel: "Elektrik", trims: ["Feel", "Shine", "Max"] }
-        ]
-      },
-      {
-        name: "C3 Aircross",
-        models: [
-          { name: "1.2 PureTech 110", fuel: "Benzin", trims: ["Feel", "Shine", "Max"] },
-          { name: "1.5 BlueHDi 110", fuel: "Dizel", trims: ["Shine", "Feel Bold"] }
-        ]
-      },
-      {
-        name: "C5 Aircross",
-        models: [
-          { name: "1.5 BlueHDi 130", fuel: "Dizel", trims: ["Feel Bold", "Shine", "Max"] },
-          { name: "1.6 PureTech 180 Hybrid", fuel: "Hibrit", trims: ["Shine", "Max"] }
-        ]
-      },
-      {
-        name: "C-Elysee",
-        models: [
-          { name: "1.6 HDi 92", fuel: "Dizel", trims: ["Attraction", "Confort", "Exclusive", "Feel"] }
-        ]
-      },
-      {
-        name: "Berlingo",
-        models: [
-          { name: "1.5 BlueHDi 100", fuel: "Dizel", trims: ["Feel Bold", "Shine", "Max"] }
+        "name": "Master",
+        "models": [
+          {
+            "name": "2.3 dCi 130/145",
+            "fuel": "Dizel",
+            "trims": [
+              "Panelvan",
+              "Şasi",
+              "Otobüs"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Skoda",
-    series: [
+    "brand": "Volkswagen",
+    "series": [
       {
-        name: "Octavia",
-        models: [
-          { name: "1.5 TSI", fuel: "Benzin", trims: ["Elite", "Premium", "Sportline", "Scout"] },
-          { name: "2.0 TDI", fuel: "Dizel", trims: ["Optimal", "Elite", "Style"] },
-          { name: "1.4 TSI iV Plug-in", fuel: "Hibrit", trims: ["Optimal", "Elite"] }
+        "name": "Golf",
+        "models": [
+          {
+            "name": "1.6 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Highline",
+              "Midline Plus"
+            ]
+          },
+          {
+            "name": "1.5 TSI / eTSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Life",
+              "Style",
+              "R-Line",
+              "Comfortline",
+              "Highline"
+            ]
+          },
+          {
+            "name": "1.0 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Impression",
+              "Life",
+              "Style",
+              "R-Line"
+            ]
+          },
+          {
+            "name": "1.4 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Highline"
+            ]
+          },
+          {
+            "name": "2.0 GTI / R",
+            "fuel": "Benzin",
+            "trims": [
+              "GTI",
+              "GTI Clubsport",
+              "R"
+            ]
+          }
         ]
       },
       {
-        name: "Fabia",
-        models: [
-          { name: "1.0 TSI 95", fuel: "Benzin", trims: ["Active", "Ambition", "Style"] },
-          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Style", "Monte Carlo"] }
+        "name": "Passat",
+        "models": [
+          {
+            "name": "1.6 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Highline",
+              "Impression",
+              "Business",
+              "Elegance"
+            ]
+          },
+          {
+            "name": "2.0 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Highline",
+              "Elegance",
+              "Business",
+              "Comfortline",
+              "4Motion"
+            ]
+          },
+          {
+            "name": "1.5 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Business",
+              "Elegance",
+              "Impression"
+            ]
+          },
+          {
+            "name": "1.4 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Highline"
+            ]
+          }
         ]
       },
       {
-        name: "Superb",
-        models: [
-          { name: "2.0 TDI 150", fuel: "Dizel", trims: ["Ambition", "Style", "L&K Crystal"] },
-          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Elite", "Premium", "L&K"] }
+        "name": "Passat CC / CC",
+        "models": [
+          {
+            "name": "2.0 TDI CC",
+            "fuel": "Dizel",
+            "trims": [
+              "Sportline",
+              "Exclusive",
+              "R-Line"
+            ]
+          },
+          {
+            "name": "1.4 TSI CC",
+            "fuel": "Benzin",
+            "trims": [
+              "Exclusive",
+              "Sportline"
+            ]
+          }
         ]
       },
       {
-        name: "Karoq",
-        models: [
-          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Ambition", "Style", "Sportline"] },
-          { name: "2.0 TDI 150", fuel: "Dizel", trims: ["Style", "Sportline"] }
+        "name": "Polo",
+        "models": [
+          {
+            "name": "1.0 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Highline",
+              "Life",
+              "Style"
+            ]
+          },
+          {
+            "name": "1.4 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Highline"
+            ]
+          },
+          {
+            "name": "1.2 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Allstar"
+            ]
+          },
+          {
+            "name": "1.0 MPI",
+            "fuel": "Benzin",
+            "trims": [
+              "Impression",
+              "Life"
+            ]
+          }
         ]
       },
       {
-        name: "Kodiaq",
-        models: [
-          { name: "2.0 TDI 150", fuel: "Dizel", trims: ["Ambition", "Style", "L&K"] },
-          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Ambition", "Style", "Sportline"] }
+        "name": "Jetta",
+        "models": [
+          {
+            "name": "1.6 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Highline"
+            ]
+          },
+          {
+            "name": "1.4 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Highline"
+            ]
+          }
         ]
       },
       {
-        name: "Kamiq",
-        models: [
-          { name: "1.0 TSI 115", fuel: "Benzin", trims: ["Ambition", "Style", "Monte Carlo"] },
-          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Style", "Monte Carlo"] }
+        "name": "Bora",
+        "models": [
+          {
+            "name": "1.6 16V / 8V",
+            "fuel": "Benzin",
+            "trims": [
+              "Pacific",
+              "Comfortline",
+              "Highline",
+              "Basic"
+            ]
+          },
+          {
+            "name": "1.9 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Comfortline",
+              "Highline"
+            ]
+          }
         ]
       },
       {
-        name: "Enyaq",
-        models: [
-          { name: "60 RWD", fuel: "Elektrik", trims: ["Style", "L&K"] },
-          { name: "85 RWD", fuel: "Elektrik", trims: ["Style", "L&K"] },
-          { name: "85x AWD", fuel: "Elektrik", trims: ["RS"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Seat",
-    series: [
-      {
-        name: "Leon",
-        models: [
-          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Style", "FR", "Xcellence"] },
-          { name: "2.0 TDI 150", fuel: "Dizel", trims: ["FR", "Style"] },
-          { name: "1.4 eHybrid 204", fuel: "Hibrit", trims: ["FR", "Xcellence"] }
-        ]
-      },
-      {
-        name: "Ibiza",
-        models: [
-          { name: "1.0 TSI 110", fuel: "Benzin", trims: ["Style", "FR", "Xcellence"] },
-          { name: "1.0 MPI 80", fuel: "Benzin", trims: ["Style", "Reference"] }
+        "name": "Scirocco",
+        "models": [
+          {
+            "name": "1.4 TSI 122/160",
+            "fuel": "Benzin",
+            "trims": [
+              "Sportline",
+              "GTS",
+              "R-Line"
+            ]
+          },
+          {
+            "name": "2.0 R",
+            "fuel": "Benzin",
+            "trims": [
+              "R"
+            ]
+          }
         ]
       },
       {
-        name: "Ateca",
-        models: [
-          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Style", "FR", "Xcellence"] },
-          { name: "2.0 TDI 150", fuel: "Dizel", trims: ["FR", "Style"] }
+        "name": "Tiguan",
+        "models": [
+          {
+            "name": "1.5 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Life",
+              "Style",
+              "R-Line",
+              "Elegance"
+            ]
+          },
+          {
+            "name": "2.0 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Life",
+              "Style",
+              "Elegance",
+              "R-Line",
+              "4Motion"
+            ]
+          },
+          {
+            "name": "1.4 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Trend&Fun",
+              "Sport&Style",
+              "Highline"
+            ]
+          }
         ]
       },
       {
-        name: "Tarraco",
-        models: [
-          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Style", "FR", "Xcellence"] },
-          { name: "2.0 TDI 150", fuel: "Dizel", trims: ["FR", "Style", "Xcellence"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Nissan",
-    series: [
-      {
-        name: "Qashqai",
-        models: [
-          { name: "1.3 DIG-T 158 Mild Hybrid", fuel: "Hibrit", trims: ["Visia", "Tekna", "Platinum Premium"] },
-          { name: "1.3 DIG-T 140", fuel: "Benzin", trims: ["Tekna", "Design Pack"] },
-          { name: "e-Power", fuel: "Hibrit", trims: ["Tekna+", "Platinum"] }
+        "name": "T-Roc",
+        "models": [
+          {
+            "name": "1.5 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Life",
+              "Style",
+              "R-Line"
+            ]
+          }
         ]
       },
       {
-        name: "Juke",
-        models: [
-          { name: "1.0 DIG-T 114", fuel: "Benzin", trims: ["Visia", "Tekna", "N-Design"] },
-          { name: "Hybrid 143", fuel: "Hibrit", trims: ["Tekna", "N-Design"] }
+        "name": "Taigo",
+        "models": [
+          {
+            "name": "1.0 TSI / 1.5 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Life",
+              "Style",
+              "R-Line"
+            ]
+          }
         ]
       },
       {
-        name: "Micra",
-        models: [
-          { name: "1.0 IG-T 100", fuel: "Benzin", trims: ["Visia", "Tekna", "Platinum"] }
+        "name": "Arteon",
+        "models": [
+          {
+            "name": "2.0 TDI 240",
+            "fuel": "Dizel",
+            "trims": [
+              "Elegance",
+              "R-Line"
+            ]
+          },
+          {
+            "name": "1.5 TSI 150",
+            "fuel": "Benzin",
+            "trims": [
+              "Elegance",
+              "R-Line"
+            ]
+          }
         ]
       },
       {
-        name: "Leaf",
-        models: [
-          { name: "40kWh", fuel: "Elektrik", trims: ["Acenta", "N-Connecta", "Tekna"] },
-          { name: "62kWh e+", fuel: "Elektrik", trims: ["Tekna", "3.Zero"] }
+        "name": "Transporter / Caravelle",
+        "models": [
+          {
+            "name": "2.0 TDI 102/140/180",
+            "fuel": "Dizel",
+            "trims": [
+              "Caravelle Highline",
+              "Comfortline",
+              "Multivan",
+              "City Van"
+            ]
+          }
         ]
       },
       {
-        name: "Navara",
-        models: [
-          { name: "2.3 dCi 163", fuel: "Dizel", trims: ["Visia", "Acenta", "N-Guard", "Platinum"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Mitsubishi",
-    series: [
-      {
-        name: "L200",
-        models: [
-          { name: "2.4 Di-D 150", fuel: "Dizel", trims: ["Invite", "Inform", "Intense", "Instyle"] },
-          { name: "2.4 Di-D 181", fuel: "Dizel", trims: ["Intense", "Instyle"] }
-        ]
-      },
-      {
-        name: "Outlander",
-        models: [
-          { name: "2.0 MIVEC", fuel: "Benzin", trims: ["Invite", "Intense", "Instyle"] },
-          { name: "PHEV 2.4", fuel: "Hibrit", trims: ["Instyle", "Diamond"] }
-        ]
-      },
-      {
-        name: "ASX",
-        models: [
-          { name: "1.0 ClearTec", fuel: "Benzin", trims: ["Invite", "Intense", "Instyle"] },
-          { name: "1.5 Hybrid", fuel: "Hibrit", trims: ["Intense", "Instyle"] }
+        "name": "Caddy",
+        "models": [
+          {
+            "name": "2.0 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Life",
+              "Style",
+              "Cargo",
+              "Trendline",
+              "Comfortline"
+            ]
+          },
+          {
+            "name": "1.6 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Trendline",
+              "Comfortline",
+              "Highline"
+            ]
+          }
         ]
       },
       {
-        name: "Eclipse Cross",
-        models: [
-          { name: "1.5 ClearTec", fuel: "Benzin", trims: ["Intense", "Instyle"] },
-          { name: "PHEV 2.4", fuel: "Hibrit", trims: ["Intense+", "Instyle"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Mazda",
-    series: [
-      {
-        name: "CX-5",
-        models: [
-          { name: "2.0 SKYACTIV-G", fuel: "Benzin", trims: ["Prime-Line", "Center-Line", "Exclusive-Line", "Sports-Line"] },
-          { name: "2.2 SKYACTIV-D", fuel: "Dizel", trims: ["Center-Line", "Exclusive-Line", "Sports-Line"] }
-        ]
-      },
-      {
-        name: "CX-30",
-        models: [
-          { name: "2.0 SKYACTIV-G", fuel: "Benzin", trims: ["Prime-Line", "Center-Line", "Exclusive-Line"] },
-          { name: "2.0 e-SKYACTIV-X", fuel: "Hibrit", trims: ["Exclusive-Line", "Homura"] }
-        ]
-      },
-      {
-        name: "3",
-        models: [
-          { name: "2.0 SKYACTIV-G", fuel: "Benzin", trims: ["Prime-Line", "Center-Line", "Homura"] },
-          { name: "2.0 e-SKYACTIV-G", fuel: "Hibrit", trims: ["Center-Line", "Exclusive-Line"] }
-        ]
-      },
-      {
-        name: "6",
-        models: [
-          { name: "2.0 SKYACTIV-G", fuel: "Benzin", trims: ["Center-Line", "Sports-Line"] },
-          { name: "2.2 SKYACTIV-D", fuel: "Dizel", trims: ["Exclusive-Line", "Sports-Line"] }
-        ]
-      },
-      {
-        name: "MX-5",
-        models: [
-          { name: "1.5 SKYACTIV-G", fuel: "Benzin", trims: ["Roadster", "RF"] },
-          { name: "2.0 SKYACTIV-G", fuel: "Benzin", trims: ["Roadster", "RF ND"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Suzuki",
-    series: [
-      {
-        name: "Swift",
-        models: [
-          { name: "1.2 Smart Hybrid", fuel: "Hibrit", trims: ["GL", "GLX", "Style", "Sport"] },
-          { name: "1.0 Boosterjet", fuel: "Benzin", trims: ["GL", "GLX"] }
-        ]
-      },
-      {
-        name: "Vitara",
-        models: [
-          { name: "1.4 Boosterjet", fuel: "Benzin", trims: ["GL+", "GLX", "Style", "Sport"] },
-          { name: "1.4 Boosterjet Hybrid", fuel: "Hibrit", trims: ["GLX", "Style", "Sport"] }
-        ]
-      },
-      {
-        name: "Jimny",
-        models: [
-          { name: "1.5 VVT", fuel: "Benzin", trims: ["GL", "GLX", "Professional"] }
-        ]
-      },
-      {
-        name: "S-Cross",
-        models: [
-          { name: "1.4 Boosterjet Hybrid", fuel: "Hibrit", trims: ["GL", "GLX", "Style"] }
-        ]
-      },
-      {
-        name: "Across",
-        models: [
-          { name: "2.5 PHEV", fuel: "Hibrit", trims: ["Style"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Volvo",
-    series: [
-      {
-        name: "S60",
-        models: [
-          { name: "B4 Mild Hybrid", fuel: "Hibrit", trims: ["Momentum", "R-Design", "Inscription"] },
-          { name: "T8 Recharge PHEV", fuel: "Hibrit", trims: ["Inscription", "R-Design"] }
-        ]
-      },
-      {
-        name: "S90",
-        models: [
-          { name: "B5 Mild Hybrid", fuel: "Hibrit", trims: ["Inscription", "Ultimate Bright"] },
-          { name: "T8 Recharge PHEV", fuel: "Hibrit", trims: ["Inscription", "Ultimate"] }
-        ]
-      },
-      {
-        name: "XC40",
-        models: [
-          { name: "B4 Mild Hybrid", fuel: "Hibrit", trims: ["Momentum", "R-Design", "Inscription"] },
-          { name: "Recharge Electric", fuel: "Elektrik", trims: ["Single Motor", "Twin Motor"] }
-        ]
-      },
-      {
-        name: "XC60",
-        models: [
-          { name: "B4 Mild Hybrid", fuel: "Hibrit", trims: ["Momentum", "Inscription", "R-Design"] },
-          { name: "T8 Recharge PHEV", fuel: "Hibrit", trims: ["Inscription", "Ultimate"] }
-        ]
-      },
-      {
-        name: "XC90",
-        models: [
-          { name: "B5 AWD Mild Hybrid", fuel: "Hibrit", trims: ["Momentum", "Inscription"] },
-          { name: "T8 Recharge PHEV", fuel: "Hibrit", trims: ["Inscription", "Ultimate"] }
-        ]
-      },
-      {
-        name: "C40 Recharge",
-        models: [
-          { name: "Single Motor", fuel: "Elektrik", trims: ["Core", "Plus", "Ultimate"] },
-          { name: "Twin Motor AWD", fuel: "Elektrik", trims: ["Plus", "Ultimate"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Alfa Romeo",
-    series: [
-      {
-        name: "Giulia",
-        models: [
-          { name: "2.2 MultiJet 200d", fuel: "Dizel", trims: ["Super", "Business", "Sprint", "Ti", "Tributo Italiano"] },
-          { name: "2.0 GME 200", fuel: "Benzin", trims: ["Super", "Sprint", "Ti"] },
-          { name: "2.9 V6 Biturbo 510", fuel: "Benzin", trims: ["Quadrifoglio"] }
-        ]
-      },
-      {
-        name: "Stelvio",
-        models: [
-          { name: "2.2 MultiJet 210d", fuel: "Dizel", trims: ["Super", "Sprint", "Ti", "Tributo Italiano"] },
-          { name: "2.0 GME 280", fuel: "Benzin", trims: ["Super", "Sprint", "Ti"] },
-          { name: "2.9 V6 Biturbo 520", fuel: "Benzin", trims: ["Quadrifoglio"] }
-        ]
-      },
-      {
-        name: "Tonale",
-        models: [
-          { name: "1.5 Hybrid 160", fuel: "Hibrit", trims: ["Sprint", "Ti", "Veloce"] },
-          { name: "1.6 MultiJet 130", fuel: "Dizel", trims: ["Super", "Sprint", "Ti"] },
-          { name: "PHEV Q4 280", fuel: "Hibrit", trims: ["Ti", "Veloce", "Edizione Speciale"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Jeep",
-    series: [
-      {
-        name: "Renegade",
-        models: [
-          { name: "1.3 T4 150", fuel: "Benzin", trims: ["Longitude", "Limited", "Trailhawk"] },
-          { name: "4xe PHEV 240", fuel: "Hibrit", trims: ["Limited", "Trailhawk", "80th Anniversary"] }
-        ]
-      },
-      {
-        name: "Compass",
-        models: [
-          { name: "1.3 T4 150", fuel: "Benzin", trims: ["Longitude", "Limited", "S", "Trailhawk"] },
-          { name: "4xe PHEV 240", fuel: "Hibrit", trims: ["Limited", "S", "Trailhawk"] }
-        ]
-      },
-      {
-        name: "Wrangler",
-        models: [
-          { name: "2.0 Turbo 272", fuel: "Benzin", trims: ["Sport", "Sahara", "Rubicon"] },
-          { name: "4xe PHEV 380", fuel: "Hibrit", trims: ["Sahara", "Rubicon", "High Altitude"] }
-        ]
-      },
-      {
-        name: "Avenger",
-        models: [
-          { name: "Electric 156", fuel: "Elektrik", trims: ["Altitude", "Altitude Sunroof", "Summit"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Land Rover",
-    series: [
-      {
-        name: "Defender",
-        models: [
-          { name: "D200 MHEV", fuel: "Dizel", trims: ["S", "SE", "HSE", "X-Dynamic SE"] },
-          { name: "P300e PHEV", fuel: "Hibrit", trims: ["SE", "HSE", "X"] },
-          { name: "P400e PHEV", fuel: "Hibrit", trims: ["HSE", "X"] }
-        ]
-      },
-      {
-        name: "Discovery Sport",
-        models: [
-          { name: "D165 MHEV", fuel: "Dizel", trims: ["S", "SE", "HSE"] },
-          { name: "P250 PHEV", fuel: "Hibrit", trims: ["SE", "HSE", "R-Dynamic HSE"] }
-        ]
-      },
-      {
-        name: "Range Rover Evoque",
-        models: [
-          { name: "D165 MHEV", fuel: "Dizel", trims: ["S", "SE", "HSE", "R-Dynamic HSE"] },
-          { name: "P300e PHEV", fuel: "Hibrit", trims: ["SE", "HSE"] }
-        ]
-      },
-      {
-        name: "Range Rover Sport",
-        models: [
-          { name: "D250 MHEV", fuel: "Dizel", trims: ["S", "SE", "HSE", "Dynamic SE"] },
-          { name: "P460e PHEV", fuel: "Hibrit", trims: ["HSE", "Dynamic HSE"] }
-        ]
-      }
-    ]
-  },
-  {
-    brand: "Subaru",
-    series: [
-      {
-        name: "Outback",
-        models: [
-          { name: "2.5i-L Lineartronic", fuel: "Benzin", trims: ["Premium", "Platinum"] }
-        ]
-      },
-      {
-        name: "Forester",
-        models: [
-          { name: "2.0i-L Lineartronic", fuel: "Benzin", trims: ["Premium", "Platinum"] },
-          { name: "e-Boxer 2.0i", fuel: "Hibrit", trims: ["Premium", "Platinum"] }
-        ]
-      },
-      {
-        name: "XV / Crosstrek",
-        models: [
-          { name: "2.0i-L Lineartronic", fuel: "Benzin", trims: ["Premium", "Platinum"] },
-          { name: "e-Boxer 2.0i", fuel: "Hibrit", trims: ["Premium", "Platinum"] }
-        ]
-      },
-      {
-        name: "Impreza",
-        models: [
-          { name: "2.0i Lineartronic", fuel: "Benzin", trims: ["Style", "Platinum"] }
+        "name": "Amarok",
+        "models": [
+          {
+            "name": "3.0 V6 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Highline",
+              "Canyon",
+              "Aventura",
+              "Style"
+            ]
+          },
+          {
+            "name": "2.0 BiTDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Highline",
+              "Trendline"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "MG",
-    series: [
+    "brand": "Ford",
+    "series": [
       {
-        name: "ZS EV",
-        models: [
-          { name: "50.3kWh Standard Range", fuel: "Elektrik", trims: ["Comfort", "Luxury"] },
-          { name: "72.6kWh Long Range", fuel: "Elektrik", trims: ["Luxury"] }
+        "name": "Focus",
+        "models": [
+          {
+            "name": "1.5 EcoBlue / TDCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Trend X",
+              "Titanium",
+              "Active",
+              "Active X",
+              "ST-Line"
+            ]
+          },
+          {
+            "name": "1.6 Ti-VCT / TDCi",
+            "fuel": "Benzin",
+            "trims": [
+              "Trend",
+              "Trend X",
+              "Titanium",
+              "Style"
+            ]
+          },
+          {
+            "name": "1.0 EcoBoost",
+            "fuel": "Benzin",
+            "trims": [
+              "Trend X",
+              "Titanium",
+              "ST-Line"
+            ]
+          }
         ]
       },
       {
-        name: "MG4 Electric",
-        models: [
-          { name: "EV 51kWh", fuel: "Elektrik", trims: ["Standard", "Comfort"] },
-          { name: "EV 64kWh", fuel: "Elektrik", trims: ["Comfort", "Luxury", "XPOWER AWD"] }
+        "name": "Fiesta",
+        "models": [
+          {
+            "name": "1.4 TDCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Trend",
+              "Comfort",
+              "Titanium"
+            ]
+          },
+          {
+            "name": "1.25 VCT / 1.4",
+            "fuel": "Benzin",
+            "trims": [
+              "Trend",
+              "MyFiesta",
+              "Titanium"
+            ]
+          },
+          {
+            "name": "1.0 EcoBoost",
+            "fuel": "Benzin",
+            "trims": [
+              "Titanium",
+              "ST-Line",
+              "Vignale"
+            ]
+          }
         ]
       },
       {
-        name: "MG5 Electric",
-        models: [
-          { name: "EV 61kWh", fuel: "Elektrik", trims: ["Standard", "Comfort", "Luxury"] }
+        "name": "Mondeo",
+        "models": [
+          {
+            "name": "2.0 TDCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Trend",
+              "Titanium",
+              "Selective",
+              "Vignale"
+            ]
+          },
+          {
+            "name": "1.6 TDCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Trend",
+              "Titanium"
+            ]
+          }
         ]
       },
       {
-        name: "HS",
-        models: [
-          { name: "1.5T 162", fuel: "Benzin", trims: ["Comfort", "Luxury"] },
-          { name: "PHEV 258", fuel: "Hibrit", trims: ["Luxury"] }
+        "name": "Escort",
+        "models": [
+          {
+            "name": "1.6 CLX",
+            "fuel": "LPG",
+            "trims": [
+              "CLX",
+              "CL",
+              "CFI"
+            ]
+          }
         ]
       },
       {
-        name: "ZS",
-        models: [
-          { name: "1.5 VTi 106", fuel: "Benzin", trims: ["Comfort", "Luxury"] }
+        "name": "Taunus",
+        "models": [
+          {
+            "name": "1.6 GTS / GT",
+            "fuel": "LPG",
+            "trims": [
+              "GTS",
+              "GT",
+              "GL"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Puma",
+        "models": [
+          {
+            "name": "1.0 EcoBoost Hybrid",
+            "fuel": "Hibrit",
+            "trims": [
+              "Trend X",
+              "Titanium",
+              "ST-Line",
+              "ST-Line X"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Kuga",
+        "models": [
+          {
+            "name": "1.5 TDCi / EcoBlue",
+            "fuel": "Dizel",
+            "trims": [
+              "Trend X",
+              "Titanium",
+              "ST-Line"
+            ]
+          },
+          {
+            "name": "2.5 PHEV",
+            "fuel": "Hibrit",
+            "trims": [
+              "ST-Line",
+              "Vignale"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Transit / Custom / Courier",
+        "models": [
+          {
+            "name": "2.0 EcoBlue / 2.2 TDCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Trend",
+              "Deluxe",
+              "Titanium",
+              "Limited",
+              "Custom",
+              "Courier"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ranger",
+        "models": [
+          {
+            "name": "2.0 EcoBlue",
+            "fuel": "Dizel",
+            "trims": [
+              "XLT",
+              "Wildtrak",
+              "Raptor",
+              "Limited"
+            ]
+          },
+          {
+            "name": "3.2 TDCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Wildtrak",
+              "Limited"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "BYD",
-    series: [
+    "brand": "BMW",
+    "series": [
       {
-        name: "Atto 3",
-        models: [
-          { name: "60.5kWh Standard Range", fuel: "Elektrik", trims: ["Comfort", "Premium"] },
-          { name: "60.5kWh Extended Range", fuel: "Elektrik", trims: ["Comfort", "Premium"] }
+        "name": "1 Serisi",
+        "models": [
+          {
+            "name": "116d / 118d",
+            "fuel": "Dizel",
+            "trims": [
+              "Joy",
+              "Sport Line",
+              "M Sport",
+              "Urban"
+            ]
+          },
+          {
+            "name": "118i / 120i",
+            "fuel": "Benzin",
+            "trims": [
+              "Sport Line",
+              "M Sport",
+              "Joy"
+            ]
+          }
         ]
       },
       {
-        name: "Seal",
-        models: [
-          { name: "RWD 82.56kWh", fuel: "Elektrik", trims: ["Excellence"] },
-          { name: "AWD 82.56kWh", fuel: "Elektrik", trims: ["Excellence"] }
+        "name": "3 Serisi",
+        "models": [
+          {
+            "name": "320d",
+            "fuel": "Dizel",
+            "trims": [
+              "Prestige",
+              "Sport Line",
+              "Luxury Line",
+              "M Sport",
+              "Technology"
+            ]
+          },
+          {
+            "name": "320i / 320i ED",
+            "fuel": "Benzin",
+            "trims": [
+              "First Edition",
+              "M Sport",
+              "Sport Line",
+              "Luxury Line"
+            ]
+          },
+          {
+            "name": "330e",
+            "fuel": "Hibrit",
+            "trims": [
+              "M Sport",
+              "Luxury Line"
+            ]
+          },
+          {
+            "name": "316i / 318i",
+            "fuel": "Benzin",
+            "trims": [
+              "Joy",
+              "Comfort",
+              "M Sport"
+            ]
+          }
         ]
       },
       {
-        name: "Han",
-        models: [
-          { name: "RWD 85.44kWh", fuel: "Elektrik", trims: ["Excellence"] },
-          { name: "AWD 85.44kWh", fuel: "Elektrik", trims: ["Excellence 4WD"] }
+        "name": "5 Serisi",
+        "models": [
+          {
+            "name": "520d",
+            "fuel": "Dizel",
+            "trims": [
+              "Premium",
+              "M Sport",
+              "Executive",
+              "Luxury Line",
+              "Special Edition"
+            ]
+          },
+          {
+            "name": "520i",
+            "fuel": "Benzin",
+            "trims": [
+              "Premium",
+              "M Sport",
+              "Executive",
+              "Special Edition"
+            ]
+          },
+          {
+            "name": "525d / 530d",
+            "fuel": "Dizel",
+            "trims": [
+              "M Sport",
+              "Exclusive",
+              "Comfort"
+            ]
+          }
         ]
       },
       {
-        name: "Dolphin",
-        models: [
-          { name: "44.9kWh Confort", fuel: "Elektrik", trims: ["Comfort", "Design"] },
-          { name: "60.4kWh Design", fuel: "Elektrik", trims: ["Design", "Dynamic"] }
+        "name": "7 Serisi",
+        "models": [
+          {
+            "name": "730d / 740d",
+            "fuel": "Dizel",
+            "trims": [
+              "Pure Excellence",
+              "M Sport",
+              "Long"
+            ]
+          },
+          {
+            "name": "740i / 750i",
+            "fuel": "Benzin",
+            "trims": [
+              "M Sport",
+              "Pure Excellence"
+            ]
+          }
         ]
       },
       {
-        name: "Tang",
-        models: [
-          { name: "AWD 108.8kWh", fuel: "Elektrik", trims: ["Excellence"] }
+        "name": "X1",
+        "models": [
+          {
+            "name": "sDrive18i / 18d",
+            "fuel": "Benzin",
+            "trims": [
+              "xLine",
+              "M Sport",
+              "Joy"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "X3",
+        "models": [
+          {
+            "name": "xDrive20d / 20i",
+            "fuel": "Dizel",
+            "trims": [
+              "xLine",
+              "M Sport",
+              "Luxury Line"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "X5",
+        "models": [
+          {
+            "name": "xDrive30d / 40i",
+            "fuel": "Dizel",
+            "trims": [
+              "xLine",
+              "M Sport",
+              "Exclusive"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "i4 / iX / iX3",
+        "models": [
+          {
+            "name": "eDrive40 / xDrive50",
+            "fuel": "Elektrik",
+            "trims": [
+              "M Sport",
+              "Impressive"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Togg",
-    series: [
+    "brand": "Mercedes-Benz",
+    "series": [
       {
-        name: "T10X",
-        models: [
-          { name: "V1 RWD Standart Menzil", fuel: "Elektrik", trims: ["Standart"] },
-          { name: "V2 RWD Uzun Menzil", fuel: "Elektrik", trims: ["Standart", "Üst"] },
-          { name: "V3 AWD", fuel: "Elektrik", trims: ["Performans"] }
+        "name": "A Serisi",
+        "models": [
+          {
+            "name": "A 180 d",
+            "fuel": "Dizel",
+            "trims": [
+              "Style",
+              "Urban",
+              "AMG"
+            ]
+          },
+          {
+            "name": "A 200 / A 180",
+            "fuel": "Benzin",
+            "trims": [
+              "AMG",
+              "Progressive",
+              "Style"
+            ]
+          }
         ]
       },
       {
-        name: "T10F",
-        models: [
-          { name: "RWD Standart Menzil", fuel: "Elektrik", trims: ["Standart", "Üst"] },
-          { name: "AWD Uzun Menzil", fuel: "Elektrik", trims: ["Üst", "Performans"] }
+        "name": "C Serisi",
+        "models": [
+          {
+            "name": "C 200 d / C 220 d",
+            "fuel": "Dizel",
+            "trims": [
+              "AMG",
+              "Avantgarde",
+              "Exclusive",
+              "Style",
+              "Fascination"
+            ]
+          },
+          {
+            "name": "C 180 / C 200",
+            "fuel": "Benzin",
+            "trims": [
+              "Fascination",
+              "AMG",
+              "Style",
+              "Exclusive"
+            ]
+          },
+          {
+            "name": "C 300 e",
+            "fuel": "Hibrit",
+            "trims": [
+              "AMG",
+              "Exclusive"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "E Serisi",
+        "models": [
+          {
+            "name": "E 220 d / E 250 CDI",
+            "fuel": "Dizel",
+            "trims": [
+              "AMG",
+              "Exclusive",
+              "Avantgarde",
+              "Fascination",
+              "Edition"
+            ]
+          },
+          {
+            "name": "E 180 / E 200",
+            "fuel": "Benzin",
+            "trims": [
+              "Elite",
+              "Edition",
+              "Avantgarde",
+              "AMG"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "S Serisi",
+        "models": [
+          {
+            "name": "S 350 d / S 400 d",
+            "fuel": "Dizel",
+            "trims": [
+              "Exclusive",
+              "AMG",
+              "Long"
+            ]
+          },
+          {
+            "name": "S 500 / Maybach",
+            "fuel": "Benzin",
+            "trims": [
+              "Maybach",
+              "Exclusive"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "GLA / GLB / GLC",
+        "models": [
+          {
+            "name": "200 / 220d",
+            "fuel": "Benzin",
+            "trims": [
+              "AMG",
+              "Progressive",
+              "Exclusive"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Vito / V-Class",
+        "models": [
+          {
+            "name": "111 CDI / 114 CDI / 119 CDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Tourer",
+              "Select",
+              "VIP",
+              "Base"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Sprinter",
+        "models": [
+          {
+            "name": "316 CDI / 319 CDI",
+            "fuel": "Dizel",
+            "trims": [
+              "City Van",
+              "Okul Taşıtı",
+              "Servis",
+              "Panelvan"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Tesla",
-    series: [
+    "brand": "Audi",
+    "series": [
       {
-        name: "Model 3",
-        models: [
-          { name: "RWD Standart Menzil", fuel: "Elektrik", trims: ["Standart Range Plus"] },
-          { name: "Long Range AWD", fuel: "Elektrik", trims: ["Long Range AWD"] },
-          { name: "Performance AWD", fuel: "Elektrik", trims: ["Performance"] }
+        "name": "A3",
+        "models": [
+          {
+            "name": "35 TFSI / 1.6 TDI",
+            "fuel": "Benzin",
+            "trims": [
+              "Advanced",
+              "S Line",
+              "Design",
+              "Sport",
+              "Ambition"
+            ]
+          },
+          {
+            "name": "30 TDI / 35 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Advanced",
+              "S Line"
+            ]
+          }
         ]
       },
       {
-        name: "Model Y",
-        models: [
-          { name: "RWD", fuel: "Elektrik", trims: ["Standard Range"] },
-          { name: "Long Range AWD", fuel: "Elektrik", trims: ["Long Range"] },
-          { name: "Performance AWD", fuel: "Elektrik", trims: ["Performance"] }
+        "name": "A4",
+        "models": [
+          {
+            "name": "2.0 TDI / 40 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Advanced",
+              "S Line",
+              "Design",
+              "Dynamic"
+            ]
+          },
+          {
+            "name": "1.4 TFSI / 2.0 TFSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Dynamic",
+              "Sport",
+              "S Line"
+            ]
+          }
         ]
       },
       {
-        name: "Model S",
-        models: [
-          { name: "Long Range AWD", fuel: "Elektrik", trims: ["Long Range"] },
-          { name: "Plaid AWD", fuel: "Elektrik", trims: ["Plaid"] }
+        "name": "A6",
+        "models": [
+          {
+            "name": "2.0 TDI / 40 TDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Prestige",
+              "Exclusive",
+              "S Line",
+              "Limousine"
+            ]
+          },
+          {
+            "name": "3.0 TDI Quattro",
+            "fuel": "Dizel",
+            "trims": [
+              "Prestige",
+              "S Line"
+            ]
+          }
         ]
       },
       {
-        name: "Model X",
-        models: [
-          { name: "Long Range AWD", fuel: "Elektrik", trims: ["Long Range"] },
-          { name: "Plaid AWD", fuel: "Elektrik", trims: ["Plaid"] }
+        "name": "Q2 / Q3 / Q5 / Q7",
+        "models": [
+          {
+            "name": "30 TFSI / 35 TFSI / 40 TDI",
+            "fuel": "Benzin",
+            "trims": [
+              "Advanced",
+              "S Line",
+              "Design"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Chevrolet",
-    series: [
+    "brand": "Toyota",
+    "series": [
       {
-        name: "Cruze",
-        models: [
-          { name: "1.6 16V 115", fuel: "Benzin", trims: ["LS", "Plus", "Sport", "LT"] },
-          { name: "2.0 CDTI 163", fuel: "Dizel", trims: ["LT"] }
+        "name": "Corolla",
+        "models": [
+          {
+            "name": "1.8 Hybrid",
+            "fuel": "Hibrit",
+            "trims": [
+              "Dream",
+              "Flame",
+              "Passion",
+              "Passion X-Pack",
+              "Vision"
+            ]
+          },
+          {
+            "name": "1.5 Vision / Flame",
+            "fuel": "Benzin",
+            "trims": [
+              "Vision",
+              "Dream",
+              "Flame",
+              "Passion"
+            ]
+          },
+          {
+            "name": "1.4 D-4D",
+            "fuel": "Dizel",
+            "trims": [
+              "Active",
+              "Touch",
+              "Elegant",
+              "Premium",
+              "Comfort"
+            ]
+          },
+          {
+            "name": "1.6 Terra / Sol",
+            "fuel": "Benzin",
+            "trims": [
+              "Terra",
+              "Sol",
+              "Luna"
+            ]
+          }
         ]
       },
       {
-        name: "Captiva",
-        models: [
-          { name: "2.0 D 163", fuel: "Dizel", trims: ["Medium", "High", "Sport"] },
-          { name: "2.4 ECOTEC", fuel: "Benzin", trims: ["LS", "LT"] }
+        "name": "Yaris",
+        "models": [
+          {
+            "name": "1.5 Hybrid",
+            "fuel": "Hibrit",
+            "trims": [
+              "Dream",
+              "Flame",
+              "Style",
+              "Cool"
+            ]
+          },
+          {
+            "name": "1.33 / 1.0",
+            "fuel": "Benzin",
+            "trims": [
+              "Terra",
+              "Cool",
+              "Style"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "C-HR",
+        "models": [
+          {
+            "name": "1.8 Hybrid / 2.0 Hybrid",
+            "fuel": "Hibrit",
+            "trims": [
+              "Flame",
+              "Passion",
+              "GR Sport"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "RAV4",
+        "models": [
+          {
+            "name": "2.5 Hybrid",
+            "fuel": "Hibrit",
+            "trims": [
+              "Dream",
+              "Flame",
+              "Passion",
+              "Adventure"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Hilux",
+        "models": [
+          {
+            "name": "2.4 D-4D / 2.8 D-4D",
+            "fuel": "Dizel",
+            "trims": [
+              "Comfort",
+              "Style",
+              "Adventure",
+              "Executive"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Porsche",
-    series: [
+    "brand": "Peugeot",
+    "series": [
       {
-        name: "Cayenne",
-        models: [
-          { name: "3.0 V6 340", fuel: "Benzin", trims: ["Base", "S", "GTS"] },
-          { name: "3.0 E-Hybrid", fuel: "Hibrit", trims: ["S", "GTS"] }
+        "name": "206 / 207 / 208",
+        "models": [
+          {
+            "name": "1.4 HDi / 1.5 BlueHDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Active",
+              "Allure",
+              "GT",
+              "Feline",
+              "Urban"
+            ]
+          },
+          {
+            "name": "1.2 PureTech / 1.4",
+            "fuel": "Benzin",
+            "trims": [
+              "Active",
+              "Allure",
+              "GT",
+              "Style"
+            ]
+          }
         ]
       },
       {
-        name: "Macan",
-        models: [
-          { name: "2.0 Turbo 265", fuel: "Benzin", trims: ["Base", "S"] },
-          { name: "Electric", fuel: "Elektrik", trims: ["Base", "4", "4S", "Turbo"] }
+        "name": "301",
+        "models": [
+          {
+            "name": "1.6 HDi / 1.5 BlueHDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Access",
+              "Active",
+              "Allure"
+            ]
+          }
         ]
       },
       {
-        name: "Taycan",
-        models: [
-          { name: "RWD", fuel: "Elektrik", trims: ["Base", "4S"] },
-          { name: "4S AWD", fuel: "Elektrik", trims: ["4S", "Turbo", "Turbo S"] }
+        "name": "307 / 308",
+        "models": [
+          {
+            "name": "1.6 HDi / 1.5 BlueHDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Comfort",
+              "Premium",
+              "Active",
+              "Allure",
+              "GT-Line"
+            ]
+          },
+          {
+            "name": "1.2 PureTech",
+            "fuel": "Benzin",
+            "trims": [
+              "Active",
+              "Allure",
+              "GT"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "2008 / 3008 / 5008",
+        "models": [
+          {
+            "name": "1.5 BlueHDi / 1.6 HDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Active Prime",
+              "Allure",
+              "GT-Line",
+              "GT"
+            ]
+          },
+          {
+            "name": "1.2 PureTech",
+            "fuel": "Benzin",
+            "trims": [
+              "Active",
+              "Allure",
+              "GT"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Partner / Rifter",
+        "models": [
+          {
+            "name": "1.6 HDi / 1.5 BlueHDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Tepee",
+              "Active",
+              "Allure",
+              "GT-Line"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Lexus",
-    series: [
+    "brand": "Opel",
+    "series": [
       {
-        name: "UX",
-        models: [
-          { name: "250h Hybrid", fuel: "Hibrit", trims: ["Business", "Privilege", "F Sport"] }
+        "name": "Astra",
+        "models": [
+          {
+            "name": "1.3 CDTI / 1.6 CDTI",
+            "fuel": "Dizel",
+            "trims": [
+              "Essentia",
+              "Enjoy",
+              "Cosmo",
+              "Edition",
+              "Design",
+              "Dynamic",
+              "GS"
+            ]
+          },
+          {
+            "name": "1.4 Turbo / 1.6 16V",
+            "fuel": "Benzin",
+            "trims": [
+              "Essentia",
+              "Enjoy",
+              "Cosmo",
+              "GS"
+            ]
+          }
         ]
       },
       {
-        name: "NX",
-        models: [
-          { name: "350h Hybrid", fuel: "Hibrit", trims: ["Business", "Premium", "F Sport"] },
-          { name: "450h+ PHEV", fuel: "Hibrit", trims: ["Premium", "F Sport"] }
+        "name": "Corsa",
+        "models": [
+          {
+            "name": "1.3 CDTI / 1.5D",
+            "fuel": "Dizel",
+            "trims": [
+              "Essentia",
+              "Enjoy",
+              "Color Edition",
+              "Edition",
+              "Elegance",
+              "GS"
+            ]
+          },
+          {
+            "name": "1.2 / 1.4",
+            "fuel": "Benzin",
+            "trims": [
+              "Essentia",
+              "Enjoy",
+              "Edition"
+            ]
+          }
         ]
       },
       {
-        name: "RX",
-        models: [
-          { name: "450h+ Hybrid", fuel: "Hibrit", trims: ["Elegant", "Premium", "F Sport"] }
+        "name": "Insignia",
+        "models": [
+          {
+            "name": "1.6 CDTI / 2.0 CDTI",
+            "fuel": "Dizel",
+            "trims": [
+              "Edition",
+              "Cosmo",
+              "Grand Sport",
+              "GS Line",
+              "Elite"
+            ]
+          },
+          {
+            "name": "1.4 Turbo / 1.6 Turbo",
+            "fuel": "Benzin",
+            "trims": [
+              "Cosmo",
+              "Edition"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Vectra",
+        "models": [
+          {
+            "name": "1.6 16V / 1.9 CDTI",
+            "fuel": "Benzin",
+            "trims": [
+              "Comfort",
+              "Elegance",
+              "CDX",
+              "GT",
+              "Design"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Mokka / Crossland / Grandland",
+        "models": [
+          {
+            "name": "1.2 Turbo / 1.5D",
+            "fuel": "Benzin",
+            "trims": [
+              "Edition",
+              "Elegance",
+              "GS Line",
+              "Ultimate"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Combo",
+        "models": [
+          {
+            "name": "1.3 CDTI / 1.5D",
+            "fuel": "Dizel",
+            "trims": [
+              "City Plus",
+              "Edition",
+              "Elegance"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Jaguar",
-    series: [
+    "brand": "Hyundai",
+    "series": [
       {
-        name: "F-PACE",
-        models: [
-          { name: "D165 MHEV", fuel: "Dizel", trims: ["S", "SE", "HSE", "R-Dynamic HSE"] },
-          { name: "P400e PHEV", fuel: "Hibrit", trims: ["SE", "HSE", "R-Dynamic"] }
+        "name": "Accent / Era / Blue",
+        "models": [
+          {
+            "name": "1.5 CRDi / 1.6 CRDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Admire",
+              "Team",
+              "Select",
+              "Mode",
+              "Mode Plus",
+              "Prime"
+            ]
+          },
+          {
+            "name": "1.4 / 1.6 Benzin",
+            "fuel": "Benzin",
+            "trims": [
+              "Select",
+              "Mode",
+              "Biz"
+            ]
+          }
         ]
       },
       {
-        name: "I-PACE",
-        models: [
-          { name: "EV400 AWD", fuel: "Elektrik", trims: ["S", "SE", "HSE", "First Edition"] }
+        "name": "i20",
+        "models": [
+          {
+            "name": "1.4 CRDi / 1.0 T-GDi",
+            "fuel": "Benzin",
+            "trims": [
+              "Jump",
+              "Style",
+              "Elite",
+              "Elite Plus",
+              "N-Line"
+            ]
+          },
+          {
+            "name": "1.4 MPi",
+            "fuel": "Benzin",
+            "trims": [
+              "Jump",
+              "Style",
+              "Elite"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Elantra",
+        "models": [
+          {
+            "name": "1.6 CRDi / 1.6 MPi",
+            "fuel": "Benzin",
+            "trims": [
+              "Style",
+              "Elite",
+              "Elite Plus"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Tucson",
+        "models": [
+          {
+            "name": "1.6 CRDi / 1.6 T-GDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Comfort",
+              "Style",
+              "Elite",
+              "Elite Plus",
+              "N-Line"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Getz",
+        "models": [
+          {
+            "name": "1.5 CRDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Cool",
+              "Hymer",
+              "Full"
+            ]
+          },
+          {
+            "name": "1.3 / 1.4",
+            "fuel": "Benzin",
+            "trims": [
+              "GL",
+              "GLS"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Maserati",
-    series: [
+    "brand": "Honda",
+    "series": [
       {
-        name: "Levante",
-        models: [
-          { name: "3.0 V6 Diesel 275", fuel: "Dizel", trims: ["GranLusso", "GranSport"] },
-          { name: "2.0 Mild Hybrid 330", fuel: "Hibrit", trims: ["Modena", "GT"] }
+        "name": "Civic",
+        "models": [
+          {
+            "name": "1.6 i-VTEC",
+            "fuel": "Benzin",
+            "trims": [
+              "Elegance",
+              "Executive",
+              "Premium",
+              "Dream"
+            ]
+          },
+          {
+            "name": "1.5 VTEC Turbo",
+            "fuel": "Benzin",
+            "trims": [
+              "RS",
+              "Elegance",
+              "Executive+"
+            ]
+          },
+          {
+            "name": "1.6 i-DTEC",
+            "fuel": "Dizel",
+            "trims": [
+              "Elegance",
+              "Executive"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CR-V",
+        "models": [
+          {
+            "name": "1.6 i-DTEC / 2.0 i-VTEC",
+            "fuel": "Dizel",
+            "trims": [
+              "Elegance",
+              "Executive"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "City / Jazz",
+        "models": [
+          {
+            "name": "1.5 i-VTEC / 1.3",
+            "fuel": "Benzin",
+            "trims": [
+              "Elegance",
+              "Executive"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Chery",
-    series: [
+    "brand": "Citroën",
+    "series": [
       {
-        name: "Omoda 5",
-        models: [
-          { name: "1.6 TGDI 183", fuel: "Benzin", trims: ["Comfort", "Luxury", "Excellent"] }
+        "name": "C-Elysee",
+        "models": [
+          {
+            "name": "1.6 HDi / 1.5 BlueHDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Attraction",
+              "Confort",
+              "Exclusive",
+              "Feel"
+            ]
+          }
         ]
       },
       {
-        name: "Tiggo 7 Pro",
-        models: [
-          { name: "1.6 TGDI 183", fuel: "Benzin", trims: ["Comfort", "Luxury", "Excellent"] }
+        "name": "C3 / C4 / C5 Aircross",
+        "models": [
+          {
+            "name": "1.2 PureTech / 1.5 BlueHDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Feel",
+              "Feel Bold",
+              "Shine",
+              "Max"
+            ]
+          }
         ]
       },
       {
-        name: "Tiggo 8 Pro",
-        models: [
-          { name: "1.6 TGDI 183", fuel: "Benzin", trims: ["Luxury", "Excellent"] }
+        "name": "Berlingo",
+        "models": [
+          {
+            "name": "1.6 HDi / 1.5 BlueHDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Confort",
+              "Feel",
+              "Shine"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Cupra",
-    series: [
+    "brand": "Skoda",
+    "series": [
       {
-        name: "Formentor",
-        models: [
-          { name: "1.5 TSI 150", fuel: "Benzin", trims: ["Base", "VZ", "VZ5"] },
-          { name: "1.4 e-Hybrid 245", fuel: "Hibrit", trims: ["VZ"] },
-          { name: "2.0 TSI 310", fuel: "Benzin", trims: ["VZ"] }
+        "name": "Octavia",
+        "models": [
+          {
+            "name": "1.6 TDI / 1.5 TSI",
+            "fuel": "Dizel",
+            "trims": [
+              "Ambition",
+              "Optimal",
+              "Style",
+              "L&K",
+              "RS"
+            ]
+          }
         ]
       },
       {
-        name: "Leon",
-        models: [
-          { name: "1.5 eTSI 150", fuel: "Hibrit", trims: ["Base", "VZ"] },
-          { name: "2.0 TSI 300", fuel: "Benzin", trims: ["VZ"] }
+        "name": "Superb",
+        "models": [
+          {
+            "name": "1.6 TDI / 2.0 TDI / 1.5 TSI",
+            "fuel": "Dizel",
+            "trims": [
+              "Ambition",
+              "Style",
+              "L&K Crystal"
+            ]
+          }
         ]
       },
       {
-        name: "Born",
-        models: [
-          { name: "58kWh 204", fuel: "Elektrik", trims: ["Base", "e-Boost"] },
-          { name: "77kWh 231", fuel: "Elektrik", trims: ["e-Boost"] }
+        "name": "Fabia / Rapid / Kamiq / Kodiaq",
+        "models": [
+          {
+            "name": "1.0 TSI / 1.4 TDI",
+            "fuel": "Benzin",
+            "trims": [
+              "Ambition",
+              "Style",
+              "Monte Carlo"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "SsangYong / KGM",
-    series: [
+    "brand": "Seat",
+    "series": [
       {
-        name: "Torres",
-        models: [
-          { name: "1.5 GDI Turbo 163", fuel: "Benzin", trims: ["Limited", "Platinum"] },
-          { name: "EVX (Elektrik)", fuel: "Elektrik", trims: ["Platinum"] }
+        "name": "Leon",
+        "models": [
+          {
+            "name": "1.6 TDI / 1.5 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Style",
+              "FR",
+              "Xcellence"
+            ]
+          }
         ]
       },
       {
-        name: "Korando",
-        models: [
-          { name: "1.5 GDI Turbo 163", fuel: "Benzin", trims: ["Limited", "Platinum"] },
-          { name: "1.6 e-XDi 136", fuel: "Dizel", trims: ["Limited", "Platinum"] }
-        ]
-      },
-      {
-        name: "Musso Grand",
-        models: [
-          { name: "2.2 e-XDi 202", fuel: "Dizel", trims: ["Platinum", "Titanium"] }
+        "name": "Ibiza",
+        "models": [
+          {
+            "name": "1.0 TSI / 1.4 TDI",
+            "fuel": "Benzin",
+            "trims": [
+              "Reference",
+              "Style",
+              "FR"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Mini",
-    series: [
+    "brand": "Dacia",
+    "series": [
       {
-        name: "Cooper",
-        models: [
-          { name: "1.5 Cooper 136", fuel: "Benzin", trims: ["Classic", "Favoured", "JCW"] },
-          { name: "2.0 Cooper S 178", fuel: "Benzin", trims: ["S", "JCW"] },
-          { name: "Cooper SE (Elektrik)", fuel: "Elektrik", trims: ["E", "SE"] }
+        "name": "Duster",
+        "models": [
+          {
+            "name": "1.5 dCi / 1.3 TCe / 1.0 ECO-G",
+            "fuel": "LPG",
+            "trims": [
+              "Comfort",
+              "Prestige",
+              "Journey",
+              "Extreme"
+            ]
+          }
         ]
       },
       {
-        name: "Countryman",
-        models: [
-          { name: "1.5 Cooper 136", fuel: "Benzin", trims: ["Classic", "Favoured", "JCW"] },
-          { name: "2.0 Cooper D 150", fuel: "Dizel", trims: ["ALL4", "Favoured"] },
-          { name: "SE ALL4 (Elektrik)", fuel: "Elektrik", trims: ["Favoured", "JCW"] }
+        "name": "Sandero / Stepway",
+        "models": [
+          {
+            "name": "0.9 TCe / 1.5 dCi / 1.0 ECO-G",
+            "fuel": "LPG",
+            "trims": [
+              "Ambiance",
+              "Stepway",
+              "Expression"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Logan / Lodgy",
+        "models": [
+          {
+            "name": "1.5 dCi",
+            "fuel": "Dizel",
+            "trims": [
+              "Ambiance",
+              "Laureate"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "DS Automobiles",
-    series: [
+    "brand": "Nissan",
+    "series": [
       {
-        name: "DS 4",
-        models: [
-          { name: "1.2 PureTech 130", fuel: "Benzin", trims: ["Bastille", "Trocadero", "Rivoli", "Performance Line"] },
-          { name: "1.5 BlueHDi 130", fuel: "Dizel", trims: ["Trocadero", "Rivoli"] }
+        "name": "Qashqai",
+        "models": [
+          {
+            "name": "1.5 dCi / 1.3 DIG-T / e-Power",
+            "fuel": "Dizel",
+            "trims": [
+              "Visia",
+              "Tekna",
+              "Sky Pack",
+              "Platinum Premium"
+            ]
+          }
         ]
       },
       {
-        name: "DS 7",
-        models: [
-          { name: "1.5 BlueHDi 130", fuel: "Dizel", trims: ["Bastille", "Trocadero", "Rivoli", "Opera"] },
-          { name: "E-TENSE 4x4 300", fuel: "Hibrit", trims: ["Rivoli", "Opera"] }
+        "name": "Micra / Juke / X-Trail",
+        "models": [
+          {
+            "name": "1.2 DIG-T / 1.6 dCi",
+            "fuel": "Benzin",
+            "trims": [
+              "Visia",
+              "Tekna",
+              "Platinum"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "Isuzu",
-    series: [
+    "brand": "Chevrolet",
+    "series": [
       {
-        name: "D-Max",
-        models: [
-          { name: "1.9 Ddi 163", fuel: "Dizel", trims: ["V-Cross", "V-Life", "V-Joy", "V-Go"] }
+        "name": "Cruze",
+        "models": [
+          {
+            "name": "1.6 16V / 2.0 CDTI",
+            "fuel": "Benzin",
+            "trims": [
+              "LS",
+              "LT",
+              "Sport"
+            ]
+          }
         ]
       },
       {
-        name: "N-Series",
-        models: [
-          { name: "NLR 3.0", fuel: "Dizel", trims: ["Standart", "Şasi"] },
-          { name: "NPR 5.2", fuel: "Dizel", trims: ["Şasi", "Kamyon"] }
+        "name": "Aveo / Kalos",
+        "models": [
+          {
+            "name": "1.3 D / 1.2 / 1.4",
+            "fuel": "Benzin",
+            "trims": [
+              "LS",
+              "LT"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Captiva",
+        "models": [
+          {
+            "name": "2.0 D 163",
+            "fuel": "Dizel",
+            "trims": [
+              "High",
+              "Sport",
+              "LTZ"
+            ]
+          }
         ]
       }
     ]
   },
   {
-    brand: "IVECO",
-    series: [
+    "brand": "Kia",
+    "series": [
       {
-        name: "Daily",
-        models: [
-          { name: "2.3 HPI 136", fuel: "Dizel", trims: ["35S13", "35C15", "50C15"] },
-          { name: "3.0 HPI 180", fuel: "Dizel", trims: ["35S18", "70C18"] }
+        "name": "Sportage",
+        "models": [
+          {
+            "name": "1.6 CRDi / 1.6 T-GDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Cool",
+              "Elegant",
+              "Prestige"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ceed / Rio / Cerato",
+        "models": [
+          {
+            "name": "1.6 CRDi / 1.4 MPI",
+            "fuel": "Dizel",
+            "trims": [
+              "Cool",
+              "Concept",
+              "Prestige"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Suzuki",
+    "series": [
+      {
+        "name": "Swift / Vitara / Jimny",
+        "models": [
+          {
+            "name": "1.4 Boosterjet / 1.2 Hybrid",
+            "fuel": "Hibrit",
+            "trims": [
+              "GL",
+              "GLX",
+              "Style"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Volvo",
+    "series": [
+      {
+        "name": "S40 / V40",
+        "models": [
+          {
+            "name": "1.6 D2 / 2.0 D4 / 1.6 T3",
+            "fuel": "Dizel",
+            "trims": [
+              "Base",
+              "Kinetic",
+              "Momentum",
+              "R-Design"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "S60 / S90 / XC60 / XC90",
+        "models": [
+          {
+            "name": "B4 / B5 / D4 / D5 AWD",
+            "fuel": "Hibrit",
+            "trims": [
+              "Momentum",
+              "Inscription",
+              "R-Design",
+              "Ultimate"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Alfa Romeo",
+    "series": [
+      {
+        "name": "Giulietta / Mito / Giulia / Stelvio / Tonale",
+        "models": [
+          {
+            "name": "1.6 JTDm / 2.0 GME",
+            "fuel": "Dizel",
+            "trims": [
+              "Progression",
+              "Distinctive",
+              "Sprint",
+              "Veloce",
+              "Ti"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Lada",
+    "series": [
+      {
+        "name": "Samara",
+        "models": [
+          {
+            "name": "1.5 8V",
+            "fuel": "LPG",
+            "trims": [
+              "1.5",
+              "1.3"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Vega",
+        "models": [
+          {
+            "name": "1.5 16V",
+            "fuel": "LPG",
+            "trims": [
+              "Li",
+              "Stw"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Niva / 4x4",
+        "models": [
+          {
+            "name": "1.7 ie",
+            "fuel": "LPG",
+            "trims": [
+              "4x4",
+              "Urban"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Chery",
+    "series": [
+      {
+        "name": "Omoda 5 / Tiggo 7 Pro / Tiggo 8 Pro",
+        "models": [
+          {
+            "name": "1.6 TGDI 183",
+            "fuel": "Benzin",
+            "trims": [
+              "Comfort",
+              "Luxury",
+              "Excellent"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Cupra",
+    "series": [
+      {
+        "name": "Formentor / Leon / Born",
+        "models": [
+          {
+            "name": "1.5 eTSI / 2.0 TSI",
+            "fuel": "Benzin",
+            "trims": [
+              "Base",
+              "VZ",
+              "VZ5"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "SsangYong / KGM",
+    "series": [
+      {
+        "name": "Torres / Korando / Rexton / Musso Grand",
+        "models": [
+          {
+            "name": "1.5 GDI / 2.2 e-XDi",
+            "fuel": "Dizel",
+            "trims": [
+              "Limited",
+              "Platinum",
+              "Titanium"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Mini",
+    "series": [
+      {
+        "name": "Cooper / Countryman / Clubman",
+        "models": [
+          {
+            "name": "1.5 Cooper / 2.0 Cooper S",
+            "fuel": "Benzin",
+            "trims": [
+              "Classic",
+              "Favoured",
+              "JCW"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Togg",
+    "series": [
+      {
+        "name": "T10X",
+        "models": [
+          {
+            "name": "V1 / V2 RWD / AWD",
+            "fuel": "Elektrik",
+            "trims": [
+              "Standart",
+              "Uzun Menzil",
+              "Performans"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "T10F",
+        "models": [
+          {
+            "name": "Sedan RWD / AWD",
+            "fuel": "Elektrik",
+            "trims": [
+              "Standart",
+              "Uzun Menzil"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Tesla",
+    "series": [
+      {
+        "name": "Model 3 / Model Y / Model S / Model X",
+        "models": [
+          {
+            "name": "RWD / Long Range / Performance",
+            "fuel": "Elektrik",
+            "trims": [
+              "Standard Range",
+              "Long Range",
+              "Plaid"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "BYD",
+    "series": [
+      {
+        "name": "Atto 3 / Dolphin / Seal / Han / SEAL U",
+        "models": [
+          {
+            "name": "EV 60.5kWh / 82.5kWh",
+            "fuel": "Elektrik",
+            "trims": [
+              "Comfort",
+              "Design",
+              "Excellence"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "MG",
+    "series": [
+      {
+        "name": "ZS EV / MG4 / HS",
+        "models": [
+          {
+            "name": "EV 51kWh / 1.5T 162",
+            "fuel": "Elektrik",
+            "trims": [
+              "Comfort",
+              "Luxury",
+              "XPOWER"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Porsche",
+    "series": [
+      {
+        "name": "911 / Panamera / Cayenne / Macan / Taycan",
+        "models": [
+          {
+            "name": "3.0 V6 / Turbo / GTS / E-Hybrid",
+            "fuel": "Benzin",
+            "trims": [
+              "Base",
+              "S",
+              "GTS",
+              "Turbo",
+              "Turbo S"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Maserati",
+    "series": [
+      {
+        "name": "Ghibli / Levante / Grecale",
+        "models": [
+          {
+            "name": "2.0 Mild Hybrid / 3.0 V6",
+            "fuel": "Benzin",
+            "trims": [
+              "GT",
+              "Modena",
+              "GranLusso"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Ferrari",
+    "series": [
+      {
+        "name": "458 / 488 / F8 / Roma / 296 GTB",
+        "models": [
+          {
+            "name": "3.9 V8 / 2.9 V6 Hybrid",
+            "fuel": "Benzin",
+            "trims": [
+              "Italia",
+              "GTB",
+              "Spider",
+              "GTS"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Lamborghini",
+    "series": [
+      {
+        "name": "Huracán / Urus / Aventador",
+        "models": [
+          {
+            "name": "5.2 V10 / 4.0 V8 BiTurbo",
+            "fuel": "Benzin",
+            "trims": [
+              "EVO",
+              "Performante",
+              "S",
+              "SVJ"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Isuzu",
+    "series": [
+      {
+        "name": "D-Max",
+        "models": [
+          {
+            "name": "1.9 Ddi 163",
+            "fuel": "Dizel",
+            "trims": [
+              "V-Cross",
+              "V-Life",
+              "V-Joy",
+              "V-Go"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "N-Series / NPR",
+        "models": [
+          {
+            "name": "NLR 3.0 / NPR 5.2",
+            "fuel": "Dizel",
+            "trims": [
+              "Standart",
+              "Şasi",
+              "Kamyon"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "IVECO",
+    "series": [
+      {
+        "name": "Daily",
+        "models": [
+          {
+            "name": "2.3 HPI / 3.0 HPI",
+            "fuel": "Dizel",
+            "trims": [
+              "35S13",
+              "35C15",
+              "50C15",
+              "70C18"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "BMC",
+    "series": [
+      {
+        "name": "Megastar / Tuğra",
+        "models": [
+          {
+            "name": "2.8 TD / Cummins 400",
+            "fuel": "Dizel",
+            "trims": [
+              "Panelvan",
+              "Çekici",
+              "Kamyon"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Scania",
+    "series": [
+      {
+        "name": "R Serisi / S Serisi",
+        "models": [
+          {
+            "name": "R 450 / R 500 / S 500",
+            "fuel": "Dizel",
+            "trims": [
+              "Streamline",
+              "Highline",
+              "V8"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "MAN",
+    "series": [
+      {
+        "name": "TGX / TGS / TGM",
+        "models": [
+          {
+            "name": "18.440 / 18.480 / 26.440",
+            "fuel": "Dizel",
+            "trims": [
+              "EfficientLine",
+              "XXL",
+              "LX"
+            ]
+          }
         ]
       }
     ]
