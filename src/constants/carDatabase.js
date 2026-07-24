@@ -36,12 +36,11 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "2.0 TS",
+            "name": "2.0 TS / Selespeed",
             "engine_code": "AR32310",
             "fuel": "Benzin",
             "trims": [
-              "Distinctive",
-              "Selespeed"
+              "Distinctive"
             ]
           }
         ]
@@ -92,23 +91,28 @@ export const CAR_DATABASE = [
         ]
       },
       {
+        "name": "MiTo",
+        "models": [
+          {
+            "name": "1.4 TB / 1.3 JTDm",
+            "engine_code": "199A3000",
+            "fuel": "Benzin",
+            "trims": [
+              "Distinctive"
+            ]
+          }
+        ]
+      },
+      {
         "name": "Giulia",
         "models": [
           {
-            "name": "2.0 Q4",
+            "name": "2.0 Q4 280hp",
             "engine_code": "55273835",
             "fuel": "Benzin",
             "trims": [
               "Veloce",
               "Sprint"
-            ]
-          },
-          {
-            "name": "2.9 V6 Bi-Turbo",
-            "engine_code": "670050436",
-            "fuel": "Benzin",
-            "trims": [
-              "Quadrifoglio"
             ]
           }
         ]
@@ -117,7 +121,7 @@ export const CAR_DATABASE = [
         "name": "Stelvio",
         "models": [
           {
-            "name": "2.0 Q4",
+            "name": "2.0 Q4 280hp",
             "engine_code": "55273835",
             "fuel": "Benzin",
             "trims": [
@@ -131,20 +135,12 @@ export const CAR_DATABASE = [
         "name": "Tonale",
         "models": [
           {
-            "name": "1.5 MHEV",
+            "name": "1.5 MHEV 160hp",
             "engine_code": "46347813",
             "fuel": "Hibrit",
             "trims": [
               "Sprint",
               "Ti",
-              "Veloce"
-            ]
-          },
-          {
-            "name": "1.3 Plug-in Hybrid",
-            "engine_code": "46347814",
-            "fuel": "Hibrit",
-            "trims": [
               "Veloce"
             ]
           }
@@ -216,7 +212,7 @@ export const CAR_DATABASE = [
         "name": "DBX",
         "models": [
           {
-            "name": "4.0 V8",
+            "name": "4.0 V8 / 707",
             "engine_code": "M177",
             "fuel": "Benzin",
             "trims": [
@@ -245,7 +241,7 @@ export const CAR_DATABASE = [
     "brand": "Audi",
     "series": [
       {
-        "name": "A3",
+        "name": "A3 / A3 Sedan",
         "models": [
           {
             "name": "1.6 TDI",
@@ -289,7 +285,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "A4",
+        "name": "A4 / A4 Avant",
         "models": [
           {
             "name": "2.0 TDI",
@@ -321,43 +317,25 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "A5",
+        "name": "A5 / Sportback",
         "models": [
           {
-            "name": "40 TDI Quattro",
-            "engine_code": "DETA",
+            "name": "40 TDI Quattro / 45 TFSI",
+            "engine_code": "DETA / DKNA",
             "fuel": "Dizel",
             "trims": [
               "Design",
-              "Sport",
-              "S Line"
-            ]
-          },
-          {
-            "name": "45 TFSI Quattro",
-            "engine_code": "DKNA",
-            "fuel": "Benzin",
-            "trims": [
               "S Line"
             ]
           }
         ]
       },
       {
-        "name": "A6",
+        "name": "A6 / Limousine",
         "models": [
           {
-            "name": "2.0 TDI",
-            "engine_code": "CAGB / CNHA",
-            "fuel": "Dizel",
-            "trims": [
-              "Limousine",
-              "Ultra"
-            ]
-          },
-          {
-            "name": "40 TDI Quattro",
-            "engine_code": "DFBA",
+            "name": "2.0 TDI / 40 TDI Quattro",
+            "engine_code": "CAGB / DFBA",
             "fuel": "Dizel",
             "trims": [
               "Design",
@@ -417,7 +395,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Q7",
+        "name": "Q7 / Q8",
         "models": [
           {
             "name": "50 TDI Quattro",
@@ -425,6 +403,69 @@ export const CAR_DATABASE = [
             "fuel": "Dizel",
             "trims": [
               "S Line"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Bentley",
+    "series": [
+      {
+        "name": "Continental GT",
+        "models": [
+          {
+            "name": "6.0 W12 / 4.0 V8",
+            "engine_code": "CDBA",
+            "fuel": "Benzin",
+            "trims": [
+              "GT"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Bentayga",
+        "models": [
+          {
+            "name": "4.0 V8",
+            "engine_code": "DCU",
+            "fuel": "Benzin",
+            "trims": [
+              "V8"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "BMC",
+    "series": [
+      {
+        "name": "Tuğra",
+        "models": [
+          {
+            "name": "1844 Çekici",
+            "engine_code": "FPT Cursor 11",
+            "fuel": "Dizel",
+            "trims": [
+              "Elegance"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Megastar",
+        "models": [
+          {
+            "name": "2.8 TD",
+            "engine_code": "VM Motori 2.8",
+            "fuel": "Dizel",
+            "trims": [
+              "Panelvan",
+              "Şasi"
             ]
           }
         ]
@@ -515,8 +556,8 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "320i ED / 320i",
-            "engine_code": "N13B16A / N20B20A / B48B20A",
+            "name": "320i ED / 320i 170hp",
+            "engine_code": "N13B16A / B48B20A",
             "fuel": "Benzin",
             "trims": [
               "Modern",
@@ -548,14 +589,6 @@ export const CAR_DATABASE = [
               "Luxury",
               "M Sport"
             ]
-          },
-          {
-            "name": "430i Gran Coupe",
-            "engine_code": "B48B20B",
-            "fuel": "Benzin",
-            "trims": [
-              "M Sport"
-            ]
           }
         ]
       },
@@ -563,7 +596,7 @@ export const CAR_DATABASE = [
         "name": "5 Series",
         "models": [
           {
-            "name": "520i",
+            "name": "520i 170hp / 184hp",
             "engine_code": "N20B20A / B48B20A",
             "fuel": "Benzin",
             "trims": [
@@ -587,6 +620,20 @@ export const CAR_DATABASE = [
             "engine_code": "N47D20D",
             "fuel": "Dizel",
             "trims": [
+              "M Sport"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "7 Series / i7",
+        "models": [
+          {
+            "name": "730d / 740LD / xDrive",
+            "engine_code": "B57D30A",
+            "fuel": "Dizel",
+            "trims": [
+              "Pure Excellence",
               "M Sport"
             ]
           }
@@ -625,11 +672,24 @@ export const CAR_DATABASE = [
         "name": "X5",
         "models": [
           {
-            "name": "xDrive30d / xDrive40i",
-            "engine_code": "B57D30A / B58B30A",
+            "name": "xDrive30d",
+            "engine_code": "B57D30A",
             "fuel": "Dizel",
             "trims": [
               "xLine",
+              "M Sport"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "i4 / iX / iX3",
+        "models": [
+          {
+            "name": "eDrive40 / xDrive50",
+            "engine_code": "HA0",
+            "fuel": "Elektrik",
+            "trims": [
               "M Sport"
             ]
           }
@@ -745,6 +805,94 @@ export const CAR_DATABASE = [
     ]
   },
   {
+    "brand": "Chevrolet",
+    "series": [
+      {
+        "name": "Cruze",
+        "models": [
+          {
+            "name": "1.6 113hp / 124hp",
+            "engine_code": "F16D4",
+            "fuel": "LPG",
+            "trims": [
+              "LS",
+              "LT",
+              "LT Plus"
+            ]
+          },
+          {
+            "name": "2.0 VCDi 163hp",
+            "engine_code": "Z20D1",
+            "fuel": "Dizel",
+            "trims": [
+              "LTZ"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Aveo",
+        "models": [
+          {
+            "name": "1.3 D / 1.2 / 1.4",
+            "engine_code": "A13DTE / A12XER",
+            "fuel": "LPG",
+            "trims": [
+              "LS",
+              "LT"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Captiva",
+        "models": [
+          {
+            "name": "2.0 D 150hp / 163hp 4x4",
+            "engine_code": "Z20S / Z20D1",
+            "fuel": "Dizel",
+            "trims": [
+              "High",
+              "Sport"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Lacetti / Kalos / Spark",
+        "models": [
+          {
+            "name": "1.4 16V / 1.2",
+            "engine_code": "F14D3",
+            "fuel": "LPG",
+            "trims": [
+              "SE",
+              "SX"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Chrysler",
+    "series": [
+      {
+        "name": "300C",
+        "models": [
+          {
+            "name": "3.0 CRD 218hp",
+            "engine_code": "OM 642",
+            "fuel": "Dizel",
+            "trims": [
+              "Base"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "brand": "Citroën",
     "series": [
       {
@@ -784,29 +932,21 @@ export const CAR_DATABASE = [
         "name": "C3 Aircross",
         "models": [
           {
-            "name": "1.2 PureTech",
-            "engine_code": "EB2ADTS",
-            "fuel": "Benzin",
-            "trims": [
-              "Feel Bold",
-              "Shine"
-            ]
-          },
-          {
-            "name": "1.5 BlueHDi",
-            "engine_code": "DV5RD",
+            "name": "1.2 PureTech / 1.5 BlueHDi",
+            "engine_code": "EB2ADTS / DV5RD",
             "fuel": "Dizel",
             "trims": [
+              "Feel Bold",
               "Shine"
             ]
           }
         ]
       },
       {
-        "name": "C4",
+        "name": "C4 / C4 X",
         "models": [
           {
-            "name": "1.2 PureTech 130",
+            "name": "1.2 PureTech 130hp",
             "engine_code": "EB2ADTS",
             "fuel": "Benzin",
             "trims": [
@@ -817,7 +957,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.5 BlueHDi 130",
+            "name": "1.5 BlueHDi 130hp",
             "engine_code": "DV5RD",
             "fuel": "Dizel",
             "trims": [
@@ -831,6 +971,20 @@ export const CAR_DATABASE = [
             "trims": [
               "SX",
               "Confort"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "C4 Picasso / Grand Picasso",
+        "models": [
+          {
+            "name": "1.6 e-HDi / 1.6 BlueHDi 120hp",
+            "engine_code": "DV6FC",
+            "fuel": "Dizel",
+            "trims": [
+              "Intensive",
+              "Exclusive"
             ]
           }
         ]
@@ -861,23 +1015,15 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "C5 Aircross",
+        "name": "C5 / C5 Aircross",
         "models": [
           {
-            "name": "1.5 BlueHDi 130",
+            "name": "1.5 BlueHDi 130hp / 1.6 PureTech",
             "engine_code": "DV5RD",
             "fuel": "Dizel",
             "trims": [
               "Feel Bold",
               "Shine",
-              "Shine Bold"
-            ]
-          },
-          {
-            "name": "1.6 PureTech 180",
-            "engine_code": "EP6FADTX",
-            "fuel": "Benzin",
-            "trims": [
               "Shine Bold"
             ]
           }
@@ -911,6 +1057,20 @@ export const CAR_DATABASE = [
             ]
           }
         ]
+      },
+      {
+        "name": "Jumper / Jumpy",
+        "models": [
+          {
+            "name": "2.0 BlueHDi / 2.2",
+            "engine_code": "DW10FU",
+            "fuel": "Dizel",
+            "trims": [
+              "Panelvan",
+              "Minibüs"
+            ]
+          }
+        ]
       }
     ]
   },
@@ -921,7 +1081,7 @@ export const CAR_DATABASE = [
         "name": "Formentor",
         "models": [
           {
-            "name": "1.5 TSI 150",
+            "name": "1.5 TSI 150hp",
             "engine_code": "DADA / DPCA",
             "fuel": "Benzin",
             "trims": [
@@ -940,10 +1100,10 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Leon",
+        "name": "Leon / Ateca",
         "models": [
           {
-            "name": "1.5 eTSI 150",
+            "name": "1.5 eTSI 150hp",
             "engine_code": "DFYA",
             "fuel": "Hibrit",
             "trims": [
@@ -974,7 +1134,7 @@ export const CAR_DATABASE = [
         "name": "Duster",
         "models": [
           {
-            "name": "1.5 dCi",
+            "name": "1.5 dCi 90 / 110 / 115hp",
             "engine_code": "K9K 658 / K9K 872",
             "fuel": "Dizel",
             "trims": [
@@ -985,7 +1145,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.3 TCe 150",
+            "name": "1.3 TCe 150hp",
             "engine_code": "H5H 470",
             "fuel": "Benzin",
             "trims": [
@@ -994,7 +1154,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.0 ECO-G",
+            "name": "1.0 ECO-G 100hp",
             "engine_code": "H4D 470",
             "fuel": "LPG",
             "trims": [
@@ -1031,26 +1191,18 @@ export const CAR_DATABASE = [
         "name": "Logan",
         "models": [
           {
-            "name": "1.5 dCi",
+            "name": "1.5 dCi / 1.4",
             "engine_code": "K9K 792",
             "fuel": "Dizel",
             "trims": [
               "Ambiance",
               "Laureate"
             ]
-          },
-          {
-            "name": "1.4 / 1.6",
-            "engine_code": "K7J 710",
-            "fuel": "LPG",
-            "trims": [
-              "Ambiance"
-            ]
           }
         ]
       },
       {
-        "name": "Lodgy",
+        "name": "Lodgy / Dokker",
         "models": [
           {
             "name": "1.5 dCi",
@@ -1080,10 +1232,78 @@ export const CAR_DATABASE = [
     ]
   },
   {
+    "brand": "DS Automobiles",
+    "series": [
+      {
+        "name": "DS 4",
+        "models": [
+          {
+            "name": "1.2 PureTech 130hp / 1.5 BlueHDi",
+            "engine_code": "EB2ADTS",
+            "fuel": "Benzin",
+            "trims": [
+              "Bastille",
+              "Trocadero",
+              "Rivoli"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "DS 7",
+        "models": [
+          {
+            "name": "1.5 BlueHDi 130hp / 1.6 E-Tense",
+            "engine_code": "DV5RD",
+            "fuel": "Dizel",
+            "trims": [
+              "Bastille",
+              "Rivoli",
+              "Opera"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Ferrari",
+    "series": [
+      {
+        "name": "458 / 488 / F8",
+        "models": [
+          {
+            "name": "3.9 V8 Turbo",
+            "engine_code": "F154",
+            "fuel": "Benzin",
+            "trims": [
+              "Italia",
+              "Spider",
+              "Tributo"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Roma / SF90 / Purosangue",
+        "models": [
+          {
+            "name": "3.9 V8 / 6.5 V12",
+            "engine_code": "F140",
+            "fuel": "Benzin",
+            "trims": [
+              "Base"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "brand": "Fiat",
     "series": [
       {
-        "name": "Egea",
+        "name": "Egea / Egea Cross",
         "models": [
           {
             "name": "1.3 Multijet 95hp",
@@ -1094,7 +1314,8 @@ export const CAR_DATABASE = [
               "Urban",
               "Lounge",
               "Mirror",
-              "Street"
+              "Street",
+              "Cross"
             ]
           },
           {
@@ -1105,7 +1326,8 @@ export const CAR_DATABASE = [
               "Easy",
               "Urban",
               "Lounge",
-              "Street"
+              "Street",
+              "Cross"
             ]
           },
           {
@@ -1115,7 +1337,8 @@ export const CAR_DATABASE = [
             "trims": [
               "Urban",
               "Lounge",
-              "S-Design"
+              "S-Design",
+              "Cross"
             ]
           },
           {
@@ -1126,16 +1349,6 @@ export const CAR_DATABASE = [
               "Urban",
               "Lounge",
               "Cross"
-            ]
-          },
-          {
-            "name": "Cross / Cross Express",
-            "engine_code": "199B1000 / 55260384",
-            "fuel": "Dizel",
-            "trims": [
-              "Street",
-              "Urban",
-              "Lounge"
             ]
           }
         ]
@@ -1237,21 +1450,22 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Punto / Grande Punto",
+        "name": "Punto / Grande Punto / Punto Evo",
         "models": [
           {
-            "name": "1.3 Multijet",
-            "engine_code": "199A2000",
+            "name": "1.3 Multijet 75 / 90 / 95hp",
+            "engine_code": "199A2000 / 199B1000",
             "fuel": "Dizel",
             "trims": [
               "Active",
               "Dynamic",
               "Pop",
-              "Lounge"
+              "Lounge",
+              "Evo"
             ]
           },
           {
-            "name": "1.4 Fire",
+            "name": "1.4 Fire 77hp",
             "engine_code": "350A1000",
             "fuel": "LPG",
             "trims": [
@@ -1262,58 +1476,36 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Uno",
+        "name": "Bravo / Brava / Marea",
         "models": [
           {
-            "name": "70 S / 60 S",
-            "engine_code": "160 A1.000",
-            "fuel": "LPG",
-            "trims": [
-              "S",
-              "SX"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "Tempra",
-        "models": [
-          {
-            "name": "1.6 i.e. SX",
-            "engine_code": "159 A3.000",
+            "name": "1.6 16V / 1.6 Multijet",
+            "engine_code": "182 A4.000",
             "fuel": "LPG",
             "trims": [
               "SX",
-              "SX A Klima"
+              "ELX",
+              "Dynamic"
             ]
           }
         ]
       },
       {
-        "name": "Palio",
+        "name": "Tempra / Uno",
         "models": [
           {
-            "name": "1.2 8V / 16V",
-            "engine_code": "178 A4.000",
+            "name": "1.6 i.e. / 70 S",
+            "engine_code": "159 A3.000 / 160 A1.000",
             "fuel": "LPG",
             "trims": [
-              "EL",
-              "SL"
-            ]
-          },
-          {
-            "name": "1.3 Multijet",
-            "engine_code": "188 A9.000",
-            "fuel": "Dizel",
-            "trims": [
-              "Dynamic",
-              "Sole"
+              "SX",
+              "S"
             ]
           }
         ]
       },
       {
-        "name": "Albea",
+        "name": "Palio / Albea",
         "models": [
           {
             "name": "1.3 Multijet",
@@ -1325,11 +1517,27 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.4 Fire",
+            "name": "1.2 / 1.4 Fire",
             "engine_code": "350A1000",
             "fuel": "LPG",
             "trims": [
+              "EL",
               "Sole"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "500 / 500L / 500X",
+        "models": [
+          {
+            "name": "1.3 Multijet / 1.4 Fire / 1.6 Multijet",
+            "engine_code": "199B1000",
+            "fuel": "Benzin",
+            "trims": [
+              "Pop",
+              "Lounge",
+              "Cross"
             ]
           }
         ]
@@ -1399,7 +1607,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.0 EcoBoost",
+            "name": "1.0 EcoBoost 125hp",
             "engine_code": "M1DA / M2DA",
             "fuel": "Benzin",
             "trims": [
@@ -1413,7 +1621,7 @@ export const CAR_DATABASE = [
         "name": "Fiesta",
         "models": [
           {
-            "name": "1.4 TDCi",
+            "name": "1.4 TDCi 68hp / 70hp",
             "engine_code": "F6JB",
             "fuel": "Dizel",
             "trims": [
@@ -1422,7 +1630,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.25 / 1.4",
+            "name": "1.25 / 1.4 96hp",
             "engine_code": "SNJA",
             "fuel": "LPG",
             "trims": [
@@ -1431,7 +1639,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.0 EcoBoost",
+            "name": "1.0 EcoBoost 100hp",
             "engine_code": "B7DA",
             "fuel": "Benzin",
             "trims": [
@@ -1445,7 +1653,7 @@ export const CAR_DATABASE = [
         "name": "Courier",
         "models": [
           {
-            "name": "1.5 TDCi 75hp / 95hp",
+            "name": "1.5 TDCi 75hp / 95hp / 100hp",
             "engine_code": "UGCA / XVCA",
             "fuel": "Dizel",
             "trims": [
@@ -1456,7 +1664,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.6 TDCi",
+            "name": "1.6 TDCi 95hp",
             "engine_code": "T1DB",
             "fuel": "Dizel",
             "trims": [
@@ -1481,7 +1689,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.5 TDCi",
+            "name": "1.5 TDCi 100hp / 120hp",
             "engine_code": "XWDA",
             "fuel": "Dizel",
             "trims": [
@@ -1495,7 +1703,7 @@ export const CAR_DATABASE = [
         "name": "Transit / Custom",
         "models": [
           {
-            "name": "2.0 EcoBlue",
+            "name": "2.0 EcoBlue 130 / 170 / 185hp",
             "engine_code": "YNF6 / YLF6 / BKFA",
             "fuel": "Dizel",
             "trims": [
@@ -1507,7 +1715,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "2.2 TDCi",
+            "name": "2.2 TDCi 125 / 155hp",
             "engine_code": "CYFA / DRFA",
             "fuel": "Dizel",
             "trims": [
@@ -1532,14 +1740,14 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Kuga",
+        "name": "Kuga / Puma",
         "models": [
           {
-            "name": "1.5 TDCi / 1.5 EcoBoost",
-            "engine_code": "XWDA / M8MA",
+            "name": "1.5 TDCi / 1.0 EcoBoost",
+            "engine_code": "XWDA / B7DA",
             "fuel": "Dizel",
             "trims": [
-              "Trend X",
+              "Style",
               "Titanium",
               "ST Line"
             ]
@@ -1557,6 +1765,20 @@ export const CAR_DATABASE = [
               "XLT",
               "Wildtrak",
               "Raptor"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "F-MAX / Cargo",
+        "models": [
+          {
+            "name": "12.7L Ecotorq 500hp",
+            "engine_code": "Ecotorq 500",
+            "fuel": "Dizel",
+            "trims": [
+              "Comfort",
+              "Luxury"
             ]
           }
         ]
@@ -1647,15 +1869,15 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Jazz",
+        "name": "Jazz / HR-V / ZR-V",
         "models": [
           {
-            "name": "1.4 i-DSI / 1.3 i-VTEC",
-            "engine_code": "L13A / L13B",
-            "fuel": "Benzin",
+            "name": "1.4 i-DSI / 1.5 e:HEV",
+            "engine_code": "L13A / LEB-H5",
+            "fuel": "Hibrit",
             "trims": [
               "Joy",
-              "Fun"
+              "Executive"
             ]
           }
         ]
@@ -1724,13 +1946,14 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "i30",
+        "name": "i10 / i30",
         "models": [
           {
-            "name": "1.6 CRDi 136hp",
-            "engine_code": "D4FB",
-            "fuel": "Dizel",
+            "name": "1.0 MPi / 1.6 CRDi 136hp",
+            "engine_code": "G3LA / D4FB",
+            "fuel": "Benzin",
             "trims": [
+              "Jump",
               "Style",
               "Elite"
             ]
@@ -1738,7 +1961,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Tucson",
+        "name": "Tucson / ix35",
         "models": [
           {
             "name": "1.6 CRDi 136hp 4x4",
@@ -1763,11 +1986,11 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Elantra",
+        "name": "Elantra / Bayon / Kona",
         "models": [
           {
-            "name": "1.6 MPi 127hp / 1.6 CRDi",
-            "engine_code": "G4FG / D4FB",
+            "name": "1.6 MPi / 1.4 MPi / 1.0 T-GDi",
+            "engine_code": "G4FG / G4LC / G3LC",
             "fuel": "Benzin",
             "trims": [
               "Style",
@@ -1777,16 +2000,124 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Bayon",
+        "name": "Staria / H-100 / Starex",
         "models": [
           {
-            "name": "1.4 MPi / 1.0 T-GDi",
-            "engine_code": "G4LC / G3LC",
-            "fuel": "Benzin",
+            "name": "2.2 CRDi / 2.5 CRDi",
+            "engine_code": "D4HB / D4CB",
+            "fuel": "Dizel",
             "trims": [
-              "Jump",
-              "Style",
-              "Elite"
+              "Prime",
+              "Commercial"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Isuzu",
+    "series": [
+      {
+        "name": "D-Max",
+        "models": [
+          {
+            "name": "1.9 Ddi 163hp / 2.5 D-Max",
+            "engine_code": "RZ4E-TC / 4JK1-TC",
+            "fuel": "Dizel",
+            "trims": [
+              "V-Cross",
+              "V-Joy",
+              "V-Life"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Iveco",
+    "series": [
+      {
+        "name": "Daily",
+        "models": [
+          {
+            "name": "35S13 / 35C15 / 50C15 3.0 HPI",
+            "engine_code": "F1CE3481",
+            "fuel": "Dizel",
+            "trims": [
+              "Panelvan",
+              "Şasi"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Jaguar",
+    "series": [
+      {
+        "name": "XE / XF / F-Pace",
+        "models": [
+          {
+            "name": "2.0 Ingenium 180hp / 240hp",
+            "engine_code": "AJ200D",
+            "fuel": "Dizel",
+            "trims": [
+              "Pure",
+              "Prestige",
+              "R-Sport"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Jeep",
+    "series": [
+      {
+        "name": "Renegade",
+        "models": [
+          {
+            "name": "1.6 Multijet 120hp / 1.3 GSE",
+            "engine_code": "55260384",
+            "fuel": "Dizel",
+            "trims": [
+              "Longtitude",
+              "Limited",
+              "Trailhawk"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Compass",
+        "models": [
+          {
+            "name": "1.6 Multijet / 1.3 PHEV 4xe",
+            "engine_code": "55260384",
+            "fuel": "Hibrit",
+            "trims": [
+              "Limited",
+              "S",
+              "Trailhawk"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Grand Cherokee",
+        "models": [
+          {
+            "name": "3.0 CRD 250hp",
+            "engine_code": "EXF V6",
+            "fuel": "Dizel",
+            "trims": [
+              "Limited",
+              "Overland",
+              "Summit"
             ]
           }
         ]
@@ -1800,7 +2131,7 @@ export const CAR_DATABASE = [
         "name": "Sportage",
         "models": [
           {
-            "name": "1.6 CRDi 136hp",
+            "name": "1.6 CRDi 136hp 4x4",
             "engine_code": "D4FE",
             "fuel": "Dizel",
             "trims": [
@@ -1810,7 +2141,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.6 GDI / T-GDI",
+            "name": "1.6 GDI / T-GDI 177hp",
             "engine_code": "G4FD / G4FJ",
             "fuel": "Benzin",
             "trims": [
@@ -1821,7 +2152,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Ceed",
+        "name": "Ceed / Proceed / XCeed",
         "models": [
           {
             "name": "1.6 CRDi 136hp",
@@ -1835,29 +2166,28 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Rio",
+        "name": "Rio / Stonic / Picanto",
         "models": [
           {
-            "name": "1.4 CRDi / 1.2 CVVT",
-            "engine_code": "D4FC / G4LA",
+            "name": "1.4 CRDi / 1.2 CVVT / 1.4 DPI",
+            "engine_code": "D4FC / G4LA / G4LC",
             "fuel": "Dizel",
             "trims": [
-              "Fun",
-              "Concept"
+              "Cool",
+              "Elegance"
             ]
           }
         ]
       },
       {
-        "name": "Stonic",
+        "name": "Cerato / Sorento / EV6",
         "models": [
           {
-            "name": "1.4 DPI / 1.0 T-GDI",
-            "engine_code": "G4LC / G3LC",
-            "fuel": "Benzin",
+            "name": "1.6 CRDi / 2.2 CRDi / EV",
+            "engine_code": "D4FB / D4HB",
+            "fuel": "Dizel",
             "trims": [
-              "Cool",
-              "Elegance"
+              "Prestige"
             ]
           }
         ]
@@ -1882,7 +2212,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Niva / 4x4",
+        "name": "Niva / 4x4 / Vega",
         "models": [
           {
             "name": "1.7 ie",
@@ -1891,6 +2221,142 @@ export const CAR_DATABASE = [
             "trims": [
               "4x4",
               "Urban"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Land Rover",
+    "series": [
+      {
+        "name": "Range Rover Evoque",
+        "models": [
+          {
+            "name": "2.0 TD4 180hp / Ingenium",
+            "engine_code": "AJ200D",
+            "fuel": "Dizel",
+            "trims": [
+              "SE",
+              "HSE",
+              "R-Dynamic"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Range Rover Sport / Velar",
+        "models": [
+          {
+            "name": "2.0 SD4 / 3.0 TDV6",
+            "engine_code": "306DT",
+            "fuel": "Dizel",
+            "trims": [
+              "SE",
+              "HSE",
+              "Autobiography"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Discovery / Discovery Sport",
+        "models": [
+          {
+            "name": "2.0 TD4 180hp",
+            "engine_code": "AJ200D",
+            "fuel": "Dizel",
+            "trims": [
+              "SE",
+              "HSE"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Freelander 2",
+        "models": [
+          {
+            "name": "2.2 TD4 160hp / SD4 190hp",
+            "engine_code": "224DT",
+            "fuel": "Dizel",
+            "trims": [
+              "XS",
+              "HSE"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Lexus",
+    "series": [
+      {
+        "name": "RX / NX / ES / LBX",
+        "models": [
+          {
+            "name": "RX 350h / NX 350h 2.5 Hybrid",
+            "engine_code": "A25A-FXS",
+            "fuel": "Hibrit",
+            "trims": [
+              "Executive",
+              "F Sport"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Maserati",
+    "series": [
+      {
+        "name": "Ghibli / Levante",
+        "models": [
+          {
+            "name": "3.0 V6 Dizel 275hp / 2.0 Hybrid 330hp",
+            "engine_code": "A630",
+            "fuel": "Dizel",
+            "trims": [
+              "Base",
+              "GranLusso",
+              "GranSport"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Mazda",
+    "series": [
+      {
+        "name": "Mazda 3",
+        "models": [
+          {
+            "name": "1.6 Skyactiv-G 120hp / 1.6D",
+            "engine_code": "PE-VPS / Y6",
+            "fuel": "Benzin",
+            "trims": [
+              "Motion",
+              "Reflex",
+              "Power"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Mazda 6 / CX-3 / CX-5",
+        "models": [
+          {
+            "name": "2.0 Skyactiv-G / 1.5 Skyactiv-D",
+            "engine_code": "PE-VPS / S5-DPTS",
+            "fuel": "Benzin",
+            "trims": [
+              "Motion",
+              "Power"
             ]
           }
         ]
@@ -1925,10 +2391,24 @@ export const CAR_DATABASE = [
         ]
       },
       {
+        "name": "B-Class",
+        "models": [
+          {
+            "name": "B 180 d / B 200",
+            "engine_code": "OM 607 / M 282",
+            "fuel": "Dizel",
+            "trims": [
+              "Style",
+              "AMG"
+            ]
+          }
+        ]
+      },
+      {
         "name": "C-Class",
         "models": [
           {
-            "name": "C 180 (1.6t / 1.5t)",
+            "name": "C 180 (1.6t 156hp / 1.5t 170hp)",
             "engine_code": "M 274.910 / M 264.915",
             "fuel": "Benzin",
             "trims": [
@@ -1938,7 +2418,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "C 200 d (1.6d / 2.0d)",
+            "name": "C 200 d (1.6d 136hp / 2.0d 160hp)",
             "engine_code": "OM 626 / OM 654",
             "fuel": "Dizel",
             "trims": [
@@ -1960,7 +2440,7 @@ export const CAR_DATABASE = [
         "name": "E-Class",
         "models": [
           {
-            "name": "E 220 d 194hp",
+            "name": "E 220 d 194hp / 200hp",
             "engine_code": "OM 654.920",
             "fuel": "Dizel",
             "trims": [
@@ -1981,6 +2461,20 @@ export const CAR_DATABASE = [
         ]
       },
       {
+        "name": "S-Class",
+        "models": [
+          {
+            "name": "S 350 d / S 400 d 4MATIC",
+            "engine_code": "OM 656",
+            "fuel": "Dizel",
+            "trims": [
+              "Long",
+              "AMG"
+            ]
+          }
+        ]
+      },
+      {
         "name": "CLA",
         "models": [
           {
@@ -1995,10 +2489,10 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "GLA / GLC",
+        "name": "GLA / GLB / GLC",
         "models": [
           {
-            "name": "GLA 200 / GLC 220 d",
+            "name": "GLA 200 / GLC 220 d 4MATIC",
             "engine_code": "M 282 / OM 654",
             "fuel": "Dizel",
             "trims": [
@@ -2009,15 +2503,63 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Vito / Sprinter",
+        "name": "Vito / V-Class / Sprinter",
         "models": [
           {
-            "name": "111 CDI / 114 CDI / 316 CDI",
+            "name": "111 CDI / 114 CDI / 119 CDI / 316 CDI",
             "engine_code": "OM 622 / OM 651",
             "fuel": "Dizel",
             "trims": [
               "Tourer",
+              "Select",
               "Panelvan"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "MG",
+    "series": [
+      {
+        "name": "ZS / ZS EV",
+        "models": [
+          {
+            "name": "1.5 VTi-TECH / 1.0T / EV 156hp",
+            "engine_code": "NSE 1.5",
+            "fuel": "Benzin",
+            "trims": [
+              "Comfort",
+              "Luxury"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "HS / EHS",
+        "models": [
+          {
+            "name": "1.5 GDI 162hp / PHEV",
+            "engine_code": "15E4E",
+            "fuel": "Benzin",
+            "trims": [
+              "Comfort",
+              "Luxury"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "MG4 EV",
+        "models": [
+          {
+            "name": "170hp / 204hp EV",
+            "engine_code": "TZ180XS001",
+            "fuel": "Elektrik",
+            "trims": [
+              "Comfort",
+              "Luxury"
             ]
           }
         ]
@@ -2031,12 +2573,13 @@ export const CAR_DATABASE = [
         "name": "Cooper",
         "models": [
           {
-            "name": "1.5 136hp / 1.5D",
-            "engine_code": "B38A15A / B37C15",
+            "name": "1.5 136hp / 1.5D / Cooper S 192hp",
+            "engine_code": "B38A15A / B48A20A",
             "fuel": "Benzin",
             "trims": [
               "Chili",
-              "Pepper"
+              "Pepper",
+              "JCW"
             ]
           }
         ]
@@ -2051,6 +2594,56 @@ export const CAR_DATABASE = [
             "trims": [
               "Chili",
               "Untamed"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Mitsubishi",
+    "series": [
+      {
+        "name": "Lancer",
+        "models": [
+          {
+            "name": "1.5 109hp / 1.6 117hp",
+            "engine_code": "4A91 / 4A92",
+            "fuel": "LPG",
+            "trims": [
+              "Inform",
+              "Invite",
+              "Intense"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ASX / Eclipse Cross",
+        "models": [
+          {
+            "name": "1.6 MIVEC / 1.5 T 4WD",
+            "engine_code": "4A92 / 4B40",
+            "fuel": "Benzin",
+            "trims": [
+              "Invite",
+              "Intense"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "L200",
+        "models": [
+          {
+            "name": "2.5 DI-D / 2.2 DI-D 150hp 4x4",
+            "engine_code": "4D56 / 4N14",
+            "fuel": "Dizel",
+            "trims": [
+              "Invite",
+              "Intense",
+              "Instyle",
+              "Tornado"
             ]
           }
         ]
@@ -2084,7 +2677,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.3 DIG-T 158hp",
+            "name": "1.3 DIG-T 158hp / e-POWER",
             "engine_code": "HR13DDT",
             "fuel": "Benzin",
             "trims": [
@@ -2119,10 +2712,10 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Micra",
+        "name": "Micra / Note",
         "models": [
           {
-            "name": "1.2 / 0.9 IG-T / 1.0",
+            "name": "1.2 80hp / 0.9 IG-T / 1.0",
             "engine_code": "HR12DE / HR09DET",
             "fuel": "Benzin",
             "trims": [
@@ -2133,10 +2726,24 @@ export const CAR_DATABASE = [
         ]
       },
       {
+        "name": "X-Trail",
+        "models": [
+          {
+            "name": "1.6 dCi / 1.7 dCi / 1.5 e-POWER",
+            "engine_code": "R9M / R9N",
+            "fuel": "Dizel",
+            "trims": [
+              "Sky Pack",
+              "Platinum"
+            ]
+          }
+        ]
+      },
+      {
         "name": "Navara",
         "models": [
           {
-            "name": "2.3 dCi 160hp / 190hp",
+            "name": "2.3 dCi 160hp / 190hp 4x4",
             "engine_code": "YS23DDT",
             "fuel": "Dizel",
             "trims": [
@@ -2210,7 +2817,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.2 Twinport / 1.4",
+            "name": "1.2 Twinport / 1.4 100hp",
             "engine_code": "A12XER / A14XER",
             "fuel": "LPG",
             "trims": [
@@ -2225,6 +2832,20 @@ export const CAR_DATABASE = [
             "trims": [
               "Edition",
               "GS Line"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Vectra",
+        "models": [
+          {
+            "name": "1.6 16V / 2.0 DTI / 1.9 CDTI",
+            "engine_code": "Z16XE / Y20DTH",
+            "fuel": "LPG",
+            "trims": [
+              "Comfort",
+              "Elegance"
             ]
           }
         ]
@@ -2269,21 +2890,22 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Crossland",
+        "name": "Crossland / Grandland",
         "models": [
           {
-            "name": "1.2 Turbo / 1.5 D",
+            "name": "1.2 Turbo / 1.5 CDTI 130hp",
             "engine_code": "EB2ADTS / DV5RD",
             "fuel": "Dizel",
             "trims": [
               "Essential",
-              "Edition"
+              "Edition",
+              "Ultimate"
             ]
           }
         ]
       },
       {
-        "name": "Combo",
+        "name": "Combo / Vivaro",
         "models": [
           {
             "name": "1.5 CDTI 102hp / 130hp",
@@ -2302,7 +2924,21 @@ export const CAR_DATABASE = [
     "brand": "Peugeot",
     "series": [
       {
-        "name": "206",
+        "name": "106",
+        "models": [
+          {
+            "name": "1.4 XR / 1.6 GTI",
+            "engine_code": "TU3JP / TU5J4",
+            "fuel": "Benzin",
+            "trims": [
+              "XR",
+              "GTI"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "206 / 206+",
         "models": [
           {
             "name": "1.4 HDi 70hp",
@@ -2312,7 +2948,8 @@ export const CAR_DATABASE = [
               "XR",
               "XT",
               "X-Line",
-              "Desire"
+              "Desire",
+              "Comfort"
             ]
           },
           {
@@ -2322,15 +2959,6 @@ export const CAR_DATABASE = [
             "trims": [
               "XR",
               "XT"
-            ]
-          },
-          {
-            "name": "206+ 1.4 HDi",
-            "engine_code": "DV4TD",
-            "fuel": "Dizel",
-            "trims": [
-              "Comfort",
-              "Urban"
             ]
           }
         ]
@@ -2358,7 +2986,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.4 75hp / 1.4 VTi",
+            "name": "1.4 75hp / 1.4 VTi 95hp",
             "engine_code": "TU3JP / EP3",
             "fuel": "LPG",
             "trims": [
@@ -2382,7 +3010,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.4 HDi / 1.5 BlueHDi",
+            "name": "1.4 HDi / 1.5 BlueHDi 100hp",
             "engine_code": "DV4TD / DV5RD",
             "fuel": "Dizel",
             "trims": [
@@ -2423,7 +3051,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.2 VTi",
+            "name": "1.2 VTi 72hp",
             "engine_code": "EB2M",
             "fuel": "Benzin",
             "trims": [
@@ -2472,7 +3100,7 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.2 PureTech 130hp",
+            "name": "1.2 PureTech 130hp EAT8",
             "engine_code": "EB2ADTS",
             "fuel": "Benzin",
             "trims": [
@@ -2511,7 +3139,7 @@ export const CAR_DATABASE = [
         "name": "508",
         "models": [
           {
-            "name": "1.5 BlueHDi 130hp / 1.6 PureTech",
+            "name": "1.5 BlueHDi 130hp / 1.6 PureTech 180hp",
             "engine_code": "DV5RD / EP6FADTX",
             "fuel": "Dizel",
             "trims": [
@@ -2589,7 +3217,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Partner / Rifter",
+        "name": "Partner / Rifter / Bipper",
         "models": [
           {
             "name": "1.6 HDi / 1.5 BlueHDi 130hp",
@@ -2625,15 +3253,15 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Panamera",
+        "name": "Panamera / Macan",
         "models": [
           {
-            "name": "2.9 V6 4 E-Hybrid",
+            "name": "2.9 V6 / 2.0 T 265hp",
             "engine_code": "DGG",
-            "fuel": "Hibrit",
+            "fuel": "Benzin",
             "trims": [
-              "4S",
-              "Executive"
+              "Base",
+              "4S"
             ]
           }
         ]
@@ -2664,6 +3292,26 @@ export const CAR_DATABASE = [
               "Carrera",
               "Carrera S",
               "Turbo S"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Proton",
+    "series": [
+      {
+        "name": "Gen-2 / Persona",
+        "models": [
+          {
+            "name": "1.6 CamPro",
+            "engine_code": "S4PE",
+            "fuel": "LPG",
+            "trims": [
+              "Line",
+              "Medium",
+              "High"
             ]
           }
         ]
@@ -2804,7 +3452,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Kangoo",
+        "name": "Kangoo / Express",
         "models": [
           {
             "name": "1.5 dCi 70 / 85 / 90 / 110hp",
@@ -2834,7 +3482,21 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Captur / Austral",
+        "name": "Laguna / Latitude / Talisman",
+        "models": [
+          {
+            "name": "1.5 dCi / 1.6 dCi 130 / 160hp",
+            "engine_code": "K9K / R9M",
+            "fuel": "Dizel",
+            "trims": [
+              "Privilege",
+              "Icon"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Captur / Austral / Kadjar",
         "models": [
           {
             "name": "1.3 TCe Mild Hybrid 160hp",
@@ -2848,28 +3510,86 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Kadjar",
+        "name": "Toros (R12) / Broadway (R9)",
         "models": [
           {
-            "name": "1.5 dCi / 1.3 TCe",
-            "engine_code": "K9K 872 / H5H",
-            "fuel": "Dizel",
+            "name": "1.4 SW / 1.4 GTE",
+            "engine_code": "C1J",
+            "fuel": "LPG",
             "trims": [
-              "Touch",
-              "Icon"
+              "Standart",
+              "GTE"
             ]
           }
         ]
       },
       {
-        "name": "Toros / R12",
+        "name": "Trafic / Master",
         "models": [
           {
-            "name": "1.4 SW",
-            "engine_code": "C1J",
+            "name": "2.0 dCi 115 / 150hp / 2.3 dCi",
+            "engine_code": "M9R / M9T",
+            "fuel": "Dizel",
+            "trims": [
+              "Grand Confort",
+              "Panelvan"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Rolls-Royce",
+    "series": [
+      {
+        "name": "Ghost / Phantom / Cullinan",
+        "models": [
+          {
+            "name": "6.75 V12",
+            "engine_code": "N74",
+            "fuel": "Benzin",
+            "trims": [
+              "Base"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Rover",
+    "series": [
+      {
+        "name": "200 / 25 / 45 / 75",
+        "models": [
+          {
+            "name": "1.6 16V / 2.0 CDT",
+            "engine_code": "K16 / M47R",
             "fuel": "LPG",
             "trims": [
-              "Standart"
+              "Classic",
+              "Club"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Saab",
+    "series": [
+      {
+        "name": "9-3",
+        "models": [
+          {
+            "name": "1.9 TiD 150hp / 1.9 TTiD 180hp",
+            "engine_code": "Z19DTH / Z19DTR",
+            "fuel": "Dizel",
+            "trims": [
+              "Linear",
+              "Vector",
+              "Aero"
             ]
           }
         ]
@@ -2912,7 +3632,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Ibiza",
+        "name": "Ibiza / Cordoba / Toledo",
         "models": [
           {
             "name": "1.4 85hp",
@@ -2935,27 +3655,14 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Arona",
+        "name": "Arona / Ateca / Tarraco",
         "models": [
           {
-            "name": "1.0 TSI 110hp",
-            "engine_code": "DKRF",
+            "name": "1.0 TSI / 1.5 TSI 150hp",
+            "engine_code": "DKRF / DPCA",
             "fuel": "Benzin",
             "trims": [
               "Style",
-              "FR"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "Ateca",
-        "models": [
-          {
-            "name": "1.6 TDI / 1.5 TSI 150hp",
-            "engine_code": "DGTE / DPCA",
-            "fuel": "Benzin",
-            "trims": [
               "Experience",
               "FR"
             ]
@@ -3018,11 +3725,11 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Fabia",
+        "name": "Fabia / Rapid / Scala",
         "models": [
           {
-            "name": "1.2 TSI / 1.0 TSI",
-            "engine_code": "CJZC / CHZB",
+            "name": "1.2 TSI / 1.0 TSI / 1.6 TDI",
+            "engine_code": "CJZC / CHZB / CAYC",
             "fuel": "Benzin",
             "trims": [
               "Ambition",
@@ -3042,6 +3749,140 @@ export const CAR_DATABASE = [
               "Elite",
               "Premium",
               "Prestige"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Smart",
+    "series": [
+      {
+        "name": "Fortwo / Forfour",
+        "models": [
+          {
+            "name": "0.9 Turbo 90hp / 1.0",
+            "engine_code": "H4B",
+            "fuel": "Benzin",
+            "trims": [
+              "Passion",
+              "Prime"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "SsangYong",
+    "series": [
+      {
+        "name": "Korando / Tivoli / Torres",
+        "models": [
+          {
+            "name": "1.5 GDI-T 163hp / 1.6 e-XDi",
+            "engine_code": "G15DT",
+            "fuel": "Benzin",
+            "trims": [
+              "Limited",
+              "Platinum"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Musso Grand / Rexton",
+        "models": [
+          {
+            "name": "2.2 e-XDi 181hp / 202hp 4x4",
+            "engine_code": "D22DTR",
+            "fuel": "Dizel",
+            "trims": [
+              "Platinum"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Subaru",
+    "series": [
+      {
+        "name": "Impreza",
+        "models": [
+          {
+            "name": "1.5 / 2.0 Boxer / WRX",
+            "engine_code": "EJ15 / EJ20",
+            "fuel": "LPG",
+            "trims": [
+              "AWD"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "XV / Forester / Outback",
+        "models": [
+          {
+            "name": "1.6 Boxer / 2.0 e-Boxer",
+            "engine_code": "FB16 / FB20",
+            "fuel": "Hibrit",
+            "trims": [
+              "Elegance",
+              "Premium"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Suzuki",
+    "series": [
+      {
+        "name": "Swift",
+        "models": [
+          {
+            "name": "1.2 Dualjet Hybrid 83hp / 1.3",
+            "engine_code": "K12D / M13A",
+            "fuel": "Hibrit",
+            "trims": [
+              "GLX Premium"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Vitara / Grand Vitara / Jimny",
+        "models": [
+          {
+            "name": "1.4 Boosterjet Hybrid 129hp 4x4",
+            "engine_code": "K14D",
+            "fuel": "Hibrit",
+            "trims": [
+              "GLX Premium",
+              "AllGrip"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Tata",
+    "series": [
+      {
+        "name": "Indica / Indigo / Xenon",
+        "models": [
+          {
+            "name": "1.4 Dicor / 2.2 Dicor",
+            "engine_code": "475 IDI",
+            "fuel": "Dizel",
+            "trims": [
+              "Trend",
+              "DLX"
             ]
           }
         ]
@@ -3139,7 +3980,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Murat 131 / 124",
+        "name": "Murat 131 / 124 / Serçe",
         "models": [
           {
             "name": "1.3 / 1.2",
@@ -3276,25 +4117,10 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "C-HR",
+        "name": "Auris / Avensis",
         "models": [
           {
-            "name": "1.8 Hybrid 122hp / 140hp",
-            "engine_code": "2ZR-FXE",
-            "fuel": "Hibrit",
-            "trims": [
-              "Flame",
-              "Passion",
-              "GR Sport"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "Auris",
-        "models": [
-          {
-            "name": "1.4 D-4D / 1.6",
+            "name": "1.4 D-4D / 1.6 / 2.0 D-4D",
             "engine_code": "1ND-TV / 1ZR-FAE",
             "fuel": "Dizel",
             "trims": [
@@ -3306,11 +4132,26 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Hilux",
+        "name": "C-HR / RAV4",
         "models": [
           {
-            "name": "2.4 D-4D 150hp 4x4",
-            "engine_code": "2GD-FTV",
+            "name": "1.8 Hybrid / 2.5 Hybrid AWD",
+            "engine_code": "2ZR-FXE / A25A-FXS",
+            "fuel": "Hibrit",
+            "trims": [
+              "Flame",
+              "Passion",
+              "GR Sport"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Hilux / Land Cruiser",
+        "models": [
+          {
+            "name": "2.4 D-4D 150hp 4x4 / 2.8 D-4D",
+            "engine_code": "2GD-FTV / 1GD-FTV",
             "fuel": "Dizel",
             "trims": [
               "Comfort",
@@ -3378,7 +4219,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Passat",
+        "name": "Passat / Passat CC / CC",
         "models": [
           {
             "name": "1.6 TDI 120hp DSG",
@@ -3392,8 +4233,8 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "2.0 TDI 150hp / 190hp 4Motion",
-            "engine_code": "CBAB / CFFB / DFHA",
+            "name": "2.0 TDI 150hp / 190hp / 240hp BiTDI 4Motion",
+            "engine_code": "CBAB / CFFB / DFHA / CUAA",
             "fuel": "Dizel",
             "trims": [
               "Comfortline",
@@ -3456,7 +4297,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Jetta",
+        "name": "Jetta / Bora",
         "models": [
           {
             "name": "1.6 TDI 105hp",
@@ -3469,9 +4310,9 @@ export const CAR_DATABASE = [
             ]
           },
           {
-            "name": "1.2 TSI / 1.4 TSI",
-            "engine_code": "CBZA / CAXA",
-            "fuel": "Benzin",
+            "name": "1.2 TSI / 1.4 TSI / 1.6 8V",
+            "engine_code": "CBZA / CAXA / AKL",
+            "fuel": "LPG",
             "trims": [
               "Trendline",
               "Comfortline"
@@ -3480,7 +4321,7 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Tiguan",
+        "name": "Tiguan / Touareg",
         "models": [
           {
             "name": "2.0 TDI 150hp / 4Motion",
@@ -3499,15 +4340,6 @@ export const CAR_DATABASE = [
               "Life",
               "Elegance",
               "R-Line"
-            ]
-          },
-          {
-            "name": "1.4 TSI 150hp ACT",
-            "engine_code": "CZEA",
-            "fuel": "Benzin",
-            "trims": [
-              "Trendline",
-              "Highline"
             ]
           }
         ]
@@ -3538,11 +4370,11 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Transporter / Caravelle",
+        "name": "Transporter / Caravelle / Multivan",
         "models": [
           {
-            "name": "2.0 TDI 102hp / 140hp / 180hp BiTDI",
-            "engine_code": "CAAA / CCHA / CFCA",
+            "name": "2.0 TDI 102hp / 140hp / 180hp / 199hp BiTDI",
+            "engine_code": "CAAA / CCHA / CFCA / CXHA",
             "fuel": "Dizel",
             "trims": [
               "City Van",
@@ -3553,28 +4385,31 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "Scirocco",
+        "name": "Scirocco / Arteon / Taigo / T-Roc",
         "models": [
           {
-            "name": "1.4 TSI 122 / 160hp",
-            "engine_code": "CAXA / CAVD",
+            "name": "1.4 TSI / 1.5 TSI / 2.0 TDI",
+            "engine_code": "CAXA / DPCA / CUAA",
             "fuel": "Benzin",
             "trims": [
-              "Sportline"
+              "Sportline",
+              "Elegance",
+              "R-Line"
             ]
           }
         ]
       },
       {
-        "name": "Arteon",
+        "name": "Beetle / Vosvos / Amarok / Crafter",
         "models": [
           {
-            "name": "2.0 TDI 240hp 4Motion / 1.5 TSI",
-            "engine_code": "CUAA / DPCA",
+            "name": "2.0 TDI / 3.0 V6 TDI 258hp",
+            "engine_code": "DDXA",
             "fuel": "Dizel",
             "trims": [
-              "Elegance",
-              "R-Line"
+              "Design",
+              "Highline",
+              "Aventura"
             ]
           }
         ]
@@ -3585,21 +4420,23 @@ export const CAR_DATABASE = [
     "brand": "Volvo",
     "series": [
       {
-        "name": "S40",
+        "name": "S40 / V40",
         "models": [
           {
-            "name": "1.6 D 109hp",
-            "engine_code": "D4164T",
+            "name": "1.6 D2 115hp / 1.6 D 109hp",
+            "engine_code": "D4162T / D4164T",
             "fuel": "Dizel",
             "trims": [
               "Base",
-              "Premium"
+              "Premium",
+              "Advance",
+              "R-Design"
             ]
           }
         ]
       },
       {
-        "name": "S60",
+        "name": "S60 / V60",
         "models": [
           {
             "name": "1.6 D2 115hp",
@@ -3622,10 +4459,10 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "S90",
+        "name": "S80 / S90 / V90",
         "models": [
           {
-            "name": "2.0 D5 AWD 235hp",
+            "name": "2.0 D4 / D5 AWD 235hp",
             "engine_code": "D4204T23",
             "fuel": "Dizel",
             "trims": [
@@ -3635,28 +4472,16 @@ export const CAR_DATABASE = [
         ]
       },
       {
-        "name": "XC60",
+        "name": "XC40 / XC60 / XC90",
         "models": [
           {
-            "name": "2.0 D4 / B5 AWD",
+            "name": "2.0 D4 / B5 AWD / Recharge PHEV",
             "engine_code": "D4204T14",
             "fuel": "Hibrit",
             "trims": [
               "Inscription",
-              "R-Design"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "XC90",
-        "models": [
-          {
-            "name": "2.0 D5 AWD 235hp",
-            "engine_code": "D4204T23",
-            "fuel": "Dizel",
-            "trims": [
-              "Inscription"
+              "R-Design",
+              "Plus"
             ]
           }
         ]
