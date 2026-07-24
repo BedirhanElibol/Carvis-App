@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CalendarDays, Car, ClipboardList, Heart, Loader2, LogIn, LogOut, MapPin, Package, Phone, Settings, ShoppingBag, Trash2, User, X, Mail, Edit3 } from "lucide-react";
+import { AlertCircle, CalendarDays, Car, ClipboardList, Heart, Loader2, LogIn, LogOut, MapPin, Package, Phone, Settings, ShoppingBag, Trash2, User, X, Mail, Edit3 } from "lucide-react";
 import { triggerHaptic } from "../../utils/haptics";
 import { Badge } from "../../components/Core";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 import { useGarage } from "../../context/GarageContext";
+import { validateUserProfileCompleteness } from "../../utils/validationUtils";
 
 import SettingsModal from "../../components/modals/SettingsModal";
 import ServiceHistoryModal from "../../components/modals/ServiceHistoryModal";
@@ -35,6 +36,7 @@ const ProfileScreen = () => {
   if (!t) return null;
 
   const isLoggedIn = currentUser && !currentUser.isAnonymous;
+  const profileStatus = validateUserProfileCompleteness(currentUser);
 
   const userPhoto =
     currentUser?.user_metadata?.avatar_url || currentUser?.photoURL;
@@ -139,8 +141,8 @@ const ProfileScreen = () => {
             {isLoggedIn ? currentUser.email : "Oturum Açılmadı"}
           </p>
           {isLoggedIn ? (
-            <Badge type="success" className="text-[9px] px-3 py-1 font-black">
-              Giriş Yapıldı
+            <Badge type={profileStatus.isComplete ? "success" : "warning"} className="text-[9px] px-3 py-1 font-black">
+              {profileStatus.isComplete ? "Giriş Yapıldı" : `%${profileStatus.completeness} Tamamlandı`}
             </Badge>
           ) : (
             <button
@@ -156,6 +158,29 @@ const ProfileScreen = () => {
           )}
         </div>
       </div>
+
+      {/* PROFILE COMPLETENESS ALERT — if missing fields like Phone or Address */}
+      {isLoggedIn && !profileStatus.isComplete && (
+        <div 
+          onClick={() => setShowSettings(true)}
+          className="glass-card p-4 rounded-[1.8rem] border border-amber-500/30 bg-amber-500/10 shadow-xl flex items-center justify-between gap-3 cursor-pointer hover:bg-amber-500/20 transition-all active-scale"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+              <AlertCircle size={20} />
+            </div>
+            <div>
+              <h5 className="text-xs font-black text-amber-400 uppercase tracking-tight">Profilinizi Tamamlayın (%{profileStatus.completeness})</h5>
+              <p className="text-[10px] font-bold text-slate-400 mt-0.5">
+                Eksik: {profileStatus.missingFields.join(", ")}
+              </p>
+            </div>
+          </div>
+          <span className="text-[10px] font-black uppercase text-amber-400 border border-amber-500/40 px-2.5 py-1 rounded-xl whitespace-nowrap">
+            Tamamla →
+          </span>
+        </div>
+      )}
 
       {/* PERSONAL INFO SECTION — only for logged-in users */}
       {isLoggedIn && (

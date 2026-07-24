@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, CheckCircle, ChevronRight, CreditCard, Lock, MapPin, RefreshCw, ShieldCheck, ShoppingBag } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import { useUI } from "../../context/UIContext";
+import { useAuth } from "../../context/AuthContext";
 import { useWallet } from "../../context/WalletContext";
+import { validateOrderPreconditions } from "../../utils/validationUtils";
 import CheckoutCartStep from "./components/CheckoutCartStep";
 import CheckoutAddressStep from "./components/CheckoutAddressStep";
 import CheckoutPaymentStep from "./components/CheckoutPaymentStep";
@@ -50,11 +52,18 @@ const CheckoutScreen = () => {
     }
   }, [cart, step]);
 
+  const { currentUser } = useAuth();
+
   const handleNext = () => {
     if (step === 1 && cart.length === 0)
-      return showAlert("Uyarı", "Sepetiniz boş.", "warning");
-    if (step === 2 && !selectedAddress)
-      return showAlert("Uyarı", "Devam etmek için bir adres seçmelisiniz.", "warning");
+      return showAlert("Uyarı", "Sepetiniz boş. Ürün eklemeden ödemeye geçilemez.", "warning");
+    
+    if (step === 2) {
+      const validation = validateOrderPreconditions({ cart, selectedAddress, currentUser });
+      if (!validation.isValid) {
+        return showAlert("Zorunlu Alan Eksik", validation.errors[0], "warning");
+      }
+    }
     setStep((prev) => prev + 1);
   };
 

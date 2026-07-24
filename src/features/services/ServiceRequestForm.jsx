@@ -264,25 +264,50 @@ const ServiceRequestForm = () => {
       <div className="max-w-xl mx-auto p-5 space-y-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           
-          {/* Araç Seçimi */}
+          {/* Araç Seçimi & Zorunlu Kontrol */}
           <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
-            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
-              <Car size={16} className="text-primary-500" />
-              Araç Seçimi
-            </label>
-            <select
-              value={selectedVehicleId}
-              onChange={(e) => setSelectedVehicleId(e.target.value)}
-              className="w-full bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-2xl p-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all"
-              required
-            >
-              <option value="">İşlem yapılacak aracı seçin...</option>
-              {vehicles.map((v) => (
-                <option key={v.id} value={v.id}>
-                  {v.brand} {v.model} ({v.plate})
-                </option>
-              ))}
-            </select>
+            <div className="flex justify-between items-center">
+              <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                <Car size={16} className="text-primary-500" />
+                Araç Seçimi <span className="text-red-500">* (Zorunlu)</span>
+              </label>
+              <button
+                type="button"
+                onClick={() => navigate("/app/profile")}
+                className="text-[10px] font-black text-cyan-400 hover:text-cyan-300 transition-colors uppercase tracking-wider"
+              >
+                + Yeni Araç Ekle
+              </button>
+            </div>
+
+            {vehicles.length === 0 ? (
+              <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-center space-y-3">
+                <p className="text-xs font-bold text-amber-400">
+                  ⚠️ Garajınızda henüz kayıtlı bir araç yok. Servis talebi açabilmek için lütfen önce aracınızı ekleyin.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => navigate("/app/profile")}
+                  className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider rounded-xl transition-all active-scale"
+                >
+                  Garajıma Git & Araç Ekle
+                </button>
+              </div>
+            ) : (
+              <select
+                value={selectedVehicleId}
+                onChange={(e) => setSelectedVehicleId(e.target.value)}
+                className="w-full bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-2xl p-4 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+                required
+              >
+                <option value="">İşlem yapılacak aracı seçin...</option>
+                {vehicles.map((v) => (
+                  <option key={v.id} value={v.id}>
+                    {v.brand} {v.model} ({v.plate})
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           {/* Belirti Seçici Grid */}
