@@ -85,7 +85,7 @@ const LiveOrderStatus = ({ order }) => {
                 (pos) => {
                     setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
                 },
-                (err) => console.log("User location query error:", err),
+                (err) => console.error("User location query error:", err),
                 { timeout: 5000 }
             );
         }
@@ -103,7 +103,6 @@ const LiveOrderStatus = ({ order }) => {
                 },
                 (payload) => {
                     if (payload.new && payload.new.lat && payload.new.lng) {
-                        console.log("Realtime provider location update received:", payload.new.lat, payload.new.lng);
                         setProviderCoords({
                             lat: Number(payload.new.lat),
                             lng: Number(payload.new.lng)
