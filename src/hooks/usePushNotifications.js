@@ -42,8 +42,6 @@ const usePushNotifications = () => {
 
       // Listen for token registration
       PushNotifications.addListener('registration', async (token) => {
-        console.log('[Push] FCM Token:', token.value);
-
         // Save FCM token to Supabase profile
         const { error } = await supabase.auth.updateUser({
           data: { fcm_token: token.value }
@@ -60,7 +58,6 @@ const usePushNotifications = () => {
 
       // Handle foreground notifications
       PushNotifications.addListener('pushNotificationReceived', (notification) => {
-        console.log('[Push] Foreground notification:', notification);
         // Trigger in-app notification via custom event
         window.dispatchEvent(new CustomEvent('carvis:push', {
           detail: {
@@ -73,7 +70,6 @@ const usePushNotifications = () => {
 
       // Handle notification tap (app was in background)
       PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
-        console.log('[Push] Action performed:', action);
         const data = action.notification.data;
         // Route user based on notification type
         if (data?.type === 'order') {
