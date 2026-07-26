@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { DollarSign, Edit2, Loader2, Package, Save, X } from "lucide-react";
 import { useSeller } from "../../../context/SellerContext";
 import { CAR_DATA } from "../../../constants/mockData";
@@ -14,6 +14,11 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
   const [compatibilities, setCompatibilities] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
+
+  const availableModels = useMemo(() => {
+    if (!selectedBrand) return [];
+    return CAR_DATA.find((c) => c.brand === selectedBrand)?.models || [];
+  }, [selectedBrand]);
 
   const handleAddCompatibility = () => {
     if (selectedBrand && selectedModel) {
@@ -167,10 +172,9 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
                 className="flex-1 bg-slate-50 dark:bg-slate-950 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2 text-slate-900 dark:text-white text-xs outline-none focus:border-primary-500"
               >
                 <option value="">Model Seçin</option>
-                {selectedBrand &&
-                  CAR_DATA.find((c) => c.brand === selectedBrand)?.models.map((m) => (
-                    <option key={m} value={m}>{m}</option>
-                  ))}
+                {availableModels.map((m) => (
+                  <option key={m} value={m}>{m}</option>
+                ))}
               </select>
 
               <button
