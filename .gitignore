@@ -40,3 +40,5 @@ scripts/whatsapp-bot/contacts.csv
 tmp/
 .agent/
 .vscode/
+.vercel
+.env*.local

@@ -1,4 +1,4 @@
--- =========================================================
+﻿-- =========================================================
 -- CARVIS PWA MASTER SCHEMA v7.2.2 (GÃœVENLÄ° & TAMÄ°R EDÄ°LMÄ°Å)
 -- COMPLETE DATABASE DEFINITION - IDEMPOTENT & NON-DESTRUCTIVE
 -- FIX: Enum 'parts' unsafe use error by using text-casting in logic
