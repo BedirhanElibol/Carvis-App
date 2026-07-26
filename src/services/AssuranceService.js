@@ -48,21 +48,16 @@ export const AssuranceService = {
    */
   async approveClaimAndTriggerRecourse(claimId, payoutAmount) {
     try {
-      // 1. Update the claim to approved and set recourse amount
-      const { data: claim, error: claimError } = await supabase
-        .from("assurance_claims")
-        .update({
-          claim_status: "recoursed_to_partner",
-          payout_amount: payoutAmount,
-          recourse_amount: payoutAmount, // Direct 100% recourse to the partner
-          recourse_status: "pending_collection",
-          updated_at: new Date().toISOString()
-        })
-        .eq("id", claimId)
-        .select()
-        .single();
+      // 1. Update the claim to approved and set recourse amount securely via RPC
+      const { data: rpcData, error: rpcError } = await supabase.rpc("approve_assurance_claim", {
+        p_claim_id: claimId,
+        p_requested_payout: payoutAmount
+      });
 
-      if (claimError) throw claimError;
+      if (rpcError) throw rpcError;
+      if (rpcData && !rpcData.success) throw new Error(rpcData.error || "Failed to approve claim.");
+
+      const claim = rpcData.data;
 
       // 2. Perform mahsuplaşma (deduct from seller/partner pending balance)
       // In production, this would trigger an ERP/accounting ledger entry.
