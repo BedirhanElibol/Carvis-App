@@ -60,7 +60,6 @@ const usePushNotifications = () => {
 
       // Handle foreground notifications
       PushNotifications.addListener('pushNotificationReceived', (notification) => {
-        console.log('[Push] Foreground notification:', notification);
         // Trigger in-app notification via custom event
         window.dispatchEvent(new CustomEvent('carvis:push', {
           detail: {
