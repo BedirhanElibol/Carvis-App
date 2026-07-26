@@ -5033,6 +5033,167 @@ DO $$ BEGIN
     END IF;
 END $$;
 
+-- ============================================================================
+-- V7.3 PROPRIETARY ENGINES: CARFAX, REPAIRPAL & CARGURUS TABLES & POLICIES
+-- ============================================================================
+
+-- 1. CARFAX Vehicle Audits Table
+CREATE TABLE IF NOT EXISTS public.carfax_vehicle_audits (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE CASCADE,
+    vin_number VARCHAR(17) NOT NULL,
+    carfax_score INTEGER DEFAULT 100 CHECK (carfax_score BETWEEN 0 AND 100),
+    trust_score INTEGER DEFAULT 10,
+    ownership_type TEXT DEFAULT '1. Sahibinden',
+    title_status TEXT DEFAULT 'clean',
+    odometer_rollback_detected BOOLEAN DEFAULT false,
+    active_recall_count INTEGER DEFAULT 0,
+    exponential_decay_risk_sum DECIMAL(5,2) DEFAULT 0.00,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. RepairPal Labor Operations & Regional Rates
+CREATE TABLE IF NOT EXISTS public.repairpal_labor_operations (
+    op_code TEXT PRIMARY KEY,
+    op_name TEXT NOT NULL,
+    reference_hours DECIMAL(4,2) NOT NULL,
+    category TEXT DEFAULT 'maintenance',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.repairpal_regional_rates (
+    region_key TEXT PRIMARY KEY,
+    city TEXT NOT NULL,
+    shop_tier TEXT NOT NULL,
+    hourly_rate DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Seed RepairPal Operations & Rates
+INSERT INTO public.repairpal_labor_operations (op_code, op_name, reference_hours, category) VALUES
+('OP_PERIODIC_MAINTENANCE', 'Periyodik Bakım & Sıvı Kontrolü', 1.2, 'maintenance'),
+('OP_BRAKE_PADS', 'Ön Fren Balatası & Disk Değişimi', 1.0, 'brakes'),
+('OP_TIMING_BELT', 'Triger Kayış Seti & Devirdaim Değişimi', 4.5, 'engine'),
+('OP_CLUTCH_KIT', 'Baskı Balata & Debriyaj Seti Değişimi', 5.0, 'transmission')
+ON CONFLICT (op_code) DO NOTHING;
+
+INSERT INTO public.repairpal_regional_rates (region_key, city, shop_tier, hourly_rate) VALUES
+('istanbul-independent', 'istanbul', 'independent', 1400.00),
+('istanbul-dealership', 'istanbul', 'dealership', 2400.00),
+('ankara-independent', 'ankara', 'independent', 1250.00),
+('ankara-dealership', 'ankara', 'dealership', 2200.00),
+('anadolu-independent', 'anadolu', 'independent', 950.00)
+ON CONFLICT (region_key) DO NOTHING;
+
+-- 3. CarGurus IMV History Table
+CREATE TABLE IF NOT EXISTS public.cargurus_imv_history (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE CASCADE,
+    imv_price DECIMAL(12,2) NOT NULL,
+    listing_price DECIMAL(12,2) NOT NULL,
+    delta_percent DECIMAL(5,2) NOT NULL,
+    deal_rating TEXT NOT NULL CHECK (deal_rating IN ('great', 'good', 'fair', 'overpriced')),
+    days_on_market INTEGER DEFAULT 1,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS Policies for New Tables
+ALTER TABLE public.carfax_vehicle_audits ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.repairpal_labor_operations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.repairpal_regional_rates ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.cargurus_imv_history ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow public read carfax_vehicle_audits" ON public.carfax_vehicle_audits;
+CREATE POLICY "Allow public read carfax_vehicle_audits" ON public.carfax_vehicle_audits FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public read repairpal_labor_operations" ON public.repairpal_labor_operations;
+CREATE POLICY "Allow public read repairpal_labor_operations" ON public.repairpal_labor_operations FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public read repairpal_regional_rates" ON public.repairpal_regional_rates;
+CREATE POLICY "Allow public read repairpal_regional_rates" ON public.repairpal_regional_rates FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public read cargurus_imv_history" ON public.cargurus_imv_history;
+CREATE POLICY "Allow public read cargurus_imv_history" ON public.cargurus_imv_history FOR SELECT USING (true);
+
+-- ============================================================================
+-- V7.4 MASTER SYSTEMS: COPART BIDDING, VECHAIN PASSPORT, 501 DVI & TRAMER
+-- ============================================================================
+
+-- 1. Copart Bids & Proxy Bidding Table
+CREATE TABLE IF NOT EXISTS public.copart_bids_proxy (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    service_request_id UUID REFERENCES public.service_requests(id) ON DELETE CASCADE,
+    bidder_user_id UUID NOT NULL,
+    max_proxy_bid DECIMAL(12,2) NOT NULL,
+    current_bid_step DECIMAL(12,2) NOT NULL,
+    user_deposit_amount DECIMAL(12,2) DEFAULT 10000.00,
+    auction_closing_mode TEXT DEFAULT 'on_approval' CHECK (auction_closing_mode IN ('pure_sale', 'on_minimum_bid', 'on_approval')),
+    seller_counter_bid DECIMAL(12,2),
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. VeChain Cryptographic Hash & Token Vehicle Passport Table
+CREATE TABLE IF NOT EXISTS public.crypto_passport_tokens (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE CASCADE,
+    vin_number VARCHAR(17) NOT NULL,
+    contract_address TEXT DEFAULT '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
+    token_standard TEXT DEFAULT 'VECHAIN-VIP180-VEFAR',
+    current_block_hash TEXT NOT NULL,
+    previous_block_hash TEXT NOT NULL,
+    is_tamper_proof BOOLEAN DEFAULT true,
+    verification_status TEXT DEFAULT 'DECENTRALIZED_HASH_VERIFIED',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. Carvana / TR 501-Point DVI Inspection Table
+CREATE TABLE IF NOT EXISTS public.dvi_501_inspections (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE CASCADE,
+    inspector_id UUID NOT NULL,
+    condition_score INTEGER CHECK (condition_score BETWEEN 0 AND 100),
+    paint_microns INTEGER NOT NULL DEFAULT 110,
+    paint_status TEXT DEFAULT 'original' CHECK (paint_status IN ('original', 'repainted', 'putty_filler')),
+    obd_trouble_codes TEXT[] DEFAULT ARRAY[]::TEXT[],
+    dyno_hp_efficiency DECIMAL(5,2) DEFAULT 95.0,
+    lateral_slip_mm DECIMAL(4,2) DEFAULT 0.8,
+    photo_urls TEXT[] DEFAULT ARRAY[]::TEXT[],
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. TRAMER / SBM Insurance Claim Database Table
+CREATE TABLE IF NOT EXISTS public.tramer_sbm_records (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    vehicle_id UUID REFERENCES public.vehicles(id) ON DELETE CASCADE,
+    claim_number TEXT NOT NULL,
+    claim_date DATE NOT NULL,
+    tramer_amount DECIMAL(12,2) NOT NULL,
+    damage_description TEXT,
+    insurance_company TEXT DEFAULT 'Türkiye Sigorta A.Ş.',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS Security Policies for V7.4 Tables
+ALTER TABLE public.copart_bids_proxy ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.crypto_passport_tokens ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.dvi_501_inspections ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.tramer_sbm_records ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow public read copart_bids_proxy" ON public.copart_bids_proxy;
+CREATE POLICY "Allow public read copart_bids_proxy" ON public.copart_bids_proxy FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public read crypto_passport_tokens" ON public.crypto_passport_tokens;
+CREATE POLICY "Allow public read crypto_passport_tokens" ON public.crypto_passport_tokens FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public read dvi_501_inspections" ON public.dvi_501_inspections;
+CREATE POLICY "Allow public read dvi_501_inspections" ON public.dvi_501_inspections FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public read tramer_sbm_records" ON public.tramer_sbm_records;
+CREATE POLICY "Allow public read tramer_sbm_records" ON public.tramer_sbm_records FOR SELECT USING (true);
+
+
+
 
 
 

@@ -123,12 +123,21 @@ const CheckoutScreen = () => {
             </span>
             . Detayları profilinizden takip edebilirsiniz.
           </p>
-          <button
-            onClick={() => navigate("/")}
-            className="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white py-4 rounded-xl font-bold transition-all"
-          >
-            Anasayfaya Dön
-          </button>
+          <div className="space-y-3">
+            <button
+              onClick={() => navigate("/orders")}
+              className="w-full bg-teal-500 hover:bg-emerald-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black uppercase tracking-wider transition-all shadow-xl active-scale flex items-center justify-center gap-2 cursor-pointer border-none"
+            >
+              <ShoppingBag size={18} />
+              Siparişlerimi Takip Et
+            </button>
+            <button
+              onClick={() => navigate("/app/home")}
+              className="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white py-3.5 rounded-2xl font-bold transition-all border-none cursor-pointer text-xs uppercase tracking-wider"
+            >
+              Anasayfaya Dön
+            </button>
+          </div>
         </div>
       </div>
     );

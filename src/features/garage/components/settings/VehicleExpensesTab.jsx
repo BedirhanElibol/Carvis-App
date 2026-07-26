@@ -72,10 +72,15 @@ const VehicleExpensesTab = ({
               <label className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase">Tutar (TL)</label>
               <input 
                 type="number" 
+                min="0"
+                step="0.01"
                 required
                 placeholder="0.00"
                 value={expenseData.amount}
-                onChange={(e) => setExpenseData({ ...expenseData, amount: e.target.value })}
+                onChange={(e) => {
+                  const val = parseFloat(e.target.value);
+                  setExpenseData({ ...expenseData, amount: val < 0 ? 0 : e.target.value });
+                }}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-black/5 dark:border-white/5 rounded-xl p-3 text-xs font-bold text-slate-900 dark:text-white outline-none"
               />
             </div>
@@ -86,9 +91,13 @@ const VehicleExpensesTab = ({
               <label className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase">İşlem Kilometresi (Opsiyonel)</label>
               <input 
                 type="number" 
+                min="0"
                 placeholder="Km bilgisi"
                 value={expenseData.mileage}
-                onChange={(e) => setExpenseData({ ...expenseData, mileage: e.target.value })}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value, 10);
+                  setExpenseData({ ...expenseData, mileage: val < 0 ? 0 : e.target.value });
+                }}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-black/5 dark:border-white/5 rounded-xl p-3 text-xs font-bold text-slate-900 dark:text-white outline-none"
               />
             </div>

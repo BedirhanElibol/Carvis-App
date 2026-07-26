@@ -335,8 +335,76 @@ const ProactiveAlerts = ({ vehicle, mapCenter }) => {
     showAlert("Bildirim Alındı", "Yol raporunuz bölgedeki diğer sürücülerle başarıyla paylaşıldı.", "success");
   };
 
+  // Calculate TÜVTÜRK inspection & insurance countdowns
+  const reminderAlerts = useMemo(() => {
+    if (!vehicle) return [];
+    const alerts = [];
+    const details = vehicle.details || {};
+
+    const calcDays = (dateStr) => {
+      if (!dateStr) return null;
+      const target = new Date(dateStr);
+      const diffMs = target.getTime() - Date.now();
+      return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    };
+
+    const inspDays = calcDays(vehicle.inspection_date || details.inspection_date || "2026-08-15");
+    if (inspDays !== null) {
+      alerts.push({
+        id: "insp-alert",
+        title: "TÜVTÜRK Muayene Bitiş Uyarısı",
+        message: inspDays < 0 ? `TÜVTÜRK muayeneniz ${Math.abs(inspDays)} gün önce bitti! Gece/gündüz deşarj cezası riski.` : `TÜVTÜRK araç muayenenizin bitmesine ${inspDays} gün kaldı.`,
+        days: inspDays,
+        urgent: inspDays <= 15,
+        actionText: "Muayene İstasyonları / Randevu",
+        type: "inspection"
+      });
+    }
+
+    const insDays = calcDays(vehicle.insurance_date || details.insurance_date || "2026-09-01");
+    if (insDays !== null) {
+      alerts.push({
+        id: "ins-alert",
+        title: "Zorunlu Trafik Sigortası Uyarısı",
+        message: insDays < 0 ? `Sigorta poliçenizin süresi ${Math.abs(insDays)} gün önce bitti!` : `Zorunlu trafik sigortanızın bitmesine ${insDays} gün kaldı.`,
+        days: insDays,
+        urgent: insDays <= 15,
+        actionText: "Sigorta Teklifi Al",
+        type: "insurance"
+      });
+    }
+
+    return alerts;
+  }, [vehicle]);
+
   return (
     <div className="bg-white dark:bg-[#0a0f24]/85 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 backdrop-blur-md shadow-2xl space-y-6 text-slate-900 dark:text-white">
+      {/* Dynamic Inspection & Insurance Reminder Cards */}
+      {reminderAlerts.length > 0 && (
+        <div className="space-y-3 pb-2 border-b border-black/5 dark:border-white/10">
+          <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">Akıllı Takvim & Muayene Uyarıları</h4>
+          {reminderAlerts.map(alt => (
+            <div key={alt.id} className={`p-4 rounded-2xl border flex items-center justify-between gap-3 ${
+              alt.urgent 
+                ? "bg-rose-500/10 border-rose-500/30 text-slate-900 dark:text-white" 
+                : "bg-cyan-500/10 border-cyan-500/20 text-slate-900 dark:text-white"
+            }`}>
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-mono font-black text-xs shrink-0 ${
+                  alt.urgent ? "bg-rose-500/20 text-rose-500" : "bg-cyan-500/20 text-cyan-400"
+                }`}>
+                  {alt.days}g
+                </div>
+                <div>
+                  <h5 className="font-black text-xs uppercase">{alt.title}</h5>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{alt.message}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Title */}
       <div className="flex justify-between items-start">
         <div>

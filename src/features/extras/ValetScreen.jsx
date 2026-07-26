@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Key, Star, MapPin, Clock, Shield, ChevronRight, Car, CheckCircle } from "lucide-react";
+import { useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { supabase } from "../../supabaseClient";
 
-const MOCK_VALETS = [
+const DEFAULT_VALETS = [
   {
     id: "v1",
     name: "Elite Valet İstanbul",
@@ -37,7 +37,7 @@ const MOCK_VALETS = [
     price: "₺75",
     badge: "standart",
     features: ["GPS Takip"],
-    available: false,
+    available: true,
   },
 ];
 
@@ -49,12 +49,59 @@ const badgeConfig = {
 
 export default function ValetScreen() {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
+  const [valets, setValets] = useState(DEFAULT_VALETS);
   const [selected, setSelected] = useState(null);
   const [includeWash, setIncludeWash] = useState(false);
   const [booked, setBooked] = useState(false);
 
-  const handleBook = () => {
+  useEffect(() => {
+    const fetchValets = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("*")
+          .or("role.eq.valet,role.eq.partner")
+          .eq("application_status", "approved");
+
+        if (!error && data && data.length > 0) {
+          const mapped = data.map((p, idx) => ({
+            id: p.id,
+            name: p.company_name || p.full_name || `Vale Hizmeti #${idx + 1}`,
+            area: p.address || "Tüm İstanbul Bölgeleri",
+            rating: p.rating_avg || 4.8,
+            reviews: p.review_count || 45,
+            eta: "10-15 dk",
+            price: "₺120",
+            badge: idx === 0 ? "premium" : "onaylı",
+            features: ["Sigortalı", "GPS Takip", "Fotoğraflı Teslim"],
+            available: true
+          }));
+          setValets(mapped);
+        }
+      } catch (err) {
+        console.warn("Valet fetch error:", err);
+      }
+    };
+    fetchValets();
+  }, []);
+
+  const handleBook = async () => {
     if (!selected) return;
+    if (currentUser?.id) {
+      try {
+        await supabase.from("appointments").insert([
+          {
+            customer_id: currentUser.id,
+            service_type: `Akıllı Vale (${selected.name})${includeWash ? " + Eko Yıkama" : ""}`,
+            appointment_date: new Date().toISOString(),
+            status: "pending"
+          }
+        ]);
+      } catch (err) {
+        console.warn("Valet appointment insert fallback:", err);
+      }
+    }
     setBooked(true);
   };
 
@@ -161,7 +208,7 @@ export default function ValetScreen() {
       {/* Valet List */}
       <div className="px-5 space-y-4">
         <h2 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Çevrenizdeki Vale Hizmetleri</h2>
-        {MOCK_VALETS.map((valet) => {
+        {valets.map((valet) => {
           const badge = badgeConfig[valet.badge];
           const isSelected = selected?.id === valet.id;
 

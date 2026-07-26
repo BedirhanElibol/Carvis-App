@@ -5,6 +5,9 @@ import { useUI } from "../../context/UIContext";
 import { useShop } from "../../context/ShopContext";
 import { validatePartPriceMarkup } from "../../utils/partPriceChecker";
 import { ArrowLeft, Calendar, CheckCircle, Clock, Layers, MessageCircle, Package, Percent, Phone, Shield, ShieldCheck, Star, Truck, Wrench, XCircle } from "lucide-react";
+import FairPriceGauge from "../../components/ui/FairPriceGauge";
+import RepairPalEstimatorCard from "../../components/repairpal/RepairPalEstimatorCard";
+import { calculateArabamTramerValuation } from "../../utils/trMarketValuationEngine";
 
 const QuoteDetailScreen = () => {
   const { id } = useParams();
@@ -172,6 +175,57 @@ const QuoteDetailScreen = () => {
             </div>
           </div>
         )}
+
+        {/* CarGurus-Style Fair Price Rating Gauge */}
+        <FairPriceGauge 
+          offeredPrice={quote.price}
+          fairMin={(quote.price || 1000) * 0.85}
+          fairMax={(quote.price || 1000) * 1.15}
+          categoryName={quote.service_request?.demand_type || "Tamir & Onarım"}
+        />
+
+        {/* RepairPal 1:1 Official Fair Price Estimator & Labor Breakdown Card */}
+        <RepairPalEstimatorCard 
+          serviceName={quote.service_request?.demand_type || quote.description || "Periyodik Bakım & Onarım"}
+          quotePrice={quote.price}
+          laborPrice={quote.labor_price}
+          partsPrice={quote.parts_price}
+          standardHours={quote.standard_hours || 1.5}
+          hourlyRate={1200}
+          warrantyMonths={quote.warranty_months || 12}
+        />
+
+        {/* arabam.com + TRAMER / SBM Integration Reference Price Card */}
+        {(() => {
+          const arabamEval = calculateArabamTramerValuation({
+            brand: quote.service_request?.brand || "Renault",
+            model: quote.service_request?.model || "Clio",
+            year: 2021,
+            km: 85000,
+            tramerAmount: quote.tramer_amount || 0
+          });
+
+          return (
+            <div className="p-4 rounded-3xl bg-slate-900 border border-teal-500/30 text-white flex items-center justify-between gap-4 shadow-xl">
+              <div>
+                <span className="text-[9px] font-black uppercase text-teal-400 tracking-widest block">
+                  {arabamEval.fairDealBadgeText}
+                </span>
+                <span className="text-base font-black font-mono text-white mt-0.5 block">
+                  {arabamEval.formattedReferencePrice}
+                </span>
+                <span className="text-[10px] text-slate-400 block mt-0.5">
+                  Aşırı uç ilanlar ayıklanmış arabam.com + TRAMER piyasa ortalaması
+                </span>
+              </div>
+              <div className="text-right border-l border-white/10 pl-3">
+                <span className="text-[9px] font-black uppercase text-emerald-400 block">Tahmini Satış Süresi</span>
+                <span className="text-xs font-mono font-bold text-white">{arabamEval.estimatedDaysToSell} Gün</span>
+                <span className="text-[8px] text-slate-400 block">{arabamEval.liquidityLabel}</span>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Fiyat Kartı */}
         <div className="glass-card p-6 rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-transparent">

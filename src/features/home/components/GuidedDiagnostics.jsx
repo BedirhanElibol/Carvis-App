@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { triggerHaptic } from "../../../utils/haptics";
 import { useUI } from "../../../context/UIContext";
 
-const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
+const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated, onOpenObdDictionary }) => {
   const { t } = useUI();
   const [step, setStep] = useState(1); // 1: Select Symptom, 2: Microphone Telemetry, 3: AI Diagnostic Report
   const [selectedSymptom, setSelectedSymptom] = useState(null);
@@ -205,10 +205,19 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated }) => {
                 exit={{ opacity: 0, y: -10 }}
                 className="space-y-4"
               >
-                <div className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-xl border border-black/5 dark:border-white/5 text-center">
+                <div className="bg-slate-50 dark:bg-slate-950/40 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
                   <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">
-                    Aracınızda gözlemlediğiniz ana arıza belirtisini seçin. Rapidsy AI mikrofon veya görsel telemetry modülüyle arızayı saniyeler içinde doğrulayacaktır.
+                    Aracınızda gözlemlediğiniz ana arıza belirtisini seçin veya OBD-II kod sözlüğünde arama yapın.
                   </p>
+                  {onOpenObdDictionary && (
+                    <button
+                      type="button"
+                      onClick={onOpenObdDictionary}
+                      className="px-3.5 py-2 rounded-xl bg-teal-500/20 hover:bg-teal-500/30 text-teal-400 border border-teal-500/30 text-[11px] font-black uppercase tracking-wider shrink-0 active-scale transition-all cursor-pointer flex items-center gap-1.5"
+                    >
+                      <BrainCircuit size={14} /> OBD-II SÖZLÜĞÜ
+                    </button>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 gap-3">

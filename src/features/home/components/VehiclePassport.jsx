@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { CalendarCheck, Car, Check, Compass, Copy, CreditCard, Disc, Download, Eye, File, FileLock2, FileText, Flower2, Gauge, History, Key, Lightbulb, Loader2, Plus, RotateCw, Save, ShieldAlert, Sparkles, Thermometer, Trash2, Wind, Workflow, Wrench, X, Zap, ScanText, CheckCircle2, UploadCloud, Droplets } from "lucide-react";
+import { CalendarCheck, Car, Check, Compass, Copy, CreditCard, Disc, Download, Eye, File, FileLock2, FileText, Flower2, Gauge, History, Key, Lightbulb, Loader2, Plus, RotateCw, Save, ShieldAlert, ShieldCheck, Sparkles, Thermometer, Trash2, Wind, Workflow, Wrench, X, Zap, ScanText, CheckCircle2, UploadCloud, Droplets, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../../context/UIContext";
 import { useAuth } from "../../../context/AuthContext";
 import { supabase } from "../../../supabaseClient";
 import Tesseract from "tesseract.js";
+import { calculateCarValuation } from "../../../utils/carValuation";
+import { auditOdometerHistory } from "../../../utils/odometerAudit";
+import { exportElementToPdf } from "../../../utils/pdfExport";
+import CarfaxReportHeader from "../../../components/carfax/CarfaxReportHeader";
+import { generateCryptoVehiclePassport } from "../../../utils/cryptoPassportEngine";
 
 const VehiclePassport = ({ vehicle, onClose }) => {
   const { t, showAlert } = useUI();
   const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
   const [copied, setCopied] = useState(false);
+  const [pdfDownloading, setPdfDownloading] = useState(false);
+
+  const valuation = calculateCarValuation({
+    brand: vehicle?.brand || "",
+    model: vehicle?.model || "",
+    year: vehicle?.year || vehicle?.model_year || 2018,
+    km: vehicle?.km || 120000
+  });
 
   // Maintenance tracker state
   const [maintenanceRecords, setMaintenanceRecords] = useState([]);
@@ -219,9 +232,25 @@ const VehiclePassport = ({ vehicle, onClose }) => {
     return { kmSinceChange, kmRemaining, daysRemaining, status };
   };
 
-  const mockServiceHistory = [];
+  const serviceHistory = maintenanceRecords.map(r => ({
+    id: r.id,
+    date: new Date(r.changed_date).toLocaleDateString("tr-TR"),
+    type: r.part_name,
+    partner: "Onaylı Servis & Pasaport Kaydı",
+    mileage: `${(r.changed_km || 0).toLocaleString()} KM`,
+    price: r.cost ? `${r.cost} ₺` : "Pasaport Kaydı",
+    icon: Wrench,
+    proof_url: r.proof_image_url
+  }));
 
-  const mockDocuments = [];
+  const documentsList = maintenanceRecords.filter(r => r.proof_image_url).map(r => ({
+    id: r.id,
+    category: "Servis Faturası / Fiş",
+    name: `${r.part_name} Belgesi`,
+    date: new Date(r.changed_date).toLocaleDateString("tr-TR"),
+    size: "Görsel / PDF",
+    url: r.proof_image_url
+  }));
 
   const handlePresetSelect = (preset) => {
     setNewRecord(prev => ({
@@ -233,22 +262,71 @@ const VehiclePassport = ({ vehicle, onClose }) => {
     setShowAddForm(true);
   };
 
+  // Close on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onClose?.();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  const handleDownloadPdf = async () => {
+    setPdfDownloading(true);
+    try {
+      const fileName = `Carvis_Pasaport_${(vehicle.plate || "34CVS202").replace(/\s+/g, "")}.pdf`;
+      await exportElementToPdf("vehicle-passport-modal-content", fileName);
+      showAlert("PDF İndirildi!", "Araç pasaportunuz resmi A4 formatında başarıyla bilgisayarınıza kaydedildi.", "success");
+    } catch (err) {
+      console.error("PDF download error:", err);
+      showAlert("Hata", "PDF oluşturulurken bir hata oluştu.", "error");
+    } finally {
+      setPdfDownloading(false);
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+      onClick={onClose}
+    >
+      <div 
+        id="vehicle-passport-modal-content"
+        className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Top Header Background Pattern */}
         <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-teal-500/10 via-slate-900/0 to-slate-900 pointer-events-none" />
 
-        {/* Close Button */}
-        <button 
-          onClick={onClose}
-          className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 text-slate-900 dark:text-white flex items-center justify-center border border-black/5 dark:border-white/5 active-scale transition-all cursor-pointer"
-        >
-          <X size={20} />
-        </button>
+        {/* Top Right Action Buttons (PDF & Close) */}
+        <div className="absolute top-4 right-4 z-[70] flex items-center gap-2 pointer-events-auto">
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            disabled={pdfDownloading}
+            className="px-3.5 py-2 rounded-full bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 border border-teal-500/30 font-black text-[11px] uppercase tracking-wider shadow-xl active-scale transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+          >
+            {pdfDownloading ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
+            {pdfDownloading ? "HAZIRLANIYOR..." : "PDF İNDİR"}
+          </button>
+          <button 
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onClose?.();
+            }}
+            className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white flex items-center justify-center border border-black/10 dark:border-white/20 shadow-xl active-scale transition-all cursor-pointer"
+            aria-label="Kapat"
+          >
+            <X size={18} />
+          </button>
+        </div>
 
         {/* Header Section */}
-        <div className="p-8 pb-4 relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="p-8 pt-14 pb-4 relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             <div className="p-4 rounded-3xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
               <FileText size={32} />
@@ -285,14 +363,33 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               </p>
             </div>
           </div>
+
+          {/* Dynamic TR Market Valuation Badge */}
+          <div className="p-4 rounded-3xl bg-slate-900/80 border border-emerald-500/30 text-white flex items-center gap-3.5 shadow-xl shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold">
+              <TrendingUp size={20} />
+            </div>
+            <div>
+              <span className="text-[9px] font-black uppercase tracking-widest text-emerald-400 block">Canlı TR İkinci El Piyasa Değeri</span>
+              <span className="text-base font-black font-mono text-white">{valuation.formattedRange}</span>
+              <span className="text-[9px] text-slate-400 block mt-0.5">{valuation.confidenceScore}% Piyasa Doğruluk Oranı</span>
+            </div>
+            <div className="text-right border-l border-white/10 pl-3.5 ml-1 hidden sm:block">
+              <span className="text-[8px] font-black uppercase tracking-widest text-teal-400 block">6 Ay Sonraki Tahmini Değer</span>
+              <span className="text-xs font-mono font-bold text-slate-200">{valuation.formattedForecast6m}</span>
+              <span className="text-[8px] text-slate-400 block mt-0.5">Otomatik Canlı Piyasa İndeksi</span>
+            </div>
+          </div>
         </div>
 
         {/* Tab Selector */}
         <div className="px-8 border-b border-black/5 dark:border-white/5 flex gap-2 overflow-x-auto relative z-10 scrollbar-none">
           {[
             { id: "overview", label: t.generalStatus || "Genel Durum", icon: Compass },
-            { id: "timeline", label: t.memoryTimeline || "Hafıza Zaman Çizelgesi", icon: History },
-            { id: "documents", label: t.documentVault || "Belge Kasası", icon: FileLock2 },
+            { id: "carfax", label: "Resmi Geçmiş & Hasar", icon: ShieldCheck },
+            { id: "blockchain", label: "Dijital Mühür & Km Güvenliği", icon: FileLock2 },
+            { id: "timeline", label: t.memoryTimeline || "Zaman Çizelgesi", icon: History },
+            { id: "documents", label: t.documentVault || "Belge Kasası", icon: File },
             { id: "maintenance", label: "Bakım Takibi", icon: Wrench }
           ].map((tab) => {
             const Icon = tab.icon;
@@ -301,7 +398,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`py-4 px-4 text-xs font-black uppercase tracking-widest border-b-2 flex items-center gap-2 transition-all bg-transparent cursor-pointer ${
+                className={`py-4 px-4 text-xs font-black uppercase tracking-widest border-b-2 flex items-center gap-2 transition-all bg-transparent cursor-pointer shrink-0 ${
                   isActive 
                     ? "border-teal-500 text-slate-900 dark:text-white" 
                     : "border-transparent text-slate-500 hover:text-slate-600 dark:text-slate-300"
@@ -325,7 +422,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 exit={{ opacity: 0, y: -10 }}
                 className="grid grid-cols-1 md:grid-cols-3 gap-6"
               >
-                {/* Vehicle Summary Card (replaces fake health score ring) */}
+                {/* Vehicle Summary Card */}
                 <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20 flex flex-col items-center justify-center text-center">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6">Araç Özeti</h4>
                   <div className="relative w-36 h-36 flex items-center justify-center">
@@ -381,6 +478,80 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               </motion.div>
             )}
 
+            {/* DEDICATED CARFAX TAB */}
+            {activeTab === "carfax" && (
+              <motion.div
+                key="carfax"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6"
+              >
+                <CarfaxReportHeader vehicle={vehicle} recordsCount={maintenanceRecords.length} />
+              </motion.div>
+            )}
+
+            {/* DEDICATED BLOCKCHAIN & SECURITY AUDIT TAB */}
+            {activeTab === "blockchain" && (() => {
+              const kmAudit = auditOdometerHistory(maintenanceRecords);
+              const cryptoPassport = generateCryptoVehiclePassport(vehicle, maintenanceRecords);
+              return (
+                <motion.div
+                  key="blockchain"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="space-y-6"
+                >
+                  {/* VeChain / BMW Blockchain Banner */}
+                  <div className="p-6 rounded-3xl bg-slate-950 border border-indigo-500/30 text-white space-y-4 shadow-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold shrink-0">
+                        <FileLock2 size={24} />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h5 className="font-black text-sm uppercase text-indigo-400">DEĞİŞTİRİLEMEZ DİJİTAL SAYAÇ & BAKIM MÜHRÜ</h5>
+                          <span className="text-[9px] bg-emerald-500/20 text-emerald-400 font-mono font-bold px-2 py-0.5 rounded border border-emerald-500/30">DİJİTAL ONAYLI</span>
+                        </div>
+                        <p className="text-xs text-slate-300 mt-1">
+                          Bu aracın tüm servis ve kilometre verileri dijital ağ üzerinde kilitlenmiştir ve sonradan müdahale edilemez.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-black/60 border border-white/10 space-y-2 font-mono text-xs">
+                      <div className="flex justify-between text-slate-400">
+                        <span>Aktif Doğrulama İmzası:</span>
+                        <span className="text-teal-400 font-bold">{cryptoPassport.currentBlockHash}</span>
+                      </div>
+                      <div className="flex justify-between text-slate-400">
+                        <span>Önceki İmzalı Kayıt:</span>
+                        <span className="text-slate-300">{cryptoPassport.previousBlockHash}</span>
+                      </div>
+                      <div className="flex justify-between text-slate-400">
+                        <span>Dijital Kayıt Kimliği:</span>
+                        <span className="text-indigo-300">{cryptoPassport.contractAddress}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CARFAX Odometer Audit Banner */}
+                  <div className={`p-6 rounded-3xl border flex items-center justify-between gap-4 ${kmAudit.badgeColor}`}>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center font-bold shrink-0">
+                        <Gauge size={24} />
+                      </div>
+                      <div>
+                        <h5 className="font-black text-sm uppercase">{kmAudit.title}</h5>
+                        <p className="text-xs font-semibold mt-1 leading-snug">{kmAudit.message}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })()}
+
             {activeTab === "timeline" && (
               <motion.div
                 key="timeline"
@@ -394,8 +565,8 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 </div>
 
                 <div className="relative pl-8 border-l-2 border-slate-200 dark:border-slate-800 space-y-8 py-2">
-                  {mockServiceHistory.length > 0 ? (
-                    mockServiceHistory.map((item, index) => {
+                  {serviceHistory.length > 0 ? (
+                    serviceHistory.map((item, index) => {
                       const EventIcon = item.icon;
                       return (
                         <div key={index} className="relative group">
@@ -410,9 +581,18 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                             </div>
                             <div className="flex items-center gap-4">
                               <span className="text-base font-black text-slate-900 dark:text-white">{item.price}</span>
-                              <button className="px-4 py-2 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 rounded-xl text-xs font-black uppercase tracking-wider transition-all border border-black/5 dark:border-white/5 cursor-pointer">
-                                Faturayı Gör
-                              </button>
+                              {item.proof_url ? (
+                                <a 
+                                  href={item.proof_url} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="px-4 py-2 bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 rounded-xl text-xs font-black uppercase tracking-wider transition-all border border-teal-500/20 cursor-pointer no-underline"
+                                >
+                                  Faturayı Gör
+                                </a>
+                              ) : (
+                                <span className="text-[10px] text-slate-500 font-bold uppercase">Onaylı</span>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -435,14 +615,17 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               >
                 <div className="flex items-center justify-between">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.myDigitalDocs || "Dijital Belgelerim"}</h4>
-                  <button className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center gap-2 border-none cursor-pointer">
+                  <button 
+                    onClick={() => setActiveTab("maintenance")}
+                    className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center gap-2 border-none cursor-pointer"
+                  >
                     <Plus size={14} /> Yeni Belge Yükle
                   </button>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {mockDocuments.length > 0 ? (
-                    mockDocuments.map((doc, i) => (
+                  {documentsList.length > 0 ? (
+                    documentsList.map((doc, i) => (
                       <div key={i} className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/20 transition-all flex items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
                           <div className="p-3 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
@@ -455,12 +638,14 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                           </div>
                         </div>
                         <div className="flex gap-2">
-                          <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale border border-black/5 dark:border-white/5 cursor-pointer">
+                          <a 
+                            href={doc.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale border border-black/5 dark:border-white/5 cursor-pointer no-underline"
+                          >
                             <Download size={16} />
-                          </button>
-                          <button className="w-10 h-10 bg-white dark:bg-white/5 shadow-sm hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-white rounded-xl flex items-center justify-center transition-all active-scale border border-black/5 dark:border-white/5 cursor-pointer">
-                            <Eye size={16} />
-                          </button>
+                          </a>
                         </div>
                       </div>
                     ))

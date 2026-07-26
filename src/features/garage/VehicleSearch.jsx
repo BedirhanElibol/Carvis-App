@@ -4,6 +4,7 @@ import { Badge } from "../../components/Core";
 import { useExternalData } from "../../hooks/useExternalData";
 import { useUI } from "../../context/UIContext";
 import { CAR_DATABASE } from "../../constants/carDatabase";
+import { sanitizeKm, sanitizeYear, validateVehicleInputs } from "../../utils/validationUtils";
 
 const VehicleSearch = ({ onVehicleFound }) => {
   const [searchMode, setSearchMode] = useState("manual"); // 'manual' or 'vin'
@@ -125,14 +126,28 @@ const VehicleSearch = ({ onVehicleFound }) => {
 
   const handleManualSubmit = () => {
     if (selection.brand && selection.series) {
+      const sanitizedKm = sanitizeKm(selection.km);
+      const sanitizedYear = sanitizeYear(selection.year);
+
+      const validation = validateVehicleInputs({
+        km: selection.km,
+        year: selection.year,
+        plate: selection.plate
+      });
+
+      if (!validation.isValid) {
+        showAlert("Geçersiz Değer", validation.errors[0], "error");
+        return;
+      }
+
       onVehicleFound({
         brand: selection.brand,
         model: `${selection.series} ${selection.model || ""}`.trim(),
-        year: selection.year,
+        year: sanitizedYear,
         engine: `${selection.trim || ""} - ${selection.fuel || ""}`.trim().replace(/^-\s*|\s*-$/, ""),
         engine_code: selectedModelData?.engine_code || "",
         plate: selection.plate ? selection.plate.toUpperCase().replace(/\s+/g, '') : "34" + (Math.random() + 1).toString(36).substring(7).toUpperCase(),
-        km: selection.km,
+        km: sanitizedKm,
       });
     }
   };
@@ -401,11 +416,28 @@ const VehicleSearch = ({ onVehicleFound }) => {
                         <p className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors">
                           {mod.name}
                         </p>
-                        {mod.engine_code && (
-                          <p className="text-[9px] font-mono text-primary-500 font-bold mt-0.5 tracking-wider">
-                            ⚙️ Motor Kodu: {mod.engine_code}
-                          </p>
-                        )}
+                        <div className="flex items-center gap-2 mt-1 flex-wrap">
+                          {mod.engine_code && (
+                            <span className="text-[9px] font-mono text-primary-500 font-bold bg-primary-500/10 px-2 py-0.5 rounded-md border border-primary-500/20">
+                              ⚙️ {mod.engine_code}
+                            </span>
+                          )}
+                          {mod.hp && (
+                            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                              ⚡ {mod.hp} HP
+                            </span>
+                          )}
+                          {mod.cc > 0 && (
+                            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                              📏 {mod.cc} cc
+                            </span>
+                          )}
+                          {mod.transmission && (
+                            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                              🕹️ {mod.transmission}
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className={`px-2.5 py-0.5 rounded-full text-[8px] font-black uppercase border ${getFuelBadgeColor(mod.fuel)}`}>
@@ -479,6 +511,16 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       {selectedModelData?.engine_code && (
                         <span className="bg-primary-500/10 text-primary-400 px-2.5 py-0.5 rounded-full text-[8px] font-mono font-bold uppercase tracking-widest border border-primary-500/20">
                           ⚙️ Motor: {selectedModelData.engine_code}
+                        </span>
+                      )}
+                      {selectedModelData?.hp && (
+                        <span className="bg-amber-500/10 text-amber-400 px-2.5 py-0.5 rounded-full text-[8px] font-bold uppercase tracking-widest border border-amber-500/20">
+                          ⚡ {selectedModelData.hp} HP
+                        </span>
+                      )}
+                      {selectedModelData?.transmission && (
+                        <span className="bg-blue-500/10 text-blue-400 px-2.5 py-0.5 rounded-full text-[8px] font-bold uppercase tracking-widest border border-blue-500/20">
+                          🕹️ {selectedModelData.transmission}
                         </span>
                       )}
                     </div>

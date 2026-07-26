@@ -7,6 +7,8 @@ import VehicleSettingsTab from "./components/settings/VehicleSettingsTab";
 import VehicleExpensesTab from "./components/settings/VehicleExpensesTab";
 import VehicleDocumentsTab from "./components/settings/VehicleDocumentsTab";
 
+import VehicleReminderModal from "./components/VehicleReminderModal";
+
 const VehicleProSettings = ({ isOpen, onClose, vehicle }) => {
   const { 
     updateVehicleDates, 
@@ -18,6 +20,7 @@ const VehicleProSettings = ({ isOpen, onClose, vehicle }) => {
     deleteVehicle,
   } = useGarage();
 
+  const [showReminderModal, setShowReminderModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -192,9 +195,18 @@ const VehicleProSettings = ({ isOpen, onClose, vehicle }) => {
           {/* Header */}
           <div className="flex justify-between items-start mb-6 relative z-10">
             <div>
-              <h3 className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white uppercase">
-                {vehicle.brand} {vehicle.model}
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white uppercase">
+                  {vehicle.brand} {vehicle.model}
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setShowReminderModal(true)}
+                  className="px-3 py-1 bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 border border-teal-500/20 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1 cursor-pointer"
+                >
+                  <CalendarCheck size={12} /> Hatırlatıcı Takvimi
+                </button>
+              </div>
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">
                   GELİŞMİŞ SAĞLIK & PRO YÖNETİM
@@ -209,6 +221,12 @@ const VehicleProSettings = ({ isOpen, onClose, vehicle }) => {
               <X size={24} />
             </button>
           </div>
+
+          <VehicleReminderModal
+            show={showReminderModal}
+            vehicle={vehicle}
+            onClose={() => setShowReminderModal(false)}
+          />
 
           {/* Navigation Tabs */}
           <div className="flex gap-1 p-1 bg-white dark:bg-slate-900/50 rounded-2xl border border-black/5 dark:border-white/5 mb-6 relative z-10 overflow-x-auto no-scrollbar">

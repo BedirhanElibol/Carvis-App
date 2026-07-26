@@ -141,3 +141,33 @@ export const CAR_DATA = [
     ],
   },
 ];
+
+export const OEM_CATALOG = [
+  {
+    id: "oem-1",
+    name: "Brembo Ön Fren Diski Seti (Hava Kanallı)",
+    brand: "Brembo",
+    category: "Yürüyen Aksam, Süspansiyon & Fren",
+    description: "Yüksek performanslı hava kanallı 288mm ön fren diski seti. Aşınmaya dayanıklı alaşım.",
+    price: 3450,
+    image_url: "https://images.unsplash.com/photo-1600706432522-e354924c5225?auto=format&fit=crop&q=80&w=400",
+  },
+  {
+    id: "oem-2",
+    name: "Bosch Aerotwo Silecek Takımı",
+    brand: "Bosch",
+    category: "Elektrik, Aydınlatma & Elektronik",
+    description: "Sessiz ve lekesiz silme sağlayan aerodinamik silecek seti.",
+    price: 650,
+    image_url: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=400",
+  },
+  {
+    id: "oem-3",
+    name: "Mann Filter Yağ Filtresi & Karbon Polen Filtresi Seti",
+    brand: "Mann Filter",
+    category: "Motor ve Mekanik (Kaput Altı)",
+    description: "Orijinal kalitede yüksek süzme kapasiteli periyodik bakım filtre seti.",
+    price: 980,
+    image_url: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=400",
+  },
+];

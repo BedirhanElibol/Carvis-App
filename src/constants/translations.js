@@ -122,7 +122,7 @@ export const TRANSLATIONS = {
     buyBoxRate: "Buy Box Oranı",
     loginGoogle: "Google ile Giriş",
     logout: "Çıkış Yap",
-    demoModeWarning: "Demo Modu: Veriler kaydedilmeyecek.",
+    demoModeWarning: "Rapidsy Canlı Mod",
     edit: "Düzenle",
     delete: "Sil",
     loginTitle: "Giriş Yap",

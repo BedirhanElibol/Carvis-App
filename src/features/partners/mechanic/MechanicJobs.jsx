@@ -393,13 +393,23 @@ const MechanicJobs = () => {
                           ARACI TESLİM ALDIM
                         </button>
                       ) : (
-                        <button
-                          onClick={() => handleStatus(job.id, "completed")}
-                          className="w-full md:w-auto bg-green-500 hover:bg-green-400 text-slate-900 dark:text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 transition-all active-scale"
-                        >
-                          <CheckCircle size={18} /> İŞİ BİTİR (₺
-                          {job.price} AL)
-                        </button>
+                        <div className="flex flex-col gap-2">
+                          <button
+                            onClick={() => {
+                              showAlert("DVI Raporu İletildi", `${job.car} için fotoğraflı usta muayene raporu oluşturuldu ve müşterinin onayına sunuldu!`, "success");
+                            }}
+                            className="w-full md:w-auto bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 border border-teal-500/30 px-5 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 text-xs uppercase tracking-wider transition-all active-scale cursor-pointer"
+                          >
+                            📷 DVI Fotoğraflı Muayene Yolla
+                          </button>
+                          <button
+                            onClick={() => handleStatus(job.id, "completed")}
+                            className="w-full md:w-auto bg-green-500 hover:bg-green-400 text-slate-900 dark:text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 transition-all active-scale"
+                          >
+                            <CheckCircle size={18} /> İŞİ BİTİR (₺
+                            {job.price} AL)
+                          </button>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -462,8 +472,9 @@ const MechanicJobs = () => {
                   <Banknote size={18} className="text-primary-400" />
                   <input
                     type="number"
+                    min="0"
                     value={bidPrice}
-                    onChange={(e) => setBidPrice(e.target.value)}
+                    onChange={(e) => setBidPrice(parseFloat(e.target.value) < 0 ? "0" : e.target.value)}
                     placeholder="Örn: 2500"
                     className="w-full bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-600 font-mono"
                   />
@@ -479,8 +490,9 @@ const MechanicJobs = () => {
                   <Banknote size={18} className="text-teal-400" />
                   <input
                     type="number"
+                    min="0"
                     value={bidPartsPrice}
-                    onChange={(e) => setBidPartsPrice(e.target.value)}
+                    onChange={(e) => setBidPartsPrice(parseFloat(e.target.value) < 0 ? "0" : e.target.value)}
                     placeholder="Örn: 1200 (Kalanı işçilik sayılır)"
                     className="w-full bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-600 font-mono"
                   />
@@ -514,8 +526,9 @@ const MechanicJobs = () => {
                   <Clock size={18} className="text-primary-400" />
                   <input
                     type="number"
+                    min="1"
                     value={bidDeliveryDays}
-                    onChange={(e) => setBidDeliveryDays(e.target.value)}
+                    onChange={(e) => setBidDeliveryDays(parseInt(e.target.value, 10) < 1 ? "1" : e.target.value)}
                     placeholder="Örn: 2"
                     className="w-full bg-transparent outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-600 font-mono"
                   />

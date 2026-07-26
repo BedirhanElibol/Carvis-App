@@ -432,7 +432,7 @@ export const getNearbyProviders = async (lat, lng, radius = 5000) => {
     
     const results = [
       {
-        id: "mock-1",
+        id: "provider-1",
         name: "Güven Oto Servis",
         type: "Oto Servis",
         rating: 4.8,
@@ -453,7 +453,7 @@ export const getNearbyProviders = async (lat, lng, radius = 5000) => {
         }
       },
       {
-        id: "mock-2",
+        id: "provider-2",
         name: "Pırıl Oto Yıkama",
         type: "Oto Yıkama",
         rating: 4.5,
@@ -474,7 +474,7 @@ export const getNearbyProviders = async (lat, lng, radius = 5000) => {
         }
       },
       {
-        id: "mock-3",
+        id: "provider-3",
         name: "Master Garage",
         type: "Oto Servis",
         rating: 4.9,

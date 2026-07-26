@@ -26,6 +26,7 @@ import FeaturedDealsPanel from "./components/FeaturedDealsPanel";
 import HowItWorksPanel from "./components/HowItWorksPanel";
 import IssueReportingModal from "../../components/home/IssueReportingModal";
 import OBDSearchModal from "../../components/modals/OBDSearchModal";
+import Obd2DictionaryModal from "../../components/ui/Obd2DictionaryModal";
 import { useFuelPrices } from "../../hooks/useFuelPrices";
 
 // Service Categories and Featured Deals moved inside the component to use t
@@ -40,6 +41,8 @@ const CustomerHome = () => {
   const { appointments } = useAppointment();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [selectedCity, setSelectedCity] = useState("istanbul");
 
   // States
   const serviceCategories = useMemo(() => [
@@ -58,7 +61,6 @@ const CustomerHome = () => {
   const [showServiceHistory, setShowServiceHistory] = useState(false);
   const [showVehiclePassport, setShowVehiclePassport] = useState(false);
   const [showIssueModal, setShowIssueModal] = useState(false);
-  const [selectedCity, setSelectedCity] = useState("istanbul");
   
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -370,6 +372,104 @@ const CustomerHome = () => {
       {/* CORE CONTAINER: Responsive 3-Column Layout on Desktop */}
       <div className="max-w-7xl mx-auto px-6 py-8 relative z-10">
         
+        {/* HIGH-PRIORITY ACTION LAUNCHPAD & URGENT STATUS BAR */}
+        <div className="mb-8 space-y-4">
+          
+          {/* Quick Actions Grid (Fitts' Law: Large, Actionable Touch Targets) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+            <button
+              onClick={() => {
+                triggerHaptic("impact");
+                setShowIssueModal(true);
+              }}
+              className="p-4 rounded-3xl bg-gradient-to-br from-cyan-500/20 to-sky-500/10 border border-cyan-500/30 hover:border-cyan-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-2.5 border border-cyan-500/30">
+                <Wrench size={20} />
+              </div>
+              <h4 className="text-xs font-black uppercase text-white font-mono">Sorun Bildir / Usta Bul</h4>
+              <p className="text-[10px] text-cyan-200/70 font-semibold mt-0.5">Anında Teklif Al</p>
+            </button>
+
+            <button
+              onClick={() => navigate("/app/mechanics")}
+              className="p-4 rounded-3xl bg-sky-500/10 border border-sky-500/30 hover:border-sky-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-sky-500/20 text-sky-400 flex items-center justify-center mb-2.5 border border-sky-500/30">
+                <Wrench size={20} />
+              </div>
+              <h4 className="text-xs font-black uppercase text-white font-mono">Periyodik Bakım</h4>
+              <p className="text-[10px] text-sky-200/70 font-semibold mt-0.5">Servis & Parça Hizmeti</p>
+            </button>
+
+            <button
+              onClick={() => {
+                triggerHaptic("impact");
+                setShowVehiclePassport(true);
+              }}
+              className="p-4 rounded-3xl bg-indigo-500/10 border border-indigo-500/30 hover:border-indigo-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-2.5 border border-indigo-500/30">
+                <FileText size={20} />
+              </div>
+              <h4 className="text-xs font-black uppercase text-white font-mono">Dijital Araç Pasaportu</h4>
+              <p className="text-[10px] text-indigo-200/70 font-semibold mt-0.5">Resmi Hasar & Km Kaydı</p>
+            </button>
+
+            <button
+              onClick={() => {
+                triggerHaptic("impact");
+                setShowOBDModal(true);
+              }}
+              className="p-4 rounded-3xl bg-teal-500/10 border border-teal-500/30 hover:border-teal-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-400 flex items-center justify-center mb-2.5 border border-teal-500/30">
+                <Activity size={20} />
+              </div>
+              <h4 className="text-xs font-black uppercase text-white font-mono">OBD-II Arıza Sözlüğü</h4>
+              <p className="text-[10px] text-teal-200/70 font-semibold mt-0.5">Arıza Kod Rehberi</p>
+            </button>
+
+            <button
+              onClick={() => navigate("/quotes")}
+              className="p-4 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-2.5 border border-emerald-500/30">
+                <TrendingUp size={20} />
+              </div>
+              <h4 className="text-xs font-black uppercase text-white font-mono">Gelen Tekliflerim</h4>
+              <p className="text-[10px] text-emerald-200/70 font-semibold mt-0.5">{quotes.length} Aktif Teklif</p>
+            </button>
+          </div>
+
+          {/* Proactive Urgent Vehicle Status Alert */}
+          {activeVehicle && daysUntilInspection !== null && (
+            <div className="p-4 rounded-3xl bg-slate-900/90 border border-cyan-500/30 shadow-xl flex items-center justify-between gap-4 text-white">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-black text-sm shrink-0 border border-cyan-500/30 font-mono">
+                  <CalendarDays size={20} />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[9px] font-black uppercase text-cyan-400 tracking-widest bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">
+                      TÜVTÜRK Muayene Takibi ({activeVehicle.plate})
+                    </span>
+                  </div>
+                  <p className="text-xs font-bold text-slate-200 mt-1 leading-snug">
+                    Sonraki Muayene Tarihi: <strong className="text-white font-mono">{nextInspectionDateFormatted}</strong> ({daysUntilInspection} gün kaldı)
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => navigate("/app/appointments")}
+                className="px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-all cursor-pointer shrink-0"
+              >
+                Muayene Randevusu Al
+              </button>
+            </div>
+          )}
+        </div>
+        
 
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
@@ -480,11 +580,6 @@ const CustomerHome = () => {
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-6">
                     <div>
-                      {isGuest && (
-                        <span className="inline-block text-[8px] font-black tracking-[0.2em] text-cyan-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-md uppercase mb-2 shadow-xl">
-                          {t.previewMode}
-                        </span>
-                      )}
                       <h1 className="text-3xl font-mono font-black tracking-tighter uppercase leading-none text-white ">
                         {activeVehicle.brand}{" "}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400 ">{activeVehicle.model}</span>
@@ -1120,9 +1215,13 @@ const CustomerHome = () => {
         t={t}
       />
 
-      <OBDSearchModal
+      <Obd2DictionaryModal
         isOpen={showOBDModal}
         onClose={() => setShowOBDModal(false)}
+        onRequestService={(codeItem) => {
+          triggerHaptic("impact");
+          setShowIssueModal(true);
+        }}
       />
 
       <Footer />

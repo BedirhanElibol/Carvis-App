@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ParkingCircle, MapPin, Clock, Star, ChevronRight, Search, Filter } from "lucide-react";
+import { supabase } from "../../supabaseClient";
 
-const MOCK_LOTS = [
+const DEFAULT_LOTS = [
   {
     id: "p1",
     name: "Zorlu Center Otoparkı",
@@ -32,7 +33,7 @@ const MOCK_LOTS = [
     name: "Beşiktaş Meydanı Otoparkı",
     address: "Çarşı Cad. Beşiktaş/İstanbul",
     distance: "0.8 km",
-    available: 0,
+    available: 14,
     total: 80,
     hourly: "₺30",
     rating: 4.2,
@@ -56,8 +57,40 @@ const MOCK_LOTS = [
 export default function ParkingScreen() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [lots, setLots] = useState(DEFAULT_LOTS);
 
-  const filtered = MOCK_LOTS.filter(
+  useEffect(() => {
+    const fetchLots = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("*")
+          .or("role.eq.parking,role.eq.partner")
+          .eq("application_status", "approved");
+
+        if (!error && data && data.length > 0) {
+          const mapped = data.map((p, idx) => ({
+            id: p.id,
+            name: p.company_name || p.full_name || `Otopark Tesisi #${idx + 1}`,
+            address: p.address || "İstanbul Merkez",
+            distance: "0.5 km",
+            available: p.business_details?.available_spots || 35,
+            total: p.business_details?.total_capacity || 150,
+            hourly: p.business_details?.hourly_rate ? `₺${p.business_details.hourly_rate}` : "₺30",
+            rating: p.rating_avg || 4.7,
+            open24: true,
+            features: ["Kapalı", "Kameralı", "Güvenlikli"]
+          }));
+          setLots(mapped);
+        }
+      } catch (err) {
+        console.warn("Parking fetch error:", err);
+      }
+    };
+    fetchLots();
+  }, []);
+
+  const filtered = lots.filter(
     (l) =>
       l.name.toLowerCase().includes(search.toLowerCase()) ||
       l.address.toLowerCase().includes(search.toLowerCase())

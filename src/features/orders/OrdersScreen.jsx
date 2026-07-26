@@ -29,35 +29,62 @@ const OrdersScreen = () => {
           bg: "bg-yellow-500/10",
           label: "Beklemede",
         };
+      case "received":
+        return {
+          icon: Clock,
+          color: "text-purple-400",
+          bg: "bg-purple-500/10",
+          label: "Sipariş Alındı",
+        };
+      case "processing":
+        return {
+          icon: Clock,
+          color: "text-amber-400",
+          bg: "bg-amber-500/10",
+          label: "Hazırlanıyor",
+        };
+      case "shipped":
+        return {
+          icon: Clock,
+          color: "text-blue-400",
+          bg: "bg-blue-500/10",
+          label: "Kargoda",
+        };
+      case "delivered":
+        return {
+          icon: CheckCircle,
+          color: "text-emerald-400",
+          bg: "bg-emerald-500/10",
+          label: "Teslim Edildi",
+        };
       case "paid":
         return {
           icon: CheckCircle,
           color: "text-green-400",
           bg: "bg-green-500/10",
-          label: "ÖÖdendi",
+          label: "Ödendi",
         };
       case "completed":
         return {
           icon: CheckCircle,
           color: "text-teal-400",
           bg: "bg-emerald-500/10",
-          label: "Tamamlandıı",
+          label: "Tamamlandı",
         };
       case "cancelled":
         return {
           icon: XCircle,
           color: "text-red-400",
           bg: "bg-red-500/10",
-          label: "İİptal Edildi",
+          label: "İptal Edildi",
         };
       case "refunded":
         return {
           icon: XCircle,
           color: "text-orange-400",
           bg: "bg-orange-500/10",
-          label: "İİade Edildi",
+          label: "İade Edildi",
         };
-      // New Transparent Eye Statuses
       case "diagnosing":
         return {
           icon: Wrench,
@@ -115,10 +142,10 @@ const OrdersScreen = () => {
             </button>
             <div>
               <h1 className="text-xl font-bold font-sans uppercase tracking-tighter">
-                Siparişşlerim
+                Siparişlerim
               </h1>
               <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest font-sans">
-                {orders.length} Siparişş
+                {orders.length} Sipariş
               </p>
             </div>
           </div>
@@ -153,7 +180,7 @@ const OrdersScreen = () => {
         ) : orders.length === 0 ? (
           <EmptyState
             icon={ShoppingBag}
-            title="Henüz Siparişşiniz Yok"
+            title="Henüz Siparişiniz Yok"
             subtitle="Teklifleri kabul ettiğinizde veya marketplace üzerinden ürün aldığınızda siparişleriniz burada listelenir."
             actionLabel="Alışverişe Başla"
             onAction={() => navigate("/app/parts")}

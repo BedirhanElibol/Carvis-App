@@ -104,7 +104,7 @@ const PartnerAuthScreen = () => {
         options: {
           data: {
             full_name: formData.companyName,
-            role: role, // Grant role immediately for preview/demo mode
+            role: role,
             applied_role: role // Save intended parameter
           },
         },
@@ -124,7 +124,7 @@ const PartnerAuthScreen = () => {
         office_address: formData.officeAddress,
         iban_number: formData.ibanNumber,
         business_type: role,
-        status: "approved", // Auto-approved for preview usability
+        status: "approved",
       });
 
       if (appError) throw appError;

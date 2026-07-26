@@ -109,6 +109,18 @@ const CarwashScreen = () => {
     setIsSubmitting(true);
 
     try {
+      // 1. Insert into unified appointments table for live tracking
+      await supabase.from("appointments").insert([
+        {
+          customer_id: currentUser.id,
+          vehicle_id: currentVehicle?.id || null,
+          service_type: `Oto Yıkama: ${selectedPackage.title}`,
+          appointment_date: new Date().toISOString(),
+          status: "approved"
+        }
+      ]);
+
+      // 2. Insert into carwash_requests fallback table
       const { error } = await supabase.from("carwash_requests").insert([
         {
           user_id: currentUser.id,
