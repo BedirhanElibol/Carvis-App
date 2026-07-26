@@ -88,7 +88,6 @@ async function runSequential() {
   for (const city of CITIES) {
     const price = await fetchCity(city);
     if (price) allPrices.push(price);
-    await new Promise(resolve => setTimeout(resolve, 100));
   }
   const end = performance.now();
   console.log(`Sequential time: ${(end - start).toFixed(2)} ms`);
