@@ -36,8 +36,8 @@ const ReferralCard = () => {
           text: `Carvis ile araç bakımını dijitalleştir, sen de kazan! Kayıt olurken davet kodumu kullan: ${referralCode}`,
           url: referralLink,
         });
-      } catch (err) {
-        console.log('Share cancelled or failed:', err);
+      } catch {
+        // Ignored
       }
     } else {
       handleCopy();
