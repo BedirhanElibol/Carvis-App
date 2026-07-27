@@ -1,5 +1,5 @@
-const CACHE_NAME = 'rapidsy-v1';
-const DYNAMIC_CACHE = 'rapidsy-dynamic-v1';
+const CACHE_NAME = 'rapidsy-v1.1';
+const DYNAMIC_CACHE = 'rapidsy-dynamic-v1.1';
 
 // Assets to cache immediately
 const STATIC_ASSETS = [
@@ -11,6 +11,7 @@ const STATIC_ASSETS = [
 
 // Install Event
 self.addEventListener('install', (event) => {
+    self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             console.log('[Service Worker] Caching static assets');
@@ -30,7 +31,7 @@ self.addEventListener('activate', (event) => {
                     }
                 })
             );
-        })
+        }).then(() => self.clients.claim())
     );
 });
 
@@ -48,7 +49,9 @@ self.addEventListener('fetch', (event) => {
         url.hostname.includes('supabase.co') ||
         url.pathname.startsWith('/@') ||           // Vite internal paths like /@react-refresh
         url.pathname.includes('node_modules') ||    // Development dependencies
-        url.protocol !== 'http:' && url.protocol !== 'https:'
+        (url.protocol !== 'http:' && url.protocol !== 'https:') ||
+        (event.request.mode === 'navigate' && url.searchParams.has('code')) ||
+        (event.request.mode === 'navigate' && url.hash.includes('access_token'))
     ) {
         return;
     }
