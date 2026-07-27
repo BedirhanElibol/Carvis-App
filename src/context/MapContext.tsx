@@ -50,7 +50,7 @@ export const MapProvider = ({ children }) => {
           setPermissionStatus("granted");
         },
         (error) => {
-          console.warn("Location access blocked or timed out (likely HTTP context). Using Fallback.", error);
+          console.log("Location access blocked or timed out (likely HTTP context). Using Fallback.", error);
           // Fallback to a default city if in development/IP context
           setPermissionStatus("granted"); // Pretend granted to allow app flow
           setUserLocation(CITY_COORDINATES["Ankara, Ostim"]);
