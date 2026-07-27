@@ -99,7 +99,7 @@ const RegisterModal = ({
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider,
-        options: { redirectTo: `${window.location.origin}/application/home` },
+        options: { redirectTo: window.location.origin },
       });
       if (error) throw error;
     } catch (error) {
