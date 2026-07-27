@@ -7,8 +7,8 @@ const validateEnv = (val, defaultValue) => {
   return val && val !== 'undefined' && val !== 'null' && val.trim() !== '' ? val : defaultValue;
 };
 
-const rawSupabaseUrl = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_SUPABASE_URL : (typeof process !== 'undefined' ? process.env.VITE_SUPABASE_URL : undefined);
-const rawSupabaseAnonKey = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_SUPABASE_ANON_KEY : (typeof process !== 'undefined' ? process.env.VITE_SUPABASE_ANON_KEY : undefined);
+const rawSupabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const rawSupabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 const supabaseUrl = validateEnv(rawSupabaseUrl, DEFAULT_SUPABASE_URL);
 const supabaseAnonKey = validateEnv(rawSupabaseAnonKey, DEFAULT_SUPABASE_ANON_KEY);
