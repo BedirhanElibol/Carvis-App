@@ -294,14 +294,14 @@ const VehiclePassport = ({ vehicle, onClose }) => {
     >
       <div 
         id="vehicle-passport-modal-content"
-        className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]"
+        className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[95vh] md:max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Background Pattern */}
         <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-teal-500/10 via-slate-900/0 to-slate-900 pointer-events-none" />
 
         {/* Top Right Action Buttons (PDF & Close) */}
-        <div className="absolute top-4 right-4 z-[70] flex items-center gap-2 pointer-events-auto">
+        <div className="absolute top-4 right-4 z-[70] flex items-center gap-1.5 md:gap-2 pointer-events-auto">
           <button
             type="button"
             onClick={handleDownloadPdf}
@@ -326,13 +326,13 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         </div>
 
         {/* Header Section */}
-        <div className="p-8 pt-14 pb-4 relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-3xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
+        <div className="p-6 md:p-8 pt-14 pb-4 relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-5">
+            <div className="p-4 rounded-3xl bg-teal-500/10 border border-teal-500/20 text-teal-400 self-start md:self-auto">
               <FileText size={32} />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
                 <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">
                   Rapidsy Araç Pasaportu
                 </span>
@@ -340,10 +340,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   Resmi Hafıza
                 </span>
               </div>
-              <h2 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase mt-2">
+              <h2 className="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase">
                 {vehicle.brand} {vehicle.model}
               </h2>
-              <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5">
+              <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-2 flex flex-wrap items-center gap-1.5">
                 <span className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-2 py-0.5 rounded text-[10px] border border-slate-300 dark:border-slate-700 font-mono font-black uppercase">
                   {vehicle.plate || "34 CVS 202"}
                 </span>
@@ -365,8 +365,8 @@ const VehiclePassport = ({ vehicle, onClose }) => {
           </div>
 
           {/* Dynamic TR Market Valuation Badge */}
-          <div className="p-4 rounded-3xl bg-slate-900/80 border border-emerald-500/30 text-white flex items-center gap-3.5 shadow-xl shrink-0">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold">
+          <div className="p-4 rounded-3xl bg-slate-900/80 border border-emerald-500/30 text-white flex items-center gap-3.5 shadow-xl w-full md:w-auto shrink-0 mt-4 md:mt-0">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold shrink-0">
               <TrendingUp size={20} />
             </div>
             <div>
@@ -383,7 +383,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         </div>
 
         {/* Tab Selector */}
-        <div className="px-8 border-b border-black/5 dark:border-white/5 flex gap-2 overflow-x-auto relative z-10 scrollbar-none">
+        <div className="px-4 md:px-8 border-b border-black/5 dark:border-white/5 flex gap-2 overflow-x-auto relative z-10 custom-scrollbar">
           {[
             { id: "overview", label: t.generalStatus || "Genel Durum", icon: Compass },
             { id: "carfax", label: "Resmi Geçmiş & Hasar", icon: ShieldCheck },
@@ -412,7 +412,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         </div>
 
         {/* Scrollable Content Body */}
-        <div className="flex-1 overflow-y-auto p-8 relative z-10 min-h-[350px]">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 relative z-10 min-h-[350px] custom-scrollbar">
           <AnimatePresence mode="wait">
             {activeTab === "overview" && (
               <motion.div
@@ -424,14 +424,14 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               >
                 {/* Vehicle Summary Card */}
                 <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20 flex flex-col items-center justify-center text-center">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6">Araç Özeti</h4>
-                  <div className="relative w-36 h-36 flex items-center justify-center">
-                    <div className="w-28 h-28 rounded-full bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-500/30 flex items-center justify-center">
-                      <Car size={40} className="text-teal-400" />
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4 md:mb-6">Araç Özeti</h4>
+                  <div className="relative w-24 h-24 md:w-36 md:h-36 flex items-center justify-center">
+                    <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-500/30 flex items-center justify-center">
+                      <Car size={40} className="text-teal-400 w-8 h-8 md:w-10 md:h-10" />
                     </div>
                   </div>
                   <div className="mt-4 space-y-1">
-                    <p className="text-lg font-black text-slate-900 dark:text-white">{vehicle.km?.toLocaleString() || "—"} km</p>
+                    <p className="text-lg md:text-xl font-black text-slate-900 dark:text-white">{vehicle.km?.toLocaleString() || "—"} km</p>
                     <p className="text-[9px] font-black text-teal-400 uppercase tracking-widest">Güncel Kilometre</p>
                   </div>
                   <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed mt-4">
@@ -442,7 +442,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 {/* Left Side Quick Info */}
                 <div className="md:col-span-2 space-y-6">
                   {/* Detailed Specs Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                     {[
                       { label: t.mileage || "Kilometre", val: `${vehicle.km?.toLocaleString() || "—"} km`, icon: Gauge },
                       { label: t.lastMaintenance || "Son Bakım", val: vehicle.last_oil_change ? new Date(vehicle.last_oil_change).toLocaleDateString("tr-TR") : "Belirtilmedi", icon: Wrench },
@@ -453,11 +453,11 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                     ].map((spec, i) => {
                       const SpecIcon = spec.icon;
                       return (
-                        <div key={i} className="p-5 rounded-2xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 flex flex-col justify-between">
-                          <SpecIcon className="text-teal-400 mb-4" size={20} />
+                        <div key={i} className="p-4 md:p-5 rounded-2xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 flex flex-col justify-between overflow-hidden">
+                          <SpecIcon className="text-teal-400 mb-3 md:mb-4" size={20} />
                           <div>
-                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider block">{spec.label}</span>
-                            <span className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1 block">{spec.val}</span>
+                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider block truncate">{spec.label}</span>
+                            <span className="text-[11px] md:text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1 block truncate">{spec.val}</span>
                           </div>
                         </div>
                       );
@@ -465,11 +465,11 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   </div>
 
                   {/* Info Panel */}
-                  <div className="p-6 rounded-3xl bg-teal-500/10 border border-teal-500/20 flex gap-4">
-                    <Lightbulb className="text-teal-400 flex-shrink-0" size={24} />
+                  <div className="p-4 md:p-6 rounded-3xl bg-teal-500/10 border border-teal-500/20 flex gap-3 md:gap-4">
+                    <Lightbulb className="text-teal-400 flex-shrink-0 w-5 h-5 md:w-6 md:h-6" size={24} />
                     <div>
-                      <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Bakım Hatırlatması</h4>
-                      <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
+                      <h4 className="text-[10px] md:text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Bakım Hatırlatması</h4>
+                      <p className="text-[10px] md:text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
                         Bakım Takibi sekmesinde parça değişim tarihlerinizi ve km bilgilerinizi kaydedin. Rapidsy sizi zamanı geldiğinde uyaracaktır.
                       </p>
                     </div>
@@ -504,47 +504,47 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   className="space-y-6"
                 >
                   {/* VeChain / BMW Blockchain Banner */}
-                  <div className="p-6 rounded-3xl bg-slate-950 border border-indigo-500/30 text-white space-y-4 shadow-xl">
-                    <div className="flex items-center gap-3">
+                  <div className="p-4 md:p-6 rounded-3xl bg-slate-950 border border-indigo-500/30 text-white space-y-4 shadow-xl">
+                    <div className="flex flex-col md:flex-row md:items-center gap-3">
                       <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold shrink-0">
                         <FileLock2 size={24} />
                       </div>
                       <div>
-                        <div className="flex items-center gap-2">
-                          <h5 className="font-black text-sm uppercase text-indigo-400">DEĞİŞTİRİLEMEZ DİJİTAL SAYAÇ & BAKIM MÜHRÜ</h5>
-                          <span className="text-[9px] bg-emerald-500/20 text-emerald-400 font-mono font-bold px-2 py-0.5 rounded border border-emerald-500/30">DİJİTAL ONAYLI</span>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h5 className="font-black text-xs md:text-sm uppercase text-indigo-400">DEĞİŞTİRİLEMEZ DİJİTAL SAYAÇ & BAKIM MÜHRÜ</h5>
+                          <span className="text-[9px] bg-emerald-500/20 text-emerald-400 font-mono font-bold px-2 py-0.5 rounded border border-emerald-500/30 shrink-0">DİJİTAL ONAYLI</span>
                         </div>
-                        <p className="text-xs text-slate-300 mt-1">
+                        <p className="text-[10px] md:text-xs text-slate-300 mt-1">
                           Bu aracın tüm servis ve kilometre verileri dijital ağ üzerinde kilitlenmiştir ve sonradan müdahale edilemez.
                         </p>
                       </div>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-black/60 border border-white/10 space-y-2 font-mono text-xs">
-                      <div className="flex justify-between text-slate-400">
+                    <div className="p-3 md:p-4 rounded-2xl bg-black/60 border border-white/10 space-y-2 font-mono text-[10px] md:text-xs overflow-x-auto custom-scrollbar">
+                      <div className="flex flex-col sm:flex-row sm:justify-between text-slate-400 gap-1">
                         <span>Aktif Doğrulama İmzası:</span>
-                        <span className="text-teal-400 font-bold">{cryptoPassport.currentBlockHash}</span>
+                        <span className="text-teal-400 font-bold break-all">{cryptoPassport.currentBlockHash}</span>
                       </div>
-                      <div className="flex justify-between text-slate-400">
+                      <div className="flex flex-col sm:flex-row sm:justify-between text-slate-400 gap-1">
                         <span>Önceki İmzalı Kayıt:</span>
-                        <span className="text-slate-300">{cryptoPassport.previousBlockHash}</span>
+                        <span className="text-slate-300 break-all">{cryptoPassport.previousBlockHash}</span>
                       </div>
-                      <div className="flex justify-between text-slate-400">
+                      <div className="flex flex-col sm:flex-row sm:justify-between text-slate-400 gap-1">
                         <span>Dijital Kayıt Kimliği:</span>
-                        <span className="text-indigo-300">{cryptoPassport.contractAddress}</span>
+                        <span className="text-indigo-300 break-all">{cryptoPassport.contractAddress}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* CARFAX Odometer Audit Banner */}
-                  <div className={`p-6 rounded-3xl border flex items-center justify-between gap-4 ${kmAudit.badgeColor}`}>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center font-bold shrink-0">
-                        <Gauge size={24} />
+                  <div className={`p-4 md:p-6 rounded-3xl border flex flex-col md:flex-row md:items-center justify-between gap-4 ${kmAudit.badgeColor}`}>
+                    <div className="flex items-center gap-3 md:gap-4">
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-white/10 flex items-center justify-center font-bold shrink-0">
+                        <Gauge size={20} className="md:w-6 md:h-6" />
                       </div>
                       <div>
-                        <h5 className="font-black text-sm uppercase">{kmAudit.title}</h5>
-                        <p className="text-xs font-semibold mt-1 leading-snug">{kmAudit.message}</p>
+                        <h5 className="font-black text-xs md:text-sm uppercase">{kmAudit.title}</h5>
+                        <p className="text-[10px] md:text-xs font-semibold mt-1 leading-snug">{kmAudit.message}</p>
                       </div>
                     </div>
                   </div>
@@ -573,20 +573,20 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                           <div className="absolute -left-[41px] top-1 w-6 h-6 rounded-full bg-white dark:bg-slate-900 border-2 border-teal-500 flex items-center justify-center text-teal-400 group-hover:scale-110 transition-all shadow-lg">
                             <EventIcon size={12} />
                           </div>
-                          <div className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                          <div className="p-4 md:p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 md:gap-4">
                             <div>
                               <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">{item.date}</span>
-                              <h4 className="text-base font-black text-slate-900 dark:text-white mt-1 uppercase tracking-tight">{item.type}</h4>
-                              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">{item.partner} • {item.mileage}</p>
+                              <h4 className="text-sm md:text-base font-black text-slate-900 dark:text-white mt-1 uppercase tracking-tight">{item.type}</h4>
+                              <p className="text-[10px] md:text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">{item.partner} • {item.mileage}</p>
                             </div>
-                            <div className="flex items-center gap-4">
-                              <span className="text-base font-black text-slate-900 dark:text-white">{item.price}</span>
+                            <div className="flex items-center justify-between sm:justify-start gap-4">
+                              <span className="text-sm md:text-base font-black text-slate-900 dark:text-white">{item.price}</span>
                               {item.proof_url ? (
                                 <a 
                                   href={item.proof_url} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
-                                  className="px-4 py-2 bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 rounded-xl text-xs font-black uppercase tracking-wider transition-all border border-teal-500/20 cursor-pointer no-underline"
+                                  className="px-3 py-1.5 md:px-4 md:py-2 bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all border border-teal-500/20 cursor-pointer no-underline"
                                 >
                                   Faturayı Gör
                                 </a>
