@@ -26,7 +26,7 @@ const DigitalInspectionModal = ({ isOpen, inspectionData, onClose, onApproved })
     ],
     total_estimated_cost = 3050,
     created_at = new Date().toLocaleDateString("tr-TR")
-  ] = inspectionData;
+  } = inspectionData;
 
   const handleApproveRepair = async () => {
     setApproving(true);

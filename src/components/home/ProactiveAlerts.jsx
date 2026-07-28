@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { AlertCircle, AlertTriangle, Loader2, Percent, Radar, Send, ThumbsUp, Users, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../context/UIContext";
