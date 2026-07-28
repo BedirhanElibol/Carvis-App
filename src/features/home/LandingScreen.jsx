@@ -127,9 +127,9 @@ const LandingScreen = () => {
     };
   }, [fuelCity]);
 
-  const _handleGuestEntry = (query = "", city = "istanbul") => {
+  const _handleGuestEntry = (query = "", city = "istanbul", targetPath = "/application/home") => {
     loginAsGuest();
-    navigate("/application/home", { state: { searchQuery: query, selectedCity: city } });
+    navigate(targetPath, { state: { searchQuery: query, selectedCity: city } });
   };
 
   // Removed automatic redirect to allow logged-in users to view the landing page
@@ -227,7 +227,8 @@ const LandingScreen = () => {
       <div className="relative z-10 pt-28 md:pt-36 flex flex-col items-center">
         
         {/* HERO SECTION */}
-        <LandingHero 
+        <LandingHero
+          handleGuestEntry={_handleGuestEntry}
           t={t} 
           language={language}
           searchQuery={searchQuery}
@@ -304,10 +305,10 @@ const LandingScreen = () => {
               <div className="space-y-4 text-left">
                 <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">{t.allServices || "Hizmetler"}</h4>
                 <ul className="space-y-2.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
-                  <li><button onClick={() => navigate("/application/home")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.smartDiagnosis || "Yakıt & Gider Takibi"}</button></li>
-                  <li><button onClick={() => navigate("/app/parts")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.autoSpareParts || "Oto Yedek Parça"}</button></li>
-                  <li><button onClick={() => navigate("/app/mechanics")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.expertMechanic || "Uzman Usta & Servis"}</button></li>
-                  <li><button onClick={() => navigate("/application/home")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.sosValet || "SOS & Vale Hizmeti"}</button></li>
+                  <li><button onClick={() => _handleGuestEntry()} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.smartDiagnosis || "Yakıt & Gider Takibi"}</button></li>
+                  <li><button onClick={() => _handleGuestEntry("", "istanbul", "/app/parts")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.autoSpareParts || "Oto Yedek Parça"}</button></li>
+                  <li><button onClick={() => _handleGuestEntry("", "istanbul", "/app/mechanics")} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.expertMechanic || "Uzman Usta & Servis"}</button></li>
+                  <li><button onClick={() => _handleGuestEntry()} className="hover:text-teal-500 dark:hover:text-teal-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.sosValet || "SOS & Vale Hizmeti"}</button></li>
                 </ul>
               </div>
 

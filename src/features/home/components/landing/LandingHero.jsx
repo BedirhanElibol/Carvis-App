@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/logo.png";
 
-const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) => {
+const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, handleGuestEntry }) => {
   const navigate = useNavigate();
 
   return (
@@ -57,7 +57,7 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
             className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-10"
           >
             <button 
-              onClick={() => navigate("/application/home")}
+              onClick={() => handleGuestEntry ? handleGuestEntry() : navigate("/application/home")}
               className="bg-[#2563eb] hover:bg-blue-600 text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px] shadow-lg shadow-blue-500/20"
             >
               {language === "tr" ? "Hemen Başla" : "Start Now"}
