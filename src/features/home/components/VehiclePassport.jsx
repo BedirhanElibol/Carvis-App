@@ -71,6 +71,17 @@ const VehiclePassport = ({ vehicle, onClose }) => {
     fetchRecords();
   }, [vehicle?.id, currentUser]);
 
+  // Close on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onClose?.();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   if (!vehicle) return null;
 
   const handleCopyChassis = () => {
@@ -261,17 +272,6 @@ const VehiclePassport = ({ vehicle, onClose }) => {
     }));
     setShowAddForm(true);
   };
-
-  // Close on Escape key press
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        onClose?.();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
 
   const handleDownloadPdf = async () => {
     setPdfDownloading(true);

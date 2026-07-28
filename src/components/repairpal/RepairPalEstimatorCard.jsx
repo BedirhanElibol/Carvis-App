@@ -1,5 +1,6 @@
 import React from "react";
 import { ShieldCheck, Wrench, Package, Clock, CheckCircle2, Award } from "lucide-react";
+import { calculateRepairPalEstimate } from "../../utils/repairPalEngine";
 
 /**
  * RepairPal 1:1 Official Fair Price Estimator & Labor Breakdown Component
