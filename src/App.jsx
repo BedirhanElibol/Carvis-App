@@ -22,6 +22,7 @@ import { useGarage } from "./context/GarageContext";
 import { Loader2, Mail, X } from "lucide-react";
 import ThemeToggleFAB from "./components/common/ThemeToggleFAB";
 import usePushNotifications from "./hooks/usePushNotifications";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 const App = () => {
   const {
     alertState,
@@ -312,6 +313,7 @@ const App = () => {
         message={alertState.message}
         type={alertState.type}
       />
+      <SpeedInsights />
     </div>
   );
 };
