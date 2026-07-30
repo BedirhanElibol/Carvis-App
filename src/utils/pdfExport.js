@@ -15,8 +15,26 @@ export async function exportElementToPdf(elementId, fileName = "Carvis_Arac_Pasa
       scale: 2, // High resolution (HD)
       useCORS: true,
       allowTaint: true,
-      backgroundColor: "#090d16", // Dark theme background
       logging: false,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+      onclone: (clonedDoc) => {
+        const clonedElement = clonedDoc.getElementById(elementId);
+        if (clonedElement) {
+          clonedElement.style.maxHeight = "none";
+          clonedElement.style.height = "auto";
+          clonedElement.style.overflow = "visible";
+          clonedElement.style.borderRadius = "0";
+
+          // Expand all scrollable children inside cloned element
+          const scrollables = clonedElement.querySelectorAll(".overflow-y-auto, .overflow-x-auto, .overflow-hidden");
+          scrollables.forEach((el) => {
+            el.style.maxHeight = "none";
+            el.style.height = "auto";
+            el.style.overflow = "visible";
+          });
+        }
+      },
     });
 
     const imgData = canvas.toDataURL("image/png");

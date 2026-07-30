@@ -289,24 +289,24 @@ const VehiclePassport = ({ vehicle, onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+      className="fixed inset-0 z-[9999] flex items-start sm:items-center justify-center p-2 pt-10 sm:pt-6 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in overflow-y-auto"
       onClick={onClose}
     >
       <div 
         id="vehicle-passport-modal-content"
-        className="w-full max-w-4xl bg-white dark:bg-slate-900 border-t sm:border border-slate-200 dark:border-white/10 rounded-t-[2rem] sm:rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col h-[94vh] sm:max-h-[90vh]"
+        className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[90vh] my-auto text-slate-900 dark:text-white"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Background Pattern */}
         <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-teal-500/10 via-slate-900/0 to-slate-900 pointer-events-none" />
 
-        {/* Top Bar for Action Buttons & Badges */}
-        <div className="px-4 pt-4 sm:px-8 sm:pt-6 flex items-center justify-between z-20 relative">
+        {/* Top Bar for Action Buttons & Badges (Sticky Top) */}
+        <div className="px-4 pt-3 sm:px-8 sm:pt-5 flex items-center justify-between z-30 relative sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-black/5 dark:border-white/5 pb-2.5">
           <div className="flex items-center gap-1.5 flex-wrap pr-2">
             <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-teal-600 dark:text-teal-400 bg-teal-500/10 px-2.5 py-1 rounded-full border border-teal-500/20">
               Carvis Araç Pasaportu
             </span>
-            <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+            <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 hidden xs:inline-block">
               Resmi Hafıza
             </span>
           </div>
@@ -316,11 +316,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               type="button"
               onClick={handleDownloadPdf}
               disabled={pdfDownloading}
-              className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-teal-500/20 hover:bg-teal-500/30 text-teal-600 dark:text-teal-300 border border-teal-500/30 font-black text-[10px] sm:text-[11px] uppercase tracking-wider shadow-sm active-scale transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-teal-500 hover:bg-teal-400 text-white dark:text-slate-950 font-black text-[10px] sm:text-[11px] uppercase tracking-wider shadow-md shadow-teal-500/20 active-scale transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 border-none"
             >
               {pdfDownloading ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
-              <span className="hidden xs:inline">{pdfDownloading ? "HAZIRLANIYOR..." : "PDF İNDİR"}</span>
-              <span className="xs:hidden">PDF</span>
+              <span>{pdfDownloading ? "HAZIRLANIYOR..." : "PDF İNDİR"}</span>
             </button>
             <button 
               type="button"
