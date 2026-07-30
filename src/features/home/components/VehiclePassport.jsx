@@ -289,105 +289,115 @@ const VehiclePassport = ({ vehicle, onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
       onClick={onClose}
     >
       <div 
         id="vehicle-passport-modal-content"
-        className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]"
+        className="w-full max-w-4xl bg-white dark:bg-slate-900 border-t sm:border border-slate-200 dark:border-white/10 rounded-t-[2rem] sm:rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col h-[94vh] sm:max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Background Pattern */}
         <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-teal-500/10 via-slate-900/0 to-slate-900 pointer-events-none" />
 
-        {/* Top Right Action Buttons (PDF & Close) */}
-        <div className="absolute top-4 right-4 z-[70] flex items-center gap-2 pointer-events-auto">
-          <button
-            type="button"
-            onClick={handleDownloadPdf}
-            disabled={pdfDownloading}
-            className="px-3.5 py-2 rounded-full bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 border border-teal-500/30 font-black text-[11px] uppercase tracking-wider shadow-xl active-scale transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
-          >
-            {pdfDownloading ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
-            {pdfDownloading ? "HAZIRLANIYOR..." : "PDF İNDİR"}
-          </button>
-          <button 
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onClose?.();
-            }}
-            className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white flex items-center justify-center border border-black/10 dark:border-white/20 shadow-xl active-scale transition-all cursor-pointer"
-            aria-label="Kapat"
-          >
-            <X size={18} />
-          </button>
+        {/* Top Bar for Action Buttons & Badges */}
+        <div className="px-4 pt-4 sm:px-8 sm:pt-6 flex items-center justify-between z-20 relative">
+          <div className="flex items-center gap-1.5 flex-wrap pr-2">
+            <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-teal-600 dark:text-teal-400 bg-teal-500/10 px-2.5 py-1 rounded-full border border-teal-500/20">
+              Carvis Araç Pasaportu
+            </span>
+            <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+              Resmi Hafıza
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={handleDownloadPdf}
+              disabled={pdfDownloading}
+              className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-teal-500/20 hover:bg-teal-500/30 text-teal-600 dark:text-teal-300 border border-teal-500/30 font-black text-[10px] sm:text-[11px] uppercase tracking-wider shadow-sm active-scale transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            >
+              {pdfDownloading ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
+              <span className="hidden xs:inline">{pdfDownloading ? "HAZIRLANIYOR..." : "PDF İNDİR"}</span>
+              <span className="xs:hidden">PDF</span>
+            </button>
+            <button 
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClose?.();
+              }}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white flex items-center justify-center border border-black/10 dark:border-white/20 shadow-sm active-scale transition-all cursor-pointer"
+              aria-label="Kapat"
+            >
+              <X size={16} className="sm:hidden" />
+              <X size={18} className="hidden sm:block" />
+            </button>
+          </div>
         </div>
 
         {/* Header Section */}
-        <div className="p-8 pt-14 pb-4 relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-3xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
-              <FileText size={32} />
+        <div className="px-4 sm:px-8 pt-3 pb-3 relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div className="flex items-start sm:items-center gap-3 sm:gap-4">
+            <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-teal-500/10 border border-teal-500/20 text-teal-400 shrink-0">
+              <FileText size={24} className="sm:hidden" />
+              <FileText size={32} className="hidden sm:block" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">
-                  Rapidsy Araç Pasaportu
-                </span>
-                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                  Resmi Hafıza
-                </span>
-              </div>
-              <h2 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase mt-2">
+              <h2 className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-tight">
                 {vehicle.brand} {vehicle.model}
               </h2>
-              <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5">
+              <div className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-1 flex flex-wrap items-center gap-1.5">
                 <span className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-2 py-0.5 rounded text-[10px] border border-slate-300 dark:border-slate-700 font-mono font-black uppercase">
                   {vehicle.plate || "34 CVS 202"}
                 </span>
                 {(vehicle.chassis_no || vehicle.chassis_number) && (
-                  <>
-                    • Şase: 
-                    <span className="font-mono text-slate-600 dark:text-slate-300 font-bold">{vehicle.chassis_no || vehicle.chassis_number}</span>
+                  <div className="flex items-center gap-1 text-[11px]">
+                    <span>• Şase:</span>
+                    <span className="font-mono text-slate-700 dark:text-slate-300 font-bold max-w-[120px] sm:max-w-none truncate">
+                      {vehicle.chassis_no || vehicle.chassis_number}
+                    </span>
                     <button 
                       onClick={handleCopyChassis}
-                      className="p-1 hover:bg-white dark:bg-white/5 shadow-sm rounded text-teal-400 hover:text-slate-900 dark:text-white transition-all active-scale cursor-pointer border-none bg-transparent"
+                      className="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-teal-500 dark:text-teal-400 cursor-pointer border-none bg-transparent"
                       title={t.copy}
                     >
-                      {copied ? <Check size={14} className="text-teal-400" /> : <Copy size={14} />}
+                      {copied ? <Check size={13} className="text-teal-400" /> : <Copy size={13} />}
                     </button>
-                  </>
+                  </div>
                 )}
-              </p>
+              </div>
             </div>
           </div>
 
           {/* Dynamic TR Market Valuation Badge */}
-          <div className="p-4 rounded-3xl bg-slate-900/80 border border-emerald-500/30 text-white flex items-center gap-3.5 shadow-xl shrink-0">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold">
-              <TrendingUp size={20} />
+          <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-slate-900 dark:bg-slate-950/90 border border-emerald-500/30 text-white flex items-center justify-between sm:justify-start gap-3 shadow-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold shrink-0">
+                <TrendingUp size={18} className="sm:hidden" />
+                <TrendingUp size={20} className="hidden sm:block" />
+              </div>
+              <div>
+                <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-emerald-400 block">Canlı TR 2. El Piyasa Değeri</span>
+                <span className="text-sm sm:text-base font-black font-mono text-white block">{valuation.formattedRange}</span>
+                <span className="text-[8px] sm:text-[9px] text-slate-400 block mt-0.5">{valuation.confidenceScore}% Doğruluk Oranı</span>
+              </div>
             </div>
-            <div>
-              <span className="text-[9px] font-black uppercase tracking-widest text-emerald-400 block">Canlı TR İkinci El Piyasa Değeri</span>
-              <span className="text-base font-black font-mono text-white">{valuation.formattedRange}</span>
-              <span className="text-[9px] text-slate-400 block mt-0.5">{valuation.confidenceScore}% Piyasa Doğruluk Oranı</span>
-            </div>
-            <div className="text-right border-l border-white/10 pl-3.5 ml-1 hidden sm:block">
-              <span className="text-[8px] font-black uppercase tracking-widest text-teal-400 block">6 Ay Sonraki Tahmini Değer</span>
+            <div className="text-right border-l border-white/10 pl-3 ml-1 hidden sm:block">
+              <span className="text-[8px] font-black uppercase tracking-widest text-teal-400 block">6 Ay Sonraki Tahmin</span>
               <span className="text-xs font-mono font-bold text-slate-200">{valuation.formattedForecast6m}</span>
-              <span className="text-[8px] text-slate-400 block mt-0.5">Otomatik Canlı Piyasa İndeksi</span>
             </div>
           </div>
         </div>
 
         {/* Tab Selector */}
-        <div className="px-8 border-b border-black/5 dark:border-white/5 flex gap-2 overflow-x-auto relative z-10 scrollbar-none">
+        <div className="px-3 sm:px-8 border-b border-black/5 dark:border-white/5 flex gap-1.5 sm:gap-2 overflow-x-auto relative z-10 scrollbar-none">
           {[
             { id: "overview", label: t.generalStatus || "Genel Durum", icon: Compass },
             { id: "carfax", label: "Resmi Geçmiş & Hasar", icon: ShieldCheck },
-            { id: "blockchain", label: "Dijital Mühür & Km Güvenliği", icon: FileLock2 },
+            { id: "blockchain", label: "Dijital Mühür & Km", icon: FileLock2 },
             { id: "timeline", label: t.memoryTimeline || "Zaman Çizelgesi", icon: History },
             { id: "documents", label: t.documentVault || "Belge Kasası", icon: File },
             { id: "maintenance", label: "Bakım Takibi", icon: Wrench }
@@ -398,13 +408,14 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`py-4 px-4 text-xs font-black uppercase tracking-widest border-b-2 flex items-center gap-2 transition-all bg-transparent cursor-pointer shrink-0 ${
+                className={`py-2.5 px-3 sm:py-3.5 sm:px-4 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider border-b-2 flex items-center gap-1.5 transition-all bg-transparent cursor-pointer shrink-0 whitespace-nowrap ${
                   isActive 
-                    ? "border-teal-500 text-slate-900 dark:text-white" 
-                    : "border-transparent text-slate-500 hover:text-slate-600 dark:text-slate-300"
+                    ? "border-teal-500 text-teal-600 dark:text-white bg-teal-500/10 sm:bg-transparent rounded-t-lg sm:rounded-none" 
+                    : "border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
                 }`}
               >
-                <Icon size={16} />
+                <Icon size={14} className="sm:hidden" />
+                <Icon size={16} className="hidden sm:block" />
                 {tab.label}
               </button>
             );
@@ -412,7 +423,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         </div>
 
         {/* Scrollable Content Body */}
-        <div className="flex-1 overflow-y-auto p-8 relative z-10 min-h-[350px]">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 pb-12 sm:pb-8 relative z-10 min-h-[250px]">
           <AnimatePresence mode="wait">
             {activeTab === "overview" && (
               <motion.div
