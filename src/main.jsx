@@ -19,21 +19,14 @@ import { AIProvider } from "./context/AIContext";
 import { MapProvider } from "./context/MapContext";
 import { WalletProvider } from "./context/WalletContext";
 import { HelmetProvider } from "react-helmet-async";
-if (import.meta.env.PROD && "serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then((registration) => {
-        console.log("SW registered: ", registration);
-      })
-      .catch((registrationError) => {
-        console.log("SW registration failed: ", registrationError);
-      });
-  });
-} else if ("serviceWorker" in navigator) {
+// Unregister any conflicting legacy manual service workers to resolve false "no internet" errors
+if ("serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
     for (const registration of registrations) {
-      registration.unregister();
+      // Unregister manual conflicting scripts if present
+      if (registration.active?.scriptURL?.includes("sw.js")) {
+        registration.unregister();
+      }
     }
   });
 } 

@@ -23,12 +23,18 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/.*\.supabase\.co/,
-            handler: 'NetworkOnly',
-            options: { cacheName: 'supabase-api' }
+            handler: 'NetworkOnly'
+          },
+          {
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'pages-cache',
+              networkTimeoutSeconds: 3
+            }
           }
         ],
-        // Don't cache navigation requests — let the network handle them
-        navigationPreload: false,
+        navigationPreload: true,
       },
       manifest: {
         name: 'Rapidsy - Akıllı Araç Platformu',
