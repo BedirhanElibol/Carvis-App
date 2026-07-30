@@ -115,8 +115,8 @@ const App = () => {
         <AppRoutes />
       </main>
 
-      {/* Bottom Nav - Show inside App and Landing */}
-      {(!hideGlobalNav || isLanding) && <BottomNav />}
+      {/* Bottom Nav - Show only inside App routes (Hide on Landing) */}
+      {!hideGlobalNav && !isLanding && <BottomNav />}
 
       {/* --- GLOBAL MODALS --- */}
       <AuthLoginModal
