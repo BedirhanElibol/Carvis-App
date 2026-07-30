@@ -10,7 +10,7 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
   return (
     <section className="relative w-full pt-20 pb-20 md:pt-28 md:pb-24 bg-transparent overflow-hidden">
       
-      {/* Background glow matching Adspirer */}
+      {/* Background glow */}
       <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-blue-500/10 dark:bg-[#1e3a8a] rounded-full blur-[150px] opacity-40 dark:opacity-20 pointer-events-none"></div>
 
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -18,12 +18,12 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
         {/* Left Column: Text & CTA */}
         <div className="flex flex-col items-start text-left">
           
-          {/* Adspirer style gradient headline */}
+          {/* Gradient Headline */}
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-[76px] font-bold text-slate-900 dark:text-white tracking-tight leading-[1.05] mb-6"
+            className="text-5xl md:text-6xl lg:text-[76px] font-bold text-slate-900 dark:text-white tracking-tight leading-[1.05] mb-6 font-sans"
           >
             {language === "tr" ? "Aracınızı yönetin, " : "Manage your car, "} <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500 dark:from-blue-400 dark:to-blue-500">
@@ -42,7 +42,7 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-[19px] text-slate-600 dark:text-slate-300 max-w-lg mb-10 leading-relaxed font-normal"
+            className="text-lg md:text-[19px] text-slate-600 dark:text-slate-300 max-w-lg mb-8 leading-relaxed font-normal"
           >
             {language === "tr" 
               ? "Sanayi sürprizlerini unutun. Aracınızın arıza, bakım veya parça ihtiyaçları için çevrenizdeki en iyi ustalardan anında teklif alın ve havuz ödeme sistemiyle paranızı güvenceye alın." 
@@ -54,74 +54,75 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-10"
+            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-8"
           >
             <button 
               onClick={() => navigate("/application/home")}
-              className="bg-[#2563eb] hover:bg-blue-600 text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px] shadow-lg shadow-blue-500/20"
+              className="bg-[#2563eb] hover:bg-blue-600 text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px] shadow-lg shadow-blue-500/20 cursor-pointer border-none"
             >
               {language === "tr" ? "Hemen Başla" : "Start Now"}
               <ArrowRight size={16} />
             </button>
             <button 
               onClick={() => navigate("/partner-login")}
-              className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-[#1f2937] text-slate-700 dark:text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px]"
+              className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-[#1f2937] text-slate-700 dark:text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px] cursor-pointer"
             >
               <Wrench size={16} className="text-slate-500 dark:text-slate-400" />
               {language === "tr" ? "Usta / İş Ortakları" : "Mechanics & Partners"}
             </button>
           </motion.div>
           
-          {/* Concrete App Capabilities (Why they should stay) */}
+          {/* Concrete App Capabilities */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-3 text-[13px] font-medium"
+            className="flex flex-wrap items-center gap-2.5 text-[12px] sm:text-[13px] font-medium"
           >
             <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 text-blue-600 dark:text-blue-400"><Wrench size={14} /> Oto Servis & Tamir</span>
             <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/20 text-yellow-700 dark:text-yellow-400"><Fuel size={14} /> Akaryakıt & Şarj</span>
             <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400"><Search size={14} /> Mobil Ekspertiz</span>
             <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400"><Package size={14} /> Yedek Parça</span>
-            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-50 dark:bg-pink-500/10 border border-pink-200 dark:border-pink-500/20 text-pink-600 dark:text-pink-400"><Shield size={14} /> Sigorta & Kasko</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-50 dark:bg-teal-500/10 border border-teal-200 dark:border-teal-500/20 text-teal-600 dark:text-teal-400"><ShieldCheck size={14} /> Dijital Araç Pasaportu</span>
           </motion.div>
 
         </div>
 
-        {/* Right Column: Orbiting Graphics matching Adspirer right side */}
+        {/* Right Column: Orbiting Graphics (Visible & Responsive on Mobile and Desktop) */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="hidden lg:flex relative h-[500px] w-full items-center justify-center"
+          className="flex relative h-[350px] xs:h-[400px] sm:h-[450px] md:h-[500px] w-full items-center justify-center my-6 lg:my-0 scale-90 xs:scale-95 sm:scale-100"
         >
           {/* Orbit Rings */}
-          <div className="absolute w-[450px] h-[450px] rounded-full border border-slate-200 dark:border-white/5"></div>
-          <div className="absolute w-[300px] h-[300px] rounded-full border border-slate-300 dark:border-white/10"></div>
-          <div className="absolute w-[180px] h-[180px] rounded-full border border-dashed border-blue-500/20"></div>
+          <div className="absolute w-[300px] xs:w-[360px] sm:w-[440px] h-[300px] xs:h-[360px] sm:h-[440px] rounded-full border border-slate-200 dark:border-white/5"></div>
+          <div className="absolute w-[210px] xs:w-[250px] sm:w-[290px] h-[210px] xs:h-[250px] sm:h-[290px] rounded-full border border-slate-300 dark:border-white/10"></div>
+          <div className="absolute w-[120px] xs:w-[140px] sm:w-[170px] h-[120px] xs:h-[140px] sm:h-[170px] rounded-full border border-dashed border-blue-500/30"></div>
           
-          {/* Center Logo - Sleek Glass Pill */}
-          <div className="absolute px-8 py-5 bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,0.1)] dark:shadow-[0_0_50px_rgba(37,99,235,0.2)] z-10">
-            <img src={logo} alt="Carvis" className="h-7 md:h-9 w-auto object-contain block dark:hidden brightness-0" />
-            <img src={logo} alt="Carvis" className="h-7 md:h-9 w-auto object-contain hidden dark:block" />
+          {/* Center Logo - Sleek Glass Pill with Brand Accent */}
+          <div className="absolute px-6 py-4 xs:px-8 xs:py-5 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-xl border-2 border-blue-500/30 rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,0.15)] dark:shadow-[0_0_50px_rgba(37,99,235,0.3)] z-10">
+            <img src={logo} alt="Rapidsy" className="h-6 xs:h-7 md:h-9 w-auto object-contain block dark:hidden brightness-0" />
+            <img src={logo} alt="Rapidsy" className="h-6 xs:h-7 md:h-9 w-auto object-contain hidden dark:block" />
           </div>
 
           {/* Floating UI Elements (Real Carvis Features Only) */}
           
           {/* 1. Top Floating Card: Periyodik Bakım */}
           <motion.div 
-            animate={{ y: [0, -10, 0] }} 
+            animate={{ y: [0, -8, 0] }} 
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[8%] left-[65%] -translate-x-1/2 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-blue-200/80 dark:border-blue-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
+            className="absolute top-[2%] sm:top-[6%] left-[55%] sm:left-[65%] -translate-x-1/2 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-blue-300 dark:border-blue-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
           >
-            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold">
-              <Wrench size={18} />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold border border-blue-500/20 shrink-0">
+              <Wrench size={16} className="sm:hidden" />
+              <Wrench size={18} className="hidden sm:block" />
             </div>
             <div>
-              <div className="text-slate-900 dark:text-white font-bold text-sm">
+              <div className="text-slate-900 dark:text-white font-black text-xs sm:text-sm font-sans leading-tight">
                 {language === "tr" ? "Periyodik Bakım" : "Periodic Maintenance"}
               </div>
-              <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">
+              <div className="text-blue-600 dark:text-blue-400 text-[10px] sm:text-xs font-bold mt-0.5">
                 {language === "tr" ? "5 Servisten Teklif Geldi" : "5 Bids Received"}
               </div>
             </div>
@@ -129,41 +130,43 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
 
           {/* 2. Bottom Right Floating Card: Yedek Parça Siparişi */}
           <motion.div 
-            animate={{ y: [0, 10, 0] }} 
+            animate={{ y: [0, 8, 0] }} 
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-[18%] right-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-indigo-200/80 dark:border-indigo-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
+            className="absolute bottom-[8%] sm:bottom-[16%] right-0 sm:right-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-indigo-300 dark:border-indigo-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
           >
-            <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold">
-              <Package size={18} />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold border border-indigo-500/20 shrink-0">
+              <Package size={16} className="sm:hidden" />
+              <Package size={18} className="hidden sm:block" />
             </div>
             <div>
-              <div className="text-slate-900 dark:text-white font-bold text-sm">
+              <div className="text-slate-900 dark:text-white font-black text-xs sm:text-sm font-sans leading-tight">
                 {language === "tr" ? "Yedek Parça Siparişi" : "Spare Parts Order"}
               </div>
-              <div className="text-indigo-600 dark:text-indigo-400 text-xs font-medium">
-                {language === "tr" ? "Uyum garantili gönderim" : "Guaranteed fit delivery"}
+              <div className="text-indigo-600 dark:text-indigo-400 text-[10px] sm:text-xs font-bold mt-0.5">
+                {language === "tr" ? "Şaseye Uyum Garantili" : "Guaranteed fit delivery"}
               </div>
             </div>
           </motion.div>
 
-          {/* 3. Bottom Left Floating Card: Mobil Ekspertiz */}
+          {/* 3. Bottom Left Floating Card: Dijital Araç Pasaportu */}
           <motion.div 
-            animate={{ y: [0, 8, 0] }} 
+            animate={{ y: [0, 6, 0] }} 
             transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-            className="absolute bottom-[20%] left-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-emerald-200/80 dark:border-emerald-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
+            className="absolute bottom-[10%] sm:bottom-[18%] left-0 sm:left-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-emerald-300 dark:border-emerald-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
           >
-            <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold">
-              <Search size={18} />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold border border-emerald-500/20 shrink-0">
+              <ShieldCheck size={16} className="sm:hidden" />
+              <ShieldCheck size={18} className="hidden sm:block" />
             </div>
             <div>
-              <div className="text-slate-900 dark:text-white font-bold text-sm">
-                {language === "tr" ? "Mobil Ekspertiz" : "Mobile Auto Inspection"}
+              <div className="text-slate-900 dark:text-white font-black text-xs sm:text-sm font-sans leading-tight">
+                {language === "tr" ? "Dijital Araç Pasaportu" : "Digital Car Passport"}
               </div>
-              <div className="text-emerald-600 dark:text-emerald-400 text-xs font-medium">
-                {language === "tr" ? "Noter öncesi garantili rapor" : "Guaranteed pre-notary report"}
+              <div className="text-emerald-600 dark:text-emerald-400 text-[10px] sm:text-xs font-bold mt-0.5">
+                {language === "tr" ? "Resmi Kayıt & Ekspertiz" : "Official Vehicle Record"}
               </div>
             </div>
-          </motion.div>
+          </motion.div>        
 
         </motion.div>
 
