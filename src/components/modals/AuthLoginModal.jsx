@@ -38,11 +38,18 @@ const AuthLoginModal = ({
         onClose();
       }
     } catch (error) {
-      setErrorMsg(
-        error.message === "Invalid login credentials"
-          ? "E-posta veya şifre hatalı."
-          : error.message,
-      );
+      const msg = error.message || "";
+      if (msg === "Invalid login credentials") {
+        setErrorMsg("E-posta veya şifre hatalı.");
+      } else if (msg.includes("Email not confirmed")) {
+        setErrorMsg("E-posta adresiniz henüz doğrulanmamış. Lütfen gelen kutunuzu kontrol edin.");
+      } else if (msg.includes("network") || msg.includes("Failed to fetch") || msg.includes("fetch")) {
+        setErrorMsg("Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.");
+      } else if (msg.includes("rate limit") || msg.includes("too many")) {
+        setErrorMsg("Çok fazla deneme yapıldı. Lütfen birkaç dakika sonra tekrar deneyin.");
+      } else {
+        setErrorMsg(msg || "Giriş yapılırken bir hata oluştu.");
+      }
     } finally {
       setLoading(false);
     }
@@ -53,7 +60,6 @@ const AuthLoginModal = ({
     setLoading(true);
     setErrorMsg("");
     try {
-      // 1. E-postanın kayıtlı olup olmadığını veritabanından sorgula (RPC)
       let emailExists = true;
       try {
         const { data: exists, error: rpcError } = await supabase.rpc("check_email_exists", {
@@ -72,7 +78,6 @@ const AuthLoginModal = ({
         return;
       }
 
-      // 2. Sıfırlama bağlantısını gönder
       const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
         redirectTo: window.location.origin,
       });
@@ -84,10 +89,10 @@ const AuthLoginModal = ({
         setErrorMsg("Çok fazla istek gönderildi. Lütfen bir süre sonra tekrar deneyin.");
       } else if (msg.includes("Invalid email")) {
         setErrorMsg("Geçersiz e-posta adresi girdiniz.");
-      } else if (msg.includes("network") || msg.includes("Failed to fetch")) {
-        setErrorMsg("Ağ bağlantı hatası. Lütfen internetinizi kontrol edin.");
+      } else if (msg.includes("network") || msg.includes("Failed to fetch") || msg.includes("fetch")) {
+        setErrorMsg("Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edin.");
       } else {
-        setErrorMsg(msg);
+        setErrorMsg(msg || "Bir hata oluştu.");
       }
     } finally {
       setLoading(false);
@@ -96,6 +101,7 @@ const AuthLoginModal = ({
 
   const handleSocialLogin = async (provider) => {
     setSocialLoading(provider);
+    setErrorMsg("");
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider,
@@ -103,7 +109,14 @@ const AuthLoginModal = ({
       });
       if (error) throw error;
     } catch (error) {
-      setErrorMsg(error.message);
+      const msg = error.message || "";
+      if (msg.includes("network") || msg.includes("Failed to fetch") || msg.includes("fetch")) {
+        setErrorMsg("Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.");
+      } else if (msg.includes("provider") || msg.includes("not enabled")) {
+        setErrorMsg(`${provider === "google" ? "Google" : "Apple"} ile giriş şu anda kullanılamıyor. Lütfen e-posta ile giriş yapın.`);
+      } else {
+        setErrorMsg(msg || `${provider === "google" ? "Google" : "Apple"} ile giriş yapılırken bir hata oluştu.`);
+      }
       setSocialLoading(null);
     }
   };
@@ -118,7 +131,7 @@ const AuthLoginModal = ({
 
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 bg-black/5 dark:bg-white/5 p-2 rounded-full hover:bg-black/10 dark:bg-white/10 transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white border border-black/5 dark:border-white/5 cursor-pointer"
+          className="absolute top-4 right-4 bg-black/5 dark:bg-white/5 p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-black/5 dark:border-white/5 cursor-pointer"
         >
           <X size={20} />
         </button>
@@ -188,7 +201,7 @@ const AuthLoginModal = ({
               </div>
 
               {errorMsg && (
-                <div className="text-red-400 text-xs font-bold bg-red-500/10 border border-red-500/20 p-3 rounded-2xl flex items-center justify-center -rotate-1 origin-center shadow-sm">
+                <div className="text-red-500 dark:text-red-400 text-xs font-bold bg-red-500/10 border border-red-500/20 p-3 rounded-2xl flex items-center justify-center shadow-sm">
                   {errorMsg}
                 </div>
               )}
@@ -196,8 +209,8 @@ const AuthLoginModal = ({
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-4.5 rounded-2xl font-black text-slate-900 dark:text-white shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] font-sans border-none cursor-pointer ${
-                  loading ? "bg-teal-600/50 text-slate-600 dark:text-slate-300" : "bg-teal-500 hover:bg-teal-400 shadow-teal-500/20"
+                className={`w-full py-4.5 rounded-2xl font-black text-white shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] font-sans border-none cursor-pointer ${
+                  loading ? "bg-teal-600/50" : "bg-teal-500 hover:bg-teal-400 shadow-teal-500/20"
                 }`}
               >
                 {loading ? (
@@ -223,7 +236,7 @@ const AuthLoginModal = ({
               <button
                 onClick={() => handleSocialLogin("google")}
                 disabled={socialLoading !== null}
-                className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-2xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer"
+                className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-2xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer"
               >
                 {socialLoading === "google" ? (
                   <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
@@ -239,7 +252,7 @@ const AuthLoginModal = ({
               <button
                 onClick={() => handleSocialLogin("apple")}
                 disabled={socialLoading !== null}
-                className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-2xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer"
+                className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-2xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer"
               >
                 {socialLoading === "apple" ? (
                   <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
@@ -247,7 +260,7 @@ const AuthLoginModal = ({
                   <img
                     src="https://www.svgrepo.com/show/511330/apple-173.svg"
                     alt="Apple"
-                    className="w-5 h-5 invert"
+                    className="w-5 h-5 dark:invert"
                   />
                 )}
                 Apple
@@ -271,7 +284,7 @@ const AuthLoginModal = ({
                     onClose();
                     navigate("/application/home");
                   }}
-                  className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-600 dark:text-slate-300 font-black px-6 py-3 rounded-2xl transition-all active:scale-95 uppercase tracking-widest text-[9px] border border-black/10 dark:border-white/10 hover:text-slate-900 dark:text-white shadow-inner cursor-pointer"
+                  className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-black px-6 py-3 rounded-2xl transition-all active:scale-95 uppercase tracking-widest text-[9px] border border-black/10 dark:border-white/10 hover:text-slate-900 dark:hover:text-white shadow-inner cursor-pointer"
                 >
                   Misafir Olarak Devam Et &rarr;
                 </button>
@@ -310,7 +323,7 @@ const AuthLoginModal = ({
               </div>
 
               {errorMsg && (
-                <div className="text-red-400 text-xs font-bold bg-red-500/10 border border-red-500/20 p-3 rounded-2xl flex items-center justify-center -rotate-1 origin-center shadow-sm">
+                <div className="text-red-500 dark:text-red-400 text-xs font-bold bg-red-500/10 border border-red-500/20 p-3 rounded-2xl flex items-center justify-center shadow-sm">
                   {errorMsg}
                 </div>
               )}
@@ -318,8 +331,8 @@ const AuthLoginModal = ({
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-4.5 rounded-2xl font-black text-slate-900 dark:text-white shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] font-sans border-none cursor-pointer ${
-                  loading ? "bg-teal-600/50 text-slate-600 dark:text-slate-300" : "bg-teal-500 hover:bg-teal-400 shadow-teal-500/20"
+                className={`w-full py-4.5 rounded-2xl font-black text-white shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] font-sans border-none cursor-pointer ${
+                  loading ? "bg-teal-600/50" : "bg-teal-500 hover:bg-teal-400 shadow-teal-500/20"
                 }`}
               >
                 {loading ? (
@@ -336,7 +349,7 @@ const AuthLoginModal = ({
                   setView("login");
                   setErrorMsg("");
                 }}
-                className="w-full py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all active:scale-[0.98] font-sans cursor-pointer flex items-center justify-center gap-1.5"
+                className="w-full py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all active:scale-[0.98] font-sans cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <ArrowLeft size={14} /> Giriş Ekranına Dön
               </button>
@@ -365,7 +378,7 @@ const AuthLoginModal = ({
                   setForgotEmail("");
                   setErrorMsg("");
                 }}
-                className="w-full py-4 bg-teal-500 hover:bg-teal-400 text-slate-900 dark:text-white rounded-2xl font-black shadow-xl shadow-teal-500/20 transition-all active:scale-[0.98] font-sans border-none cursor-pointer"
+                className="w-full py-4 bg-teal-500 hover:bg-teal-400 text-white rounded-2xl font-black shadow-xl shadow-teal-500/20 transition-all active:scale-[0.98] font-sans border-none cursor-pointer"
               >
                 Giriş Ekranına Dön
               </button>

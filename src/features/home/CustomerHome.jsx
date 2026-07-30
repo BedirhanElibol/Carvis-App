@@ -375,17 +375,18 @@ const CustomerHome = () => {
         {/* HIGH-PRIORITY ACTION LAUNCHPAD & URGENT STATUS BAR */}
         <div className="mb-8 space-y-4">
           
-          {/* Quick Actions Grid (Fitts' Law: Large, Actionable Touch Targets) */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3.5">
+          {/* TOP QUICK ACTION GRID */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 mb-6 sm:mb-8">
             <button
               onClick={() => {
                 triggerHaptic("impact");
                 setShowIssueModal(true);
               }}
-              className="p-4 rounded-3xl bg-gradient-to-br from-cyan-500/20 to-sky-500/10 border border-cyan-500/30 hover:border-cyan-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-500/20 to-sky-500/10 border border-cyan-500/30 hover:border-cyan-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-cyan-500/30">
-                <Wrench size={18} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-cyan-500/30">
+                <Wrench size={16} className="sm:hidden" />
+                <Wrench size={18} className="hidden sm:block" />
               </div>
               <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Sorun Bildir / Usta Bul</h4>
               <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-cyan-200/70 font-semibold mt-0.5">Anında Teklif Al</p>
@@ -393,10 +394,11 @@ const CustomerHome = () => {
 
             <button
               onClick={() => navigate("/app/mechanics")}
-              className="p-4 rounded-3xl bg-sky-500/10 border border-sky-500/30 hover:border-sky-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-sky-500/10 border border-sky-500/30 hover:border-sky-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-sky-500/20 text-sky-500 dark:text-sky-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-sky-500/30">
-                <Wrench size={18} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-sky-500/20 text-sky-500 dark:text-sky-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-sky-500/30">
+                <Wrench size={16} className="sm:hidden" />
+                <Wrench size={18} className="hidden sm:block" />
               </div>
               <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Periyodik Bakım</h4>
               <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-sky-200/70 font-semibold mt-0.5">Servis & Parça Hizmeti</p>
@@ -407,10 +409,11 @@ const CustomerHome = () => {
                 triggerHaptic("impact");
                 setShowVehiclePassport(true);
               }}
-              className="p-4 rounded-3xl bg-indigo-500/10 border border-indigo-500/30 hover:border-indigo-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-indigo-500/10 border border-indigo-500/30 hover:border-indigo-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-indigo-500/20 text-indigo-500 dark:text-indigo-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-indigo-500/30">
-                <FileText size={18} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-indigo-500/20 text-indigo-500 dark:text-indigo-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-indigo-500/30">
+                <FileText size={16} className="sm:hidden" />
+                <FileText size={18} className="hidden sm:block" />
               </div>
               <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Dijital Araç Pasaportu</h4>
               <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-indigo-200/70 font-semibold mt-0.5">Resmi Hasar & Km Kaydı</p>
@@ -421,10 +424,11 @@ const CustomerHome = () => {
                 triggerHaptic("impact");
                 setShowOBDModal(true);
               }}
-              className="p-4 rounded-3xl bg-teal-500/10 border border-teal-500/30 hover:border-teal-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-teal-500/10 border border-teal-500/30 hover:border-teal-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-teal-500/20 text-teal-500 dark:text-teal-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-teal-500/30">
-                <Activity size={18} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-teal-500/20 text-teal-500 dark:text-teal-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-teal-500/30">
+                <Activity size={16} className="sm:hidden" />
+                <Activity size={18} className="hidden sm:block" />
               </div>
               <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">OBD-II Arıza Sözlüğü</h4>
               <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-teal-200/70 font-semibold mt-0.5">Arıza Kod Rehberi</p>
@@ -432,10 +436,11 @@ const CustomerHome = () => {
 
             <button
               onClick={() => navigate("/quotes")}
-              className="p-4 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="col-span-2 sm:col-span-1 p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-emerald-500/30">
-                <TrendingUp size={18} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-emerald-500/30">
+                <TrendingUp size={16} className="sm:hidden" />
+                <TrendingUp size={18} className="hidden sm:block" />
               </div>
               <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Gelen Tekliflerim</h4>
               <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-emerald-200/70 font-semibold mt-0.5">{quotes.length} Aktif Teklif</p>
@@ -677,105 +682,112 @@ const CustomerHome = () => {
 
             {/* UNIFIED CUSTOMER MANAGEMENT COCKPIT GRID */}
             {activeVehicle && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                 <button
                   onClick={() => setShowVehicleSelector(true)}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
                 >
-                  <div className="bg-cyan-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400">
-                    <Car size={24} />
+                  <div className="bg-cyan-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400">
+                    <Car size={20} className="sm:hidden" />
+                    <Car size={24} className="hidden sm:block" />
                   </div>
-                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-[11px] sm:text-xs uppercase tracking-wider leading-tight">
                     GARAJIM
                   </h4>
-                  <p className="text-[10px] text-slate-500 dark:text-cyan-200/50 mt-1 font-sans">
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-cyan-200/50 mt-0.5 sm:mt-1 font-sans">
                     Araç Yönetimi
                   </p>
                 </button>
 
                 <button
                   onClick={() => setShowServiceHistory(true)}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
                 >
-                  <div className="bg-sky-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-sky-500/20 text-sky-600 dark:text-sky-400">
-                    <ClipboardList size={24} />
+                  <div className="bg-sky-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-sky-500/20 text-sky-600 dark:text-sky-400">
+                    <ClipboardList size={20} className="sm:hidden" />
+                    <ClipboardList size={24} className="hidden sm:block" />
                   </div>
-                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-[11px] sm:text-xs uppercase tracking-wider leading-tight">
                     SERVİS GEÇMİŞİ
                   </h4>
-                  <p className="text-[10px] text-slate-500 dark:text-cyan-200/50 mt-1 font-sans">
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-cyan-200/50 mt-0.5 sm:mt-1 font-sans">
                     Dijital Pasaport
                   </p>
                 </button>
 
                 <button
                   onClick={() => navigate("/quotes")}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-blue-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-blue-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
                 >
-                  <div className="bg-blue-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-blue-500/20 text-blue-600 dark:text-blue-400">
-                    <Package size={24} />
+                  <div className="bg-blue-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-blue-500/20 text-blue-600 dark:text-blue-400">
+                    <Package size={20} className="sm:hidden" />
+                    <Package size={24} className="hidden sm:block" />
                   </div>
-                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-[11px] sm:text-xs uppercase tracking-wider leading-tight">
                     TALEPLERİM
                   </h4>
-                  <p className="text-[10px] text-slate-500 dark:text-blue-200/50 mt-1 font-sans">
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-blue-200/50 mt-0.5 sm:mt-1 font-sans">
                     Teklifleri Gör
                   </p>
                 </button>
 
                 <button
                   onClick={() => navigate("/appointments")}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
                 >
-                  <div className="bg-emerald-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
-                    <CalendarDays size={24} />
+                  <div className="bg-emerald-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                    <CalendarDays size={20} className="sm:hidden" />
+                    <CalendarDays size={24} className="hidden sm:block" />
                   </div>
-                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-[11px] sm:text-xs uppercase tracking-wider leading-tight">
                     RANDEVULARIM
                   </h4>
-                  <p className="text-[10px] text-slate-500 dark:text-emerald-200/50 mt-1 font-sans">
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-emerald-200/50 mt-0.5 sm:mt-1 font-sans">
                     Takip Et
                   </p>
                 </button>
 
                 <button
                   onClick={() => setShowOBDModal(true)}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-400 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-400 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
                 >
-                  <div className="bg-cyan-500/20 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-cyan-500/40 text-cyan-600 dark:text-cyan-400">
-                    <Activity size={24} className="animate-pulse" />
+                  <div className="bg-cyan-500/20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-cyan-500/40 text-cyan-600 dark:text-cyan-400">
+                    <Activity size={20} className="animate-pulse sm:hidden" />
+                    <Activity size={24} className="animate-pulse hidden sm:block" />
                   </div>
-                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-[11px] sm:text-xs uppercase tracking-wider leading-tight">
                     OBD-II KODU ARAMA
                   </h4>
-                  <p className="text-[10px] text-slate-500 dark:text-cyan-200/50 mt-1 font-sans">
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-cyan-200/50 mt-0.5 sm:mt-1 font-sans">
                     Arıza Kodu Sorgula
                   </p>
                 </button>
 
                 <button
                   onClick={() => navigate("/orders")}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-amber-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-amber-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
                 >
-                  <div className="bg-amber-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-amber-500/20 text-amber-600 dark:text-amber-400">
-                    <ShoppingBag size={24} />
+                  <div className="bg-amber-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-amber-500/20 text-amber-600 dark:text-amber-400">
+                    <ShoppingBag size={20} className="sm:hidden" />
+                    <ShoppingBag size={24} className="hidden sm:block" />
                   </div>
-                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-[11px] sm:text-xs uppercase tracking-wider leading-tight">
                     SİPARİŞLERİM
                   </h4>
-                  <p className="text-[10px] text-slate-500 dark:text-amber-200/50 mt-1 font-sans">
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-amber-200/50 mt-0.5 sm:mt-1 font-sans">
                     Sipariş Takibi
                   </p>
                 </button>
 
                 <button
                   onClick={() => navigate("/app/favorites")}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-5 rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-rose-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="col-span-2 sm:col-span-1 bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-rose-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
                 >
-                  <div className="bg-rose-500/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border border-rose-500/20 text-rose-600 dark:text-rose-400">
-                    <Heart size={24} />
+                  <div className="bg-rose-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-rose-500/20 text-rose-600 dark:text-rose-400">
+                    <Heart size={20} className="sm:hidden" />
+                    <Heart size={24} className="hidden sm:block" />
                   </div>
-                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-[11px] sm:text-xs uppercase tracking-wider leading-tight">
                     FAVORİLERİM
                   </h4>
                   <p className="text-[10px] text-slate-500 dark:text-rose-200/50 mt-1 font-sans">

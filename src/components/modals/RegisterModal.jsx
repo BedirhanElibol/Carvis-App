@@ -52,7 +52,7 @@ const RegisterModal = ({
         options: {
           data: {
             full_name: formData.fullName,
-            role: "customer", // Enforce strict default to prevent injection
+            role: "customer",
             applied_role: loginIntent || "customer",
             kvkk_consent: true,
             privacy_consent: true,
@@ -63,14 +63,13 @@ const RegisterModal = ({
       });
 
       if (error) {
-        // Handle "Email already in use" specifically (422 error from Supabase)
         if (error.message.includes("Email already registered") || error.status === 422 || error.code === "user_already_exists") {
           showAlert(
             "Zaten Bir Hesabınız Var",
             "Bu e-posta adresiyle daha önce kayıt olunmuş. Lütfen giriş yapmayı deneyin.",
             "info"
           );
-          onSwitchToLogin(); // Automatically switch to login tab
+          onSwitchToLogin();
           return;
         }
         throw error;
@@ -78,11 +77,16 @@ const RegisterModal = ({
       setIsRegistered(true);
     } catch (error) {
       console.error("Signup error:", error);
-      let msg = error.message || "Kayıt işlemi sırasında bir hata oluştu.";
-      if (error.status === 422 || error.message.includes("registered")) {
-        msg = "Bu e-posta adresiyle zaten bir hesap bulunuyor. Lütfen Giriş Yap menüsünü kullanın.";
+      const msg = error.message || "";
+      if (error.status === 422 || msg.includes("registered")) {
+        showAlert("Kayıt Hatası", "Bu e-posta adresiyle zaten bir hesap bulunuyor. Lütfen Giriş Yap menüsünü kullanın.", "error");
+      } else if (msg.includes("network") || msg.includes("Failed to fetch") || msg.includes("fetch")) {
+        showAlert("Bağlantı Hatası", "Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.", "error");
+      } else if (msg.includes("Password")) {
+        showAlert("Kayıt Hatası", "Şifre en az 6 karakter olmalıdır.", "error");
+      } else {
+        showAlert("Kayıt Hatası", msg || "Kayıt işlemi sırasında bir hata oluştu.", "error");
       }
-      showAlert("Kayıt Hatası", msg, "error");
     } finally {
       setLoading(false);
     }
@@ -105,7 +109,14 @@ const RegisterModal = ({
       });
       if (error) throw error;
     } catch (error) {
-      showAlert("Hata", error.message, "error");
+      const msg = error.message || "";
+      if (msg.includes("network") || msg.includes("Failed to fetch") || msg.includes("fetch")) {
+        showAlert("Bağlantı Hatası", "Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.", "error");
+      } else if (msg.includes("provider") || msg.includes("not enabled")) {
+        showAlert("Hata", `${provider === "google" ? "Google" : "Apple"} ile kayıt şu anda kullanılamıyor. Lütfen e-posta ile kayıt olun.`, "error");
+      } else {
+        showAlert("Hata", msg || `${provider === "google" ? "Google" : "Apple"} ile kayıt yapılırken bir hata oluştu.`, "error");
+      }
       setSocialLoading(null);
     }
   };
@@ -121,7 +132,7 @@ const RegisterModal = ({
         <div className="p-2 sm:p-4">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 bg-black/5 dark:bg-white/5 p-2 rounded-full hover:bg-black/10 dark:bg-white/10 transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white border border-black/5 dark:border-white/5 cursor-pointer"
+            className="absolute top-4 right-4 bg-black/5 dark:bg-white/5 p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-black/5 dark:border-white/5 cursor-pointer"
           >
             <X size={20} />
           </button>
@@ -143,7 +154,7 @@ const RegisterModal = ({
               </p>
               <button
                 onClick={onClose}
-                className="w-full bg-teal-500 hover:bg-teal-400 text-slate-900 dark:text-white p-4.5 rounded-2xl font-bold uppercase tracking-widest text-xs transition-all active:scale-95 cursor-pointer border-none"
+                className="w-full bg-teal-500 hover:bg-teal-400 text-white p-4.5 rounded-2xl font-bold uppercase tracking-widest text-xs transition-all active:scale-95 cursor-pointer border-none"
               >
                 Tamam
               </button>
@@ -163,7 +174,7 @@ const RegisterModal = ({
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="relative group">
-                  <div className="bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
+                  <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
                     <User size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                     <input
                       type="text"
@@ -180,7 +191,7 @@ const RegisterModal = ({
                 </div>
 
                 <div className="relative group">
-                  <div className="bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
+                  <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
                     <Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                     <input
                       type="email"
@@ -197,7 +208,7 @@ const RegisterModal = ({
                 </div>
 
                 <div className="relative group">
-                  <div className="bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
+                  <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
                     <Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                     <input
                       type={showPassword ? "text" : "password"}
@@ -213,7 +224,7 @@ const RegisterModal = ({
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors border-none bg-transparent cursor-pointer ml-2 shrink-0"
+                      className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors border-none bg-transparent cursor-pointer ml-2 shrink-0"
                     >
                       {showPassword ? (
                         <EyeOff size={18} />
@@ -225,7 +236,7 @@ const RegisterModal = ({
                 </div>
 
                 {/* KVKK & Compliance Section */}
-                <div className="bg-black/30 p-4 rounded-2xl border border-black/5 dark:border-white/5 space-y-3">
+                <div className="bg-slate-100 dark:bg-white/5 p-4 rounded-2xl border border-black/5 dark:border-white/5 space-y-3">
                   <label className="flex items-start gap-3 cursor-pointer group">
                     <div className="relative mt-0.5">
                       <input
@@ -235,7 +246,7 @@ const RegisterModal = ({
                         className="peer hidden"
                       />
                       <div className="w-5 h-5 border-2 border-black/10 dark:border-white/10 rounded-md bg-transparent peer-checked:bg-teal-500 peer-checked:border-teal-500 transition-all flex items-center justify-center">
-                        <Check size={12} className="text-slate-900 dark:text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
+                        <Check size={12} className="text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
                       </div>
                     </div>
                     <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold leading-tight select-none">
@@ -267,7 +278,7 @@ const RegisterModal = ({
                         className="peer hidden"
                       />
                       <div className="w-5 h-5 border-2 border-black/10 dark:border-white/10 rounded-md bg-transparent peer-checked:bg-teal-500 peer-checked:border-teal-500 transition-all flex items-center justify-center">
-                        <Check size={12} className="text-slate-900 dark:text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
+                        <Check size={12} className="text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
                       </div>
                     </div>
                     <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold leading-tight select-none">
@@ -279,7 +290,7 @@ const RegisterModal = ({
                 <button
                   type="submit"
                   disabled={loading || !isKvkkAccepted}
-                  className="w-full bg-teal-500 hover:bg-teal-400 text-slate-900 dark:text-white py-4.5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-teal-500/20 flex items-center justify-center gap-3 active:scale-95 h-14 disabled:opacity-50 disabled:grayscale font-sans border-none cursor-pointer"
+                  className="w-full bg-teal-500 hover:bg-teal-400 text-white py-4.5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-teal-500/20 flex items-center justify-center gap-3 active:scale-95 h-14 disabled:opacity-50 disabled:grayscale font-sans border-none cursor-pointer"
                 >
                   {loading ? (
                     <Loader2 className="animate-spin" size={24} />
@@ -306,13 +317,10 @@ const RegisterModal = ({
                   type="button"
                   onClick={() => handleSocialRegister("google")}
                   disabled={socialLoading !== null}
-                  className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
+                  className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
                 >
                   {socialLoading === "google" ? (
-                    <Loader2
-                      size={18}
-                      className="animate-spin text-slate-500 dark:text-slate-400"
-                    />
+                    <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
                   ) : (
                     <img
                       src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -326,25 +334,22 @@ const RegisterModal = ({
                   type="button"
                   onClick={() => handleSocialRegister("apple")}
                   disabled={socialLoading !== null}
-                  className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
+                  className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
                 >
                   {socialLoading === "apple" ? (
-                    <Loader2
-                      size={18}
-                      className="animate-spin text-slate-500 dark:text-slate-400"
-                    />
+                    <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
                   ) : (
                     <img
                       src="https://www.svgrepo.com/show/511330/apple-173.svg"
                       alt="Apple"
-                      className="w-5 h-5 invert"
+                      className="w-5 h-5 dark:invert"
                     />
                   )}
                   Apple
                 </button>
               </div>
 
-              <div className="mt-8 text-center bg-black/20 p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center gap-2">
+              <div className="mt-8 text-center bg-slate-100 dark:bg-white/5 p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center gap-2">
                 <div>
                   <span className="text-xs text-slate-500 dark:text-slate-400 font-bold mr-2 font-sans">
                     {t.haveAccount || "Zaten hesabın var mı?"}
@@ -363,7 +368,7 @@ const RegisterModal = ({
                       onClose();
                       navigate("/application/home");
                     }}
-                    className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-600 dark:text-slate-300 font-black px-8 py-2.5 rounded-xl transition-all active:scale-95 uppercase tracking-widest text-[9px] border border-black/10 dark:border-white/10 hover:text-slate-900 dark:text-white cursor-pointer"
+                    className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-black px-8 py-2.5 rounded-xl transition-all active:scale-95 uppercase tracking-widest text-[9px] border border-black/10 dark:border-white/10 hover:text-slate-900 dark:hover:text-white cursor-pointer"
                   >
                     Hızlı Keşfet &rarr;
                   </button>

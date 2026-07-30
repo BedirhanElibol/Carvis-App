@@ -14,18 +14,21 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['pwa-icon.png', 'offline.html'],
+      includeAssets: ['pwa-icon.png'],
       workbox: {
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB
-        navigateFallback: '/offline.html',
-        navigateFallbackDenylist: [/^\/api/, /^\/supabase/],
+        // navigateFallback removed: was causing false 'offline' errors on OAuth redirects
+        // SPA routing is handled by index.html fallback on the hosting/dev server side
+        navigateFallbackDenylist: [/^\/api/, /^\/supabase/, /^\/auth/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/.*\.supabase\.co/,
-            handler: 'NetworkFirst',
-            options: { cacheName: 'supabase-api', networkTimeoutSeconds: 5 }
+            handler: 'NetworkOnly',
+            options: { cacheName: 'supabase-api' }
           }
-        ]
+        ],
+        // Don't cache navigation requests — let the network handle them
+        navigationPreload: false,
       },
       manifest: {
         name: 'Rapidsy - Akıllı Araç Platformu',
