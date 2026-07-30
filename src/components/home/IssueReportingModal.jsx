@@ -104,12 +104,12 @@ const IssueReportingModal = ({ isOpen, onClose }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-[9999] flex items-start sm:items-center justify-center p-2 pt-12 sm:pt-6 sm:p-4 overflow-y-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+          className="fixed inset-0 bg-slate-950/85 backdrop-blur-md"
           onClick={onClose}
         ></motion.div>
         
@@ -117,7 +117,7 @@ const IssueReportingModal = ({ isOpen, onClose }) => {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col max-h-[90vh] text-slate-900 dark:text-white"
+          className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col max-h-[85vh] sm:max-h-[90vh] text-slate-900 dark:text-white my-auto z-10"
         >
           {/* Header */}
           <div className="p-5 border-b border-black/5 dark:border-white/5 relative bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">

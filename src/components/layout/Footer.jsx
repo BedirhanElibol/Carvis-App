@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Car, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Instagram, Linkedin, Twitter } from "lucide-react";
 import LegalViewModal from "../../features/legal/LegalViewModal";
+import { RapidsyLogoIcon } from "../Core";
 
 const Footer = () => {
   const [legalModal, setLegalModal] = useState({ open: false, type: "" });
@@ -17,15 +18,15 @@ const Footer = () => {
         {/* Brand & Mission */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
           <div className="space-y-4 max-w-xs">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <Car size={18} className="text-slate-900 dark:text-white" />
+            <div className="flex items-center gap-2.5">
+              <div className="w-10 h-10 bg-slate-100 dark:bg-white/5 rounded-2xl flex items-center justify-center border border-black/10 dark:border-white/10 shadow-md">
+                <RapidsyLogoIcon className="w-7 h-7 text-cyan-500" />
               </div>
-              <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white">
-                RAPIDSY <span className="text-primary-500">PRO</span>
+              <span className="text-2xl font-mono font-black tracking-tighter text-slate-900 dark:text-white uppercase">
+                RAPIDSY
               </span>
             </div>
-            <p className="text-xs text-slate-500 leading-relaxed font-sans">
+            <p className="text-xs text-slate-500 leading-relaxed font-sans font-medium">
               Otomotiv dünyasının dijitalleşen yüzü. Güvenli ticaret, akıllı diagnostik ve şeffaf hizmet anlayışı ile her an yanınızda.
             </p>
           </div>

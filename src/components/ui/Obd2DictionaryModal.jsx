@@ -30,8 +30,8 @@ const Obd2DictionaryModal = ({ isOpen, onClose, onRequestService }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[80] flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-800 w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 text-white">
+    <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[9999] flex items-start sm:items-center justify-center p-2 pt-12 sm:pt-6 sm:p-4 overflow-y-auto">
+      <div className="bg-slate-900 border border-slate-800 w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] rounded-[2rem] sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 text-white my-auto">
         
         {/* Header */}
         <div className="p-6 border-b border-white/10 flex justify-between items-center bg-slate-950/60 shrink-0">

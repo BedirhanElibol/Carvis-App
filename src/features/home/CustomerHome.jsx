@@ -382,26 +382,27 @@ const CustomerHome = () => {
                 triggerHaptic("impact");
                 setShowIssueModal(true);
               }}
-              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-500/20 to-sky-500/10 border border-cyan-500/30 hover:border-cyan-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-500/30 via-sky-500/20 to-teal-500/30 border-2 border-cyan-400 text-left transition-all active-scale group cursor-pointer shadow-xl shadow-cyan-500/20 relative overflow-hidden ring-2 ring-cyan-400/30"
             >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-cyan-500/30">
+              <div className="absolute top-1 right-1.5 px-1.5 py-0.5 rounded-full bg-cyan-400 text-slate-950 text-[7px] font-black uppercase tracking-wider">Öne Çıkan</div>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-cyan-400 text-slate-950 flex items-center justify-center mb-2 sm:mb-2.5 font-bold shadow-md shadow-cyan-400/30">
                 <Wrench size={16} className="sm:hidden" />
                 <Wrench size={18} className="hidden sm:block" />
               </div>
               <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Sorun Bildir / Usta Bul</h4>
-              <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-cyan-200/70 font-semibold mt-0.5">Anında Teklif Al</p>
+              <p className="text-[9px] sm:text-[10px] text-cyan-700 dark:text-cyan-300 font-bold mt-0.5">Anında Teklif Al</p>
             </button>
 
             <button
               onClick={() => navigate("/app/mechanics")}
-              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-sky-500/10 border border-sky-500/30 hover:border-sky-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-sky-500/25 to-blue-500/15 border-2 border-sky-400/80 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-sky-500/15 relative overflow-hidden"
             >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-sky-500/20 text-sky-500 dark:text-sky-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-sky-500/30">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-sky-500/30 text-sky-600 dark:text-sky-300 flex items-center justify-center mb-2 sm:mb-2.5 border border-sky-400/40">
                 <Wrench size={16} className="sm:hidden" />
                 <Wrench size={18} className="hidden sm:block" />
               </div>
               <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Periyodik Bakım</h4>
-              <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-sky-200/70 font-semibold mt-0.5">Servis & Parça Hizmeti</p>
+              <p className="text-[9px] sm:text-[10px] text-sky-700 dark:text-sky-300 font-bold mt-0.5">Servis & Parça Hizmeti</p>
             </button>
 
             <button
@@ -545,32 +546,39 @@ const CustomerHome = () => {
             {/* DIRECT ACTION CTA (LINEAR UX) */}
             {activeVehicle && (
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-sky-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-sky-500 to-emerald-400 rounded-[2.5rem] blur opacity-40 group-hover:opacity-75 transition duration-500 animate-pulse"></div>
                 <button
                   onClick={() => {
                     triggerHaptic("impact");
                     setShowIssueModal(true);
                   }}
-                  className="relative w-full bg-white dark:bg-[#0a0f24]/90 border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 rounded-[2.5rem] p-6 shadow-xl dark:shadow-2xl shadow-cyan-500/10 cursor-pointer text-left overflow-hidden active-scale transition-all"
+                  className="relative w-full bg-white dark:bg-[#0a0f24] border-2 border-cyan-400 dark:border-cyan-400/80 hover:border-cyan-300 rounded-[2.5rem] p-5 sm:p-7 shadow-2xl shadow-cyan-500/25 cursor-pointer text-left overflow-hidden active-scale transition-all"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-sky-500/5 pointer-events-none"></div>
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-400/10 rounded-full blur-2xl pointer-events-none -mr-8 -mt-8 group-hover:bg-cyan-400/20 transition-colors"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/15 via-sky-500/10 to-emerald-500/10 pointer-events-none"></div>
+                  <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none -mr-8 -mt-8 group-hover:bg-cyan-400/30 transition-colors"></div>
+                  <div className="absolute top-3 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-mono font-black text-[9px] uppercase tracking-widest shadow-md hidden sm:block">
+                    ⚡ ANINDA BİLDİR & TEKLİF AL
+                  </div>
                   
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-cyan-500/10 dark:bg-white/5 rounded-2xl flex items-center justify-center backdrop-blur-md border border-cyan-400/30 shrink-0 shadow-md dark:shadow-xl">
-                        <Wrench size={32} className="text-cyan-500 dark:text-cyan-400" />
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 bg-cyan-400 text-slate-950 rounded-2xl flex items-center justify-center backdrop-blur-md border border-cyan-300 shrink-0 shadow-lg shadow-cyan-400/30">
+                        <Wrench size={28} className="sm:hidden" />
+                        <Wrench size={34} className="hidden sm:block" />
                       </div>
                       <div className="font-sans">
-                        <h2 className="text-2xl sm:text-3xl font-mono font-black tracking-tighter uppercase mb-1 text-slate-900 dark:text-white">
+                        <span className="inline-block sm:hidden text-[8px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-0.5">
+                          ⚡ ANINDA BİLDİR & TEKLİF AL
+                        </span>
+                        <h2 className="text-xl sm:text-3xl font-mono font-black tracking-tighter uppercase mb-1 text-slate-900 dark:text-white leading-none">
                           Sorun Bildir / Usta Bul
                         </h2>
-                        <p className="text-xs font-semibold text-slate-600 dark:text-cyan-100/70">
-                          Arıza, bakım veya diğer servis ihtiyaçlarınız için doğrudan randevu alın.
+                        <p className="text-xs font-bold text-slate-600 dark:text-cyan-100/90 leading-snug">
+                          Arıza, bakım veya yedek parça ihtiyacınız için anında en uygun ustalardan teklif toplayın.
                         </p>
                       </div>
                     </div>
-                    <ChevronRight size={28} className="text-cyan-500/70 group-hover:translate-x-1 group-hover:text-cyan-400 transition-all hidden sm:block" />
+                    <ChevronRight size={32} className="text-cyan-500 group-hover:translate-x-1 group-hover:text-cyan-300 transition-all hidden sm:block shrink-0" />
                   </div>
                 </button>
               </div>
