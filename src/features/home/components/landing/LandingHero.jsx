@@ -185,19 +185,27 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
           </div>
 
           <div className="w-full overflow-hidden ml-24 md:ml-40 flex relative">
-            <div className="flex items-center whitespace-nowrap animate-marquee">
-              {[...fuelPrices, ...fuelPrices, ...fuelPrices, ...fuelPrices].map((station, index) => (
-                <div key={index} className="flex items-center gap-3 mx-6 text-[13px] shrink-0">
+            <div 
+              className="flex items-center whitespace-nowrap animate-marquee"
+              style={{
+                willChange: "transform",
+                transform: "translate3d(0,0,0)",
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden"
+              }}
+            >
+              {[...fuelPrices, ...fuelPrices].map((station, index) => (
+                <div key={index} className="flex items-center gap-3 mx-4 md:mx-6 text-[12px] md:text-[13px] shrink-0 transform-gpu">
                   <span className="font-bold text-slate-800 dark:text-white">{station.marka || "İstasyon"}</span>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1">
                     <span className="text-slate-500 dark:text-slate-400">Benzin:</span>
                     <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{station.benzin || "-"}₺</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1">
                     <span className="text-slate-500 dark:text-slate-400">Motorin:</span>
                     <span className="text-blue-600 dark:text-blue-400 font-semibold">{station.motorin || "-"}₺</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1">
                     <span className="text-slate-500 dark:text-slate-400">LPG:</span>
                     <span className="text-indigo-600 dark:text-indigo-400 font-semibold">{station.lpg || "-"}₺</span>
                   </div>

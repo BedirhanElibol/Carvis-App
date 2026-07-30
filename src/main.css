@@ -194,6 +194,9 @@
 @utility animate-marquee {
   animation: marquee 35s linear infinite;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 @utility glow-orange {
