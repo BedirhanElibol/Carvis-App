@@ -1,21 +1,15 @@
 import React, { useState } from "react";
-import { Bell, ChevronRight, Globe, LogOut, MapPin, MessageSquare, Moon, ShieldAlert, Store, Sun, User } from "lucide-react";
+import { Bell, ChevronRight, Globe, LogOut, MapPin, Moon, ShieldAlert, Store, Sun, User } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
 import { useNotification } from "../../context/NotificationContext";
-import { useMessage } from "../../context/MessageContext";
 import { useNavigate } from "react-router-dom";
 
 const AppHeader = () => {
   const { currentUser, handleLogout } = useAuth();
   const { t, language, toggleLanguage, theme, toggleTheme, openModal, selectedLocation } = useUI();
   const { unreadCount } = useNotification();
-  const { conversations = [] } = useMessage();
   const navigate = useNavigate();
-
-  const totalUnreadMessages = Array.isArray(conversations)
-    ? conversations.reduce((acc, conv) => acc + (conv.unreadCount || 0), 0)
-    : 0;
 
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -77,19 +71,6 @@ const AppHeader = () => {
             <Sun size={18} className="text-amber-400" />
           ) : (
             <Moon size={18} className="text-slate-500 dark:text-slate-400" />
-          )}
-        </button>
-
-        {/* Mesaj Butonu */}
-        <button
-          onClick={() => navigate("/messages")}
-          className="hidden sm:flex w-10 h-10 glass-card text-slate-900 dark:text-white rounded-xl items-center justify-center relative active-scale border border-black/5 dark:border-white/5"
-        >
-          <MessageSquare size={18} className="text-slate-500 dark:text-slate-400" />
-          {totalUnreadMessages > 0 && (
-            <span className="absolute -top-1 -right-1 bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black rounded-full w-5 h-5 flex items-center justify-center animate-pulse border-2 border-slate-950">
-              {totalUnreadMessages > 9 ? "9+" : totalUnreadMessages}
-            </span>
           )}
         </button>
 
