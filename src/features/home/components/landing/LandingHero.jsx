@@ -184,14 +184,10 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
             </div>
           </div>
 
-          <div className="w-full overflow-hidden ml-24 md:ml-40 flex">
-            <motion.div 
-              animate={{ x: [0, -1000] }} 
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="flex items-center whitespace-nowrap"
-            >
-              {[...fuelPrices, ...fuelPrices, ...fuelPrices].map((station, index) => (
-                <div key={index} className="flex items-center gap-3 mx-6 text-[13px]">
+          <div className="w-full overflow-hidden ml-24 md:ml-40 flex relative">
+            <div className="flex items-center whitespace-nowrap animate-marquee">
+              {[...fuelPrices, ...fuelPrices, ...fuelPrices, ...fuelPrices].map((station, index) => (
+                <div key={index} className="flex items-center gap-3 mx-6 text-[13px] shrink-0">
                   <span className="font-bold text-slate-800 dark:text-white">{station.marka || "İstasyon"}</span>
                   <div className="flex items-center gap-1.5">
                     <span className="text-slate-500 dark:text-slate-400">Benzin:</span>
@@ -207,7 +203,7 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
                   </div>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
           
         </div>
