@@ -31,7 +31,7 @@ export const BottomNav = () => {
   if (!t) return null;
 
   return (
-    <nav className="fixed bottom-6 left-0 right-0 flex justify-center items-center z-[999] pointer-events-none px-4">
+    <nav className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-0 right-0 flex justify-center items-center z-[90] pointer-events-none px-4">
       <div className="w-full max-w-[400px] pointer-events-auto animate-slide-up">
         <div className="relative">
           {/* Subtle Shadow/Glow under the nav container */}

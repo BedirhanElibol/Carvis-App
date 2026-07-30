@@ -47,17 +47,17 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Rapidsy, arac ariza lambasi veya hasar fotografini analiz ederek tani sunabilmek icin kameraya erisim ister.</string>
+	<string>Rapidsy, araç arıza lambası veya hasar fotoğrafını analiz ederek tanı sunabilmek için kameraya erişim ister.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Rapidsy, SOS yol yardimi sirasinda konumunuzu yardim ekibine iletmek icin konum erisimi ister.</string>
+	<string>Rapidsy, SOS yol yardımı sırasında konumunuzu yardım ekibine iletmek için konum erişimi ister.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Rapidsy, yakindaki onayli ustalari, otoparklari ve yol yardim servislerini gostermek icin konumunuzu kullanir.</string>
+	<string>Rapidsy, yakındaki onaylı ustaları, otoparkları ve yol yardım servislerini göstermek için konumunuzu kullanır.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Rapidsy, sesli ariza bildirimi ozelligini kullandiginizda mikrofon erisimi ister.</string>
+	<string>Rapidsy, sesli arıza bildirimi özelliğini kullandığınızda mikrofon erişimi ister.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Rapidsy, arac belgelerini ve servis fislerini fotograf olarak kaydetmenize imkan tanir.</string>
+	<string>Rapidsy, araç belgelerini ve servis fişlerini fotoğraf olarak kaydetmenize imkan tanır.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Rapidsy, AI ariza analizi icin galerinizdeki arac fotograflarini secmenize izin verir.</string>
+	<string>Rapidsy, AI arıza analizi için galerinizdeki araç fotoğraflarını seçmenize izin verir.</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UILaunchStoryboardName</key>

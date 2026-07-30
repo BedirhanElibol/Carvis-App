@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ArrowLeft, CheckCircle, Loader2, Lock, LogIn, Mail, Send, User, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const AuthLoginModal = ({
   show,
@@ -11,6 +12,7 @@ const AuthLoginModal = ({
   handleAuthSuccess,
 }) => {
   const { loginAsGuest } = useAuth();
+  const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [forgotEmail, setForgotEmail] = useState("");
@@ -145,6 +147,7 @@ const AuthLoginModal = ({
                   <Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                   <input
                     type="email"
+                    autoComplete="email"
                     required
                     className="bg-transparent w-full outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-500 font-sans"
                     placeholder="ornek@email.com"
@@ -174,6 +177,7 @@ const AuthLoginModal = ({
                   <Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                   <input
                     type="password"
+                    autoComplete="current-password"
                     required
                     className="bg-transparent w-full outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-500 font-sans"
                     placeholder="••••••••"
@@ -265,6 +269,7 @@ const AuthLoginModal = ({
                   onClick={() => {
                     loginAsGuest();
                     onClose();
+                    navigate("/application/home");
                   }}
                   className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-600 dark:text-slate-300 font-black px-6 py-3 rounded-2xl transition-all active:scale-95 uppercase tracking-widest text-[9px] border border-black/10 dark:border-white/10 hover:text-slate-900 dark:text-white shadow-inner cursor-pointer"
                 >

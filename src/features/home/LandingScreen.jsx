@@ -144,7 +144,7 @@ const LandingScreen = () => {
       </div>
 
       {/* Floating Glass Navbar */}
-      <nav className="fixed top-4 left-4 right-4 z-50 max-w-7xl mx-auto">
+      <nav className="fixed top-[calc(1rem+env(safe-area-inset-top))] left-4 right-4 z-50 max-w-7xl mx-auto">
         <div className="w-full bg-white/70 dark:bg-[#060b14]/70 backdrop-blur-2xl border border-white/40 dark:border-cyan-500/20 px-4 md:px-8 py-3.5 rounded-[2rem] flex items-center justify-between shadow-xl dark:shadow-xl transition-all">
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
             <img

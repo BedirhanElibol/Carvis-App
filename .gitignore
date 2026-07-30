@@ -38,6 +38,7 @@ scripts/whatsapp-bot/contacts.csv
 *_log.txt
 *.log
 tmp/
+scratch/
 .agent/
 .vscode/
 .vercel

@@ -3,6 +3,22 @@ import { supabase } from "../supabaseClient";
 
 const AuthContext = createContext();
 
+const getStoredGuestUser = () => {
+  try {
+    const storedGuest =
+      localStorage.getItem("carvis_guest") ||
+      localStorage.getItem("rapidsy_guest");
+    if (!storedGuest) return null;
+
+    const guestUser = JSON.parse(storedGuest);
+    return guestUser?.isAnonymous ? guestUser : null;
+  } catch {
+    localStorage.removeItem("carvis_guest");
+    localStorage.removeItem("rapidsy_guest");
+    return null;
+  }
+};
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);
 
@@ -61,8 +77,10 @@ export const AuthProvider = ({ children }) => {
           ["google", "apple"].includes(session.user.app_metadata?.provider);
 
         setCurrentUser({ ...session.user, ...profile, isVerified });
+        localStorage.removeItem("carvis_guest");
+        localStorage.removeItem("rapidsy_guest");
       } else {
-        setCurrentUser(null);
+        setCurrentUser(getStoredGuestUser());
       }
       setLoading(false);
     };
@@ -110,6 +128,8 @@ export const AuthProvider = ({ children }) => {
       isAnonymous: true,
       user_metadata: { full_name: "Misafir Kullanıcı", role: "customer" },
     };
+    localStorage.setItem("carvis_guest", JSON.stringify(guestUser));
+    localStorage.removeItem("rapidsy_guest");
     setCurrentUser(guestUser);
     setLoading(false);
   };

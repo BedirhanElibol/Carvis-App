@@ -3,6 +3,7 @@ import { Check, Eye, EyeOff, Loader2, Lock, Mail, User, UserPlus, X } from "luci
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
+import { useNavigate } from "react-router-dom";
 
 const RegisterModal = ({
   show,
@@ -14,6 +15,7 @@ const RegisterModal = ({
 }) => {
   const { loginAsGuest } = useAuth();
   const { showAlert: showAlertContext, openModal } = useUI();
+  const navigate = useNavigate();
   
   // Safe showAlert fallback
   const showAlert = showAlertProp || showAlertContext;
@@ -165,6 +167,7 @@ const RegisterModal = ({
                     <User size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                     <input
                       type="text"
+                      autoComplete="name"
                       placeholder="Ad Soyad"
                       value={formData.fullName}
                       onChange={(e) =>
@@ -181,6 +184,7 @@ const RegisterModal = ({
                     <Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                     <input
                       type="email"
+                      autoComplete="email"
                       placeholder={t.emailPlaceholder || "E-posta Adresi"}
                       value={formData.email}
                       onChange={(e) =>
@@ -197,6 +201,7 @@ const RegisterModal = ({
                     <Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
                     <input
                       type={showPassword ? "text" : "password"}
+                      autoComplete="new-password"
                       placeholder={t.passwordPlaceholder || "Şifre"}
                       value={formData.password}
                       onChange={(e) =>
@@ -356,6 +361,7 @@ const RegisterModal = ({
                     onClick={() => {
                       loginAsGuest();
                       onClose();
+                      navigate("/application/home");
                     }}
                     className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 text-slate-600 dark:text-slate-300 font-black px-8 py-2.5 rounded-xl transition-all active:scale-95 uppercase tracking-widest text-[9px] border border-black/10 dark:border-white/10 hover:text-slate-900 dark:text-white cursor-pointer"
                   >

@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ShieldCheck, ShoppingBag, Zap } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 
+const ONBOARDING_SEEN_KEY = "__SAFE_TOKEN_6__rapidsy_onboarding__END_TOKEN_6___seen";
+
 const getSlides = (t) => [
   {
     title: "Master Match",
@@ -41,7 +43,7 @@ const OnboardingSlides = ({ onComplete }) => {
   const handleComplete = () => {
     // Mark onboarding as done so it won't show again
     try {
-      localStorage.setItem('carvis_onboarding_done', '1');
+      localStorage.setItem(ONBOARDING_SEEN_KEY, "true");
     } catch { /* ignore storage errors */ }
     onComplete();
   };

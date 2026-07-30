@@ -31,7 +31,7 @@ const AppHeader = () => {
   };
 
   return (
-    <div className="p-4 sm:p-5 flex justify-between items-center bg-slate-50 dark:bg-slate-950/20 backdrop-blur-2xl border-b border-black/5 dark:border-white/5 sticky top-0 z-[100]">
+    <div className="px-4 pb-4 pt-[calc(1rem+env(safe-area-inset-top))] sm:p-5 flex justify-between items-center bg-slate-50 dark:bg-slate-950/20 backdrop-blur-2xl border-b border-black/5 dark:border-white/5 sticky top-0 z-[100]">
       <button
         onClick={() => openModal("location")}
         className="flex items-center gap-2.5 text-slate-800 dark:text-slate-100 glass-card px-4 py-2.5 rounded-2xl active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5 transition-all shadow-xl"
@@ -83,7 +83,7 @@ const AppHeader = () => {
         {/* Mesaj Butonu */}
         <button
           onClick={() => navigate("/messages")}
-          className="w-10 h-10 glass-card text-slate-900 dark:text-white rounded-xl flex items-center justify-center relative active-scale border border-black/5 dark:border-white/5"
+          className="hidden sm:flex w-10 h-10 glass-card text-slate-900 dark:text-white rounded-xl items-center justify-center relative active-scale border border-black/5 dark:border-white/5"
         >
           <MessageSquare size={18} className="text-slate-500 dark:text-slate-400" />
           {totalUnreadMessages > 0 && (
@@ -108,7 +108,7 @@ const AppHeader = () => {
 
         <button
           onClick={handleSellerEntry}
-          className="w-10 h-10 bg-primary-600 text-slate-900 dark:text-white rounded-xl shadow-lg flex items-center justify-center active-scale transition-all"
+          className="hidden sm:flex w-10 h-10 bg-primary-600 text-slate-900 dark:text-white rounded-xl shadow-lg items-center justify-center active-scale transition-all"
         >
           <Store size={20} />
         </button>
