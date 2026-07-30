@@ -297,17 +297,17 @@ const CustomerHome = () => {
   const compatibleParts = [];
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans pb-32 relative selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white font-sans pb-32 relative selection:bg-cyan-500/30">
       
       {/* Background Ambience */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-20">
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-0 dark:opacity-20">
         <div className="absolute top-[5%] right-[-5%] w-[700px] h-[700px] bg-sky-600/30 rounded-full blur-[140px]"></div>
         <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-[120px]"></div>
       </div>
 
       {/* Grid overlay */}
       <div 
-        className="absolute inset-0 pointer-events-none z-0 opacity-10 fixed"
+        className="fixed inset-0 pointer-events-none z-0 opacity-0 dark:opacity-10"
         style={{
           backgroundImage: `
             linear-gradient(to right, rgba(6, 182, 212, 0.1) 1px, transparent 1px),
@@ -318,16 +318,16 @@ const CustomerHome = () => {
       ></div>
 
       {/* TOP COMPACT HEADER */}
-      <div className="px-6 py-4.5 flex items-center justify-between border-b border-white/10 bg-[#030712]/70 backdrop-blur-2xl sticky top-0 z-30 shadow-lg shadow-cyan-500/5">
+      <div className="px-4 sm:px-6 py-3 sm:py-4.5 flex items-center justify-between border-b border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[#030712]/70 backdrop-blur-2xl sticky top-0 z-30 shadow-sm dark:shadow-lg dark:shadow-cyan-500/5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/5 shadow-xl border border-white/10 flex items-center justify-center">
-            <Layers size={18} className="text-cyan-400 " />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-white/5 shadow-sm dark:shadow-xl border border-slate-200 dark:border-white/10 flex items-center justify-center">
+            <Layers size={18} className="text-cyan-500 dark:text-cyan-400" />
           </div>
           <div>
-            <p className="text-[9px] uppercase tracking-[0.25em] text-cyan-400 font-black leading-none font-mono">
+            <p className="text-[9px] uppercase tracking-[0.25em] text-cyan-600 dark:text-cyan-400 font-black leading-none font-mono">
               Rapidsy
             </p>
-            <h2 className="text-sm font-mono font-black tracking-tight mt-1 text-white uppercase ">
+            <h2 className="text-xs sm:text-sm font-mono font-black tracking-tight mt-1 text-slate-900 dark:text-white uppercase">
               ANA SAYFA
             </h2>
           </div>
@@ -343,9 +343,9 @@ const CustomerHome = () => {
                   setShowVehicleSelector(true);
                 }
               }}
-              className="px-3.5 py-2 rounded-xl border border-white/10 bg-cyan-500/5 shadow-xl text-[10px] font-black uppercase tracking-wider hover:bg-cyan-500/20 hover:border-cyan-400 text-cyan-300 transition-all flex items-center gap-1.5 active-scale cursor-pointer"
+              className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-cyan-500/5 shadow-sm dark:shadow-xl text-[9px] sm:text-[10px] font-black uppercase tracking-wider hover:bg-cyan-500/20 hover:border-cyan-400 text-cyan-600 dark:text-cyan-300 transition-all flex items-center gap-1.5 active-scale cursor-pointer"
             >
-              <RefreshCw size={11} className="text-cyan-400" /> {t.changeVehicle}
+              <RefreshCw size={11} className="text-cyan-500 dark:text-cyan-400" /> {t.changeVehicle}
             </button>
           )}
 
@@ -357,7 +357,7 @@ const CustomerHome = () => {
                 navigate("/app/profile");
               }
             }}
-            className="w-10 h-10 rounded-xl bg-white/5 shadow-xl border border-white/10 flex items-center justify-center text-cyan-400 hover:text-cyan-300 hover:border-cyan-400 transition-all active-scale cursor-pointer"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-white/5 shadow-sm dark:shadow-xl border border-slate-200 dark:border-white/10 flex items-center justify-center text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 hover:border-cyan-400 transition-all active-scale cursor-pointer"
             title="Profil & Kokpit"
           >
             <User size={18} />
@@ -370,13 +370,13 @@ const CustomerHome = () => {
 
 
       {/* CORE CONTAINER: Responsive 3-Column Layout on Desktop */}
-      <div className="max-w-7xl mx-auto px-6 py-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-8 relative z-10">
         
         {/* HIGH-PRIORITY ACTION LAUNCHPAD & URGENT STATUS BAR */}
         <div className="mb-8 space-y-4">
           
           {/* Quick Actions Grid (Fitts' Law: Large, Actionable Touch Targets) */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3.5">
             <button
               onClick={() => {
                 triggerHaptic("impact");
@@ -384,22 +384,22 @@ const CustomerHome = () => {
               }}
               className="p-4 rounded-3xl bg-gradient-to-br from-cyan-500/20 to-sky-500/10 border border-cyan-500/30 hover:border-cyan-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-2.5 border border-cyan-500/30">
-                <Wrench size={20} />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-cyan-500/30">
+                <Wrench size={18} />
               </div>
-              <h4 className="text-xs font-black uppercase text-white font-mono">Sorun Bildir / Usta Bul</h4>
-              <p className="text-[10px] text-cyan-200/70 font-semibold mt-0.5">Anında Teklif Al</p>
+              <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Sorun Bildir / Usta Bul</h4>
+              <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-cyan-200/70 font-semibold mt-0.5">Anında Teklif Al</p>
             </button>
 
             <button
               onClick={() => navigate("/app/mechanics")}
               className="p-4 rounded-3xl bg-sky-500/10 border border-sky-500/30 hover:border-sky-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-10 h-10 rounded-2xl bg-sky-500/20 text-sky-400 flex items-center justify-center mb-2.5 border border-sky-500/30">
-                <Wrench size={20} />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-sky-500/20 text-sky-500 dark:text-sky-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-sky-500/30">
+                <Wrench size={18} />
               </div>
-              <h4 className="text-xs font-black uppercase text-white font-mono">Periyodik Bakım</h4>
-              <p className="text-[10px] text-sky-200/70 font-semibold mt-0.5">Servis & Parça Hizmeti</p>
+              <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Periyodik Bakım</h4>
+              <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-sky-200/70 font-semibold mt-0.5">Servis & Parça Hizmeti</p>
             </button>
 
             <button
@@ -409,11 +409,11 @@ const CustomerHome = () => {
               }}
               className="p-4 rounded-3xl bg-indigo-500/10 border border-indigo-500/30 hover:border-indigo-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-2.5 border border-indigo-500/30">
-                <FileText size={20} />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-indigo-500/20 text-indigo-500 dark:text-indigo-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-indigo-500/30">
+                <FileText size={18} />
               </div>
-              <h4 className="text-xs font-black uppercase text-white font-mono">Dijital Araç Pasaportu</h4>
-              <p className="text-[10px] text-indigo-200/70 font-semibold mt-0.5">Resmi Hasar & Km Kaydı</p>
+              <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Dijital Araç Pasaportu</h4>
+              <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-indigo-200/70 font-semibold mt-0.5">Resmi Hasar & Km Kaydı</p>
             </button>
 
             <button
@@ -423,46 +423,46 @@ const CustomerHome = () => {
               }}
               className="p-4 rounded-3xl bg-teal-500/10 border border-teal-500/30 hover:border-teal-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-400 flex items-center justify-center mb-2.5 border border-teal-500/30">
-                <Activity size={20} />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-teal-500/20 text-teal-500 dark:text-teal-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-teal-500/30">
+                <Activity size={18} />
               </div>
-              <h4 className="text-xs font-black uppercase text-white font-mono">OBD-II Arıza Sözlüğü</h4>
-              <p className="text-[10px] text-teal-200/70 font-semibold mt-0.5">Arıza Kod Rehberi</p>
+              <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">OBD-II Arıza Sözlüğü</h4>
+              <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-teal-200/70 font-semibold mt-0.5">Arıza Kod Rehberi</p>
             </button>
 
             <button
               onClick={() => navigate("/quotes")}
               className="p-4 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-2.5 border border-emerald-500/30">
-                <TrendingUp size={20} />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-emerald-500/30">
+                <TrendingUp size={18} />
               </div>
-              <h4 className="text-xs font-black uppercase text-white font-mono">Gelen Tekliflerim</h4>
-              <p className="text-[10px] text-emerald-200/70 font-semibold mt-0.5">{quotes.length} Aktif Teklif</p>
+              <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Gelen Tekliflerim</h4>
+              <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-emerald-200/70 font-semibold mt-0.5">{quotes.length} Aktif Teklif</p>
             </button>
           </div>
 
           {/* Proactive Urgent Vehicle Status Alert */}
           {activeVehicle && daysUntilInspection !== null && (
-            <div className="p-4 rounded-3xl bg-slate-900/90 border border-cyan-500/30 shadow-xl flex items-center justify-between gap-4 text-white">
+            <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900/90 border border-cyan-200 dark:border-cyan-500/30 shadow-sm dark:shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-black text-sm shrink-0 border border-cyan-500/30 font-mono">
-                  <CalendarDays size={20} />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 flex items-center justify-center font-black text-sm shrink-0 border border-cyan-500/30 font-mono">
+                  <CalendarDays size={18} />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-black uppercase text-cyan-400 tracking-widest bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">
-                      TÜVTÜRK Muayene Takibi ({activeVehicle.plate})
+                    <span className="text-[8px] sm:text-[9px] font-black uppercase text-cyan-600 dark:text-cyan-400 tracking-widest bg-cyan-500/10 px-2 sm:px-2.5 py-0.5 rounded-full border border-cyan-500/20">
+                      TÜVTÜRK Muayene ({activeVehicle.plate})
                     </span>
                   </div>
-                  <p className="text-xs font-bold text-slate-200 mt-1 leading-snug">
-                    Sonraki Muayene Tarihi: <strong className="text-white font-mono">{nextInspectionDateFormatted}</strong> ({daysUntilInspection} gün kaldı)
+                  <p className="text-[10px] sm:text-xs font-bold text-slate-600 dark:text-slate-200 mt-1 leading-snug">
+                    Sonraki Muayene: <strong className="text-slate-900 dark:text-white font-mono">{nextInspectionDateFormatted}</strong> ({daysUntilInspection} gün kaldı)
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => navigate("/app/appointments")}
-                className="px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-all cursor-pointer shrink-0"
+                className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-white dark:text-slate-950 font-black text-[10px] sm:text-xs uppercase tracking-wider transition-all cursor-pointer shrink-0 text-center"
               >
                 Muayene Randevusu Al
               </button>
@@ -1133,7 +1133,7 @@ const CustomerHome = () => {
               <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">
                 {t.quickActions}
               </h4>
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                 {[
                   { icon: Wrench, label: t.getService, route: "/app/mechanics" },
                   { icon: Package, label: t.autoParts, route: "/app/parts" },
@@ -1145,7 +1145,7 @@ const CustomerHome = () => {
                     onClick={() => navigate(item.route)}
                     className="bg-white dark:bg-[#0a0f24]/80 border border-black/5 dark:border-white/5 hover:border-white/15 p-3 rounded-[1.8rem] flex flex-col items-center justify-center gap-2 active-scale cursor-pointer group transition-all"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-black/40 border border-slate-200 dark:border-white/10 flex items-center justify-center group-hover:bg-white dark:bg-[#0f172a] transition-all shadow-inner">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center group-hover:bg-cyan-50 dark:group-hover:bg-[#0f172a] transition-all shadow-sm dark:shadow-inner">
                       <item.icon size={18} className="text-slate-600 dark:text-slate-400 group-hover:text-cyan-400 transition-colors" />
                     </div>
                     <span className="text-[8px] font-black text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:text-white transition-colors uppercase tracking-tighter leading-none text-center block">
@@ -1157,9 +1157,9 @@ const CustomerHome = () => {
             </div>
 
             {/* EXPERT AUDIT ASSURANCE */}
-            <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 p-5 rounded-[2.5rem] flex items-center justify-between gap-4">
+            <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 p-4 sm:p-5 rounded-[2rem] sm:rounded-[2.5rem] flex items-center justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-black/30 border border-slate-200 dark:border-white/10 rounded-xl text-cyan-400 shrink-0">
+                <div className="p-2 sm:p-2.5 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-cyan-500 dark:text-cyan-400 shrink-0">
                   <ShieldCheck size={20} />
                 </div>
                 <div>
