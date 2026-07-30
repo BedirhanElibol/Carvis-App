@@ -4,8 +4,16 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/logo.png";
 
-const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) => {
+const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, onStart }) => {
   const navigate = useNavigate();
+
+  const handleStartAction = () => {
+    if (onStart) {
+      onStart();
+    } else {
+      navigate("/application/home");
+    }
+  };
 
   return (
     <section className="relative w-full pt-16 pb-20 md:pt-24 md:pb-28 bg-transparent overflow-hidden">
@@ -58,7 +66,7 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
             className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto mb-10"
           >
             <button 
-              onClick={() => navigate("/application/home")}
+              onClick={handleStartAction}
               className="bg-[#2563eb] hover:bg-blue-600 text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px] shadow-lg shadow-blue-500/20 cursor-pointer border-none"
             >
               <span>{language === "tr" ? "Hemen Başla" : "Start Now"}</span>
@@ -96,10 +104,24 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
           transition={{ duration: 0.8, delay: 0.2 }}
           className="relative h-[320px] xs:h-[370px] sm:h-[440px] md:h-[500px] w-full flex items-center justify-center my-4 lg:my-0 select-none"
         >
-          {/* Concentric Orbit Rings */}
-          <div className="absolute w-[270px] xs:w-[330px] sm:w-[420px] md:w-[460px] h-[270px] xs:h-[330px] sm:h-[420px] md:h-[460px] rounded-full border border-slate-200/80 dark:border-white/10"></div>
-          <div className="absolute w-[190px] xs:w-[230px] sm:w-[290px] md:w-[320px] h-[190px] xs:h-[230px] sm:h-[290px] md:h-[320px] rounded-full border border-slate-300/80 dark:border-white/15"></div>
-          <div className="absolute w-[110px] xs:w-[130px] sm:w-[170px] md:w-[190px] h-[110px] xs:h-[130px] sm:h-[170px] md:h-[190px] rounded-full border border-dashed border-blue-500/30"></div>
+          {/* Concentric Orbit Rings with Gentle Undulating Wave Animations */}
+          <motion.div 
+            animate={{ rotate: 360 }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+            className="absolute w-[270px] xs:w-[330px] sm:w-[420px] md:w-[460px] h-[270px] xs:h-[330px] sm:h-[420px] md:h-[460px] rounded-full border border-slate-200/80 dark:border-white/10"
+          ></motion.div>
+          
+          <motion.div 
+            animate={{ rotate: -360, scale: [1, 1.03, 1] }}
+            transition={{ rotate: { duration: 45, repeat: Infinity, ease: "linear" }, scale: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
+            className="absolute w-[190px] xs:w-[230px] sm:w-[290px] md:w-[320px] h-[190px] xs:h-[230px] sm:h-[290px] md:h-[320px] rounded-full border border-slate-300/80 dark:border-white/15"
+          ></motion.div>
+          
+          <motion.div 
+            animate={{ rotate: 360, scale: [1, 1.05, 1] }}
+            transition={{ rotate: { duration: 30, repeat: Infinity, ease: "linear" }, scale: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
+            className="absolute w-[110px] xs:w-[130px] sm:w-[170px] md:w-[190px] h-[110px] xs:h-[130px] sm:h-[170px] md:h-[190px] rounded-full border border-dashed border-blue-500/40"
+          ></motion.div>
           
           {/* Center Logo Glass Pill */}
           <div className="absolute px-5 py-3.5 xs:px-7 xs:py-4 sm:px-8 sm:py-5 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-xl border border-slate-200 dark:border-white/15 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-500/15 z-10">
@@ -107,13 +129,14 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
             <img src={logo} alt="Rapidsy" className="h-6 xs:h-7 sm:h-9 w-auto object-contain hidden dark:block" />
           </div>
 
-          {/* Floating UI Feature Cards (Positioned & Scaled proportionally for Mobile) */}
+          {/* Floating UI Feature Cards */}
           
           {/* 1. Top Card: Periyodik Bakım */}
           <motion.div 
             animate={{ y: [0, -7, 0] }} 
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[0%] xs:top-[2%] sm:top-[6%] left-[50%] -translate-x-1/2 bg-white/95 dark:bg-[#0c1327]/95 backdrop-blur-md border border-blue-200 dark:border-blue-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl z-20 hover:scale-105 transition-transform"
+            onClick={handleStartAction}
+            className="absolute top-[0%] xs:top-[2%] sm:top-[6%] left-[50%] -translate-x-1/2 bg-white/95 dark:bg-[#0c1327]/95 backdrop-blur-md border border-blue-200 dark:border-blue-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl z-20 hover:scale-105 cursor-pointer transition-transform"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold border border-blue-500/20 shrink-0">
               <Wrench size={16} className="sm:hidden" />
@@ -133,7 +156,8 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
           <motion.div 
             animate={{ y: [0, 7, 0] }} 
             transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-[2%] xs:bottom-[4%] sm:bottom-[12%] right-[1%] xs:right-[2%] bg-white/95 dark:bg-[#0c1327]/95 backdrop-blur-md border border-indigo-200 dark:border-indigo-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl z-20 hover:scale-105 transition-transform"
+            onClick={handleStartAction}
+            className="absolute bottom-[2%] xs:bottom-[4%] sm:bottom-[12%] right-[1%] xs:right-[2%] bg-white/95 dark:bg-[#0c1327]/95 backdrop-blur-md border border-indigo-200 dark:border-indigo-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl z-20 hover:scale-105 cursor-pointer transition-transform"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold border border-indigo-500/20 shrink-0">
               <Package size={16} className="sm:hidden" />
@@ -153,7 +177,8 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
           <motion.div 
             animate={{ y: [0, 6, 0] }} 
             transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-            className="absolute bottom-[4%] xs:bottom-[6%] sm:bottom-[14%] left-[1%] xs:left-[2%] bg-white/95 dark:bg-[#0c1327]/95 backdrop-blur-md border border-emerald-200 dark:border-emerald-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl z-20 hover:scale-105 transition-transform"
+            onClick={handleStartAction}
+            className="absolute bottom-[4%] xs:bottom-[6%] sm:bottom-[14%] left-[1%] xs:left-[2%] bg-white/95 dark:bg-[#0c1327]/95 backdrop-blur-md border border-emerald-200 dark:border-emerald-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl z-20 hover:scale-105 cursor-pointer transition-transform"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold border border-emerald-500/20 shrink-0">
               <ShieldCheck size={16} className="sm:hidden" />
