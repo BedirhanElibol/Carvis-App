@@ -98,57 +98,89 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
           {/* Orbit Rings */}
           <div className="absolute w-[450px] h-[450px] rounded-full border border-slate-200 dark:border-white/5"></div>
           <div className="absolute w-[300px] h-[300px] rounded-full border border-slate-300 dark:border-white/10"></div>
+          <div className="absolute w-[180px] h-[180px] rounded-full border border-dashed border-blue-500/20"></div>
           
-          {/* Center Logo - Sleek Glass Pill for wide logos */}
-          <div className="absolute px-8 py-5 bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,0.1)] dark:shadow-[0_0_50px_rgba(37,99,235,0.2)] z-10">
-            <img src={logo} alt="Rapidsy" className="h-7 md:h-9 w-auto object-contain block dark:hidden brightness-0" />
-            <img src={logo} alt="Rapidsy" className="h-7 md:h-9 w-auto object-contain hidden dark:block" />
+          {/* Center Logo - Sleek Glass Pill */}
+          <div className="absolute px-8 py-5 bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,0.1)] dark:shadow-[0_0_50px_rgba(37,99,235,0.2)] z-10">
+            <img src={logo} alt="Carvis" className="h-7 md:h-9 w-auto object-contain block dark:hidden brightness-0" />
+            <img src={logo} alt="Carvis" className="h-7 md:h-9 w-auto object-contain hidden dark:block" />
           </div>
 
-          {/* Floating UI Elements (Simulating App Value) */}
+          {/* Floating UI Elements (Real Carvis Features Only) */}
           
-          {/* Top Floating Card (Bidding) */}
+          {/* 1. Top Floating Card: Periyodik Bakım */}
           <motion.div 
             animate={{ y: [0, -10, 0] }} 
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[8%] left-[65%] -translate-x-1/2 bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md border border-blue-200 dark:border-blue-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20"
+            className="absolute top-[8%] left-[65%] -translate-x-1/2 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-blue-200/80 dark:border-blue-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
           >
-            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold">
               <Wrench size={18} />
             </div>
             <div>
-              <div className="text-slate-900 dark:text-white font-bold text-sm">Periyodik Bakım</div>
-              <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">5 Servisten Teklif Geldi</div>
+              <div className="text-slate-900 dark:text-white font-bold text-sm">
+                {language === "tr" ? "Periyodik Bakım" : "Periodic Maintenance"}
+              </div>
+              <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">
+                {language === "tr" ? "5 Servisten Teklif Geldi" : "5 Bids Received"}
+              </div>
             </div>
           </motion.div>
 
-          {/* Bottom Right Floating Card (Spare Parts) */}
+          {/* 2. Bottom Right Floating Card: Yedek Parça Siparişi */}
           <motion.div 
             animate={{ y: [0, 10, 0] }} 
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-[15%] right-[0%] bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md border border-indigo-200 dark:border-indigo-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20"
+            className="absolute bottom-[15%] right-[0%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-indigo-200/80 dark:border-indigo-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
           >
-            <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+            <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold">
               <Package size={18} />
             </div>
             <div>
-              <div className="text-slate-900 dark:text-white font-bold text-sm">Yedek Parça Siparişi</div>
-              <div className="text-indigo-600 dark:text-indigo-400 text-xs font-medium">Uyum garantili gönderim</div>
+              <div className="text-slate-900 dark:text-white font-bold text-sm">
+                {language === "tr" ? "Yedek Parça Siparişi" : "Spare Parts Order"}
+              </div>
+              <div className="text-indigo-600 dark:text-indigo-400 text-xs font-medium">
+                {language === "tr" ? "Uyum garantili gönderim" : "Guaranteed fit delivery"}
+              </div>
             </div>
           </motion.div>
 
-          {/* Bottom Left Floating Card (Insurance) */}
+          {/* 3. Bottom Left Floating Card: Kasko Teklifleri */}
           <motion.div 
             animate={{ y: [0, -8, 0] }} 
             transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-[25%] left-[5%] bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md border border-blue-200 dark:border-blue-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20"
+            className="absolute bottom-[25%] left-[5%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-blue-200/80 dark:border-blue-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
           >
-            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold">
               <ShieldCheck size={18} />
             </div>
             <div>
-              <div className="text-slate-900 dark:text-white font-bold text-sm">Kasko Teklifleri</div>
-              <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">%30 Özel İndirim</div>
+              <div className="text-slate-900 dark:text-white font-bold text-sm">
+                {language === "tr" ? "Kasko Teklifleri" : "Insurance Quotes"}
+              </div>
+              <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">
+                {language === "tr" ? "%30 Özel İndirim" : "Up to 30% Special Discount"}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 4. Top Left Floating Card: Mobil Ekspertiz */}
+          <motion.div 
+            animate={{ y: [0, 8, 0] }} 
+            transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+            className="absolute top-[20%] left-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-emerald-200/80 dark:border-emerald-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
+          >
+            <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold">
+              <Search size={18} />
+            </div>
+            <div>
+              <div className="text-slate-900 dark:text-white font-bold text-sm">
+                {language === "tr" ? "Mobil Ekspertiz" : "Mobile Auto Inspection"}
+              </div>
+              <div className="text-emerald-600 dark:text-emerald-400 text-xs font-medium">
+                {language === "tr" ? "Noter öncesi garantili rapor" : "Guaranteed pre-notary report"}
+              </div>
             </div>
           </motion.div>
 
