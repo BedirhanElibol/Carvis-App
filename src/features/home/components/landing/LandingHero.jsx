@@ -131,7 +131,7 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
           <motion.div 
             animate={{ y: [0, 10, 0] }} 
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-[15%] right-[0%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-indigo-200/80 dark:border-indigo-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
+            className="absolute bottom-[18%] right-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-indigo-200/80 dark:border-indigo-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
           >
             <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold">
               <Package size={18} />
@@ -146,30 +146,11 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel }) 
             </div>
           </motion.div>
 
-          {/* 3. Bottom Left Floating Card: Kasko Teklifleri */}
-          <motion.div 
-            animate={{ y: [0, -8, 0] }} 
-            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-[25%] left-[5%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-blue-200/80 dark:border-blue-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
-          >
-            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold">
-              <ShieldCheck size={18} />
-            </div>
-            <div>
-              <div className="text-slate-900 dark:text-white font-bold text-sm">
-                {language === "tr" ? "Kasko Teklifleri" : "Insurance Quotes"}
-              </div>
-              <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">
-                {language === "tr" ? "%30 Özel İndirim" : "Up to 30% Special Discount"}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* 4. Top Left Floating Card: Mobil Ekspertiz */}
+          {/* 3. Bottom Left Floating Card: Mobil Ekspertiz */}
           <motion.div 
             animate={{ y: [0, 8, 0] }} 
-            transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-            className="absolute top-[20%] left-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-emerald-200/80 dark:border-emerald-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
+            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+            className="absolute bottom-[20%] left-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-emerald-200/80 dark:border-emerald-500/20 px-4 py-3 rounded-2xl flex items-center gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 transition-transform"
           >
             <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold">
               <Search size={18} />
