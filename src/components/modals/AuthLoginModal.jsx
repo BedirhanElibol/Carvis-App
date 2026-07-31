@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { ArrowLeft, CheckCircle, Loader2, Lock, LogIn, Mail, Send, User, X } from "lucide-react";
+import { ArrowLeft, CheckCircle, Eye, EyeOff, Loader2, Lock, LogIn, Mail, Send, User, X, Sparkles } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 const AuthLoginModal = ({
   show,
@@ -11,10 +12,10 @@ const AuthLoginModal = ({
   onSwitchToRegister,
   handleAuthSuccess,
 }) => {
-  const { loginAsGuest } = useAuth();
   const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
   const [view, setView] = useState("login"); // 'login' | 'forgot' | 'success'
   const [loading, setLoading] = useState(false);
@@ -122,47 +123,77 @@ const AuthLoginModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 z-[110] flex sm:items-center items-start justify-center backdrop-blur-md animate-in fade-in p-4 overflow-y-auto pt-10 sm:pt-4">
-      <div className="bg-white dark:bg-[#0a0f24]/90 border border-black/10 dark:border-white/10 w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-200 my-auto text-slate-900 dark:text-white">
+    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-xl z-[9999] flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
+      
+      {/* Clerk.com / Resend.com Style Auth Card */}
+      <div className="w-full max-w-[420px] bg-white dark:bg-[#080d1a] border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-7 sm:p-9 shadow-2xl relative overflow-hidden text-slate-900 dark:text-white my-auto">
         
-        {/* Decorative Background Glows */}
-        <div className="absolute -top-20 -right-20 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        {/* Subtle Neon Ambient Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-cyan-500/10 dark:bg-cyan-500/20 blur-3xl pointer-events-none rounded-full"></div>
 
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 bg-black/5 dark:bg-white/5 p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-black/5 dark:border-white/5 cursor-pointer"
+          className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center border border-slate-200 dark:border-white/10 transition-all cursor-pointer z-10"
         >
-          <X size={20} />
+          <X size={18} />
         </button>
 
         {view === "login" && (
           <>
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 font-sans uppercase tracking-tight">
-                {t.loginTitle || "Giriş Yap"}
+            {/* Header: Logo & Branding */}
+            <div className="flex flex-col items-center text-center mb-6">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-sky-500/20 border border-cyan-500/30 p-2 flex items-center justify-center shadow-lg shadow-cyan-500/10 mb-3">
+                <img src={logo} alt="Rapidsy" className="h-8 w-auto object-contain" />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-sans uppercase">
+                Rapidsy'ye Hoş Geldiniz
               </h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium font-sans leading-relaxed">
-                Hesabınıza erişmek için bilgilerinizi girin.
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
+                Akıllı Otomobil Platformunuza Erişin
               </p>
             </div>
 
-            <div className="mb-6 flex items-center justify-center gap-2 text-teal-400 font-black uppercase tracking-widest text-xs font-sans">
-              <User size={16} /> Müşteri Girişi
+            {/* Clerk-Style One-Click Google OAuth */}
+            <button
+              onClick={() => handleSocialLogin("google")}
+              disabled={socialLoading !== null}
+              className="w-full flex items-center justify-center gap-3 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/15 py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer mb-5"
+            >
+              {socialLoading === "google" ? (
+                <Loader2 size={18} className="animate-spin text-cyan-500" />
+              ) : (
+                <img
+                  src="https://www.svgrepo.com/show/475656/google-color.svg"
+                  alt="Google"
+                  className="w-5 h-5"
+                />
+              )}
+              <span>Google ile Devam Et</span>
+            </button>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3 mb-5">
+              <div className="h-px bg-slate-200 dark:bg-white/10 flex-1"></div>
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                veya e-posta ile
+              </span>
+              <div className="h-px bg-slate-200 dark:bg-white/10 flex-1"></div>
             </div>
 
-            <form onSubmit={handleLogin} className="space-y-5">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-600 dark:text-slate-300 ml-1 font-sans">
-                  {t.email}
+            {/* Form */}
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-[11px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 font-sans">
+                  E-Posta Adresi
                 </label>
-                <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                  <Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
+                <div className="bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center px-3.5 py-3 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+                  <Mail size={16} className="text-slate-400 mr-2.5 shrink-0" />
                   <input
                     type="email"
                     autoComplete="email"
                     required
-                    className="bg-transparent w-full outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-500 font-sans"
+                    className="bg-transparent w-full outline-none text-xs font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 font-sans"
                     placeholder="ornek@email.com"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
@@ -170,10 +201,10 @@ const AuthLoginModal = ({
                 </div>
               </div>
 
-              <div className="space-y-1.5">
-                <div className="flex justify-between items-center px-1">
-                  <label className="text-xs font-bold text-slate-600 dark:text-slate-300 font-sans">
-                    {t.password}
+              <div className="space-y-1">
+                <div className="flex justify-between items-center px-0.5">
+                  <label className="text-[11px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 font-sans">
+                    Şifre
                   </label>
                   <button
                     type="button"
@@ -181,27 +212,34 @@ const AuthLoginModal = ({
                       setView("forgot");
                       setErrorMsg("");
                     }}
-                    className="text-xs font-semibold text-teal-400 hover:underline bg-transparent border-none cursor-pointer"
+                    className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 hover:underline bg-transparent border-none cursor-pointer"
                   >
-                    Şifremi Unuttum
+                    Şifremi Unuttum?
                   </button>
                 </div>
-                <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                  <Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
+                <div className="bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center px-3.5 py-3 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+                  <Lock size={16} className="text-slate-400 mr-2.5 shrink-0" />
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     required
-                    className="bg-transparent w-full outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-500 font-sans"
+                    className="bg-transparent w-full outline-none text-xs font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 font-sans"
                     placeholder="••••••••"
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors bg-transparent border-none cursor-pointer p-0"
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
                 </div>
               </div>
 
               {errorMsg && (
-                <div className="text-red-500 dark:text-red-400 text-xs font-bold bg-red-500/10 border border-red-500/20 p-3 rounded-2xl flex items-center justify-center shadow-sm">
+                <div className="text-rose-500 text-xs font-bold bg-rose-500/10 border border-rose-500/20 p-3 rounded-2xl text-center">
                   {errorMsg}
                 </div>
               )}
@@ -209,70 +247,20 @@ const AuthLoginModal = ({
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-4.5 rounded-2xl font-black text-white shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] font-sans border-none cursor-pointer ${
-                  loading ? "bg-teal-600/50" : "bg-teal-500 hover:bg-teal-400 shadow-teal-500/20"
-                }`}
+                className="w-full py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-950 bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 shadow-lg shadow-cyan-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer border-none disabled:opacity-50"
               >
-                {loading ? (
-                  <Loader2 className="animate-spin" />
-                ) : (
-                  <LogIn size={20} />
-                )}
-                {loading ? "Bağlanıyor..." : t.loginButton || "Giriş Yap"}
+                {loading ? <Loader2 className="animate-spin" size={16} /> : <LogIn size={16} />}
+                <span>{loading ? "GİRİŞ YAPILIYOR..." : "GİRİŞ YAP"}</span>
               </button>
             </form>
 
-            {/* Social Login Divider */}
-            <div className="flex items-center gap-4 my-6 opacity-50">
-              <div className="h-px bg-black/10 dark:bg-white/10 flex-1"></div>
-              <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-sans">
-                Veya
-              </span>
-              <div className="h-px bg-black/10 dark:bg-white/10 flex-1"></div>
-            </div>
-
-            {/* Social Logins */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              <button
-                onClick={() => handleSocialLogin("google")}
-                disabled={socialLoading !== null}
-                className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-2xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer"
-              >
-                {socialLoading === "google" ? (
-                  <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
-                ) : (
-                  <img
-                    src="https://www.svgrepo.com/show/475656/google-color.svg"
-                    alt="Google"
-                    className="w-5 h-5"
-                  />
-                )}
-                Google
-              </button>
-              <button
-                onClick={() => handleSocialLogin("apple")}
-                disabled={socialLoading !== null}
-                className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3.5 rounded-2xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer"
-              >
-                {socialLoading === "apple" ? (
-                  <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
-                ) : (
-                  <img
-                    src="https://www.svgrepo.com/show/511330/apple-173.svg"
-                    alt="Apple"
-                    className="w-5 h-5 dark:invert"
-                  />
-                )}
-                Apple
-              </button>
-            </div>
-
-            <div className="text-center">
+            {/* Footer switch */}
+            <div className="text-center mt-6 pt-4 border-t border-slate-200 dark:border-white/10">
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium font-sans">
-                Hesabınız yok mu?{" "}
+                Henüz bir hesabınız yok mu?{" "}
                 <button
                   onClick={onSwitchToRegister}
-                  className="text-teal-400 font-bold hover:underline font-sans bg-transparent border-none cursor-pointer"
+                  className="text-cyan-600 dark:text-cyan-400 font-black hover:underline font-sans bg-transparent border-none cursor-pointer"
                 >
                   Hemen Kayıt Ol
                 </button>
@@ -281,28 +269,39 @@ const AuthLoginModal = ({
           </>
         )}
 
+        {/* FORGOT PASSWORD VIEW */}
         {view === "forgot" && (
-          <>
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 font-sans uppercase tracking-tight">
-                Şifremi Unuttum
-              </h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium font-sans leading-relaxed">
-                Hesabınızın e-posta adresini girin. Şifre sıfırlama bağlantısını e-postanıza göndereceğiz.
+          <div className="space-y-4">
+            <button
+              onClick={() => {
+                setView("login");
+                setErrorMsg("");
+              }}
+              className="flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors bg-transparent border-none cursor-pointer p-0"
+            >
+              <ArrowLeft size={16} /> Giriş Ekranına Dön
+            </button>
+
+            <div className="text-center my-4">
+              <h3 className="text-lg font-black text-slate-900 dark:text-white font-sans uppercase">
+                Şifre Sıfırlama
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
+                E-posta adresinizi girin, sıfırlama bağlantısı gönderelim.
               </p>
             </div>
 
-            <form onSubmit={handleForgotPassword} className="space-y-5">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-600 dark:text-slate-300 ml-1 font-sans">
-                  E-posta Adresi
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-[11px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 font-sans">
+                  Kayıtlı E-Posta Adresiniz
                 </label>
-                <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                  <Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
+                <div className="bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center px-3.5 py-3 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+                  <Mail size={16} className="text-slate-400 mr-2.5 shrink-0" />
                   <input
                     type="email"
                     required
-                    className="bg-transparent w-full outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-500 font-sans"
+                    className="bg-transparent w-full outline-none text-xs font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 font-sans"
                     placeholder="ornek@email.com"
                     value={forgotEmail}
                     onChange={(e) => setForgotEmail(e.target.value)}
@@ -311,7 +310,7 @@ const AuthLoginModal = ({
               </div>
 
               {errorMsg && (
-                <div className="text-red-500 dark:text-red-400 text-xs font-bold bg-red-500/10 border border-red-500/20 p-3 rounded-2xl flex items-center justify-center shadow-sm">
+                <div className="text-rose-500 text-xs font-bold bg-rose-500/10 border border-rose-500/20 p-3 rounded-2xl text-center">
                   {errorMsg}
                 </div>
               )}
@@ -319,60 +318,39 @@ const AuthLoginModal = ({
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-4.5 rounded-2xl font-black text-white shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] font-sans border-none cursor-pointer ${
-                  loading ? "bg-teal-600/50" : "bg-teal-500 hover:bg-teal-400 shadow-teal-500/20"
-                }`}
+                className="w-full py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-950 bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 shadow-lg shadow-cyan-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer border-none disabled:opacity-50"
               >
-                {loading ? (
-                  <Loader2 className="animate-spin" />
-                ) : (
-                  <Send size={20} />
-                )}
-                {loading ? "Gönderiliyor..." : "Sıfırlama Bağlantısı Gönder"}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setView("login");
-                  setErrorMsg("");
-                }}
-                className="w-full py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all active:scale-[0.98] font-sans cursor-pointer flex items-center justify-center gap-1.5"
-              >
-                <ArrowLeft size={14} /> Giriş Ekranına Dön
+                {loading ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}
+                <span>{loading ? "GÖNDERİLİYOR..." : "SIFIRLAMA BAĞLANTISI GÖNDER"}</span>
               </button>
             </form>
-          </>
+          </div>
         )}
 
+        {/* SUCCESS VIEW */}
         {view === "success" && (
-          <>
-            <div className="text-center py-6 space-y-6">
-              <div className="w-16 h-16 bg-teal-500/10 border border-teal-500/20 rounded-full flex items-center justify-center mx-auto text-teal-400 animate-bounce">
-                <CheckCircle size={32} />
-              </div>
-              <div>
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 font-sans uppercase tracking-tight">
-                  Talep Alındı!
-                </h2>
-                <p className="text-sm text-slate-500 dark:text-slate-400 font-medium font-sans leading-relaxed px-2">
-                  Eğer <strong className="text-teal-400">{forgotEmail}</strong> adresi sistemimizde kayıtlı ise, şifre sıfırlama bağlantısı gönderilecektir. Lütfen gelen kutunuzu ve spam/gereksiz klasörünü kontrol edin.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setView("login");
-                  setForgotEmail("");
-                  setErrorMsg("");
-                }}
-                className="w-full py-4 bg-teal-500 hover:bg-teal-400 text-white rounded-2xl font-black shadow-xl shadow-teal-500/20 transition-all active:scale-[0.98] font-sans border-none cursor-pointer"
-              >
-                Giriş Ekranına Dön
-              </button>
+          <div className="text-center py-6 space-y-4">
+            <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-500 border border-emerald-500/30 flex items-center justify-center mx-auto">
+              <CheckCircle size={32} />
             </div>
-          </>
+            <h3 className="text-lg font-black text-slate-900 dark:text-white font-sans uppercase">
+              Bağlantı Gönderildi!
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs mx-auto font-sans">
+              <strong>{forgotEmail}</strong> adresine şifre sıfırlama bağlantısı gönderildi. Lütfen e-postanızı ve gereksiz kutusunu kontrol edin.
+            </p>
+            <button
+              onClick={() => {
+                setView("login");
+                setForgotEmail("");
+              }}
+              className="px-6 py-2.5 rounded-2xl bg-slate-100 dark:bg-white/10 text-slate-800 dark:text-white font-bold text-xs hover:bg-slate-200 dark:hover:bg-white/20 transition-all border border-slate-200 dark:border-white/10 cursor-pointer"
+            >
+              Giriş Ekranına Dön
+            </button>
+          </div>
         )}
+
       </div>
     </div>
   );

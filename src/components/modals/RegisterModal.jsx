@@ -1,107 +1,97 @@
 import React, { useState } from "react";
-import { Check, Eye, EyeOff, Loader2, Lock, Mail, User, UserPlus, X } from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, Mail, Phone, User, X, ShieldCheck } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
-import { useUI } from "../../context/UIContext";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 const RegisterModal = ({
   show,
   onClose,
   t,
   onSwitchToLogin,
-  showAlert: showAlertProp,
-  loginIntent,
+  handleAuthSuccess,
 }) => {
-  const { loginAsGuest } = useAuth();
-  const { showAlert: showAlertContext, openModal } = useUI();
   const navigate = useNavigate();
-  
-  // Safe showAlert fallback
-  const showAlert = showAlertProp || showAlertContext;
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
     fullName: "",
+    email: "",
+    phone: "",
+    password: "",
   });
-  const [loading, setLoading] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [socialLoading, setSocialLoading] = useState(null);
-  const [isKvkkAccepted, setIsKvkkAccepted] = useState(false);
-  const [isMarketingAccepted, setIsMarketingAccepted] = useState(false);
 
   if (!show || !t) return null;
 
-  const handleSubmit = async (e) => {
-    if (e) e.preventDefault();
-    if (!isKvkkAccepted) {
-      showAlert(
-        "Zorunlu Onay",
-        "Devam etmek için yasal metinleri onaylamanız gerekmektedir.",
-        "warning",
-      );
-      return;
-    }
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMsg("");
 
     try {
-      setLoading(true);
-      const { error } = await supabase.auth.signUp({
+      let emailExists = false;
+      try {
+        const { data: exists, error: rpcError } = await supabase.rpc("check_email_exists", {
+          email_to_check: formData.email,
+        });
+        if (!rpcError && typeof exists === "boolean") {
+          emailExists = exists;
+        }
+      } catch {
+        // Fallback
+      }
+
+      if (emailExists) {
+        setErrorMsg("Bu e-posta adresiyle zaten kayıtlı bir hesap var. Lütfen giriş yapın.");
+        setLoading(false);
+        return;
+      }
+
+      const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
           data: {
             full_name: formData.fullName,
+            phone: formData.phone,
             role: "customer",
-            applied_role: loginIntent || "customer",
-            kvkk_consent: true,
-            privacy_consent: true,
-            marketing_consent: isMarketingAccepted,
           },
-          emailRedirectTo: `${window.location.origin}/application/home`,
         },
       });
 
-      if (error) {
-        if (error.message.includes("Email already registered") || error.status === 422 || error.code === "user_already_exists") {
-          showAlert(
-            "Zaten Bir Hesabınız Var",
-            "Bu e-posta adresiyle daha önce kayıt olunmuş. Lütfen giriş yapmayı deneyin.",
-            "info"
-          );
-          onSwitchToLogin();
-          return;
-        }
-        throw error;
+      if (error) throw error;
+
+      if (data.user) {
+        if (handleAuthSuccess) handleAuthSuccess(data.user);
+        onClose();
+        navigate("/application/home");
       }
-      setIsRegistered(true);
     } catch (error) {
-      console.error("Signup error:", error);
       const msg = error.message || "";
-      if (error.status === 422 || msg.includes("registered")) {
-        showAlert("Kayıt Hatası", "Bu e-posta adresiyle zaten bir hesap bulunuyor. Lütfen Giriş Yap menüsünü kullanın.", "error");
-      } else if (msg.includes("network") || msg.includes("Failed to fetch") || msg.includes("fetch")) {
-        showAlert("Bağlantı Hatası", "Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.", "error");
-      } else if (msg.includes("Password")) {
-        showAlert("Kayıt Hatası", "Şifre en az 6 karakter olmalıdır.", "error");
+      if (msg.includes("already registered")) {
+        setErrorMsg("Bu e-posta adresiyle zaten bir hesap bulunuyor.");
+      } else if (msg.includes("Password should be at least")) {
+        setErrorMsg("Şifreniz en az 6 karakter olmalıdır.");
+      } else if (msg.includes("network") || msg.includes("fetch")) {
+        setErrorMsg("Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edin.");
       } else {
-        showAlert("Kayıt Hatası", msg || "Kayıt işlemi sırasında bir hata oluştu.", "error");
+        setErrorMsg(msg || "Kayıt olurken bir hata oluştu.");
       }
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSocialRegister = async (provider) => {
-    if (!isKvkkAccepted) {
-      showAlert(
-        "Zorunlu Onay",
-        "Devam etmek için yasal metinleri onaylamanız gerekmektedir.",
-        "warning",
-      );
-      return;
-    }
+  const handleSocialLogin = async (provider) => {
     setSocialLoading(provider);
+    setErrorMsg("");
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider,
@@ -109,262 +99,178 @@ const RegisterModal = ({
       });
       if (error) throw error;
     } catch (error) {
-      const msg = error.message || "";
-      if (msg.includes("network") || msg.includes("Failed to fetch") || msg.includes("fetch")) {
-        showAlert("Bağlantı Hatası", "Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.", "error");
-      } else if (msg.includes("provider") || msg.includes("not enabled")) {
-        showAlert("Hata", `${provider === "google" ? "Google" : "Apple"} ile kayıt şu anda kullanılamıyor. Lütfen e-posta ile kayıt olun.`, "error");
-      } else {
-        showAlert("Hata", msg || `${provider === "google" ? "Google" : "Apple"} ile kayıt yapılırken bir hata oluştu.`, "error");
-      }
+      setErrorMsg(`${provider === "google" ? "Google" : "Apple"} ile kayıt olurken bir hata oluştu.`);
       setSocialLoading(null);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 z-[110] flex sm:items-center items-start justify-center backdrop-blur-md animate-in fade-in p-4 overflow-y-auto pt-10 sm:pt-4">
-      <div className="bg-white dark:bg-[#0a0f24]/90 border border-black/10 dark:border-white/10 w-full max-w-md rounded-[2.5rem] shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-200 my-auto text-slate-900 dark:text-white">
+    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-xl z-[9999] flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
+      
+      {/* Clerk / Resend Style Register Card */}
+      <div className="w-full max-w-[440px] bg-white dark:bg-[#080d1a] border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-7 sm:p-9 shadow-2xl relative overflow-hidden text-slate-900 dark:text-white my-auto">
         
-        {/* Decorative Background Glows */}
-        <div className="absolute -top-20 -right-20 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        {/* Subtle Neon Ambient Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-cyan-500/10 dark:bg-cyan-500/20 blur-3xl pointer-events-none rounded-full"></div>
 
-        <div className="p-2 sm:p-4">
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 bg-black/5 dark:bg-white/5 p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-black/5 dark:border-white/5 cursor-pointer"
-          >
-            <X size={20} />
-          </button>
-          
-          {isRegistered ? (
-            <div className="py-8 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Mail size={40} className="text-teal-400" />
-              </div>
-              <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-4 font-sans">
-                {t.verifyEmailTitle || "E-POSTANI ONAYLA"}
-              </h2>
-              <p className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed mb-8">
-                {formData.email} adresine bir doğrulama bağlantısı gönderdik.{" "}
-                <br />
-                <span className="text-sm text-slate-500">
-                  Lütfen gelen kutunu (ve spam klasörünü) kontrol et.
-                </span>
-              </p>
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center border border-slate-200 dark:border-white/10 transition-all cursor-pointer z-10"
+        >
+          <X size={18} />
+        </button>
+
+        {/* Header: Logo & Branding */}
+        <div className="flex flex-col items-center text-center mb-6">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-sky-500/20 border border-cyan-500/30 p-2 flex items-center justify-center shadow-lg shadow-cyan-500/10 mb-3">
+            <img src={logo} alt="Rapidsy" className="h-8 w-auto object-contain" />
+          </div>
+          <h2 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-sans uppercase">
+            Hesap Oluşturun
+          </h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
+            Ücretsiz Rapidsy Dünyasına Anında Katılın
+          </p>
+        </div>
+
+        {/* Clerk-Style Google Register */}
+        <button
+          onClick={() => handleSocialLogin("google")}
+          disabled={socialLoading !== null}
+          className="w-full flex items-center justify-center gap-3 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/15 py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-bold text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 font-sans cursor-pointer mb-5"
+        >
+          {socialLoading === "google" ? (
+            <Loader2 size={18} className="animate-spin text-cyan-500" />
+          ) : (
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              alt="Google"
+              className="w-5 h-5"
+            />
+          )}
+          <span>Google ile Tek Tıkla Kayıt Ol</span>
+        </button>
+
+        {/* Divider */}
+        <div className="flex items-center gap-3 mb-5">
+          <div className="h-px bg-slate-200 dark:bg-white/10 flex-1"></div>
+          <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            veya bilgilerinizle
+          </span>
+          <div className="h-px bg-slate-200 dark:bg-white/10 flex-1"></div>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleRegister} className="space-y-3.5">
+          <div className="space-y-1">
+            <label className="text-[11px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 font-sans">
+              Ad Soyad
+            </label>
+            <div className="bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center px-3.5 py-3 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+              <User size={16} className="text-slate-400 mr-2.5 shrink-0" />
+              <input
+                type="text"
+                name="fullName"
+                required
+                className="bg-transparent w-full outline-none text-xs font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 font-sans"
+                placeholder="Ahmet Yılmaz"
+                value={formData.fullName}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[11px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 font-sans">
+              E-Posta Adresi
+            </label>
+            <div className="bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center px-3.5 py-3 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+              <Mail size={16} className="text-slate-400 mr-2.5 shrink-0" />
+              <input
+                type="email"
+                name="email"
+                required
+                className="bg-transparent w-full outline-none text-xs font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 font-sans"
+                placeholder="ornek@email.com"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[11px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 font-sans">
+              Telefon Numarası
+            </label>
+            <div className="bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center px-3.5 py-3 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+              <Phone size={16} className="text-slate-400 mr-2.5 shrink-0" />
+              <input
+                type="tel"
+                name="phone"
+                required
+                className="bg-transparent w-full outline-none text-xs font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 font-sans font-mono"
+                placeholder="05XX XXX XX XX"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[11px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 font-sans">
+              Şifre Oluşturun
+            </label>
+            <div className="bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center px-3.5 py-3 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all">
+              <Lock size={16} className="text-slate-400 mr-2.5 shrink-0" />
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                required
+                className="bg-transparent w-full outline-none text-xs font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 font-sans"
+                placeholder="En az 6 karakter"
+                value={formData.password}
+                onChange={handleChange}
+              />
               <button
-                onClick={onClose}
-                className="w-full bg-teal-500 hover:bg-teal-400 text-white p-4.5 rounded-2xl font-bold uppercase tracking-widest text-xs transition-all active:scale-95 cursor-pointer border-none"
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors bg-transparent border-none cursor-pointer p-0"
               >
-                Tamam
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
-          ) : (
-            <>
-              <div className="mb-8">
-                <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter uppercase font-sans">
-                  {t.registerTitle}
-                </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mt-1 font-sans">
-                  {loginIntent === "seller"
-                    ? "Satıcı hesabı oluştur."
-                    : "Rapidsy dünyasına katıl."}
-                </p>
-              </div>
+          </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="relative group">
-                  <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                    <User size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
-                    <input
-                      type="text"
-                      autoComplete="name"
-                      placeholder="Ad Soyad"
-                      value={formData.fullName}
-                      onChange={(e) =>
-                        setFormData({ ...formData, fullName: e.target.value })
-                      }
-                      required
-                      className="bg-transparent w-full outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-500 font-sans"
-                    />
-                  </div>
-                </div>
-
-                <div className="relative group">
-                  <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                    <Mail size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
-                    <input
-                      type="email"
-                      autoComplete="email"
-                      placeholder={t.emailPlaceholder || "E-posta Adresi"}
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      required
-                      className="bg-transparent w-full outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-500 font-sans"
-                    />
-                  </div>
-                </div>
-
-                <div className="relative group">
-                  <div className="bg-slate-100 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:ring-2 focus-within:ring-teal-500/20 focus-within:border-teal-500 transition-all shadow-inner">
-                    <Lock size={18} className="text-slate-500 dark:text-slate-400 mr-3 shrink-0" />
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      autoComplete="new-password"
-                      placeholder={t.passwordPlaceholder || "Şifre"}
-                      value={formData.password}
-                      onChange={(e) =>
-                        setFormData({ ...formData, password: e.target.value })
-                      }
-                      required
-                      className="bg-transparent w-full outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-500 font-sans"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors border-none bg-transparent cursor-pointer ml-2 shrink-0"
-                    >
-                      {showPassword ? (
-                        <EyeOff size={18} />
-                      ) : (
-                        <Eye size={18} />
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                {/* KVKK & Compliance Section */}
-                <div className="bg-slate-100 dark:bg-white/5 p-4 rounded-2xl border border-black/5 dark:border-white/5 space-y-3">
-                  <label className="flex items-start gap-3 cursor-pointer group">
-                    <div className="relative mt-0.5">
-                      <input
-                        type="checkbox"
-                        checked={isKvkkAccepted}
-                        onChange={(e) => setIsKvkkAccepted(e.target.checked)}
-                        className="peer hidden"
-                      />
-                      <div className="w-5 h-5 border-2 border-black/10 dark:border-white/10 rounded-md bg-transparent peer-checked:bg-teal-500 peer-checked:border-teal-500 transition-all flex items-center justify-center">
-                        <Check size={12} className="text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
-                      </div>
-                    </div>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold leading-tight select-none">
-                      <button 
-                        type="button" 
-                        onClick={() => openModal("kvkk")}
-                        className="text-teal-400 underline hover:text-teal-300 decoration-teal-400/30 bg-transparent border-none cursor-pointer p-0"
-                      >
-                        KVKK Aydınlatma Metni
-                      </button> 
-                      {" ve "}
-                      <button 
-                        type="button" 
-                        onClick={() => openModal("kvkk")}
-                        className="text-teal-400 underline hover:text-teal-300 decoration-teal-400/30 bg-transparent border-none cursor-pointer p-0"
-                      >
-                        Kullanıcı Sözleşmesi
-                      </button>
-                      'ni okudum, onaylıyorum.
-                    </span>
-                  </label>
-
-                  <label className="flex items-start gap-3 cursor-pointer group">
-                    <div className="relative mt-0.5">
-                      <input
-                        type="checkbox"
-                        checked={isMarketingAccepted}
-                        onChange={(e) => setIsMarketingAccepted(e.target.checked)}
-                        className="peer hidden"
-                      />
-                      <div className="w-5 h-5 border-2 border-black/10 dark:border-white/10 rounded-md bg-transparent peer-checked:bg-teal-500 peer-checked:border-teal-500 transition-all flex items-center justify-center">
-                        <Check size={12} className="text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
-                      </div>
-                    </div>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold leading-tight select-none">
-                      Tarafıma bilgilendirme ve pazarlama içerikli e-iletiler gönderilmesine izin veriyorum (Opsiyonel).
-                    </span>
-                  </label>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading || !isKvkkAccepted}
-                  className="w-full bg-teal-500 hover:bg-teal-400 text-white py-4.5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-teal-500/20 flex items-center justify-center gap-3 active:scale-95 h-14 disabled:opacity-50 disabled:grayscale font-sans border-none cursor-pointer"
-                >
-                  {loading ? (
-                    <Loader2 className="animate-spin" size={24} />
-                  ) : (
-                    <>
-                      <UserPlus size={20} /> {t.registerTitle}
-                    </>
-                  )}
-                </button>
-              </form>
-
-              {/* Social Logic Divider */}
-              <div className="flex items-center gap-4 my-6 opacity-50">
-                <div className="h-px bg-black/10 dark:bg-white/10 flex-1"></div>
-                <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-sans">
-                  Veya
-                </span>
-                <div className="h-px bg-black/10 dark:bg-white/10 flex-1"></div>
-              </div>
-
-              {/* Social Logins */}
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                <button
-                  type="button"
-                  onClick={() => handleSocialRegister("google")}
-                  disabled={socialLoading !== null}
-                  className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
-                >
-                  {socialLoading === "google" ? (
-                    <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
-                  ) : (
-                    <img
-                      src="https://www.svgrepo.com/show/475656/google-color.svg"
-                      alt="Google"
-                      className="w-5 h-5"
-                    />
-                  )}
-                  Google
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleSocialRegister("apple")}
-                  disabled={socialLoading !== null}
-                  className="flex items-center justify-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-3 rounded-xl text-sm font-bold text-slate-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all active:scale-[0.98] shadow-sm disabled:opacity-50 h-12 font-sans cursor-pointer"
-                >
-                  {socialLoading === "apple" ? (
-                    <Loader2 size={18} className="animate-spin text-slate-500 dark:text-slate-400" />
-                  ) : (
-                    <img
-                      src="https://www.svgrepo.com/show/511330/apple-173.svg"
-                      alt="Apple"
-                      className="w-5 h-5 dark:invert"
-                    />
-                  )}
-                  Apple
-                </button>
-              </div>
-
-              <div className="mt-8 text-center bg-slate-100 dark:bg-white/5 p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center gap-2">
-                <div>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 font-bold mr-2 font-sans">
-                    {t.haveAccount || "Zaten hesabın var mı?"}
-                  </span>
-                  <button
-                    onClick={onSwitchToLogin}
-                    className="text-teal-400 font-black text-xs uppercase tracking-widest hover:underline font-sans bg-transparent border-none cursor-pointer"
-                  >
-                    {t.loginTitle}
-                  </button>
-                </div>
-              </div>
-            </>
+          {errorMsg && (
+            <div className="text-rose-500 text-xs font-bold bg-rose-500/10 border border-rose-500/20 p-3 rounded-2xl text-center">
+              {errorMsg}
+            </div>
           )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-950 bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 shadow-lg shadow-cyan-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer border-none disabled:opacity-50 mt-2"
+          >
+            {loading ? <Loader2 className="animate-spin" size={16} /> : <ShieldCheck size={16} />}
+            <span>{loading ? "KAYIT YAPILIYOR..." : "HESAP OLUŞTUR"}</span>
+          </button>
+        </form>
+
+        {/* Footer Switch */}
+        <div className="text-center mt-6 pt-4 border-t border-slate-200 dark:border-white/10">
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium font-sans">
+            Zaten hesabınız var mı?{" "}
+            <button
+              onClick={onSwitchToLogin}
+              className="text-cyan-600 dark:text-cyan-400 font-black hover:underline font-sans bg-transparent border-none cursor-pointer"
+            >
+              Giriş Yap
+            </button>
+          </p>
         </div>
+
       </div>
     </div>
   );
