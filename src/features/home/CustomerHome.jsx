@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Activity, Zap, AlertCircle, AlertTriangle, Calendar, CalendarDays, Car, CheckCircle, ChevronRight, ClipboardList, Disc, Droplets, FileText, Flame, HardDrive, Heart, HeartHandshake, Key, Layers, Loader2, Map, MapPin, Maximize, Navigation, Package, Plus, RefreshCw, Search, ShieldAlert, ShieldCheck, ShoppingBag, Star, TrendingDown, Truck, User, UserCheck, Video, Wind, Wrench, X, Clock, Lightbulb, TrendingUp } from "lucide-react";
+import { Activity, Zap, AlertCircle, AlertTriangle, Calendar, CalendarDays, Car, CheckCircle, ChevronRight, ClipboardList, Disc, Droplets, FileText, Flame, Fuel, HardDrive, Heart, HeartHandshake, Key, Layers, Loader2, Map, MapPin, Maximize, Navigation, Package, Plus, RefreshCw, Search, ShieldAlert, ShieldCheck, ShoppingBag, Star, TrendingDown, Truck, User, UserCheck, Video, Wind, Wrench, X, Clock, Lightbulb, TrendingUp } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { Badge } from "../../components/Core";
 import { useUI } from "../../context/UIContext";
