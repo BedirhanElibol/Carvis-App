@@ -16,9 +16,10 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['pwa-icon.png'],
       workbox: {
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB
-        // navigateFallback removed: was causing false 'offline' errors on OAuth redirects
-        // SPA routing is handled by index.html fallback on the hosting/dev server side
         navigateFallbackDenylist: [/^\/api/, /^\/supabase/, /^\/auth/],
         runtimeCaching: [
           {
@@ -29,8 +30,8 @@ export default defineConfig({
             urlPattern: ({ request }) => request.mode === 'navigate',
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'pages-cache',
-              networkTimeoutSeconds: 3
+              cacheName: 'pages-cache-v2',
+              networkTimeoutSeconds: 2
             }
           }
         ],
