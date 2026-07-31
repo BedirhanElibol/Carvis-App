@@ -361,18 +361,6 @@ const RegisterModal = ({
                     {t.loginTitle}
                   </button>
                 </div>
-                <div className="w-full pt-3 mt-1 border-t border-black/5 dark:border-white/5">
-                  <button
-                    onClick={() => {
-                      loginAsGuest();
-                      onClose();
-                      navigate("/application/home");
-                    }}
-                    className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-black px-8 py-2.5 rounded-xl transition-all active:scale-95 uppercase tracking-widest text-[9px] border border-black/10 dark:border-white/10 hover:text-slate-900 dark:hover:text-white cursor-pointer"
-                  >
-                    Hızlı Keşfet &rarr;
-                  </button>
-                </div>
               </div>
             </>
           )}

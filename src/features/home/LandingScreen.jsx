@@ -130,11 +130,8 @@ const LandingScreen = () => {
     };
   }, [fuelCity]);
 
-  const _handleGuestEntry = (query = "", city = "istanbul") => {
-    if (!currentUser) {
-      loginAsGuest();
-    }
-    navigate("/application/home", { state: { searchQuery: query, selectedCity: city } });
+  const _handleGuestEntry = () => {
+    openModal("login", "customer");
   };
 
   return (

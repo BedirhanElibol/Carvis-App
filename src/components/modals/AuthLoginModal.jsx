@@ -267,7 +267,7 @@ const AuthLoginModal = ({
               </button>
             </div>
 
-            <div className="text-center space-y-4">
+            <div className="text-center">
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium font-sans">
                 Hesabınız yok mu?{" "}
                 <button
@@ -277,18 +277,6 @@ const AuthLoginModal = ({
                   Hemen Kayıt Ol
                 </button>
               </p>
-              <div className="pt-4 border-t border-black/5 dark:border-white/5">
-                <button
-                  onClick={() => {
-                    loginAsGuest();
-                    onClose();
-                    navigate("/application/home");
-                  }}
-                  className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-black px-6 py-3 rounded-2xl transition-all active:scale-95 uppercase tracking-widest text-[9px] border border-black/10 dark:border-white/10 hover:text-slate-900 dark:hover:text-white shadow-inner cursor-pointer"
-                >
-                  Misafir Olarak Devam Et &rarr;
-                </button>
-              </div>
             </div>
           </>
         )}
