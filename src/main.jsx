@@ -19,17 +19,32 @@ import { AIProvider } from "./context/AIContext";
 import { MapProvider } from "./context/MapContext";
 import { WalletProvider } from "./context/WalletContext";
 import { HelmetProvider } from "react-helmet-async";
-// Unregister any conflicting legacy manual service workers to resolve false "no internet" errors
+// Global Dynamic Import Chunk Error Handler for Vercel Deployments & Stale SW Caches
+window.addEventListener("error", (event) => {
+  const msg = event?.message || "";
+  if (
+    msg.includes("Failed to fetch dynamically imported module") ||
+    msg.includes("Expected a JavaScript-or-Wasm module script") ||
+    msg.includes("Importing a module script failed")
+  ) {
+    const lastReload = sessionStorage.getItem("chunk_reload_ts");
+    const now = Date.now();
+    if (!lastReload || now - parseInt(lastReload, 10) > 8000) {
+      sessionStorage.setItem("chunk_reload_ts", String(now));
+      window.location.reload();
+    }
+  }
+});
+
+// Purge any stale legacy Service Worker caches
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
-    for (const registration of registrations) {
-      // Unregister manual conflicting scripts if present
-      if (registration.active?.scriptURL?.includes("sw.js")) {
-        registration.unregister();
-      }
+    for (const reg of registrations) {
+      reg.unregister();
     }
-  });
-} 
+  }).catch(() => {});
+}
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     {" "}
