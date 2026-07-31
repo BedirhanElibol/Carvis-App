@@ -93,17 +93,21 @@ export function runCarfaxAudit(vehicle = {}, maintenanceRecords = []) {
   const km = parseInt(vehicle.km || 120000, 10);
   const age = Math.max(1, currentYear - year);
 
+  const hasRecords = Array.isArray(maintenanceRecords) && maintenanceRecords.length > 0;
+
   // VIN DLQ Check
-  const vinCheck = validateVinNumber(vehicle.chassis_no || vehicle.chassis_number || "1HGCR2F83HA000000");
+  const vinCheck = validateVinNumber(vehicle.chassis_no || vehicle.chassis_number || "");
 
   // Ownership Classifier
-  let ownershipType = "1. Sahibinden (Bireysel Kullanım)";
+  let ownershipType = "Kullanıcı Kaydı";
   if (age > 4 || km > 80000) {
-    ownershipType = "2. Sahibinden (Düzenli Bakımlı)";
+    ownershipType = "İkinci El Devir Kaydı";
   }
 
   // Odometer Fraud Analysis
-  const sortedRecords = [...maintenanceRecords].sort((a, b) => new Date(a.changed_date) - new Date(b.changed_date));
+  const sortedRecords = hasRecords
+    ? [...maintenanceRecords].sort((a, b) => new Date(a.changed_date) - new Date(b.changed_date))
+    : [];
   let rollbackDetected = false;
   let maxKmSeen = 0;
 
@@ -121,25 +125,32 @@ export function runCarfaxAudit(vehicle = {}, maintenanceRecords = []) {
 
   const exponentialValuation = calculateCarfaxExponentialValue(750000, activeRisks);
 
-  const odometerStatus = rollbackDetected
+  const odometerStatus = !hasRecords
+    ? { isRollback: false, label: "⚪ HENÜZ KAYIT GİRİLMEDİ", badgeColor: "text-slate-400 bg-slate-500/10 border-slate-500/30" }
+    : rollbackDetected
     ? { isRollback: true, label: "🔴 ŞÜPHELİ SAYAÇ DÜŞÜRME", badgeColor: "text-rose-400 bg-rose-500/10 border-rose-500/30" }
     : { isRollback: false, label: "🟢 KİLOMETRE ORİJİNAL (SAYAÇ DÜZENLİ)", badgeColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30" };
 
-  const recallStatus = { hasActiveRecall: false, count: 0, title: "✅ SIFIR GERİ ÇAĞIRMA BÜLTENİ", message: "Üretici tarafından yayınlanmış herhangi bir güvenlik geri çağırma riski bulunmamaktadır." };
+  const recallStatus = {
+    hasActiveRecall: false,
+    count: 0,
+    title: "✅ SIFIR GERİ ÇAĞIRMA BÜLTENİ",
+    message: "Üretici tarafından yayınlanmış herhangi bir güvenlik geri çağırma riski bulunmamaktadır."
+  };
 
-  let score = 100;
+  let score = hasRecords ? 100 : 75; // Default neutral baseline if no maintenance logs yet
   if (rollbackDetected) score -= 45;
-  if (!vinCheck.isValid) score -= 10;
+  if (!vinCheck.isValid && vehicle.chassis_no) score -= 10;
 
   return {
-    vehicleScore: Math.max(20, score),
+    vehicleScore: hasRecords ? Math.max(20, score) : "75 (Veri Ekleme Bekleniyor)",
     vinCheck,
     ownershipType,
-    titleGuarantee: "TEMİZ RUHSAT & ŞASE GÜVENCESİ (RECONSTRUCTED TITLE YOK)",
+    titleGuarantee: hasRecords ? "TEMİZ RUHSAT & ŞASE GÜVENCESİ" : "KAYIT GİRİLMEDİ (DOĞRULAMA BEKLİYOR)",
     odometerStatus,
     recallStatus,
     exponentialValuation,
     totalVerifiedRecords: maintenanceRecords.length,
-    carfaxSeal: "CARFAX VERIFIED 1:1 CERTIFIED REPORT"
+    carfaxSeal: hasRecords ? "CARFAX ONAYLI RAPOR" : "TASLAK PASAPORT (KAYIT BEKLENİYOR)"
   };
 }
