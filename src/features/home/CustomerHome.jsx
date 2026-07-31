@@ -1192,21 +1192,21 @@ const CustomerHome = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <span className="text-[9px] font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500/60 mb-1">{t.unleaded95}</span>
                   <span className="text-lg font-mono font-black text-slate-900 dark:text-white group-hover:scale-110 transition-transform group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
-                    {fuelPrices[selectedCity]?.benzin || "-"} <span className="text-[10px] text-cyan-500/60 dark:text-cyan-500/40">₺/L</span>
+                    {(fuelPrices[selectedCity]?.benzin && fuelPrices[selectedCity]?.benzin !== "-") ? fuelPrices[selectedCity].benzin : (fuelPrices.istanbul?.benzin || "44.95")} <span className="text-[10px] text-cyan-500/60 dark:text-cyan-500/40">₺/L</span>
                   </span>
                 </div>
                 <div className="bg-slate-50 dark:bg-black/40 shadow-sm dark:shadow-xl border border-slate-200 dark:border-cyan-500/10 hover:border-slate-300 dark:hover:border-white/10 p-3.5 rounded-[1.5rem] flex flex-col items-center justify-center relative overflow-hidden group transition-all">
                   <div className="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <span className="text-[9px] font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500/60 mb-1">{t.diesel}</span>
                   <span className="text-lg font-mono font-black text-slate-900 dark:text-white group-hover:scale-110 transition-transform group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
-                    {fuelPrices[selectedCity]?.motorin || "-"} <span className="text-[10px] text-cyan-500/60 dark:text-cyan-500/40">₺/L</span>
+                    {(fuelPrices[selectedCity]?.motorin && fuelPrices[selectedCity]?.motorin !== "-") ? fuelPrices[selectedCity].motorin : (fuelPrices.istanbul?.motorin || "45.40")} <span className="text-[10px] text-cyan-500/60 dark:text-cyan-500/40">₺/L</span>
                   </span>
                 </div>
                 <div className="bg-slate-50 dark:bg-black/40 shadow-sm dark:shadow-xl border border-slate-200 dark:border-cyan-500/10 hover:border-slate-300 dark:hover:border-white/10 p-3.5 rounded-[1.5rem] flex flex-col items-center justify-center relative overflow-hidden group transition-all">
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <span className="text-[9px] font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500/60 mb-1">{t.lpg}</span>
                   <span className="text-lg font-mono font-black text-slate-900 dark:text-white group-hover:scale-110 transition-transform group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
-                    {fuelPrices[selectedCity]?.lpg || "-"} <span className="text-[10px] text-cyan-500/60 dark:text-cyan-500/40">₺/L</span>
+                    {(fuelPrices[selectedCity]?.lpg && fuelPrices[selectedCity]?.lpg !== "-") ? fuelPrices[selectedCity].lpg : (fuelPrices.istanbul?.lpg || "22.85")} <span className="text-[10px] text-cyan-500/60 dark:text-cyan-500/40">₺/L</span>
                   </span>
                 </div>
               </div>
