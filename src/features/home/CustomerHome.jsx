@@ -386,8 +386,8 @@ const CustomerHome = () => {
       {/* CORE CONTAINER: Responsive 3-Column Layout on Desktop */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-8 relative z-10 space-y-6">
         
-        {/* 1. TOP MOST PRIMARY CARD: VEHICLE COCKPIT MASTER MODULE */}
-        {activeVehicle && (
+        {/* 1. TOP MOST PRIMARY CARD: VEHICLE COCKPIT OR WELCOME BANNER */}
+        {activeVehicle ? (
           <div className="bg-white dark:bg-[#0a0f24]/80 rounded-[2.5rem] p-6 sm:p-7 border border-slate-200 dark:border-white/10 shadow-xl relative overflow-hidden backdrop-blur-2xl">
             <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 dark:bg-white/5 rounded-full blur-3xl pointer-events-none -mr-12 -mt-12"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20"></div>
@@ -405,18 +405,33 @@ const CustomerHome = () => {
                   </p>
                 </div>
                 
-                <button
-                  onClick={() => {
-                    if (isGuest) {
-                      openModal("login");
-                    } else {
-                      navigate("/app/profile");
-                    }
-                  }}
-                  className="w-10 h-10 rounded-xl bg-cyan-500/10 dark:bg-cyan-500/5 shadow-md dark:shadow-xl border border-slate-200 dark:border-white/10 flex items-center justify-center text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 hover:border-cyan-400 transition-all active-scale cursor-pointer shrink-0"
-                >
-                  <User size={18} />
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      if (isGuest) {
+                        openModal("login");
+                      } else {
+                        setShowVehicleSelector(true);
+                      }
+                    }}
+                    className="px-3.5 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-xs font-black uppercase tracking-wider border border-cyan-500/20 flex items-center gap-1.5 transition-all cursor-pointer"
+                  >
+                    <Plus size={14} /> Araç Değiştir / Ekle
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      if (isGuest) {
+                        openModal("login");
+                      } else {
+                        navigate("/app/profile");
+                      }
+                    }}
+                    className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-white hover:text-cyan-400 transition-all cursor-pointer shrink-0"
+                  >
+                    <User size={18} />
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-center border-t border-slate-200 dark:border-cyan-500/10 pt-6">
@@ -475,6 +490,42 @@ const CustomerHome = () => {
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        ) : (
+          /* WELCOME & ADD VEHICLE BANNER (TOP #1 POSITION) */
+          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0a0f24] text-white border border-cyan-500/30 rounded-[2.5rem] p-7 sm:p-9 text-center relative overflow-hidden group shadow-2xl backdrop-blur-md">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none -mr-10 -mt-10"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-sky-500/15 rounded-full blur-2xl pointer-events-none -ml-10 -mb-10"></div>
+
+            <div className="relative z-10 max-w-xl mx-auto">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-sky-500 text-slate-950 flex items-center justify-center mx-auto mb-4 shadow-xl shadow-cyan-500/30 border border-cyan-300">
+                <Car size={32} />
+              </div>
+              
+              <span className="bg-cyan-500/20 text-cyan-400 font-mono text-[9px] font-black uppercase tracking-[0.25em] px-3 py-1 rounded-full border border-cyan-500/30 mb-3 inline-block">
+                GARAJANIZ RAPIDSY KORUMASINDA
+              </span>
+
+              <h2 className="text-2xl sm:text-3xl font-mono font-black tracking-tighter uppercase mb-2 text-white">
+                {t.welcomeToRapidsy}
+              </h2>
+              <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed mb-6 font-medium">
+                {isGuest ? t.guestModeDesc : "Garajınıza ilk aracınızı ekleyin, parçadan ustaya, dijital pasaporttan periyodik bakıma tüm geçmişinizi anında yönetin."}
+              </p>
+              
+              <button
+                onClick={() => {
+                  if (isGuest) {
+                    openModal("login");
+                  } else {
+                    setShowVehicleSelector(true);
+                  }
+                }}
+                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 px-8 py-4 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-cyan-500/25 cursor-pointer flex items-center justify-center gap-2 mx-auto"
+              >
+                <Plus size={16} /> {isGuest ? t.loginOrRegister : "GARAJA İLK ARACINI EKLE"}
+              </button>
             </div>
           </div>
         )}
@@ -606,40 +657,6 @@ const CustomerHome = () => {
                   serviceCategories={serviceCategories} 
                 />
                 
-                {/* GUEST MODE ONBOARDING CARD */}
-                <div className="bg-white dark:bg-[#0a0f24]/85 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-8 text-center relative overflow-hidden group shadow-2xl backdrop-blur-md">
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl pointer-events-none -mr-8 -mt-8"></div>
-                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl pointer-events-none"></div>
-
-                  <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-cyan-500 to-sky-500 text-white flex items-center justify-center mx-auto mb-5 shadow-lg shadow-cyan-500/20">
-                    {isGuest ? (
-                      <UserCheck size={28} className="animate-pulse-slow" />
-                    ) : (
-                      <Car size={28} className="animate-pulse-slow" />
-                    )}
-                  </div>
-                  
-                  <h3 className="text-2xl font-mono font-black tracking-tighter uppercase mb-2 text-slate-900 dark:text-white">{t.welcomeToRapidsy}</h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed mb-6 font-semibold">
-                    {isGuest ? t.guestModeDesc : t.addCarToGarageDesc}
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-sm mx-auto">
-                    <button
-                      onClick={() => {
-                        if (isGuest) {
-                          openModal("login");
-                        } else {
-                          setShowVehicleSelector(true);
-                        }
-                      }}
-                      className="w-full bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 text-white px-6 py-4 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-lg shadow-cyan-500/15 border-none cursor-pointer"
-                    >
-                      {isGuest ? t.loginOrRegister : t.addNewCar}
-                    </button>
-                  </div>
-                </div>
-
                 <FeaturedDealsPanel t={t} featuredDeals={featuredDeals} showAlert={showAlert} />
 
                 <PopularProvidersPanel 
