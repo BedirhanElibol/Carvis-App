@@ -30,7 +30,15 @@ const FuelScreen = () => {
   });
 
   const fetchLogs = useCallback(async () => {
-    if (!currentUser?.id || !activeVehicle?.id) return;
+    if (!currentUser?.id) {
+      setLoading(false);
+      return;
+    }
+    if (!activeVehicle?.id) {
+      setLoading(false);
+      setLogs([]);
+      return;
+    }
     try {
       setLoading(true);
       const { data, error } = await supabase
@@ -50,6 +58,7 @@ const FuelScreen = () => {
       }
     } catch (error) {
       console.error("Catch error:", error);
+      setLogs([]);
     } finally {
       setLoading(false);
     }

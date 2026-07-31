@@ -357,6 +357,10 @@ export const AppRoutes = () => {
           }
         />
         <Route
+          path="/fuel"
+          element={<Navigate to="/app/fuel" replace />}
+        />
+        <Route
           path="/app/ev-charging"
           element={
             <ProtectedRoute allowedRoles={["customer", "admin"]}>
