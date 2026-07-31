@@ -279,7 +279,13 @@ const FuelScreen = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Yakıt Tipi</label>
-                  <input type="text" name="fuel_type" value={formData.fuel_type} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-slate-800 border border-black/5 dark:border-white/5 rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none transition-colors" />
+                  <select name="fuel_type" value={formData.fuel_type} onChange={handleInputChange} className="w-full bg-slate-50 dark:bg-slate-800 border border-black/5 dark:border-white/5 rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-white focus:border-primary-500 focus:outline-none transition-colors appearance-none">
+                    <option value="Benzin">Benzin</option>
+                    <option value="Dizel">Dizel</option>
+                    <option value="LPG">LPG</option>
+                    <option value="Elektrik">Elektrik</option>
+                    <option value="Hibrit">Hibrit</option>
+                  </select>
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">İstasyon</label>
