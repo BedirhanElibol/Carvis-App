@@ -965,7 +965,7 @@ const CustomerHome = () => {
             )}
 
             {/* COMPATIBLE SPARE PARTS RECOMMENDED DEALS */}
-            {activeVehicle && compatibleParts.length > 0 && (
+            {activeVehicle && (compatibleParts || []).length > 0 && (
               <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 space-y-5 backdrop-blur-md shadow-sm dark:shadow-xl">
                 <div className="flex justify-between items-center border-b border-slate-200 dark:border-cyan-500/10 pb-4">
                   <div>
@@ -985,7 +985,7 @@ const CustomerHome = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {compatibleParts.map((part) => (
+                  {(compatibleParts || []).map((part) => (
                     <div key={part.id} className="bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-cyan-500/10 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-300 dark:hover:border-white/10 transition-all shadow-sm dark:shadow-xl group">
                       <div className="relative rounded-xl overflow-hidden aspect-video bg-slate-100 dark:bg-[#0a0f24] mb-3 border border-slate-200 dark:border-cyan-500/10">
                         <img src={part.image} alt={part.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 dark:opacity-80 group-hover:opacity-100" />
