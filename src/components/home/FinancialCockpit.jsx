@@ -127,7 +127,7 @@ const FinancialCockpit = ({ vehicle }) => {
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-2">
                   <BarChart3 className="text-cyan-400" size={18} />
-                  <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-300">Yıllık Toplam Sahip Olma Maliyeti (TCO)</span>
+                  <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-300">Tahmini Yıllık Sahip Olma Maliyeti (TCO)</span>
                 </div>
                 <span className="text-xs font-mono bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded-full font-bold">
                   {tco.costPerKm} ₺/km
@@ -135,13 +135,13 @@ const FinancialCockpit = ({ vehicle }) => {
               </div>
 
               <div>
-                <div className="flex items-baseline gap-2 mb-4">
+                <div className="flex items-baseline gap-2 mb-3">
                   <h2 className="text-3xl font-mono font-black text-white">{formatCurrency(tco.yearlyTotal)}</h2>
                   <span className="text-xs text-slate-400 font-mono">/ yıl ({formatCurrency(tco.monthlyTotal)} / ay)</span>
                 </div>
 
                 {/* Expense Breakdown Progress */}
-                <div className="space-y-2">
+                <div className="space-y-2 mb-3">
                   {tco.breakdown.map((item, idx) => (
                     <div key={idx} className="flex justify-between items-center text-xs">
                       <div className="flex items-center gap-2">
@@ -152,6 +152,10 @@ const FinancialCockpit = ({ vehicle }) => {
                     </div>
                   ))}
                 </div>
+
+                <p className="text-[9px] text-cyan-400/80 font-mono italic border-t border-white/10 pt-2">
+                  💡 *Türkiye geneli yıllık 15.000 KM binek araç ortalama maliyet tahminidir.
+                </p>
               </div>
             </motion.div>
           )}
@@ -159,7 +163,10 @@ const FinancialCockpit = ({ vehicle }) => {
 
         {/* Insurances & Taxes Column */}
         <div className="bg-white dark:bg-[#0a0f24]/85 rounded-3xl p-5 shadow-sm border border-slate-200 dark:border-white/10 flex flex-col justify-between">
-          <h4 className="text-xs font-mono font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Poliçe & Zorunlu Ödemeler</h4>
+          <div className="flex justify-between items-center mb-3">
+            <h4 className="text-xs font-mono font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Poliçe & Zorunlu Ödemeler</h4>
+            <span className="text-[9px] font-mono font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">Örnek Takip</span>
+          </div>
           
           <div className="space-y-4">
             {insurances.map((item) => {
