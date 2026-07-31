@@ -384,8 +384,101 @@ const CustomerHome = () => {
 
 
       {/* CORE CONTAINER: Responsive 3-Column Layout on Desktop */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-8 relative z-10 space-y-6">
         
+        {/* 1. TOP MOST PRIMARY CARD: VEHICLE COCKPIT MASTER MODULE */}
+        {activeVehicle && (
+          <div className="bg-white dark:bg-[#0a0f24]/80 rounded-[2.5rem] p-6 sm:p-7 border border-slate-200 dark:border-white/10 shadow-xl relative overflow-hidden backdrop-blur-2xl">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 dark:bg-white/5 rounded-full blur-3xl pointer-events-none -mr-12 -mt-12"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20"></div>
+            
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h1 className="text-3xl sm:text-4xl font-mono font-black tracking-tighter uppercase leading-none text-slate-900 dark:text-white">
+                    {activeVehicle.brand}{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-sky-500 dark:from-cyan-400 dark:to-sky-400">{activeVehicle.model}</span>
+                  </h1>
+                  <p className="text-[10px] sm:text-xs text-slate-500 dark:text-cyan-200/60 font-mono tracking-widest uppercase mt-2 flex items-center gap-2 flex-wrap">
+                    <span className="bg-slate-100 dark:bg-white/5 px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white font-bold">{activeVehicle.plate}</span> 
+                    <span className="text-sky-600 dark:text-sky-400 font-black">{activeVehicle.km?.toLocaleString()} KM</span>
+                  </p>
+                </div>
+                
+                <button
+                  onClick={() => {
+                    if (isGuest) {
+                      openModal("login");
+                    } else {
+                      navigate("/app/profile");
+                    }
+                  }}
+                  className="w-10 h-10 rounded-xl bg-cyan-500/10 dark:bg-cyan-500/5 shadow-md dark:shadow-xl border border-slate-200 dark:border-white/10 flex items-center justify-center text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 hover:border-cyan-400 transition-all active-scale cursor-pointer shrink-0"
+                >
+                  <User size={18} />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-center border-t border-slate-200 dark:border-cyan-500/10 pt-6">
+                <div className="flex items-center gap-5 bg-slate-50 dark:bg-black/40 p-4 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-xl">
+                  <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
+                    <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-500/20 to-sky-500/10 border-2 border-cyan-500/40 flex items-center justify-center shadow-md dark:shadow-xl">
+                      <Car size={28} className="text-cyan-500 dark:text-cyan-400" />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <h4 className="text-[10px] font-black text-cyan-600 dark:text-cyan-500 uppercase tracking-widest leading-none">
+                        KİLOMETRE DURUMU
+                      </h4>
+                    </div>
+                    <p className="text-sm font-black text-slate-900 dark:text-cyan-300 mt-1 font-mono">
+                      {activeVehicle.km?.toLocaleString() || "—"} KM
+                    </p>
+                    <p className="text-[10px] text-slate-500 dark:text-cyan-100/50 mt-1 leading-relaxed">
+                      Bakım takibinizi Araç Pasaportu'ndan yönetin.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-slate-50 dark:bg-black/40 p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-xl relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-12 h-12 bg-sky-500/10 blur-xl"></div>
+                    <p className="text-[9px] font-black text-sky-600 dark:text-sky-400/80 uppercase tracking-widest mb-1.5 font-mono">
+                      {t.lastOilChange}
+                    </p>
+                    <p className="text-xs font-black text-slate-900 dark:text-white font-mono leading-none">
+                      {activeVehicle.last_oil_change ? new Date(activeVehicle.last_oil_change).toLocaleDateString("tr-TR") : t.notSpecified}
+                    </p>
+                    <p className="text-[9px] text-cyan-600 dark:text-cyan-400 mt-2.5 uppercase font-mono font-black tracking-wide">
+                      {t.protected10k}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      triggerHaptic("impact");
+                      setShowVehiclePassport(true);
+                    }}
+                    className="bg-cyan-500/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 text-left hover:bg-slate-100 dark:hover:bg-white/5 shadow-sm dark:shadow-xl transition-all active-scale group cursor-pointer relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-transparent"></div>
+                    <p className="text-[9px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1.5 font-mono">
+                      {t.digitalPassport}
+                    </p>
+                    <p className="text-xs font-black text-slate-900 dark:text-white leading-none flex items-center gap-1 font-sans">
+                      {t.history} <ChevronRight size={12} className="text-cyan-500 dark:text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
+                    </p>
+                    <p className="text-[9px] text-sky-600 dark:text-sky-400 mt-2.5 uppercase font-mono font-black tracking-wide">
+                      {t.allHistory}
+                    </p>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* HIGH-PRIORITY ACTION LAUNCHPAD & URGENT STATUS BAR */}
         <div className="mb-8 space-y-4">
           
@@ -632,99 +725,6 @@ const CustomerHome = () => {
                     <ChevronRight size={24} className="text-cyan-500/70 group-hover:translate-x-1 transition-all hidden sm:block" />
                   </div>
                 </button>
-              </div>
-            )}
-
-            {/* VEHICLE COCKPIT MASTER MODULE */}
-            {activeVehicle && (
-              <div className="bg-white dark:bg-[#0a0f24]/80 rounded-[2.5rem] p-6 border border-slate-200 dark:border-white/10 shadow-xl relative overflow-hidden backdrop-blur-2xl">
-                <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 dark:bg-white/5 rounded-full blur-3xl pointer-events-none -mr-12 -mt-12"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-6">
-                    <div>
-                      <h1 className="text-3xl font-mono font-black tracking-tighter uppercase leading-none text-slate-900 dark:text-white">
-                        {activeVehicle.brand}{" "}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-sky-500 dark:from-cyan-400 dark:to-sky-400">{activeVehicle.model}</span>
-                      </h1>
-                      <p className="text-[10px] text-slate-500 dark:text-cyan-200/60 font-mono tracking-widest uppercase mt-1.5 flex items-center gap-2">
-                        <span className="bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">{activeVehicle.plate}</span> 
-                        <span className="text-sky-600 dark:text-sky-400 font-bold">{activeVehicle.km?.toLocaleString()} KM</span>
-                      </p>
-                    </div>
-                    
-                    <button
-                      onClick={() => {
-                        if (isGuest) {
-                          openModal("login");
-                        } else {
-                          navigate("/app/profile");
-                        }
-                      }}
-                      className="w-10 h-10 rounded-xl bg-cyan-500/10 dark:bg-cyan-500/5 shadow-md dark:shadow-xl border border-slate-200 dark:border-white/10 flex items-center justify-center text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 hover:border-cyan-400 transition-all active-scale cursor-pointer"
-                    >
-                      <User size={18} />
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center border-t border-slate-200 dark:border-cyan-500/10 pt-6">
-                    <div className="flex items-center gap-5 bg-slate-50 dark:bg-black/40 p-4 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-xl">
-                      <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
-                        <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-500/20 to-sky-500/10 border-2 border-cyan-500/40 flex items-center justify-center shadow-md dark:shadow-xl">
-                          <Car size={28} className="text-cyan-500 dark:text-cyan-400" />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-1.5">
-                          <h4 className="text-[10px] font-black text-cyan-600 dark:text-cyan-500 uppercase tracking-widest leading-none">
-                            KİLOMETRE DURUMU
-                          </h4>
-                        </div>
-                        <p className="text-sm font-black text-slate-900 dark:text-cyan-300 mt-1 font-mono">
-                          {activeVehicle.km?.toLocaleString() || "—"} KM
-                        </p>
-                        <p className="text-[10px] text-slate-500 dark:text-cyan-100/50 mt-1 leading-relaxed">
-                          Bakım takibinizi Araç Pasaportu'ndan yönetin.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-slate-50 dark:bg-black/40 p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-12 h-12 bg-sky-500/10 blur-xl"></div>
-                        <p className="text-[9px] font-black text-sky-600 dark:text-sky-400/80 uppercase tracking-widest mb-1.5 font-mono">
-                          {t.lastOilChange}
-                        </p>
-                        <p className="text-xs font-black text-slate-900 dark:text-white font-mono leading-none">
-                          {activeVehicle.last_oil_change ? new Date(activeVehicle.last_oil_change).toLocaleDateString("tr-TR") : t.notSpecified}
-                        </p>
-                        <p className="text-[9px] text-cyan-600 dark:text-cyan-400 mt-2.5 uppercase font-mono font-black tracking-wide">
-                          {t.protected10k}
-                        </p>
-                      </div>
-
-                      <button
-                        onClick={() => {
-                          triggerHaptic("impact");
-                          setShowVehiclePassport(true);
-                        }}
-                        className="bg-cyan-500/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 text-left hover:bg-slate-100 dark:hover:bg-white/5 shadow-sm dark:shadow-xl transition-all active-scale group cursor-pointer relative overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-transparent"></div>
-                        <p className="text-[9px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1.5 font-mono">
-                          {t.digitalPassport}
-                        </p>
-                        <p className="text-xs font-black text-slate-900 dark:text-white leading-none flex items-center gap-1 font-sans">
-                          {t.history} <ChevronRight size={12} className="text-cyan-500 dark:text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
-                        </p>
-                        <p className="text-[9px] text-sky-600 dark:text-sky-400 mt-2.5 uppercase font-mono font-black tracking-wide">
-                          {t.allHistory}
-                        </p>
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             )}
 
