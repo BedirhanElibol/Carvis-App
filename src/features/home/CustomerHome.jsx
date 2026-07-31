@@ -34,7 +34,7 @@ import { useFuelPrices } from "../../hooks/useFuelPrices";
 // Replaced popularProviders with dynamic state
 
 const CustomerHome = () => {
-  const { t, showAlert, openModal, selectedLocation, setSelectedLocation } = useUI();
+  const { t, showAlert, openModal, selectedLocation, setSelectedLocation, theme } = useUI();
   const { currentVehicle, addVehicle } = useGarage();
   const { currentUser } = useAuth();
   const { quotes } = useQuote();
@@ -308,10 +308,9 @@ const CustomerHome = () => {
   };
 
   // Compatible parts data will be fetched dynamically
-  const compatibleParts = [];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white font-sans pb-32 relative selection:bg-cyan-500/30">
+    <div className={`min-h-screen font-sans pb-32 relative selection:bg-cyan-500/30 transition-colors duration-300 ${theme === 'dark' ? 'dark bg-[#030712] text-white' : 'bg-slate-50 text-slate-900'}`}>
       
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-0 dark:opacity-20">

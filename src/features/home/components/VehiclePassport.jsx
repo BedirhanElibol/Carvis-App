@@ -298,15 +298,15 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Background Pattern */}
-        <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-teal-500/10 via-slate-900/0 to-slate-900 pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-36 bg-gradient-to-b from-teal-500/10 via-teal-500/5 to-transparent pointer-events-none" />
 
         {/* Top Bar for Action Buttons & Badges (Sticky Top) */}
-        <div className="px-4 pt-3 sm:px-8 sm:pt-5 flex items-center justify-between z-30 relative sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-black/5 dark:border-white/5 pb-2.5">
+        <div className="px-4 pt-3 sm:px-8 sm:pt-5 flex items-center justify-between z-30 relative sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-white/10 pb-2.5">
           <div className="flex items-center gap-1.5 flex-wrap pr-2">
-            <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-teal-600 dark:text-teal-400 bg-teal-500/10 px-2.5 py-1 rounded-full border border-teal-500/20">
-              Carvis Araç Pasaportu
+            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-500/10 px-2.5 py-1 rounded-full border border-teal-200 dark:border-teal-500/20">
+              Rapidsy Araç Pasaportu
             </span>
-            <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 hidden xs:inline-block">
+            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-500/20 hidden xs:inline-block">
               Resmi Hafıza
             </span>
           </div>
@@ -316,7 +316,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               type="button"
               onClick={handleDownloadPdf}
               disabled={pdfDownloading}
-              className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-teal-500 hover:bg-teal-400 text-white dark:text-slate-950 font-black text-[10px] sm:text-[11px] uppercase tracking-wider shadow-md shadow-teal-500/20 active-scale transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 border-none"
+              className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider shadow-md shadow-teal-500/20 active-scale transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 border-none"
             >
               {pdfDownloading ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
               <span>{pdfDownloading ? "HAZIRLANIYOR..." : "PDF İNDİR"}</span>
@@ -328,7 +328,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 e.stopPropagation();
                 onClose?.();
               }}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white flex items-center justify-center border border-black/10 dark:border-white/20 shadow-sm active-scale transition-all cursor-pointer"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white flex items-center justify-center border border-slate-200 dark:border-white/20 shadow-sm active-scale transition-all cursor-pointer"
               aria-label="Kapat"
             >
               <X size={16} className="sm:hidden" />
@@ -392,12 +392,12 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         </div>
 
         {/* Tab Selector */}
-        <div className="px-3 sm:px-8 border-b border-black/5 dark:border-white/5 flex gap-1.5 sm:gap-2 overflow-x-auto relative z-10 scrollbar-none">
+        <div className="px-3 sm:px-8 border-b border-slate-200 dark:border-white/10 flex gap-1.5 sm:gap-2 overflow-x-auto relative z-10 scrollbar-none bg-slate-50/50 dark:bg-slate-900/50">
           {[
             { id: "overview", label: t.generalStatus || "Genel Durum", icon: Compass },
             { id: "carfax", label: "Resmi Geçmiş & Hasar", icon: ShieldCheck },
-            { id: "blockchain", label: "Dijital Mühür & Km", icon: FileLock2 },
-            { id: "timeline", label: t.memoryTimeline || "Zaman Çizelgesi", icon: History },
+            { id: "blockchain", label: "Dijital Mühür & KM Güvenliği", icon: FileLock2 },
+            { id: "timeline", label: t.memoryTimeline || "Hafıza & Zaman Tüneli", icon: History },
             { id: "documents", label: t.documentVault || "Belge Kasası", icon: File },
             { id: "maintenance", label: "Bakım Takibi", icon: Wrench }
           ].map((tab) => {
@@ -407,10 +407,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`py-2.5 px-3 sm:py-3.5 sm:px-4 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider border-b-2 flex items-center gap-1.5 transition-all bg-transparent cursor-pointer shrink-0 whitespace-nowrap ${
+                className={`py-3 px-3.5 text-[11px] sm:text-xs font-black uppercase tracking-wider border-b-2 flex items-center gap-1.5 transition-all bg-transparent cursor-pointer shrink-0 whitespace-nowrap ${
                   isActive 
-                    ? "border-teal-500 text-teal-600 dark:text-white bg-teal-500/10 sm:bg-transparent rounded-t-lg sm:rounded-none" 
-                    : "border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+                    ? "border-teal-500 text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-500/10 rounded-t-xl" 
+                    : "border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 }`}
               >
                 <Icon size={14} className="sm:hidden" />
@@ -433,18 +433,18 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 className="grid grid-cols-1 md:grid-cols-3 gap-6"
               >
                 {/* Vehicle Summary Card */}
-                <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-slate-50 dark:bg-slate-950/20 flex flex-col items-center justify-center text-center">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-6">Araç Özeti</h4>
+                <div className="p-6 rounded-3xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-950/40 flex flex-col items-center justify-center text-center shadow-sm">
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-6">Araç Özeti</h4>
                   <div className="relative w-36 h-36 flex items-center justify-center">
-                    <div className="w-28 h-28 rounded-full bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-500/30 flex items-center justify-center">
-                      <Car size={40} className="text-teal-400" />
+                    <div className="w-28 h-28 rounded-full bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-500/40 flex items-center justify-center shadow-inner">
+                      <Car size={40} className="text-teal-600 dark:text-teal-400" />
                     </div>
                   </div>
                   <div className="mt-4 space-y-1">
-                    <p className="text-lg font-black text-slate-900 dark:text-white">{vehicle.km?.toLocaleString() || "—"} km</p>
-                    <p className="text-[9px] font-black text-teal-400 uppercase tracking-widest">Güncel Kilometre</p>
+                    <p className="text-xl font-black text-slate-900 dark:text-white font-mono">{vehicle.km?.toLocaleString() || "—"} KM</p>
+                    <p className="text-[9px] font-black text-teal-600 dark:text-teal-400 uppercase tracking-widest">Güncel Kilometre</p>
                   </div>
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed mt-4">
+                  <p className="text-xs font-bold text-slate-600 dark:text-slate-400 leading-relaxed mt-4">
                     Bakım takibinizi "Bakım Takibi" sekmesinden güncelleyebilirsiniz.
                   </p>
                 </div>
@@ -454,20 +454,20 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   {/* Detailed Specs Grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {[
-                      { label: t.mileage || "Kilometre", val: `${vehicle.km?.toLocaleString() || "—"} km`, icon: Gauge },
-                      { label: t.lastMaintenance || "Son Bakım", val: vehicle.last_oil_change ? new Date(vehicle.last_oil_change).toLocaleDateString("tr-TR") : "Belirtilmedi", icon: Wrench },
+                      { label: t.mileage || "Kilometre", val: `${vehicle.km?.toLocaleString() || "—"} KM`, icon: Gauge },
+                      { label: t.lastMaintenance || "Son Bakım", val: vehicle.last_oil_change ? new Date(vehicle.last_oil_change).toLocaleDateString("tr-TR") : "BELİRTİLMEDİ", icon: Wrench },
                       { label: "Model Yılı", val: vehicle.year || "—", icon: CalendarCheck },
                       { label: "Motor Kodu", val: vehicle.engine_code || "—", icon: Workflow },
-                      { label: t.spareKey || "Yedek Anahtar", val: t.available || "Mevcut", icon: Key },
+                      { label: t.spareKey || "Yedek Anahtar", val: t.available || "MEVCUT", icon: Key },
                       { label: "Plaka", val: vehicle.plate || "—", icon: CreditCard }
                     ].map((spec, i) => {
                       const SpecIcon = spec.icon;
                       return (
-                        <div key={i} className="p-5 rounded-2xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 flex flex-col justify-between">
-                          <SpecIcon className="text-teal-400 mb-4" size={20} />
+                        <div key={i} className="p-5 rounded-2xl bg-white dark:bg-slate-800/80 shadow-md border border-slate-200 dark:border-white/10 flex flex-col justify-between">
+                          <SpecIcon className="text-teal-600 dark:text-teal-400 mb-4" size={20} />
                           <div>
-                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider block">{spec.label}</span>
-                            <span className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1 block">{spec.val}</span>
+                            <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider block">{spec.label}</span>
+                            <span className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1 block font-mono">{spec.val}</span>
                           </div>
                         </div>
                       );
@@ -475,11 +475,11 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   </div>
 
                   {/* Info Panel */}
-                  <div className="p-6 rounded-3xl bg-teal-500/10 border border-teal-500/20 flex gap-4">
-                    <Lightbulb className="text-teal-400 flex-shrink-0" size={24} />
+                  <div className="p-6 rounded-3xl bg-teal-50 dark:bg-teal-500/10 border border-teal-200 dark:border-teal-500/20 flex gap-4 shadow-sm">
+                    <Lightbulb className="text-teal-600 dark:text-teal-400 flex-shrink-0" size={24} />
                     <div>
                       <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Bakım Hatırlatması</h4>
-                      <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
+                      <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed">
                         Bakım Takibi sekmesinde parça değişim tarihlerinizi ve km bilgilerinizi kaydedin. Rapidsy sizi zamanı geldiğinde uyaracaktır.
                       </p>
                     </div>
