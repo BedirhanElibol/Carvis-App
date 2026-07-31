@@ -56,6 +56,7 @@ const CustomerHome = () => {
   ], [t]);
 
   const featuredDeals = useMemo(() => [], []);
+  const compatibleParts = useMemo(() => [], []);
 
   const [showVehicleSelector, setShowVehicleSelector] = useState(false);
   const [showServiceHistory, setShowServiceHistory] = useState(false);

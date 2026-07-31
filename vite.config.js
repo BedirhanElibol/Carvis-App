@@ -34,7 +34,7 @@ export default defineConfig({
             }
           }
         ],
-        navigationPreload: true,
+        navigationPreload: false,
       },
       manifest: {
         name: 'Rapidsy - Akıllı Araç Platformu',
