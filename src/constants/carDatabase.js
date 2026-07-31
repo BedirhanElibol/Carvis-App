@@ -3,6 +3,350 @@ export const CAR_DATABASE = [
     "brand": "Alfa Romeo",
     "series": [
       {
+        "name": "Giulietta",
+        "years": "2010-2021",
+        "models": [
+          {
+            "name": "1.4 TB MultiAir 170",
+            "engine_code": "940A2000",
+            "fuel": "Benzin",
+            "hp": 170,
+            "cc": 1368,
+            "cylinders": 4,
+            "transmission": "6-Manuel / TCT Otomatik",
+            "trims": ["Progression", "Distinctive", "Super", "Speciale"]
+          },
+          {
+            "name": "1.4 TB 120",
+            "engine_code": "198A4000",
+            "fuel": "Benzin",
+            "hp": 120,
+            "cc": 1368,
+            "cylinders": 4,
+            "transmission": "6-Manuel",
+            "trims": ["Progression", "Distinctive"]
+          },
+          {
+            "name": "1.6 JTDm-2 105/120",
+            "engine_code": "940A3000",
+            "fuel": "Dizel",
+            "hp": 120,
+            "cc": 1598,
+            "cylinders": 4,
+            "transmission": "6-Manuel / TCT Otomatik",
+            "trims": ["Progression", "Distinctive", "Super"]
+          },
+          {
+            "name": "2.0 JTDm-2 150/175",
+            "engine_code": "940A5000",
+            "fuel": "Dizel",
+            "hp": 175,
+            "cc": 1956,
+            "cylinders": 4,
+            "transmission": "TCT Otomatik",
+            "trims": ["Distinctive", "Super", "Speciale"]
+          },
+          {
+            "name": "1.75 TBi 240 (Quadrifoglio Verde / Veloce)",
+            "engine_code": "940B2000",
+            "fuel": "Benzin",
+            "hp": 240,
+            "cc": 1742,
+            "cylinders": 4,
+            "transmission": "6-TCT Otomatik",
+            "trims": ["Quadrifoglio Verde", "Veloce"]
+          }
+        ]
+      },
+      {
+        "name": "Giulia",
+        "years": "2016-2024",
+        "models": [
+          {
+            "name": "2.0 Turbo 200",
+            "engine_code": "55273837",
+            "fuel": "Benzin",
+            "hp": 200,
+            "cc": 1995,
+            "cylinders": 4,
+            "transmission": "8-Otomatik AT8",
+            "trims": ["Super", "Veloce"]
+          },
+          {
+            "name": "2.0 Turbo Q4 280",
+            "engine_code": "55273837",
+            "fuel": "Benzin",
+            "hp": 280,
+            "cc": 1995,
+            "cylinders": 4,
+            "transmission": "8-Otomatik Q4 AWD",
+            "trims": ["Veloce", "Veloce Ti", "Estrema", "Competizione"]
+          },
+          {
+            "name": "2.2 Turbo Diesel 150/180/210",
+            "engine_code": "55268532",
+            "fuel": "Dizel",
+            "hp": 210,
+            "cc": 2143,
+            "cylinders": 4,
+            "transmission": "8-Otomatik AT8 / Q4",
+            "trims": ["Super", "Veloce"]
+          },
+          {
+            "name": "2.9 V6 Bi-Turbo Quadrifoglio 510",
+            "engine_code": "690T",
+            "fuel": "Benzin",
+            "hp": 510,
+            "cc": 2891,
+            "cylinders": 6,
+            "transmission": "8-Otomatik AT8",
+            "trims": ["Quadrifoglio", "GTA", "GTAm"]
+          }
+        ]
+      },
+      {
+        "name": "Stelvio",
+        "years": "2017-2024",
+        "models": [
+          {
+            "name": "2.0 Turbo Q4 280",
+            "engine_code": "55273837",
+            "fuel": "Benzin",
+            "hp": 280,
+            "cc": 1995,
+            "cylinders": 4,
+            "transmission": "8-Otomatik Q4 AWD",
+            "trims": ["Super", "Veloce", "Estrema", "Competizione"]
+          },
+          {
+            "name": "2.2 Turbo Diesel Q4 210",
+            "engine_code": "55268532",
+            "fuel": "Dizel",
+            "hp": 210,
+            "cc": 2143,
+            "cylinders": 4,
+            "transmission": "8-Otomatik Q4 AWD",
+            "trims": ["Super", "Veloce"]
+          },
+          {
+            "name": "2.9 V6 Bi-Turbo Quadrifoglio 510",
+            "engine_code": "690T",
+            "fuel": "Benzin",
+            "hp": 510,
+            "cc": 2891,
+            "cylinders": 6,
+            "transmission": "8-Otomatik Q4 AWD",
+            "trims": ["Quadrifoglio"]
+          }
+        ]
+      },
+      {
+        "name": "Tonale",
+        "years": "2022-2024",
+        "models": [
+          {
+            "name": "1.5 Hybrid 130/160",
+            "engine_code": "46347813",
+            "fuel": "Hibrit",
+            "hp": 160,
+            "cc": 1469,
+            "cylinders": 4,
+            "transmission": "7-Dual Clutch TCT",
+            "trims": ["Sprint", "Ti", "Veloce", "Edizione Speciale"]
+          },
+          {
+            "name": "1.3 PHEV Q4 280",
+            "engine_code": "46337527",
+            "fuel": "Plug-in Hibrit",
+            "hp": 280,
+            "cc": 1332,
+            "cylinders": 4,
+            "transmission": "6-Otomatik Q4 AWD",
+            "trims": ["Ti", "Veloce", "Edizione Speciale"]
+          },
+          {
+            "name": "1.6 Multijet 130",
+            "engine_code": "55280444",
+            "fuel": "Dizel",
+            "hp": 130,
+            "cc": 1598,
+            "cylinders": 4,
+            "transmission": "6-Dual Clutch TCT",
+            "trims": ["Sprint", "Ti"]
+          }
+        ]
+      },
+      {
+        "name": "MiTo",
+        "years": "2008-2018",
+        "models": [
+          {
+            "name": "1.4 TB 135/170 Quadrifoglio Verde",
+            "engine_code": "955A2000",
+            "fuel": "Benzin",
+            "hp": 170,
+            "cc": 1368,
+            "cylinders": 4,
+            "transmission": "6-Manuel / TCT",
+            "trims": ["Progression", "Distinctive", "Quadrifoglio Verde", "Veloce"]
+          },
+          {
+            "name": "1.3 JTDm 85/95",
+            "engine_code": "199B1000",
+            "fuel": "Dizel",
+            "hp": 95,
+            "cc": 1248,
+            "cylinders": 4,
+            "transmission": "5-Manuel",
+            "trims": ["Progression", "Distinctive"]
+          }
+        ]
+      },
+      {
+        "name": "159",
+        "years": "2005-2011",
+        "models": [
+          {
+            "name": "1.9 JTDm 150",
+            "engine_code": "939A2000",
+            "fuel": "Dizel",
+            "hp": 150,
+            "cc": 1910,
+            "cylinders": 4,
+            "transmission": "6-Manuel / Q-Tronic",
+            "trims": ["Progression", "Distinctive", "TI"]
+          },
+          {
+            "name": "2.0 JTDm 170",
+            "engine_code": "939B3000",
+            "fuel": "Dizel",
+            "hp": 170,
+            "cc": 1956,
+            "cylinders": 4,
+            "transmission": "6-Manuel",
+            "trims": ["Distinctive", "TI"]
+          },
+          {
+            "name": "1.75 TBi 200",
+            "engine_code": "939B1000",
+            "fuel": "Benzin",
+            "hp": 200,
+            "cc": 1742,
+            "cylinders": 4,
+            "transmission": "6-Manuel",
+            "trims": ["Distinctive", "TI"]
+          },
+          {
+            "name": "2.4 JTDm 200/210 Q4",
+            "engine_code": "939A3000",
+            "fuel": "Dizel",
+            "hp": 210,
+            "cc": 2387,
+            "cylinders": 5,
+            "transmission": "6-Manuel / Q-Tronic",
+            "trims": ["Distinctive", "TI"]
+          }
+        ]
+      },
+      {
+        "name": "156",
+        "years": "1997-2007",
+        "models": [
+          {
+            "name": "1.6 / 2.0 Twin Spark",
+            "engine_code": "AR32301",
+            "fuel": "Benzin",
+            "hp": 155,
+            "cc": 1970,
+            "cylinders": 4,
+            "transmission": "5-Manuel / Selespeed",
+            "trims": ["TS", "Distinctive"]
+          },
+          {
+            "name": "1.9 JTD 115/140/150",
+            "engine_code": "937A5000",
+            "fuel": "Dizel",
+            "hp": 150,
+            "cc": 1910,
+            "cylinders": 4,
+            "transmission": "5/6-Manuel",
+            "trims": ["Progression", "Distinctive"]
+          },
+          {
+            "name": "3.2 V6 24V GTA 250",
+            "engine_code": "AR32401",
+            "fuel": "Benzin",
+            "hp": 250,
+            "cc": 3179,
+            "cylinders": 6,
+            "transmission": "6-Manuel / Selespeed",
+            "trims": ["GTA"]
+          }
+        ]
+      },
+      {
+        "name": "147",
+        "years": "2000-2010",
+        "models": [
+          {
+            "name": "1.6 Twin Spark 105/120",
+            "engine_code": "AR37203",
+            "fuel": "Benzin",
+            "hp": 120,
+            "cc": 1598,
+            "cylinders": 4,
+            "transmission": "5-Manuel",
+            "trims": ["Impression", "Progression", "Distinctive"]
+          },
+          {
+            "name": "2.0 Twin Spark 150",
+            "engine_code": "AR32310",
+            "fuel": "Benzin",
+            "hp": 150,
+            "cc": 1970,
+            "cylinders": 4,
+            "transmission": "5-Manuel / Selespeed",
+            "trims": ["Distinctive", "BlackLine"]
+          },
+          {
+            "name": "1.9 JTD 115/140/150",
+            "engine_code": "937A5000",
+            "fuel": "Dizel",
+            "hp": 150,
+            "cc": 1910,
+            "cylinders": 4,
+            "transmission": "5/6-Manuel",
+            "trims": ["Progression", "Distinctive"]
+          },
+          {
+            "name": "3.2 V6 GTA 250",
+            "engine_code": "AR32401",
+            "fuel": "Benzin",
+            "hp": 250,
+            "cc": 3179,
+            "cylinders": 6,
+            "transmission": "6-Manuel",
+            "trims": ["GTA"]
+          }
+        ]
+      },
+      {
+        "name": "4C",
+        "years": "2013-2020",
+        "models": [
+          {
+            "name": "1.75 TBi 240",
+            "engine_code": "960A1000",
+            "fuel": "Benzin",
+            "hp": 240,
+            "cc": 1742,
+            "cylinders": 4,
+            "transmission": "6-TCT Otomatik",
+            "trims": ["Coupe", "Spider"]
+          }
+        ]
+      },
+      {
         "name": "Junior (Milano)",
         "years": "2024",
         "models": [
@@ -14,10 +358,7 @@ export const CAR_DATABASE = [
             "cc": 1199,
             "cylinders": 3,
             "transmission": "e-DCS6",
-            "trims": [
-              "Ibrida",
-              "Speciali"
-            ]
+            "trims": ["Ibrida", "Speciali"]
           },
           {
             "name": "Elettrica 156/240 (Veloce)",
@@ -27,9 +368,7 @@ export const CAR_DATABASE = [
             "cc": 0,
             "cylinders": 0,
             "transmission": "Otomatik",
-            "trims": [
-              "Elettrica Veloce"
-            ]
+            "trims": ["Elettrica Veloce"]
           }
         ]
       }
