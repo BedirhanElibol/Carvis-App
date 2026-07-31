@@ -145,6 +145,20 @@ const CustomerHome = () => {
 
   const isGuest = !currentUser || currentUser.isAnonymous;
 
+  const handleProtectedAction = (actionCallback) => {
+    if (isGuest) {
+      triggerHaptic("warning");
+      openModal("login", "customer");
+      showAlert(
+        "Giriş Yapmanız Gerekiyor",
+        "Teklif almak, sorun bildirmek veya araç pasaportunu yönetmek için lütfen hesabınıza giriş yapın.",
+        "info"
+      );
+      return;
+    }
+    if (actionCallback) actionCallback();
+  };
+
   // activeVehicle resolution
   const activeVehicle = useMemo(() => {
     if (currentVehicle) return currentVehicle;
@@ -379,8 +393,10 @@ const CustomerHome = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 mb-6 sm:mb-8">
             <button
               onClick={() => {
-                triggerHaptic("impact");
-                setShowIssueModal(true);
+                handleProtectedAction(() => {
+                  triggerHaptic("impact");
+                  setShowIssueModal(true);
+                });
               }}
               className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-500/30 via-sky-500/20 to-teal-500/30 border-2 border-cyan-400 text-left transition-all active-scale group cursor-pointer shadow-xl shadow-cyan-500/20 relative overflow-hidden ring-2 ring-cyan-400/30"
             >
@@ -394,7 +410,7 @@ const CustomerHome = () => {
             </button>
 
             <button
-              onClick={() => navigate("/app/mechanics")}
+              onClick={() => handleProtectedAction(() => navigate("/app/mechanics"))}
               className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-sky-500/25 to-blue-500/15 border-2 border-sky-400/80 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-sky-500/15 relative overflow-hidden"
             >
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-sky-500/30 text-sky-600 dark:text-sky-300 flex items-center justify-center mb-2 sm:mb-2.5 border border-sky-400/40">
@@ -407,8 +423,10 @@ const CustomerHome = () => {
 
             <button
               onClick={() => {
-                triggerHaptic("impact");
-                setShowVehiclePassport(true);
+                handleProtectedAction(() => {
+                  triggerHaptic("impact");
+                  setShowVehiclePassport(true);
+                });
               }}
               className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-indigo-500/10 border border-indigo-500/30 hover:border-indigo-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
@@ -422,8 +440,10 @@ const CustomerHome = () => {
 
             <button
               onClick={() => {
-                triggerHaptic("impact");
-                setShowOBDModal(true);
+                handleProtectedAction(() => {
+                  triggerHaptic("impact");
+                  setShowOBDModal(true);
+                });
               }}
               className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-teal-500/10 border border-teal-500/30 hover:border-teal-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
@@ -436,7 +456,7 @@ const CustomerHome = () => {
             </button>
 
             <button
-              onClick={() => navigate("/quotes")}
+              onClick={() => handleProtectedAction(() => navigate("/quotes"))}
               className="col-span-2 sm:col-span-1 p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-emerald-500/30">
@@ -467,7 +487,7 @@ const CustomerHome = () => {
                 </div>
               </div>
               <button
-                onClick={() => navigate("/app/appointments")}
+                onClick={() => handleProtectedAction(() => navigate("/app/appointments"))}
                 className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-white dark:text-slate-950 font-black text-[10px] sm:text-xs uppercase tracking-wider transition-all cursor-pointer shrink-0 text-center"
               >
                 Muayene Randevusu Al
@@ -541,8 +561,6 @@ const CustomerHome = () => {
               </>
             )}
 
-            {/* PROACTIVE ALERTS REMOVED (NO FAKE RADAR DATA) */}
-
             {/* FEATURED PRIMARY CTA: DİJİTAL ARAÇ PASAPORTU */}
             {activeVehicle && (
               <div className="space-y-4">
@@ -551,8 +569,10 @@ const CustomerHome = () => {
                   <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-400 rounded-[2.5rem] blur opacity-50 group-hover:opacity-80 transition duration-500 animate-pulse"></div>
                   <button
                     onClick={() => {
-                      triggerHaptic("impact");
-                      setShowVehiclePassport(true);
+                      handleProtectedAction(() => {
+                        triggerHaptic("impact");
+                        setShowVehiclePassport(true);
+                      });
                     }}
                     className="relative w-full bg-white dark:bg-[#07131e] border-2 border-emerald-400 dark:border-emerald-400/90 hover:border-emerald-300 rounded-[2.5rem] p-5 sm:p-7 shadow-2xl shadow-emerald-500/25 cursor-pointer text-left overflow-hidden active-scale transition-all"
                   >
@@ -588,8 +608,10 @@ const CustomerHome = () => {
                 {/* 2. SECONDARY CTA: SORUN BİLDİR / USTA BUL */}
                 <button
                   onClick={() => {
-                    triggerHaptic("impact");
-                    setShowIssueModal(true);
+                    handleProtectedAction(() => {
+                      triggerHaptic("impact");
+                      setShowIssueModal(true);
+                    });
                   }}
                   className="w-full bg-white dark:bg-[#0a0f24]/90 border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 rounded-[2.5rem] p-5 sm:p-6 shadow-xl dark:shadow-2xl shadow-cyan-500/10 cursor-pointer text-left overflow-hidden active-scale transition-all group relative"
                 >
