@@ -372,21 +372,14 @@ const VehiclePassport = ({ vehicle, onClose }) => {
           </div>
 
           {/* Dynamic TR Market Valuation Badge */}
-          <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-slate-900 dark:bg-slate-950/90 border border-emerald-500/30 text-white flex items-center justify-between sm:justify-start gap-3 shadow-lg">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold shrink-0">
-                <TrendingUp size={18} className="sm:hidden" />
-                <TrendingUp size={20} className="hidden sm:block" />
-              </div>
-              <div>
-                <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-emerald-400 block">Tahmini 2. El Piyasa Değeri</span>
-                <span className="text-sm sm:text-base font-black font-mono text-white block">{valuation.formattedRange}</span>
-                <span className="text-[8px] sm:text-[9px] text-slate-400 block mt-0.5">*Piyasa ve araç durumuna göre tahmini aralıktır</span>
-              </div>
+          <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-slate-900 dark:bg-slate-950/90 border border-emerald-500/30 text-white flex items-center gap-3 shadow-lg">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold shrink-0">
+              <TrendingUp size={18} className="sm:hidden" />
+              <TrendingUp size={20} className="hidden sm:block" />
             </div>
-            <div className="text-right border-l border-white/10 pl-3 ml-1 hidden sm:block">
-              <span className="text-[8px] font-black uppercase tracking-widest text-teal-400 block">6 Ay Sonraki Tahmin</span>
-              <span className="text-xs font-mono font-bold text-slate-200">{valuation.formattedForecast6m}</span>
+            <div>
+              <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-emerald-400 block">Tahmini 2. El Piyasa Değeri</span>
+              <span className="text-sm sm:text-base font-black font-mono text-white block">{valuation.formattedRange}</span>
             </div>
           </div>
         </div>
