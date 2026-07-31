@@ -610,6 +610,7 @@ const CustomerHome = () => {
               onClick={() => handleProtectedAction(() => navigate("/app/extras/fuel"))}
               className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-500/25 to-orange-500/15 border-2 border-amber-400/80 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-amber-500/15 relative overflow-hidden"
             >
+              <div className="absolute top-1 right-1.5 px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[7px] font-black uppercase tracking-wider">Yeni</div>
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-amber-500/30 text-amber-600 dark:text-amber-300 flex items-center justify-center mb-2 sm:mb-2.5 border border-amber-400/40">
                 <Fuel size={16} className="sm:hidden" />
                 <Fuel size={18} className="hidden sm:block" />

@@ -63,7 +63,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         .from("maintenance_records")
         .select("*")
         .eq("vehicle_id", vehicle.id)
-        .order("changed_date", { ascending: false });
+        .order("created_at", { ascending: false });
       if (!error && data) {
         setMaintenanceRecords(data);
       }
