@@ -616,18 +616,6 @@ const CustomerHome = () => {
               <p className="text-[9px] sm:text-[10px] text-cyan-700 dark:text-cyan-300 font-bold mt-0.5">Anında Teklif Al</p>
             </button>
 
-            <button
-              onClick={() => handleProtectedAction(() => navigate("/app/fuel"))}
-              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-500/25 to-orange-500/15 border-2 border-amber-400/80 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-amber-500/15 relative overflow-hidden"
-            >
-              <div className="absolute top-1 right-1.5 px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[7px] font-black uppercase tracking-wider">Yeni</div>
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-amber-500/30 text-amber-600 dark:text-amber-300 flex items-center justify-center mb-2 sm:mb-2.5 border border-amber-400/40">
-                <Fuel size={16} className="sm:hidden" />
-                <Fuel size={18} className="hidden sm:block" />
-              </div>
-              <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Yakıt Takibi & Fiş</h4>
-              <p className="text-[9px] sm:text-[10px] text-amber-700 dark:text-amber-300 font-bold mt-0.5">Tüketim & Kayıt</p>
-            </button>
 
             <button
               onClick={() => handleProtectedAction(() => navigate("/app/mechanics"))}
