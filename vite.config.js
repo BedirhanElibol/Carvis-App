@@ -25,16 +25,9 @@ export default defineConfig({
           {
             urlPattern: /^https:\/\/.*\.supabase\.co/,
             handler: 'NetworkOnly'
-          },
-          {
-            urlPattern: ({ request }) => request.mode === 'navigate',
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'pages-cache-v2',
-              networkTimeoutSeconds: 2
-            }
           }
         ],
+        navigateFallback: 'index.html',
         navigationPreload: false,
       },
       manifest: {
