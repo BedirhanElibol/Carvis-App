@@ -555,12 +555,12 @@ const CustomerHome = () => {
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-sky-500/10 rounded-full blur-2xl pointer-events-none -ml-10 -mb-10"></div>
 
             <div className="relative z-10 max-w-xl mx-auto flex flex-col items-center justify-center space-y-4">
-              <div className="space-y-1">
-                <p className="text-[10px] sm:text-xs font-mono font-black uppercase tracking-[0.25em] text-cyan-400">
-                  RAPIDSY DİJİTAL GARAJ
-                </p>
+              <div className="space-y-1.5">
+                <span className="bg-cyan-500/20 text-cyan-400 font-mono text-[9px] font-black uppercase tracking-[0.25em] px-3.5 py-1 rounded-full border border-cyan-500/30 inline-block mb-1">
+                  HOŞ GELDİNİZ 👋
+                </span>
                 <h2 className="text-2xl sm:text-3xl font-mono font-black tracking-tighter uppercase text-white">
-                  {t.welcomeToRapidsy}
+                  Rapidsy'ye Hoş Geldiniz
                 </h2>
               </div>
 
