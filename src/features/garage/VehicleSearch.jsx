@@ -27,7 +27,9 @@ const VehicleSearch = ({ onVehicleFound }) => {
   const [selection, setSelection] = useState({
     brand: "",
     series: "",
+    seriesObj: null,
     model: "",
+    modelObj: null,
     trim: "",
     fuel: "",
     year: "",
@@ -174,8 +176,8 @@ const VehicleSearch = ({ onVehicleFound }) => {
   };
 
   const selectedBrandData = CAR_DATABASE.find(c => c.brand === selection.brand);
-  const selectedSeriesData = selectedBrandData?.series.find(s => s.name === selection.series) || apiModels.find(m => m.name === selection.series);
-  const selectedModelData = selectedSeriesData?.models?.find(m => m.name === selection.model) || selectedSeriesData?.models?.[0];
+  const selectedSeriesData = selection.seriesObj || selectedBrandData?.series?.find(s => s.name === selection.series) || apiModels.find(m => m.name === selection.series);
+  const selectedModelData = selection.modelObj || selectedSeriesData?.models?.find(m => m.name === selection.model) || selectedSeriesData?.models?.[0];
 
   return (
     <div className="glass-card rounded-[2.5rem] p-8 border border-black/10 dark:border-white/10 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-500">
@@ -308,10 +310,19 @@ const VehicleSearch = ({ onVehicleFound }) => {
               <div className="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5 mb-2 animate-in fade-in">
                 <button
                   onClick={() => {
-                    if (step === "series") setStep("brand");
-                    else if (step === "model") setStep("series");
-                    else if (step === "trim") setStep("model");
-                    else if (step === "final") setStep("trim");
+                    if (step === "series") {
+                      setSelection(prev => ({ ...prev, brand: "", series: "", seriesObj: null, model: "", modelObj: null, trim: "" }));
+                      setStep("brand");
+                    } else if (step === "model") {
+                      setSelection(prev => ({ ...prev, series: "", seriesObj: null, model: "", modelObj: null, trim: "" }));
+                      setStep("series");
+                    } else if (step === "trim") {
+                      setSelection(prev => ({ ...prev, model: "", modelObj: null, trim: "" }));
+                      setStep("model");
+                    } else if (step === "final") {
+                      setSelection(prev => ({ ...prev, trim: "" }));
+                      setStep("trim");
+                    }
                   }}
                   className="flex items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
@@ -413,7 +424,15 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       <button
                         key={idx}
                         onClick={() => {
-                          setSelection({ ...selection, series: ser.name, model: "", trim: "", fuel: "" });
+                          setSelection(prev => ({
+                            ...prev,
+                            series: ser.name,
+                            seriesObj: ser,
+                            model: "",
+                            modelObj: null,
+                            trim: "",
+                            fuel: ""
+                          }));
                           setStep("model");
                         }}
                         className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
@@ -460,7 +479,13 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       <button
                         key={idx}
                         onClick={() => {
-                          setSelection({ ...selection, model: mod.name, fuel: mod.fuel || "Benzin / Dizel", trim: "" });
+                          setSelection(prev => ({
+                            ...prev,
+                            model: mod.name,
+                            modelObj: mod,
+                            fuel: mod.fuel || "Benzin / Dizel",
+                            trim: ""
+                          }));
                           setStep("trim");
                         }}
                         className="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all flex items-center justify-between group text-left active-scale"
