@@ -457,8 +457,8 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                       { label: t.mileage || "Kilometre", val: `${vehicle.km?.toLocaleString() || "—"} KM`, icon: Gauge },
                       { label: t.lastMaintenance || "Son Bakım", val: vehicle.last_oil_change ? new Date(vehicle.last_oil_change).toLocaleDateString("tr-TR") : "BELİRTİLMEDİ", icon: Wrench },
                       { label: "Model Yılı", val: vehicle.year || "—", icon: CalendarCheck },
-                      { label: "Motor Kodu", val: vehicle.engine_code || "—", icon: Workflow },
-                      { label: t.spareKey || "Yedek Anahtar", val: t.available || "MEVCUT", icon: Key },
+                      { label: "Motor Kodu", val: vehicle.engine_code || "BELİRTİLMEDİ", icon: Workflow },
+                      { label: t.spareKey || "Yedek Anahtar", val: vehicle.spare_key ? (vehicle.spare_key === "yes" ? "MEVCUT" : "YOK") : "BELİRTİLMEDİ", icon: Key },
                       { label: "Plaka", val: vehicle.plate || "—", icon: CreditCard }
                     ].map((spec, i) => {
                       const SpecIcon = spec.icon;
@@ -522,28 +522,43 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                       <div>
                         <div className="flex items-center gap-2">
                           <h5 className="font-black text-sm uppercase text-indigo-400">DEĞİŞTİRİLEMEZ DİJİTAL SAYAÇ & BAKIM MÜHRÜ</h5>
-                          <span className="text-[9px] bg-emerald-500/20 text-emerald-400 font-mono font-bold px-2 py-0.5 rounded border border-emerald-500/30">DİJİTAL ONAYLI</span>
+                          <span className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded border ${
+                            maintenanceRecords.length > 0
+                              ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
+                              : "bg-amber-500/20 text-amber-400 border-amber-500/30"
+                          }`}>
+                            {maintenanceRecords.length > 0 ? "DİJİTAL ONAYLI" : "KAYIT BEKLENİYOR"}
+                          </span>
                         </div>
                         <p className="text-xs text-slate-300 mt-1">
-                          Bu aracın tüm servis ve kilometre verileri dijital ağ üzerinde kilitlenmiştir ve sonradan müdahale edilemez.
+                          {maintenanceRecords.length > 0
+                            ? "Bu aracın tüm servis ve kilometre verileri dijital ağ üzerinde kilitlenmiştir."
+                            : "Sisteme henüz onaylı servis veya bakım faturası eklenmemiştir. Fatura eklediğinizde dijital mühür aktifleşecektir."}
                         </p>
                       </div>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-black/60 border border-white/10 space-y-2 font-mono text-xs">
-                      <div className="flex justify-between text-slate-400">
-                        <span>Aktif Doğrulama İmzası:</span>
-                        <span className="text-teal-400 font-bold">{cryptoPassport.currentBlockHash}</span>
+                    {maintenanceRecords.length > 0 ? (
+                      <div className="p-4 rounded-2xl bg-black/60 border border-white/10 space-y-2 font-mono text-xs">
+                        <div className="flex justify-between text-slate-400">
+                          <span>Aktif Doğrulama İmzası:</span>
+                          <span className="text-teal-400 font-bold">{cryptoPassport.currentBlockHash}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-400">
+                          <span>Önceki İmzalı Kayıt:</span>
+                          <span className="text-slate-300">{cryptoPassport.previousBlockHash}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-400">
+                          <span>Dijital Kayıt Kimliği:</span>
+                          <span className="text-indigo-300">{cryptoPassport.contractAddress}</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between text-slate-400">
-                        <span>Önceki İmzalı Kayıt:</span>
-                        <span className="text-slate-300">{cryptoPassport.previousBlockHash}</span>
+                    ) : (
+                      <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 text-amber-300/80 font-mono text-xs flex items-center justify-between">
+                        <span>Dijital Mühür Durumu:</span>
+                        <span className="font-bold">Henüz Kayıt Girilmedi</span>
                       </div>
-                      <div className="flex justify-between text-slate-400">
-                        <span>Dijital Kayıt Kimliği:</span>
-                        <span className="text-indigo-300">{cryptoPassport.contractAddress}</span>
-                      </div>
-                    </div>
+                    )}
                   </div>
 
                   {/* CARFAX Odometer Audit Banner */}

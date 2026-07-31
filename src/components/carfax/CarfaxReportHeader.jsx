@@ -34,8 +34,12 @@ const CarfaxReportHeader = ({ vehicle = {}, recordsCount = 0, maintenanceRecords
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-2xl text-emerald-400 text-xs font-black uppercase tracking-wider">
-            <ShieldCheck size={16} /> RESMİ KAYITLI ONAYLI
+          <div className={`flex items-center gap-2 border px-3.5 py-1.5 rounded-2xl text-xs font-black uppercase tracking-wider ${
+            recordsCount > 0
+              ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+              : "bg-amber-500/10 border-amber-500/30 text-amber-400"
+          }`}>
+            <ShieldCheck size={16} /> {recordsCount > 0 ? "ONAYLI SERVİS KAYDI" : "KULLANICI BEYANI"}
           </div>
         </div>
       </div>
@@ -49,8 +53,12 @@ const CarfaxReportHeader = ({ vehicle = {}, recordsCount = 0, maintenanceRecords
             <span className="text-[8px] font-black uppercase text-slate-400 tracking-widest">01. SAHİPLİK</span>
           </div>
           <div>
-            <span className="text-xs font-black uppercase text-white block">{audit.ownershipType}</span>
-            <span className="text-[9px] text-slate-400 block mt-0.5">Ruhsat Sahibi Doğrulanmış</span>
+            <span className="text-xs font-black uppercase text-white block">
+              {recordsCount > 0 ? audit.ownershipType : "KULLANICI BEYANI"}
+            </span>
+            <span className="text-[9px] text-slate-400 block mt-0.5">
+              {recordsCount > 0 ? "Ruhsat Beyanı Onaylı" : "Sisteme Girilen Veri"}
+            </span>
           </div>
         </div>
 
@@ -58,11 +66,11 @@ const CarfaxReportHeader = ({ vehicle = {}, recordsCount = 0, maintenanceRecords
         <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-between space-y-2">
           <div className="flex items-center justify-between text-emerald-400">
             <FileCheck size={20} />
-            <span className="text-[8px] font-black uppercase text-slate-400 tracking-widest">02. RUHSAT</span>
+            <span className="text-[8px] font-black uppercase text-slate-400 tracking-widest">02. HASAR / TRAMER</span>
           </div>
           <div>
-            <span className="text-xs font-black uppercase text-emerald-400 block">TEMİZ RUHSAT</span>
-            <span className="text-[9px] text-slate-400 block mt-0.5">Reconstructed / Salvage Yok</span>
+            <span className="text-xs font-black uppercase text-amber-400 block">BİLGİ GİRİLMEDİ</span>
+            <span className="text-[9px] text-slate-400 block mt-0.5">Tramer Kaydı Eklenmedi</span>
           </div>
         </div>
 
@@ -70,13 +78,17 @@ const CarfaxReportHeader = ({ vehicle = {}, recordsCount = 0, maintenanceRecords
         <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-between space-y-2">
           <div className="flex items-center justify-between text-teal-400">
             <CheckCircle2 size={20} />
-            <span className="text-[8px] font-black uppercase text-slate-400 tracking-widest">03. SAYAÇ & HASAR</span>
+            <span className="text-[8px] font-black uppercase text-slate-400 tracking-widest">03. SAYAÇ BİLGİSİ</span>
           </div>
           <div>
-            <span className={`text-xs font-black uppercase block ${audit.odometerStatus.isRollback ? 'text-rose-400' : 'text-emerald-400'}`}>
-              {audit.odometerStatus.isRollback ? '🔴 ŞÜPHELİ SAYAÇ' : '🟢 SAYAÇ ORİJİNAL'}
+            <span className={`text-xs font-black uppercase block ${
+              recordsCount === 0 ? 'text-amber-400' : audit.odometerStatus.isRollback ? 'text-rose-400' : 'text-emerald-400'
+            }`}>
+              {recordsCount === 0 ? 'KAYIT BEKLENİYOR' : audit.odometerStatus.isRollback ? '🔴 ŞÜPHELİ SAYAÇ' : '🟢 SAYAÇ ORİJİNAL'}
             </span>
-            <span className="text-[9px] text-slate-400 block mt-0.5">Kronolojik Geçmiş Tutarlı</span>
+            <span className="text-[9px] text-slate-400 block mt-0.5">
+              {recordsCount === 0 ? "En az 1 servis kaydı gerekli" : "Kronolojik Geçmiş Tutarlı"}
+            </span>
           </div>
         </div>
 
@@ -88,7 +100,7 @@ const CarfaxReportHeader = ({ vehicle = {}, recordsCount = 0, maintenanceRecords
           </div>
           <div>
             <span className="text-xs font-black uppercase text-cyan-400 block">{recordsCount} SERVİS KAYDI</span>
-            <span className="text-[9px] text-slate-400 block mt-0.5">{audit.recallStatus.title}</span>
+            <span className="text-[9px] text-slate-400 block mt-0.5">{recordsCount > 0 ? audit.recallStatus.title : "Fatura Eklenmedi"}</span>
           </div>
         </div>
       </div>
