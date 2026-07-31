@@ -34,9 +34,6 @@ const CarfaxReportHeader = ({ vehicle = {}, recordsCount = 0, maintenanceRecords
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="bg-blue-500/20 text-blue-300 font-mono font-black text-xs px-3 py-1.5 rounded-2xl border border-blue-500/30">
-            ARAÇ GÜVEN SKORU: {audit.vehicleScore}/100
-          </div>
           <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-2xl text-emerald-400 text-xs font-black uppercase tracking-wider">
             <ShieldCheck size={16} /> RESMİ KAYITLI ONAYLI
           </div>
