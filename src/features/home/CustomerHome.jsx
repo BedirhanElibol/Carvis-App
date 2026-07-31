@@ -112,15 +112,46 @@ const CustomerHome = () => {
   useEffect(() => {
     if (selectedLocation) {
       const lowerLoc = selectedLocation.toLowerCase();
-      if (lowerLoc.includes("ankara")) {
-        setSelectedCity("ankara");
-      } else if (lowerLoc.includes("izmir")) {
-        setSelectedCity("izmir");
-      } else {
-        setSelectedCity("istanbul");
-      }
+      setSelectedCity(lowerLoc);
     }
   }, [selectedLocation]);
+
+  // AUTOMATIC GEOLOCATION PROMPT & REVERSE GEOCODING CITY FINDER
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+
+    const detectLocation = () => {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            const { latitude, longitude } = position.coords;
+            const res = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`
+            );
+            if (res.ok) {
+              const data = await res.json();
+              const foundCity = data.address?.province || data.address?.city || data.address?.state || data.address?.town || "";
+              if (foundCity) {
+                const cleanCity = foundCity.toLowerCase().replace(/i̇/g, "i").trim();
+                setSelectedCity(cleanCity);
+                if (setSelectedLocation) {
+                  setSelectedLocation(foundCity);
+                }
+              }
+            }
+          } catch (err) {
+            console.log("Auto location discovery error:", err);
+          }
+        },
+        (error) => {
+          console.log("Location permission declined or unavailable:", error.message);
+        },
+        { timeout: 10000, enableHighAccuracy: true }
+      );
+    };
+
+    detectLocation();
+  }, []);
 
 
 
@@ -348,6 +379,39 @@ const CustomerHome = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Location Auto Finder Button */}
+          <button
+            onClick={() => {
+              if (navigator.geolocation) {
+                showAlert("Konum Aranıyor...", "Geçerli GPS konumunuz taranıyor...", "info");
+                navigator.geolocation.getCurrentPosition(
+                  async (pos) => {
+                    try {
+                      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&zoom=10&addressdetails=1`);
+                      if (res.ok) {
+                        const d = await res.json();
+                        const city = d.address?.province || d.address?.city || d.address?.state || d.address?.town || "";
+                        if (city) {
+                          setSelectedCity(city.toLowerCase().replace(/i̇/g, "i").trim());
+                          if (setSelectedLocation) setSelectedLocation(city);
+                          showAlert("Konum Bulundu 📍", `${city} konumu başarıyla ayarlandı.`, "success");
+                        }
+                      }
+                    } catch (err) {
+                      showAlert("Konum Hatası", "Konum bilgisi alınamadı.", "error");
+                    }
+                  },
+                  () => showAlert("Konum İzni Gerekli", "Lütfen tarayıcınızdan konum iznini veriniz.", "warning")
+                );
+              }
+            }}
+            className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-[9px] sm:text-[10px] font-black uppercase tracking-wider transition-all flex items-center gap-1.5 active-scale cursor-pointer"
+            title="Otomatik Konumumu Bul"
+          >
+            <Navigation size={12} className="animate-pulse text-cyan-400" />
+            <span className="truncate max-w-[80px] sm:max-w-[120px]">{selectedCity ? selectedCity.toUpperCase() : "KONUM BUL"}</span>
+          </button>
+
           {activeVehicle && (
             <button
               onClick={() => {
@@ -485,12 +549,25 @@ const CustomerHome = () => {
             </div>
           </div>
         ) : (
-          /* WELCOME & ADD VEHICLE BANNER (TOP #1 POSITION - MINIMALIST) */
-          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0a0f24] text-white border border-cyan-500/30 rounded-[2.5rem] p-6 sm:p-8 text-center relative overflow-hidden group shadow-2xl backdrop-blur-md">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none -mr-10 -mt-10"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-sky-500/15 rounded-full blur-2xl pointer-events-none -ml-10 -mb-10"></div>
+          /* WELCOME & ADD VEHICLE BANNER (TOP #1 POSITION - ELEGANT WELCOME) */
+          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0a0f24] text-white border border-cyan-500/30 rounded-[2.5rem] p-7 sm:p-9 text-center relative overflow-hidden group shadow-2xl backdrop-blur-md">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none -mr-10 -mt-10"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-sky-500/10 rounded-full blur-2xl pointer-events-none -ml-10 -mb-10"></div>
 
-            <div className="relative z-10 max-w-xl mx-auto flex flex-col items-center justify-center">
+            <div className="relative z-10 max-w-xl mx-auto flex flex-col items-center justify-center space-y-4">
+              <div className="space-y-1">
+                <p className="text-[10px] sm:text-xs font-mono font-black uppercase tracking-[0.25em] text-cyan-400">
+                  RAPIDSY DİJİTAL GARAJ
+                </p>
+                <h2 className="text-2xl sm:text-3xl font-mono font-black tracking-tighter uppercase text-white">
+                  {t.welcomeToRapidsy}
+                </h2>
+              </div>
+
+              <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed font-medium">
+                {isGuest ? t.guestModeDesc : "Garajınıza aracınızı ekleyin; bakım, parça ve dijital pasaport geçmişinizi anında yönetin."}
+              </p>
+
               <button
                 onClick={() => {
                   if (isGuest) {
@@ -499,7 +576,7 @@ const CustomerHome = () => {
                     setShowVehicleSelector(true);
                   }
                 }}
-                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 px-8 py-4.5 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-cyan-500/25 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 px-8 py-4.5 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-cyan-500/25 cursor-pointer flex items-center justify-center gap-2 mt-2"
               >
                 <Plus size={16} /> {isGuest ? t.loginOrRegister : "GARAJA ARAÇ EKLE"}
               </button>
