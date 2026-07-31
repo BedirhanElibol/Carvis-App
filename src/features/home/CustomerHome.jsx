@@ -435,23 +435,15 @@ const CustomerHome = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-center border-t border-slate-200 dark:border-cyan-500/10 pt-6">
-                <div className="flex items-center gap-5 bg-slate-50 dark:bg-black/40 p-4 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-xl">
-                  <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
-                    <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-500/20 to-sky-500/10 border-2 border-cyan-500/40 flex items-center justify-center shadow-md dark:shadow-xl">
-                      <Car size={28} className="text-cyan-500 dark:text-cyan-400" />
-                    </div>
-                  </div>
+                <div className="flex items-center gap-4 bg-slate-50 dark:bg-black/40 p-4.5 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-xl">
                   <div>
                     <div className="flex items-center gap-1.5">
                       <h4 className="text-[10px] font-black text-cyan-600 dark:text-cyan-500 uppercase tracking-widest leading-none">
                         KİLOMETRE DURUMU
                       </h4>
                     </div>
-                    <p className="text-sm font-black text-slate-900 dark:text-cyan-300 mt-1 font-mono">
+                    <p className="text-base font-black text-slate-900 dark:text-cyan-300 mt-1 font-mono">
                       {activeVehicle.km?.toLocaleString() || "—"} KM
-                    </p>
-                    <p className="text-[10px] text-slate-500 dark:text-cyan-100/50 mt-1 leading-relaxed">
-                      Bakım takibinizi Araç Pasaportu'ndan yönetin.
                     </p>
                   </div>
                 </div>
@@ -493,27 +485,12 @@ const CustomerHome = () => {
             </div>
           </div>
         ) : (
-          /* WELCOME & ADD VEHICLE BANNER (TOP #1 POSITION) */
-          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0a0f24] text-white border border-cyan-500/30 rounded-[2.5rem] p-7 sm:p-9 text-center relative overflow-hidden group shadow-2xl backdrop-blur-md">
+          /* WELCOME & ADD VEHICLE BANNER (TOP #1 POSITION - MINIMALIST) */
+          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0a0f24] text-white border border-cyan-500/30 rounded-[2.5rem] p-6 sm:p-8 text-center relative overflow-hidden group shadow-2xl backdrop-blur-md">
             <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none -mr-10 -mt-10"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-sky-500/15 rounded-full blur-2xl pointer-events-none -ml-10 -mb-10"></div>
 
-            <div className="relative z-10 max-w-xl mx-auto">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-sky-500 text-slate-950 flex items-center justify-center mx-auto mb-4 shadow-xl shadow-cyan-500/30 border border-cyan-300">
-                <Car size={32} />
-              </div>
-              
-              <span className="bg-cyan-500/20 text-cyan-400 font-mono text-[9px] font-black uppercase tracking-[0.25em] px-3 py-1 rounded-full border border-cyan-500/30 mb-3 inline-block">
-                GARAJANIZ RAPIDSY KORUMASINDA
-              </span>
-
-              <h2 className="text-2xl sm:text-3xl font-mono font-black tracking-tighter uppercase mb-2 text-white">
-                {t.welcomeToRapidsy}
-              </h2>
-              <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed mb-6 font-medium">
-                {isGuest ? t.guestModeDesc : "Garajınıza ilk aracınızı ekleyin, parçadan ustaya, dijital pasaporttan periyodik bakıma tüm geçmişinizi anında yönetin."}
-              </p>
-              
+            <div className="relative z-10 max-w-xl mx-auto flex flex-col items-center justify-center">
               <button
                 onClick={() => {
                   if (isGuest) {
@@ -522,9 +499,9 @@ const CustomerHome = () => {
                     setShowVehicleSelector(true);
                   }
                 }}
-                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 px-8 py-4 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-cyan-500/25 cursor-pointer flex items-center justify-center gap-2 mx-auto"
+                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 px-8 py-4.5 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-cyan-500/25 cursor-pointer flex items-center justify-center gap-2"
               >
-                <Plus size={16} /> {isGuest ? t.loginOrRegister : "GARAJA İLK ARACINI EKLE"}
+                <Plus size={16} /> {isGuest ? t.loginOrRegister : "GARAJA ARAÇ EKLE"}
               </button>
             </div>
           </div>
