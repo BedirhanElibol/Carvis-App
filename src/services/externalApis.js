@@ -155,6 +155,40 @@ export const decodeVin = async (vin) => {
   }
 };
 
+// --- Live Dynamic NHTSA Vehicle Models API Fetcher ---
+export const fetchModelsForMakeFromAPI = async (makeName) => {
+  if (!makeName) return [];
+  try {
+    const response = await fetch(
+      `https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/${encodeURIComponent(makeName)}?format=json`
+    );
+    const data = await response.json();
+    if (data.Results && data.Results.length > 0) {
+      const uniqueModelNames = Array.from(new Set(data.Results.map((r) => r.Model_Name))).filter(Boolean);
+      return uniqueModelNames.map((mName) => ({
+        name: mName,
+        years: "Tüm Yıllar (Resmi API)",
+        models: [
+          {
+            name: `${mName} Varyantı`,
+            engine_code: "STD-API",
+            fuel: "Benzin / Dizel / Hibrit",
+            hp: 150,
+            cc: 1600,
+            cylinders: 4,
+            transmission: "Manuel / Otomatik",
+            trims: ["Standart", "Premium"]
+          }
+        ]
+      }));
+    }
+    return [];
+  } catch (error) {
+    console.error("Live NHTSA Model Fetch Error:", error);
+    return [];
+  }
+};
+
 // --- 2. Fuel Prices (Kök Çözüm + Hasan Adıgüzel API) ---
 // Veritabanı veya dış API kesintilerini önlemek için API + Statik karmaşık veri üretici
 export const getFuelPrices = async (cityInput = "istanbul") => {

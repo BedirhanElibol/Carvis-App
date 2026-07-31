@@ -6,6 +6,8 @@ import { useUI } from "../../context/UIContext";
 import { CAR_DATABASE } from "../../constants/carDatabase";
 import { sanitizeKm, sanitizeYear, validateVehicleInputs } from "../../utils/validationUtils";
 
+import { fetchModelsForMakeFromAPI } from "../../services/externalApis";
+
 const VehicleSearch = ({ onVehicleFound }) => {
   const [searchMode, setSearchMode] = useState("manual"); // 'manual' or 'vin'
   const [vin, setVin] = useState("");
@@ -19,6 +21,8 @@ const VehicleSearch = ({ onVehicleFound }) => {
   const [step, setStep] = useState("brand"); // brand, series, model, trim, final
   const [brandSearch, setBrandSearch] = useState("");
   const [seriesSearch, setSeriesSearch] = useState("");
+  const [apiModels, setApiModels] = useState([]);
+  const [loadingApiModels, setLoadingApiModels] = useState(false);
   
   const [selection, setSelection] = useState({
     brand: "",
@@ -344,9 +348,13 @@ const VehicleSearch = ({ onVehicleFound }) => {
                   ).map((car, idx) => (
                     <button
                       key={idx}
-                      onClick={() => {
+                      onClick={async () => {
                         setSelection({ ...selection, brand: car.brand, series: "", model: "", trim: "" });
                         setStep("series");
+                        setLoadingApiModels(true);
+                        const liveModels = await fetchModelsForMakeFromAPI(car.brand);
+                        setApiModels(liveModels);
+                        setLoadingApiModels(false);
                       }}
                       className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-center flex flex-col items-center justify-center gap-1.5 active-scale group"
                     >
@@ -377,23 +385,46 @@ const VehicleSearch = ({ onVehicleFound }) => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 max-h-[260px] overflow-y-auto pr-1 custom-scrollbar">
-                  {selectedBrandData.series.filter(s =>
-                    s.name.toLowerCase().includes(seriesSearch.toLowerCase())
-                  ).map((ser, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setSelection({ ...selection, series: ser.name, model: "", trim: "" });
-                        setStep("model");
-                      }}
-                      className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
-                    >
-                      <span className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors">
-                        {ser.name}
-                      </span>
-                      <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
-                    </button>
-                  ))}
+                  {/* Combine local series with live NHTSA API models */}
+                  {(() => {
+                    const localSeries = selectedBrandData?.series || [];
+                    const combined = [...localSeries];
+                    
+                    // Add API models that are not already present in local series
+                    apiModels.forEach(apiM => {
+                      if (!combined.some(s => s.name.toLowerCase() === apiM.name.toLowerCase())) {
+                        combined.push(apiM);
+                      }
+                    });
+
+                    const filtered = combined.filter(s =>
+                      s.name.toLowerCase().includes(seriesSearch.toLowerCase())
+                    );
+
+                    if (filtered.length === 0 && loadingApiModels) {
+                      return (
+                        <div className="col-span-2 text-center py-6 text-xs text-primary-400 font-bold animate-pulse">
+                          🌐 Canlı Resmi Otomotiv API'sinden Modeller Yükleniyor...
+                        </div>
+                      );
+                    }
+
+                    return filtered.map((ser, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          setSelection({ ...selection, series: ser.name, model: ser.models?.[0]?.name || ser.name, trim: "" });
+                          setStep(ser.models?.[0]?.trims ? "trim" : "final");
+                        }}
+                        className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
+                      >
+                        <span className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors truncate">
+                          {ser.name}
+                        </span>
+                        <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors shrink-0" />
+                      </button>
+                    ));
+                  })()}
                 </div>
               </div>
             )}
