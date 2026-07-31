@@ -276,9 +276,9 @@ const VehiclePassport = ({ vehicle, onClose }) => {
   const handleDownloadPdf = async () => {
     setPdfDownloading(true);
     try {
-      const fileName = `Carvis_Pasaport_${(vehicle.plate || "34CVS202").replace(/\s+/g, "")}.pdf`;
-      await exportElementToPdf("vehicle-passport-modal-content", fileName);
-      showAlert("PDF İndirildi!", "Araç pasaportunuz resmi A4 formatında başarıyla bilgisayarınıza kaydedildi.", "success");
+      const fileName = `Rapidsy_Pasaport_${(vehicle.plate || "34CVS202").replace(/\s+/g, "")}.pdf`;
+      await exportElementToPdf("vehicle-passport-modal-content", fileName, vehicle);
+      showAlert("PDF İndirildi!", "Araç pasaportunuz resmi A4 formatında başarıyla cihazınıza indirildi.", "success");
     } catch (err) {
       console.error("PDF download error:", err);
       showAlert("Hata", "PDF oluşturulurken bir hata oluştu.", "error");
