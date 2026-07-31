@@ -10,29 +10,36 @@ const FinancialCockpit = ({ vehicle }) => {
   const valuation = calculateVehicleMarketValue(vehicle);
   const tco = calculateTotalCostOfOwnership(vehicle);
 
-  const insurances = [
+  // Calculate real remaining days from vehicle data if available
+  const getDaysLeft = (targetDateStr) => {
+    if (!targetDateStr) return null;
+    const target = new Date(targetDateStr);
+    const now = new Date();
+    const diffTime = target - now;
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  const kaskoDays = getDaysLeft(vehicle?.insurance_expiry_date || vehicle?.insurance_expiry);
+  const inspectionDays = getDaysLeft(vehicle?.inspection_expiry_date || vehicle?.inspection_date || vehicle?.inspection_expiry);
+
+  const realInsurances = [
     {
       id: "kasko",
-      name: "Kasko",
+      name: "Kasko & Trafik Poliçesi",
       icon: <ShieldCheck size={18} />,
-      daysLeft: 45,
-      totalDays: 365,
+      daysLeft: kaskoDays,
+      dateStr: vehicle?.insurance_expiry_date || vehicle?.insurance_expiry
     },
     {
-      id: "trafik",
-      name: "Trafik Sigortası",
+      id: "inspection",
+      name: "TÜVTÜRK Muayene Tarihi",
       icon: <FileText size={18} />,
-      daysLeft: 12,
-      totalDays: 365,
-    },
-    {
-      id: "mtv",
-      name: "MTV Ödemesi",
-      icon: <Landmark size={18} />,
-      daysLeft: 2,
-      totalDays: 180,
+      daysLeft: inspectionDays,
+      dateStr: vehicle?.inspection_expiry_date || vehicle?.inspection_date || vehicle?.inspection_expiry
     }
   ];
+
+  const hasAnyPolicy = kaskoDays !== null || inspectionDays !== null;
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(amount);
@@ -164,18 +171,24 @@ const FinancialCockpit = ({ vehicle }) => {
         {/* Insurances & Taxes Column */}
         <div className="bg-white dark:bg-[#0a0f24]/85 rounded-3xl p-5 shadow-sm border border-slate-200 dark:border-white/10 flex flex-col justify-between">
           <div className="flex justify-between items-center mb-3">
-            <h4 className="text-xs font-mono font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Poliçe & Zorunlu Ödemeler</h4>
-            <span className="text-[9px] font-mono font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">Örnek Takip</span>
+            <h4 className="text-xs font-mono font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Poliçe & Muayene Takibi</h4>
+            <span className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-md border ${
+              hasAnyPolicy ? "text-cyan-500 bg-cyan-500/10 border-cyan-500/20" : "text-amber-500 bg-amber-500/10 border-amber-500/20"
+            }`}>
+              {hasAnyPolicy ? "Aktif Takip" : "Tarih Girilmedi"}
+            </span>
           </div>
           
           <div className="space-y-4">
-            {insurances.map((item) => {
-              const progress = Math.max(5, (item.daysLeft / item.totalDays) * 100);
-              const isDanger = item.daysLeft <= 15;
-              const isWarning = item.daysLeft <= 45;
-              const statusColorClass = isDanger ? 'text-red-500' : isWarning ? 'text-amber-500' : 'text-cyan-500';
-              const statusBgClass = isDanger ? 'bg-red-500/10 text-red-500' : isWarning ? 'bg-amber-500/10 text-amber-500' : 'bg-cyan-500/10 text-cyan-500';
+            {realInsurances.map((item) => {
+              const hasDate = item.daysLeft !== null;
+              const days = item.daysLeft ?? 0;
+              const isDanger = hasDate && days <= 15;
+              const isWarning = hasDate && days <= 45;
+              const statusColorClass = !hasDate ? 'text-slate-400' : isDanger ? 'text-red-500' : isWarning ? 'text-amber-500' : 'text-cyan-500';
+              const statusBgClass = !hasDate ? 'bg-slate-500/10 text-slate-400' : isDanger ? 'bg-red-500/10 text-red-500' : isWarning ? 'bg-amber-500/10 text-amber-500' : 'bg-cyan-500/10 text-cyan-500';
               const barBgClass = isDanger ? 'bg-red-500' : isWarning ? 'bg-amber-500' : 'bg-cyan-500';
+              const progress = hasDate ? Math.max(5, Math.min(100, (days / 365) * 100)) : 0;
               
               return (
                 <div key={item.id} className="relative group">
@@ -186,23 +199,32 @@ const FinancialCockpit = ({ vehicle }) => {
                       </div>
                       <div>
                         <h5 className="text-xs font-semibold text-slate-900 dark:text-white leading-none">{item.name}</h5>
+                        {item.dateStr && (
+                          <span className="text-[9px] text-slate-400 font-mono mt-0.5 block">
+                            Bitiş: {new Date(item.dateStr).toLocaleDateString("tr-TR")}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="text-right">
                       <span className={`text-[11px] font-mono font-black ${statusColorClass}`}>
-                        {item.daysLeft} Gün Kaldı
+                        {hasDate ? (days <= 0 ? "SÜRESİ DOLDU" : `${days} Gün Kaldı`) : "Girilmedi"}
                       </span>
                     </div>
                   </div>
                   
-                  <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${progress}%` }}
-                      transition={{ duration: 1, ease: "easeOut" }}
-                      className={`h-full rounded-full ${barBgClass}`}
-                    />
-                  </div>
+                  {hasDate ? (
+                    <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                        className={`h-full rounded-full ${barBgClass}`}
+                      />
+                    </div>
+                  ) : (
+                    <p className="text-[9px] text-slate-400 italic">Tarih eklenerek otomatik hatırlatıcı oluşturulur.</p>
+                  )}
                 </div>
               );
             })}
