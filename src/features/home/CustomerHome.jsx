@@ -1184,19 +1184,27 @@ const CustomerHome = () => {
                   </p>
                 </div>
                 
-                <select
-                  id="city-select"
-                  name="city"
-                  aria-label="Araç Seçimi"
-                  value={selectedCity}
-                  onChange={(e) => setSelectedCity(e.target.value)}
-                  className="bg-slate-100 dark:bg-[#0a0f24] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-cyan-50 text-[10px] font-black uppercase tracking-wider rounded-xl px-3 py-1.5 outline-none cursor-pointer hover:border-cyan-400/50 transition-colors shadow-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 appearance-none"
-                  style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2322d3ee' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em', paddingRight: '2rem' }}
-                >
-                  <option value="istanbul">{t.istanbul}</option>
-                  <option value="ankara">{t.ankara}</option>
-                  <option value="izmir">{t.izmir}</option>
-                </select>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleProtectedAction(() => navigate("/app/extras/fuel"))}
+                    className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 text-[10px] font-mono font-black uppercase tracking-wider hover:bg-amber-400 active-scale transition-all shadow-lg shadow-amber-500/20 cursor-pointer flex items-center gap-1"
+                  >
+                    <Plus size={12} /> YAKIT EKLE / TAKİP
+                  </button>
+                  <select
+                    id="city-select"
+                    name="city"
+                    aria-label="Şehir Seçimi"
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                    className="bg-slate-100 dark:bg-[#0a0f24] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-cyan-50 text-[10px] font-black uppercase tracking-wider rounded-xl px-3 py-1.5 outline-none cursor-pointer hover:border-cyan-400/50 transition-colors shadow-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 appearance-none"
+                    style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2322d3ee' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em', paddingRight: '2rem' }}
+                  >
+                    <option value="istanbul">{t.istanbul}</option>
+                    <option value="ankara">{t.ankara}</option>
+                    <option value="izmir">{t.izmir}</option>
+                  </select>
+                </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3 pt-2 border-t border-slate-200 dark:border-cyan-500/10">
