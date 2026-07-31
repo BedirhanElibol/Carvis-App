@@ -549,24 +549,23 @@ const CustomerHome = () => {
             </div>
           </div>
         ) : (
-          /* WELCOME & ADD VEHICLE BANNER (TOP #1 POSITION - ELEGANT WELCOME) */
-          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0a0f24] text-white border border-cyan-500/30 rounded-[2.5rem] p-7 sm:p-9 text-center relative overflow-hidden group shadow-2xl backdrop-blur-md">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none -mr-10 -mt-10"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-sky-500/10 rounded-full blur-2xl pointer-events-none -ml-10 -mb-10"></div>
+          /* WELCOME & ADD VEHICLE BANNER (TOP #1 POSITION - CLASSY LEFT-ALIGNED) */
+          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0a0f24] text-white border border-cyan-500/20 rounded-[2.5rem] p-7 sm:p-9 text-left relative overflow-hidden group shadow-2xl backdrop-blur-md">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -mr-16 -mt-16"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none -ml-16 -mb-16"></div>
 
-            <div className="relative z-10 max-w-xl mx-auto flex flex-col items-center justify-center space-y-4">
-              <div className="space-y-1.5">
-                <span className="bg-cyan-500/20 text-cyan-400 font-mono text-[9px] font-black uppercase tracking-[0.25em] px-3.5 py-1 rounded-full border border-cyan-500/30 inline-block mb-1">
-                  HOŞ GELDİNİZ 👋
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-mono font-black tracking-tighter uppercase text-white">
-                  Rapidsy'ye Hoş Geldiniz
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="space-y-2 max-w-xl">
+                <p className="text-[10px] sm:text-xs font-mono font-bold text-cyan-400/90 uppercase tracking-[0.2em]">
+                  RAPIDSY DİJİTAL GARAJ
+                </p>
+                <h2 className="text-2xl sm:text-3xl font-mono font-black tracking-tighter uppercase text-white leading-tight">
+                  {t.welcomeToRapidsy}
                 </h2>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium pt-1">
+                  {isGuest ? t.guestModeDesc : "Garajınıza aracınızı ekleyin; bakım, parça ve dijital pasaport geçmişinizi anında yönetin."}
+                </p>
               </div>
-
-              <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed font-medium">
-                {isGuest ? t.guestModeDesc : "Garajınıza aracınızı ekleyin; bakım, parça ve dijital pasaport geçmişinizi anında yönetin."}
-              </p>
 
               <button
                 onClick={() => {
@@ -576,7 +575,7 @@ const CustomerHome = () => {
                     setShowVehicleSelector(true);
                   }
                 }}
-                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 px-8 py-4.5 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-cyan-500/25 cursor-pointer flex items-center justify-center gap-2 mt-2"
+                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 px-8 py-4.5 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-cyan-500/20 cursor-pointer flex items-center justify-center gap-2 shrink-0 border border-cyan-300/30"
               >
                 <Plus size={16} /> {isGuest ? t.loginOrRegister : "GARAJA ARAÇ EKLE"}
               </button>
