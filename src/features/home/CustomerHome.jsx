@@ -543,42 +543,71 @@ const CustomerHome = () => {
 
             {/* PROACTIVE ALERTS REMOVED (NO FAKE RADAR DATA) */}
 
-            {/* DIRECT ACTION CTA (LINEAR UX) */}
+            {/* FEATURED PRIMARY CTA: DİJİTAL ARAÇ PASAPORTU */}
             {activeVehicle && (
-              <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-sky-500 to-emerald-400 rounded-[2.5rem] blur opacity-40 group-hover:opacity-75 transition duration-500 animate-pulse"></div>
+              <div className="space-y-4">
+                {/* 1. FEATURED DIGITAL PASSPORT BANNER */}
+                <div className="relative group">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-400 rounded-[2.5rem] blur opacity-50 group-hover:opacity-80 transition duration-500 animate-pulse"></div>
+                  <button
+                    onClick={() => {
+                      triggerHaptic("impact");
+                      setShowVehiclePassport(true);
+                    }}
+                    className="relative w-full bg-white dark:bg-[#07131e] border-2 border-emerald-400 dark:border-emerald-400/90 hover:border-emerald-300 rounded-[2.5rem] p-5 sm:p-7 shadow-2xl shadow-emerald-500/25 cursor-pointer text-left overflow-hidden active-scale transition-all"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-cyan-500/10 pointer-events-none"></div>
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none -mr-8 -mt-8 group-hover:bg-emerald-400/30 transition-colors"></div>
+                    <div className="absolute top-3.5 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 font-mono font-black text-[9px] uppercase tracking-widest shadow-md hidden sm:block">
+                      🛡️ EGM & TRAMER ONAYLI KAYIT
+                    </div>
+                    
+                    <div className="flex items-center justify-between relative z-10">
+                      <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-tr from-emerald-400 to-teal-400 text-slate-950 rounded-2xl flex items-center justify-center backdrop-blur-md border border-emerald-300 shrink-0 shadow-lg shadow-emerald-400/30">
+                          <ShieldCheck size={30} className="sm:hidden" />
+                          <ShieldCheck size={36} className="hidden sm:block" />
+                        </div>
+                        <div className="font-sans">
+                          <span className="inline-block sm:hidden text-[8px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-0.5">
+                            🛡️ EGM & TRAMER ONAYLI KAYIT
+                          </span>
+                          <h2 className="text-xl sm:text-3xl font-mono font-black tracking-tighter uppercase mb-1 text-slate-900 dark:text-white leading-none">
+                            Dijital Araç Pasaportu
+                          </h2>
+                          <p className="text-xs font-bold text-slate-600 dark:text-emerald-100/90 leading-snug">
+                            {activeVehicle.brand} {activeVehicle.model} resmi servis geçmişi, ekspertiz ve QR doğrulaması.
+                          </p>
+                        </div>
+                      </div>
+                      <ChevronRight size={32} className="text-emerald-500 group-hover:translate-x-1 group-hover:text-emerald-300 transition-all hidden sm:block shrink-0" />
+                    </div>
+                  </button>
+                </div>
+
+                {/* 2. SECONDARY CTA: SORUN BİLDİR / USTA BUL */}
                 <button
                   onClick={() => {
                     triggerHaptic("impact");
                     setShowIssueModal(true);
                   }}
-                  className="relative w-full bg-white dark:bg-[#0a0f24] border-2 border-cyan-400 dark:border-cyan-400/80 hover:border-cyan-300 rounded-[2.5rem] p-5 sm:p-7 shadow-2xl shadow-cyan-500/25 cursor-pointer text-left overflow-hidden active-scale transition-all"
+                  className="w-full bg-white dark:bg-[#0a0f24]/90 border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 rounded-[2.5rem] p-5 sm:p-6 shadow-xl dark:shadow-2xl shadow-cyan-500/10 cursor-pointer text-left overflow-hidden active-scale transition-all group relative"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/15 via-sky-500/10 to-emerald-500/10 pointer-events-none"></div>
-                  <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none -mr-8 -mt-8 group-hover:bg-cyan-400/30 transition-colors"></div>
-                  <div className="absolute top-3 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-mono font-black text-[9px] uppercase tracking-widest shadow-md hidden sm:block">
-                    ⚡ ANINDA BİLDİR & TEKLİF AL
-                  </div>
-                  
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 sm:w-16 sm:h-16 bg-cyan-400 text-slate-950 rounded-2xl flex items-center justify-center backdrop-blur-md border border-cyan-300 shrink-0 shadow-lg shadow-cyan-400/30">
-                        <Wrench size={28} className="sm:hidden" />
-                        <Wrench size={34} className="hidden sm:block" />
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 bg-cyan-500/10 dark:bg-white/5 rounded-2xl flex items-center justify-center backdrop-blur-md border border-cyan-400/30 shrink-0">
+                        <Wrench size={24} className="text-cyan-500 dark:text-cyan-400" />
                       </div>
                       <div className="font-sans">
-                        <span className="inline-block sm:hidden text-[8px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-0.5">
-                          ⚡ ANINDA BİLDİR & TEKLİF AL
-                        </span>
-                        <h2 className="text-xl sm:text-3xl font-mono font-black tracking-tighter uppercase mb-1 text-slate-900 dark:text-white leading-none">
+                        <h3 className="text-lg sm:text-xl font-mono font-black tracking-tighter uppercase mb-0.5 text-slate-900 dark:text-white">
                           Sorun Bildir / Usta Bul
-                        </h2>
-                        <p className="text-xs font-bold text-slate-600 dark:text-cyan-100/90 leading-snug">
-                          Arıza, bakım veya yedek parça ihtiyacınız için anında en uygun ustalardan teklif toplayın.
+                        </h3>
+                        <p className="text-xs font-semibold text-slate-600 dark:text-cyan-100/70">
+                          Arıza veya bakım ihtiyacınız için anında teklif toplayın.
                         </p>
                       </div>
                     </div>
-                    <ChevronRight size={32} className="text-cyan-500 group-hover:translate-x-1 group-hover:text-cyan-300 transition-all hidden sm:block shrink-0" />
+                    <ChevronRight size={24} className="text-cyan-500/70 group-hover:translate-x-1 transition-all hidden sm:block" />
                   </div>
                 </button>
               </div>
