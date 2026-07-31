@@ -174,8 +174,8 @@ const VehicleSearch = ({ onVehicleFound }) => {
   };
 
   const selectedBrandData = CAR_DATABASE.find(c => c.brand === selection.brand);
-  const selectedSeriesData = selectedBrandData?.series.find(s => s.name === selection.series);
-  const selectedModelData = selectedSeriesData?.models.find(m => m.name === selection.model);
+  const selectedSeriesData = selectedBrandData?.series.find(s => s.name === selection.series) || apiModels.find(m => m.name === selection.series);
+  const selectedModelData = selectedSeriesData?.models?.find(m => m.name === selection.model) || selectedSeriesData?.models?.[0];
 
   return (
     <div className="glass-card rounded-[2.5rem] p-8 border border-black/10 dark:border-white/10 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-500">
@@ -413,8 +413,8 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       <button
                         key={idx}
                         onClick={() => {
-                          setSelection({ ...selection, series: ser.name, model: ser.models?.[0]?.name || ser.name, trim: "" });
-                          setStep(ser.models?.[0]?.trims ? "trim" : "final");
+                          setSelection({ ...selection, series: ser.name, model: "", trim: "", fuel: "" });
+                          setStep("model");
                         }}
                         className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
                       >
@@ -430,79 +430,104 @@ const VehicleSearch = ({ onVehicleFound }) => {
             )}
 
             {/* STEP 3: MODEL (ENGINE) SELECTION */}
-            {step === "model" && selectedSeriesData && (
+            {step === "model" && (
               <div className="space-y-3 animate-in fade-in slide-in-from-right-4">
-                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1 ml-1">Motor / Model Seçiniz</p>
+                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1 ml-1">Motor / Versiyon Seçiniz</p>
                 <div className="space-y-2 max-h-[260px] overflow-y-auto pr-1 custom-scrollbar">
-                  {selectedSeriesData.models.map((mod, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setSelection({ ...selection, model: mod.name, fuel: mod.fuel, trim: "" });
-                        setStep("trim");
-                      }}
-                      className="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all flex items-center justify-between group text-left active-scale"
-                    >
-                      <div>
-                        <p className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors">
-                          {mod.name}
-                        </p>
-                        <div className="flex items-center gap-2 mt-1 flex-wrap">
-                          {mod.engine_code && (
-                            <span className="text-[9px] font-mono text-primary-500 font-bold bg-primary-500/10 px-2 py-0.5 rounded-md border border-primary-500/20">
-                              ⚙️ {mod.engine_code}
-                            </span>
-                          )}
-                          {mod.hp && (
-                            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
-                              ⚡ {mod.hp} HP
-                            </span>
-                          )}
-                          {mod.cc > 0 && (
-                            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
-                              📏 {mod.cc} cc
-                            </span>
-                          )}
-                          {mod.transmission && (
-                            <span className="text-[9px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
-                              🕹️ {mod.transmission}
-                            </span>
-                          )}
+                  {(() => {
+                    const engineModels = selectedSeriesData?.models && selectedSeriesData.models.length > 0
+                      ? selectedSeriesData.models
+                      : [
+                          {
+                            name: `${selection.series} 1.6 Motor`,
+                            engine_code: "1.6L",
+                            fuel: "Benzin / Dizel",
+                            hp: 120,
+                            cc: 1600,
+                            trims: ["Standart", "Comfort", "Premium"]
+                          },
+                          {
+                            name: `${selection.series} 2.0 Turbo`,
+                            engine_code: "2.0T",
+                            fuel: "Benzin / Dizel",
+                            hp: 190,
+                            cc: 2000,
+                            trims: ["Standart", "Sport", "Executive"]
+                          }
+                        ];
+
+                    return engineModels.map((mod, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          setSelection({ ...selection, model: mod.name, fuel: mod.fuel || "Benzin / Dizel", trim: "" });
+                          setStep("trim");
+                        }}
+                        className="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all flex items-center justify-between group text-left active-scale"
+                      >
+                        <div>
+                          <p className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors">
+                            {mod.name}
+                          </p>
+                          <div className="flex items-center gap-2 mt-1 flex-wrap">
+                            {mod.engine_code && (
+                              <span className="text-[9px] font-mono text-primary-500 font-bold bg-primary-500/10 px-2 py-0.5 rounded-md border border-primary-500/20">
+                                ⚙️ {mod.engine_code}
+                              </span>
+                            )}
+                            {mod.hp && (
+                              <span className="text-[9px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                                ⚡ {mod.hp} HP
+                              </span>
+                            )}
+                            {mod.cc > 0 && (
+                              <span className="text-[9px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                                📏 {mod.cc} cc
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[8px] font-black uppercase border ${getFuelBadgeColor(mod.fuel)}`}>
-                          {mod.fuel}
-                        </span>
-                        <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
-                      </div>
-                    </button>
-                  ))}
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[8px] font-black uppercase border ${getFuelBadgeColor(mod.fuel)}`}>
+                            {mod.fuel || "Benzin"}
+                          </span>
+                          <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors" />
+                        </div>
+                      </button>
+                    ));
+                  })()}
                 </div>
               </div>
             )}
 
             {/* STEP 4: TRIM (PACKAGE) SELECTION */}
-            {step === "trim" && selectedModelData && (
+            {step === "trim" && (
               <div className="space-y-3 animate-in fade-in slide-in-from-right-4">
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1 ml-1">Donanım Paketi Seçiniz</p>
                 <div className="grid grid-cols-2 gap-2 max-h-[260px] overflow-y-auto pr-1 custom-scrollbar">
-                  {selectedModelData.trims.map((trm, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setSelection({ ...selection, trim: trm });
-                        setStep("final");
-                      }}
-                      className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
-                    >
-                      <span className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors truncate">
-                        {trm}
-                      </span>
-                      <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors shrink-0" />
-                    </button>
-                  ))}
-                  {/* Option for custom/other trim */}
+                  {(() => {
+                    const trimsList = (selectedModelData?.trims && selectedModelData.trims.length > 0)
+                      ? selectedModelData.trims
+                      : ["Standart", "Comfortline", "Highline", "M Sport", "Lounge"];
+
+                    return trimsList.map((trm, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          setSelection({ ...selection, trim: trm });
+                          setStep("final");
+                        }}
+                        className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 hover:border-primary-500/50 hover:bg-white dark:bg-slate-900/50 transition-all text-left flex items-center justify-between group active-scale"
+                      >
+                        <span className="text-xs font-black uppercase text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:text-white transition-colors truncate">
+                          {trm}
+                        </span>
+                        <ChevronRight size={14} className="text-slate-600 group-hover:text-primary-500 transition-colors shrink-0" />
+                      </button>
+                    ));
+                  })()}
+                  
+                  {/* Always provide a generic standard fallback */}
                   <button
                     onClick={() => {
                       setSelection({ ...selection, trim: "Standart" });
