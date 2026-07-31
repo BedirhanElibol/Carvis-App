@@ -379,9 +379,9 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 <TrendingUp size={20} className="hidden sm:block" />
               </div>
               <div>
-                <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-emerald-400 block">Canlı TR 2. El Piyasa Değeri</span>
+                <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-emerald-400 block">Tahmini 2. El Piyasa Değeri</span>
                 <span className="text-sm sm:text-base font-black font-mono text-white block">{valuation.formattedRange}</span>
-                <span className="text-[8px] sm:text-[9px] text-slate-400 block mt-0.5">{valuation.confidenceScore}% Doğruluk Oranı</span>
+                <span className="text-[8px] sm:text-[9px] text-slate-400 block mt-0.5">*Piyasa ve araç durumuna göre tahmini aralıktır</span>
               </div>
             </div>
             <div className="text-right border-l border-white/10 pl-3 ml-1 hidden sm:block">

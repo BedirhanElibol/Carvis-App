@@ -120,7 +120,17 @@ const CustomerHome = () => {
   useEffect(() => {
     if (!navigator.geolocation) return;
 
-    const detectLocation = () => {
+    const detectLocation = async () => {
+      // Check if permission was explicitly denied previously
+      if (navigator.permissions && navigator.permissions.query) {
+        try {
+          const status = await navigator.permissions.query({ name: "geolocation" });
+          if (status.state === "denied") return; // Quietly return if user denied permission
+        } catch {
+          // Ignore permissions query unsupported error
+        }
+      }
+
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           try {
@@ -139,14 +149,14 @@ const CustomerHome = () => {
                 }
               }
             }
-          } catch (err) {
-            console.log("Auto location discovery error:", err);
+          } catch {
+            // Silently handle nominatim fetch error
           }
         },
-        (error) => {
-          console.log("Location permission declined or unavailable:", error.message);
+        () => {
+          // Silently handle location denied/unavailable without polluting browser console
         },
-        { timeout: 10000, enableHighAccuracy: true }
+        { timeout: 8000, enableHighAccuracy: false }
       );
     };
 
