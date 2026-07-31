@@ -617,7 +617,7 @@ const CustomerHome = () => {
             </button>
 
             <button
-              onClick={() => handleProtectedAction(() => navigate("/app/extras/fuel"))}
+              onClick={() => handleProtectedAction(() => navigate("/app/fuel"))}
               className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-500/25 to-orange-500/15 border-2 border-amber-400/80 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-amber-500/15 relative overflow-hidden"
             >
               <div className="absolute top-1 right-1.5 px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[7px] font-black uppercase tracking-wider">Yeni</div>
@@ -1197,7 +1197,7 @@ const CustomerHome = () => {
                 
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => handleProtectedAction(() => navigate("/app/extras/fuel"))}
+                    onClick={() => handleProtectedAction(() => navigate("/app/fuel"))}
                     className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 text-[10px] font-mono font-black uppercase tracking-wider hover:bg-amber-400 active-scale transition-all shadow-lg shadow-amber-500/20 cursor-pointer flex items-center gap-1"
                   >
                     <Plus size={12} /> YAKIT EKLE / TAKİP
