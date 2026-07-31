@@ -1196,12 +1196,6 @@ const CustomerHome = () => {
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleProtectedAction(() => navigate("/app/fuel"))}
-                    className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 text-[10px] font-mono font-black uppercase tracking-wider hover:bg-amber-400 active-scale transition-all shadow-lg shadow-amber-500/20 cursor-pointer flex items-center gap-1"
-                  >
-                    <Plus size={12} /> YAKIT EKLE / TAKİP
-                  </button>
                   <select
                     id="city-select"
                     name="city"
