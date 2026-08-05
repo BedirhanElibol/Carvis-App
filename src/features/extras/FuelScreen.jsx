@@ -86,6 +86,10 @@ const FuelScreen = () => {
     setFormData(newFormData);
   };
 
+  const isValidUUID = (str) =>
+    typeof str === "string" &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!currentUser?.id || !activeVehicle?.id) {
@@ -98,6 +102,17 @@ const FuelScreen = () => {
       return;
     }
 
+    // Ensure valid UUID format for user_id and vehicle_id
+    if (!isValidUUID(currentUser.id)) {
+      showAlert("Oturum Gerekli", "Lütfen yakıt kaydı eklemek için giriş yapın.", "warning");
+      return;
+    }
+
+    if (!isValidUUID(activeVehicle.id)) {
+      showAlert("Araç Seçin", "Lütfen önce garajınıza resmi bir araç ekleyin.", "warning");
+      return;
+    }
+
     try {
       setSubmitting(true);
       const { error } = await supabase.from("fuel_logs").insert([
@@ -107,10 +122,10 @@ const FuelScreen = () => {
           liters: parseFloat(formData.liters),
           price_per_liter: parseFloat(formData.price_per_liter),
           total_cost: parseFloat(formData.total_cost),
-          odometer: parseInt(formData.odometer),
-          fuel_type: formData.fuel_type,
-          station_name: formData.station_name,
-          notes: formData.notes
+          odometer: parseInt(formData.odometer, 10),
+          fuel_type: formData.fuel_type || "Benzin",
+          station_name: formData.station_name || "Belirtilmedi",
+          notes: formData.notes || ""
         }
       ]);
 
@@ -131,9 +146,11 @@ const FuelScreen = () => {
     } catch (error) {
       console.error("Insert error:", error);
       if (error.code === "42P01") {
-         showAlert("Hata", "Veritabanı tablosu henüz oluşturulmamış (fuel_logs). Lütfen migration'ı çalıştırın.", "error");
+        showAlert("Hata", "Veritabanı tablosu henüz hazır değil (fuel_logs).", "error");
+      } else if (error.message?.includes("invalid input syntax for type uuid") || error.status === 400) {
+        showAlert("Hata", "Geçerli bir araç veya kullanıcı kimliği bulunamadı.", "error");
       } else {
-         showAlert("Hata", "Yakıt kaydı eklenirken bir sorun oluştu.", "error");
+        showAlert("Hata", error.message || "Yakıt kaydı eklenirken bir sorun oluştu.", "error");
       }
     } finally {
       setSubmitting(false);

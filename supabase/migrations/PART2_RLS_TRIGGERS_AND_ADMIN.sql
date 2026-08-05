@@ -46,6 +46,30 @@ CREATE INDEX IF NOT EXISTS idx_wallet_tx_wallet ON public.wallet_transactions(wa
 -- =========================================================
 -- 10. LIVE FUEL PRICES & CRON
 -- =========================================================
+CREATE TABLE IF NOT EXISTS public.fuel_logs (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+    vehicle_id UUID NOT NULL REFERENCES public.vehicles(id) ON DELETE CASCADE,
+    liters DECIMAL(10,2) NOT NULL,
+    price_per_liter DECIMAL(10,2) NOT NULL,
+    total_cost DECIMAL(10,2) NOT NULL,
+    odometer INTEGER NOT NULL,
+    fuel_type TEXT DEFAULT 'Benzin',
+    station_name TEXT,
+    notes TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.fuel_logs ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Users can manage own fuel logs" ON public.fuel_logs;
+CREATE POLICY "Users can manage own fuel logs" 
+ON public.fuel_logs FOR ALL 
+USING (auth.uid() = user_id OR public.is_admin())
+WITH CHECK (auth.uid() = user_id OR public.is_admin());
+
+CREATE INDEX IF NOT EXISTS idx_fuel_logs_user ON public.fuel_logs(user_id);
+CREATE INDEX IF NOT EXISTS idx_fuel_logs_vehicle ON public.fuel_logs(vehicle_id);
 
 CREATE TABLE IF NOT EXISTS public.live_fuel_prices (
     province_code text PRIMARY KEY,
