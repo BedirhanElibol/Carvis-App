@@ -1267,23 +1267,26 @@ const CustomerHome = () => {
                 </div>
               </div>
 
-              {/* Station Infrastructure Compliance */}
-              <div className="pt-3 border-t border-slate-200 dark:border-cyan-500/10 flex flex-col gap-2 text-[9px] text-slate-500 dark:text-cyan-100/50 font-semibold">
-                <div className="flex justify-between items-center">
-                  <span className="flex items-center gap-1.5"><ShieldCheck size={11} className="text-cyan-500/80" /> EPDK Lisans Durumu:</span>
-                  <span className="text-cyan-600 dark:text-cyan-400 uppercase font-mono font-black">Lisanslı (Cezası Yok)</span>
+              {/* REAL CALCULATED FUEL INFO */}
+              <div className="pt-3 border-t border-slate-200 dark:border-cyan-500/10 flex flex-col gap-2 text-[10px] text-slate-600 dark:text-cyan-100/70 font-semibold">
+                <div className="flex justify-between items-center bg-slate-50 dark:bg-black/30 p-2.5 rounded-xl border border-slate-200 dark:border-white/5">
+                  <span className="flex items-center gap-1.5 font-bold text-slate-700 dark:text-slate-300">
+                    <Fuel size={13} className="text-cyan-500" /> 50L Depo Dolum (Benzin):
+                  </span>
+                  <span className="text-cyan-600 dark:text-cyan-400 font-mono font-black">
+                    ₺{((parseFloat((fuelPrices[selectedCity]?.benzin && fuelPrices[selectedCity]?.benzin !== "-") ? fuelPrices[selectedCity].benzin : (fuelPrices.istanbul?.benzin || "44.95")) || 44.95) * 50).toLocaleString("tr-TR", { maximumFractionDigits: 0 })}
+                  </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="flex items-center gap-1.5"><HardDrive size={11} className="text-cyan-500/80" /> Yeraltı Tank Yaşı:</span>
-                  <span className="text-slate-900 dark:text-white font-mono font-black">5 Yıl (Korozyon & Sızıntı Testi Geçildi)</span>
+                <div className="flex justify-between items-center bg-slate-50 dark:bg-black/30 p-2.5 rounded-xl border border-slate-200 dark:border-white/5">
+                  <span className="flex items-center gap-1.5 font-bold text-slate-700 dark:text-slate-300">
+                    <Fuel size={13} className="text-amber-500" /> 50L Depo Dolum (Motorin):
+                  </span>
+                  <span className="text-amber-600 dark:text-amber-400 font-mono font-black">
+                    ₺{((parseFloat((fuelPrices[selectedCity]?.motorin && fuelPrices[selectedCity]?.motorin !== "-") ? fuelPrices[selectedCity].motorin : (fuelPrices.istanbul?.motorin || "45.40")) || 45.40) * 50).toLocaleString("tr-TR", { maximumFractionDigits: 0 })}
+                  </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="flex items-center gap-1.5"><Wind size={11} className="text-cyan-500/80" /> Gaz Geri Kazanım (VRS):</span>
-                  <span className="text-slate-900 dark:text-white font-mono font-black">%99.4 Ekolojik Filtre Uyumlu</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="flex items-center gap-1.5"><Flame size={11} className="text-cyan-500/80" /> Parlama Noktası Audit:</span>
-                  <span className="text-cyan-600 dark:text-cyan-400 uppercase font-mono font-black font-bold">Sorunsuz</span>
+                <div className="flex justify-between items-center pt-1 text-[9px] text-slate-400 font-mono">
+                  <span>ℹ️ Veriler EPDK & Ana Dağıtıcı Tavan Fiyatlarıdır.</span>
                 </div>
               </div>
             </div>
