@@ -169,6 +169,15 @@ BEGIN
 
         -- 2. Add them directly to the corporate_branches network (Rapidsy AÄŸÄ±)
         -- If lat/lng are NULL, they won't appear on the map until geocoded by admin.
+        INSERT INTO public.corporate_branches (
+            chain_name,
+            name,
+            address,
+            phone,
+            lat,
+            lng,
+            city
+        ) VALUES (
             COALESCE(NEW.company_name, 'BaÄŸÄ±msÄ±z Kurumsal Servis'),
             COALESCE(NEW.company_name, 'Yeni Rapidsy NoktasÄ±'),
             NEW.office_address,
