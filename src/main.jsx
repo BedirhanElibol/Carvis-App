@@ -20,6 +20,20 @@ import { MapProvider } from "./context/MapContext";
 import { WalletProvider } from "./context/WalletContext";
 import { HelmetProvider } from "react-helmet-async";
 // Global Dynamic Import Chunk Error Handler for Vercel Deployments & Stale SW Caches
+const handleChunkError = () => {
+  const lastReload = sessionStorage.getItem("chunk_reload_ts");
+  const now = Date.now();
+  if (!lastReload || now - parseInt(lastReload, 10) > 4000) {
+    sessionStorage.setItem("chunk_reload_ts", String(now));
+    window.location.reload();
+  }
+};
+
+window.addEventListener("vite:preload-error", (event) => {
+  event.preventDefault();
+  handleChunkError();
+});
+
 window.addEventListener("error", (event) => {
   const msg = event?.message || "";
   if (
@@ -27,23 +41,9 @@ window.addEventListener("error", (event) => {
     msg.includes("Expected a JavaScript-or-Wasm module script") ||
     msg.includes("Importing a module script failed")
   ) {
-    const lastReload = sessionStorage.getItem("chunk_reload_ts");
-    const now = Date.now();
-    if (!lastReload || now - parseInt(lastReload, 10) > 8000) {
-      sessionStorage.setItem("chunk_reload_ts", String(now));
-      window.location.reload();
-    }
+    handleChunkError();
   }
 });
-
-// Purge any stale legacy Service Worker caches
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.getRegistrations().then((registrations) => {
-    for (const reg of registrations) {
-      reg.unregister();
-    }
-  }).catch(() => {});
-}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
