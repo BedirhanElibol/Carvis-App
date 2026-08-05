@@ -19,7 +19,7 @@ export default function EVChargingScreen() {
       setIsLoading(true);
       try {
         const meta = getCityMetadata(city);
-        const apiData = await getEVStations(meta.lat, meta.lng, 25);
+        const apiData = await getEVStations(meta.lat, meta.lng, 50);
         if (isMounted) {
           if (apiData && apiData.length > 0) {
             const mapped = apiData.map((item, idx) => {

@@ -73,7 +73,25 @@ export const UIProvider = ({ children }) => {
   });
 
   const [loginIntent, setLoginIntent] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState("Ankara, Ostim");
+  const [selectedLocation, setSelectedLocationState] = useState(() => {
+    try {
+      return localStorage.getItem("rapidsy_user_location") || "İstanbul, Maslak";
+    } catch {
+      return "İstanbul, Maslak";
+    }
+  });
+
+  const setSelectedLocation = (locationOrUpdater) => {
+    setSelectedLocationState((prev) => {
+      const newLoc = typeof locationOrUpdater === "function" ? locationOrUpdater(prev) : locationOrUpdater;
+      try {
+        if (newLoc) localStorage.setItem("rapidsy_user_location", newLoc);
+      } catch (err) {
+        console.error("Location storage err:", err);
+      }
+      return newLoc;
+    });
+  };
 
   // Çeviri nesnesi (Eğer dil bulunamazsa varsayılan olarak Türkçe göster)
   const t = TRANSLATIONS[language] || TRANSLATIONS["tr"];

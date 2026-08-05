@@ -9,10 +9,14 @@ const MapContext = createContext();
 export const useMap = () => useContext(MapContext);
 
 const CITY_COORDINATES = {
-  "Ankara, Ostim": { lat: 39.9675, lng: 32.7485 },
   "Istanbul, Maslak": { lat: 41.1105, lng: 29.021 },
+  "İstanbul, Maslak": { lat: 41.1105, lng: 29.021 },
+  "Ankara, Ostim": { lat: 39.9675, lng: 32.7485 },
+  "Ankara, Çankaya": { lat: 39.8974, lng: 32.7681 },
   "Izmir, Bornova": { lat: 38.4622, lng: 27.2161 },
+  "İzmir, Bornova": { lat: 38.4622, lng: 27.2161 },
   "Antalya, Merkez": { lat: 36.8841, lng: 30.7056 },
+  "Bursa, Nilüfer": { lat: 40.2167, lng: 28.9833 }
 };
 
 export const MapProvider = ({ children }) => {
@@ -21,14 +25,14 @@ export const MapProvider = ({ children }) => {
   const [nearbyProviders, setNearbyProviders] = useState([]);
   const [activeSOS, setActiveSOS] = useState(null);
   const [userLocation, setUserLocation] = useState(
-    CITY_COORDINATES[selectedLocation] || CITY_COORDINATES["Ankara, Ostim"]
+    CITY_COORDINATES[selectedLocation] || CITY_COORDINATES["İstanbul, Maslak"]
   );
   const [loadingMap, setLoadingMap] = useState(false);
   const [permissionStatus, setPermissionStatus] = useState("loading"); // 'loading', 'granted', 'denied'
 
   // Sync location when UI selectedLocation changes
   useEffect(() => {
-    if (CITY_COORDINATES[selectedLocation]) {
+    if (selectedLocation && CITY_COORDINATES[selectedLocation]) {
       setUserLocation(CITY_COORDINATES[selectedLocation]);
     }
   }, [selectedLocation]);
@@ -50,10 +54,13 @@ export const MapProvider = ({ children }) => {
           setPermissionStatus("granted");
         },
         (error) => {
-          console.warn("Location access blocked or timed out (likely HTTP context). Using Fallback.", error);
-          // Fallback to a default city if in development/IP context
-          setPermissionStatus("granted"); // Pretend granted to allow app flow
-          setUserLocation(CITY_COORDINATES["Ankara, Ostim"]);
+          console.warn("Location access blocked or timed out. Using selectedLocation.", error);
+          setPermissionStatus("granted");
+          if (selectedLocation && CITY_COORDINATES[selectedLocation]) {
+            setUserLocation(CITY_COORDINATES[selectedLocation]);
+          } else {
+            setUserLocation(CITY_COORDINATES["İstanbul, Maslak"]);
+          }
         },
         { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 }
       );
