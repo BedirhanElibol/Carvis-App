@@ -88,7 +88,7 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               whileHover={{ scale: 0.99 }}
-              onClick={() => setShowValuationModal(true)}
+              onClick={onOpenProSettings}
               className="bg-gradient-to-br from-slate-900 via-slate-950 to-black dark:from-slate-900 dark:via-[#0a0f24] dark:to-black rounded-3xl p-6 shadow-2xl relative overflow-hidden text-white border border-white/10 cursor-pointer group"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -96,9 +96,9 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
               <div className="relative z-10 flex flex-col h-full justify-between gap-6">
                 <div className="flex justify-between items-start">
                   <div className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full border border-white/10">
-                    <TrendingUp size={14} className="text-cyan-400" />
+                    <Car size={14} className="text-cyan-400" />
                     <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-300">
-                      {vehicle?.brand ? `${vehicle.brand} ${vehicle.model}` : "Tahmini Piyasa Değeri"}
+                      {vehicle?.brand ? `${vehicle.brand} ${vehicle.model || ""}` : "Araç Değeri"}
                     </span>
                   </div>
                   <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md group-hover:border-cyan-500/50 transition-colors">
@@ -107,19 +107,34 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
                 </div>
 
                 <div>
-                  <div className="flex items-baseline gap-3 mb-1">
-                    <h2 className="text-3xl font-mono font-black tracking-tighter">
-                      {formatCurrency(valuation.currentValue)}
-                    </h2>
-                    <div className="flex items-center gap-1 text-xs font-black px-2 py-1 rounded-lg bg-cyan-500/20 text-cyan-400">
-                      <ArrowUpRight size={14} />
-                      %{valuation.percentage}
+                  {valuation.hasValue ? (
+                    <div>
+                      <div className="flex items-baseline gap-3 mb-1">
+                        <h2 className="text-3xl font-mono font-black tracking-tighter text-cyan-400">
+                          {formatCurrency(valuation.currentValue)}
+                        </h2>
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300">
+                          Kayıtlı Fiyat
+                        </span>
+                      </div>
+                      <p className="text-[10px] font-mono text-slate-400 uppercase tracking-widest flex items-center justify-between">
+                        <span>Kaynak: {valuation.source}</span>
+                        <span className="flex items-center gap-1 text-cyan-400">Güncelle <ChevronRight size={12} /></span>
+                      </p>
                     </div>
-                  </div>
-                  <p className="text-[10px] font-mono font-black text-slate-400 uppercase tracking-widest flex items-center justify-between">
-                    <span>Aralık: {formatCurrency(valuation.minRange)} - {formatCurrency(valuation.maxRange)}</span>
-                    <span className="flex items-center gap-1 text-cyan-400">Detay <ChevronRight size={12} /></span>
-                  </p>
+                  ) : (
+                    <div>
+                      <h2 className="text-xl font-mono font-black tracking-tight text-slate-300 mb-1">
+                        Araç Fiyatı Girilmedi
+                      </h2>
+                      <p className="text-[11px] text-slate-400 mb-3 leading-snug">
+                        Aracınızın kasko veya alış değerini kaydederek finansal takibi başlatabilirsiniz.
+                      </p>
+                      <button className="px-3.5 py-1.5 rounded-xl bg-cyan-500 text-slate-950 text-xs font-mono font-black uppercase tracking-wider hover:bg-cyan-400 transition-all flex items-center gap-1.5">
+                        ➕ Araç Fiyatı / Değeri Ekle
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -134,17 +149,17 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-2">
                   <BarChart3 className="text-cyan-400" size={18} />
-                  <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-300">Tahmini Yıllık Sahip Olma Maliyeti (TCO)</span>
+                  <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-300">Gerçek Kayıtlı Harcamalar</span>
                 </div>
                 <span className="text-xs font-mono bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded-full font-bold">
-                  {tco.costPerKm} ₺/km
+                  Canlı Kayıtlar
                 </span>
               </div>
 
               <div>
                 <div className="flex items-baseline gap-2 mb-3">
-                  <h2 className="text-3xl font-mono font-black text-white">{formatCurrency(tco.yearlyTotal)}</h2>
-                  <span className="text-xs text-slate-400 font-mono">/ yıl ({formatCurrency(tco.monthlyTotal)} / ay)</span>
+                  <h2 className="text-3xl font-mono font-black text-white">{formatCurrency(tco.totalCost)}</h2>
+                  <span className="text-xs text-slate-400 font-mono">toplam harcama</span>
                 </div>
 
                 {/* Expense Breakdown Progress */}
@@ -161,7 +176,7 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
                 </div>
 
                 <p className="text-[9px] text-cyan-400/80 font-mono italic border-t border-white/10 pt-2">
-                  💡 *Türkiye geneli yıllık 15.000 KM binek araç ortalama maliyet tahminidir.
+                  ✓ Sadece sizin girdiğiniz gerçek yakıt ve servis fatura kayıtları esas alınır.
                 </p>
               </div>
             </motion.div>
