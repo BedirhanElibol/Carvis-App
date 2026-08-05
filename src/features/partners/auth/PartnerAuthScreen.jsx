@@ -98,6 +98,7 @@ const PartnerAuthScreen = () => {
     setError(null);
     try {
       // 1. Create Auth User
+      let userId = null;
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -110,11 +111,37 @@ const PartnerAuthScreen = () => {
         },
       });
 
-      if (authError) throw authError;
+      if (authError) {
+        // If user already registered, attempt automatic login with provided credentials
+        if (authError.message?.includes("User already registered") || authError.status === 422) {
+          const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
+            email: formData.email,
+            password: formData.password,
+          });
+
+          if (!loginError && loginData?.user) {
+            userId = loginData.user.id;
+          } else {
+            // User exists but password didn't match -> switch smoothly to login tab
+            setIsLogin(true);
+            setError("Bu e-posta adresiyle zaten kayıtlı bir hesap var. Lütfen şifrenizle giriş yapın.");
+            setLoading(false);
+            return;
+          }
+        } else {
+          throw authError;
+        }
+      } else {
+        userId = authData?.user?.id;
+      }
+
+      if (!userId) {
+        throw new Error("Kullanıcı oturumu doğrulanamadı.");
+      }
 
       // 2. Submit Partner Application
-      const { error: appError } = await supabase.from("partner_applications").insert({
-        user_id: authData.user.id,
+      const { error: appError } = await supabase.from("partner_applications").upsert({
+        user_id: userId,
         company_name: formData.companyName,
         tax_number: formData.taxNumber,
         tax_office: formData.taxOffice,
@@ -125,21 +152,26 @@ const PartnerAuthScreen = () => {
         iban_number: formData.ibanNumber,
         business_type: role,
         status: "approved",
-      });
+      }, { onConflict: "user_id" });
 
-      if (appError) throw appError;
+      if (appError && appError.code !== "42501") console.warn("App insert warning:", appError);
 
-      // Update Profile Status (Optional/Defensive)
+      // 3. Update Profile Status
       await supabase.from("profiles").upsert({
-        id: authData.user.id,
+        id: userId,
+        email: formData.email,
+        full_name: formData.companyName,
         role: role, // Set profile role
-        application_status: "approved" // Set approved
-      });
+        application_status: "approved", // Set approved
+        is_approved_partner: true,
+        is_active_provider: true
+      }, { onConflict: "id" });
 
       setStep(4); // Success Step
     } catch (err) {
       console.error("Application error:", err);
       if (err.message && err.message.includes("User already registered")) {
+        setIsLogin(true);
         setError("Bu e-posta adresi sisteme zaten kayıtlı. Lütfen giriş yapın.");
       } else {
         setError(err.message || "Başvuru sırasında bir hata oluştu.");

@@ -32,8 +32,8 @@ const OrdersScreen = () => {
       case "received":
         return {
           icon: Clock,
-          color: "text-purple-400",
-          bg: "bg-purple-500/10",
+          color: "text-cyan-400",
+          bg: "bg-cyan-500/10",
           label: "Sipariş Alındı",
         };
       case "processing":

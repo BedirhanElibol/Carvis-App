@@ -71,8 +71,6 @@ const VehiclePassport = ({ vehicle, onClose }) => {
     fetchRecords();
   }, [vehicle?.id, currentUser]);
 
-  if (!vehicle) return null;
-
   const handleCopyChassis = () => {
     navigator.clipboard.writeText(vehicle.chassis_no || vehicle.chassis_number || "");
     setCopied(true);
@@ -286,6 +284,8 @@ const VehiclePassport = ({ vehicle, onClose }) => {
       setPdfDownloading(false);
     }
   };
+
+  if (!vehicle) return null;
 
   return (
     <div 

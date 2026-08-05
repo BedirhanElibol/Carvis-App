@@ -99,6 +99,9 @@ const MessageScreen = lazy(() => import("./features/messages/MessageScreen"));
 const PrivacyPolicyScreen = lazy(
   () => import("./features/legal/PrivacyPolicyScreen"),
 );
+const TermsOfServiceScreen = lazy(
+  () => import("./features/legal/TermsOfServiceScreen"),
+);
 const PartnerSettingsScreen = lazy(
   () => import("./features/partners/PartnerSettingsScreen"),
 );
@@ -202,6 +205,22 @@ export const AppRoutes = () => {
               <PrivacyPolicyScreen />
             </>
           }
+        />
+        <Route
+          path="/terms-of-service"
+          element={
+            <>
+              <SEO
+                title="Kullanım Koşulları"
+                description="Rapidsy kullanım koşulları ve hizmet sözleşmesi."
+              />
+              <TermsOfServiceScreen />
+            </>
+          }
+        />
+        <Route
+          path="/terms"
+          element={<Navigate to="/terms-of-service" replace />}
         />
 
         {/* Customer Routes */}
@@ -370,7 +389,11 @@ export const AppRoutes = () => {
         />
         <Route
           path="/app/parking"
-          element={<Navigate to="/application/home" replace />}
+          element={
+            <ProtectedRoute allowedRoles={["customer", "admin"]}>
+              <ParkingScreen />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/app/product/:id"

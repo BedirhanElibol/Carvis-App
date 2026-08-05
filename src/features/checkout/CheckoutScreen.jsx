@@ -72,7 +72,12 @@ const CheckoutScreen = () => {
     else navigate(-1);
   };
 
+  const [agreedToTerms, setAgreedToTerms] = useState(true);
+
   const handlePaymentSubmit = async () => {
+    if (!agreedToTerms) {
+      return showAlert("Onay Gerekli", "Devam etmek için Mesafeli Satış Sözleşmesini ve Ön Bilgilendirme Formunu onaylamalısınız.", "warning");
+    }
     if (!cardData.number || !cardData.cvv || !cardData.expiry) {
       return showAlert("Hata", "Kart bilgileri eksik.", "error");
     }
@@ -249,7 +254,12 @@ const CheckoutScreen = () => {
               <div className="space-y-4">
                 <div className="p-3 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-black/5 dark:border-white/5 space-y-2">
                   <label className="flex gap-2 items-start cursor-pointer">
-                    <input type="checkbox" defaultChecked className="mt-1" />
+                    <input
+                      type="checkbox"
+                      checked={agreedToTerms}
+                      onChange={(e) => setAgreedToTerms(e.target.checked)}
+                      className="mt-1 accent-primary-500 rounded cursor-pointer"
+                    />
                     <span className="text-[10px] text-slate-500 leading-tight">
                       <span 
                         onClick={() => setLegalModal({ open: true, type: "MESAFELI_SATIS" })}

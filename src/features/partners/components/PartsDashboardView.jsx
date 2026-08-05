@@ -198,9 +198,18 @@ export default function PartsDashboardView({ currentUser }) {
           {loading ? (
             <div className="py-8 text-center text-slate-500 text-xs">Yükleniyor...</div>
           ) : filteredOrders.length === 0 ? (
-            <div className="py-12 text-center text-slate-500">
-              <ShoppingBag size={40} className="mx-auto mb-3 opacity-20" />
-              <p className="font-bold text-sm">Gösterilecek sipariş bulunmuyor.</p>
+            <div className="py-12 text-center text-slate-400 space-y-4">
+              <Package size={40} className="mx-auto text-emerald-500/40" />
+              <div>
+                <p className="font-black text-sm text-white">Henüz Aktif Parça Siparişi Yok</p>
+                <p className="text-xs text-slate-400 mt-1">Mağazanıza yeni ürün ekleyerek müşterilerden sipariş almaya başlayabilirsiniz.</p>
+              </div>
+              <button
+                onClick={() => setIsProductModalOpen(true)}
+                className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-wider cursor-pointer transition-all active-scale shadow-lg shadow-emerald-900/30"
+              >
+                <Plus size={16} /> + Envantere Ürün Ekle
+              </button>
             </div>
           ) : (
             <div className="divide-y divide-white/5">

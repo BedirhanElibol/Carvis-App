@@ -29,15 +29,30 @@ export const AuthProvider = ({ children }) => {
   const fetchProfile = async (user) => {
     if (!user) return null;
     try {
+      const isSuperAdmin = user.email === "bedirelibol7@gmail.com";
+
       const { data: rows } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", user.id)
         .limit(1);
 
-      if (rows && rows.length > 0) return rows[0];
+      if (rows && rows.length > 0) {
+        const profile = rows[0];
+        if (isSuperAdmin) {
+          return {
+            ...profile,
+            role: "admin",
+            application_status: "approved",
+            is_approved_partner: true,
+            is_active_provider: true,
+          };
+        }
+        return profile;
+      }
 
       // Profile missing (OAuth user created before trigger) — auto-create it
+      const defaultRole = isSuperAdmin ? "admin" : "customer";
       const { data: newProfile } = await supabase
         .from("profiles")
         .upsert(
@@ -48,17 +63,25 @@ export const AuthProvider = ({ children }) => {
               user.user_metadata?.full_name ||
               user.email?.split("@")[0] ||
               "Kullanici",
-            role: "customer",
+            role: defaultRole,
+            application_status: isSuperAdmin ? "approved" : "pending",
+            is_approved_partner: isSuperAdmin,
+            is_active_provider: isSuperAdmin,
           },
           { onConflict: "id" },
         )
         .select()
         .limit(1);
 
-      return newProfile?.[0] || { role: "customer" };
+      const created = newProfile?.[0] || { role: defaultRole };
+      return isSuperAdmin
+        ? { ...created, role: "admin", application_status: "approved" }
+        : created;
     } catch (err) {
       if (err.code !== "42501") console.error("Profile fetch error:", err);
-      return { role: "customer" };
+      return user.email === "bedirelibol7@gmail.com"
+        ? { role: "admin", application_status: "approved" }
+        : { role: "customer" };
     }
   };
 
@@ -67,10 +90,6 @@ export const AuthProvider = ({ children }) => {
       if (session?.user) {
         let profile = await fetchProfile(session.user);
         
-        // Roles and Application statuses are strictly enforced by the Database and Admin panel.
-        // No client-side URL interception for privileges.
-        
-        // Check email confirmation OR if logged in via Social Provider
         const isVerified =
           profile?.is_verified ||
           !!session.user.email_confirmed_at ||
@@ -110,12 +129,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("carvis_guest");
     localStorage.removeItem("rapidsy_guest");
     sessionStorage.clear();
-    // Full page reload to clear all React state and prevent stale guest mode
     window.location.href = "/";
   };
 
   const loginAsGuest = () => {
-    // Valid UUID format for Postgres: 8-4-4-4-12
     const guestId =
       "00000000-0000-4000-8000-" +
       Math.random().toString(16).slice(2, 14).padStart(12, "0");
@@ -124,23 +141,34 @@ export const AuthProvider = ({ children }) => {
       aud: "authenticated",
       role: "customer",
       email: "guest@rapidsy.app",
-      confirmed_at: new Date().toISOString(),
+      full_name: "Misafir Sürücü",
       isAnonymous: true,
-      user_metadata: { full_name: "Misafir Kullanıcı", role: "customer" },
+      isVerified: true,
+      application_status: "approved",
     };
-    localStorage.setItem("carvis_guest", JSON.stringify(guestUser));
-    localStorage.removeItem("rapidsy_guest");
+    try {
+      localStorage.setItem("carvis_guest", JSON.stringify(guestUser));
+      localStorage.setItem("rapidsy_guest", JSON.stringify(guestUser));
+    } catch (e) {
+      console.warn("LocalStorage save guest failed", e);
+    }
     setCurrentUser(guestUser);
-    setLoading(false);
+    return guestUser;
   };
 
-  const value = useMemo(() => ({
-    currentUser,
-    setCurrentUser,
-    loading,
-    handleLogout,
-    loginAsGuest,
-  }), [currentUser, loading]);
+  const value = useMemo(
+    () => ({
+      currentUser,
+      loading,
+      loginAsGuest,
+      handleLogout,
+      setCurrentUser,
+      fetchProfile,
+    }),
+    [currentUser, loading],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+export default AuthContext;

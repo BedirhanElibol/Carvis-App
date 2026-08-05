@@ -57,8 +57,19 @@ export const useFuelPrices = (t) => {
           }
         };
 
+        const createCityPricesProxy = (basePrices) => {
+          return new Proxy(basePrices, {
+            get(target, prop) {
+              if (typeof prop === "string" && !(prop in target) && prop !== "then") {
+                return target.istanbul || { benzin: "44.95", motorin: "45.40", lpg: "22.85" };
+              }
+              return target[prop];
+            }
+          });
+        };
+
         if (isMounted) {
-          setFuelPrices(livePrices);
+          setFuelPrices(createCityPricesProxy(livePrices));
           const d = new Date();
           setLastUpdated(`${d.toLocaleDateString("tr-TR")} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`);
         }

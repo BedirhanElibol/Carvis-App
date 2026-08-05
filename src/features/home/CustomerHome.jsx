@@ -28,6 +28,7 @@ import IssueReportingModal from "../../components/home/IssueReportingModal";
 import OBDSearchModal from "../../components/modals/OBDSearchModal";
 import Obd2DictionaryModal from "../../components/ui/Obd2DictionaryModal";
 import { useFuelPrices } from "../../hooks/useFuelPrices";
+import { TURKEY_CITIES } from "../../constants/turkeyCities";
 
 // Service Categories and Featured Deals moved inside the component to use t
 
@@ -48,6 +49,7 @@ const CustomerHome = () => {
   const serviceCategories = useMemo(() => [
     { name: t.periodicMaintenance, icon: Wrench, color: "text-cyan-500 dark:text-cyan-400", bg: "bg-white/5", border: "hover:border-white/10", route: "/app/mechanics" },
     { name: "EV Şarj", icon: Zap, color: "text-emerald-500 dark:text-emerald-400", bg: "bg-emerald-500/10", border: "hover:border-emerald-500/30", route: "/app/ev-charging" },
+    { name: "Yakıt Takip", icon: Fuel, color: "text-amber-500 dark:text-amber-400", bg: "bg-amber-500/10", border: "hover:border-amber-500/30", route: "/app/fuel" },
     { name: t.brakeSystem, icon: Activity, color: "text-sky-500 dark:text-sky-400", bg: "bg-sky-500/10", border: "hover:border-sky-500/30", route: "/app/mechanics" },
     { name: t.tireAndAlignment, icon: Disc, color: "text-blue-500 dark:text-blue-400", bg: "bg-blue-500/10", border: "hover:border-blue-500/30", route: "/app/mechanics" },
     { name: "Kasko & Sigorta", icon: ShieldCheck, color: "text-cyan-500 dark:text-cyan-400", bg: "bg-white/5", border: "hover:border-white/10", route: "/app/insurance" },
@@ -597,7 +599,7 @@ const CustomerHome = () => {
         <div className="mb-8 space-y-4">
           
           {/* TOP QUICK ACTION GRID */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 mb-6 sm:mb-8">
             <button
               onClick={() => {
                 handleProtectedAction(() => {
@@ -616,6 +618,18 @@ const CustomerHome = () => {
               <p className="text-[9px] sm:text-[10px] text-cyan-700 dark:text-cyan-300 font-bold mt-0.5">Anında Teklif Al</p>
             </button>
 
+            <button
+              onClick={() => handleProtectedAction(() => navigate("/app/fuel"))}
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-500/25 to-yellow-500/15 border-2 border-amber-400 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-amber-500/15 relative overflow-hidden ring-2 ring-amber-400/30"
+            >
+              <div className="absolute top-1 right-1.5 px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[7px] font-black uppercase tracking-wider">CANLI FİYAT</div>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center mb-2 sm:mb-2.5 font-bold shadow-md shadow-amber-400/30">
+                <Fuel size={16} className="sm:hidden" />
+                <Fuel size={18} className="hidden sm:block" />
+              </div>
+              <h4 className="text-[10px] sm:text-xs font-black uppercase text-slate-900 dark:text-white font-mono leading-tight">Yakıt Takip Sistemi</h4>
+              <p className="text-[9px] sm:text-[10px] text-amber-600 dark:text-amber-300 font-bold mt-0.5">Fiyatlar & Gider</p>
+            </button>
 
             <button
               onClick={() => handleProtectedAction(() => navigate("/app/mechanics"))}
@@ -665,7 +679,7 @@ const CustomerHome = () => {
 
             <button
               onClick={() => handleProtectedAction(() => navigate("/quotes"))}
-              className="col-span-2 sm:col-span-1 p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-emerald-500/30">
                 <TrendingUp size={16} className="sm:hidden" />
@@ -675,6 +689,14 @@ const CustomerHome = () => {
               <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-emerald-200/70 font-semibold mt-0.5">{quotes.length} Aktif Teklif</p>
             </button>
           </div>
+
+          {/* SERVICE CATEGORIES & SEARCH PANEL FOR ALL USERS */}
+          <SearchAndCategoriesPanel 
+            t={t} 
+            searchQuery={searchQuery} 
+            setSearchQuery={setSearchQuery} 
+            serviceCategories={serviceCategories} 
+          />
 
           {/* Proactive Urgent Vehicle Status Alert */}
           {activeVehicle && daysUntilInspection !== null && (
@@ -916,6 +938,22 @@ const CustomerHome = () => {
                   </h4>
                   <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-amber-200/50 mt-0.5 sm:mt-1 font-sans">
                     Sipariş Takibi
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => navigate("/app/fuel")}
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-amber-500/30 hover:border-amber-400 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                >
+                  <div className="bg-amber-500/20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-amber-500/40 text-amber-600 dark:text-amber-400">
+                    <Fuel size={20} className="sm:hidden" />
+                    <Fuel size={24} className="hidden sm:block" />
+                  </div>
+                  <h4 className="font-mono font-black text-slate-900 dark:text-white text-[11px] sm:text-xs uppercase tracking-wider leading-tight">
+                    YAKIT TAKİP SİSTEMİ
+                  </h4>
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 dark:text-amber-200/50 mt-0.5 sm:mt-1 font-sans">
+                    Canlı Fiyatlar & Gider
                   </p>
                 </button>
 
@@ -1193,9 +1231,14 @@ const CustomerHome = () => {
                     className="bg-slate-100 dark:bg-[#0a0f24] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-cyan-50 text-[10px] font-black uppercase tracking-wider rounded-xl px-3 py-1.5 outline-none cursor-pointer hover:border-cyan-400/50 transition-colors shadow-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 appearance-none"
                     style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2322d3ee' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em', paddingRight: '2rem' }}
                   >
-                    <option value="istanbul">{t.istanbul}</option>
-                    <option value="ankara">{t.ankara}</option>
-                    <option value="izmir">{t.izmir}</option>
+                    {Object.values(TURKEY_CITIES).map((item) => {
+                      const val = item.city.toLowerCase().replace(/i̇/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u").replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c").trim();
+                      return (
+                        <option key={item.city} value={val}>
+                          {item.city}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
               </div>

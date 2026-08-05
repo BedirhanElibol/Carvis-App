@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /app/admin
+Disallow: /partner/dashboard
+
+Sitemap: https://rapidsy.app/sitemap.xml

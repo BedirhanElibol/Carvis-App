@@ -1,4 +1,6 @@
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Car, CheckCircle, ChevronRight, Clock, Key, MapPin, Shield, Star } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../supabaseClient";
 

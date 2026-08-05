@@ -278,10 +278,10 @@ const LandingScreen = () => {
               <div className="space-y-4 text-left">
                 <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">{t.allServices || "Hizmetler"}</h4>
                 <ul className="space-y-2.5 text-xs font-semibold text-slate-500 dark:text-slate-400 font-sans">
-                  <li><button onClick={() => _handleGuestEntry()} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Oto Servis & Tamir</button></li>
-                  <li><button onClick={() => _handleGuestEntry()} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Yedek Parça</button></li>
-                  <li><button onClick={() => _handleGuestEntry()} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Mobil Ekspertiz</button></li>
-                  <li><button onClick={() => _handleGuestEntry()} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Dijital Araç Pasaportu</button></li>
+                  <li><button onClick={() => currentUser ? navigate("/app/mechanics") : _handleGuestEntry()} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Oto Servis & Tamir</button></li>
+                  <li><button onClick={() => currentUser ? navigate("/app/parts") : _handleGuestEntry()} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Yedek Parça</button></li>
+                  <li><button onClick={() => currentUser ? navigate("/app/expert") : _handleGuestEntry()} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Mobil Ekspertiz</button></li>
+                  <li><button onClick={() => currentUser ? navigate("/application/home") : _handleGuestEntry()} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Dijital Araç Pasaportu</button></li>
                 </ul>
               </div>
 
@@ -290,8 +290,8 @@ const LandingScreen = () => {
                 <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">{t.partners || "Partnerler"}</h4>
                 <ul className="space-y-2.5 text-xs font-semibold text-slate-500 dark:text-slate-400 font-sans">
                   <li><button onClick={() => navigate("/partner-login")} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">{t.becomePartner || "Rapidsy Partner Ol"}</button></li>
-                  <li><button onClick={() => navigate("/partner-login")} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Usta & Servis Girişi</button></li>
-                  <li><button onClick={() => navigate("/partner-login")} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Satıcı Paneli</button></li>
+                  <li><button onClick={() => navigate("/partner-login/mechanic")} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Usta & Servis Girişi</button></li>
+                  <li><button onClick={() => navigate("/partner-login/parts")} className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors bg-transparent border-none p-0 cursor-pointer">Satıcı Paneli</button></li>
                 </ul>
               </div>
 
@@ -302,7 +302,7 @@ const LandingScreen = () => {
               <p>&copy; {new Date().getFullYear()} Rapidsy Teknoloji A.Ş. Tüm hakları saklıdır.</p>
               <div className="flex gap-6">
                 <button onClick={() => navigate("/privacy-policy")} className="hover:text-slate-900 dark:hover:text-white transition-colors bg-transparent border-none p-0 cursor-pointer">Gizlilik Politikası</button>
-                <button onClick={() => navigate("/privacy-policy")} className="hover:text-slate-900 dark:hover:text-white transition-colors bg-transparent border-none p-0 cursor-pointer">Kullanım Koşulları</button>
+                <button onClick={() => navigate("/terms-of-service")} className="hover:text-slate-900 dark:hover:text-white transition-colors bg-transparent border-none p-0 cursor-pointer">Kullanım Koşulları</button>
               </div>
             </div>
 

@@ -8,6 +8,16 @@ export default defineConfig({
   build: {
     minify: 'esbuild',
     reportCompressedSize: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-leaflet': ['leaflet', 'react-leaflet'],
+          'vendor-pdf': ['jspdf', 'jspdf-autotable'],
+          'vendor-icons': ['lucide-react']
+        }
+      }
+    }
   },
   plugins: [
     react(),

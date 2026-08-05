@@ -6,17 +6,35 @@ import { useWallet } from "./WalletContext";
 import { supabase } from "../supabaseClient";
 import { triggerHaptic } from "../utils/haptics";
 
+import { OEM_CATALOG } from "../constants/mockData";
+
 export const ShopContext = createContext();
 
 export const useShop = () => {
   return useContext(ShopContext);
 };
 
+const DEFAULT_PRODUCTS = OEM_CATALOG.map((p, index) => ({
+  ...p,
+  id: p.id || index + 1,
+  img: p.image_url || p.img,
+  certified: true,
+  offers: [
+    { id: index + 10, sellerId: "seller_default", sellerName: "OtoYedekparça A.Ş.", price: p.price, stock: 15, rating: 4.9 }
+  ],
+  compatibility: [
+    { brand: "Fiat", model: "Egea" },
+    { brand: "Renault", model: "Clio" },
+    { brand: "Volkswagen", model: "Passat" },
+    { brand: "Ford", model: "Focus" }
+  ]
+}));
+
 export const ShopProvider = ({ children }) => {
   const { showAlert, t } = useUI();
   const { currentUser } = useAuth();
   const { blockFunds } = useWallet();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(DEFAULT_PRODUCTS);
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -50,13 +68,12 @@ export const ShopProvider = ({ children }) => {
   const fetchProducts = useCallback(async () => {
     try {
       const { data, error } = await supabase.from("products").select("*");
-      if (error) {
-        if (error.code !== "42501") console.error("Products fetch error:", error);
-        setProducts([]);
+      if (error || !data || data.length === 0) {
+        setProducts(DEFAULT_PRODUCTS);
         return;
       }
 
-      const mappedData = (data || []).map((p) => {
+      const mappedData = (data || []).map((p, idx) => {
         const name = p.name.toLowerCase();
         const category = (p.category || "").toLowerCase();
 
@@ -82,15 +99,25 @@ export const ShopProvider = ({ children }) => {
             finalImg = "/src/assets/products/car_battery.png";
           } else {
             finalImg =
-              "https://placehold.co/300x300/1e293b/FFFFFF?text=" +
-              encodeURIComponent(p.name);
+              "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=400";
           }
         }
-        return { ...p, img: finalImg };
+        return {
+          ...p,
+          img: finalImg,
+          offers: p.offers || [
+            { id: idx + 1, sellerId: p.seller_id || "s1", sellerName: "Onaylı Parçacı", price: p.price || 500, stock: p.stock || 10, rating: 4.8 }
+          ],
+          compatibility: p.compatibility || [
+            { brand: "Fiat", model: "Egea" },
+            { brand: "Renault", model: "Clio" }
+          ]
+        };
       });
       setProducts(mappedData);
     } catch (error) {
       console.error("Products Exception:", error);
+      setProducts(DEFAULT_PRODUCTS);
     }
   }, []);
 

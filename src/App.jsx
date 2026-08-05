@@ -22,6 +22,7 @@ import { useGarage } from "./context/GarageContext";
 import { Loader2, Mail, X } from "lucide-react";
 import ThemeToggleFAB from "./components/common/ThemeToggleFAB";
 import usePushNotifications from "./hooks/usePushNotifications";
+import CookieBanner from "./components/ui/CookieBanner";
 const App = () => {
   const {
     alertState,
@@ -93,18 +94,42 @@ const App = () => {
                     Hesabını tam kullanmak için e-postanı onayla.
                   </p>
                 </div>
-                <button
-                  onClick={() =>
-                    showAlert(
-                      "Bilgi",
-                      "Doğrulama bağlantısı kayıt olurken e-postana gönderildi. Lütfen gelen kutunu kontrol et.",
-                      "info",
-                    )
-                  }
-                  className="text-[9px] font-black uppercase tracking-widest bg-orange-500/20 hover:bg-orange-500/40 text-orange-500 px-3 py-1.5 rounded-lg transition-all"
-                >
-                  Nasıl?
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={async () => {
+                      if (currentUser?.email) {
+                        try {
+                          const { error } = await supabase.auth.resend({
+                            type: 'signup',
+                            email: currentUser.email
+                          });
+                          if (!error) {
+                            showAlert("E-posta Gönderildi 📧", `${currentUser.email} adresine doğrulama bağlantısı tekrar gönderildi.`, "success");
+                          } else {
+                            showAlert("Bilgi", "Doğrulama e-postası zaten gönderildi. Lütfen gelen/gereksiz kutunuzu kontrol edin.", "info");
+                          }
+                        } catch {
+                          showAlert("Bilgi", "Lütfen e-posta kutunuzu kontrol ediniz.", "info");
+                        }
+                      }
+                    }}
+                    className="text-[9px] font-black uppercase tracking-widest bg-orange-500 hover:bg-orange-400 text-slate-950 px-2.5 py-1 rounded-lg transition-all shadow-sm cursor-pointer"
+                  >
+                    Tekrar Gönder
+                  </button>
+                  <button
+                    onClick={() =>
+                      showAlert(
+                        "E-posta Doğrulama",
+                        "Doğrulama bağlantısı e-postanıza gönderildi. Bağlantıya tıklayarak hesabınızı onaylayabilirsiniz.",
+                        "info",
+                      )
+                    }
+                    className="text-[9px] font-black uppercase tracking-widest bg-orange-500/20 hover:bg-orange-500/40 text-orange-400 px-2.5 py-1 rounded-lg transition-all cursor-pointer"
+                  >
+                    Nasıl?
+                  </button>
+                </div>
               </div>
             )}
         </>
@@ -304,6 +329,8 @@ const App = () => {
           </div>
         </div>
       )}
+
+      <CookieBanner />
 
       <AlertModal
         show={alertState.show}

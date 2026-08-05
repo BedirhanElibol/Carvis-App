@@ -81,7 +81,7 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
             <div className="absolute top-0 left-0 w-40 h-40 bg-indigo-500/15 rounded-full blur-[60px] pointer-events-none"></div>
             
             <div className="relative z-10">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30 mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30 mb-6 group-hover:scale-110 transition-transform">
                 <PackageCheck size={26} />
               </div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 tracking-tight font-sans">

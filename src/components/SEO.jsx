@@ -35,6 +35,25 @@ const SEO = ({ title, description, type }) => {
         name="twitter:description"
         content={description || "Rapidsy - Oto Servis Asistanınız"}
       />
+
+      {/* Schema.org Structured Data (JSON-LD) for Search Engine Optimization */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AutoRepair",
+          "name": "Rapidsy",
+          "url": "https://rapidsy.app/",
+          "logo": "https://rapidsy.app/pwa-icon.png",
+          "description": description || "Türkiye'nin akıllı otomobil platformu. Yapay zeka destekli araç bakımı, usta randevusu ve yedek parça pazaryeri.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "TR",
+            "addressLocality": "İstanbul"
+          },
+          "openingHours": "Mo-Su 00:00-23:59",
+          "priceRange": "₺₺"
+        })}
+      </script>
     </Helmet>
   );
 };

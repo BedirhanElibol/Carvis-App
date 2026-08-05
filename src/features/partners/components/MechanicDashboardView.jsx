@@ -1,12 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { Wrench, Calendar, DollarSign, Star, Clock, CheckCircle2, ChevronRight, User, Settings, Shield, Plus, X, AlertCircle } from "lucide-react";
+import { Wrench, Calendar, DollarSign, Star, Clock, CheckCircle2, ChevronRight, User, Settings, Shield, Plus, X, AlertCircle, Phone, Navigation, Volume2, BellRing } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
+
+// Web Audio API Loud Workshop Alert Sound for Mechanics
+const playLoudWorkshopSiren = () => {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    
+    // Play 2-tone alarm chime
+    const playTone = (freq, startTime, duration) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "square"; // Loud piercing square wave for noisy garages
+      osc.frequency.setValueAtTime(freq, startTime);
+      gain.gain.setValueAtTime(0.35, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    };
+
+    playTone(900, ctx.currentTime, 0.25);
+    playTone(1200, ctx.currentTime + 0.3, 0.35);
+  } catch (e) {
+    console.warn("Audio alert blocked:", e);
+  }
+};
 
 export default function MechanicDashboardView({ currentUser }) {
   const [appointments, setAppointments] = useState([]);
   const [activeJobs, setActiveJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("active"); // active, history
+  const [newJobAlert, setNewJobAlert] = useState(null); // Realtime alert popup
   
   // Modals
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
@@ -74,6 +103,26 @@ export default function MechanicDashboardView({ currentUser }) {
 
   useEffect(() => {
     fetchData();
+
+    if (!currentUser?.id) return;
+
+    // Realtime listener for incoming customer requests/appointments
+    const subscription = supabase
+      .channel(`mechanic_alerts_${currentUser.id}`)
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'appointments', filter: `seller_id=eq.${currentUser.id}` },
+        (payload) => {
+          playLoudWorkshopSiren();
+          setNewJobAlert(payload.new);
+          fetchData();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscription);
+    };
   }, [currentUser]);
 
   const handleApproveAppointment = async (id) => {
@@ -163,6 +212,30 @@ export default function MechanicDashboardView({ currentUser }) {
 
   return (
     <div className="space-y-8 font-sans text-slate-100">
+      {/* Realtime Siren Flash Alert Banner for New Customer Orders */}
+      {newJobAlert && (
+        <div className="bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 border-2 border-amber-300 p-5 rounded-3xl shadow-2xl animate-pulse flex items-center justify-between gap-4 text-white">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-white/20 rounded-2xl animate-bounce">
+              <BellRing size={28} className="text-amber-300" />
+            </div>
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-widest bg-black/40 px-2 py-0.5 rounded text-amber-300">
+                🚨 YENİ MÜŞTERİ TALEBİ GELDİ!
+              </span>
+              <h4 className="font-black text-lg uppercase mt-1">Acil Hizmet Bekliyor</h4>
+              <p className="text-xs text-amber-100 font-medium">Lütfen aşağıdaki listeden talebi inceleyip teklif verin veya kabul edin.</p>
+            </div>
+          </div>
+          <button
+            onClick={() => setNewJobAlert(null)}
+            className="px-4 py-2 bg-black/40 hover:bg-black/60 text-white rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer border border-white/20"
+          >
+            Kapat
+          </button>
+        </div>
+      )}
+
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -244,9 +317,18 @@ export default function MechanicDashboardView({ currentUser }) {
           {loading ? (
             <div className="py-8 text-center text-slate-500 text-xs">Yükleniyor...</div>
           ) : filteredJobs.length === 0 ? (
-            <div className="py-12 text-center text-slate-500">
-              <CheckCircle2 size={40} className="mx-auto mb-3 opacity-20" />
-              <p className="font-bold text-sm">Gösterilecek iş emri bulunmuyor.</p>
+            <div className="py-12 text-center text-slate-400 space-y-4">
+              <Wrench size={40} className="mx-auto text-orange-500/40" />
+              <div>
+                <p className="font-black text-sm text-white">Henüz Aktif İş Emri Bulunmuyor</p>
+                <p className="text-xs text-slate-400 mt-1">Dükkanınıza gelen müşteri araçları için yeni bir iş emri başlatabilirsiniz.</p>
+              </div>
+              <button
+                onClick={() => setIsOrderModalOpen(true)}
+                className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-wider cursor-pointer transition-all active-scale shadow-lg shadow-orange-900/30"
+              >
+                <Plus size={16} /> + İlk İş Emrini Oluştur
+              </button>
             </div>
           ) : (
             <div className="divide-y divide-white/5">
@@ -298,29 +380,59 @@ export default function MechanicDashboardView({ currentUser }) {
             </div>
           ) : (
             <div className="space-y-4">
-              {filteredAppts.slice(0, 5).map((appt) => (
-                <div key={appt.id} className="p-4 rounded-2xl bg-slate-950/40 border border-white/5 space-y-3 hover:border-white/10 transition-colors">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h4 className="font-bold text-sm text-white">{appt.profiles?.full_name || "Müşteri"}</h4>
-                      <p className="text-[10px] text-slate-400 mt-0.5">{appt.vehicles?.brand} {appt.vehicles?.model} ({appt.vehicles?.plate})</p>
+              {filteredAppts.slice(0, 5).map((appt) => {
+                const customerPhone = appt.profiles?.phone || appt.phone;
+                const vehicleAddress = appt.service_address || "İstanbul";
+                return (
+                  <div key={appt.id} className="p-4 rounded-2xl bg-slate-950/60 border border-orange-500/20 space-y-3 hover:border-orange-500/40 transition-colors shadow-lg">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="font-black text-sm text-white">{appt.profiles?.full_name || "Müşteri"}</h4>
+                        <p className="text-[10px] text-slate-400 font-bold mt-0.5">{appt.vehicles?.brand} {appt.vehicles?.model} ({appt.vehicles?.plate})</p>
+                      </div>
+                      <span className="text-[9px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded font-black uppercase">
+                        {new Date(appt.appointment_date).toLocaleDateString("tr-TR")}
+                      </span>
                     </div>
-                    <span className="text-[9px] font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded font-bold">
-                      {new Date(appt.appointment_date).toLocaleDateString("tr-TR")}
-                    </span>
-                  </div>
-                  {activeTab === "active" && (
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleApproveAppointment(appt.id)}
-                        className="flex-1 bg-orange-600 hover:bg-orange-500 text-white font-black py-2 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-colors"
+
+                    {/* Quick Call & Location Buttons for Garages (Large Touch Targets) */}
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      {customerPhone ? (
+                        <a
+                          href={`tel:${customerPhone}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center justify-center gap-1.5 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[11px] uppercase tracking-wider rounded-xl shadow-md border border-emerald-400/20 transition-all no-underline"
+                        >
+                          <Phone size={14} /> Müşteriyi Ara
+                        </a>
+                      ) : (
+                        <span className="text-[10px] text-slate-500 flex items-center justify-center py-2 bg-slate-900 rounded-xl">Telefon Belirtilmemiş</span>
+                      )}
+
+                      <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(vehicleAddress)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 bg-cyan-600 hover:bg-cyan-500 text-white font-black text-[11px] uppercase tracking-wider rounded-xl shadow-md border border-cyan-400/20 transition-all no-underline"
                       >
-                        Onayla & İş Başlat
-                      </button>
+                        <Navigation size={14} /> Haritada Gör
+                      </a>
                     </div>
-                  )}
-                </div>
-              ))}
+
+                    {activeTab === "active" && (
+                      <div className="flex gap-2 pt-1">
+                        <button
+                          onClick={() => handleApproveAppointment(appt.id)}
+                          className="w-full bg-orange-600 hover:bg-orange-500 text-white font-black py-2.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer transition-colors active-scale shadow-lg shadow-orange-900/30"
+                        >
+                          Onayla & İş Başlat
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
