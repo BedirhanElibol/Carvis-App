@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Zap, MapPin, Clock, Star, ChevronRight, Search, Filter, Navigation, ShieldCheck, RefreshCw, Cpu } from "lucide-react";
+import { useUI } from "../../context/UIContext";
 import { getEVStations, getCityMetadata } from "../../services/externalApis";
 
 const BRANDS = ["Tümü", "ZES", "Trugo", "Eşarj", "Voltrun", "Tesla Supercharger", "Sharz.net", "Astor Charge"];
 
 export default function EVChargingScreen() {
   const navigate = useNavigate();
+  const { selectedLocation } = useUI();
   const [search, setSearch] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("Tümü");
-  const [city, setCity] = useState("istanbul");
+
+  // Extract initial city code from selectedLocation (e.g., "Ankara, Ostim" -> "ankara")
+  const [city, setCity] = useState(() => {
+    if (!selectedLocation) return "istanbul";
+    const normalized = selectedLocation.toLowerCase();
+    if (normalized.includes("ankara")) return "ankara";
+    if (normalized.includes("izmir") || normalized.includes("i̇zmir")) return "izmir";
+    if (normalized.includes("bursa")) return "bursa";
+    if (normalized.includes("antalya")) return "antalya";
+    return "istanbul";
+  });
+
   const [stations, setStations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,43 +34,56 @@ export default function EVChargingScreen() {
         const apiData = await getEVStations(meta.lat, meta.lng, 50);
         if (isMounted) {
           if (apiData && apiData.length > 0) {
-            const mapped = apiData.map((item, idx) => {
-              const title = item.AddressInfo?.Title || "EV Şarj İstasyonu";
-              let brandName = "Genel EV";
-              if (title.includes("ZES")) brandName = "ZES";
-              else if (title.includes("Trugo")) brandName = "Trugo";
-              else if (title.includes("Eşarj") || title.includes("Esarj")) brandName = "Eşarj";
-              else if (title.includes("Tesla")) brandName = "Tesla Supercharger";
-              else if (title.includes("Voltrun")) brandName = "Voltrun";
-              else if (title.includes("Astor")) brandName = "Astor Charge";
+            const mapped = apiData
+              .map((item, idx) => {
+                const title = item.AddressInfo?.Title || "EV Şarj İstasyonu";
+                let brandName = "Genel EV";
+                if (title.includes("ZES")) brandName = "ZES";
+                else if (title.includes("Trugo")) brandName = "Trugo";
+                else if (title.includes("Eşarj") || title.includes("Esarj")) brandName = "Eşarj";
+                else if (title.includes("Tesla")) brandName = "Tesla Supercharger";
+                else if (title.includes("Voltrun")) brandName = "Voltrun";
+                else if (title.includes("Astor")) brandName = "Astor Charge";
 
-              const connectors = (item.Connections || []).map((c) => ({
-                type: c.ConnectionType?.Title || "CCS2 (DC Fast)",
-                power: c.PowerKW ? `${c.PowerKW} kW` : "22 kW",
-                isDc: c.PowerKW ? c.PowerKW >= 50 : false,
-                quantity: c.Quantity || 1,
-                price: c.PowerKW > 50 ? "₺8.40/kWh" : "₺6.90/kWh",
-              }));
+                const connectors = (item.Connections || []).map((c) => ({
+                  type: c.ConnectionType?.Title || "CCS2 (DC Fast)",
+                  power: c.PowerKW ? `${c.PowerKW} kW` : "22 kW",
+                  isDc: c.PowerKW ? c.PowerKW >= 50 : false,
+                  quantity: c.Quantity || 1,
+                  price: c.PowerKW > 50 ? "₺8.40/kWh" : "₺6.90/kWh",
+                }));
 
-              const defaultConnectors = connectors.length > 0 ? connectors : [
-                { type: "CCS2 (DC Fast)", power: "180 kW", isDc: true, quantity: 2, price: "₺8.40/kWh" },
-                { type: "Type 2 (AC)", power: "22 kW", isDc: false, quantity: 2, price: "₺6.90/kWh" }
-              ];
+                const defaultConnectors = connectors.length > 0 ? connectors : [
+                  { type: "CCS2 (DC Fast)", power: "180 kW", isDc: true, quantity: 2, price: "₺8.40/kWh" },
+                  { type: "Type 2 (AC)", power: "22 kW", isDc: false, quantity: 2, price: "₺6.90/kWh" }
+                ];
 
-              return {
-                id: item.ID || `ev-st-${idx}`,
-                brand: brandName,
-                name: title,
-                address: `${item.AddressInfo?.AddressLine1 || ""}, ${item.AddressInfo?.Town || city}`,
-                city: city,
-                distance: `${(0.8 + (idx * 0.7) % 4.5).toFixed(1)} km`,
-                rating: (4.7 + ((idx * 3) % 4) / 10).toFixed(1),
-                pricePerKwh: connectors.some(c => c.isDc) ? "₺8.40" : "₺6.90",
-                open24: true,
-                connectors: defaultConnectors,
-                features: connectors.some(c => c.isDc) ? ["DC Ultra Hızlı", "7/24 Açık", "Canlı Veri"] : ["AC Şarj", "7/24 Açık"],
-              };
-            });
+                const realState = item.AddressInfo?.StateOrProvince || "";
+                const realAddress = `${item.AddressInfo?.AddressLine1 || ""}, ${item.AddressInfo?.Town || ""}, ${realState}`;
+
+                return {
+                  id: item.ID || `ev-st-${idx}`,
+                  brand: brandName,
+                  name: title,
+                  address: realAddress,
+                  stationCity: (realState || realAddress).toLowerCase(),
+                  distance: `${(0.8 + (idx * 0.7) % 4.5).toFixed(1)} km`,
+                  rating: (4.7 + ((idx * 3) % 4) / 10).toFixed(1),
+                  pricePerKwh: connectors.some(c => c.isDc) ? "₺8.40" : "₺6.90",
+                  open24: true,
+                  connectors: defaultConnectors,
+                  features: connectors.some(c => c.isDc) ? ["DC Ultra Hızlı", "7/24 Açık", "Canlı Veri"] : ["AC Şarj", "7/24 Açık"],
+                };
+              })
+              .filter((st) => {
+                // STRICT CITY FILTERING: Only show stations matching selected city
+                const targetCity = city.toLowerCase();
+                if (targetCity === "istanbul") {
+                  return st.stationCity.includes("istanbul") || st.address.toLowerCase().includes("istanbul") || (!st.stationCity.includes("ankara") && !st.stationCity.includes("izmir"));
+                }
+                return st.stationCity.includes(targetCity) || st.address.toLowerCase().includes(targetCity);
+              });
+
             setStations(mapped);
           } else {
             setStations([]);
