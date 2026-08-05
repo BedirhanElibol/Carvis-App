@@ -2526,3 +2526,10 @@ EXCEPTION WHEN duplicate_column THEN null; END $$;
 -- 4. WALLET TRANSACTIONS TABLE
 CREATE TABLE IF NOT EXISTS public.wallet_transactions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    wallet_id UUID REFERENCES public.wallets(id) ON DELETE CASCADE,
+    amount DECIMAL(10,2) NOT NULL,
+    type TEXT, -- 'credit' (earned), 'debit' (withdrawn)
+    description TEXT,
+    reference_id UUID, -- Can be payment_id or withdrawal_id
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);

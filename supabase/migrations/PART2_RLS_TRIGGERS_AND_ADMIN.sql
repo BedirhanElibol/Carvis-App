@@ -1,10 +1,6 @@
-    wallet_id UUID REFERENCES public.wallets(id) ON DELETE CASCADE,
-    amount DECIMAL(10,2) NOT NULL,
-    type TEXT, -- 'credit' (earned), 'debit' (withdrawn)
-    description TEXT,
-    reference_id UUID, -- Can be payment_id or withdrawal_id
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+-- =========================================================
+-- CARVIS PAYMENTS & ESCROW RLS, INDEXES & TRIGGERS
+-- =========================================================
 
 -- 5. RLS (Row Level Security)
 ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;
