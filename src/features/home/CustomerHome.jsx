@@ -836,7 +836,10 @@ const CustomerHome = () => {
             {/* FINANCIAL COCKPIT & SMART MAINTENANCE TIMELINE */}
             {activeVehicle && (
               <>
-                <FinancialCockpit vehicle={activeVehicle} />
+                <FinancialCockpit 
+                  vehicle={activeVehicle} 
+                  onOpenProSettings={() => setShowProSettingsModal(true)}
+                />
                 <SmartMaintenanceTimeline
                   vehicle={activeVehicle}
                   onBookMaintenance={() => navigate("/app/mechanics")}
@@ -1407,6 +1410,14 @@ const CustomerHome = () => {
         <VehiclePassport
           show={showVehiclePassport}
           onClose={() => setShowVehiclePassport(false)}
+          vehicle={activeVehicle}
+        />
+      )}
+
+      {showProSettingsModal && activeVehicle && (
+        <VehicleProSettings
+          isOpen={showProSettingsModal}
+          onClose={() => setShowProSettingsModal(false)}
           vehicle={activeVehicle}
         />
       )}
