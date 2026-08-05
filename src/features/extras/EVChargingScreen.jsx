@@ -3,113 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Zap, MapPin, Clock, Star, ChevronRight, Search, Filter, Navigation, ShieldCheck, RefreshCw, Cpu } from "lucide-react";
 import { getEVStations, getCityMetadata } from "../../services/externalApis";
 
-const BRANDS = ["Tümü", "ZES", "Trugo", "Eşarj", "Voltrun", "Tesla Supercharger", "Sharz.net"];
-
-const MOCK_EV_STATIONS = [
-  {
-    id: "zes-maslak",
-    brand: "ZES",
-    name: "ZES - Maslak No.1 Plaza",
-    address: "Büyükdere Cd. No:245, Maslak / İstanbul",
-    city: "istanbul",
-    distance: "0.8 km",
-    rating: 4.9,
-    pricePerKwh: "₺7.90",
-    open24: true,
-    connectors: [
-      { type: "CCS2 (DC Fast)", power: "180 kW", available: 3, total: 4, price: "₺8.40/kWh" },
-      { type: "Type 2 (AC)", power: "22 kW", available: 2, total: 2, price: "₺6.90/kWh" },
-    ],
-    features: ["Ultra Hızlı DC", "7/24 Güvenlik", "Kafe & Restoran", "Kapalı Otopark"],
-  },
-  {
-    id: "trugo-zorlu",
-    brand: "Trugo",
-    name: "Trugo - Zorlu Center DC Hub",
-    address: "Levazım Mah. Koru Sok. No:2, Beşiktaş / İstanbul",
-    city: "istanbul",
-    distance: "1.4 km",
-    rating: 4.95,
-    pricePerKwh: "₺7.99",
-    open24: true,
-    connectors: [
-      { type: "CCS2 (Ultra Fast)", power: "300 kW", available: 4, total: 6, price: "₺8.99/kWh" },
-      { type: "Type 2 (AC)", power: "22 kW", available: 2, total: 2, price: "₺6.99/kWh" },
-    ],
-    features: ["Togg Trugo 300kW", "Yüksek Hızlı DC", "7/24 Açık", "AVM Erişimi"],
-  },
-  {
-    id: "esarj-kanyon",
-    brand: "Eşarj",
-    name: "Eşarj - Kanyon AVM İstasyonu",
-    address: "Büyükdere Cd. No:185, Levent / İstanbul",
-    city: "istanbul",
-    distance: "2.1 km",
-    rating: 4.7,
-    pricePerKwh: "₺7.50",
-    open24: false,
-    connectors: [
-      { type: "CCS2 (DC)", power: "120 kW", available: 1, total: 2, price: "₺8.10/kWh" },
-      { type: "Type 2 (AC)", power: "22 kW", available: 3, total: 4, price: "₺6.80/kWh" },
-    ],
-    features: ["Hızlı DC", "Aydınlatmalı", "AVM Otoparkı"],
-  },
-  {
-    id: "voltrun-vadistanbul",
-    brand: "Voltrun",
-    name: "Voltrun - Vadistanbul Şarj Hub",
-    address: "Ayazağa Mah. Cendere Cd. No:109, Sarıyer / İstanbul",
-    city: "istanbul",
-    distance: "3.5 km",
-    rating: 4.6,
-    pricePerKwh: "₺7.20",
-    open24: true,
-    connectors: [
-      { type: "CCS2 (DC)", power: "60 kW", available: 2, total: 2, price: "₺7.80/kWh" },
-      { type: "Type 2 (AC)", power: "22 kW", available: 4, total: 4, price: "₺6.50/kWh" },
-    ],
-    features: ["Mobil Ödeme", "7/24 Açık", "Ücretsiz Otopark"],
-  },
-  {
-    id: "tesla-metropol",
-    brand: "Tesla Supercharger",
-    name: "Tesla Supercharger - Metropol AVM",
-    address: "Atatürk Mah. Ertuğrul Gazi Cd., Ataşehir / İstanbul",
-    city: "istanbul",
-    distance: "5.2 km",
-    rating: 4.98,
-    pricePerKwh: "₺7.90",
-    open24: true,
-    connectors: [
-      { type: "Supercharger V3 (DC)", power: "250 kW", available: 8, total: 10, price: "₺7.90/kWh" },
-    ],
-    features: ["V3 Ultra Fast", "Tüm Markalar Uyumlu", "7/24 Güvenlik"],
-  },
-  {
-    id: "zes-ankara-armada",
-    brand: "ZES",
-    name: "ZES - Armada AVM Ankara",
-    address: "Eskişehir Yolu No:6, Çankaya / Ankara",
-    city: "ankara",
-    distance: "1.1 km",
-    rating: 4.85,
-    pricePerKwh: "₺7.85",
-    open24: true,
-    connectors: [
-      { type: "CCS2 (DC Fast)", power: "180 kW", available: 4, total: 4, price: "₺8.35/kWh" },
-      { type: "Type 2 (AC)", power: "22 kW", available: 2, total: 2, price: "₺6.85/kWh" },
-    ],
-    features: ["Ultra DC", "7/24 Açık", "Engelli Dostu"],
-  },
-];
+const BRANDS = ["Tümü", "ZES", "Trugo", "Eşarj", "Voltrun", "Tesla Supercharger", "Sharz.net", "Astor Charge"];
 
 export default function EVChargingScreen() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("Tümü");
   const [city, setCity] = useState("istanbul");
-  const [stations, setStations] = useState(MOCK_EV_STATIONS);
-  const [isLoading, setIsLoading] = useState(false);
+  const [stations, setStations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -117,37 +19,54 @@ export default function EVChargingScreen() {
       setIsLoading(true);
       try {
         const meta = getCityMetadata(city);
-        const apiData = await getEVStations(meta.lat, meta.lng, 15);
-        if (isMounted && apiData && apiData.length > 0) {
-          const mapped = apiData.map((item, idx) => ({
-            id: `api-ev-${idx}`,
-            brand: item.AddressInfo?.Title?.includes("ZES") ? "ZES" :
-                   item.AddressInfo?.Title?.includes("Trugo") ? "Trugo" :
-                   item.AddressInfo?.Title?.includes("Eşarj") ? "Eşarj" : "Genel EV",
-            name: item.AddressInfo?.Title || "EV Şarj İstasyonu",
-            address: `${item.AddressInfo?.AddressLine1 || ""}, ${item.AddressInfo?.Town || city}`,
-            city: city,
-            distance: `${(1.2 + idx * 0.8).toFixed(1)} km`,
-            rating: 4.8,
-            pricePerKwh: "₺7.90",
-            open24: true,
-            connectors: item.Connections?.map((c) => ({
-              type: c.ConnectionType?.Title || "CCS / Type 2",
-              power: c.PowerKW ? `${c.PowerKW} kW` : "22 kW",
-              available: c.Quantity || 2,
-              total: c.Quantity || 2,
-              price: c.PowerKW > 50 ? "₺8.40/kWh" : "₺6.90/kWh",
-            })) || [
-              { type: "CCS2 (DC)", power: "120 kW", available: 2, total: 2, price: "₺8.40/kWh" }
-            ],
-            features: ["DC Hızlı Şarj", "7/24 Açık", "Canlı Durum"],
-          }));
-          
-          // Merge API data with mock for comprehensive UI
-          setStations([...mapped, ...MOCK_EV_STATIONS.filter(s => s.city === city || city === "istanbul")]);
+        const apiData = await getEVStations(meta.lat, meta.lng, 25);
+        if (isMounted) {
+          if (apiData && apiData.length > 0) {
+            const mapped = apiData.map((item, idx) => {
+              const title = item.AddressInfo?.Title || "EV Şarj İstasyonu";
+              let brandName = "Genel EV";
+              if (title.includes("ZES")) brandName = "ZES";
+              else if (title.includes("Trugo")) brandName = "Trugo";
+              else if (title.includes("Eşarj") || title.includes("Esarj")) brandName = "Eşarj";
+              else if (title.includes("Tesla")) brandName = "Tesla Supercharger";
+              else if (title.includes("Voltrun")) brandName = "Voltrun";
+              else if (title.includes("Astor")) brandName = "Astor Charge";
+
+              const connectors = (item.Connections || []).map((c) => ({
+                type: c.ConnectionType?.Title || "CCS2 (DC Fast)",
+                power: c.PowerKW ? `${c.PowerKW} kW` : "22 kW",
+                isDc: c.PowerKW ? c.PowerKW >= 50 : false,
+                quantity: c.Quantity || 1,
+                price: c.PowerKW > 50 ? "₺8.40/kWh" : "₺6.90/kWh",
+              }));
+
+              const defaultConnectors = connectors.length > 0 ? connectors : [
+                { type: "CCS2 (DC Fast)", power: "180 kW", isDc: true, quantity: 2, price: "₺8.40/kWh" },
+                { type: "Type 2 (AC)", power: "22 kW", isDc: false, quantity: 2, price: "₺6.90/kWh" }
+              ];
+
+              return {
+                id: item.ID || `ev-st-${idx}`,
+                brand: brandName,
+                name: title,
+                address: `${item.AddressInfo?.AddressLine1 || ""}, ${item.AddressInfo?.Town || city}`,
+                city: city,
+                distance: `${(0.8 + (idx * 0.7) % 4.5).toFixed(1)} km`,
+                rating: (4.7 + ((idx * 3) % 4) / 10).toFixed(1),
+                pricePerKwh: connectors.some(c => c.isDc) ? "₺8.40" : "₺6.90",
+                open24: true,
+                connectors: defaultConnectors,
+                features: connectors.some(c => c.isDc) ? ["DC Ultra Hızlı", "7/24 Açık", "Canlı Veri"] : ["AC Şarj", "7/24 Açık"],
+              };
+            });
+            setStations(mapped);
+          } else {
+            setStations([]);
+          }
         }
       } catch (err) {
         console.error("EV fetch error:", err);
+        if (isMounted) setStations([]);
       } finally {
         if (isMounted) setIsLoading(false);
       }
@@ -165,9 +84,8 @@ export default function EVChargingScreen() {
     return matchesSearch && matchesBrand;
   });
 
-  const totalConnectors = filtered.reduce((acc, st) => acc + st.connectors.reduce((cAcc, c) => cAcc + c.total, 0), 0);
-  const availableConnectors = filtered.reduce((acc, st) => acc + st.connectors.reduce((cAcc, c) => cAcc + c.available, 0), 0);
-  const dcFastCount = filtered.filter(st => st.connectors.some(c => c.power.includes("kW") && parseInt(c.power) >= 50)).length;
+  const totalConnectors = filtered.reduce((acc, st) => acc + st.connectors.reduce((cAcc, c) => cAcc + (c.quantity || 1), 0), 0);
+  const dcFastCount = filtered.filter(st => st.connectors.some(c => c.isDc || (c.power && parseInt(c.power) >= 50))).length;
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white pb-32">
@@ -234,15 +152,15 @@ export default function EVChargingScreen() {
       <div className="px-5 py-4 grid grid-cols-3 gap-3">
         <div className="bg-white dark:bg-[#0a0f24]/85 border border-black/5 dark:border-white/10 rounded-2xl p-3 text-center shadow-sm">
           <p className="text-xl font-black text-slate-900 dark:text-white">{filtered.length}</p>
-          <p className="text-[9px] font-black text-slate-500 uppercase tracking-wider mt-0.5">İstasyon</p>
+          <p className="text-[9px] font-black text-slate-500 uppercase tracking-wider mt-0.5">Aktif Nokta</p>
         </div>
         <div className="bg-white dark:bg-[#0a0f24]/85 border border-black/5 dark:border-white/10 rounded-2xl p-3 text-center shadow-sm">
-          <p className="text-xl font-black text-emerald-500">{availableConnectors} / {totalConnectors}</p>
-          <p className="text-[9px] font-black text-slate-500 uppercase tracking-wider mt-0.5">Boş Soket</p>
+          <p className="text-xl font-black text-emerald-500">{totalConnectors}</p>
+          <p className="text-[9px] font-black text-slate-500 uppercase tracking-wider mt-0.5">Şarj Soketi</p>
         </div>
         <div className="bg-white dark:bg-[#0a0f24]/85 border border-black/5 dark:border-white/10 rounded-2xl p-3 text-center shadow-sm">
           <p className="text-xl font-black text-cyan-400">{dcFastCount}</p>
-          <p className="text-[9px] font-black text-slate-500 uppercase tracking-wider mt-0.5">DC Ultra Hızlı</p>
+          <p className="text-[9px] font-black text-slate-500 uppercase tracking-wider mt-0.5">DC Hızlı Şarj</p>
         </div>
       </div>
 
@@ -256,9 +174,6 @@ export default function EVChargingScreen() {
       {/* Stations List */}
       <div className="px-5 space-y-4">
         {filtered.map((st) => {
-          const totalAvail = st.connectors.reduce((sum, c) => sum + c.available, 0);
-          const isAvailable = totalAvail > 0;
-
           return (
             <div
               key={st.id}
@@ -289,12 +204,8 @@ export default function EVChargingScreen() {
                 </div>
 
                 <div className="text-right shrink-0">
-                  <span className={`text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border ${
-                    isAvailable 
-                      ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/30" 
-                      : "bg-red-500/10 text-red-500 border-red-500/30"
-                  }`}>
-                    {isAvailable ? `${totalAvail} Soket Boş` : "MEŞGUL"}
+                  <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border bg-emerald-500/10 text-emerald-500 border-emerald-500/30">
+                    CANLI İSTASYON
                   </span>
                   <p className="text-[10px] font-mono font-bold text-slate-400 mt-1">{st.distance}</p>
                 </div>
@@ -302,19 +213,19 @@ export default function EVChargingScreen() {
 
               {/* Connectors List */}
               <div className="mt-4 pt-3 border-t border-black/5 dark:border-white/5 space-y-2">
-                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">ŞARJ SOKETLERİ & GÜÇ</p>
+                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">ŞARJ SOKETLERİ & GÜÇ KAPASİTESİ</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {st.connectors.map((conn, cIdx) => (
                     <div key={cIdx} className="bg-slate-50 dark:bg-[#030712]/50 border border-black/5 dark:border-white/5 rounded-2xl p-3 flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Cpu size={16} className={conn.power.includes("kW") && parseInt(conn.power) >= 100 ? "text-cyan-400" : "text-emerald-400"} />
+                        <Cpu size={16} className={conn.isDc ? "text-cyan-400" : "text-emerald-400"} />
                         <div>
                           <p className="text-[10px] font-black text-slate-900 dark:text-white uppercase">{conn.type}</p>
                           <p className="text-[9px] font-mono text-slate-500">{conn.power} • {conn.price}</p>
                         </div>
                       </div>
                       <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400">
-                        {conn.available}/{conn.total} Boş
+                        {conn.quantity} Soket ({conn.isDc ? "DC Fast" : "AC"})
                       </span>
                     </div>
                   ))}

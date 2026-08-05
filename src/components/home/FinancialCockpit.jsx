@@ -3,7 +3,7 @@ import { ArrowDownRight, ArrowUpRight, BarChart3, Car, ChevronRight, FileText, F
 import { motion, AnimatePresence } from "framer-motion";
 import { calculateVehicleMarketValue, calculateTotalCostOfOwnership } from "../../utils/vehicleValuation";
 
-const FinancialCockpit = ({ vehicle }) => {
+const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
   const [activeTab, setActiveTab] = useState("valuation"); // 'valuation' | 'tco'
   const [showValuationModal, setShowValuationModal] = useState(false);
 
@@ -172,11 +172,14 @@ const FinancialCockpit = ({ vehicle }) => {
         <div className="bg-white dark:bg-[#0a0f24]/85 rounded-3xl p-5 shadow-sm border border-slate-200 dark:border-white/10 flex flex-col justify-between">
           <div className="flex justify-between items-center mb-3">
             <h4 className="text-xs font-mono font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Poliçe & Muayene Takibi</h4>
-            <span className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-md border ${
-              hasAnyPolicy ? "text-cyan-500 bg-cyan-500/10 border-cyan-500/20" : "text-amber-500 bg-amber-500/10 border-amber-500/20"
-            }`}>
-              {hasAnyPolicy ? "Aktif Takip" : "Tarih Girilmedi"}
-            </span>
+            {onOpenProSettings && (
+              <button
+                onClick={onOpenProSettings}
+                className="text-[10px] font-mono font-black text-cyan-500 hover:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg border border-cyan-500/30 transition-all cursor-pointer flex items-center gap-1"
+              >
+                ✏️ Tarih / Bilgi Düzenle
+              </button>
+            )}
           </div>
           
           <div className="space-y-4">
@@ -191,7 +194,7 @@ const FinancialCockpit = ({ vehicle }) => {
               const progress = hasDate ? Math.max(5, Math.min(100, (days / 365) * 100)) : 0;
               
               return (
-                <div key={item.id} className="relative group">
+                <div key={item.id} onClick={onOpenProSettings} className="relative group cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-xl transition-colors">
                   <div className="flex justify-between items-end mb-1.5">
                     <div className="flex items-center gap-2">
                       <div className={`p-1.5 rounded-lg ${statusBgClass}`}>
@@ -208,7 +211,7 @@ const FinancialCockpit = ({ vehicle }) => {
                     </div>
                     <div className="text-right">
                       <span className={`text-[11px] font-mono font-black ${statusColorClass}`}>
-                        {hasDate ? (days <= 0 ? "SÜRESİ DOLDU" : `${days} Gün Kaldı`) : "Girilmedi"}
+                        {hasDate ? (days <= 0 ? "SÜRESİ DOLDU" : `${days} Gün Kaldı`) : "➕ Tarih Ekle"}
                       </span>
                     </div>
                   </div>
@@ -223,7 +226,7 @@ const FinancialCockpit = ({ vehicle }) => {
                       />
                     </div>
                   ) : (
-                    <p className="text-[9px] text-slate-400 italic">Tarih eklenerek otomatik hatırlatıcı oluşturulur.</p>
+                    <p className="text-[9px] text-cyan-500 font-mono font-bold hover:underline">Tıklayarak muayene / kasko tarihini hemen ekleyebilirsiniz ➔</p>
                   )}
                 </div>
               );

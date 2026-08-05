@@ -10,6 +10,7 @@ import { useQuote } from "../../context/QuoteContext";
 import { useAppointment } from "../../context/AppointmentContext";
 import { useNavigate, useLocation } from "react-router-dom";
 const VehicleSearch = React.lazy(() => import("../garage/VehicleSearch"));
+import VehicleProSettings from "../garage/VehicleProSettings";
 import ServiceHistoryModal from "../../components/modals/ServiceHistoryModal";
 import OnboardingSlides from "../../components/onboarding/OnboardingSlides";
 import VehiclePassport from "./components/VehiclePassport";
@@ -64,6 +65,7 @@ const CustomerHome = () => {
   const [showServiceHistory, setShowServiceHistory] = useState(false);
   const [showVehiclePassport, setShowVehiclePassport] = useState(false);
   const [showIssueModal, setShowIssueModal] = useState(false);
+  const [showProSettingsModal, setShowProSettingsModal] = useState(false);
   
   const [searchQuery, setSearchQuery] = useState("");
 
