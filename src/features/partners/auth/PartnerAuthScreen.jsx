@@ -12,21 +12,10 @@ const PartnerAuthScreen = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const defaultPartnerAccounts = {
-    master: { email: "partner@carvis.com", password: "Password123!", title: "⚡ Ortak Giriş (partner@carvis.com)" },
-    mechanic: { email: "usta@carvis.com", password: "Password123!", title: "Usta & Servis" },
-    parts: { email: "parca@carvis.com", password: "Password123!", title: "Parça Tedarikçisi" },
-    carwash: { email: "yikama@carvis.com", password: "Password123!", title: "Seyyar Yıkama" },
-    insurance: { email: "sigorta@carvis.com", password: "Password123!", title: "Sigorta Şirketi" },
-    admin: { email: "admin@carvis.com", password: "Password123!", title: "Platform Yönetimi (Admin)" },
-  };
-
-  const defaultAcc = defaultPartnerAccounts[role] || defaultPartnerAccounts.mechanic;
-
-  // Form States - Pre-filled with pre-created approved partner credentials
+  // Form States - Clean, professional initial state
   const [formData, setFormData] = useState({
-    email: defaultAcc.email,
-    password: defaultAcc.password,
+    email: "",
+    password: "",
     companyName: "",
     taxNumber: "",
     taxOffice: "",
@@ -370,36 +359,12 @@ const PartnerAuthScreen = () => {
         </form>
 
         {step < 4 && (
-          <div className="mt-8 space-y-6">
+          <div className="mt-8">
             <div className="text-center">
               <button type="button" onClick={() => { setIsLogin(!isLogin); setStep(1); setError(null); }} className="text-slate-500 hover:text-slate-900 dark:text-white text-sm transition-colors font-medium">
                 {isLogin ? "Henüz iş ortağımız değil misiniz? Şimdi Başvurun" : "Zaten hesabınız var mı? Giriş Yapın"}
               </button>
             </div>
-
-            {isLogin && (
-              <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
-                <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2.5">
-                  ⚡ Hazır Onaylı Partner Hesapları (Tek Tıkla Seç):
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {Object.entries(defaultPartnerAccounts).map(([rKey, rAcc]) => (
-                    <button
-                      key={rKey}
-                      type="button"
-                      onClick={() => handleQuickLogin(rKey)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all border ${
-                        formData.email === rAcc.email
-                          ? "bg-blue-600 text-white border-blue-500 shadow-sm"
-                          : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"
-                      }`}
-                    >
-                      {rAcc.title}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         )}
       </motion.div>
