@@ -61,6 +61,22 @@ const partnerAccounts = [
     companyName: 'Anadolu Sigorta A.Ş.',
     phone: '05327778899',
     city: 'istanbul'
+  },
+  {
+    role: 'admin',
+    email: 'admin@carvis.com',
+    password: 'Password123!',
+    companyName: 'Rapidsy Platform Yöneticisi',
+    phone: '05320000000',
+    city: 'istanbul'
+  },
+  {
+    role: 'partner',
+    email: 'partner@carvis.com',
+    password: 'Password123!',
+    companyName: 'Tek Ortak Partner Hesabı',
+    phone: '05329999999',
+    city: 'istanbul'
   }
 ];
 
