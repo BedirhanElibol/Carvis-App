@@ -17,9 +17,6 @@ const PartnerAuthScreen = () => {
     mechanic: { email: "usta@carvis.com", password: "Password123!", title: "Usta & Servis" },
     parts: { email: "parca@carvis.com", password: "Password123!", title: "Parça Tedarikçisi" },
     carwash: { email: "yikama@carvis.com", password: "Password123!", title: "Seyyar Yıkama" },
-    tow_truck: { email: "cekici@carvis.com", password: "Password123!", title: "Acil Çekici" },
-    valet: { email: "vale@carvis.com", password: "Password123!", title: "Vale Hizmeti" },
-    parking: { email: "otopark@carvis.com", password: "Password123!", title: "Otopark İşletmesi" },
     insurance: { email: "sigorta@carvis.com", password: "Password123!", title: "Sigorta Şirketi" },
     admin: { email: "admin@carvis.com", password: "Password123!", title: "Platform Yönetimi (Admin)" },
   };
