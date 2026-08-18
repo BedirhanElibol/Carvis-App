@@ -66,14 +66,14 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, on
           >
             <button 
               onClick={handleStartAction}
-              className="bg-[#2563eb] hover:bg-blue-600 text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px] shadow-lg shadow-blue-500/20 cursor-pointer border-none"
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-7 py-3.5 font-semibold transition-all flex items-center justify-center gap-2 text-[15px] shadow-md shadow-blue-500/20 active:scale-98 cursor-pointer border-none"
             >
               {language === "tr" ? "Hemen Başla" : "Start Now"}
               <ArrowRight size={16} />
             </button>
             <button 
               onClick={() => navigate("/partner-login")}
-              className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-[#1f2937] text-slate-700 dark:text-white rounded-full px-8 py-3.5 font-medium transition-colors flex items-center justify-center gap-2 text-[15px] cursor-pointer"
+              className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-[#1f2937] text-slate-700 dark:text-white rounded-xl px-7 py-3.5 font-semibold transition-all flex items-center justify-center gap-2 text-[15px] active:scale-98 cursor-pointer"
             >
               <Wrench size={16} className="text-slate-500 dark:text-slate-400" />
               {language === "tr" ? "Usta / İş Ortakları" : "Mechanics & Partners"}

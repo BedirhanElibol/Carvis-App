@@ -1,49 +1,89 @@
 /**
- * Rapidsy Secure Logger Utility
- * OWASP Mobile M2:2024 (Insecure Data Storage & Leakage Prevention)
- * Masking PII and sensitive tokens in console outputs.
+ * Log Sanitizer & Production Error Masker Utility
+ * Redacts sensitive fields (JWT tokens, passwords, credit card info, keys)
+ * and masks raw internal stack traces in production environment.
  */
 
-const PII_PATTERNS = {
-  plate: /[0-9]{2}\s?[A-Z]{1,3}\s?[0-9]{2,4}/gi,
-  phone: /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g,
-  email: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
-  token: /eyJ[a-zA-Z0-9-_=]+\.eyJ[a-zA-Z0-9-_=]+\.?[a-zA-Z0-9-_.+/=]*/g,
-  cardNumber: /\b(?:\d[ -]*?){13,16}\b/g
-};
+const SENSITIVE_KEYS = [
+  'password',
+  'token',
+  'authorization',
+  'auth',
+  'secret',
+  'api_key',
+  'apikey',
+  'creditCard',
+  'cardNumber',
+  'cvv',
+  'ssn',
+  'tcNo'
+];
 
-const maskSensitiveData = (value) => {
-  if (typeof value !== "string") {
-    try {
-      value = JSON.stringify(value);
-    } catch {
-      return "[Unserializable Data]";
+/**
+ * Recursively redacts sensitive values from an object or array.
+ * @param {any} data 
+ * @returns {any}
+ */
+export function sanitizeLogData(data) {
+  if (data === null || data === undefined) return data;
+
+  if (typeof data === 'string') {
+    // Redact potential Bearer tokens or JWT strings in logs
+    if (data.startsWith('Bearer ') || data.split('.').length === 3 && data.length > 50) {
+      return '[REDACTED_TOKEN]';
     }
+    return data;
   }
 
-  return value
-    .replace(PII_PATTERNS.token, "[SECURE_TOKEN_MASKED]")
-    .replace(PII_PATTERNS.cardNumber, "[CARD_NUMBER_MASKED]")
-    .replace(PII_PATTERNS.phone, "[PHONE_NUMBER_MASKED]")
-    .replace(PII_PATTERNS.plate, "[LICENSE_PLATE_MASKED]")
-    .replace(PII_PATTERNS.email, "[EMAIL_MASKED]");
-};
+  if (Array.isArray(data)) {
+    return data.map(item => sanitizeLogData(item));
+  }
 
-const isProd = import.meta.env.PROD;
+  if (typeof data === 'object') {
+    const sanitized = {};
+    for (const [key, value] of Object.entries(data)) {
+      const lowerKey = key.toLowerCase();
+      if (SENSITIVE_KEYS.some(sensitive => lowerKey.includes(sensitive.toLowerCase()))) {
+        sanitized[key] = '[REDACTED]';
+      } else {
+        sanitized[key] = sanitizeLogData(value);
+      }
+    }
+    return sanitized;
+  }
 
+  return data;
+}
+
+/**
+ * Custom logger that redacts PII and sensitive info in production and dev.
+ */
 export const logger = {
-  info: (message, ...optionalParams) => {
-    if (isProd) return; // Do not show verbose info in production console
-    console.info(`[Rapidsy INFO] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
+  log: (...args) => {
+    if (import.meta.env.DEV) {
+      console.log(...args.map(arg => sanitizeLogData(arg)));
+    }
   },
-  warn: (message, ...optionalParams) => {
-    console.warn(`[Rapidsy WARN] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
+  warn: (...args) => {
+    console.warn(...args.map(arg => sanitizeLogData(arg)));
   },
-  error: (message, ...optionalParams) => {
-    console.error(`[Rapidsy ERROR] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
-  },
-  debug: (message, ...optionalParams) => {
-    if (isProd) return;
-    console.debug(`[Rapidsy DEBUG] ${maskSensitiveData(message)}`, ...optionalParams.map(maskSensitiveData));
+  error: (message, errorObj, ...args) => {
+    const isProd = import.meta.env.PROD;
+    const errorId = 'ERR-' + Math.random().toString(36).substring(2, 9).toUpperCase();
+
+    if (isProd) {
+      // In production, mask detailed internal stack traces/SQL errors for the end user
+      console.error(`[${errorId}] ${message}`, sanitizeLogData(errorObj?.message || errorObj || 'An error occurred'));
+      return {
+        errorId,
+        userMessage: 'İşlem sırasında bir hata oluştu. Lütfen tekrar deneyiniz.'
+      };
+    } else {
+      console.error(`[${errorId}] ${message}`, sanitizeLogData(errorObj), ...args.map(arg => sanitizeLogData(arg)));
+      return {
+        errorId,
+        userMessage: errorObj?.message || message
+      };
+    }
   }
 };

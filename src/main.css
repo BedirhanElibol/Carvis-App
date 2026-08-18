@@ -4,10 +4,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
-  --font-sans: 'Fira Sans', system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-heading: 'Outfit', system-ui, sans-serif;
   --font-mono: 'Fira Code', monospace;
 
-  /* Primary (Blue) in OKLCH (Tailwind v4 Native) */
+  /* Primary (Corporate Slate/Blue) in OKLCH */
   --color-primary-50: oklch(0.97 0.01 250);
   --color-primary-100: oklch(0.93 0.03 250);
   --color-primary-200: oklch(0.88 0.06 250);
@@ -20,21 +21,21 @@
   --color-primary-900: oklch(0.30 0.12 250);
   --color-primary-950: oklch(0.20 0.10 250);
 
-  /* Accent (Orange) in OKLCH */
-  --color-accent-50: oklch(0.97 0.02 45);
-  --color-accent-100: oklch(0.93 0.05 45);
-  --color-accent-200: oklch(0.88 0.10 45);
-  --color-accent-300: oklch(0.80 0.15 45);
-  --color-accent-400: oklch(0.70 0.20 45);
-  --color-accent-500: oklch(0.65 0.22 45);
-  --color-accent-600: oklch(0.55 0.20 45);
-  --color-accent-700: oklch(0.45 0.15 45);
-  --color-accent-800: oklch(0.35 0.10 45);
-  --color-accent-900: oklch(0.30 0.08 45);
-  --color-accent-950: oklch(0.20 0.05 45);
+  /* Accent (Emerald & Amber) in OKLCH */
+  --color-accent-50: oklch(0.97 0.02 160);
+  --color-accent-100: oklch(0.93 0.05 160);
+  --color-accent-200: oklch(0.88 0.10 160);
+  --color-accent-300: oklch(0.80 0.15 160);
+  --color-accent-400: oklch(0.70 0.20 160);
+  --color-accent-500: oklch(0.65 0.22 160);
+  --color-accent-600: oklch(0.55 0.20 160);
+  --color-accent-700: oklch(0.45 0.15 160);
+  --color-accent-800: oklch(0.35 0.10 160);
+  --color-accent-900: oklch(0.30 0.08 160);
+  --color-accent-950: oklch(0.20 0.05 160);
 
-  --color-glass-light: color-mix(in oklch, white 70%, transparent);
-  --color-glass-dark: color-mix(in oklch, var(--color-slate-900) 80%, transparent);
+  --color-glass-light: #ffffff;
+  --color-glass-dark: #0f172a;
 
   --blur-xs: 2px;
 
@@ -98,6 +99,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
   }
 
   ::selection {
