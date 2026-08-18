@@ -144,9 +144,8 @@ const PartnerLandingScreen = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
         >
-
           <RoleCard
             title="Usta & Servis"
             desc="İş emri yönetim kartları, servis randevuları, müşteri onaylı bakım kartları."
@@ -168,7 +167,27 @@ const PartnerLandingScreen = () => {
             color="cyan"
             onClick={() => navigate("/partner-login/carwash")}
           />
-
+          <RoleCard
+            title="Acil Çekici"
+            desc="7/24 yol yardım, oto kurtarıcı çağrıları ve anlık GPS konum takibi."
+            icon={Car}
+            color="amber"
+            onClick={() => navigate("/partner-login/tow_truck")}
+          />
+          <RoleCard
+            title="Vale Hizmeti"
+            desc="VIP araç teslim alma, vale randevuları ve güvenli teslimat yönetimi."
+            icon={Key}
+            color="amber"
+            onClick={() => navigate("/partner-login/valet")}
+          />
+          <RoleCard
+            title="Otopark İşletmesi"
+            desc="Doluluk oranı takibi, otopark rezervasyonları ve plaka tanıma entegrasyonu."
+            icon={Car}
+            color="cyan"
+            onClick={() => navigate("/partner-login/parking")}
+          />
           <RoleCard
             title="Sigorta Şirketi"
             desc="Kasko, trafik ve roadside poliçe teklifleri yönetimi ve Rapidsy entegrasyonu."
