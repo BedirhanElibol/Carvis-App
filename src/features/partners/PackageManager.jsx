@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Check, Loader2, Package, Plus, Settings, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
@@ -84,7 +84,7 @@ const PackageManager = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center bg-white dark:bg-slate-900/50 p-6 rounded-3xl border border-black/5 dark:border-white/5">
+      <div className="flex justify-between items-center bg-white dark:bg-slate-900/50 p-6 rounded-xl border border-black/5 dark:border-white/5">
         <div>
           <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Servis Paketlerim</h3>
           <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Abonelik bazlı gelir modelleri</p>
@@ -103,7 +103,7 @@ const PackageManager = () => {
             <Loader2 className="animate-spin mx-auto text-primary-500" size={32} />
           </div>
         ) : packages.length === 0 ? (
-          <div className="col-span-full py-20 bg-black/5 dark:bg-white/5 rounded-[2.5rem] border border-dashed border-black/10 dark:border-white/10 text-center">
+          <div className="col-span-full py-20 bg-black/5 dark:bg-white/5 rounded-xl border border-dashed border-black/10 dark:border-white/10 text-center">
              <Package size={40} className="mx-auto text-slate-700 mb-4" />
              <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Henüz paketiniz bulunmuyor</p>
           </div>
@@ -157,8 +157,8 @@ const PackageManager = () => {
 
       {/* Add Package Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-in fade-in">
-          <div className="bg-white dark:bg-[#0f172a] w-full max-w-lg rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 animate-in fade-in">
+          <div className="bg-white dark:bg-[#0f172a] w-full max-w-lg rounded-xl border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[90vh]">
             <div className="p-6 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
               <h3 className="font-black text-slate-900 dark:text-white text-xl uppercase tracking-tighter">Yeni Servis Paketi</h3>
               <button onClick={() => setShowAddModal(false)} className="text-slate-500 hover:text-slate-900 dark:text-white transition"><X size={20} /></button>
@@ -228,7 +228,7 @@ const PackageManager = () => {
 
               <button 
                 type="submit"
-                className="w-full py-5 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white rounded-[1.5rem] font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl shadow-primary-900/30 active-scale"
+                className="w-full py-5 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white rounded-[1.5rem] font-black text-xs uppercase tracking-[0.2em] transition-all shadow-primary-900/30 active-scale"
               >
                 PAKETİ OLUŞTUR VE YAYINLA
               </button>

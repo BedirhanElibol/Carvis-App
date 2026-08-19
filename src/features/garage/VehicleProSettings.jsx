@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Bell, CalendarCheck, CreditCard, ExternalLink, FileText, Fingerprint, FolderClosed, Fuel, Gauge, Plus, Settings, Shield, ShieldAlert, ShieldCheck, Sparkles, Wrench, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGarage } from "../../context/GarageContext";
@@ -183,12 +183,12 @@ const VehicleProSettings = ({ isOpen, onClose, vehicle }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-50 dark:bg-slate-950/60 backdrop-blur-xl"
+        className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-50 dark:bg-slate-950/60"
       >
         <motion.div
           initial={{ scale: 0.95, y: 20 }}
           animate={{ scale: 1, y: 0 }}
-          className="glass-card w-full max-w-2xl rounded-[2.5rem] border border-black/10 dark:border-white/10 p-8 shadow-2xl relative overflow-hidden flex flex-col max-h-[85vh]"
+          className="glass-card w-full max-w-2xl rounded-xl border border-black/10 dark:border-white/10 p-8 relative overflow-hidden flex flex-col max-h-[85vh]"
         >
           <div className="absolute top-0 right-0 w-40 h-40 bg-primary-600/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
           

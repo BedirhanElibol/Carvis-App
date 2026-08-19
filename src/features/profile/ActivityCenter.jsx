@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+﻿import React, { useCallback, useEffect, useState } from "react";
 import { FileCheck, Inbox, MessageSquare, ShieldCheck, Users } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
@@ -65,7 +65,7 @@ const ActivityCenter = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 bg-white dark:bg-slate-900/50 p-1.5 rounded-3xl border border-black/5 dark:border-white/5">
+      <div className="flex gap-2 bg-white dark:bg-slate-900/50 p-1.5 rounded-xl border border-black/5 dark:border-white/5">
         {[
           { id: "consultations", label: "Danışmanlık", icon: Users },
           { id: "insurance", label: "Sigorta", icon: ShieldCheck },
@@ -74,7 +74,7 @@ const ActivityCenter = () => {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-              activeTab === tab.id ? "bg-primary-600 text-slate-900 dark:text-white shadow-xl" : "text-slate-500 hover:text-slate-900 dark:text-white"
+              activeTab === tab.id ? "bg-primary-600 text-slate-900 dark:text-white" : "text-slate-500 hover:text-slate-900 dark:text-white"
             }`}
           >
             <tab.icon size={14} />
@@ -101,10 +101,10 @@ const ActivityCenter = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: idx * 0.05 }}
-                  className="glass-card p-6 rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 flex flex-col justify-between hover:border-black/20 dark:border-white/20 transition-all group"
+                  className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 flex flex-col justify-between hover:border-black/20 dark:border-white/20 transition-all group"
                 >
                   <div className="flex justify-between items-start mb-6">
-                    <div className="p-3 rounded-2xl bg-black/20 border border-black/5 dark:border-white/5 group-hover:scale-110 transition-transform">
+                    <div className="p-3 rounded-2xl bg-black/20 border border-black/5 dark:border-white/5 group-hover:scale-[1.02] transition-transform">
                       {activeTab === 'consultations' ? <MessageSquare size={20} className="text-primary-400" /> : 
                        <FileCheck size={20} className="text-teal-400" />}
                     </div>

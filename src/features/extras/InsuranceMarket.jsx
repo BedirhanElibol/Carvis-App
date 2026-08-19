@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Car, CheckCircle2, Info, ShieldCheck } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
@@ -83,7 +83,7 @@ const InsuranceMarket = () => {
             Şu anda listelenen sigorta teklifi bulunmuyor
           </div>
         ) : products.map((p) => (
-          <div key={p.id} className="glass-card p-6 rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 relative overflow-hidden group">
+          <div key={p.id} className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 dark:bg-white/5 rounded-full blur-3xl -mr-12 -mt-12 transition-transform group-hover:scale-125 duration-700"></div>
             
             <div className="flex justify-between items-start mb-6">
@@ -108,7 +108,7 @@ const InsuranceMarket = () => {
               </button>
               <button 
                 onClick={() => handleApply(p)}
-                className="flex-1 bg-white text-slate-950 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest active-scale hover:bg-accent-500 hover:text-slate-900 dark:text-white transition-all shadow-xl"
+                className="flex-1 bg-white text-slate-950 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest active-scale hover:bg-accent-500 hover:text-slate-900 dark:text-white transition-all"
               >
                 BAŞVURU YAP
               </button>
@@ -118,7 +118,7 @@ const InsuranceMarket = () => {
       </div>
 
       {/* Info Banner */}
-      <div className="p-6 bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-black/5 dark:border-white/5 text-center">
+      <div className="p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-black/5 dark:border-white/5 text-center">
         <Info size={24} className="text-slate-500 mx-auto mb-3" />
         <p className="text-[10px] text-slate-500 leading-relaxed font-sans uppercase tracking-tight">
           Teklifler araç yaşınıza ve hasar geçmişinize göre değişiklik gösterebilir. <br />

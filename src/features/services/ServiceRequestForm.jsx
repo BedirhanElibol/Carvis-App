@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGarage } from "../../context/GarageContext";
 import { useAuth } from "../../context/AuthContext";
@@ -243,11 +243,11 @@ const ServiceRequestForm = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24 font-sans relative overflow-hidden">
       {/* Background Glows */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-primary-600/5 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-20 left-0 w-80 h-80 bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none"></div>
+      
+      
 
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5 p-5 flex justify-between items-center">
+      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950/80 border-b border-black/5 dark:border-white/5 p-5 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
@@ -266,7 +266,7 @@ const ServiceRequestForm = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           
           {/* Araç Seçimi & Zorunlu Kontrol */}
-          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+          <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
             <div className="flex justify-between items-center">
               <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
                 <Car size={16} className="text-primary-500" />
@@ -312,7 +312,7 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Belirti Seçici Grid */}
-          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+          <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
             <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
               <ShieldAlert size={16} className="text-primary-500" />
               Hissedilen Belirtiler (Çoklu Seçim)
@@ -415,7 +415,7 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Arıza Kanıt Yükleme Alanı */}
-          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+          <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
             <div className="flex justify-between items-center">
               <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
                 <Paperclip size={16} className="text-primary-500" />
@@ -473,7 +473,7 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Engine Code (Optional) */}
-          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+          <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
             <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 block">
               Motor Hacmi / Kodu <span className="text-slate-600">(Opsiyonel)</span>
             </label>
@@ -487,7 +487,7 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Talep Tipi */}
-          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+          <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
             <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 block">Talep Tipi</label>
             <div className="grid grid-cols-2 gap-3">
               <button
@@ -495,7 +495,7 @@ const ServiceRequestForm = () => {
                 onClick={() => setDemandType("part")}
                 className={`py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   demandType === "part"
-                    ? "bg-primary-600 text-slate-900 dark:text-white shadow-xl shadow-primary-950/40"
+                    ? "bg-primary-600 text-slate-900 dark:text-white shadow-primary-950/40"
                     : "bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400"
                 }`}
               >
@@ -506,7 +506,7 @@ const ServiceRequestForm = () => {
                 onClick={() => setDemandType("service")}
                 className={`py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   demandType === "service"
-                    ? "bg-primary-600 text-slate-900 dark:text-white shadow-xl shadow-primary-950/40"
+                    ? "bg-primary-600 text-slate-900 dark:text-white shadow-primary-950/40"
                     : "bg-white dark:bg-slate-900/40 border border-black/5 dark:border-white/5 text-slate-500 dark:text-slate-400"
                 }`}
               >
@@ -516,7 +516,7 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Aciliyet Durumu */}
-          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+          <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
             <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 block">Aciliyet Durumu</label>
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -545,7 +545,7 @@ const ServiceRequestForm = () => {
           </div>
 
           {/* Açıklama */}
-          <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+          <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
             <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
               <FileText size={16} className="text-primary-500" />
               Talep Açıklaması
@@ -571,7 +571,7 @@ const ServiceRequestForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-primary-600 to-indigo-600 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-xs uppercase tracking-[0.2em] text-slate-900 dark:text-white active-scale disabled:opacity-50 shadow-xl shadow-primary-900/20 border border-black/10 dark:border-white/10"
+            className="w-full bg-gradient-to-r from-primary-600 to-indigo-600 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-xs uppercase tracking-[0.2em] text-slate-900 dark:text-white active-scale disabled:opacity-50 shadow-primary-900/20 border border-black/10 dark:border-white/10"
           >
             {loading ? (
               <Loader2 className="animate-spin text-slate-900 dark:text-white" size={16} />

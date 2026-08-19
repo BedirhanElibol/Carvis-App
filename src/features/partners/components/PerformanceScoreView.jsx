@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useMemo } from "react";
+﻿import React, { useState, useEffect, useMemo } from "react";
 import { BarChart3, TrendingUp, Clock, RotateCcw, Star, Package, Truck, Award, ShieldCheck, ChevronUp, ChevronDown } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
 const badgeConfig = {
-  gold: { label: "Altın Mağaza", color: "from-amber-400 to-yellow-600", textColor: "text-amber-900", icon: "🏆" },
+  gold: { label: "Altın Mağaza", color: "from-amber-400 to-yellow-600", textColor: "text-amber-900", icon: "" },
   silver: { label: "Gümüş Mağaza", color: "from-slate-300 to-slate-500", textColor: "text-slate-900", icon: "🥈" },
   bronze: { label: "Bronz Mağaza", color: "from-orange-400 to-orange-700", textColor: "text-orange-900", icon: "🥉" },
-  starter: { label: "Yeni Mağaza", color: "from-slate-500 to-slate-700", textColor: "text-white", icon: "🚀" }
+  starter: { label: "Yeni Mağaza", color: "from-slate-500 to-slate-700", textColor: "text-white", icon: "" }
 };
 
 function MiniLineChart({ data, color = "#f97316" }) {
@@ -133,7 +133,7 @@ export default function PerformanceScoreView({ currentUser }) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-mono font-black uppercase tracking-tight text-white glow-orange">Performans Karnesi</h1>
+          <h1 className="text-3xl font-mono font-black uppercase tracking-tight text-white">Performans Karnesi</h1>
           <p className="text-xs text-slate-400 mt-1">Mağaza performansınızı takip edin, metriklerinizi iyileştirin.</p>
         </div>
         {/* Store Badge */}
@@ -147,7 +147,7 @@ export default function PerformanceScoreView({ currentUser }) {
       </div>
 
       {/* Overall Score Card */}
-      <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-8 shadow-sm">
+      <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-8 shadow-sm">
         <div className="flex flex-col md:flex-row items-center gap-8">
           {/* Score Circle */}
           <div className="relative w-36 h-36 shrink-0">
@@ -219,7 +219,7 @@ export default function PerformanceScoreView({ currentUser }) {
       </div>
 
       {/* Order Trend Chart */}
-      <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 shadow-sm">
+      <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 shadow-sm">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-sm font-mono font-black uppercase tracking-tight text-white">Son 30 Gün Sipariş Trendi</h3>
@@ -238,7 +238,7 @@ export default function PerformanceScoreView({ currentUser }) {
       </div>
 
       {/* Tips */}
-      <div className="bg-gradient-to-r from-orange-500/5 to-amber-500/5 border border-orange-500/10 rounded-3xl p-6">
+      <div className="bg-gradient-to-r from-orange-500/5 to-amber-500/5 border border-orange-500/10 rounded-xl p-6">
         <div className="flex items-start gap-4">
           <div className="bg-orange-500/10 p-3 rounded-2xl shrink-0">
             <Award size={24} className="text-orange-500" />

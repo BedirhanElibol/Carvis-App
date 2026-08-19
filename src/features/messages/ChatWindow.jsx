@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import { useMessage } from "../../context/MessageContext";
 import { useAuth } from "../../context/AuthContext";
 import { ArrowLeft, CheckCheck, Loader2, Paperclip, Send, ShieldAlert } from "lucide-react";
@@ -57,7 +57,7 @@ const ChatWindow = ({ activeUserId, onBack }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-950/50 backdrop-blur-md relative">
+    <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-950/50 relative">
       {/* Header */}
       <div className="p-4 border-b border-black/5 dark:border-white/5 flex items-center gap-3 bg-white dark:bg-slate-900/50">
         <button

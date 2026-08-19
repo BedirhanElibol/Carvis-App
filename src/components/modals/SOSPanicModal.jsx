@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Activity, MapPin, Phone, ShieldCheck, TriangleAlert, Truck, X } from "lucide-react";
 import { cn } from "../../lib/utils";
 
@@ -37,13 +37,13 @@ const SOSPanicModal = ({ show, onClose }) => {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-red-950/20 backdrop-blur-2xl animate-in fade-in duration-500">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-red-950/20 animate-in fade-in duration-500">
       {/* Pulsing Emergency Background */}
       <div className="absolute inset-0 z-[-1] overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-600/20 via-transparent to-transparent animate-pulse-slow"></div>
       </div>
 
-      <div className="bg-slate-50 dark:bg-slate-950 w-full max-w-lg rounded-[3rem] border-2 border-red-500/50 shadow-xl overflow-hidden relative animate-in zoom-in-95 duration-300">
+      <div className="bg-slate-50 dark:bg-slate-950 w-full max-w-lg rounded-[3rem] border-2 border-red-500/50 overflow-hidden relative animate-in zoom-in-95 duration-300">
         {/* Header Section */}
         <div className="bg-red-600 p-8 text-center relative">
           <button
@@ -119,7 +119,7 @@ const SOSPanicModal = ({ show, onClose }) => {
           {/* SOS Actions Grid */}
           <div className="grid grid-cols-2 gap-4">
             <button className="bg-red-600/10 border border-red-500/20 p-6 rounded-[2rem] flex flex-col items-center justify-center gap-3 hover:bg-red-600/20 transition-all active-scale group">
-              <div className="bg-red-600 p-4 rounded-2xl group-hover:scale-110 transition duration-300">
+              <div className="bg-red-600 p-4 rounded-2xl group-hover:scale-[1.02] transition duration-300">
                 <Truck size={32} className="text-slate-900 dark:text-white" />
               </div>
               <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest text-center font-sans">
@@ -127,7 +127,7 @@ const SOSPanicModal = ({ show, onClose }) => {
               </span>
             </button>
             <button className="bg-primary-500/10 border border-primary-500/20 p-6 rounded-[2rem] flex flex-col items-center justify-center gap-3 hover:bg-primary-500/20 transition-all active-scale group">
-              <div className="bg-primary-500 p-4 rounded-2xl group-hover:scale-110 transition duration-300">
+              <div className="bg-primary-500 p-4 rounded-2xl group-hover:scale-[1.02] transition duration-300">
                 <Activity size={32} className="text-slate-900 dark:text-white" />
               </div>
               <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest text-center font-sans">

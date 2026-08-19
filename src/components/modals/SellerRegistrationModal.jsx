@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { ArrowRight, Check, CheckCircle, FileText, Loader2, ShieldCheck, Store, Upload, X, Zap } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 
@@ -233,7 +233,7 @@ const SellerRegistrationModal = ({
         </div>
       </div>
 
-      <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+      <div className="bg-slate-50 p-6 rounded-xl border border-slate-100">
         <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
           <FileText size={20} className="text-orange-500" /> Gerekli Belgeler
         </h3>
@@ -260,7 +260,7 @@ const SellerRegistrationModal = ({
         </div>
       </div>
 
-      <button type="button" onClick={() => validateStep1() && setCurrentStep(2)} className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-5 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 group shadow-xl">
+      <button type="button" onClick={() => validateStep1() && setCurrentStep(2)} className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-5 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 group">
         Kapasite Bilgilerine Geç <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
       </button>
     </div>
@@ -268,7 +268,7 @@ const SellerRegistrationModal = ({
 
   const renderStep2 = () => (
     <div className="space-y-6">
-      <div className="bg-orange-50 p-6 rounded-3xl border border-orange-100 mb-4">
+      <div className="bg-orange-50 p-6 rounded-xl border border-orange-100 mb-4">
         <h3 className="text-lg font-black text-slate-900 uppercase tracking-tighter flex items-center gap-2">
           <Zap size={20} className="text-orange-500" /> İşletme Nicelikleri
         </h3>
@@ -351,7 +351,7 @@ const SellerRegistrationModal = ({
         )}
       </div>
 
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+      <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
         <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
           <ShieldCheck size={18} className="text-orange-500" /> Yasal Onaylar
         </h3>
@@ -373,7 +373,7 @@ const SellerRegistrationModal = ({
 
       <div className="flex gap-4">
         <button type="button" onClick={() => setCurrentStep(1)} className="flex-1 bg-slate-100 text-slate-900 p-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-md">Geri</button>
-        <button type="submit" disabled={loading} className="flex-[2] bg-orange-600 hover:bg-orange-500 text-slate-900 dark:text-white p-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-orange-950/20 disabled:opacity-50">
+        <button type="submit" disabled={loading} className="flex-[2] bg-orange-600 hover:bg-orange-500 text-slate-900 dark:text-white p-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-orange-950/20 disabled:opacity-50">
           {loading ? <Loader2 className="animate-spin mx-auto" size={24} /> : "Başvuruyu Gönder"}
         </button>
       </div>
@@ -381,8 +381,8 @@ const SellerRegistrationModal = ({
   );
 
   return (
-    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto custom-scrollbar">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 z-[100] flex items-center justify-center p-4">
+      <div className="bg-white w-full max-w-2xl rounded-xl relative overflow-hidden animate-in zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto custom-scrollbar">
         <div className="p-8">
           <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
             <X size={20} className="text-slate-500" />

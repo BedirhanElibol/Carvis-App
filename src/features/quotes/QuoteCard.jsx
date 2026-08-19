@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { AlertCircle, ArrowRight, CheckCircle, Clock, XCircle, Shield, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -131,7 +131,7 @@ const QuoteCard = ({ quote }) => {
       {quote.standard_hours && (
         <div className="mb-3 px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-between text-xs font-mono">
           <span className="text-cyan-400 font-bold flex items-center gap-1.5 text-[10px]">
-            ⚡ OEM Standart Süre: <strong>{quote.standard_hours} Saat</strong>
+            OEM Standart Süre: <strong>{quote.standard_hours} Saat</strong>
           </span>
           <span className="text-emerald-400 font-bold text-[10px]">
             Tavan Limit: ₺{quote.max_labor_ceiling?.toLocaleString("tr-TR") || quote.price}

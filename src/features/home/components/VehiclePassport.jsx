@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { CalendarCheck, Car, Check, Compass, Copy, CreditCard, Disc, Download, Eye, File, FileLock2, FileText, Flower2, Gauge, History, Key, Lightbulb, Loader2, Plus, RotateCw, Save, ShieldAlert, ShieldCheck, Sparkles, Thermometer, Trash2, Wind, Workflow, Wrench, X, Zap, ScanText, CheckCircle2, UploadCloud, Droplets, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../../context/UIContext";
@@ -289,19 +289,19 @@ const VehiclePassport = ({ vehicle, onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] flex items-start sm:items-center justify-center p-2 pt-10 sm:pt-6 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in overflow-y-auto"
+      className="fixed inset-0 z-[9999] flex items-start sm:items-center justify-center p-2 pt-10 sm:pt-6 sm:p-4 bg-black/85 animate-fade-in overflow-y-auto"
       onClick={onClose}
     >
       <div 
         id="vehicle-passport-modal-content"
-        className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[90vh] my-auto text-slate-900 dark:text-white"
+        className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2rem] sm:rounded-xl relative overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[90vh] my-auto text-slate-900 dark:text-white"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Background Pattern */}
         <div className="absolute top-0 left-0 right-0 h-36 bg-gradient-to-b from-teal-500/10 via-teal-500/5 to-transparent pointer-events-none" />
 
         {/* Top Bar for Action Buttons & Badges (Sticky Top) */}
-        <div className="px-4 pt-3 sm:px-8 sm:pt-5 flex items-center justify-between z-30 relative sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-white/10 pb-2.5">
+        <div className="px-4 pt-3 sm:px-8 sm:pt-5 flex items-center justify-between z-30 relative sticky top-0 bg-white/95 dark:bg-slate-900/95 border-b border-slate-200 dark:border-white/10 pb-2.5">
           <div className="flex items-center gap-1.5 flex-wrap pr-2">
             <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-500/10 px-2.5 py-1 rounded-full border border-teal-200 dark:border-teal-500/20">
               Rapidsy Araç Pasaportu
@@ -340,7 +340,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
         {/* Header Section */}
         <div className="px-4 sm:px-8 pt-3 pb-3 relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start sm:items-center gap-3 sm:gap-4">
-            <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-teal-500/10 border border-teal-500/20 text-teal-400 shrink-0">
+            <div className="p-3 sm:p-4 rounded-2xl sm:rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 shrink-0">
               <FileText size={24} className="sm:hidden" />
               <FileText size={32} className="hidden sm:block" />
             </div>
@@ -372,7 +372,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
           </div>
 
           {/* Dynamic TR Market Valuation Badge */}
-          <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-slate-900 dark:bg-slate-950/90 border border-emerald-500/30 text-white flex items-center gap-3 shadow-lg">
+          <div className="p-3 sm:p-4 rounded-2xl sm:rounded-xl bg-slate-900 dark:bg-slate-950/90 border border-emerald-500/30 text-white flex items-center gap-3 shadow-lg">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold shrink-0">
               <TrendingUp size={18} className="sm:hidden" />
               <TrendingUp size={20} className="hidden sm:block" />
@@ -426,7 +426,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 className="grid grid-cols-1 md:grid-cols-3 gap-6"
               >
                 {/* Vehicle Summary Card */}
-                <div className="p-6 rounded-3xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-950/40 flex flex-col items-center justify-center text-center shadow-sm">
+                <div className="p-6 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-950/40 flex flex-col items-center justify-center text-center shadow-sm">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-6">Araç Özeti</h4>
                   <div className="relative w-36 h-36 flex items-center justify-center">
                     <div className="w-28 h-28 rounded-full bg-gradient-to-br from-teal-500/20 to-blue-500/20 border-2 border-teal-500/40 flex items-center justify-center shadow-inner">
@@ -468,7 +468,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   </div>
 
                   {/* Info Panel */}
-                  <div className="p-6 rounded-3xl bg-teal-50 dark:bg-teal-500/10 border border-teal-200 dark:border-teal-500/20 flex gap-4 shadow-sm">
+                  <div className="p-6 rounded-xl bg-teal-50 dark:bg-teal-500/10 border border-teal-200 dark:border-teal-500/20 flex gap-4 shadow-sm">
                     <Lightbulb className="text-teal-600 dark:text-teal-400 flex-shrink-0" size={24} />
                     <div>
                       <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-1">Bakım Hatırlatması</h4>
@@ -507,7 +507,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   className="space-y-6"
                 >
                   {/* VeChain / BMW Blockchain Banner */}
-                  <div className="p-6 rounded-3xl bg-slate-950 border border-indigo-500/30 text-white space-y-4 shadow-xl">
+                  <div className="p-6 rounded-xl bg-slate-950 border border-indigo-500/30 text-white space-y-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold shrink-0">
                         <FileLock2 size={24} />
@@ -555,7 +555,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   </div>
 
                   {/* CARFAX Odometer Audit Banner */}
-                  <div className={`p-6 rounded-3xl border flex items-center justify-between gap-4 ${kmAudit.badgeColor}`}>
+                  <div className={`p-6 rounded-xl border flex items-center justify-between gap-4 ${kmAudit.badgeColor}`}>
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center font-bold shrink-0">
                         <Gauge size={24} />
@@ -588,10 +588,10 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                       const EventIcon = item.icon;
                       return (
                         <div key={index} className="relative group">
-                          <div className="absolute -left-[41px] top-1 w-6 h-6 rounded-full bg-white dark:bg-slate-900 border-2 border-teal-500 flex items-center justify-center text-teal-400 group-hover:scale-110 transition-all shadow-lg">
+                          <div className="absolute -left-[41px] top-1 w-6 h-6 rounded-full bg-white dark:bg-slate-900 border-2 border-teal-500 flex items-center justify-center text-teal-400 group-hover:scale-[1.02] transition-all shadow-lg">
                             <EventIcon size={12} />
                           </div>
-                          <div className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                          <div className="p-6 rounded-xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div>
                               <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">{item.date}</span>
                               <h4 className="text-base font-black text-slate-900 dark:text-white mt-1 uppercase tracking-tight">{item.type}</h4>
@@ -635,7 +635,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500">{t.myDigitalDocs || "Dijital Belgelerim"}</h4>
                   <button 
                     onClick={() => setActiveTab("maintenance")}
-                    className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center gap-2 border-none cursor-pointer"
+                    className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center gap-2 border-none cursor-pointer"
                   >
                     <Plus size={14} /> Yeni Belge Yükle
                   </button>
@@ -644,7 +644,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {documentsList.length > 0 ? (
                     documentsList.map((doc, i) => (
-                      <div key={i} className="p-6 rounded-3xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/20 transition-all flex items-center justify-between gap-4">
+                      <div key={i} className="p-6 rounded-xl bg-white dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/5 hover:border-teal-500/20 transition-all flex items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
                           <div className="p-3 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
                             <File size={20} />
@@ -689,7 +689,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                   </div>
                   <button 
                     onClick={() => setShowAddForm(!showAddForm)}
-                    className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center gap-2 border-none cursor-pointer"
+                    className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center gap-2 border-none cursor-pointer"
                   >
                     <Plus size={14} /> Bakım Kaydı Ekle
                   </button>
@@ -698,7 +698,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                 {/* Quick preset selection */}
                 {showAddForm && (
                   <div className="space-y-4">
-                    <div className="bg-white dark:bg-[#0a0f24] border border-slate-200 dark:border-white/10 rounded-[2rem] p-8 shadow-xl relative overflow-hidden flex flex-col items-center justify-center text-center">
+                    <div className="bg-white dark:bg-[#0a0f24] border border-slate-200 dark:border-white/10 rounded-[2rem] p-8 relative overflow-hidden flex flex-col items-center justify-center text-center">
                       <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -mr-16 -mt-16"></div>
 
                       {!proofFile && !ocrScanning && !ocrComplete && (
@@ -737,7 +737,7 @@ const VehiclePassport = ({ vehicle, onClose }) => {
                         <div className="space-y-6 w-full py-8">
                           <div className="relative w-24 h-24 mx-auto">
                             <div className="absolute inset-0 border-4 border-slate-200 dark:border-white/10 rounded-2xl"></div>
-                            <div className="absolute top-0 left-0 w-full h-1 bg-teal-500 rounded-full shadow-xl animate-[scan_2s_ease-in-out_infinite]"></div>
+                            <div className="absolute top-0 left-0 w-full h-1 bg-teal-500 rounded-full animate-[scan_2s_ease-in-out_infinite]"></div>
                             <ScanText size={40} className="text-teal-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
                           </div>
                           <div>

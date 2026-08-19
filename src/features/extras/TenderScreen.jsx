@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+﻿import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Clock, FileText, Package, RefreshCw, Wrench } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
@@ -71,9 +71,9 @@ const TenderScreen = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24 animate-fade-in relative">
       {/* Ambient Background */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+      
 
-      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button

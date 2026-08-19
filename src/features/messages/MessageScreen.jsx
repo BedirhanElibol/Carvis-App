@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMessage } from "../../context/MessageContext";
 import { useAuth } from "../../context/AuthContext";
@@ -49,12 +49,12 @@ const MessageScreen = () => {
     <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white relative">
       {/* Context Background for Premium vibe */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[10%] left-[-20%] w-[500px] h-[500px] bg-primary-500/5 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-[20%] right-[-10%] w-[400px] h-[400px] bg-accent-500/5 rounded-full blur-[100px]"></div>
+        
+        
       </div>
 
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950/40 backdrop-blur-2xl border-b border-black/5 dark:border-white/5 p-4">
+      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950/40 border-b border-black/5 dark:border-white/5 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
@@ -109,7 +109,7 @@ const MessageScreen = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4 z-10 custom-scrollbar">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center opacity-50 space-y-4">
-            <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-[2.5rem] flex items-center justify-center border border-black/5 dark:border-white/5 shadow-2xl">
+            <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center border border-black/5 dark:border-white/5">
               <Send size={32} className="text-slate-700 -rotate-12" />
             </div>
             <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 font-sans">
@@ -129,7 +129,7 @@ const MessageScreen = () => {
               <div key={message.id} className="space-y-4">
                 {showDate && (
                   <div className="flex items-center justify-center my-6">
-                    <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest border border-black/5 dark:border-white/5 font-sans">
+                    <div className="bg-white dark:bg-slate-900/50 px-4 py-1.5 rounded-full text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest border border-black/5 dark:border-white/5 font-sans">
                       {new Date(message.created_at).toLocaleDateString(
                         "tr-TR",
                         { day: "numeric", month: "long" },
@@ -144,10 +144,10 @@ const MessageScreen = () => {
                     className={`max-w-[80%] space-y-1 ${isOwn ? "items-end" : "items-start"} flex flex-col`}
                   >
                     <div
-                      className={`rounded-3xl px-4 py-3 shadow-2xl ${
+                      className={`rounded-xl px-4 py-3 ${
                         isOwn
                           ? "bg-primary-600 text-slate-900 dark:text-white rounded-br-none shadow-primary-900/20"
-                          : "bg-black/5 dark:bg-white/5 backdrop-blur-xl border border-black/10 dark:border-white/10 text-slate-800 dark:text-slate-100 rounded-bl-none shadow-black/40"
+                          : "bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-800 dark:text-slate-100 rounded-bl-none shadow-black/40"
                       }`}
                     >
                       <p className="text-sm font-medium leading-relaxed font-sans">
@@ -183,7 +183,7 @@ const MessageScreen = () => {
       </div>
 
       {/* Input Form */}
-      <div className="p-4 bg-slate-50 dark:bg-slate-950/60 backdrop-blur-3xl border-t border-black/5 dark:border-white/5 z-20 pb-8">
+      <div className="p-4 bg-slate-50 dark:bg-slate-950/60 border-t border-black/5 dark:border-white/5 z-20 pb-8">
         <form onSubmit={handleSend} className="flex items-center gap-3">
           <div className="flex-1 relative group">
             <input
@@ -198,7 +198,7 @@ const MessageScreen = () => {
           <button
             type="submit"
             disabled={sending || !messageText.trim()}
-            className="bg-primary-600 w-14 h-14 rounded-[2rem] flex items-center justify-center active-scale disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-primary-900/40 transition-all hover:bg-primary-500"
+            className="bg-primary-600 w-14 h-14 rounded-[2rem] flex items-center justify-center active-scale disabled:opacity-50 disabled:cursor-not-allowed shadow-primary-900/40 transition-all hover:bg-primary-500"
           >
             {sending ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>

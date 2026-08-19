@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUI } from "../../context/UIContext";
 import { getEVStations, getCityMetadata } from "../../services/externalApis";
@@ -115,7 +115,7 @@ export default function EVChargingScreen() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white pb-32">
       {/* Header */}
-      <div className="sticky top-0 z-30 bg-white/90 dark:bg-[#0a0f24]/90 backdrop-blur-xl border-b border-black/5 dark:border-white/10 px-5 py-4 shadow-lg">
+      <div className="sticky top-0 z-30 bg-white/90 dark:bg-[#0a0f24]/90 border-b border-black/5 dark:border-white/10 px-5 py-4 shadow-lg">
         <div className="flex items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-3">
             <button
@@ -202,7 +202,7 @@ export default function EVChargingScreen() {
           return (
             <div
               key={st.id}
-              className="bg-white dark:bg-[#0a0f24]/85 border border-black/5 dark:border-white/10 rounded-3xl p-5 shadow-xl hover:border-emerald-500/30 transition-all group relative overflow-hidden"
+              className="bg-white dark:bg-[#0a0f24]/85 border border-black/5 dark:border-white/10 rounded-xl p-5 hover:border-emerald-500/30 transition-all group relative overflow-hidden"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-3 flex-1 min-w-0">

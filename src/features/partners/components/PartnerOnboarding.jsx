@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useUI } from "../../../context/UIContext";
 import { AnimatePresence } from "framer-motion";
@@ -202,10 +202,10 @@ const PartnerOnboarding = ({ onComplete }) => {
   
 
   return (
-    <div className="glass-card p-10 rounded-[3rem] border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 shadow-2xl relative overflow-hidden max-w-4xl mx-auto">
+    <div className="glass-card p-10 rounded-[3rem] border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 relative overflow-hidden max-w-4xl mx-auto">
       {/* Background decorations */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary-600/10 rounded-full blur-[80px] pointer-events-none"></div>
-      <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+      
+      
 
       {/* Stepper Indicators */}
       <div className="flex items-center justify-between mb-10 max-w-md mx-auto relative z-10">

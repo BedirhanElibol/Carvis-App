@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { ArrowLeft, Copy, Loader2, Package, Ticket } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
@@ -41,7 +41,7 @@ const CampaignsScreen = () => {
   return (
     <div className="p-5 pb-32 space-y-6 min-h-screen bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
       {/* Glow Effect */}
-      <div className="absolute top-0 left-1/4 w-1/2 h-64 bg-primary-600/10 blur-[120px] pointer-events-none"></div>
+      
 
       {/* Header */}
       <div className="flex items-center gap-4 relative z-10">
@@ -95,7 +95,7 @@ const CampaignsScreen = () => {
                 <Loader2 className="animate-spin mx-auto text-orange-500" size={40} />
               </div>
             ) : coupons.length === 0 ? (
-              <div className="text-center py-20 bg-black/5 dark:bg-white/5 rounded-[2.5rem] border border-dashed border-black/10 dark:border-white/10">
+              <div className="text-center py-20 bg-black/5 dark:bg-white/5 rounded-xl border border-dashed border-black/10 dark:border-white/10">
                 <Ticket size={40} className="mx-auto text-slate-600 mb-4" />
                 <p className="text-sm font-bold text-slate-500">Aktif kupon bulunamadı.</p>
               </div>
@@ -103,7 +103,7 @@ const CampaignsScreen = () => {
               coupons.map((coupon) => (
                 <div
                   key={coupon.id}
-                  className="glass-card rounded-[2rem] border border-black/10 dark:border-white/10 shadow-xl overflow-hidden relative group"
+                  className="glass-card rounded-[2rem] border border-black/10 dark:border-white/10 overflow-hidden relative group"
                 >
                   <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-orange-500 to-red-600"></div>
                   <div className="p-6 pl-8">

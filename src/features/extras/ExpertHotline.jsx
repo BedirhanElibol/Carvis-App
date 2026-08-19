@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Activity, ChevronRight, Cpu, Gauge, Headset, Search, ShieldCheck } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
@@ -72,7 +72,7 @@ const ExpertHotline = () => {
             onClick={() => setSelectedTopic(topic)}
             className={`p-5 rounded-[2rem] border transition-all active-scale text-left relative overflow-hidden group ${
               selectedTopic?.id === topic.id 
-                ? "bg-primary-600 border-primary-500 shadow-2xl shadow-primary-900/30" 
+                ? "bg-primary-600 border-primary-500 shadow-primary-900/30" 
                 : "glass-card border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 hover:border-black/20 dark:border-white/20"
             }`}
           >
@@ -85,7 +85,7 @@ const ExpertHotline = () => {
             <p className={`text-[10px] font-bold ${selectedTopic?.id === topic.id ? "text-slate-900 dark:text-white/60" : "text-slate-500"}`}>
               {topic.fee} ₺ / Seans
             </p>
-            <div className={`absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform ${
+            <div className={`absolute -right-4 -bottom-4 opacity-5 group-hover:scale-[1.02] transition-transform ${
                selectedTopic?.id === topic.id ? "text-slate-900 dark:text-white" : "text-primary-500"
             }`}>
               <topic.icon size={80} />
@@ -109,7 +109,7 @@ const ExpertHotline = () => {
         <button
           onClick={handleRequest}
           disabled={loading || !selectedTopic}
-          className="w-full bg-white text-slate-950 py-5 rounded-[1.8rem] font-black text-xs uppercase tracking-[0.2em] shadow-2xl active-scale disabled:opacity-50 transition-all flex items-center justify-center gap-3"
+          className="w-full bg-white text-slate-950 py-5 rounded-[1.8rem] font-black text-xs uppercase tracking-[0.2em] active-scale disabled:opacity-50 transition-all flex items-center justify-center gap-3"
         >
           {loading ? "GÖNDERİLİYOR..." : "GÖRÜŞME TALEBİ OLUŞTUR"}
           <ChevronRight size={18} />
@@ -117,7 +117,7 @@ const ExpertHotline = () => {
       </div>
 
       {/* Trust Banner */}
-      <div className="glass-card p-6 rounded-[2.5rem] border border-emerald-500/10 bg-emerald-500/5 flex items-center gap-4">
+      <div className="glass-card p-6 rounded-xl border border-emerald-500/10 bg-emerald-500/5 flex items-center gap-4">
         <div className="w-12 h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center border border-emerald-500/10">
           <ShieldCheck size={24} className="text-emerald-500" />
         </div>

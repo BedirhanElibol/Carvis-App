@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Banknote, Cpu, Globe } from "lucide-react";
 import { motion } from "framer-motion";  
 import { useUI } from "../../context/UIContext";
@@ -90,7 +90,7 @@ const AdminSettings = () => {
         </div>
         <button
           onClick={handleSave}
-          className="bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white px-8 py-3 rounded-2xl font-black font-sans uppercase tracking-widest text-xs transition-all hover:scale-105 active:scale-95 shadow-lg shadow-red-900/50"
+          className="bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white px-8 py-3 rounded-2xl font-black font-sans uppercase tracking-widest text-xs transition-all hover:scale-[1.01] active:scale-95 shadow-lg shadow-red-900/50"
         >
           Değişiklikleri Kaydet
         </button>
@@ -103,7 +103,7 @@ const AdminSettings = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="glass-card rounded-[2.5rem] border border-black/5 dark:border-white/5 overflow-hidden shadow-2xl"
+            className="glass-card rounded-xl border border-black/5 dark:border-white/5 overflow-hidden"
           >
             <div className="p-6 border-b border-black/5 dark:border-white/5 bg-black/5 dark:bg-white/5 flex items-center gap-3">
               <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-500 dark:text-slate-400">

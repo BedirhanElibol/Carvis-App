@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Gift, Copy, Check, Share2, Sparkles } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useUI } from '../../context/UIContext';
@@ -45,7 +45,7 @@ const ReferralCard = () => {
   };
 
   return (
-    <div className="glass-card p-6 rounded-[2.5rem] border border-primary-500/20 bg-gradient-to-br from-primary-500/5 via-transparent to-transparent shadow-2xl relative overflow-hidden group">
+    <div className="glass-card p-6 rounded-xl border border-primary-500/20 bg-gradient-to-br from-primary-500/5 via-transparent to-transparent relative overflow-hidden group">
       {/* Background radial highlight */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl group-hover:scale-120 transition-transform"></div>
       
@@ -81,7 +81,7 @@ const ReferralCard = () => {
         {/* Share Button */}
         <button
           onClick={handleShare}
-          className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-black text-xs uppercase tracking-widest px-6 py-4 rounded-2xl active-scale transition-all flex items-center justify-center gap-2 shadow-xl shadow-primary-900/10 border border-primary-500/20"
+          className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-black text-xs uppercase tracking-widest px-6 py-4 rounded-2xl active-scale transition-all flex items-center justify-center gap-2 shadow-primary-900/10 border border-primary-500/20"
         >
           <Share2 size={14} /> Paylaş
         </button>

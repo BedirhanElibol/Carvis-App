@@ -1,4 +1,4 @@
-import React from "react"; /** * Skeleton Card for loading states * Usage: <SkeletonCard /> or <SkeletonCard variant="compact" /> */
+﻿import React from "react"; /** * Skeleton Card for loading states * Usage: <SkeletonCard /> or <SkeletonCard variant="compact" /> */
 export const SkeletonCard = ({ variant = "default" }) => {
   if (variant === "compact") {
     return (
@@ -17,7 +17,7 @@ export const SkeletonCard = ({ variant = "default" }) => {
     );
   }
   return (
-    <div className="glass-card rounded-3xl p-5 border border-black/5 dark:border-white/5 animate-pulse">
+    <div className="glass-card rounded-xl p-5 border border-black/5 dark:border-white/5 animate-pulse">
       {" "}
       <div className="flex gap-4">
         {" "}

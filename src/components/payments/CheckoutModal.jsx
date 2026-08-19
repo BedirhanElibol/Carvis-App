@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { CreditCard, ShieldCheck, Loader2, X, Lock } from 'lucide-react';
 import RapidsyTrustBadge from '../shared/RapidsyTrustBadge';
 
@@ -25,8 +25,8 @@ export default function CheckoutModal({ isOpen, onClose, amount, providerName, o
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-[#030712] border border-white/10 rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 animate-in fade-in duration-200">
+            <div className="bg-[#030712] border border-white/10 rounded-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-300">
                 {/* Header */}
                 <div className="relative bg-gradient-to-r from-primary/20 to-accent/20 p-6 text-center border-b border-white/10">
                     <button 
@@ -35,7 +35,7 @@ export default function CheckoutModal({ isOpen, onClose, amount, providerName, o
                     >
                         <X size={18} className="text-white" />
                     </button>
-                    <div className="mx-auto w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-3 shadow-xl">
+                    <div className="mx-auto w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-3">
                         <ShieldCheck size={24} className="text-primary" />
                     </div>
                     <h2 className="text-xl font-black text-white tracking-tight">Güvenli Ödeme (Escrow)</h2>
@@ -115,7 +115,7 @@ export default function CheckoutModal({ isOpen, onClose, amount, providerName, o
                         <button 
                             type="submit" 
                             disabled={isProcessing}
-                            className="w-full mt-6 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary/90 hover:to-emerald-500/90 text-white font-black uppercase tracking-wider py-4 rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 active-scale disabled:opacity-70"
+                            className="w-full mt-6 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary/90 hover:to-emerald-500/90 text-white font-black uppercase tracking-wider py-4 rounded-xl transition-all flex items-center justify-center gap-2 active-scale disabled:opacity-70"
                         >
                             {isProcessing ? (
                                 <>

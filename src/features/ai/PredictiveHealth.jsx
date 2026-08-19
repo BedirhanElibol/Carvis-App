@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+﻿import React, { useMemo } from "react";
 import { Activity, AlertTriangle, CheckCircle, Thermometer, TrendingDown } from "lucide-react";
 import { motion } from "framer-motion";  
 
@@ -127,7 +127,7 @@ const PredictiveHealth = ({ vehicle }) => {
   };
 
   return (
-    <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 relative overflow-hidden">
+    <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 relative overflow-hidden">
       {/* Background Decoration */}
       <div
         className={`absolute -right-10 -top-10 w-40 h-40 ${getBg(assessment.score)}/10 rounded-full blur-3xl`}
@@ -158,7 +158,7 @@ const PredictiveHealth = ({ vehicle }) => {
           initial={{ width: 0 }}
           animate={{ width: `${assessment.score}%` }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className={`h-full ${getBg(assessment.score)} shadow-xl`}
+          className={`h-full ${getBg(assessment.score)}`}
         />
       </div>
 

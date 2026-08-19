@@ -18,8 +18,7 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, on
   return (
     <section className="relative w-full pt-20 pb-20 md:pt-28 md:pb-24 bg-transparent overflow-hidden">
       
-      {/* Background glow matching Adspirer */}
-      <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-blue-500/10 dark:bg-[#1e3a8a] rounded-full blur-[150px] opacity-40 dark:opacity-20 pointer-events-none"></div>
+      {/* Clean subtle background — no blur glow */}
 
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         
@@ -87,11 +86,11 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, on
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-wrap items-center gap-2.5 text-[12px] sm:text-[13px] font-medium"
           >
-            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 text-blue-600 dark:text-blue-400"><Wrench size={14} /> Oto Servis & Tamir</span>
-            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/20 text-yellow-700 dark:text-yellow-400"><Fuel size={14} /> Akaryakıt & Şarj</span>
-            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400"><Search size={14} /> Mobil Ekspertiz</span>
-            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400"><Package size={14} /> Yedek Parça</span>
-            <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-50 dark:bg-teal-500/10 border border-teal-200 dark:border-teal-500/20 text-teal-600 dark:text-teal-400"><ShieldCheck size={14} /> Dijital Araç Pasaportu</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 text-blue-600 dark:text-blue-400"><Wrench size={14} /> Oto Servis & Tamir</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/20 text-yellow-700 dark:text-yellow-400"><Fuel size={14} /> Akaryakıt & Şarj</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400"><Search size={14} /> Mobil Ekspertiz</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400"><Package size={14} /> Yedek Parça</span>
+            <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-teal-50 dark:bg-teal-500/10 border border-teal-200 dark:border-teal-500/20 text-teal-600 dark:text-teal-400"><ShieldCheck size={14} /> Dijital Araç Pasaportu</span>
           </motion.div>
 
         </div>
@@ -109,7 +108,7 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, on
           <div className="absolute w-[130px] xs:w-[150px] sm:w-[180px] h-[130px] xs:h-[150px] sm:h-[180px] rounded-full border border-dashed border-blue-500/30"></div>
           
           {/* Center Logo - Sleek Glass Pill with Brand Accent */}
-          <div className="absolute px-6 py-4 xs:px-8 xs:py-5 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-xl border-2 border-blue-500/30 rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,0.15)] dark:shadow-[0_0_50px_rgba(37,99,235,0.3)] z-10">
+          <div className="absolute px-6 py-4 xs:px-8 xs:py-5 bg-white dark:bg-[#0f172a] border-2 border-blue-500/30 rounded-2xl flex items-center justify-center z-10">
             <img src={logo} alt="Rapidsy" className="h-6 xs:h-7 md:h-9 w-auto object-contain block dark:hidden brightness-0" />
             <img src={logo} alt="Rapidsy" className="h-6 xs:h-7 md:h-9 w-auto object-contain hidden dark:block" />
           </div>
@@ -121,9 +120,9 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, on
             animate={{ y: [0, -8, 0] }} 
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             onClick={handleStartAction}
-            className="absolute top-[4%] sm:top-[8%] left-[55%] sm:left-[65%] -translate-x-1/2 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-blue-300 dark:border-blue-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 cursor-pointer transition-transform"
+            className="absolute top-[4%] sm:top-[8%] left-[55%] sm:left-[65%] -translate-x-1/2 bg-white dark:bg-[#0f172a] border border-blue-300 dark:border-blue-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-xl flex items-center gap-2.5 sm:gap-3 z-20 hover:scale-[1.01] cursor-pointer transition-transform"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold border border-blue-500/20 shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold border border-blue-500/20 shrink-0">
               <Wrench size={16} className="sm:hidden" />
               <Wrench size={18} className="hidden sm:block" />
             </div>
@@ -142,9 +141,9 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, on
             animate={{ y: [0, 8, 0] }} 
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             onClick={handleStartAction}
-            className="absolute bottom-[10%] sm:bottom-[18%] right-0 sm:right-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-indigo-300 dark:border-indigo-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 cursor-pointer transition-transform"
+            className="absolute bottom-[10%] sm:bottom-[18%] right-0 sm:right-[2%] bg-white dark:bg-[#0f172a] border border-indigo-300 dark:border-indigo-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-xl flex items-center gap-2.5 sm:gap-3 z-20 hover:scale-[1.01] cursor-pointer transition-transform"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold border border-indigo-500/20 shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold border border-indigo-500/20 shrink-0">
               <Package size={16} className="sm:hidden" />
               <Package size={18} className="hidden sm:block" />
             </div>
@@ -163,9 +162,9 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, on
             animate={{ y: [0, 6, 0] }} 
             transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
             onClick={handleStartAction}
-            className="absolute bottom-[12%] sm:bottom-[20%] left-0 sm:left-[2%] bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border border-emerald-300 dark:border-emerald-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-xl dark:shadow-2xl z-20 hover:scale-105 cursor-pointer transition-transform"
+            className="absolute bottom-[12%] sm:bottom-[20%] left-0 sm:left-[2%] bg-white dark:bg-[#0f172a] border border-emerald-300 dark:border-emerald-500/30 px-3 py-2 sm:px-4 sm:py-3 rounded-xl flex items-center gap-2.5 sm:gap-3 z-20 hover:scale-[1.01] cursor-pointer transition-transform"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold border border-emerald-500/20 shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold border border-emerald-500/20 shrink-0">
               <ShieldCheck size={16} className="sm:hidden" />
               <ShieldCheck size={18} className="hidden sm:block" />
             </div>

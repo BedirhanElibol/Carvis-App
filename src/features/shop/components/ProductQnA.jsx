@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { MessageCircle, Star } from 'lucide-react';
 
 const ProductQnA = ({ winnerOffer, qnaList, asking, onAskQuestion }) => {
@@ -15,7 +15,7 @@ const ProductQnA = ({ winnerOffer, qnaList, asking, onAskQuestion }) => {
     };
 
     return (
-        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-2xl space-y-6">
+        <div className="bg-white p-6 rounded-xl border border-slate-100 space-y-6">
             <div className="flex justify-between items-end">
                 <div>
                     <h4 className="font-bold text-xl text-slate-800 flex items-center gap-2"><Star size={20} className="text-orange-400 fill-orange-400" /> Ürün Yorumları</h4>

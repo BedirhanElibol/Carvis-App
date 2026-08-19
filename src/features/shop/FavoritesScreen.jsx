@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, HeartOff, Package, ShieldCheck, ShoppingBag, Trash2, Wrench } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
@@ -33,7 +33,7 @@ const FavoritesScreen = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-32 animate-fade-in">
       {/* Header */}
-      <div className="sticky top-0 z-20 glass-card px-5 py-5 border-b border-black/5 dark:border-white/5 backdrop-blur-3xl flex items-center gap-4">
+      <div className="sticky top-0 z-20 glass-card px-5 py-5 border-b border-black/5 dark:border-white/5 flex items-center gap-4">
         <button
           onClick={() => navigate(-1)}
           className="p-2.5 glass-card rounded-2xl text-slate-500 dark:text-slate-400 active-scale-95 border border-black/10 dark:border-white/10"
@@ -52,9 +52,9 @@ const FavoritesScreen = () => {
 
       <div className="p-5">
         {favoriteProducts.length === 0 ? (
-          <div className="glass-card p-10 rounded-[3rem] border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/40 text-center flex flex-col items-center justify-center relative overflow-hidden shadow-2xl">
-            <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary-600/10 rounded-full blur-[60px] pointer-events-none"></div>
-            <div className="w-20 h-20 bg-slate-50 dark:bg-slate-950 rounded-[1.75rem] border border-black/5 dark:border-white/5 flex items-center justify-center text-primary-400 mb-6 shadow-xl relative">
+          <div className="glass-card p-10 rounded-[3rem] border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/40 text-center flex flex-col items-center justify-center relative overflow-hidden">
+            
+            <div className="w-20 h-20 bg-slate-50 dark:bg-slate-950 rounded-[1.75rem] border border-black/5 dark:border-white/5 flex items-center justify-center text-primary-400 mb-6 relative">
               <div className="absolute inset-0 bg-primary-500 blur-lg rounded-full opacity-10 animate-pulse"></div>
               <HeartOff size={36} className="relative z-10" />
             </div>
@@ -103,7 +103,7 @@ const FavoritesScreen = () => {
                     <img
                       src={product.img}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                     />
                   </div>
                   {/* Info */}

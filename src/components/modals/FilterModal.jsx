@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { ChevronRight, CircleCheck, Filter, Trash2, X } from "lucide-react";
 
 const FilterModal = ({
@@ -40,8 +40,8 @@ const FilterModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 z-[200] flex items-end sm:items-center justify-center backdrop-blur-md animate-in fade-in duration-300">
-      <div className="bg-white dark:bg-slate-900 w-full sm:w-[450px] rounded-t-[3rem] sm:rounded-[3rem] p-8 shadow-xl animate-in slide-in-from-bottom-full duration-500 border-t sm:border border-black/10 dark:border-white/10 relative overflow-hidden">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 z-[200] flex items-end sm:items-center justify-center animate-in fade-in duration-300">
+      <div className="bg-white dark:bg-slate-900 w-full sm:w-[450px] rounded-t-[3rem] sm:rounded-[3rem] p-8 animate-in slide-in-from-bottom-full duration-500 border-t sm:border border-black/10 dark:border-white/10 relative overflow-hidden">
         {/* Background Glow */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
 
@@ -162,7 +162,7 @@ const FilterModal = ({
             onClick={() =>
               setTempFilters({ ...tempFilters, stock: !tempFilters.stock })
             }
-            className={`flex items-center justify-between p-5 rounded-3xl border transition-all cursor-pointer active-scale group ${
+            className={`flex items-center justify-between p-5 rounded-xl border transition-all cursor-pointer active-scale group ${
               tempFilters.stock
                 ? "bg-primary-600/10 border-primary-500/50"
                 : "bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5 hover:bg-black/10 dark:bg-white/10"
@@ -203,7 +203,7 @@ const FilterModal = ({
           </button>
           <button
             onClick={handleApply}
-            className="flex-[2] bg-white text-slate-950 py-5 rounded-[1.8rem] font-black text-[10px] uppercase tracking-[0.2em] hover:bg-slate-100 transition-all active-scale shadow-2xl flex items-center justify-center gap-2 font-sans"
+            className="flex-[2] bg-white text-slate-950 py-5 rounded-[1.8rem] font-black text-[10px] uppercase tracking-[0.2em] hover:bg-slate-100 transition-all active-scale flex items-center justify-center gap-2 font-sans"
           >
             <CircleCheck size={16} /> {t.apply}
           </button>

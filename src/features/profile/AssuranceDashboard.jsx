@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { ShieldCheck, Flame, Plus, CheckCircle2, History, AlertCircle } from "lucide-react";
 import { AssuranceService } from "../../services/AssuranceService";
 
@@ -91,7 +91,7 @@ const AssuranceDashboard = ({ customerId, language = "tr" }) => {
       </div>
 
       {showClaimForm && (
-        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
           <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase">Hasar Bildirim Formu</h3>
           <form onSubmit={handleClaimSubmit} className="space-y-4">
             <div>

@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Plus, Fuel, Wrench, FileText, Shield, Sparkles, CreditCard } from "lucide-react";
 
 const getExpenseIcon = (type) => {
@@ -50,7 +50,7 @@ const VehicleExpensesTab = ({
       </div>
 
       {showExpenseForm && (
-        <form onSubmit={handleAddExpenseSubmit} className="p-6 bg-white dark:bg-slate-900/60 rounded-3xl border border-black/10 dark:border-white/10 space-y-4 animate-in slide-in-from-top-4 duration-300">
+        <form onSubmit={handleAddExpenseSubmit} className="p-6 bg-white dark:bg-slate-900/60 rounded-xl border border-black/10 dark:border-white/10 space-y-4 animate-in slide-in-from-top-4 duration-300">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase">Masraf Tipi</label>

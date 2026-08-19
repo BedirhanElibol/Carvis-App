@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { CreditCard, ShieldCheck, Wallet, X } from "lucide-react";
  
 import { motion, AnimatePresence } from "framer-motion";
@@ -28,14 +28,14 @@ const TopUpModal = ({ isOpen, onClose }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex py-10 justify-center items-end md:items-center bg-black/60 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex py-10 justify-center items-end md:items-center bg-black/60"
       >
         <div className="absolute inset-0" onClick={onClose}></div>
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
-          className="relative bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-t-3xl md:rounded-3xl p-6 shadow-2xl"
+          className="relative bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-t-3xl md:rounded-xl p-6"
         >
           <button
             onClick={onClose}

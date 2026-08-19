@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+﻿import React, { useState, useRef } from "react";
 import { CalendarDays, Camera, Car, Check, ChevronLeft, ChevronRight, Gauge, Hash, HelpCircle, Search, ShieldCheck } from "lucide-react";
 import { Badge } from "../../components/Core";
 import { useExternalData } from "../../hooks/useExternalData";
@@ -180,12 +180,12 @@ const VehicleSearch = ({ onVehicleFound }) => {
   const selectedModelData = selection.modelObj || selectedSeriesData?.models?.find(m => m.name === selection.model) || selectedSeriesData?.models?.[0];
 
   return (
-    <div className="glass-card rounded-[2.5rem] p-8 border border-black/10 dark:border-white/10 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-500">
+    <div className="glass-card rounded-xl p-8 border border-black/10 dark:border-white/10 relative overflow-hidden animate-in fade-in zoom-in duration-500">
       {/* Design elements */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
 
       {scanning && (
-        <div className="absolute inset-0 z-50 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-md flex flex-col items-center justify-center gap-6 animate-in fade-in">
+        <div className="absolute inset-0 z-50 bg-slate-50 dark:bg-slate-950/80 flex flex-col items-center justify-center gap-6 animate-in fade-in">
           <div className="relative w-48 h-32 border-2 border-primary-500/50 rounded-2xl overflow-hidden">
             <div className="absolute inset-0 bg-primary-500/5 flex items-center justify-center">
               <Hash
@@ -193,7 +193,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                 className="text-primary-500/20 animate-pulse"
               />
             </div>
-            <div className="absolute top-0 left-0 w-full h-1 bg-primary-500 shadow-xl animate-scanline"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-primary-500 animate-scanline"></div>
           </div>
           <div className="text-center">
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-500 animate-pulse mb-1">
@@ -502,7 +502,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                             )}
                             {mod.hp && (
                               <span className="text-[9px] font-bold text-slate-400 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
-                                ⚡ {mod.hp} HP
+                                {mod.hp} HP
                               </span>
                             )}
                             {mod.cc > 0 && (
@@ -573,7 +573,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
             {step === "final" && (
               <div className="space-y-5 animate-in fade-in slide-in-from-right-4">
                 {/* Summary Card */}
-                <div className="bg-primary-500/5 border border-primary-500/20 p-5 rounded-3xl relative overflow-hidden flex items-start gap-4">
+                <div className="bg-primary-500/5 border border-primary-500/20 p-5 rounded-xl relative overflow-hidden flex items-start gap-4">
                   <div className="bg-primary-500/10 p-3 rounded-2xl text-primary-400 shrink-0">
                     <Car size={22} />
                   </div>
@@ -596,7 +596,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                       )}
                       {selectedModelData?.hp && (
                         <span className="bg-amber-500/10 text-amber-400 px-2.5 py-0.5 rounded-full text-[8px] font-bold uppercase tracking-widest border border-amber-500/20">
-                          ⚡ {selectedModelData.hp} HP
+                          {selectedModelData.hp} HP
                         </span>
                       )}
                       {selectedModelData?.transmission && (
@@ -666,7 +666,7 @@ const VehicleSearch = ({ onVehicleFound }) => {
                 <button
                   onClick={handleManualSubmit}
                   disabled={!selection.year || !selection.km || !selection.plate}
-                  className="w-full bg-white text-slate-950 hover:bg-slate-100 disabled:opacity-30 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active-scale shadow-xl flex items-center justify-center gap-3"
+                  className="w-full bg-white text-slate-950 hover:bg-slate-100 disabled:opacity-30 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active-scale flex items-center justify-center gap-3"
                 >
                   GARAJA EKLE
                   <Check size={18} />

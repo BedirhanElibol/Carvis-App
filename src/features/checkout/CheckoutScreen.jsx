@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, CheckCircle, ChevronRight, CreditCard, Lock, MapPin, RefreshCw, ShieldCheck, ShoppingBag } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
@@ -116,8 +116,8 @@ const CheckoutScreen = () => {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-6 animate-fade-in relative z-50">
         <div className="absolute top-0 left-0 w-full h-full bg-slate-50 dark:bg-slate-950 z-[-1]"></div>
-        <div className="glass-card p-12 rounded-[3rem] text-center max-w-lg border border-black/5 dark:border-white/5 shadow-2xl">
-          <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-green-900/50">
+        <div className="glass-card p-12 rounded-[3rem] text-center max-w-lg border border-black/5 dark:border-white/5">
+          <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-green-900/50">
             <CheckCircle size={48} className="text-slate-900 dark:text-white" />
           </div>
           <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">Siparişiniz Alındı!</h1>
@@ -131,7 +131,7 @@ const CheckoutScreen = () => {
           <div className="space-y-3">
             <button
               onClick={() => navigate("/orders")}
-              className="w-full bg-teal-500 hover:bg-emerald-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black uppercase tracking-wider transition-all shadow-xl active-scale flex items-center justify-center gap-2 cursor-pointer border-none"
+              className="w-full bg-teal-500 hover:bg-emerald-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black uppercase tracking-wider transition-all active-scale flex items-center justify-center gap-2 cursor-pointer border-none"
             >
               <ShoppingBag size={18} />
               Siparişlerimi Takip Et
@@ -151,7 +151,7 @@ const CheckoutScreen = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-32 animate-fade-in relative z-40">
       {/* Header / Stepper */}
-      <div className="sticky top-0 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl z-50 border-b border-black/5 dark:border-white/5 p-4">
+      <div className="sticky top-0 bg-slate-50 dark:bg-slate-950/80 z-50 border-b border-black/5 dark:border-white/5 p-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <button
             onClick={handleBack}
@@ -210,7 +210,7 @@ const CheckoutScreen = () => {
 
         {/* RIGHT CONTENT: SUMMARY */}
         <div className="lg:col-span-1">
-          <div className="glass-card p-6 rounded-[2.5rem] border border-black/10 dark:border-white/10 sticky top-24 space-y-6">
+          <div className="glass-card p-6 rounded-xl border border-black/10 dark:border-white/10 sticky top-24 space-y-6">
             <h3 className="font-black text-xl text-slate-900 dark:text-white">Sipariş Özeti</h3>
             <div className="space-y-3">
               <div className="flex justify-between text-sm text-slate-500 dark:text-slate-400">
@@ -245,7 +245,7 @@ const CheckoutScreen = () => {
             {step < 3 ? (
               <button
                 onClick={handleNext}
-                className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2"
+                className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl transition-all active-scale flex items-center justify-center gap-2"
               >
                 {step === 1 ? "Sepeti Onayla" : "Ödemeye Geç"}
                 <ChevronRight size={18} />
@@ -294,7 +294,7 @@ const CheckoutScreen = () => {
                 <button
                   onClick={handlePaymentSubmit}
                   disabled={isProcessingCheckout}
-                  className="w-full bg-green-600 hover:bg-green-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl transition-all active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-green-600 hover:bg-green-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl transition-all active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isProcessingCheckout ? (
                     <RefreshCw className="animate-spin" />

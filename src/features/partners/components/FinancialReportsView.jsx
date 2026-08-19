@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { DollarSign, Wallet, ArrowUpRight, TrendingUp, CheckCircle, Percent, ArrowRight } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -122,7 +122,7 @@ export default function FinancialReportsView({ currentUser }) {
       </div>
 
       {/* Early Payout Card */}
-      <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm">
+      <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm">
         <div className="space-y-2 max-w-xl">
           <span className="bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Erken Ödeme Fırsatı</span>
           <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Vade Beklemeden Hakedişini Al</h3>

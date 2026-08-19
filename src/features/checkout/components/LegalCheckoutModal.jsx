@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { ShieldCheck, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -61,14 +61,14 @@ export const LegalCheckoutBanner = ({
               animate={{ opacity: 1 }} 
               exit={{ opacity: 0 }} 
               onClick={() => setShowFullModal(false)}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-slate-900/60"
             />
             
             <motion.div 
               initial={{ scale: 0.95, opacity: 0 }} 
               animate={{ scale: 1, opacity: 1 }} 
               exit={{ scale: 0.95, opacity: 0 }} 
-              className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden p-6 max-h-[80vh] flex flex-col"
+              className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-xl overflow-hidden p-6 max-h-[80vh] flex flex-col"
             >
               <div className="flex items-center gap-2 mb-4">
                 <ShieldCheck className="text-teal-500" />

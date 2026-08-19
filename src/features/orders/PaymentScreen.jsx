@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useOrder } from "../../context/OrderContext";
 import { useQuote } from "../../context/QuoteContext";
@@ -60,7 +60,7 @@ const PaymentScreen = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-20">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
@@ -78,7 +78,7 @@ const PaymentScreen = () => {
       {/* Content */}
       <div className="p-5 space-y-4">
         {/* Sipariş Özeti */}
-        <div className="glass-card p-5 rounded-3xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 backdrop-blur-2xl">
+        <div className="glass-card p-5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
           <h3 className="text-lg font-bold mb-4 font-sans">Sipariş Özeti</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
@@ -122,7 +122,7 @@ const PaymentScreen = () => {
         </div>
 
         {/* Güvenlik Bilgisi */}
-        <div className="glass-card p-5 rounded-3xl border border-green-500/30 bg-green-500/5 space-y-4">
+        <div className="glass-card p-5 rounded-xl border border-green-500/30 bg-green-500/5 space-y-4">
           <div className="flex items-start gap-3">
             <Shield size={24} className="text-green-400 flex-shrink-0 mt-0.5" />
             <div>
@@ -151,7 +151,7 @@ const PaymentScreen = () => {
           <button
             onClick={handlePayment}
             disabled={loading}
-            className="w-full bg-primary-600 hover:bg-primary-500 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-sm uppercase tracking-widest text-slate-900 dark:text-white shadow-xl shadow-primary-600/20 active-scale disabled:opacity-50 transition-all font-sans"
+            className="w-full bg-primary-600 hover:bg-primary-500 p-5 rounded-2xl flex items-center justify-center gap-2 font-black text-sm uppercase tracking-widest text-slate-900 dark:text-white shadow-primary-600/20 active-scale disabled:opacity-50 transition-all font-sans"
           >
             {loading ? (
               <Loader2 className="animate-spin" size={20} />
@@ -163,7 +163,7 @@ const PaymentScreen = () => {
             )}
           </button>
         ) : (
-          <div className="glass-card p-8 rounded-3xl border border-green-500/30 bg-green-500/10 text-center animate-bounce-in">
+          <div className="glass-card p-8 rounded-xl border border-green-500/30 bg-green-500/10 text-center animate-bounce-in">
             <div className="bg-green-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle size={40} className="text-green-400" />
             </div>

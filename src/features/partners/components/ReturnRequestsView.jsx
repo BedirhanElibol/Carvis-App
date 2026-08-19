@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { RotateCcw, Package, CheckCircle, XCircle, Eye, X, AlertCircle, Clock, RefreshCw, Search, ImageIcon } from "lucide-react";
 import { ReturnService } from "../../../services/ReturnService";
 
@@ -81,7 +81,7 @@ export default function ReturnRequestsView({ currentUser }) {
     <div className="space-y-6 font-sans text-slate-100">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-mono font-black uppercase tracking-tight text-white glow-orange">İade & İptal Talepleri</h1>
+        <h1 className="text-3xl font-mono font-black uppercase tracking-tight text-white">İade & İptal Talepleri</h1>
         <p className="text-xs text-slate-400 mt-1">Müşterilerden gelen iade taleplerini inceleyin, onaylayın veya reddedin.</p>
       </div>
 
@@ -123,7 +123,7 @@ export default function ReturnRequestsView({ currentUser }) {
       {loading ? (
         <div className="py-12 text-center text-slate-500 text-xs">Yükleniyor...</div>
       ) : filteredReturns.length === 0 ? (
-        <div className="py-16 text-center text-slate-500 glass-card border border-white/5 rounded-3xl">
+        <div className="py-16 text-center text-slate-500 glass-card border border-white/5 rounded-xl">
           <RotateCcw size={40} className="mx-auto mb-3 opacity-20" />
           <p className="font-bold text-sm">İade talebi bulunmuyor.</p>
         </div>
@@ -139,7 +139,7 @@ export default function ReturnRequestsView({ currentUser }) {
             else if (r.status === "rejected") colorClass = "bg-red-500/10 text-red-400";
             
             return (
-              <div key={r.id} className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-5 shadow-sm hover:border-white/10 transition-all duration-300">
+              <div key={r.id} className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-5 shadow-sm hover:border-white/10 transition-all duration-300">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 space-y-3">
                     <div className="flex items-center gap-3">
@@ -184,8 +184,8 @@ export default function ReturnRequestsView({ currentUser }) {
 
       {/* Detail Modal */}
       {selectedReturn && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="glass-card border border-white/10 bg-slate-950/95 w-full max-w-lg rounded-3xl p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+          <div className="glass-card border border-white/10 bg-slate-950/95 w-full max-w-lg rounded-xl p-6 relative max-h-[90vh] overflow-y-auto">
             <button onClick={() => { setSelectedReturn(null); setRejectionReason(""); }} className="absolute top-4 right-4 text-slate-400 hover:text-white cursor-pointer transition-colors">
               <X size={20} />
             </button>

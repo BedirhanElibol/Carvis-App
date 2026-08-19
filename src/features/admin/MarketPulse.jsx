@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Fuel, TrendingUp } from "lucide-react";
 import { useExternalData } from "../../hooks/useExternalData";
 import { useUI } from "../../context/UIContext";
@@ -50,16 +50,16 @@ const MarketPulse = () => {
 
   if (loading) {
     return (
-      <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 h-full flex items-center justify-center min-h-[300px]">
+      <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 h-full flex items-center justify-center min-h-[300px]">
         <div className="w-8 h-8 border-2 border-primary-500 border-t-white rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="glass-card bg-slate-50 dark:bg-slate-950/40 p-8 rounded-[2.5rem] border border-black/10 dark:border-white/10 h-full relative overflow-hidden group lg:col-span-2 shadow-2xl backdrop-blur-xl">
+    <div className="glass-card bg-slate-50 dark:bg-slate-950/40 p-8 rounded-xl border border-black/10 dark:border-white/10 h-full relative overflow-hidden group lg:col-span-2">
       {/* Background Glow - Dimmed for better mobile readability */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-orange-600/5 rounded-full blur-[100px] -mr-10 -mt-10 group-hover:bg-orange-600/10 transition-all duration-700"></div>
+      
 
       <div className="flex justify-between items-center mb-8 relative z-10">
         <h3 className="font-black text-slate-900 dark:text-white flex items-center gap-3 font-sans uppercase tracking-widest text-xs">

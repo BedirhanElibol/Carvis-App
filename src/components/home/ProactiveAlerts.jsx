@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+﻿import React, { useState, useEffect, useMemo } from "react";
 import { AlertCircle, AlertTriangle, Loader2, Percent, Radar, Send, ThumbsUp, Users, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../context/UIContext";
@@ -378,7 +378,7 @@ const ProactiveAlerts = ({ vehicle, mapCenter }) => {
   }, [vehicle]);
 
   return (
-    <div className="bg-white dark:bg-[#0a0f24]/85 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 backdrop-blur-md shadow-2xl space-y-6 text-slate-900 dark:text-white">
+    <div className="bg-white dark:bg-[#0a0f24]/85 border border-slate-200 dark:border-white/10 rounded-xl p-6 space-y-6 text-slate-900 dark:text-white">
       {/* Dynamic Inspection & Insurance Reminder Cards */}
       {reminderAlerts.length > 0 && (
         <div className="space-y-3 pb-2 border-b border-black/5 dark:border-white/10">

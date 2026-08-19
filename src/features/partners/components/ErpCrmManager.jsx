@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Archive, Calendar, CheckCircle, CheckCircle2, Clock, Download, FileText, Layers, Minus, Plus, Search, Upload } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUI } from "../../../context/UIContext";
@@ -212,7 +212,7 @@ const ErpCrmManager = () => {
                 return (
                   <div 
                     key={order.id} 
-                    className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col justify-between"
+                    className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex justify-between items-center mb-4">
@@ -404,7 +404,7 @@ const ErpCrmManager = () => {
             {completedInvoices.map((invoice) => (
               <div 
                 key={invoice.id}
-                className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+                className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50 hover:border-emerald-500/20 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
@@ -446,7 +446,7 @@ const ErpCrmManager = () => {
                       <CheckCircle size={12} /> YÜKLENDİ (GÖRÜNTÜLE)
                     </a>
                   ) : (
-                    <label className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-xl active-scale transition-all cursor-pointer">
+                    <label className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl active-scale transition-all cursor-pointer">
                       <Upload size={12} /> RESMİ FATURA YÜKLE
                       <input 
                         type="file" 

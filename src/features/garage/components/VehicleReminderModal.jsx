@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { CalendarCheck, ShieldCheck, FileCheck, X, Save, AlertCircle, Loader2 } from "lucide-react";
 import { useUI } from "../../../context/UIContext";
 import { supabase } from "../../../supabaseClient";
@@ -53,8 +53,8 @@ const VehicleReminderModal = ({ show, vehicle, onClose, onSaveSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl p-6 relative overflow-hidden text-slate-900 dark:text-white">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 animate-fade-in">
+      <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl p-6 relative overflow-hidden text-slate-900 dark:text-white">
         <button
           type="button"
           onClick={onClose}

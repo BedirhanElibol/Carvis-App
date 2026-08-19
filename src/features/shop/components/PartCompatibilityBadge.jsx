@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { CheckCircle2, XCircle, AlertCircle, Cpu, Info, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -70,12 +70,12 @@ const PartCompatibilityBadge = ({ part, vehicle }) => {
 
       <AnimatePresence>
         {showModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-slate-900 border border-cyan-500/30 rounded-3xl p-6 max-w-sm w-full text-white shadow-2xl space-y-4"
+              className="bg-slate-900 border border-cyan-500/30 rounded-xl p-6 max-w-sm w-full text-white space-y-4"
             >
               <div className="flex justify-between items-center border-b border-white/10 pb-3">
                 <h4 className="text-sm font-mono font-black text-cyan-400 flex items-center gap-2">

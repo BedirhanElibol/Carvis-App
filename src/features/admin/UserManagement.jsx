@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+﻿import React, { useState, useEffect, useCallback } from "react";
 import { supabase } from "../../supabaseClient";
 import { BadgeCheck, Banknote, Eye, Loader2, Search, UserX } from "lucide-react";
 import { useUI } from "../../context/UIContext";
@@ -119,7 +119,7 @@ const UserManagement = () => {
         </div>
       </div>
 
-      <div className="glass-card rounded-2xl border border-black/5 dark:border-white/5 overflow-hidden shadow-2xl">
+      <div className="glass-card rounded-2xl border border-black/5 dark:border-white/5 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
@@ -226,14 +226,14 @@ const UserManagement = () => {
         {selectedUser && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/80"
               onClick={() => setSelectedUser(null)}
             ></div>
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden font-sans"
+              className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl p-6 overflow-hidden font-sans"
             >
               <div className="flex items-start justify-between mb-6">
                 <div>
@@ -289,7 +289,7 @@ const UserManagement = () => {
                     </div>
                   </div>
                   <button
-                    className="bg-orange-500 hover:bg-orange-600 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg transition-all hover:scale-105 active-scale uppercase"
+                    className="bg-orange-500 hover:bg-orange-600 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg transition-all hover:scale-[1.01] active-scale uppercase"
                     disabled={processingId === selectedUser.id}
                     onClick={async () => {
                       setProcessingId(selectedUser.id);
@@ -326,7 +326,7 @@ const UserManagement = () => {
                       </div>
                     </div>
                     <button
-                      className={`${selectedUser.is_banned ? 'bg-slate-500 hover:bg-slate-600' : 'bg-red-600 hover:bg-red-700'} text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg transition-all hover:scale-105 active-scale uppercase`}
+                      className={`${selectedUser.is_banned ? 'bg-slate-500 hover:bg-slate-600' : 'bg-red-600 hover:bg-red-700'} text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg transition-all hover:scale-[1.01] active-scale uppercase`}
                       disabled={processingId === selectedUser.id}
                       onClick={async () => {
                         const isBanning = !selectedUser.is_banned;

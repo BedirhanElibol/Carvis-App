@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Package, Send, Wrench } from "lucide-react";
 
 /**
@@ -15,7 +15,7 @@ const VehicleDemandForm = ({
   const [description, setDescription] = useState(initialDescription);
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 animate-slide-up">
+    <div className="w-full max-w-md mx-auto p-6 bg-white rounded-xl border border-slate-100 animate-slide-up">
       {/* Seçili Araç Özeti */}
       <div className="bg-blue-600 p-4 rounded-2xl mb-6 text-slate-900 dark:text-white shadow-lg shadow-blue-200">
         <p className="text-[10px] font-black uppercase tracking-widest opacity-80">
@@ -90,7 +90,7 @@ const VehicleDemandForm = ({
       {/* Gönder Butonu */}
       <button
         onClick={() => onSubmit({ demandType, description })}
-        className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-5 rounded-2xl font-black text-lg tracking-widest uppercase shadow-xl hover:bg-blue-600 transition-all flex items-center justify-center space-x-3 active:scale-95"
+        className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white p-5 rounded-2xl font-black text-lg tracking-widest uppercase hover:bg-blue-600 transition-all flex items-center justify-center space-x-3 active:scale-95"
       >
         <Send size={20} />
         <span>Talebi Gönder</span>

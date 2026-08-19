@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { BellRing, Image, ShieldCheck, Truck, X, AlertCircle } from "lucide-react";
 import ServiceTimeline from "./ServiceTimeline";
 import { supabase } from "../../supabaseClient";
@@ -77,8 +77,8 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
   const technicianNotes = proofs.technician_notes || "";
 
   return (
-    <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in">
-      <div className="bg-white dark:bg-[#0f172a] w-full max-w-lg rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 animate-in fade-in">
+      <div className="bg-white dark:bg-[#0f172a] w-full max-w-lg rounded-xl border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="p-5 border-b border-black/5 dark:border-white/5 flex justify-between items-center bg-slate-50 dark:bg-slate-950">
           <div>
@@ -193,7 +193,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
           </div>
 
           {/* Technician Notes */}
-          <div className="bg-white dark:bg-slate-900/50 p-5 rounded-3xl border border-black/5 dark:border-white/5">
+          <div className="bg-white dark:bg-slate-900/50 p-5 rounded-xl border border-black/5 dark:border-white/5">
             <h4 className="text-primary-400 font-black text-[10px] uppercase tracking-widest mb-2">
               Usta Notları
             </h4>
@@ -203,7 +203,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
           </div>
 
           {/* Price Breakdown */}
-          <div className="bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-black/5 dark:border-white/5">
+          <div className="bg-black/5 dark:bg-white/5 p-6 rounded-xl border border-black/5 dark:border-white/5">
              <div className="flex justify-between items-center mb-2">
                <span className="text-xs text-slate-500 uppercase font-black">Sipariş Toplamı</span>
                <span className="text-xl font-mono font-black text-slate-900 dark:text-white">₺{localOrder.total_amount?.toLocaleString('tr-TR')}</span>
@@ -240,7 +240,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
 
           {/* Tracking & Returns */}
           {(localOrder.quote?.tracking_number || localOrder.status === 'completed' || localOrder.status === 'repairing' || localOrder.status === 'paid' || localOrder.status === 'return_requested') && (
-             <div className="bg-slate-100 dark:bg-slate-900/80 p-5 rounded-3xl border border-black/5 dark:border-white/5 flex flex-col gap-3">
+             <div className="bg-slate-100 dark:bg-slate-900/80 p-5 rounded-xl border border-black/5 dark:border-white/5 flex flex-col gap-3">
                {localOrder.quote?.tracking_number && (
                  <div className="flex items-center justify-between">
                    <div className="flex items-center gap-2 text-primary-500">

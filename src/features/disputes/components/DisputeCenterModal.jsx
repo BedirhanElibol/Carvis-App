@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { AlertCircle, ShieldCheck, HeartHandshake, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { DisputeService } from "../../../services/DisputeService";
@@ -54,7 +54,7 @@ const DisputeCenterModal = ({
           initial={{ scale: 0.97, opacity: 0 }} 
           animate={{ scale: 1, opacity: 1 }} 
           exit={{ scale: 0.97, opacity: 0 }} 
-          className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden p-6 space-y-4"
+          className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-xl overflow-hidden p-6 space-y-4"
         >
           {/* Header */}
           <div className="flex justify-between items-start">

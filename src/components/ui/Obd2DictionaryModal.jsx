@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Search, AlertTriangle, Wrench, ShieldCheck, X, Activity, ChevronRight, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { OBD2_CODES, searchObd2Codes } from "../../constants/obd2Codes";
@@ -30,8 +30,8 @@ const Obd2DictionaryModal = ({ isOpen, onClose, onRequestService }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[9999] flex items-start sm:items-center justify-center p-2 pt-12 sm:pt-6 sm:p-4 overflow-y-auto">
-      <div className="bg-slate-900 border border-slate-800 w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] rounded-[2rem] sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 text-white my-auto">
+    <div className="fixed inset-0 bg-slate-950/85 z-[9999] flex items-start sm:items-center justify-center p-2 pt-12 sm:pt-6 sm:p-4 overflow-y-auto">
+      <div className="bg-slate-900 border border-slate-800 w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] rounded-[2rem] sm:rounded-xl flex flex-col overflow-hidden animate-in zoom-in-95 text-white my-auto">
         
         {/* Header */}
         <div className="p-6 border-b border-white/10 flex justify-between items-center bg-slate-950/60 shrink-0">
@@ -134,7 +134,7 @@ const Obd2DictionaryModal = ({ isOpen, onClose, onRequestService }) => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
-              className="p-6 bg-slate-950 border-t border-teal-500/30 text-white space-y-4 shrink-0 shadow-2xl"
+              className="p-6 bg-slate-950 border-t border-teal-500/30 text-white space-y-4 shrink-0"
             >
               <div className="flex items-start justify-between">
                 <div>
@@ -177,7 +177,7 @@ const Obd2DictionaryModal = ({ isOpen, onClose, onRequestService }) => {
                     onRequestService?.(activeCode);
                     onClose();
                   }}
-                  className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 font-black text-xs uppercase tracking-widest active-scale transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer border-none"
+                  className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 font-black text-xs uppercase tracking-widest active-scale transition-all flex items-center justify-center gap-2 cursor-pointer border-none"
                 >
                   <Wrench size={16} /> BU ARIZA İÇİN USTALARDAN TEKLİF AL
                 </button>

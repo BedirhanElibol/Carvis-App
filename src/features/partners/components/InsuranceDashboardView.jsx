@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Shield, FileText, ClipboardList, CheckCircle2, ChevronRight, Activity, DollarSign, X, AlertCircle } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -83,7 +83,7 @@ export default function InsuranceDashboardView({ currentUser }) {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter glow-orange">Sigorta Şirketi Paneli</h1>
+          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter">Sigorta Şirketi Paneli</h1>
           <p className="text-slate-400 text-xs mt-1">Carvis üzerinden gelen sigorta talepleri ve aktif poliçeler</p>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function InsuranceDashboardView({ currentUser }) {
           { label: "Hasar Kaybı Oranı", value: stats.lossRatio, icon: Activity, color: "text-red-400", bg: "bg-red-500/10" },
           { label: "Toplam Prim Hacmi", value: `₺${stats.premiumVolume.toLocaleString("tr-TR")}`, icon: DollarSign, color: "text-emerald-400", bg: "bg-emerald-500/10" },
         ].map((s) => (
-          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-3xl flex flex-col justify-between shadow-sm hover:border-white/10 transition-all duration-300">
+          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-xl flex flex-col justify-between shadow-sm hover:border-white/10 transition-all duration-300">
             <div className={`${s.bg} w-12 h-12 rounded-2xl flex items-center justify-center mb-4`}>
               <s.icon size={22} className={s.color} />
             </div>
@@ -141,7 +141,7 @@ export default function InsuranceDashboardView({ currentUser }) {
       {activeTab === "active" ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Policy Underwriting Queue */}
-          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Poliçe Onay Sırası</h3>
               <span className="bg-orange-500/10 text-orange-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">RİSK ANALİZİ</span>
@@ -188,7 +188,7 @@ export default function InsuranceDashboardView({ currentUser }) {
           </div>
 
           {/* Active Insurance Claims */}
-          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Hasar Talebi İnceleme Merkezi</h3>
               <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">HASAR DOSYALARI</span>
@@ -220,7 +220,7 @@ export default function InsuranceDashboardView({ currentUser }) {
         /* History View: Active Policies & Settled Claims */
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Active Policies */}
-          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Aktif Yürürlükteki Poliçeler</h3>
               <span className="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">AKTİF</span>
@@ -253,7 +253,7 @@ export default function InsuranceDashboardView({ currentUser }) {
           </div>
 
           {/* Settled Claims */}
-          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Sonuçlandırılan Hasarlar</h3>
               <span className="bg-slate-500/10 text-slate-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">SONUÇLANDI</span>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Eye, EyeOff, Loader2, Lock, Mail, Phone, User, X, ShieldCheck } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
@@ -105,10 +105,10 @@ const RegisterModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-xl z-[9999] flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
+    <div className="fixed inset-0 bg-slate-950/80 z-[9999] flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
       
       {/* Clerk / Resend Style Register Card */}
-      <div className="w-full max-w-[440px] bg-white dark:bg-[#080d1a] border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-7 sm:p-9 shadow-2xl relative overflow-hidden text-slate-900 dark:text-white my-auto">
+      <div className="w-full max-w-[440px] bg-white dark:bg-[#080d1a] border border-slate-200 dark:border-white/10 rounded-xl p-7 sm:p-9 relative overflow-hidden text-slate-900 dark:text-white my-auto">
         
         {/* Subtle Neon Ambient Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-cyan-500/10 dark:bg-cyan-500/20 blur-3xl pointer-events-none rounded-full"></div>

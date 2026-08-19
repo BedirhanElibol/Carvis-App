@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { ArrowLeft, ShieldAlert, MapPin, Navigation, Truck, CreditCard, Loader2, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -70,7 +70,7 @@ const SosRequestScreen = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white pb-32">
       {/* Header */}
-      <div className="px-6 py-4.5 flex items-center gap-4 border-b border-black/5 dark:border-white/5 bg-white dark:bg-[#0a0f24]/80 backdrop-blur-xl sticky top-0 z-30">
+      <div className="px-6 py-4.5 flex items-center gap-4 border-b border-black/5 dark:border-white/5 bg-white dark:bg-[#0a0f24]/80 sticky top-0 z-30">
         <button onClick={() => navigate(-1)} className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white">
           <ArrowLeft size={20} />
         </button>
@@ -84,7 +84,7 @@ const SosRequestScreen = () => {
         
         {step === "location" && (
           <div className="space-y-6">
-            <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-sm">
+            <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-6 shadow-sm">
               <h2 className="text-xl font-bold mb-2">Konumunuzu Doğrulayın</h2>
               <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">Çekicinin size ulaşabilmesi için konumunuzu doğru seçtiğinizden emin olun.</p>
               
@@ -96,7 +96,7 @@ const SosRequestScreen = () => {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-sm">
+            <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-6 shadow-sm">
               <h2 className="text-lg font-bold mb-4">Araç Durumu</h2>
               <textarea 
                 value={description}
@@ -109,7 +109,7 @@ const SosRequestScreen = () => {
             <button 
               onClick={handleRequest}
               disabled={loading}
-              className="w-full bg-red-500 hover:bg-red-600 text-white font-bold text-lg p-5 rounded-2xl shadow-xl shadow-red-500/20 active:scale-[0.98] transition-all flex justify-center items-center gap-2"
+              className="w-full bg-red-500 hover:bg-red-600 text-white font-bold text-lg p-5 rounded-2xl shadow-red-500/20 active:scale-[0.98] transition-all flex justify-center items-center gap-2"
             >
               {loading ? <Loader2 className="animate-spin" /> : <Truck />}
               Çekici Talep Et
@@ -118,7 +118,7 @@ const SosRequestScreen = () => {
         )}
 
         {step === "payment" && (
-          <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-8 shadow-sm text-center">
+          <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-8 shadow-sm text-center">
             <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-red-500">
               <CreditCard size={32} />
             </div>
@@ -141,7 +141,7 @@ const SosRequestScreen = () => {
             <button 
               onClick={handlePayment}
               disabled={loading}
-              className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-lg p-5 rounded-2xl shadow-xl active:scale-[0.98] transition-all flex justify-center items-center gap-2"
+              className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-lg p-5 rounded-2xl active:scale-[0.98] transition-all flex justify-center items-center gap-2"
             >
               {loading ? <Loader2 className="animate-spin" /> : "Kredi Kartı İle Öde"}
             </button>
@@ -149,7 +149,7 @@ const SosRequestScreen = () => {
         )}
 
         {step === "searching" && (
-          <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-12 shadow-sm text-center">
+          <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-12 shadow-sm text-center">
             <div className="relative w-24 h-24 mx-auto mb-8">
               <div className="absolute inset-0 bg-red-500/20 rounded-full animate-ping"></div>
               <div className="absolute inset-0 bg-red-500/40 rounded-full animate-pulse"></div>
@@ -165,7 +165,7 @@ const SosRequestScreen = () => {
         )}
 
         {step === "found" && (
-          <div className="bg-white dark:bg-white/5 border border-emerald-500/30 rounded-3xl p-8 shadow-sm text-center relative overflow-hidden">
+          <div className="bg-white dark:bg-white/5 border border-emerald-500/30 rounded-xl p-8 shadow-sm text-center relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
             
             <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 text-emerald-500">
@@ -191,7 +191,7 @@ const SosRequestScreen = () => {
 
             <button 
               onClick={() => navigate("/application/home")}
-              className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold p-4 rounded-2xl shadow-xl"
+              className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold p-4 rounded-2xl"
             >
               Ana Sayfaya Dön
             </button>

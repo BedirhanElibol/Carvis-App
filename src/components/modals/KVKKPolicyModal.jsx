@@ -1,14 +1,14 @@
-import React from "react";
+﻿import React from "react";
 import { ClipboardCheck, Gavel } from "lucide-react";
 
 const KVKKPolicyModal = ({ show, t, onAgree }) => {
   if (!show || !t) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/80 z-[200] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-sm rounded-3xl p-6 shadow-2xl scale-100 animate-in zoom-in-95 duration-200 text-slate-900 dark:text-white">
+    <div className="fixed inset-0 bg-black/80 z-[200] flex items-center justify-center p-4 animate-in fade-in duration-300">
+      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-sm rounded-xl p-6 scale-100 animate-in zoom-in-95 duration-200 text-slate-900 dark:text-white">
         <div className="flex flex-col items-center text-center">
-          <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-primary-500/10 text-primary-500 border border-primary-500/20 shadow-xl">
+          <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-primary-500/10 text-primary-500 border border-primary-500/20">
             <Gavel size={32} />
           </div>
           <h3 className="font-black text-xl text-slate-900 dark:text-white mb-2 font-sans">

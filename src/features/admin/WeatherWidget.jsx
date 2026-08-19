@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Cloud, Droplets, MapPin, Wind } from "lucide-react";
 import { useExternalData } from "../../hooks/useExternalData";
 import { useUI } from "../../context/UIContext";
@@ -61,7 +61,7 @@ const WeatherWidget = () => {
           </p>
         </div>
         <div className="text-right">
-          <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest bg-black/10 dark:bg-white/10 px-2 py-1 rounded-lg backdrop-blur-md inline-block font-sans">
+          <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest bg-black/10 dark:bg-white/10 px-2 py-1 rounded-lg inline-block font-sans">
             {weather.condition}
           </p>
         </div>

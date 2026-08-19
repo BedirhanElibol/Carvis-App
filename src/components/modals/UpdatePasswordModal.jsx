@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { CheckCircle, Eye, EyeOff, Key, Loader2, Lock, ShieldAlert, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 
@@ -43,8 +43,8 @@ const UpdatePasswordModal = ({ show, onClose, t }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 z-[115] flex sm:items-center items-start justify-center backdrop-blur-md animate-in fade-in p-4 overflow-y-auto pt-10 sm:pt-4">
-      <div className="bg-white dark:bg-[#0a0f24]/90 border border-black/10 dark:border-white/10 w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-200 my-auto text-slate-900 dark:text-white">
+    <div className="fixed inset-0 bg-black/80 z-[115] flex sm:items-center items-start justify-center animate-in fade-in p-4 overflow-y-auto pt-10 sm:pt-4">
+      <div className="bg-white dark:bg-[#0a0f24]/90 border border-black/10 dark:border-white/10 w-full max-w-md rounded-xl p-8 relative overflow-hidden animate-in zoom-in-95 duration-200 my-auto text-slate-900 dark:text-white">
         
         {/* Decorative Background Glows */}
         <div className="absolute -top-20 -right-20 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -125,7 +125,7 @@ const UpdatePasswordModal = ({ show, onClose, t }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-4.5 rounded-2xl font-black text-slate-900 dark:text-white shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] font-sans border-none cursor-pointer ${
+                className={`w-full py-4.5 rounded-2xl font-black text-slate-900 dark:text-white flex items-center justify-center gap-2 transition-all active:scale-[0.98] font-sans border-none cursor-pointer ${
                   loading ? "bg-teal-600/50 text-slate-600 dark:text-slate-300" : "bg-teal-500 hover:bg-teal-400 shadow-teal-500/20"
                 }`}
               >
@@ -160,7 +160,7 @@ const UpdatePasswordModal = ({ show, onClose, t }) => {
                 setConfirmPassword("");
                 setSuccess(false);
               }}
-              className="w-full py-4 bg-teal-500 hover:bg-teal-400 text-slate-900 dark:text-white rounded-2xl font-black shadow-xl shadow-teal-500/20 transition-all active:scale-[0.98] font-sans border-none cursor-pointer"
+              className="w-full py-4 bg-teal-500 hover:bg-teal-400 text-slate-900 dark:text-white rounded-2xl font-black shadow-teal-500/20 transition-all active:scale-[0.98] font-sans border-none cursor-pointer"
             >
               Uygulamaya Git
             </button>

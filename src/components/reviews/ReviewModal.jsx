@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, X, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../../supabaseClient';
@@ -55,14 +55,14 @@ const ReviewModal = ({ isOpen, onClose, order, onSuccess }) => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={onClose}
-                    className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                    className="absolute inset-0 bg-black/60"
                 />
                 
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                    className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-white/10 overflow-hidden"
+                    className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-xl border border-white/10 overflow-hidden"
                 >
                     {isSuccess ? (
                         <div className="p-8 text-center flex flex-col items-center">
@@ -98,7 +98,7 @@ const ReviewModal = ({ isOpen, onClose, order, onSuccess }) => {
                                             onMouseEnter={() => setHoveredRating(star)}
                                             onMouseLeave={() => setHoveredRating(0)}
                                             onClick={() => setRating(star)}
-                                            className="transition-transform hover:scale-110 active:scale-95"
+                                            className="transition-transform hover:scale-[1.02] active:scale-95"
                                         >
                                             <Star 
                                                 size={40} 

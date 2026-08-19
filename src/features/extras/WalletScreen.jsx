@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowDownLeft, ArrowLeft, ArrowUpRight, ChevronRight, Inbox, LayoutGrid, Plus, ShieldCheck, Wallet, X } from "lucide-react";
 import { useWallet } from "../../context/WalletContext";
@@ -20,11 +20,11 @@ const WalletScreen = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24 relative overflow-hidden animate-fade-in">
       {/* Ambient Backgrounds */}
-      <div className="absolute top-[-100px] right-[-100px] w-96 h-96 bg-primary-600/20 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-[-100px] left-[-100px] w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+      
+      
 
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5 p-5">
+      <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-950/80 border-b border-black/5 dark:border-white/5 p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
@@ -47,11 +47,11 @@ const WalletScreen = () => {
 
       <div className="p-5 space-y-6 relative z-10">
         {/* RAPIDSY CARD */}
-        <div className="relative w-full h-56 rounded-[2.5rem] p-7 shadow-2xl overflow-hidden group border border-black/5 dark:border-white/5">
+        <div className="relative w-full h-56 rounded-xl p-7 overflow-hidden group border border-black/5 dark:border-white/5">
           {/* Background gradient & texture for card */}
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-black"></div>
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/20 rounded-full blur-[80px] group-hover:bg-primary-500/30 transition-all"></div>
+          
 
           {/* Card Content */}
           <div className="relative z-10 h-full flex flex-col justify-between">
@@ -107,7 +107,7 @@ const WalletScreen = () => {
             onClick={() => setShowTopUp(true)}
             className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center justify-center gap-3 hover:bg-primary-600/10 hover:border-primary-500/30 transition-all active-scale group"
           >
-            <div className="w-14 h-14 rounded-2xl bg-primary-600 flex items-center justify-center text-slate-900 dark:text-white shadow-xl group-hover:scale-110 transition-transform">
+            <div className="w-14 h-14 rounded-2xl bg-primary-600 flex items-center justify-center text-slate-900 dark:text-white group-hover:scale-[1.02] transition-transform">
               <Plus size={28} />
             </div>
             <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest font-sans">
@@ -124,7 +124,7 @@ const WalletScreen = () => {
             }
             className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 flex flex-col items-center justify-center gap-3 hover:bg-black/5 dark:bg-white/5 transition-all active-scale group"
           >
-            <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-black/10 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 shadow-xl group-hover:scale-110 transition-transform">
+            <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-black/10 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:scale-[1.02] transition-transform">
               <LayoutGrid size={24} />
             </div>
             <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest font-sans">
@@ -213,10 +213,10 @@ const WalletScreen = () => {
       {showTopUp && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-md"
+            className="absolute inset-0 bg-black/60"
             onClick={() => setShowTopUp(false)}
           ></div>
-          <div className="bg-slate-50 dark:bg-slate-950 w-full sm:w-[400px] rounded-t-[3rem] sm:rounded-3xl border border-black/10 dark:border-white/10 relative z-10 animate-slide-up p-8 shadow-2xl">
+          <div className="bg-slate-50 dark:bg-slate-950 w-full sm:w-[400px] rounded-t-[3rem] sm:rounded-xl border border-black/10 dark:border-white/10 relative z-10 animate-slide-up p-8">
             <div className="w-12 h-1.5 bg-black/10 dark:bg-white/10 rounded-full mx-auto mb-6 sm:hidden"></div>
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-2xl font-black text-slate-900 dark:text-white font-sans uppercase tracking-tighter">

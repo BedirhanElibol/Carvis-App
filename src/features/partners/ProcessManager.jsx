@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+﻿import React, { useState, useRef } from "react";
 import { Camera, CheckCircle2, ChevronRight, ClipboardList, Clock, Loader2, Lock, Plus, Search, ShieldCheck, Wrench } from "lucide-react";
 import { EscrowService } from "../../services/EscrowService";
 import { supabase } from "../../supabaseClient";
@@ -163,7 +163,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
   if (currentStatus === "pending_approval") {
     return (
       <div className="bg-primary-500/10 border border-primary-500/20 p-8 rounded-[2rem] flex flex-col items-center justify-center gap-4 text-primary-400 group">
-        <div className="w-16 h-16 rounded-3xl bg-primary-950 flex items-center justify-center border border-primary-500/20 shadow-2xl">
+        <div className="w-16 h-16 rounded-xl bg-primary-950 flex items-center justify-center border border-primary-500/20">
           <Clock size={32} className="animate-pulse" />
         </div>
         <div className="text-center">
@@ -181,7 +181,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
   if (currentStatus === "completed") {
     return (
       <div className="bg-emerald-500/10 border border-emerald-500/20 p-8 rounded-[2rem] flex flex-col items-center justify-center gap-4 text-teal-400 group">
-        <div className="w-16 h-16 rounded-3xl bg-emerald-950 flex items-center justify-center border border-emerald-500/20 shadow-2xl">
+        <div className="w-16 h-16 rounded-xl bg-emerald-950 flex items-center justify-center border border-emerald-500/20">
           <CheckCircle2 size={32} />
         </div>
         <div className="text-center">
@@ -197,7 +197,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-900/50 border border-black/10 dark:border-white/10 p-6 rounded-[2rem] backdrop-blur-3xl">
+    <div className="bg-white dark:bg-slate-900/50 border border-black/10 dark:border-white/10 p-6 rounded-[2rem]">
       <div className="flex justify-between items-start mb-6">
         <div className="flex gap-4">
           <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 flex items-center justify-center text-primary-400">
@@ -254,7 +254,7 @@ const ProcessManager = ({ currentStatus, onUpdateStatus, orderId }) => {
         <button
           onClick={handleNextStep}
           disabled={uploading}
-          className="flex flex-col items-center justify-center gap-2 py-4 bg-gradient-to-br from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-primary-900/40 active-scale disabled:opacity-50 font-sans"
+          className="flex flex-col items-center justify-center gap-2 py-4 bg-gradient-to-br from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-primary-900/40 active-scale disabled:opacity-50 font-sans"
         >
           {uploading ? (
             <Loader2 size={20} className="animate-spin" />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import { Activity, Banknote, Bot, Camera, ChevronLeft, ChevronRight, Clock, Eye, Lightbulb, Mic, Package, Send, ShieldAlert, Sparkles, Trash2, Wrench } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useAI } from "../../context/AIContext";
@@ -15,8 +15,8 @@ const DamageAnalysisCard = ({ data, vehicleInfo, onFindMechanic, onFindParts }) 
   return (
     <div className="relative group overflow-hidden">
       {/* Holographic Border Glow */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-primary-600 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-      <div className="relative glass-card border border-black/10 dark:border-white/10 bg-white dark:bg-slate-900/90 p-8 rounded-[2.5rem] space-y-6 shadow-2xl backdrop-blur-3xl">
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-primary-600 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+      <div className="relative glass-card border border-black/10 dark:border-white/10 bg-white dark:bg-slate-900/90 p-8 rounded-xl space-y-6">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-4">
             <div className="bg-gradient-to-br from-red-500 to-primary-600 p-3 rounded-2xl shadow-lg shadow-red-900/40">
@@ -112,7 +112,7 @@ const DamageAnalysisCard = ({ data, vehicleInfo, onFindMechanic, onFindParts }) 
           </button>
           <button
             onClick={onFindMechanic}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-xl shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active-scale shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans"
           >
             USTA ÇAĞIR <ChevronRight size={14} />
           </button>
@@ -168,11 +168,11 @@ const AIChatScreen = () => {
   return (
     <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-950 relative overflow-hidden animate-fade-in font-sans">
       {/* Background elements */}
-      <div className="absolute top-[10%] right-[-10%] w-[60%] h-[60%] bg-primary-600/5 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-[-5%] w-[400px] h-[400px] bg-accent-600/5 rounded-full blur-[100px] pointer-events-none"></div>
+      
+      
 
       {/* Header */}
-      <div className="glass-card px-6 py-7 border-b border-black/5 dark:border-white/5 sticky top-0 z-20 flex justify-between items-center backdrop-blur-3xl shadow-xl">
+      <div className="glass-card px-6 py-7 border-b border-black/5 dark:border-white/5 sticky top-0 z-20 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
@@ -183,7 +183,7 @@ const AIChatScreen = () => {
           <div className="flex items-center gap-4">
             <div className="relative">
               <div className="absolute inset-0 bg-primary-500 blur-xl rounded-full opacity-40 animate-pulse"></div>
-              <div className="relative bg-gradient-to-br from-primary-400 to-primary-600 p-3.5 rounded-2xl shadow-2xl border border-black/10 dark:border-white/10 group overflow-hidden">
+              <div className="relative bg-gradient-to-br from-primary-400 to-primary-600 p-3.5 rounded-2xl border border-black/10 dark:border-white/10 group overflow-hidden">
                 <Sparkles
                   size={22}
                   className="text-slate-900 dark:text-white group-hover:rotate-12 transition-transform"
@@ -204,7 +204,7 @@ const AIChatScreen = () => {
                 </Badge>
               </div>
               <div className="flex items-center gap-1.5 mt-2">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full shadow-xl"></span>
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
                 <p className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest font-sans">
                   {currentVehicle
                     ? `${currentVehicle.make} ${currentVehicle.model} BAĞLI`
@@ -219,7 +219,7 @@ const AIChatScreen = () => {
           <button
             onClick={() => setShowAudioAnalyzer(!showAudioAnalyzer)}
             className={cn(
-              "p-3 rounded-2xl transition-all border active-scale shadow-xl font-black text-[10px] flex items-center gap-2 font-sans",
+              "p-3 rounded-2xl transition-all border active-scale font-black text-[10px] flex items-center gap-2 font-sans",
               showAudioAnalyzer
                 ? "bg-primary-600 text-slate-900 dark:text-white border-primary-500 shadow-primary-900/40"
                 : "glass-card text-slate-500 border-black/10 dark:border-white/10 hover:text-slate-900 dark:text-white",
@@ -252,10 +252,10 @@ const AIChatScreen = () => {
       </AnimatePresence>
 
       {/* Deep Scan Entry Point */}
-      <div className="mx-6 mt-6 bg-white dark:bg-slate-900/60 border border-black/5 dark:border-white/5 rounded-[2rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6 z-10 group hover:border-primary-500/30 transition-all shadow-2xl backdrop-blur-3xl relative overflow-hidden">
+      <div className="mx-6 mt-6 bg-white dark:bg-slate-900/60 border border-black/5 dark:border-white/5 rounded-[2rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6 z-10 group hover:border-primary-500/30 transition-all relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div className="flex items-center gap-5">
-          <div className="bg-primary-500/10 p-4 rounded-2xl text-primary-400 group-hover:scale-110 transition-transform border border-primary-500/20 shadow-inner">
+          <div className="bg-primary-500/10 p-4 rounded-2xl text-primary-400 group-hover:scale-[1.02] transition-transform border border-primary-500/20 shadow-inner">
             <Camera size={26} />
           </div>
           <div>
@@ -272,7 +272,7 @@ const AIChatScreen = () => {
         </div>
         <button
           onClick={handleImageUpload}
-          className="w-full md:w-auto bg-white text-black px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-[0.2em] shadow-2xl active-scale hover:bg-primary-500 hover:text-slate-900 dark:text-white transition-all font-sans"
+          className="w-full md:w-auto bg-white text-black px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-[0.2em] active-scale hover:bg-primary-500 hover:text-slate-900 dark:text-white transition-all font-sans"
         >
           TARAMAYA BAŞLA
         </button>
@@ -302,16 +302,16 @@ const AIChatScreen = () => {
               className={`max-w-[92%] ${m.type === "analysis" ? "w-full" : ""}`}
             >
               {m.type === "image" ? (
-                <div className="relative rounded-[3rem] overflow-hidden border-8 border-black/5 dark:border-white/5 shadow-2xl group">
+                <div className="relative rounded-[3rem] overflow-hidden border-8 border-black/5 dark:border-white/5 group">
                   <img
                     src={m.imageUrl}
                     alt="Damage"
-                    className="max-w-full h-80 object-cover w-full scale-105 group-hover:scale-110 transition-transform duration-1000"
+                    className="max-w-full h-80 object-cover w-full scale-105 group-hover:scale-[1.02] transition-transform duration-1000"
                   />
                   {isTyping && (
                     <div className="absolute inset-0 pointer-events-none">
                       <div className="absolute inset-0 bg-primary-500/20 animate-pulse"></div>
-                      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-white to-transparent shadow-xl animate-scan z-10"></div>
+                      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-white to-transparent animate-scan z-10"></div>
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.6)_100%)]"></div>
                     </div>
                   )}
@@ -327,10 +327,10 @@ const AIChatScreen = () => {
                 />
               ) : (
                 <div
-                  className={`p-6 rounded-[2.5rem] text-sm shadow-2xl relative border ${
+                  className={`p-6 rounded-xl text-sm relative border ${
                     m.sender === "user"
                       ? "bg-gradient-to-br from-primary-600 to-primary-700 text-slate-900 dark:text-white rounded-tr-none border-primary-500 shadow-primary-900/30"
-                      : "glass-card border-black/5 dark:border-white/5 text-slate-800 dark:text-slate-100 rounded-tl-none backdrop-blur-3xl"
+                      : "glass-card border-black/5 dark:border-white/5 text-slate-800 dark:text-slate-100 rounded-tl-none"
                   }`}
                 >
                   <p className="leading-relaxed font-bold tracking-tight text-base font-sans">
@@ -352,7 +352,7 @@ const AIChatScreen = () => {
 
         {isTyping && (
           <div className="flex justify-start animate-in fade-in">
-            <div className="glass-card border border-black/10 dark:border-white/10 p-6 rounded-[2rem] rounded-tl-none flex items-center gap-5 shadow-2xl backdrop-blur-3xl bg-white dark:bg-slate-900/40">
+            <div className="glass-card border border-black/10 dark:border-white/10 p-6 rounded-[2rem] rounded-tl-none flex items-center gap-5 bg-white dark:bg-slate-900/40">
               <div className="flex gap-2">
                 <motion.div
                   animate={{ scale: [1, 1.5, 1] }}
@@ -388,7 +388,7 @@ const AIChatScreen = () => {
       </div>
 
       {/* Input Overlay */}
-      <div className="p-6 glass-card border-t border-black/5 dark:border-white/5 absolute bottom-0 w-full backdrop-blur-3xl shadow-xl z-20 pb-12">
+      <div className="p-6 glass-card border-t border-black/5 dark:border-white/5 absolute bottom-0 w-full z-20 pb-12">
         {/* Suggestions */}
         <div className="flex gap-3 overflow-x-auto pb-6 no-scrollbar">
           {messages.length < 3 &&
@@ -404,7 +404,7 @@ const AIChatScreen = () => {
         </div>
 
         <div className="flex gap-4 items-center">
-          <div className="flex-1 bg-slate-50 dark:bg-slate-950 border border-black/5 dark:border-white/5 rounded-[2.5rem] flex items-center px-8 py-1.5 hover:border-primary-500/30 transition-all shadow-inner group">
+          <div className="flex-1 bg-slate-50 dark:bg-slate-950 border border-black/5 dark:border-white/5 rounded-xl flex items-center px-8 py-1.5 hover:border-primary-500/30 transition-all shadow-inner group">
             <input
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
@@ -423,7 +423,7 @@ const AIChatScreen = () => {
             onClick={() => handleSend()}
             disabled={!inputText.trim() || isTyping}
             className={cn(
-              "w-16 h-16 rounded-2xl transition-all shadow-2xl active-scale flex items-center justify-center group font-sans",
+              "w-16 h-16 rounded-2xl transition-all active-scale flex items-center justify-center group font-sans",
               !inputText.trim() || isTyping
                 ? "bg-white dark:bg-slate-900 text-slate-800"
                 : "bg-gradient-to-br from-primary-500 to-primary-600 text-slate-900 dark:text-white shadow-primary-900/50",

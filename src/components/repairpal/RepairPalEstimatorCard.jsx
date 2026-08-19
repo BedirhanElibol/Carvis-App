@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { ShieldCheck, Wrench, Package, Clock, CheckCircle2, Award } from "lucide-react";
 import { calculateRepairPalEstimate } from "../../utils/repairPalEngine";
 
@@ -30,7 +30,7 @@ const RepairPalEstimatorCard = ({
   const { labor, parts, total } = estimate;
 
   return (
-    <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 text-white space-y-6 shadow-2xl">
+    <div className="bg-slate-950 border border-slate-800 rounded-xl p-6 text-white space-y-6">
       {/* RepairPal Official Header & Certified Stamp */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div className="flex items-center gap-3">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Activity, Database, Package, Server, TrendingUp, Users } from "lucide-react";
  
 import { motion } from "framer-motion";
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
           </p>
         </div>
         <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 p-2 px-4 rounded-2xl">
-          <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-xl"></span>
+          <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
           <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest font-sans">
             Sistem Operasyonel
           </span>
@@ -134,11 +134,11 @@ const AdminDashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20 transition-all flex flex-col justify-between h-40 group shadow-xl"
+            className="glass-card p-6 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20 transition-all flex flex-col justify-between h-40 group"
           >
             <div className="flex justify-between items-start">
               <div
-                className={`p-3 rounded-xl ${stat.bg} group-hover:scale-110 transition-transform`}
+                className={`p-3 rounded-xl ${stat.bg} group-hover:scale-[1.02] transition-transform`}
               >
                 {(() => {
                   const Icon = stat.icon;
@@ -165,7 +165,7 @@ const AdminDashboard = () => {
 
       {/* System Health Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="glass-card p-8 rounded-[2.5rem] border border-black/5 dark:border-white/5 shadow-2xl">
+        <div className="glass-card p-8 rounded-xl border border-black/5 dark:border-white/5">
           <h3 className="font-black text-slate-900 dark:text-white mb-6 flex items-center gap-3 font-sans uppercase tracking-widest text-xs">
             <Server size={20} className="text-slate-500 dark:text-slate-400" /> Sunucu Performansı
           </h3>
@@ -214,7 +214,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="glass-card p-8 rounded-[2.5rem] border border-black/5 dark:border-white/5 flex flex-col justify-center items-center text-center shadow-2xl bg-gradient-to-br from-slate-900 to-black">
+        <div className="glass-card p-8 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-center items-center text-center bg-gradient-to-br from-slate-900 to-black">
           <div className="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center mb-6 relative border border-emerald-500/20">
             <Activity size={40} className="text-emerald-500" />
             <span className="absolute top-0 right-0 w-4 h-4 bg-emerald-500 rounded-full animate-ping"></span>

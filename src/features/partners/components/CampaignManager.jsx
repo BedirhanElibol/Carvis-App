@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { Plus, Tag, Trash2, Eye, EyeOff, RefreshCw, Sparkles } from 'lucide-react';
 import { supabase } from '../../../supabaseClient';
 import { useAuth } from '../../../context/AuthContext';
@@ -114,7 +114,7 @@ const CampaignManager = () => {
 
       {/* Create Form */}
       {showForm && (
-        <form onSubmit={handleSubmit} className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 space-y-4 animate-in slide-in-from-top-2">
+        <form onSubmit={handleSubmit} className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 space-y-4 animate-in slide-in-from-top-2">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-primary-500/10 rounded-xl border border-primary-500/20">
               <Sparkles size={18} className="text-primary-400" />
@@ -206,7 +206,7 @@ const CampaignManager = () => {
           <RefreshCw size={24} className="animate-spin text-primary-400" />
         </div>
       ) : campaigns.length === 0 ? (
-        <div className="text-center py-12 glass-card rounded-3xl border border-dashed border-black/10 dark:border-white/10">
+        <div className="text-center py-12 glass-card rounded-xl border border-dashed border-black/10 dark:border-white/10">
           <Tag size={32} className="mx-auto text-slate-400 mb-3" />
           <p className="font-bold text-slate-500">Henüz kampanya yok</p>
           <p className="text-sm text-slate-400 mt-1">İlk kampanyanızı oluşturun, müşterileriniz görsün!</p>

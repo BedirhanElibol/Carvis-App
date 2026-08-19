@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { ShieldCheck, X } from "lucide-react";
 import { LEGAL_TEXTS } from "./legalTexts";
 
@@ -14,11 +14,11 @@ const LegalViewModal = ({ type, isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div 
-        className="absolute inset-0 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-md" 
+        className="absolute inset-0 bg-slate-50 dark:bg-slate-950/80" 
         onClick={onClose}
       ></div>
       
-      <div className="glass-card w-full max-w-2xl max-h-[80vh] rounded-[2.5rem] overflow-hidden flex flex-col relative animate-slide-up border border-black/10 dark:border-white/10">
+      <div className="glass-card w-full max-w-2xl max-h-[80vh] rounded-xl overflow-hidden flex flex-col relative animate-slide-up border border-black/10 dark:border-white/10">
         {/* Header */}
         <div className="p-6 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-black/5 dark:bg-white/5">
           <div className="flex items-center gap-3">

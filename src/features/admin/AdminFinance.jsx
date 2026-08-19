@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+﻿import React, { useState, useEffect, useCallback } from "react";
 import { Activity, Clock, Percent, RefreshCcw, TrendingUp } from "lucide-react";
  
 import { motion } from "framer-motion";
@@ -145,7 +145,7 @@ const AdminFinance = () => {
         ))}
       </div>
 
-      <div className="glass-card rounded-[2.5rem] border border-black/5 dark:border-white/5 overflow-hidden shadow-2xl">
+      <div className="glass-card rounded-xl border border-black/5 dark:border-white/5 overflow-hidden">
         <div className="p-6 border-b border-black/5 dark:border-white/5 flex justify-between items-center bg-black/5 dark:bg-white/5">
           <h3 className="font-black text-slate-900 dark:text-white font-sans uppercase tracking-widest text-xs">
             Son İşlemler

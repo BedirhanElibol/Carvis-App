@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Tag, Plus, X, AlertCircle, Percent, Calendar } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -131,7 +131,7 @@ export default function PromotionsView({ currentUser }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Coupons List */}
-        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 space-y-6">
+        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-6 space-y-6">
           <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
             <Percent size={18} className="text-emerald-500" /> Aktif Kuponlar
           </h3>
@@ -160,7 +160,7 @@ export default function PromotionsView({ currentUser }) {
         </div>
 
         {/* Campaigns List */}
-        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 space-y-6">
+        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-6 space-y-6">
           <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
             <Tag size={18} className="text-blue-500" /> Mağaza Kampanyaları
           </h3>
@@ -190,8 +190,8 @@ export default function PromotionsView({ currentUser }) {
 
       {/* Modal: Kupon Ekle */}
       {isCouponModalOpen && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-xl p-6 relative">
             <button onClick={() => setIsCouponModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
               <X size={20} />
             </button>
@@ -248,8 +248,8 @@ export default function PromotionsView({ currentUser }) {
 
       {/* Modal: Kampanya Ekle */}
       {isCampaignModalOpen && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-xl p-6 relative">
             <button onClick={() => setIsCampaignModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
               <X size={20} />
             </button>

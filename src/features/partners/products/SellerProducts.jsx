@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { BookOpen, DollarSign, Edit2, Filter, Image, Loader2, Package, Plus, Save, Search, Trash2, X } from "lucide-react";
 import { useSeller } from "../../../context/SellerContext";
 import ProductCatalogModal from "./ProductCatalogModal";
@@ -103,7 +103,7 @@ const SellerProducts = () => {
           </button>
           <button
             onClick={() => setShowModal(true)}
-            className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white px-5 py-3 rounded-xl font-bold text-sm shadow-xl active-scale flex items-center gap-2"
+            className="bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white px-5 py-3 rounded-xl font-bold text-sm active-scale flex items-center gap-2"
           >
             <Plus size={18} /> YENİ İLAN
           </button>
@@ -214,8 +214,8 @@ const SellerProducts = () => {
 
       {/* Add Product Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-in zoom-in-95">
+        <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 z-[60] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-xl border border-black/10 dark:border-white/10 overflow-hidden animate-in zoom-in-95">
             <div className="p-6 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-black/5 dark:bg-white/5">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Package className="text-primary-500" /> Yeni İlan Oluştur
@@ -392,7 +392,7 @@ const SellerProducts = () => {
               <button
                 type="submit"
                 disabled={addingProduct}
-                className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl active-scale flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {addingProduct ? (
                   <>

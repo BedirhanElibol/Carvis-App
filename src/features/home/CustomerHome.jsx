@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+﻿import React, { useState, useMemo, useEffect } from "react";
 import { Activity, Zap, AlertCircle, AlertTriangle, Calendar, CalendarDays, Car, CheckCircle, ChevronRight, ClipboardList, Disc, Droplets, FileText, Flame, Fuel, HardDrive, Heart, HeartHandshake, Key, Layers, Loader2, Map, MapPin, Maximize, Navigation, Package, Plus, RefreshCw, Search, ShieldAlert, ShieldCheck, ShoppingBag, Star, TrendingDown, Truck, User, UserCheck, Video, Wind, Wrench, X, Clock, Lightbulb, TrendingUp } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { Badge } from "../../components/Core";
@@ -360,8 +360,8 @@ const CustomerHome = () => {
       
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-0 dark:opacity-20">
-        <div className="absolute top-[5%] right-[-5%] w-[700px] h-[700px] bg-sky-600/30 rounded-full blur-[140px]"></div>
-        <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-[120px]"></div>
+        
+        
       </div>
 
       {/* Grid overlay */}
@@ -377,7 +377,7 @@ const CustomerHome = () => {
       ></div>
 
       {/* TOP COMPACT HEADER */}
-      <div className="px-4 sm:px-6 py-3 sm:py-4.5 flex items-center justify-between border-b border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[#030712]/70 backdrop-blur-2xl sticky top-0 z-30 shadow-sm dark:shadow-lg dark:shadow-cyan-500/5">
+      <div className="px-4 sm:px-6 py-3 sm:py-4.5 flex items-center justify-between border-b border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[#030712]/70 sticky top-0 z-30 shadow-sm dark:shadow-lg dark:shadow-cyan-500/5">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-white/5 shadow-sm dark:shadow-xl border border-slate-200 dark:border-white/10 flex items-center justify-center">
             <Layers size={18} className="text-cyan-500 dark:text-cyan-400" />
@@ -466,7 +466,7 @@ const CustomerHome = () => {
         
         {/* 1. TOP MOST PRIMARY CARD: VEHICLE COCKPIT OR WELCOME BANNER */}
         {activeVehicle ? (
-          <div className="bg-white dark:bg-[#0a0f24]/80 rounded-[2.5rem] p-6 sm:p-7 border border-slate-200 dark:border-white/10 shadow-xl relative overflow-hidden backdrop-blur-2xl">
+          <div className="bg-white dark:bg-[#0a0f24]/80 rounded-xl p-6 sm:p-7 border border-slate-200 dark:border-white/10 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 dark:bg-white/5 rounded-full blur-3xl pointer-events-none -mr-12 -mt-12"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20"></div>
             
@@ -564,7 +564,7 @@ const CustomerHome = () => {
           </div>
         ) : (
           /* WELCOME & ADD VEHICLE BANNER (TOP #1 POSITION - CLASSY LEFT-ALIGNED) */
-          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0a0f24] text-white border border-cyan-500/20 rounded-[2.5rem] p-7 sm:p-9 text-left relative overflow-hidden group shadow-2xl backdrop-blur-md">
+          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#0a0f24] text-white border border-cyan-500/20 rounded-xl p-7 sm:p-9 text-left relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -mr-16 -mt-16"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none -ml-16 -mb-16"></div>
 
@@ -589,7 +589,7 @@ const CustomerHome = () => {
                     setShowVehicleSelector(true);
                   }
                 }}
-                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 px-8 py-4.5 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-cyan-500/20 cursor-pointer flex items-center justify-center gap-2 shrink-0 border border-cyan-300/30"
+                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 px-8 py-4.5 rounded-2xl text-xs font-mono font-black uppercase tracking-widest active-scale transition-all shadow-cyan-500/20 cursor-pointer flex items-center justify-center gap-2 shrink-0 border border-cyan-300/30"
               >
                 <Plus size={16} /> {isGuest ? t.loginOrRegister : "GARAJA ARAÇ EKLE"}
               </button>
@@ -609,7 +609,7 @@ const CustomerHome = () => {
                   setShowIssueModal(true);
                 });
               }}
-              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-500/30 via-sky-500/20 to-teal-500/30 border-2 border-cyan-400 text-left transition-all active-scale group cursor-pointer shadow-xl shadow-cyan-500/20 relative overflow-hidden ring-2 ring-cyan-400/30"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-xl bg-gradient-to-br from-cyan-500/30 via-sky-500/20 to-teal-500/30 border-2 border-cyan-400 text-left transition-all active-scale group cursor-pointer shadow-cyan-500/20 relative overflow-hidden ring-2 ring-cyan-400/30"
             >
               <div className="absolute top-1 right-1.5 px-1.5 py-0.5 rounded-full bg-cyan-400 text-slate-950 text-[7px] font-black uppercase tracking-wider">Öne Çıkan</div>
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-cyan-400 text-slate-950 flex items-center justify-center mb-2 sm:mb-2.5 font-bold shadow-md shadow-cyan-400/30">
@@ -622,7 +622,7 @@ const CustomerHome = () => {
 
             <button
               onClick={() => handleProtectedAction(() => navigate("/app/fuel"))}
-              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-500/25 to-yellow-500/15 border-2 border-amber-400 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-amber-500/15 relative overflow-hidden ring-2 ring-amber-400/30"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-xl bg-gradient-to-br from-amber-500/25 to-yellow-500/15 border-2 border-amber-400 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-amber-500/15 relative overflow-hidden ring-2 ring-amber-400/30"
             >
               <div className="absolute top-1 right-1.5 px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[7px] font-black uppercase tracking-wider">CANLI FİYAT</div>
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center mb-2 sm:mb-2.5 font-bold shadow-md shadow-amber-400/30">
@@ -635,7 +635,7 @@ const CustomerHome = () => {
 
             <button
               onClick={() => handleProtectedAction(() => navigate("/app/mechanics"))}
-              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-sky-500/25 to-blue-500/15 border-2 border-sky-400/80 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-sky-500/15 relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-xl bg-gradient-to-br from-sky-500/25 to-blue-500/15 border-2 border-sky-400/80 text-left transition-all active-scale group cursor-pointer shadow-lg shadow-sky-500/15 relative overflow-hidden"
             >
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-sky-500/30 text-sky-600 dark:text-sky-300 flex items-center justify-center mb-2 sm:mb-2.5 border border-sky-400/40">
                 <Wrench size={16} className="sm:hidden" />
@@ -652,7 +652,7 @@ const CustomerHome = () => {
                   setShowVehiclePassport(true);
                 });
               }}
-              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-indigo-500/10 border border-indigo-500/30 hover:border-indigo-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-xl bg-indigo-500/10 border border-indigo-500/30 hover:border-indigo-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-indigo-500/20 text-indigo-500 dark:text-indigo-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-indigo-500/30">
                 <FileText size={16} className="sm:hidden" />
@@ -669,7 +669,7 @@ const CustomerHome = () => {
                   setShowOBDModal(true);
                 });
               }}
-              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-teal-500/10 border border-teal-500/30 hover:border-teal-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-xl bg-teal-500/10 border border-teal-500/30 hover:border-teal-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-teal-500/20 text-teal-500 dark:text-teal-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-teal-500/30">
                 <Activity size={16} className="sm:hidden" />
@@ -681,7 +681,7 @@ const CustomerHome = () => {
 
             <button
               onClick={() => handleProtectedAction(() => navigate("/quotes"))}
-              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
+              className="p-3.5 sm:p-4 rounded-2xl sm:rounded-xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all active-scale group cursor-pointer shadow-lg relative overflow-hidden"
             >
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mb-2 sm:mb-2.5 border border-emerald-500/30">
                 <TrendingUp size={16} className="sm:hidden" />
@@ -702,7 +702,7 @@ const CustomerHome = () => {
 
           {/* Proactive Urgent Vehicle Status Alert */}
           {activeVehicle && daysUntilInspection !== null && (
-            <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900/90 border border-cyan-200 dark:border-cyan-500/30 shadow-sm dark:shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="p-3 sm:p-4 rounded-2xl sm:rounded-xl bg-white dark:bg-slate-900/90 border border-cyan-200 dark:border-cyan-500/30 shadow-sm dark:shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 flex items-center justify-center font-black text-sm shrink-0 border border-cyan-500/30 font-mono">
                   <CalendarDays size={18} />
@@ -764,7 +764,7 @@ const CustomerHome = () => {
               <div className="space-y-4">
                 {/* 1. FEATURED DIGITAL PASSPORT BANNER */}
                 <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-400 rounded-[2.5rem] blur opacity-50 group-hover:opacity-80 transition duration-500 animate-pulse"></div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-400 rounded-xl blur opacity-50 group-hover:opacity-80 transition duration-500 animate-pulse"></div>
                   <button
                     onClick={() => {
                       handleProtectedAction(() => {
@@ -772,23 +772,23 @@ const CustomerHome = () => {
                         setShowVehiclePassport(true);
                       });
                     }}
-                    className="relative w-full bg-white dark:bg-[#07131e] border-2 border-emerald-400 dark:border-emerald-400/90 hover:border-emerald-300 rounded-[2.5rem] p-5 sm:p-7 shadow-2xl shadow-emerald-500/25 cursor-pointer text-left overflow-hidden active-scale transition-all"
+                    className="relative w-full bg-white dark:bg-[#07131e] border-2 border-emerald-400 dark:border-emerald-400/90 hover:border-emerald-300 rounded-xl p-5 sm:p-7 shadow-emerald-500/25 cursor-pointer text-left overflow-hidden active-scale transition-all"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-cyan-500/10 pointer-events-none"></div>
                     <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none -mr-8 -mt-8 group-hover:bg-emerald-400/30 transition-colors"></div>
                     <div className="absolute top-3.5 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 font-mono font-black text-[9px] uppercase tracking-widest shadow-md hidden sm:block">
-                      🛡️ EGM & TRAMER ONAYLI KAYIT
+                      EGM & TRAMER ONAYLI KAYIT
                     </div>
                     
                     <div className="flex items-center justify-between relative z-10">
                       <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-tr from-emerald-400 to-teal-400 text-slate-950 rounded-2xl flex items-center justify-center backdrop-blur-md border border-emerald-300 shrink-0 shadow-lg shadow-emerald-400/30">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-tr from-emerald-400 to-teal-400 text-slate-950 rounded-2xl flex items-center justify-center border border-emerald-300 shrink-0 shadow-lg shadow-emerald-400/30">
                           <ShieldCheck size={30} className="sm:hidden" />
                           <ShieldCheck size={36} className="hidden sm:block" />
                         </div>
                         <div className="font-sans">
                           <span className="inline-block sm:hidden text-[8px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-0.5">
-                            🛡️ EGM & TRAMER ONAYLI KAYIT
+                            EGM & TRAMER ONAYLI KAYIT
                           </span>
                           <h2 className="text-xl sm:text-3xl font-mono font-black tracking-tighter uppercase mb-1 text-slate-900 dark:text-white leading-none">
                             Dijital Araç Pasaportu
@@ -811,11 +811,11 @@ const CustomerHome = () => {
                       setShowIssueModal(true);
                     });
                   }}
-                  className="w-full bg-white dark:bg-[#0a0f24]/90 border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 rounded-[2.5rem] p-5 sm:p-6 shadow-xl dark:shadow-2xl shadow-cyan-500/10 cursor-pointer text-left overflow-hidden active-scale transition-all group relative"
+                  className="w-full bg-white dark:bg-[#0a0f24]/90 border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 rounded-xl p-5 sm:p-6 shadow-cyan-500/10 cursor-pointer text-left overflow-hidden active-scale transition-all group relative"
                 >
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 bg-cyan-500/10 dark:bg-white/5 rounded-2xl flex items-center justify-center backdrop-blur-md border border-cyan-400/30 shrink-0">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 bg-cyan-500/10 dark:bg-white/5 rounded-2xl flex items-center justify-center border border-cyan-400/30 shrink-0">
                         <Wrench size={24} className="text-cyan-500 dark:text-cyan-400" />
                       </div>
                       <div className="font-sans">
@@ -852,7 +852,7 @@ const CustomerHome = () => {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                 <button
                   onClick={() => setShowVehicleSelector(true)}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden cursor-pointer"
                 >
                   <div className="bg-cyan-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400">
                     <Car size={20} className="sm:hidden" />
@@ -868,7 +868,7 @@ const CustomerHome = () => {
 
                 <button
                   onClick={() => setShowServiceHistory(true)}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden cursor-pointer"
                 >
                   <div className="bg-sky-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-sky-500/20 text-sky-600 dark:text-sky-400">
                     <ClipboardList size={20} className="sm:hidden" />
@@ -884,7 +884,7 @@ const CustomerHome = () => {
 
                 <button
                   onClick={() => navigate("/quotes")}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-blue-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-blue-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden cursor-pointer"
                 >
                   <div className="bg-blue-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-blue-500/20 text-blue-600 dark:text-blue-400">
                     <Package size={20} className="sm:hidden" />
@@ -900,7 +900,7 @@ const CustomerHome = () => {
 
                 <button
                   onClick={() => navigate("/appointments")}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden cursor-pointer"
                 >
                   <div className="bg-emerald-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
                     <CalendarDays size={20} className="sm:hidden" />
@@ -916,7 +916,7 @@ const CustomerHome = () => {
 
                 <button
                   onClick={() => setShowOBDModal(true)}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-400 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-400 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden cursor-pointer"
                 >
                   <div className="bg-cyan-500/20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-cyan-500/40 text-cyan-600 dark:text-cyan-400">
                     <Activity size={20} className="animate-pulse sm:hidden" />
@@ -932,7 +932,7 @@ const CustomerHome = () => {
 
                 <button
                   onClick={() => navigate("/orders")}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-amber-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-amber-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden cursor-pointer"
                 >
                   <div className="bg-amber-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-amber-500/20 text-amber-600 dark:text-amber-400">
                     <ShoppingBag size={20} className="sm:hidden" />
@@ -948,7 +948,7 @@ const CustomerHome = () => {
 
                 <button
                   onClick={() => navigate("/app/fuel")}
-                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-amber-500/30 hover:border-amber-400 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-amber-500/30 hover:border-amber-400 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden cursor-pointer"
                 >
                   <div className="bg-amber-500/20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-amber-500/40 text-amber-600 dark:text-amber-400">
                     <Fuel size={20} className="sm:hidden" />
@@ -964,7 +964,7 @@ const CustomerHome = () => {
 
                 <button
                   onClick={() => navigate("/app/favorites")}
-                  className="col-span-2 sm:col-span-1 bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-rose-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden backdrop-blur-xl cursor-pointer"
+                  className="col-span-2 sm:col-span-1 bg-white dark:bg-[#0a0f24]/80 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 hover:border-rose-500/50 transition-all text-left group shadow-sm dark:shadow-xl active-scale relative overflow-hidden cursor-pointer"
                 >
                   <div className="bg-rose-500/10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-3 border border-rose-500/20 text-rose-600 dark:text-rose-400">
                     <Heart size={20} className="sm:hidden" />
@@ -991,7 +991,7 @@ const CustomerHome = () => {
 
             {/* CHRONOLOGICAL MAINTENANCE TIMELINE */}
             {activeVehicle && (
-              <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 space-y-4 backdrop-blur-xl shadow-sm dark:shadow-xl">
+              <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-xl p-6 space-y-4 shadow-sm dark:shadow-xl">
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="font-mono font-black text-base uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
                     <Calendar size={18} className="text-cyan-500 dark:text-cyan-400" /> {t.upcomingTasks}
@@ -1090,7 +1090,7 @@ const CustomerHome = () => {
 
             {/* COMPATIBLE SPARE PARTS RECOMMENDED DEALS */}
             {activeVehicle && (compatibleParts || []).length > 0 && (
-              <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 space-y-5 backdrop-blur-md shadow-sm dark:shadow-xl">
+              <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-xl p-6 space-y-5 shadow-sm dark:shadow-xl">
                 <div className="flex justify-between items-center border-b border-slate-200 dark:border-cyan-500/10 pb-4">
                   <div>
                     <h3 className="font-black text-base uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
@@ -1112,7 +1112,7 @@ const CustomerHome = () => {
                   {(compatibleParts || []).map((part) => (
                     <div key={part.id} className="bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-cyan-500/10 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-300 dark:hover:border-white/10 transition-all shadow-sm dark:shadow-xl group">
                       <div className="relative rounded-xl overflow-hidden aspect-video bg-slate-100 dark:bg-[#0a0f24] mb-3 border border-slate-200 dark:border-cyan-500/10">
-                        <img src={part.image} alt={part.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 dark:opacity-80 group-hover:opacity-100" />
+                        <img src={part.image} alt={part.name} className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500 opacity-90 dark:opacity-80 group-hover:opacity-100" />
                         <span className="absolute top-2 left-2 px-2 py-0.5 rounded-lg bg-cyan-500 text-[8px] font-black uppercase text-white dark:text-[#0a0f24] tracking-widest shadow-md">
                           {part.badge}
                         </span>
@@ -1209,7 +1209,7 @@ const CustomerHome = () => {
             )}
 
             {/* REAL-TIME FUEL PRICES WIDGET */}
-            <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 backdrop-blur-xl shadow-sm dark:shadow-xl space-y-4">
+            <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-xl p-6 shadow-sm dark:shadow-xl space-y-4">
               <div className="flex justify-between items-start">
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
@@ -1252,21 +1252,21 @@ const CustomerHome = () => {
                 <div className="bg-slate-50 dark:bg-black/40 shadow-sm dark:shadow-xl border border-slate-200 dark:border-cyan-500/10 hover:border-slate-300 dark:hover:border-white/10 p-3.5 rounded-[1.5rem] flex flex-col items-center justify-center relative overflow-hidden group transition-all">
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <span className="text-[9px] font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500/60 mb-1">{t.unleaded95}</span>
-                  <span className="text-lg font-mono font-black text-slate-900 dark:text-white group-hover:scale-110 transition-transform group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
+                  <span className="text-lg font-mono font-black text-slate-900 dark:text-white group-hover:scale-[1.02] transition-transform group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
                     {(fuelPrices[selectedCity]?.benzin && fuelPrices[selectedCity]?.benzin !== "-") ? fuelPrices[selectedCity].benzin : (fuelPrices.istanbul?.benzin || "44.95")} <span className="text-[10px] text-cyan-500/60 dark:text-cyan-500/40">₺/L</span>
                   </span>
                 </div>
                 <div className="bg-slate-50 dark:bg-black/40 shadow-sm dark:shadow-xl border border-slate-200 dark:border-cyan-500/10 hover:border-slate-300 dark:hover:border-white/10 p-3.5 rounded-[1.5rem] flex flex-col items-center justify-center relative overflow-hidden group transition-all">
                   <div className="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <span className="text-[9px] font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500/60 mb-1">{t.diesel}</span>
-                  <span className="text-lg font-mono font-black text-slate-900 dark:text-white group-hover:scale-110 transition-transform group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
+                  <span className="text-lg font-mono font-black text-slate-900 dark:text-white group-hover:scale-[1.02] transition-transform group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
                     {(fuelPrices[selectedCity]?.motorin && fuelPrices[selectedCity]?.motorin !== "-") ? fuelPrices[selectedCity].motorin : (fuelPrices.istanbul?.motorin || "45.40")} <span className="text-[10px] text-cyan-500/60 dark:text-cyan-500/40">₺/L</span>
                   </span>
                 </div>
                 <div className="bg-slate-50 dark:bg-black/40 shadow-sm dark:shadow-xl border border-slate-200 dark:border-cyan-500/10 hover:border-slate-300 dark:hover:border-white/10 p-3.5 rounded-[1.5rem] flex flex-col items-center justify-center relative overflow-hidden group transition-all">
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <span className="text-[9px] font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500/60 mb-1">{t.lpg}</span>
-                  <span className="text-lg font-mono font-black text-slate-900 dark:text-white group-hover:scale-110 transition-transform group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
+                  <span className="text-lg font-mono font-black text-slate-900 dark:text-white group-hover:scale-[1.02] transition-transform group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
                     {(fuelPrices[selectedCity]?.lpg && fuelPrices[selectedCity]?.lpg !== "-") ? fuelPrices[selectedCity].lpg : (fuelPrices.istanbul?.lpg || "22.85")} <span className="text-[10px] text-cyan-500/60 dark:text-cyan-500/40">₺/L</span>
                   </span>
                 </div>
@@ -1310,11 +1310,11 @@ const CustomerHome = () => {
                   <div
                     key={alert.id}
                     onClick={alert.action}
-                    className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 p-4.5 rounded-[1.8rem] transition-all cursor-pointer active-scale relative overflow-hidden group shadow-sm dark:shadow-xl backdrop-blur-md"
+                    className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 hover:border-cyan-400/50 p-4.5 rounded-[1.8rem] transition-all cursor-pointer active-scale relative overflow-hidden group shadow-sm dark:shadow-xl"
                   >
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0 shadow-sm">
-                        <alert.icon size={18} className="text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform" />
+                        <alert.icon size={18} className="text-cyan-600 dark:text-cyan-400 group-hover:scale-[1.02] transition-transform" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-center mb-1">
@@ -1362,7 +1362,7 @@ const CustomerHome = () => {
             </div>
 
             {/* EXPERT AUDIT ASSURANCE */}
-            <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 p-4 sm:p-5 rounded-[2rem] sm:rounded-[2.5rem] flex items-center justify-between gap-3 sm:gap-4">
+            <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 p-4 sm:p-5 rounded-[2rem] sm:rounded-xl flex items-center justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 sm:p-2.5 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-cyan-500 dark:text-cyan-400 shrink-0">
                   <ShieldCheck size={20} />
@@ -1382,7 +1382,7 @@ const CustomerHome = () => {
 
       {/* MODALS & TOUR */}
       {showVehicleSelector && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
           <div className="relative w-full max-w-md">
             <button
               onClick={() => setShowVehicleSelector(false)}

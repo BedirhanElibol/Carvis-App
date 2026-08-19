@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Home, MessageSquare, ShoppingCart, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUI } from "../../context/UIContext";
@@ -39,7 +39,7 @@ export const BottomNav = () => {
           <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/5 via-primary-500/10 to-primary-500/5 blur-xl pointer-events-none rounded-full"></div>
           
           {/* Main Nav Container */}
-          <div className="relative bg-white/90 dark:bg-[#0c101a]/90 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 px-2.5 py-1.5 flex justify-between items-center rounded-full shadow-2xl">
+          <div className="relative bg-white/90 dark:bg-[#0c101a]/90 border border-slate-200/80 dark:border-white/10 px-2.5 py-1.5 flex justify-between items-center rounded-full">
             {tabs.map((tab) => {
               const isActive = location.pathname === tab.id || (tab.id === "/" && location.pathname === "/application/home");
                 

@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Sparkles, TrendingDown, AlertTriangle, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 /**
@@ -19,7 +19,7 @@ const FairPriceGauge = ({ offeredPrice = 0, fairMin = 0, fairMax = 0, categoryNa
 
   if (price < min) {
     rating = "great";
-    label = "🔥 HARİKA FİYAT (FIRSAT)";
+    label = "HARİKA FİYAT (FIRSAT)";
     badgeStyle = "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
     GaugeIcon = Sparkles;
     const discount = Math.round(((avg - price) / avg) * 100);
@@ -37,7 +37,7 @@ const FairPriceGauge = ({ offeredPrice = 0, fairMin = 0, fairMax = 0, categoryNa
   const gaugePercent = Math.min(100, Math.max(0, ((price - (min * 0.7)) / ((max * 1.3) - (min * 0.7))) * 100));
 
   return (
-    <div className="p-4 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-3 text-white">
+    <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-3 text-white">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className={`px-2.5 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider border flex items-center gap-1.5 ${badgeStyle}`}>

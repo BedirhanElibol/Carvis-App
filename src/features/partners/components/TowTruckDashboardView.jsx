@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Truck, AlertTriangle, Navigation, Clock, CheckCircle, Check, Plus, X, AlertCircle } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -75,7 +75,7 @@ export default function TowTruckDashboardView({ currentUser }) {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter glow-orange">Acil Çekici İstasyon Paneli</h1>
+          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter">Acil Çekici İstasyon Paneli</h1>
           <p className="text-slate-400 text-xs mt-1">Havuzdaki çekici çağrıları ve aktif operasyonlarınız.</p>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default function TowTruckDashboardView({ currentUser }) {
           { label: "Mevcut Filo Gücü", value: stats.fleetCapacity, icon: Navigation, color: "text-blue-400", bg: "bg-blue-500/10" },
           { label: "Toplam SOS Hasılatı", value: `₺${stats.earnings.toLocaleString("tr-TR")}`, icon: CheckCircle, color: "text-emerald-400", bg: "bg-emerald-500/10" },
         ].map((s) => (
-          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-3xl flex items-center justify-between shadow-sm hover:border-white/10 transition-all duration-300">
+          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-xl flex items-center justify-between shadow-sm hover:border-white/10 transition-all duration-300">
             <div>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{s.label}</p>
               <h3 className="text-2xl font-mono font-black text-white mt-1.5">{s.value}</h3>
@@ -133,7 +133,7 @@ export default function TowTruckDashboardView({ currentUser }) {
       {activeTab === "active" ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* SOS Emergency Queue */}
-          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Acil Çekici Çağrı Havuzu</h3>
               <span className="bg-red-500/10 text-red-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider animate-pulse">CANLI ACİL SOS</span>
@@ -174,7 +174,7 @@ export default function TowTruckDashboardView({ currentUser }) {
           </div>
 
           {/* Active Towing Assignments */}
-          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Aktif Görevlerim</h3>
               <span className="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">ROTA ÜZERİNDE</span>
@@ -218,7 +218,7 @@ export default function TowTruckDashboardView({ currentUser }) {
         </div>
       ) : (
         /* History View */
-        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Geçmiş Kurtarma Görevleri</h3>
             <span className="bg-slate-500/10 text-slate-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">GEÇMİŞ</span>

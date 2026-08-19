@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
  
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ShieldCheck, ShoppingBag, Zap } from "lucide-react";
@@ -77,7 +77,7 @@ const OnboardingSlides = ({ onComplete }) => {
             className="flex flex-col items-center text-center"
           >
             <div
-              className={`w-32 h-32 rounded-[2.5rem] bg-gradient-to-b ${getSlides(t)[current].bg} flex items-center justify-center mb-12 border border-black/5 dark:border-white/5 shadow-2xl relative`}
+              className={`w-32 h-32 rounded-xl bg-gradient-to-b ${getSlides(t)[current].bg} flex items-center justify-center mb-12 border border-black/5 dark:border-white/5 relative`}
             >
               <div className="absolute inset-0 bg-black/5 dark:bg-white/5 blur-xl rounded-full"></div>
               {(() => {
@@ -119,7 +119,7 @@ const OnboardingSlides = ({ onComplete }) => {
         {/* Next/Finish Button */}
         <button
           onClick={next}
-          className="w-full py-5 bg-white text-black rounded-3xl font-black text-xl tracking-tighter transition-all active:scale-95 hover:shadow-2xl hover:shadow-white/10 flex items-center justify-center gap-2 uppercase"
+          className="w-full py-5 bg-white text-black rounded-xl font-black text-xl tracking-tighter transition-all active:scale-95 hover:shadow-2xl hover:shadow-white/10 flex items-center justify-center gap-2 uppercase"
         >
           {current === getSlides(t).length - 1 ? t.letsStart : t.continueBtn}
           <ChevronRight size={24} />

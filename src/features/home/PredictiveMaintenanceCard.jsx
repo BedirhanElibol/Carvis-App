@@ -22,17 +22,7 @@ const PredictiveMaintenanceCard = ({
   const isWarning = progress > 70;
 
   return (
-    <div className="glass-card rounded-[2.5rem] p-6 border border-black/5 dark:border-white/5 relative overflow-hidden group">
-      {/* Background Glow */}
-      <div
-        className={`absolute top-0 right-0 w-32 h-32 blur-[60px] opacity-20 transition-colors duration-500 ${
-          isCritical
-            ? "bg-red-500"
-            : isWarning
-              ? "bg-amber-500"
-              : "bg-primary-500"
-        }`}
-      ></div>
+    <div className="glass-card rounded-xl p-6 border border-black/5 dark:border-white/5 relative overflow-hidden group">
 
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-3">
@@ -73,10 +63,10 @@ const PredictiveMaintenanceCard = ({
             <div
               className={`h-full rounded-full transition-all duration-1000 ${
                 isCritical
-                  ? "bg-red-500 shadow-xl"
+                  ? "bg-red-500"
                   : isWarning
                     ? "bg-amber-500"
-                    : "bg-primary-500 shadow-xl"
+                    : "bg-primary-500"
               }`}
               style={{ width: `${progress}%` }}
             />

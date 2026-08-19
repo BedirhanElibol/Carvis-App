@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { ChevronLeft, Droplets, ShieldCheck, Sparkles, MapPin, Calendar, Clock, CheckCircle2, AlertCircle, ArrowRight, Loader2, Award, Zap, Camera, Star } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
@@ -156,7 +156,7 @@ const CarwashScreen = () => {
   return (
     <div className="p-5 pb-32 space-y-6 animate-fade-in relative text-slate-900 dark:text-white">
       {/* Background Accent */}
-      <div className="absolute top-[10%] right-[-10%] w-[50%] h-[50%] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+      
 
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -171,7 +171,7 @@ const CarwashScreen = () => {
       </div>
 
       {/* 360° Safety & Compliance Guarantee Banner */}
-      <div className="bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-transparent p-4 rounded-3xl border border-emerald-500/20 flex items-center gap-4">
+      <div className="bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-transparent p-4 rounded-xl border border-emerald-500/20 flex items-center gap-4">
         <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 border border-emerald-500/30">
           <Camera size={24} />
         </div>
@@ -216,7 +216,7 @@ const CarwashScreen = () => {
         {filteredPackages.map((pkg) => (
           <div
             key={pkg.id}
-            className={`p-6 rounded-[2.5rem] bg-gradient-to-br ${pkg.color} bg-white dark:bg-[#0a0f24]/90 border shadow-xl relative overflow-hidden backdrop-blur-xl transition-all hover:scale-[1.01]`}
+            className={`p-6 rounded-xl bg-gradient-to-br ${pkg.color} bg-white dark:bg-[#0a0f24]/90 border relative overflow-hidden transition-all hover:scale-[1.01]`}
           >
             <div className="flex justify-between items-start mb-4">
               <div>
@@ -286,8 +286,8 @@ const CarwashScreen = () => {
       {/* Booking Modal */}
       {showBookingModal && selectedPackage && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={() => setShowBookingModal(false)}></div>
-          <div className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4 text-slate-900 dark:text-white">
+          <div className="absolute inset-0 bg-slate-950/80" onClick={() => setShowBookingModal(false)}></div>
+          <div className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-xl p-6 border border-black/10 dark:border-white/10 space-y-4 text-slate-900 dark:text-white">
             <div className="flex justify-between items-center border-b border-black/5 dark:border-white/10 pb-3">
               <div>
                 <h3 className="font-black text-base uppercase">{selectedPackage.title}</h3>

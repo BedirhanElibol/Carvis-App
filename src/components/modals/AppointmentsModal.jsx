@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { CalendarDays, X } from "lucide-react";
 import { Badge } from "../Core";
 
@@ -6,8 +6,8 @@ const AppointmentsModal = ({ show, onClose, t, appointments, onCancel }) => {
   if (!show || !t) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-[85] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in">
-      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-sm rounded-3xl p-6 shadow-2xl max-h-[80vh] flex flex-col text-slate-900 dark:text-white">
+    <div className="fixed inset-0 bg-black/60 z-[85] flex items-center justify-center p-4 animate-in fade-in">
+      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-sm rounded-xl p-6 max-h-[80vh] flex flex-col text-slate-900 dark:text-white">
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-black text-xl tracking-tighter flex items-center gap-2 font-sans uppercase text-slate-900 dark:text-white">
             <CalendarDays size={20} className="text-teal-400" />{" "}

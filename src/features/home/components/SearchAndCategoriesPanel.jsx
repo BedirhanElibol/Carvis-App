@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+﻿import React, { memo } from "react";
 import { ChevronRight, Map, RefreshCw, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,7 +6,7 @@ const SearchAndCategoriesPanel = memo(({ t, searchQuery, setSearchQuery, service
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 shadow-2xl backdrop-blur-md space-y-6">
+    <div className="bg-white dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-xl p-6 space-y-6">
       <div>
         <h3 className="text-lg font-black tracking-tight text-slate-900 dark:text-white uppercase">
           {t.serviceSearch}
@@ -51,7 +51,7 @@ const SearchAndCategoriesPanel = memo(({ t, searchQuery, setSearchQuery, service
             className={`bg-slate-50 dark:bg-[#030712]/40 border border-black/5 dark:border-white/5 ${cat.border} p-3.5 rounded-2xl flex flex-col items-center justify-center gap-2 flex-1 min-w-[95px] max-w-[115px] sm:max-w-[140px] active-scale cursor-pointer group transition-all duration-300 relative overflow-hidden`}
           >
             <div className="absolute inset-0 bg-white/[0.01] group-hover:bg-white/[0.03] transition-colors pointer-events-none"></div>
-            <div className={`p-3 rounded-xl ${cat.bg} ${cat.color} group-hover:scale-110 transition-transform shadow-inner`}>
+            <div className={`p-3 rounded-xl ${cat.bg} ${cat.color} group-hover:scale-[1.02] transition-transform shadow-inner`}>
               <cat.icon size={20} />
             </div>
             <span className="text-[9px] font-black text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:text-white transition-colors uppercase tracking-tight text-center leading-none">
@@ -67,7 +67,7 @@ const SearchAndCategoriesPanel = memo(({ t, searchQuery, setSearchQuery, service
         className="w-full bg-gradient-to-r from-cyan-500/10 to-orange-500/10 hover:from-cyan-500/20 hover:to-orange-500/20 border border-cyan-500/30 p-4 rounded-2xl flex items-center justify-between group active-scale transition-all cursor-pointer"
       >
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-cyan-500/20 rounded-xl text-cyan-400 group-hover:scale-110 transition-transform shadow-inner relative">
+          <div className="p-3 bg-cyan-500/20 rounded-xl text-cyan-400 group-hover:scale-[1.02] transition-transform shadow-inner relative">
             <Map size={24} />
             <span className="absolute -top-1 -right-1 flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>

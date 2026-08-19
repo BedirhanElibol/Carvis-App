@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+﻿import React, { memo } from "react";
 import { ChevronRight, Star, Loader2, FileText, Flame, ShieldCheck, Maximize, HeartHandshake, Video } from "lucide-react";
 import LocationMap from "../../../../components/ui/LocationMap";
 
@@ -35,7 +35,7 @@ const LandingInteractiveMap = memo(({t, language, isLoadingProviders, nearbyProv
                     onMouseEnter={() => setHoveredPin(prov.id)}
                     onMouseLeave={() => setHoveredPin(null)}
                     onClick={() => openModal("login", "customer")}
-                    className={`bg-white/80 dark:bg-black/40 border ${hoveredPin === prov.id ? 'border-orange-500/50 bg-black/10 dark:bg-emerald-500/10' : 'border-black/5 dark:border-emerald-500/10 hover:border-black/20 dark:hover:border-emerald-500/30'} p-5 rounded-3xl transition-all cursor-pointer group flex flex-col gap-3 shadow-xl backdrop-blur-md`}
+                    className={`bg-white/80 dark:bg-black/40 border ${hoveredPin === prov.id ? 'border-orange-500/50 bg-black/10 dark:bg-emerald-500/10' : 'border-black/5 dark:border-emerald-500/10 hover:border-black/20 dark:hover:border-emerald-500/30'} p-5 rounded-xl transition-all cursor-pointer group flex flex-col gap-3`}
                   >
                     <div className="flex justify-between items-start">
                       <div>
@@ -107,7 +107,7 @@ const LandingInteractiveMap = memo(({t, language, isLoadingProviders, nearbyProv
             </div>
 
             {/* Right Column: Interactive Map Component */}
-            <div className="flex-1 bg-slate-50 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-2xl flex items-center justify-center p-2">
+            <div className="flex-1 bg-slate-50 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-xl relative overflow-hidden flex items-center justify-center p-2">
               <LocationMap 
                 center={mapCenter} 
                 markers={[...nearbyProviders, ...edsMarkers]} 

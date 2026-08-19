@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+﻿import React, { useState, memo } from "react";
 import { ChevronRight, FileText, Flame, HeartHandshake, Loader2, MapPin, Maximize, Navigation, ShieldCheck, Star, Video } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import LocationMap from "../../../components/ui/LocationMap";
@@ -43,11 +43,11 @@ const PopularProvidersPanel = memo(({ t, isLoadingProviders, nearbyProviders, ed
                 key={prov.id}
                 onMouseEnter={() => setHoveredPin(prov.id)}
                 onMouseLeave={() => setHoveredPin(null)}
-                className={`bg-white dark:bg-[#0a0f24]/80 border ${hoveredPin === prov.id ? 'border-cyan-500/50 bg-teal-50/50 dark:bg-white/10' : 'border-black/5 dark:border-white/5 hover:border-slate-200 dark:border-white/10'} p-5 rounded-[2.2rem] flex flex-col justify-between gap-4 transition-all relative overflow-hidden group shadow-xl backdrop-blur-md cursor-pointer`}
+                className={`bg-white dark:bg-[#0a0f24]/80 border ${hoveredPin === prov.id ? 'border-cyan-500/50 bg-teal-50/50 dark:bg-white/10' : 'border-black/5 dark:border-white/5 hover:border-slate-200 dark:border-white/10'} p-5 rounded-[2.2rem] flex flex-col justify-between gap-4 transition-all relative overflow-hidden group cursor-pointer`}
               >
                 <div className="flex justify-between items-start">
                   <div className="flex gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-black/40 border border-slate-200 dark:border-white/10 flex items-center justify-center text-cyan-500 dark:text-cyan-400 shadow-inner shrink-0 group-hover:scale-105 transition-transform">
+                    <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-black/40 border border-slate-200 dark:border-white/10 flex items-center justify-center text-cyan-500 dark:text-cyan-400 shadow-inner shrink-0 group-hover:scale-[1.01] transition-transform">
                       <MapPin size={22} />
                     </div>
                     <div>
@@ -145,7 +145,7 @@ const PopularProvidersPanel = memo(({ t, isLoadingProviders, nearbyProviders, ed
           </div>
 
           {/* Map View */}
-          <div className="w-full lg:w-1/2 bg-slate-100 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-inner flex items-center justify-center p-2">
+          <div className="w-full lg:w-1/2 bg-slate-100 dark:bg-[#050814] border border-slate-200 dark:border-white/10 rounded-xl relative overflow-hidden shadow-inner flex items-center justify-center p-2">
             <LocationMap 
               center={mapCenter} 
               markers={[...nearbyProviders, ...edsMarkers]} 

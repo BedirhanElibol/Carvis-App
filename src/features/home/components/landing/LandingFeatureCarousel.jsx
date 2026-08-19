@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Car, SearchCheck, Cpu, ShieldCheck } from 'lucide-react';
 
@@ -16,7 +16,7 @@ const LandingFeatureCarousel = ({ language, t }) => {
       mockupBg: "from-sky-100 to-sky-50 dark:from-slate-800 dark:to-slate-900",
       content: (
         <div className="flex flex-col gap-4">
-          <div className="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-white/5 shadow-xl">
+          <div className="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-white/5">
             <div className="flex justify-between items-center mb-4">
               <div className="h-4 w-24 bg-slate-200 dark:bg-slate-800 rounded"></div>
               <div className="h-4 w-8 bg-sky-500/20 rounded"></div>
@@ -41,7 +41,7 @@ const LandingFeatureCarousel = ({ language, t }) => {
       content: (
         <div className="flex flex-col gap-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-white/5 shadow-xl flex items-center gap-4">
+            <div key={i} className="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-white/5 flex items-center gap-4">
               <div className="w-12 h-12 bg-slate-100 dark:bg-slate-900 rounded-xl shrink-0"></div>
               <div className="flex-1 space-y-2">
                 <div className="h-3 w-1/2 bg-slate-200 dark:bg-slate-800 rounded"></div>
@@ -84,7 +84,7 @@ const LandingFeatureCarousel = ({ language, t }) => {
       mockupBg: "from-slate-50 to-slate-100 dark:from-slate-950 dark:to-[#0a0f24]",
       content: (
         <div className="flex flex-col items-center justify-center h-full gap-6">
-          <div className="w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center border-4 border-white dark:border-slate-900 shadow-2xl relative">
+          <div className="w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center border-4 border-white dark:border-slate-900 relative">
             <ShieldCheck size={48} className="text-emerald-500" />
             <div className="absolute inset-0 rounded-full border-2 border-emerald-500 animate-ping opacity-20"></div>
           </div>
@@ -124,7 +124,7 @@ const LandingFeatureCarousel = ({ language, t }) => {
         </p>
       </div>
 
-      <div className="relative bg-white dark:bg-[#030712] rounded-[3rem] border border-slate-200 dark:border-white/10 shadow-2xl overflow-hidden min-h-[500px]">
+      <div className="relative bg-white dark:bg-[#030712] rounded-[3rem] border border-slate-200 dark:border-white/10 overflow-hidden min-h-[500px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -152,7 +152,7 @@ const LandingFeatureCarousel = ({ language, t }) => {
               {/* Subtle grid in background of mockup area */}
               <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(black 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
               
-              <div className="w-full max-w-sm aspect-[9/16] bg-white/50 dark:bg-black/20 backdrop-blur-3xl border border-white/50 dark:border-white/10 rounded-[2.5rem] p-6 shadow-2xl relative z-10">
+              <div className="w-full max-w-sm aspect-[9/16] bg-white/50 dark:bg-black/20 border border-white/50 dark:border-white/10 rounded-xl p-6 relative z-10">
                 {/* Phone Notch/Status bar */}
                 <div className="w-1/3 h-4 bg-slate-200 dark:bg-white/10 rounded-full mx-auto mb-8"></div>
                 {features[currentIndex].content}

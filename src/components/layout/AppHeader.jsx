@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Bell, ChevronRight, Globe, LogOut, MapPin, Moon, ShieldAlert, Store, Sun, User } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
@@ -25,10 +25,10 @@ const AppHeader = () => {
   };
 
   return (
-    <div className="px-4 pb-4 pt-[calc(1rem+env(safe-area-inset-top))] sm:p-5 flex justify-between items-center bg-slate-50 dark:bg-slate-950/20 backdrop-blur-2xl border-b border-black/5 dark:border-white/5 sticky top-0 z-[100]">
+    <div className="px-4 pb-4 pt-[calc(1rem+env(safe-area-inset-top))] sm:p-5 flex justify-between items-center bg-slate-50 dark:bg-slate-950/20 border-b border-black/5 dark:border-white/5 sticky top-0 z-[100]">
       <button
         onClick={() => openModal("location")}
-        className="flex items-center gap-2.5 text-slate-800 dark:text-slate-100 glass-card px-4 py-2.5 rounded-2xl active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5 transition-all shadow-xl"
+        className="flex items-center gap-2.5 text-slate-800 dark:text-slate-100 glass-card px-4 py-2.5 rounded-2xl active-scale border border-black/10 dark:border-white/10 hover:bg-black/5 dark:bg-white/5 transition-all"
       >
         <div className="bg-primary-500/20 p-1.5 rounded-lg shadow-inner">
           <MapPin size={16} className="text-primary-500" />
@@ -120,7 +120,7 @@ const AppHeader = () => {
                 className="fixed inset-0 z-[90]"
                 onClick={() => setShowUserMenu(false)}
               ></div>
-              <div className="absolute top-12 right-0 w-52 glass-card border border-black/10 dark:border-white/10 rounded-2xl z-[100] py-2 animate-slide-up shadow-2xl backdrop-blur-3xl">
+              <div className="absolute top-12 right-0 w-52 glass-card border border-black/10 dark:border-white/10 rounded-2xl z-[100] py-2 animate-slide-up">
                 <div className="px-4 py-2 border-b border-black/5 dark:border-white/5 mb-1">
                   <p className="text-[10px] font-black text-primary-400 uppercase tracking-widest">
                     {t.myAccount}

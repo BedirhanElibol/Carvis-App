@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { BellOff, Loader2, X } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../supabaseClient";
@@ -65,8 +65,8 @@ const NotificationModal = ({ show, onClose, t }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-[75] flex items-start justify-center pt-20 p-4 backdrop-blur-sm animate-in slide-in-from-top-10">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-3xl p-6 shadow-2xl">
+    <div className="fixed inset-0 bg-black/60 z-[75] flex items-start justify-center pt-20 p-4 animate-in slide-in-from-top-10">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-xl p-6">
         <div className="flex justify-between items-center mb-4">
           <h3 className="font-bold text-lg font-sans text-slate-900 dark:text-white">{t.notifications}</h3>
           <button

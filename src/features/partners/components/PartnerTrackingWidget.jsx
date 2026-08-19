@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Navigation, Camera, CheckCircle2, ShieldAlert } from "lucide-react";
 import { TrackingService } from "../../../services/DisputeService";
 import { supabase } from "../../../supabaseClient";
@@ -127,7 +127,7 @@ const PartnerTrackingWidget = ({
   };
 
   return (
-    <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 space-y-5 max-w-md mx-auto">
+    <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 space-y-5 max-w-md mx-auto">
       <div className="flex items-center justify-between">
         <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">İşlem Operasyonel Denetim</h4>
         <span className="text-[9px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md uppercase">GPS DOĞRULAMALI</span>

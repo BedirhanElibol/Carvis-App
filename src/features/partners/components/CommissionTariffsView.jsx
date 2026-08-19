@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Percent, HelpCircle, RefreshCw, Calculator, DollarSign } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -49,7 +49,7 @@ export default function CommissionTariffsView() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Rates Table */}
-        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 lg:col-span-2 space-y-6">
+        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-6 lg:col-span-2 space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Kategori Komisyon Oranları</h3>
             <button
@@ -79,7 +79,7 @@ export default function CommissionTariffsView() {
         </div>
 
         {/* Calculator Sidebar */}
-        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 space-y-6 shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-6 space-y-6 shadow-sm">
           <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
             <Calculator size={18} className="text-emerald-500" /> Hakediş Hesaplayıcı
           </h3>

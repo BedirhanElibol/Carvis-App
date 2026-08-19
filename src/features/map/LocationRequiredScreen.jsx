@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { ChevronLeft, MapPin, RefreshCw, ShieldAlert } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const LocationRequiredScreen = ({ onRetry }) => {
     <div className="fixed inset-0 z-[1000] bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-8 text-center overflow-hidden">
       {/* Background Effects */}
       <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary-900/40 via-slate-950 to-black pointer-events-none opacity-50"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
+      
 
       <div className="relative z-10 max-w-sm flex flex-col items-center animate-in fade-in zoom-in-95 duration-700">
         {/* Back Button Area - Top Left */}
@@ -32,10 +32,10 @@ const LocationRequiredScreen = ({ onRetry }) => {
 
         {/* Icon Cluster */}
         <div className="relative mb-10">
-          <div className="w-24 h-24 bg-gradient-to-tr from-primary-600 to-primary-600 rounded-[2.5rem] flex items-center justify-center shadow-xl rotate-12 group-hover:rotate-0 transition-transform duration-500">
+          <div className="w-24 h-24 bg-gradient-to-tr from-primary-600 to-primary-600 rounded-xl flex items-center justify-center rotate-12 group-hover:rotate-0 transition-transform duration-500">
             <MapPin size={48} className="text-slate-900 dark:text-white -rotate-12" />
           </div>
-          <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-full flex items-center justify-center shadow-xl animate-bounce">
+          <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-full flex items-center justify-center animate-bounce">
             <ShieldAlert size={20} className="text-red-500" />
           </div>
         </div>
@@ -56,7 +56,7 @@ const LocationRequiredScreen = ({ onRetry }) => {
         <div className="w-full space-y-4">
           <button
             onClick={onRetry}
-            className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 shadow-2xl shadow-primary-900/50 transition-all active-scale-95 group"
+            className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 shadow-primary-900/50 transition-all active-scale-95 group"
           >
             <RefreshCw
               size={20}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { X, CheckCircle2, AlertTriangle, AlertOctagon, Camera, Wrench, ShieldCheck, Zap, ArrowRight, Loader2 } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
@@ -63,8 +63,8 @@ const DigitalInspectionModal = ({ isOpen, inspectionData, onClose, onApproved })
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[2.5rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh] text-slate-900 dark:text-white">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/85 animate-fade-in">
+      <div className="w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl relative overflow-hidden flex flex-col max-h-[90vh] text-slate-900 dark:text-white">
         {/* Header */}
         <div className="p-6 pb-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
           <div className="flex items-center gap-3">
@@ -98,7 +98,7 @@ const DigitalInspectionModal = ({ isOpen, inspectionData, onClose, onApproved })
             const BadgeIcon = isRed ? AlertOctagon : isYellow ? AlertTriangle : CheckCircle2;
 
             return (
-              <div key={idx} className="p-5 rounded-3xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-3">
+              <div key={idx} className="p-5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className={`px-2.5 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider border flex items-center gap-1.5 ${badgeBg}`}>
@@ -146,7 +146,7 @@ const DigitalInspectionModal = ({ isOpen, inspectionData, onClose, onApproved })
             <button
               onClick={handleApproveRepair}
               disabled={approving}
-              className="px-6 py-3.5 bg-teal-500 hover:bg-emerald-500 text-slate-950 rounded-2xl text-xs font-black uppercase tracking-wider shadow-xl flex items-center justify-center gap-2 cursor-pointer border-none disabled:opacity-50"
+              className="px-6 py-3.5 bg-teal-500 hover:bg-emerald-500 text-slate-950 rounded-2xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer border-none disabled:opacity-50"
             >
               {approving ? <Loader2 size={16} className="animate-spin" /> : <Zap size={16} />}
               {approving ? "İŞLENİYOR..." : "ONAYLA VE ONARIMI BAŞLAT"}

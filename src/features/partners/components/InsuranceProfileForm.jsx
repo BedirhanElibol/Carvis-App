@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { CheckCircle2, Globe, Phone, Shield, Webhook } from "lucide-react";
 
 const COMPANY_TYPES = [
-  { id: "kasko", label: "Kasko", emoji: "🚗" },
+  { id: "kasko", label: "Kasko", emoji: "" },
   { id: "trafik", label: "Trafik Sigortası", emoji: "📋" },
   { id: "ferdi_kaza", label: "Ferdi Kaza", emoji: "🏥" },
   { id: "roadside", label: "Yol Yardım Sigortası", emoji: "🛣️" },

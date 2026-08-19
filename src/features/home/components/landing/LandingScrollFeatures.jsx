@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+﻿import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Car, SearchCheck, Cpu, ShieldCheck, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -61,7 +61,7 @@ const FeatureTextItem = ({ feature, index, scrollYProgress, navigate, language }
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
           onClick={() => navigate("/application/home")}
-          className="mt-8 self-start px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-xl"
+          className="mt-8 self-start px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-black text-sm uppercase tracking-widest hover:scale-[1.01] transition-transform"
         >
           {language === "tr" ? "HEMEN BAŞLA" : "START NOW"}
         </motion.button>
@@ -132,7 +132,7 @@ const LandingScrollFeatures = ({ language, t }) => {
       color: "bg-sky-500",
       content: (
         <div className="flex flex-col gap-4">
-          <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-6 shadow-2xl border border-slate-200/50 dark:border-white/10 w-full">
+          <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-6 border border-slate-200/50 dark:border-white/10 w-full">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
@@ -178,7 +178,7 @@ const LandingScrollFeatures = ({ language, t }) => {
             <div className="absolute top-4 -right-4 w-full h-full bg-white/50 dark:bg-slate-900/50 rounded-[2rem] border border-slate-200/50 dark:border-white/5 blur-sm z-0 scale-95"></div>
             
             {/* Foreground card */}
-            <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-5 shadow-2xl border border-slate-200/50 dark:border-white/10 w-full relative z-10">
+            <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-5 border border-slate-200/50 dark:border-white/10 w-full relative z-10">
               <div className="flex justify-between items-start mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
                 <div>
                   <div className="h-2 w-20 bg-slate-300 dark:bg-slate-600 rounded-full mb-2"></div>
@@ -213,7 +213,7 @@ const LandingScrollFeatures = ({ language, t }) => {
         : "Describe the sound, warning light, or issue to Rapidsy Assistant. Get instant diagnostics and estimated repair costs right in your pocket.",
       color: "bg-indigo-600",
       content: (
-        <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-5 shadow-2xl border border-slate-200/50 dark:border-white/10 w-full flex flex-col h-64 relative overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-5 border border-slate-200/50 dark:border-white/10 w-full flex flex-col h-64 relative overflow-hidden">
           {/* Decorative AI background */}
           <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 50% 0%, #4f46e5 0%, transparent 70%)' }}></div>
           
@@ -246,10 +246,10 @@ const LandingScrollFeatures = ({ language, t }) => {
         : "Pay securely with your credit card. The amount is held in the Rapidsy pool and never transferred until the mechanic completes the job and you approve.",
       color: "bg-emerald-500",
       content: (
-        <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 shadow-2xl border border-slate-200/50 dark:border-white/10 w-full flex flex-col items-center justify-center relative overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200/50 dark:border-white/10 w-full flex flex-col items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 bg-emerald-500/5"></div>
           
-          <div className="w-20 h-20 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center relative z-10 mb-6 border-4 border-white dark:border-slate-800 shadow-xl">
+          <div className="w-20 h-20 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center relative z-10 mb-6 border-4 border-white dark:border-slate-800">
             <div className="absolute inset-0 rounded-full border border-emerald-500 animate-ping opacity-20"></div>
             <ShieldCheck size={32} className="text-emerald-500" />
           </div>

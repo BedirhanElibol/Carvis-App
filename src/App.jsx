@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useUI } from "./context/UIContext";
 import { useAuth } from "./context/AuthContext";
@@ -290,7 +290,7 @@ const App = () => {
 
       {/* Vehicle Selector Modal */}
       {showVehicleSelector && (
-        <div className="fixed inset-0 bg-black/80 z-[110] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in">
+        <div className="fixed inset-0 bg-black/80 z-[110] flex items-center justify-center p-4 animate-in fade-in">
           <div className="relative w-full max-w-md">
             <button
               onClick={() => setShowVehicleSelector(false)}

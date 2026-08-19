@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Star, X } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
@@ -44,8 +44,8 @@ const ReviewsModal = ({ isOpen, onClose, targetId, orderId, targetName }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/90 backdrop-blur-md z-[100] flex items-end md:items-center justify-center p-4">
-      <div className="bg-slate-50 dark:bg-slate-950 w-full max-w-md rounded-[3rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-slide-up relative">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/90 z-[100] flex items-end md:items-center justify-center p-4">
+      <div className="bg-slate-50 dark:bg-slate-950 w-full max-w-md rounded-[3rem] border border-black/10 dark:border-white/10 overflow-hidden animate-slide-up relative">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-600 to-accent-600"></div>
         <button onClick={onClose} className="absolute top-6 right-6 text-slate-500 hover:text-slate-900 dark:text-white transition">
           <X size={24} />
@@ -85,7 +85,7 @@ const ReviewsModal = ({ isOpen, onClose, targetId, orderId, targetName }) => {
           <button 
             onClick={handleSubmit}
             disabled={submitting}
-            className="w-full bg-primary-600 hover:bg-primary-500 py-4 rounded-2xl font-black text-xs text-slate-900 dark:text-white uppercase tracking-[0.2em] shadow-xl shadow-primary-900/20 active-scale disabled:opacity-50 transition-all"
+            className="w-full bg-primary-600 hover:bg-primary-500 py-4 rounded-2xl font-black text-xs text-slate-900 dark:text-white uppercase tracking-[0.2em] shadow-primary-900/20 active-scale disabled:opacity-50 transition-all"
           >
             {submitting ? "GÖNDERİLİYOR..." : "DEĞERLENDİRMEYİ YAYINLA"}
           </button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { ShieldAlert, Eye, X, CheckCircle, RotateCcw, Search, RefreshCw, AlertTriangle, Scale, Clock, ArrowRight, User } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { DisputeService } from "../../services/DisputeService";
@@ -215,8 +215,8 @@ export default function AdminDisputes() {
 
       {/* Detail Modal */}
       {selectedDispute && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-lg rounded-3xl p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-lg rounded-xl p-6 relative max-h-[90vh] overflow-y-auto">
             <button onClick={() => setSelectedDispute(null)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
               <X size={20} />
             </button>

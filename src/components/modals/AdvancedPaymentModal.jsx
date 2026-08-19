@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { CheckCircle, ChevronRight, CreditCard, Info, Loader2, X } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 
@@ -86,8 +86,8 @@ const AdvancedPaymentModal = ({
   ];
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-5xl h-[90vh] md:h-auto md:max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden relative flex flex-col md:flex-row text-slate-900 dark:text-white">
+    <div className="fixed inset-0 bg-slate-950/80 z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-5xl h-[90vh] md:h-auto md:max-h-[90vh] rounded-2xl overflow-hidden relative flex flex-col md:flex-row text-slate-900 dark:text-white">
         {/* Close Button */}
         <button
           onClick={onClose}

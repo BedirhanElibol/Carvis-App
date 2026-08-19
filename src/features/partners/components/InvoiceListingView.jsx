@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Search, Plus, FileText, Download, X, AlertCircle } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -147,8 +147,8 @@ export default function InvoiceListingView({ currentUser }) {
 
       {/* Create Invoice Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-xl p-6 relative">
             <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
               <X size={20} />
             </button>

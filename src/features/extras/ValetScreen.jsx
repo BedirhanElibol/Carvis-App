@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Car, CheckCircle, ChevronRight, Clock, Key, MapPin, Shield, Star } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
@@ -110,7 +110,7 @@ export default function ValetScreen() {
   if (booked) {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-[#030712] flex items-center justify-center p-6">
-        <div className="bg-white dark:bg-[#0a0f24]/85 border border-emerald-500/30 rounded-3xl p-10 text-center max-w-sm w-full shadow-2xl">
+        <div className="bg-white dark:bg-[#0a0f24]/85 border border-emerald-500/30 rounded-xl p-10 text-center max-w-sm w-full">
           <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle size={40} className="text-emerald-500" />
           </div>
@@ -145,7 +145,7 @@ export default function ValetScreen() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white pb-32">
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-white/80 dark:bg-[#0a0f24]/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5 px-5 py-4">
+      <div className="sticky top-0 z-20 bg-white/80 dark:bg-[#0a0f24]/80 border-b border-black/5 dark:border-white/5 px-5 py-4">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
@@ -219,7 +219,7 @@ export default function ValetScreen() {
               key={valet.id}
               onClick={() => valet.available && setSelected(isSelected ? null : valet)}
               disabled={!valet.available}
-              className={`w-full text-left bg-white dark:bg-[#0a0f24]/85 border rounded-3xl p-5 shadow-sm transition-all ${
+              className={`w-full text-left bg-white dark:bg-[#0a0f24]/85 border rounded-xl p-5 shadow-sm transition-all ${
                 !valet.available
                   ? "opacity-50 cursor-not-allowed border-black/5 dark:border-white/5"
                   : isSelected
@@ -279,7 +279,7 @@ export default function ValetScreen() {
         <div className="fixed bottom-6 left-0 right-0 px-5 z-30">
           <button
             onClick={handleBook}
-            className="w-full max-w-lg mx-auto flex items-center justify-between bg-amber-500 hover:bg-amber-400 text-white px-6 py-4 rounded-2xl font-black shadow-2xl shadow-amber-500/40 transition-all"
+            className="w-full max-w-lg mx-auto flex items-center justify-between bg-amber-500 hover:bg-amber-400 text-white px-6 py-4 rounded-2xl font-black shadow-amber-500/40 transition-all"
           >
             <div>
               <p className="text-sm">{selected.name} · {selected.price}</p>

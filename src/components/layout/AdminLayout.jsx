@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { FileCheck, LayoutDashboard, LogOut, Menu, Settings, ShieldAlert, Users, Wallet, X, Scale } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
@@ -125,7 +125,7 @@ const AdminLayout = () => {
       {/* Main Content */}
       <main className="flex-1 md:ml-64 relative bg-slate-50 dark:bg-slate-950">
         {/* Header for Mobile */}
-        <div className="md:hidden p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
+        <div className="md:hidden p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-slate-50 dark:bg-slate-950/80 sticky top-0 z-40">
           <button onClick={() => setIsSidebarOpen(true)} className="text-slate-900 dark:text-white">
             <Menu size={24} />
           </button>

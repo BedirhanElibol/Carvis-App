@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+﻿import React, { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, CreditCard, Loader2, ShieldCheck, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { usePayment } from "../../context/PaymentContext";
@@ -126,10 +126,10 @@ const PaymentModal = ({
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/80"
         onClick={onClose}
       ></div>
-      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl overflow-hidden flex flex-col max-h-[90vh]">
         <div className="p-5 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-slate-100 dark:bg-slate-800/50">
           <h3 className="font-bold text-slate-900 dark:text-white text-lg flex items-center gap-2">
             <CreditCard className="text-primary-500" />

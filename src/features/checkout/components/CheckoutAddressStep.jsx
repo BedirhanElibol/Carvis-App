@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { CheckCircle, MapPin, Plus, Save, Trash2, X } from "lucide-react";
 import { useShop } from "../../../context/ShopContext";
 import { useAuth } from "../../../context/AuthContext";
@@ -41,7 +41,7 @@ const AddAddressModal = ({ onClose, onSaved }) => {
   };
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-end p-0 bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-end p-0 bg-black/60"
       onClick={onClose}
     >
       {" "}
@@ -153,7 +153,7 @@ const CheckoutAddressStep = () => {
           <div
             key={addr.id}
             onClick={() => setSelectedAddress(addr)}
-            className={`glass-card p-5 rounded-3xl border cursor-pointer transition-all ${selectedAddress?.id === addr.id ? "border-primary-500 bg-primary-600/10" : "border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20"}`}
+            className={`glass-card p-5 rounded-xl border cursor-pointer transition-all ${selectedAddress?.id === addr.id ? "border-primary-500 bg-primary-600/10" : "border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20"}`}
           >
             {" "}
             <div className="flex justify-between items-start mb-2">
@@ -188,7 +188,7 @@ const CheckoutAddressStep = () => {
         {currentUser && !currentUser.isAnonymous && (
           <button
             onClick={() => setShowAddModal(true)}
-            className="glass-card p-5 rounded-3xl border border-dashed border-black/20 dark:border-white/20 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-black/5 dark:bg-white/5 transition-all"
+            className="glass-card p-5 rounded-xl border border-dashed border-black/20 dark:border-white/20 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-black/5 dark:bg-white/5 transition-all"
           >
             {" "}
             <Plus size={24} />{" "}

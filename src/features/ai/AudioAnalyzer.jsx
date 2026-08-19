@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+﻿import React, { useState, useEffect, useRef, useCallback } from "react";
 import { AlertCircle, Check, Loader2, Mic, Square } from "lucide-react";
 
 /**
@@ -74,7 +74,7 @@ const AudioAnalyzer = () => {
   };
 
   return (
-    <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5">
+    <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5">
       <h3 className="font-black text-xl text-slate-900 dark:text-white mb-2 flex items-center gap-2">
         <Mic className="text-primary-400" /> Sesli Arıza Tespiti
       </h3>
@@ -93,7 +93,7 @@ const AudioAnalyzer = () => {
         />
 
         {analyzing && (
-          <div className="absolute inset-0 bg-white dark:bg-slate-900/80 backdrop-blur-sm flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-white dark:bg-slate-900/80 flex flex-col items-center justify-center">
             <Loader2 className="animate-spin text-primary-500 mb-2" size={32} />
             <span className="text-xs font-black text-primary-400 animate-pulse uppercase tracking-widest">
               Analiz Ediliyor...
@@ -102,7 +102,7 @@ const AudioAnalyzer = () => {
         )}
 
         {result && !analyzing && (
-          <div className="absolute inset-0 bg-white dark:bg-slate-900/90 flex flex-col items-center justify-center backdrop-blur-md">
+          <div className="absolute inset-0 bg-white dark:bg-slate-900/90 flex flex-col items-center justify-center">
             {result === "normal" ? (
               <>
                 <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-2">
@@ -137,10 +137,10 @@ const AudioAnalyzer = () => {
         <button
           onClick={handleToggleRecord}
           disabled={analyzing}
-          className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl ${
+          className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
             isRecording
               ? "bg-red-500 hover:bg-red-600 scale-110 shadow-red-500/30 ring-4 ring-red-500/20"
-              : "bg-primary-600 hover:bg-primary-500 hover:scale-105 shadow-primary-500/30"
+              : "bg-primary-600 hover:bg-primary-500 hover:scale-[1.01] shadow-primary-500/30"
           }`}
         >
           {isRecording ? (

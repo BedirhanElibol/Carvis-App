@@ -1,4 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
+﻿/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect, useCallback , useMemo } from "react";
 import { useUI } from "./UIContext";
 import { useAuth } from "./AuthContext";
@@ -202,7 +202,7 @@ export const ShopProvider = ({ children }) => {
         price: service.price,
         mechanicName: service.mechanicName,
         shopName: service.shopName,
-        img: service.image || "https://via.placeholder.com/100?text=🔧",
+        img: service.image || "https://via.placeholder.com/100?text=",
         uniqueId: Date.now(),
         itemType: "service",
       },

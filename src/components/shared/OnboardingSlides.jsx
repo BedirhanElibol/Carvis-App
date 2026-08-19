@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Car, ChevronRight, MapPin, ShoppingBag, Sparkles, X } from "lucide-react";
 const SLIDES = [
   {
@@ -75,7 +75,7 @@ const OnboardingSlides = ({ onComplete }) => {
             className={`absolute inset-0 bg-gradient-to-br ${slide.color} rounded-full blur-3xl opacity-30 scale-150`}
           />{" "}
           <div
-            className={`relative bg-gradient-to-br ${slide.color} p-8 rounded-[2.5rem] shadow-2xl border border-black/10 dark:border-white/10`}
+            className={`relative bg-gradient-to-br ${slide.color} p-8 rounded-xl border border-black/10 dark:border-white/10`}
           >
             {" "}
             <Icon size={48} className="text-slate-900 dark:text-white" />{" "}
@@ -109,7 +109,7 @@ const OnboardingSlides = ({ onComplete }) => {
         {/* Next Button */}{" "}
         <button
           onClick={handleNext}
-          className={`w-full py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] active:scale-[0.98] transition-all shadow-2xl flex items-center justify-center gap-3 ${isLast ? "bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white shadow-primary-900/40" : "bg-white text-slate-950 hover:bg-slate-100 shadow-white/10"}`}
+          className={`w-full py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] active:scale-[0.98] transition-all flex items-center justify-center gap-3 ${isLast ? "bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white shadow-primary-900/40" : "bg-white text-slate-950 hover:bg-slate-100 shadow-white/10"}`}
         >
           {" "}
           {isLast ? "Başlayalım!" : "Devam"}{" "}

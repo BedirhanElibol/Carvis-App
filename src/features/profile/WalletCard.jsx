@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Radio, ShieldCheck, User, Wallet, Zap } from "lucide-react";
 import { useWallet } from "../../context/WalletContext";
 
@@ -11,7 +11,7 @@ const WalletCard = () => {
   return (
     <div className="space-y-4">
       {/* Main Balance Card */}
-      <div className="bg-gradient-to-br from-primary-600 to-primary-900 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden group border border-black/10 dark:border-white/10 active-scale">
+      <div className="bg-gradient-to-br from-primary-600 to-primary-900 rounded-xl p-8 relative overflow-hidden group border border-black/10 dark:border-white/10 active-scale">
         <div className="absolute top-0 right-0 w-48 h-48 bg-black/10 dark:bg-white/10 rounded-full blur-3xl -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-700"></div>
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent-500/20 rounded-full blur-2xl -ml-12 -mb-12"></div>
         
@@ -39,7 +39,7 @@ const WalletCard = () => {
                 </div>
               ))}
             </div>
-            <button className="bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:bg-white/20 px-4 py-2 rounded-xl text-xs font-black text-slate-900 dark:text-white transition-all backdrop-blur-md border border-black/10 dark:border-white/10">
+            <button className="bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:bg-white/20 px-4 py-2 rounded-xl text-xs font-black text-slate-900 dark:text-white transition-all border border-black/10 dark:border-white/10">
               YÜKLE
             </button>
           </div>

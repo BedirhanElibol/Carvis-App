@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuote } from "../../context/QuoteContext";
 import { ArrowLeft, Filter } from "lucide-react";
@@ -39,7 +39,7 @@ const QuotesScreen = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button

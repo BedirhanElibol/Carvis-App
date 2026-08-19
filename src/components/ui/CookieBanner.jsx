@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Cookie, X, Check, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,7 +26,7 @@ const CookieBanner = () => {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:max-w-md z-50 animate-slide-up">
-      <div className="bg-slate-900/95 dark:bg-[#0a0f24]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-4 md:p-5 rounded-3xl shadow-2xl text-white font-sans">
+      <div className="bg-slate-900/95 dark:bg-[#0a0f24]/95 border border-black/10 dark:border-white/10 p-4 md:p-5 rounded-xl text-white font-sans">
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex items-center gap-2.5">
             <div className="p-2 bg-cyan-500/10 rounded-xl border border-cyan-500/20 text-cyan-400">

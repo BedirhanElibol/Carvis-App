@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { motion } from "framer-motion";  
 import { cn } from "../../lib/utils";
 export const Card = ({ className, children, ...props }) => {
@@ -9,7 +9,7 @@ export const Card = ({ className, children, ...props }) => {
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       className={cn(
-        "glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 shadow-2xl relative overflow-hidden",
+        "glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 relative overflow-hidden",
         className,
       )}
       {...props}

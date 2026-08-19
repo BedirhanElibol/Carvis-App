@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { AlertTriangle, CheckCircle, CheckCircle2, Cog, Download, Info, Loader2, Shield, ShieldCheck, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
@@ -325,7 +325,7 @@ const DigitalPassport = ({ vehicle }) => {
     <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
       <div className="print-area space-y-6">
         {/* Header - Digital Passport Card */}
-        <div className="bg-gradient-to-br from-primary-600 to-indigo-700 p-8 rounded-[2.5rem] text-slate-900 dark:text-white shadow-2xl relative overflow-hidden print:bg-none print:border-2 print:border-black print:text-black">
+        <div className="bg-gradient-to-br from-primary-600 to-indigo-700 p-8 rounded-xl text-slate-900 dark:text-white relative overflow-hidden print:bg-none print:border-2 print:border-black print:text-black">
           <div className="absolute top-0 right-0 w-32 h-32 bg-black/10 dark:bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl print:hidden"></div>
           <ShieldCheck className="absolute bottom-6 right-6 opacity-20 print:text-black print:opacity-10" size={80} />
           
@@ -343,11 +343,11 @@ const DigitalPassport = ({ vehicle }) => {
             </div>
             
             <div className="mt-8 flex gap-4">
-               <div className="bg-black/10 dark:bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-black/10 dark:border-white/10 print:border-black print:bg-none">
+               <div className="bg-black/10 dark:bg-white/10 px-4 py-2 rounded-xl border border-black/10 dark:border-white/10 print:border-black print:bg-none">
                  <p className="text-[8px] font-black uppercase tracking-widest opacity-60 print:opacity-100">Toplam Kayıt</p>
                  <p className="text-xl font-black">{history.length}</p>
                </div>
-               <div className="bg-black/10 dark:bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-black/10 dark:border-white/10 print:border-black print:bg-none">
+               <div className="bg-black/10 dark:bg-white/10 px-4 py-2 rounded-xl border border-black/10 dark:border-white/10 print:border-black print:bg-none">
                  <p className="text-[8px] font-black uppercase tracking-widest opacity-60 print:opacity-100">Güven Puanı</p>
                  <p className="text-xl font-black text-emerald-300 print:text-black">A+</p>
                </div>
@@ -356,7 +356,7 @@ const DigitalPassport = ({ vehicle }) => {
         </div>
 
         {/* EGM/Tramer API Consent & Sync Widget */}
-        <div className="bg-white/80 dark:bg-[#0a0f24]/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 shadow-xl space-y-4 no-print">
+        <div className="bg-white/80 dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-xl p-6 space-y-4 no-print">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0 text-blue-500">
@@ -393,7 +393,7 @@ const DigitalPassport = ({ vehicle }) => {
 
         {/* VIN DECODED TECHNICAL SPECIFICATIONS */}
         {vehicle?.vin_data && Object.values(vehicle.vin_data).some(v => v) && (
-          <div className="bg-white/80 dark:bg-[#0a0f24]/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 shadow-xl space-y-4 no-print">
+          <div className="bg-white/80 dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-xl p-6 space-y-4 no-print">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary-500/10 flex items-center justify-center shrink-0">
                 <Cog size={20} className="text-primary-500" />
@@ -516,7 +516,7 @@ const DigitalPassport = ({ vehicle }) => {
 
         {/* MANUFACTURER RECALLS & TECHNICAL SERVICE BULLETINS */}
         {vehicle && (
-          <div className="bg-white/80 dark:bg-[#0a0f24]/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6 shadow-xl space-y-4 no-print">
+          <div className="bg-white/80 dark:bg-[#0a0f24]/80 border border-slate-200 dark:border-white/10 rounded-xl p-6 space-y-4 no-print">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center shrink-0">
                 <AlertTriangle size={20} className="text-orange-500" />
@@ -606,9 +606,9 @@ const DigitalPassport = ({ vehicle }) => {
             history.map((record) => (
               <div key={record.id} className="relative break-inside-avoid">
                 {/* Timeline dot */}
-                <div className="absolute -left-[23px] top-1.5 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-4 border-primary-600 shadow-xl print:border-black print:bg-white print:shadow-none"></div>
+                <div className="absolute -left-[23px] top-1.5 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-4 border-primary-600 print:border-black print:bg-white print:shadow-none"></div>
                 
-                <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-all group print:border-black/10">
+                <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-all group print:border-black/10">
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <p className="text-[10px] font-black text-primary-500 uppercase tracking-widest mb-1 print:text-black">
@@ -653,7 +653,7 @@ const DigitalPassport = ({ vehicle }) => {
       <button 
         onClick={handleDownloadPDF}
         disabled={generatingPDF}
-        className="no-print w-full py-5 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:bg-black/10 dark:bg-white/10 rounded-2xl text-slate-900 dark:text-white font-black text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 active-scale shadow-xl shadow-black/20 disabled:opacity-50"
+        className="no-print w-full py-5 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:bg-black/10 dark:bg-white/10 rounded-2xl text-slate-900 dark:text-white font-black text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 active-scale shadow-black/20 disabled:opacity-50"
       >
         {generatingPDF ? (
           <>
@@ -668,8 +668,8 @@ const DigitalPassport = ({ vehicle }) => {
 
       {/* Modal: KVKK Consent */}
       {showKvkModal && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-3xl p-6 shadow-2xl relative text-left">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-xl p-6 relative text-left">
             <button onClick={() => setShowKvkModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
               <X size={20} />
             </button>

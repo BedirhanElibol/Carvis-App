@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { Star, MessageSquare, User, ThumbsUp, RefreshCw } from 'lucide-react';
 import { supabase } from '../../supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -95,7 +95,7 @@ const PartnerReviewsPanel = ({ partnerId }) => {
     <div className="space-y-6 font-sans text-slate-900 dark:text-slate-100">
       {/* Stats Header */}
       {reviews.length > 0 && (
-        <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white/50 dark:bg-slate-900/40">
+        <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 bg-white/50 dark:bg-slate-900/40">
           <div className="flex gap-6 items-center">
             <div className="text-center">
               <p className="text-5xl font-mono font-black text-slate-900 dark:text-white tracking-tighter">{stats.avg}</p>
@@ -129,7 +129,7 @@ const PartnerReviewsPanel = ({ partnerId }) => {
 
       {/* Reviews List */}
       {reviews.length === 0 ? (
-        <div className="text-center py-12 glass-card border border-black/5 dark:border-white/5 bg-white/50 dark:bg-slate-900/40 rounded-3xl">
+        <div className="text-center py-12 glass-card border border-black/5 dark:border-white/5 bg-white/50 dark:bg-slate-900/40 rounded-xl">
           <div className="w-16 h-16 bg-slate-100 dark:bg-slate-950/40 border border-black/5 dark:border-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
             <MessageSquare size={28} className="text-slate-500 dark:text-slate-400" />
           </div>
@@ -144,7 +144,7 @@ const PartnerReviewsPanel = ({ partnerId }) => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="glass-card p-5 rounded-3xl border border-black/5 dark:border-white/5 bg-white/50 dark:bg-slate-900/40 hover:border-black/10 dark:hover:border-white/10 transition-all duration-300"
+              className="glass-card p-5 rounded-xl border border-black/5 dark:border-white/5 bg-white/50 dark:bg-slate-900/40 hover:border-black/10 dark:hover:border-white/10 transition-all duration-300"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { ShieldCheck, UserCheck, HeartHandshake, HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -34,7 +34,7 @@ export const TrustBadge = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 mt-2 z-50 w-64 p-4 rounded-2xl bg-white/95 dark:bg-slate-900/95 border border-black/5 dark:border-white/5 shadow-2xl backdrop-blur-md text-left"
+            className="absolute left-0 mt-2 z-50 w-64 p-4 rounded-2xl bg-white/95 dark:bg-slate-900/95 border border-black/5 dark:border-white/5 text-left"
           >
             <h5 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2">
               {language === "tr" ? "RAPIDSY GÜVENCE DOĞRULAMASI" : "RAPIDSY TRUST VERIFICATION"}

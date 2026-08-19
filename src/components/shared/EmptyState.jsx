@@ -1,10 +1,10 @@
-import React from "react";
+﻿import React from "react";
  /** * Common Empty State component for the marketplace */
 const EmptyState = ({ icon: Icon, title, subtitle, actionLabel, onAction }) => {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-6 text-center animate-in fade-in zoom-in duration-500">
       {" "}
-      <div className="w-20 h-20 bg-white dark:bg-slate-900/50 rounded-full flex items-center justify-center mb-6 border border-black/5 dark:border-white/5 shadow-2xl">
+      <div className="w-20 h-20 bg-white dark:bg-slate-900/50 rounded-full flex items-center justify-center mb-6 border border-black/5 dark:border-white/5">
         {" "}
         {Icon && <Icon size={32} className="text-slate-500" />}{" "}
       </div>{" "}

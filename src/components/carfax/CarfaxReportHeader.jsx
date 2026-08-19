@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { ShieldCheck, UserCheck, FileCheck, AlertCircle, CheckCircle2, Wrench, Award } from "lucide-react";
 import { runCarfaxAudit } from "../../utils/carfaxEngine";
 
@@ -14,7 +14,7 @@ const CarfaxReportHeader = ({ vehicle = {}, recordsCount = 0, maintenanceRecords
   const audit = runCarfaxAudit(vehicle, maintenanceRecords);
 
   return (
-    <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 text-white space-y-5 shadow-2xl">
+    <div className="bg-slate-950 border border-slate-800 rounded-xl p-6 text-white space-y-5">
       {/* CARFAX Header Title & Verified Seal */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div className="flex items-center gap-3">

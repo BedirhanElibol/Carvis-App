@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+﻿import React, { useState, useEffect, useCallback } from "react";
 import { Droplet, MapPin, CheckCircle, Clock, RefreshCw, EyeOff, User } from "lucide-react";
 import CarwashService from "../../services/CarwashService";
 import { supabase } from "../../supabaseClient";
@@ -134,7 +134,7 @@ export default function CarwashDashboard() {
           <RefreshCw size={24} className="animate-spin text-primary-400" />
         </div>
       ) : (activeTab === "available" ? availableJobs : myJobs).length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-12 text-center flex flex-col items-center justify-center min-h-[300px]">
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-12 text-center flex flex-col items-center justify-center min-h-[300px]">
           <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4">
             {activeTab === "available" ? (
               <Droplet size={32} className="text-slate-400" />

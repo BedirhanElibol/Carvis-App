@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { DollarSign, Edit2, Loader2, Package, Save, X } from "lucide-react";
 import { useSeller } from "../../../context/SellerContext";
 import { CAR_DATA } from "../../../constants/mockData";
@@ -62,8 +62,8 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-sm z-[70] flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-in zoom-in-95">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 z-[70] flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-xl border border-black/10 dark:border-white/10 overflow-hidden animate-in zoom-in-95">
         <div className="p-6 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-black/5 dark:bg-white/5">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Edit2 className="text-primary-500" size={20} /> İlanı Düzenle
@@ -207,7 +207,7 @@ const SellerProductEditModal = ({ isOpen, onClose, product }) => {
           <button
             type="submit"
             disabled={isUpdating}
-            className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl active-scale flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
+            className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl active-scale flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
           >
             {isUpdating ? (
               <><Loader2 size={18} className="animate-spin" /> GÜNCELLENİYOR...</>

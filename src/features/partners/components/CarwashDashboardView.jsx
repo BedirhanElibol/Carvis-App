@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Droplet, MapPin, Calendar, DollarSign, RefreshCw, Star, CheckCircle, Navigation, Plus, X, AlertCircle, Camera } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -74,7 +74,7 @@ export default function CarwashDashboardView({ currentUser }) {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter glow-orange">Seyyar Yıkama Paneli</h1>
+          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter">Seyyar Yıkama Paneli</h1>
           <p className="text-slate-400 text-xs mt-1">Bölgenizdeki seyyar / mobil yıkama taleplerini üstlenin.</p>
         </div>
       </div>
@@ -87,7 +87,7 @@ export default function CarwashDashboardView({ currentUser }) {
           { label: "Su Tankı Kapasitesi", value: stats.waterLevel, icon: Droplet, color: "text-blue-400", bg: "bg-blue-500/10" },
           { label: "Toplam Hasılat", value: `₺${stats.earnings.toLocaleString("tr-TR")}`, icon: DollarSign, color: "text-orange-500", bg: "bg-yellow-500/10" },
         ].map((s) => (
-          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-3xl flex items-center justify-between shadow-sm hover:border-white/10 transition-all duration-300">
+          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-xl flex items-center justify-between shadow-sm hover:border-white/10 transition-all duration-300">
             <div>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{s.label}</p>
               <h3 className="text-2xl font-mono font-black text-white mt-1.5">{s.value}</h3>
@@ -132,7 +132,7 @@ export default function CarwashDashboardView({ currentUser }) {
       {activeTab === "active" ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Available Requests in Area */}
-          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Bölgenizdeki Yıkama Talepleri</h3>
               <span className="bg-orange-500/10 text-orange-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">HAZIR TALEPLER</span>
@@ -177,7 +177,7 @@ export default function CarwashDashboardView({ currentUser }) {
           </div>
 
           {/* Active Work Orders */}
-          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+          <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Aktif Yıkama Görevlerim</h3>
               <span className="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">İŞLEMDELER</span>
@@ -226,7 +226,7 @@ export default function CarwashDashboardView({ currentUser }) {
         </div>
       ) : (
         /* History View */
-        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Tamamlanan Yıkama Görevleri</h3>
             <span className="bg-slate-500/10 text-slate-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">GEÇMİŞ</span>

@@ -25,12 +25,7 @@ const RevenueTrend = ({ color = "primary" }) => {
   const gradient = colorConfig[color] || colorConfig.primary;
 
   return (
-    <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 relative overflow-hidden group">
-      {/* Background Glow */}
-      <div
-        className={`absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br ${gradient} opacity-5 blur-[80px] group-hover:opacity-10 transition-opacity`}
-      ></div>
-
+    <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 relative overflow-hidden group">
       <div className="flex justify-between items-start mb-8">
         <div>
           <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-1">
@@ -72,7 +67,7 @@ const RevenueTrend = ({ color = "primary" }) => {
                 initial={{ height: 0 }}
                 animate={{ height: `${item.value}%` }}
                 transition={{ delay: i * 0.1, type: "spring", stiffness: 100 }}
-                className={`w-full max-w-[12px] rounded-t-full bg-gradient-to-t ${gradient} relative shadow-xl shadow-primary-900/20`}
+                className={`w-full max-w-[12px] rounded-t-full bg-gradient-to-t ${gradient} relative shadow-primary-900/20`}
               >
                 {/* Animated Shine Effect */}
                 <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-transparent opacity-0 group-hover/bar:opacity-100 transition-opacity rounded-t-full"></div>

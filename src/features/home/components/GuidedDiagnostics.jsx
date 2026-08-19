@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import { Activity, BrainCircuit, ChevronRight, Droplet, Loader2, Radio, ShieldAlert, Volume2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { triggerHaptic } from "../../../utils/haptics";
@@ -157,8 +157,8 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated, onOpenObd
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[85vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 animate-fade-in">
+      <div className="w-full max-w-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-white/10 rounded-2xl relative overflow-hidden flex flex-col max-h-[85vh]">
         {/* Telemetry background pulse */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-500/40 to-transparent" />
 
@@ -396,7 +396,7 @@ const GuidedDiagnostics = ({ show, onClose, vehicle, onRequestCreated, onOpenObd
                   </button>
                   <button 
                     onClick={handleCreateServiceRequest}
-                    className="p-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-black rounded-xl text-xs uppercase tracking-widest transition-all shadow-xl shadow-orange-950/20 flex items-center justify-center gap-2 active-scale"
+                    className="p-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-black rounded-xl text-xs uppercase tracking-widest transition-all shadow-orange-950/20 flex items-center justify-center gap-2 active-scale"
                   >
                     USTALARDAN TEKLİF AL <ChevronRight size={14} />
                   </button>

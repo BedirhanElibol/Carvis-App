@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { MapPin, PlusCircle, X } from "lucide-react";
 
 const AddressModal = ({
@@ -16,8 +16,8 @@ const AddressModal = ({
   if (!show || !t) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-[85] flex items-end sm:items-center justify-center backdrop-blur-sm animate-in fade-in">
-      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full sm:w-96 rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl animate-in slide-in-from-bottom-full text-slate-900 dark:text-white">
+    <div className="fixed inset-0 bg-black/60 z-[85] flex items-end sm:items-center justify-center animate-in fade-in">
+      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full sm:w-96 rounded-t-3xl sm:rounded-xl p-6 animate-in slide-in-from-bottom-full text-slate-900 dark:text-white">
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-bold text-lg font-sans text-slate-900 dark:text-white">{t.selectAddress}</h3>
           <button onClick={onClose}>

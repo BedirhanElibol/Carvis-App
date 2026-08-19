@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { X, Wrench, Thermometer, Disc, Droplets, ChevronRight, Send, Package, ArrowLeft, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -109,7 +109,7 @@ const IssueReportingModal = ({ isOpen, onClose }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-slate-950/85 backdrop-blur-md"
+          className="fixed inset-0 bg-slate-950/85"
           onClick={onClose}
         ></motion.div>
         
@@ -117,7 +117,7 @@ const IssueReportingModal = ({ isOpen, onClose }) => {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col max-h-[85vh] sm:max-h-[90vh] text-slate-900 dark:text-white my-auto z-10"
+          className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-black/10 dark:border-white/10 flex flex-col max-h-[85vh] sm:max-h-[90vh] text-slate-900 dark:text-white my-auto z-10"
         >
           {/* Header */}
           <div className="p-5 border-b border-black/5 dark:border-white/5 relative bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
@@ -238,7 +238,7 @@ const IssueReportingModal = ({ isOpen, onClose }) => {
                 type="button"
                 onClick={handleSubmitRequest}
                 disabled={isSubmitting}
-                className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:opacity-90 transition flex items-center justify-center gap-2 shadow-xl active-scale"
+                className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:opacity-90 transition flex items-center justify-center gap-2 active-scale"
               >
                 <Send size={18} /> {isSubmitting ? "Gönderiliyor..." : "TALEBİ GÖNDER"}
               </button>

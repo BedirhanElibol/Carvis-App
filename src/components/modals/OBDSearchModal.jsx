@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, AlertTriangle, ShieldAlert, CheckCircle, Wrench, X, ArrowRight, Activity, DollarSign } from "lucide-react";
 import { obdCodesDatabase, searchOBDCode } from "../../data/obdCodes";
@@ -24,12 +24,12 @@ const OBDSearchModal = ({ isOpen, onClose }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[9999] flex items-start sm:items-center justify-center p-2 pt-12 sm:pt-6 sm:p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
+      <div className="fixed inset-0 z-[9999] flex items-start sm:items-center justify-center p-2 pt-12 sm:pt-6 sm:p-4 bg-slate-950/85 overflow-y-auto">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 w-full max-w-xl rounded-[2.5rem] p-5 sm:p-6 shadow-2xl space-y-6 max-h-[85vh] sm:max-h-[90vh] overflow-y-auto text-slate-900 dark:text-white my-auto"
+          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 w-full max-w-xl rounded-xl p-5 sm:p-6 space-y-6 max-h-[85vh] sm:max-h-[90vh] overflow-y-auto text-slate-900 dark:text-white my-auto"
         >
           {/* Modal Header */}
           <div className="flex justify-between items-center">

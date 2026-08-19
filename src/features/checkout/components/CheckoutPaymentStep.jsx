@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { CreditCard } from "lucide-react";
 
 const CheckoutPaymentStep = ({
@@ -14,7 +14,7 @@ const CheckoutPaymentStep = ({
   return (
     <div className="space-y-6 animate-slide-up">
       {/* Visual Card Wrapper */}
-      <div className="glass-card p-6 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50">
+      <div className="glass-card p-6 rounded-xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900/50">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* Form */}
           <div className="space-y-4">

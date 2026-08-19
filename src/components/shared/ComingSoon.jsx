@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { ArrowLeft, Construction } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,8 +10,8 @@ const ComingSoon = ({
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-6 text-center animate-fade-in relative overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary-500/10 rounded-full blur-[100px]"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-teal-500/10 rounded-full blur-[100px]"></div>
+      
+      
       <div className="glass-card p-12 rounded-[3rem] border border-black/5 dark:border-white/5 max-w-lg w-full relative z-10">
         <div className="w-24 h-24 bg-white dark:bg-slate-900/50 rounded-full flex items-center justify-center mx-auto mb-8 border border-black/5 dark:border-white/5">
           <Construction

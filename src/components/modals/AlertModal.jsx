@@ -1,15 +1,15 @@
-import React from "react";
+﻿import React from "react";
 import { CircleCheck, Info, ShieldCheck, TriangleAlert } from "lucide-react";
 
 const AlertModal = ({ show, onClose, title, message, type }) => {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-[10001] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-sm rounded-3xl p-6 shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 bg-black/60 z-[10001] flex items-center justify-center p-4 animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-sm rounded-xl p-6 scale-100 animate-in zoom-in-95 duration-200">
         <div className="flex flex-col items-center text-center">
           <div
-            className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-xl ${
+            className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${
               type === "error"
                 ? "bg-red-500/10 text-red-500 border border-red-500/20"
                 : type === "success"

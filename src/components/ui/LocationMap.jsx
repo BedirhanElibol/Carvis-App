@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { MapPin, Navigation, Star } from "lucide-react";
@@ -49,7 +49,7 @@ const LocationMap = ({
   markers = [], 
   hoveredPin = null,
   zoom = 12,
-  className = "w-full h-full rounded-3xl"
+  className = "w-full h-full rounded-xl"
 }) => {
   const { t } = useUI();
   
@@ -88,7 +88,7 @@ const LocationMap = ({
           position={[center.lat, center.lng]}
           icon={L.divIcon({
             className: "custom-leaflet-marker",
-            html: `<div class="w-6 h-6 rounded-full bg-slate-900 dark:bg-white flex items-center justify-center ring-4 ring-slate-900/20 dark:ring-white/20 shadow-xl z-50">
+            html: `<div class="w-6 h-6 rounded-full bg-slate-900 dark:bg-white flex items-center justify-center ring-4 ring-slate-900/20 dark:ring-white/20 z-50">
                      <div class="w-2 h-2 rounded-full bg-white dark:bg-slate-900"></div>
                    </div>`,
             iconSize: [24, 24],
@@ -131,7 +131,7 @@ const LocationMap = ({
       </MapContainer>
       
       {/* Map Overlay Gradient to blend with background smoothly */}
-      <div className="absolute inset-0 pointer-events-none rounded-3xl border border-black/5 dark:border-white/5 z-10" />
+      <div className="absolute inset-0 pointer-events-none rounded-xl border border-black/5 dark:border-white/5 z-10" />
     </div>
   );
 };

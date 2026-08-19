@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { CheckCircle2, MapPin, Truck, Zap } from "lucide-react";
 
 const SERVICE_TYPES = [
   { id: "towing", label: "Çekici Hizmeti", emoji: "🚛" },
-  { id: "tire_change", label: "Lastik Değişimi", emoji: "🔧" },
-  { id: "battery_boost", label: "Akü Takviyesi", emoji: "⚡" },
+  { id: "tire_change", label: "Lastik Değişimi", emoji: "" },
+  { id: "battery_boost", label: "Akü Takviyesi", emoji: "" },
   { id: "fuel_delivery", label: "Yakıt İkmali", emoji: "⛽" },
   { id: "lockout", label: "Araç Açma", emoji: "🔑" },
   { id: "towing_only", label: "Sadece Nakliye", emoji: "🏗️" },

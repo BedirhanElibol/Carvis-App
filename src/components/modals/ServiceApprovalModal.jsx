@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Clock, ShieldCheck, X } from "lucide-react";
  
 import { motion, AnimatePresence } from "framer-motion";
@@ -46,7 +46,7 @@ const ServiceApprovalModal = ({ isOpen, onClose, orderId, orderAmount }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/90 backdrop-blur-3xl">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/90">
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -105,7 +105,7 @@ const ServiceApprovalModal = ({ isOpen, onClose, orderId, orderAmount }) => {
                 <button 
                   onClick={handleApprove}
                   disabled={!proof || isReleasing}
-                  className="flex-[2] py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-white text-black hover:bg-emerald-500 hover:text-slate-900 dark:text-white transition-all shadow-2xl disabled:opacity-30 disabled:grayscale active-scale"
+                  className="flex-[2] py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-white text-black hover:bg-emerald-500 hover:text-slate-900 dark:text-white transition-all disabled:opacity-30 disabled:grayscale active-scale"
                 >
                    {isReleasing ? "İŞLENİYOR..." : "ONAYLA VE ÖDEMEYİ GÖNDER"}
                 </button>

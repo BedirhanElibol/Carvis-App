@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { AlertTriangle, ArrowLeft, ArrowRight, Camera, CheckCircle2, FileText, ShieldCheck, Sparkles, X } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useAI } from "../../context/AIContext";
@@ -34,8 +34,8 @@ const AccidentAssistantModal = ({ show, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-50 dark:bg-slate-950/40 backdrop-blur-2xl animate-in fade-in duration-500">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-xl rounded-t-[2.5rem] sm:rounded-[3rem] border border-black/10 dark:border-white/10 shadow-xl overflow-hidden relative animate-in slide-in-from-bottom-full sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-300 pb-safe max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-50 dark:bg-slate-950/40 animate-in fade-in duration-500">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-xl rounded-t-[2.5rem] sm:rounded-[3rem] border border-black/10 dark:border-white/10 overflow-hidden relative animate-in slide-in-from-bottom-full sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-300 pb-safe max-h-[90vh] flex flex-col">
         {/* Touch Drag Indicator (Mobile Only) */}
         <div className="w-12 h-1.5 bg-black/10 dark:bg-white/10 rounded-full mx-auto mt-4 mb-2 sm:hidden shrink-0"></div>
 
@@ -71,7 +71,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
                   className={cn(
                     "w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-500",
                     step >= s.id
-                      ? "bg-primary-600 border-primary-400 text-slate-900 dark:text-white shadow-xl"
+                      ? "bg-primary-600 border-primary-400 text-slate-900 dark:text-white"
                       : "bg-slate-100 dark:bg-slate-800 border-black/10 dark:border-white/10 text-slate-500",
                   )}
                 >
@@ -100,7 +100,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
         <div className="p-6 sm:p-8 min-h-[350px] overflow-y-auto no-scrollbar overscroll-contain flex-1">
           {step === 1 && (
             <div className="space-y-6 animate-in slide-in-from-right-4 duration-500">
-              <div className="bg-primary-500/5 border border-primary-500/20 p-4 rounded-3xl flex items-start gap-4">
+              <div className="bg-primary-500/5 border border-primary-500/20 p-4 rounded-xl flex items-start gap-4">
                 <AlertTriangle
                   size={24}
                   className="text-primary-400 shrink-0 mt-1"
@@ -113,8 +113,8 @@ const AccidentAssistantModal = ({ show, onClose }) => {
                   Mümkünse araçları trafiği engellemeyecek bir yere çekin.
                 </p>
               </div>
-              <button className="w-full aspect-video bg-black/5 dark:bg-white/5 border-2 border-dashed border-black/10 dark:border-white/10 rounded-[2.5rem] flex flex-col items-center justify-center gap-4 hover:border-primary-500/40 hover:bg-primary-500/5 transition-all active-scale group">
-                <div className="bg-slate-100 dark:bg-slate-800 p-5 rounded-3xl group-hover:scale-110 transition-transform">
+              <button className="w-full aspect-video bg-black/5 dark:bg-white/5 border-2 border-dashed border-black/10 dark:border-white/10 rounded-xl flex flex-col items-center justify-center gap-4 hover:border-primary-500/40 hover:bg-primary-500/5 transition-all active-scale group">
+                <div className="bg-slate-100 dark:bg-slate-800 p-5 rounded-xl group-hover:scale-[1.02] transition-transform">
                   <Camera
                     size={40}
                     className="text-slate-500 group-hover:text-primary-400"
@@ -150,7 +150,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
                   Olay Özeti
                 </label>
                 <textarea
-                  className="w-full bg-slate-100 dark:bg-slate-800 border border-black/5 dark:border-white/5 p-4 rounded-3xl text-sm outline-none focus:border-primary-500/50 transition-all h-32 resize-none font-sans"
+                  className="w-full bg-slate-100 dark:bg-slate-800 border border-black/5 dark:border-white/5 p-4 rounded-xl text-sm outline-none focus:border-primary-500/50 transition-all h-32 resize-none font-sans"
                   placeholder="Kaza nasıl meydana geldi?"
                   value={reportData.description}
                   onChange={(e) =>
@@ -186,7 +186,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
               </div>
               <button
                 onClick={handleStartAnalysis}
-                className="bg-primary-600 text-slate-900 dark:text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary-900/40 active-scale font-sans"
+                className="bg-primary-600 text-slate-900 dark:text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-primary-900/40 active-scale font-sans"
               >
                 {analysisStatus === "analyzing"
                   ? "ANALİZ EDİLİYOR..."
@@ -230,7 +230,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
               </div>
               <button
                 onClick={onClose}
-                className="w-full bg-white text-slate-950 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl active-scale font-sans"
+                className="w-full bg-white text-slate-950 py-4 rounded-2xl font-black text-xs uppercase tracking-widest active-scale font-sans"
               >
                 RAPORU KAYDET VE KAPAT
               </button>
@@ -251,7 +251,7 @@ const AccidentAssistantModal = ({ show, onClose }) => {
             )}
             <button
               onClick={nextStep}
-              className="flex-1 bg-gradient-to-r from-slate-700 to-blue-600 text-slate-900 dark:text-white p-4 rounded-2xl flex items-center justify-center gap-3 font-black text-xs uppercase tracking-widest shadow-xl active-scale font-sans"
+              className="flex-1 bg-gradient-to-r from-slate-700 to-blue-600 text-slate-900 dark:text-white p-4 rounded-2xl flex items-center justify-center gap-3 font-black text-xs uppercase tracking-widest active-scale font-sans"
             >
               İleri <ArrowRight size={20} />
             </button>

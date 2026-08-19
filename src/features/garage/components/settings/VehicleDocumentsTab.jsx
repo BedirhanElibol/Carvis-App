@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Plus, FileText, ExternalLink } from "lucide-react";
 
 const VehicleDocumentsTab = ({
@@ -25,7 +25,7 @@ const VehicleDocumentsTab = ({
       </div>
 
       {showDocForm && (
-        <form onSubmit={handleAddDocSubmit} className="p-6 bg-white dark:bg-slate-900/60 rounded-3xl border border-black/10 dark:border-white/10 space-y-4 animate-in slide-in-from-top-4 duration-300">
+        <form onSubmit={handleAddDocSubmit} className="p-6 bg-white dark:bg-slate-900/60 rounded-xl border border-black/10 dark:border-white/10 space-y-4 animate-in slide-in-from-top-4 duration-300">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase">Belge Adı</label>
@@ -94,7 +94,7 @@ const VehicleDocumentsTab = ({
           </div>
         ) : (
           documents.map((doc) => (
-            <div key={doc.id} className="p-5 bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-black/5 dark:border-white/5 flex flex-col justify-between hover:border-black/10 dark:border-white/10 transition-all relative overflow-hidden group">
+            <div key={doc.id} className="p-5 bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between hover:border-black/10 dark:border-white/10 transition-all relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-24 h-24 bg-primary-600/5 rounded-full blur-2xl"></div>
               <div>
                 <div className="flex justify-between items-start mb-3">

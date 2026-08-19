@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { CheckCircle, CreditCard, Loader2, ShieldCheck, X } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 
@@ -52,8 +52,8 @@ const PaymentModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/90 backdrop-blur-md z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden relative">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/90 z-[70] flex items-center justify-center p-4 animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-xl border border-black/10 dark:border-white/10 overflow-hidden relative">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -161,7 +161,7 @@ const PaymentModal = ({
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-xl shadow-primary-900/50 active-scale flex items-center justify-center gap-2 transition-all font-sans"
+                  className="w-full bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white font-bold py-4 rounded-xl shadow-primary-900/50 active-scale flex items-center justify-center gap-2 transition-all font-sans"
                 >
                   <ShieldCheck size={18} /> Güvenli Öde
                 </button>
@@ -193,7 +193,7 @@ const PaymentModal = ({
 
         {step === "success" && (
           <div className="p-12 flex flex-col items-center text-center">
-            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-xl shadow-green-900/50 animate-in zoom-in">
+            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-green-900/50 animate-in zoom-in">
               <CheckCircle size={40} className="text-slate-900 dark:text-white" />
             </div>
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 font-sans">

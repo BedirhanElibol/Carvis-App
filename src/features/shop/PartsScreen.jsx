@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, ShoppingBag, Car, CircleCheck, Filter, CirclePlus, Heart, ShieldCheck } from 'lucide-react';
 import { getBuyBoxWinner } from '../../utils/productUtils';
@@ -12,7 +12,7 @@ import PartCompatibilityBadge from './components/PartCompatibilityBadge';
 
 const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFavorite, addToCart, setSelectedProduct, winnerOffer }) => {
     return (
-        <div onClick={() => setSelectedProduct(product)} className="glass-card p-3 rounded-[2rem] border border-black/5 dark:border-white/5 shadow-2xl hover:border-primary-500/30 transition-all cursor-pointer group relative active-scale overflow-hidden">
+        <div onClick={() => setSelectedProduct(product)} className="glass-card p-3 rounded-[2rem] border border-black/5 dark:border-white/5 hover:border-primary-500/30 transition-all cursor-pointer group relative active-scale overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
             <div className="absolute top-3 left-3 z-20 flex flex-col gap-1">
@@ -30,7 +30,7 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
                 <Heart size={14} className={isFavorite ? "fill-red-500 text-red-500" : ""} />
             </button>
             <div className="w-full h-36 bg-white dark:bg-slate-900/50 rounded-2xl mb-4 overflow-hidden border border-black/5 dark:border-white/5">
-                <img src={product.img} className="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-90 group-hover:opacity-100" alt={product.name} />
+                <img src={product.img} className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-700 opacity-90 group-hover:opacity-100" alt={product.name} />
             </div>
             <div className="space-y-1 relative z-10 px-1">
                 <p className="text-[9px] text-primary-500 font-black uppercase tracking-[0.15em] mb-0.5">{product.brand}</p>
@@ -135,14 +135,14 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
         <div className="p-5 pb-32 space-y-4 animate-fade-in">
             <div className="flex justify-between items-center mb-4">
                 <h3 className="font-black text-3xl text-slate-900 dark:text-white italic tracking-tighter">{t.parts}</h3>
-                <div onClick={() => navigate('/checkout')} className="relative p-3 glass-card rounded-2xl cursor-pointer hover:bg-black/10 dark:bg-white/10 transition-all active-scale shadow-2xl border border-black/10 dark:border-white/10">
+                <div onClick={() => navigate('/checkout')} className="relative p-3 glass-card rounded-2xl cursor-pointer hover:bg-black/10 dark:bg-white/10 transition-all active-scale border border-black/10 dark:border-white/10">
                     <ShoppingBag size={24} className="text-primary-400" />
                     {cartCount > 0 && <span className="absolute -top-1 -right-1 bg-accent-600 text-slate-900 dark:text-white w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-black ring-2 ring-slate-900 animate-pulse">{cartCount}</span>}
                 </div>
             </div>
 
             {(currentVehicle || isManualFiltering) && (
-                <div className={`glass-card p-4 rounded-3xl border mb-6 flex items-center gap-4 animate-fade-in shadow-xl ${isManualFiltering && !currentVehicle ? 'border-orange-500/20 bg-orange-500/5' : 'border-primary-500/20 bg-primary-600/5'}`}>
+                <div className={`glass-card p-4 rounded-xl border mb-6 flex items-center gap-4 animate-fade-in ${isManualFiltering && !currentVehicle ? 'border-orange-500/20 bg-orange-500/5' : 'border-primary-500/20 bg-primary-600/5'}`}>
                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border shadow-inner ${isManualFiltering && !currentVehicle ? 'bg-orange-600/10 border-orange-500/20' : 'bg-primary-600/10 border-primary-500/20'}`}>
                         <Car size={24} className={isManualFiltering && !currentVehicle ? 'text-orange-500' : 'text-primary-500'} />
                     </div>
@@ -164,11 +164,11 @@ const ProductCard = React.memo(({ product, currentVehicle, isFavorite, toggleFav
             )}
 
             <div className="flex gap-2 mb-6 sticky top-0 z-20 py-2">
-                <div className="flex-1 glass-card border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 shadow-2xl focus-within:border-primary-500/50 transition-all backdrop-blur-xl">
+                <div className="flex-1 glass-card border border-black/10 dark:border-white/10 rounded-2xl flex items-center px-4 py-3.5 focus-within:border-primary-500/50 transition-all">
                     <Search size={20} className="text-slate-500 mr-3" />
                     <input type="text" placeholder="Parça, marka veya kategori ara..." className="bg-transparent w-full outline-none text-sm text-slate-900 dark:text-white placeholder-slate-500 font-medium" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                 </div>
-                <button onClick={() => setShowFilterModal(true)} className={`p-4 rounded-2xl border transition-all active-scale shadow-2xl ${filterCriteria.min || filterCriteria.max || filterCriteria.stock ? 'bg-primary-600 border-primary-500 text-slate-900 dark:text-white' : 'glass-card border-black/10 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}>
+                <button onClick={() => setShowFilterModal(true)} className={`p-4 rounded-2xl border transition-all active-scale ${filterCriteria.min || filterCriteria.max || filterCriteria.stock ? 'bg-primary-600 border-primary-500 text-slate-900 dark:text-white' : 'glass-card border-black/10 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}>
                     <Filter size={22} />
                 </button>
             </div>

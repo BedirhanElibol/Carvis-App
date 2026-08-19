@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Package, X } from "lucide-react";
 import { Badge } from "../Core";
 
@@ -6,8 +6,8 @@ const OrdersModal = ({ show, onClose, t, orders }) => {
   if (!show || !t) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-[85] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in">
-      <div className="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl max-h-[80vh] flex flex-col">
+    <div className="fixed inset-0 bg-black/60 z-[85] flex items-center justify-center p-4 animate-in fade-in">
+      <div className="bg-white w-full max-w-sm rounded-xl p-6 max-h-[80vh] flex flex-col">
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-bold text-xl flex items-center gap-2 font-sans">
             <Package size={22} className="text-orange-600" /> {t.myOrders}

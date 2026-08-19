@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+﻿import React, { memo } from "react";
 import { ChevronRight, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { triggerHaptic } from "../../../utils/haptics";
@@ -26,7 +26,7 @@ const FeaturedDealsPanel = memo(({ t, featuredDeals, showAlert }) => {
         {featuredDeals.map((deal) => (
           <div 
             key={deal.id}
-            className="bg-white dark:bg-[#0a0f24]/80 border border-black/5 dark:border-white/5 rounded-[2.2rem] p-4.5 flex flex-col justify-between hover:border-slate-200 dark:border-white/10 transition-all shadow-xl group relative overflow-hidden backdrop-blur-md"
+            className="bg-white dark:bg-[#0a0f24]/80 border border-black/5 dark:border-white/5 rounded-[2.2rem] p-4.5 flex flex-col justify-between hover:border-slate-200 dark:border-white/10 transition-all group relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl pointer-events-none"></div>
             
@@ -34,12 +34,12 @@ const FeaturedDealsPanel = memo(({ t, featuredDeals, showAlert }) => {
               <img 
                 src={deal.image} 
                 alt={deal.title} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500" 
               />
-              <span className="absolute top-2 left-2 px-2.5 py-1 rounded-lg bg-cyan-500/80 backdrop-blur-sm text-[8px] font-black uppercase text-slate-900 dark:text-white tracking-widest shadow-md">
+              <span className="absolute top-2 left-2 px-2.5 py-1 rounded-lg bg-cyan-500/80 text-[8px] font-black uppercase text-slate-900 dark:text-white tracking-widest shadow-md">
                 {deal.badge}
               </span>
-              <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm text-[8px] font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1">
+              <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/60 text-[8px] font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1">
                 <Star size={10} className="text-yellow-400 fill-yellow-400" />
                 {deal.rating} ({deal.reviewsCount})
               </div>

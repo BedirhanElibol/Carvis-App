@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+﻿import React, { useState, useEffect, useCallback } from "react";
 import { ArrowLeft, Car, Fuel, Loader2, Plus, Trash2, X } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
@@ -208,7 +208,7 @@ const FuelScreen = () => {
             </div>
           ) : logs.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 opacity-60">
-              <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-[2.5rem] flex items-center justify-center border border-black/5 dark:border-white/5 shadow-2xl mb-4">
+              <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center border border-black/5 dark:border-white/5 mb-4">
                 <Fuel size={32} className="text-slate-500" />
               </div>
               <p className="text-sm font-black uppercase tracking-[0.1em] text-slate-500">
@@ -218,7 +218,7 @@ const FuelScreen = () => {
           ) : (
             <div className="space-y-4">
               {logs.map((log) => (
-                <div key={log.id} className="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-black/5 dark:border-white/5 shadow-lg relative group overflow-hidden">
+                <div key={log.id} className="bg-white dark:bg-slate-900 rounded-xl p-5 border border-black/5 dark:border-white/5 shadow-lg relative group overflow-hidden">
                   <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
                      <button onClick={() => deleteLog(log.id)} className="text-red-500 hover:text-red-600 bg-red-50 dark:bg-red-500/10 p-2 rounded-xl">
                         <Trash2 size={16} />
@@ -261,8 +261,8 @@ const FuelScreen = () => {
 
       {/* Add Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-[2.5rem] p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+        <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-xl p-6 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
             <button 
               onClick={() => setShowAddModal(false)}
               className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 bg-slate-100 dark:bg-slate-800 p-2 rounded-full"

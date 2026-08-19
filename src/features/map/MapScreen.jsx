@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+﻿import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { AlertOctagon, AlertTriangle, Camera, ChevronLeft, CircleDollarSign, Layers, LocateFixed, MapPin, MessageCircle, Navigation, Phone, Search, Shield, ShieldCheck, Star, Truck, Users, Wrench, X, XCircle, Zap } from "lucide-react";
 import { useMap } from "../../context/MapContext";
@@ -206,7 +206,7 @@ const MapScreen = () => {
 
       {/* --- EXPERT SEARCH OVERLAY --- */}
       {loadingMap && (
-        <div className="absolute inset-0 z-20 bg-slate-50 dark:bg-slate-950/40 backdrop-blur-sm flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 z-20 bg-slate-50 dark:bg-slate-950/40 flex items-center justify-center pointer-events-none">
           <div className="glass-card px-6 py-4 rounded-2xl border border-black/10 dark:border-white/10 flex items-center gap-4 animate-in fade-in zoom-in duration-300">
             <div className="w-5 h-5 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
             <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">
@@ -224,7 +224,7 @@ const MapScreen = () => {
         >
           <ChevronLeft size={24} />
         </button>
-        <div className="flex-1 glass-card rounded-2xl border border-black/10 dark:border-white/10 flex items-center px-4 backdrop-blur-3xl shadow-2xl">
+        <div className="flex-1 glass-card rounded-2xl border border-black/10 dark:border-white/10 flex items-center px-4">
           <Search size={18} className="text-slate-500 dark:text-slate-400 mr-3" />
           <input
             type="text"
@@ -239,10 +239,10 @@ const MapScreen = () => {
         <div className="absolute bottom-32 right-5 z-30 flex flex-col gap-4">
           <button
             onClick={() => setIsDriveMode(!isDriveMode)}
-            className={`w-16 h-16 rounded-[2rem] flex flex-col items-center justify-center active-scale border-4 transition-all shadow-xl group ${
+            className={`w-16 h-16 rounded-[2rem] flex flex-col items-center justify-center active-scale border-4 transition-all group ${
               isDriveMode 
-                ? "bg-emerald-500 text-slate-900 border-black/20 dark:border-white/20 shadow-xl" 
-                : "bg-black/80 dark:bg-white/10 text-white border-transparent backdrop-blur-xl hover:bg-black"
+                ? "bg-emerald-500 text-slate-900 border-black/20 dark:border-white/20" 
+                : "bg-black/80 dark:bg-white/10 text-white border-transparent hover:bg-black"
             }`}
           >
             <Navigation size={20} className={isDriveMode ? "animate-pulse" : ""} />
@@ -251,7 +251,7 @@ const MapScreen = () => {
 
           <button
             onClick={() => setShowSOSPanel(true)}
-            className="w-16 h-16 bg-red-600 text-slate-900 dark:text-white rounded-[2rem] shadow-xl flex flex-col items-center justify-center active-scale border-4 border-black/20 dark:border-white/20 group hover:bg-red-500 transition-all"
+            className="w-16 h-16 bg-red-600 text-slate-900 dark:text-white rounded-[2rem] flex flex-col items-center justify-center active-scale border-4 border-black/20 dark:border-white/20 group hover:bg-red-500 transition-all"
           >
             <AlertTriangle size={20} className="group-hover:animate-bounce" />
             <span className="text-[10px] font-black mt-1">SOS</span>
@@ -268,12 +268,12 @@ const MapScreen = () => {
             exit={{ opacity: 0, y: -50 }}
             className="absolute top-24 left-5 right-5 z-20 pointer-events-none flex flex-col items-center"
           >
-            <div className={`glass-card rounded-[2rem] px-6 py-4 border-2 flex items-center justify-between gap-6 backdrop-blur-3xl shadow-2xl transition-colors duration-500 ${
+            <div className={`glass-card rounded-[2rem] px-6 py-4 border-2 flex items-center justify-between gap-6 transition-colors duration-500 ${
               closestEDS && closestEDS.distanceMeters < 500 
-                ? "border-red-500 bg-red-500/10 shadow-xl" 
+                ? "border-red-500 bg-red-500/10" 
                 : closestEDS && closestEDS.distanceMeters < 1000 
-                ? "border-orange-500 bg-orange-500/10 shadow-xl"
-                : "border-emerald-500/30 bg-emerald-500/5 shadow-xl"
+                ? "border-orange-500 bg-orange-500/10"
+                : "border-emerald-500/30 bg-emerald-500/5"
             }`}>
               
               <div className="flex flex-col items-center justify-center border-r border-black/10 dark:border-white/10 pr-6">
@@ -318,7 +318,7 @@ const MapScreen = () => {
             
             {/* Screen edge glowing warning if extremely close */}
             {closestEDS && closestEDS.distanceMeters < 500 && (
-              <div className="fixed inset-0 pointer-events-none shadow-xl z-0 animate-pulse" />
+              <div className="fixed inset-0 pointer-events-none z-0 animate-pulse" />
             )}
           </motion.div>
         )}
@@ -327,7 +327,7 @@ const MapScreen = () => {
       {/* --- PROVIDER DETAIL PANEL --- */}
       {selectedProvider && !activeSOS && (
         <div className="absolute bottom-10 left-5 right-5 z-40 animate-in slide-in-from-bottom-5">
-          <div className="glass-card bg-white dark:bg-slate-900/90 backdrop-blur-3xl border border-black/20 dark:border-white/20 p-6 rounded-[2.5rem] shadow-2xl overflow-hidden relative">
+          <div className="glass-card bg-white dark:bg-slate-900/90 border border-black/20 dark:border-white/20 p-6 rounded-xl overflow-hidden relative">
             <div className={`absolute top-0 right-0 w-32 h-32 opacity-10 bg-gradient-to-br blur-3xl ${
               selectedProvider.role === "valet" ? "from-blue-500" :
               selectedProvider.role === "parking" ? "from-emerald-500" :
@@ -342,7 +342,7 @@ const MapScreen = () => {
             </button>
 
             <div className="flex items-start gap-4 mb-6 relative z-10">
-              <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-slate-900 dark:text-white border border-black/10 dark:border-white/10 shadow-xl overflow-hidden">
+              <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-slate-900 dark:text-white border border-black/10 dark:border-white/10 overflow-hidden">
                 <img 
                   src={selectedProvider.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${selectedProvider.full_name}`} 
                   className="w-full h-full object-cover"
@@ -410,7 +410,7 @@ const MapScreen = () => {
               </button>
               <button
                 onClick={() => selectedProvider?.id && navigate(`/messages/${selectedProvider.id}`)}
-                className="bg-primary-600 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active-scale shadow-xl shadow-primary-900/20"
+                className="bg-primary-600 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 active-scale shadow-primary-900/20"
               >
                 <MessageCircle size={18} /> MESAJ AT
               </button>
@@ -423,10 +423,10 @@ const MapScreen = () => {
       {showSOSPanel && (
         <div className="absolute inset-0 z-50 flex items-end animate-in fade-in duration-300">
           <div
-            className="absolute inset-0 bg-red-950/20 backdrop-blur-md"
+            className="absolute inset-0 bg-red-950/20"
             onClick={() => setShowSOSPanel(false)}
           ></div>
-          <div className="w-full bg-white dark:bg-slate-900 border-t-4 border-red-600 rounded-t-[3rem] p-8 pb-12 relative shadow-xl z-10 animate-in slide-in-from-bottom-20 duration-500">
+          <div className="w-full bg-white dark:bg-slate-900 border-t-4 border-red-600 rounded-t-[3rem] p-8 pb-12 relative z-10 animate-in slide-in-from-bottom-20 duration-500">
             <div className="w-12 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full mx-auto mb-8 opacity-50"></div>
             <h2 className="text-2xl font-black tracking-tighter uppercase text-center mb-2">
               ACİL YARDIM ÇAĞRISI
@@ -467,7 +467,7 @@ const MapScreen = () => {
                   className="bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 p-6 rounded-[2rem] flex flex-col items-center justify-center gap-4 transition-all active-scale hover:bg-black/10 dark:bg-white/10 group"
                 >
                   <div
-                    className={`p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 ${item.color} group-hover:scale-110 transition-transform shadow-inner`}
+                    className={`p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 ${item.color} group-hover:scale-[1.02] transition-transform shadow-inner`}
                   >
                     <item.icon size={32} />
                   </div>
@@ -492,7 +492,7 @@ const MapScreen = () => {
       <AnimatePresence>
         {activeSOS && (
           <div className="absolute bottom-6 left-5 right-5 z-40">
-            <div className="glass-card bg-slate-50 dark:bg-slate-950/95 border-2 border-red-500 p-6 rounded-[2.5rem] shadow-2xl relative space-y-5 overflow-hidden">
+            <div className="glass-card bg-slate-50 dark:bg-slate-950/95 border-2 border-red-500 p-6 rounded-xl relative space-y-5 overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-600 via-orange-500 to-red-600 animate-pulse"></div>
               
               <div className="flex flex-col items-center justify-center py-4 text-center">

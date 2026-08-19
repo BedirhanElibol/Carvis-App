@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { MessageSquare, Star, Wrench } from "lucide-react";
 
 import ReviewsModal from "./modals/ReviewsModal";
@@ -29,12 +29,12 @@ export const SpecialistCard = ({ specialist }) => {
   const isVerified = specialist.is_verified || specialist.verified || true;
 
   return (
-    <div className="glass-card p-6 rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl mb-5 mx-1 relative overflow-hidden group hover:border-primary-500/30 transition-all active-scale-[0.98]">
+    <div className="glass-card p-6 rounded-xl border border-black/10 dark:border-white/10 mb-5 mx-1 relative overflow-hidden group hover:border-primary-500/30 transition-all active-scale-[0.98]">
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 rounded-full blur-3xl group-hover:bg-primary-600/10 transition-colors"></div>
       
       <div className="flex justify-between items-start mb-6 relative z-10">
         <div className="flex gap-4 items-center">
-          <div className="w-14 h-14 bg-gradient-to-tr from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center border border-black/5 dark:border-white/5 shadow-xl">
+          <div className="w-14 h-14 bg-gradient-to-tr from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center border border-black/5 dark:border-white/5">
              <Wrench size={24} className="text-primary-400" />
           </div>
           <div>
@@ -61,7 +61,7 @@ export const SpecialistCard = ({ specialist }) => {
       </div>
 
       <div className="flex gap-3 relative z-10">
-        <button className="flex-1 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest active-scale transition-all shadow-xl shadow-primary-900/20">
+        <button className="flex-1 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest active-scale transition-all shadow-primary-900/20">
           {specialist.price ? `Hemen Çağır - ${specialist.price}` : t.requestQuote}
         </button>
         <button 
@@ -125,7 +125,7 @@ export const RapidsyLogoIcon = ({ className }) => (
 export const ModernCard = ({ children, className, onClick }) => (
   <div
     onClick={onClick}
-    className={`glass-card border border-black/10 dark:border-white/10 p-5 rounded-3xl shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 cursor-pointer ${className}`}
+    className={`glass-card border border-black/10 dark:border-white/10 p-5 rounded-xl hover:shadow-primary-500/20 transition-all duration-500 cursor-pointer ${className}`}
   >
     {children}
   </div>
@@ -148,7 +148,7 @@ export const ActionButton = ({
   return (
     <button
       onClick={onClick}
-      className={`${colors[color]} text-slate-900 dark:text-white p-5 rounded-[2rem] shadow-xl flex flex-col items-center justify-center gap-2 flex-1 hover:scale-[1.03] active:scale-95 transition-all duration-300`}
+      className={`${colors[color]} text-slate-900 dark:text-white p-5 rounded-[2rem] flex flex-col items-center justify-center gap-2 flex-1 hover:scale-[1.03] active:scale-95 transition-all duration-300`}
     >
       <div className="p-2 bg-black/10 dark:bg-white/10 rounded-xl">
         <Icon size={22} className="text-slate-900 dark:text-white" />
@@ -183,7 +183,7 @@ export const RapidsyLogo = ({ className = "w-64 h-auto" }) => (
     <img
       src={logo}
       alt="Rapidsy Logo"
-      className="h-6 md:h-8 w-auto p-1 md:p-1.5 object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
+      className="h-6 md:h-8 w-auto p-1 md:p-1.5 object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-[1.01]"
     />
   </div>
 );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { CreditCard, Inbox, Loader2, Package } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
@@ -79,13 +79,13 @@ const PackageStore = () => {
           key={pkg.id}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-card rounded-[2.5rem] border border-black/10 dark:border-white/10 overflow-hidden relative group shadow-2xl"
+          className="glass-card rounded-xl border border-black/10 dark:border-white/10 overflow-hidden relative group"
         >
           {/* Header Image/Gradient */}
           <div className="h-32 bg-gradient-to-br from-primary-600/40 to-accent-600/40 relative">
-            <div className="absolute inset-0 backdrop-blur-sm"></div>
+            <div className="absolute inset-0"></div>
             <div className="absolute bottom-4 left-6 flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-black/10 dark:bg-white/10 backdrop-blur-md border border-black/20 dark:border-white/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-2xl bg-black/10 dark:bg-white/10 border border-black/20 dark:border-white/20 flex items-center justify-center">
                 <Package size={24} className="text-slate-900 dark:text-white" />
               </div>
               <div>
@@ -95,7 +95,7 @@ const PackageStore = () => {
                 </p>
               </div>
             </div>
-            <div className="absolute top-4 right-6 bg-slate-50 dark:bg-slate-950/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10">
+            <div className="absolute top-4 right-6 bg-slate-50 dark:bg-slate-950/50 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10">
               <span className="text-[10px] font-black text-teal-400 uppercase tracking-widest">
                 {pkg.validity_months} AY GEÇERLİ
               </span>
@@ -139,7 +139,7 @@ const PackageStore = () => {
       ))}
 
       {packages.length === 0 && (
-        <div className="text-center py-20 bg-black/5 dark:bg-white/5 rounded-[2.5rem] border border-dashed border-black/10 dark:border-white/10">
+        <div className="text-center py-20 bg-black/5 dark:bg-white/5 rounded-xl border border-dashed border-black/10 dark:border-white/10">
           <Inbox size={40} className="mx-auto text-slate-600 mb-4" />
           <p className="text-sm font-bold text-slate-500">Şu an aktif servis paketi bulunmamaktadır.</p>
         </div>

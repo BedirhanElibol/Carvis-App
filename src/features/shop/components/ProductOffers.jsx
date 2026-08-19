@@ -1,10 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 import { SlidersHorizontal } from 'lucide-react';
 import { Badge } from '../../../components/Core';
 
 const ProductOffers = ({ scoredOffers, t }) => {
     return (
-        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-2xl space-y-4">
+        <div className="bg-white p-6 rounded-xl border border-slate-100 space-y-4">
             <h4 className="font-bold text-xl text-slate-800 flex items-center gap-2"><SlidersHorizontal size={20} /> Tüm Satıcı Teklifleri</h4>
             <div className="space-y-3">
                 {scoredOffers.map(offer => (

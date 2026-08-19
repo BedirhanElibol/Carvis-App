@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Wrench, Calendar, DollarSign, Star, Clock, CheckCircle2, ChevronRight, User, Settings, Shield, Plus, X, AlertCircle, Phone, Navigation, Volume2, BellRing } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -214,7 +214,7 @@ export default function MechanicDashboardView({ currentUser }) {
     <div className="space-y-8 font-sans text-slate-100">
       {/* Realtime Siren Flash Alert Banner for New Customer Orders */}
       {newJobAlert && (
-        <div className="bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 border-2 border-amber-300 p-5 rounded-3xl shadow-2xl animate-pulse flex items-center justify-between gap-4 text-white">
+        <div className="bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 border-2 border-amber-300 p-5 rounded-xl animate-pulse flex items-center justify-between gap-4 text-white">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-white/20 rounded-2xl animate-bounce">
               <BellRing size={28} className="text-amber-300" />
@@ -239,7 +239,7 @@ export default function MechanicDashboardView({ currentUser }) {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter glow-orange">Oto Servis & Bakım Paneli</h1>
+          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter">Oto Servis & Bakım Paneli</h1>
           <p className="text-slate-400 text-xs mt-1">İş emirleri oluşturun ve aktif randevularınızı yönetin.</p>
         </div>
         <div className="flex gap-2">
@@ -260,7 +260,7 @@ export default function MechanicDashboardView({ currentUser }) {
           { label: "Toplam Hasılat", value: `₺${stats.monthlyEarnings.toLocaleString("tr-TR")}`, icon: DollarSign, color: "text-emerald-400", bg: "bg-emerald-500/10" },
           { label: "Müşteri Puanı", value: `${stats.rating} / 5.0`, icon: Star, color: "text-amber-400", bg: "bg-amber-500/10" },
         ].map((s) => (
-          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-3xl flex items-center justify-between shadow-sm hover:border-white/10 transition-all duration-300">
+          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-xl flex items-center justify-between shadow-sm hover:border-white/10 transition-all duration-300">
             <div>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{s.label}</p>
               <h3 className="text-2xl font-mono font-black text-white mt-1.5">{s.value}</h3>
@@ -304,7 +304,7 @@ export default function MechanicDashboardView({ currentUser }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Repair Jobs List */}
-        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 lg:col-span-2 space-y-6">
+        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 lg:col-span-2 space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">
               {activeTab === "active" ? "Aktif Servis & İş Emirleri" : "Tamamlanan İş Emirleri"}
@@ -361,7 +361,7 @@ export default function MechanicDashboardView({ currentUser }) {
         </div>
 
         {/* Appointments List */}
-        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">
               {activeTab === "active" ? "Randevu İstekleri" : "Geçmiş Randevular"}
@@ -440,8 +440,8 @@ export default function MechanicDashboardView({ currentUser }) {
 
       {/* Modal: İş Emri Ekle */}
       {isOrderModalOpen && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="bg-slate-900 border border-white/10 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-white/10 w-full max-w-md rounded-xl p-6 relative">
             <button onClick={() => setIsOrderModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white cursor-pointer">
               <X size={20} />
             </button>

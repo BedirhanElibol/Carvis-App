@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useMessage } from "../../context/MessageContext";
 import { ChevronRight, Loader2, MessageSquare, Search } from "lucide-react";
 import ChatWindow from "./ChatWindow";
@@ -26,13 +26,13 @@ const MessageListScreen = () => {
     <div className="h-[calc(100vh-80px)] md:h-[calc(100vh-64px)] flex bg-slate-50 dark:bg-slate-950 overflow-hidden relative">
       {/* Context Background */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-900/10 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-900/10 rounded-full blur-[120px]"></div>
+        
+        
       </div>
 
       {/* Sidebar (Conversation List) */}
       <div
-        className={` w-full md:w-96 bg-white dark:bg-slate-900/50 backdrop-blur-xl border-r border-black/5 dark:border-white/5 flex flex-col z-10 transition-transform duration-300 absolute md:relative inset-0 ${
+        className={` w-full md:w-96 bg-white dark:bg-slate-900/50 border-r border-black/5 dark:border-white/5 flex flex-col z-10 transition-transform duration-300 absolute md:relative inset-0 ${
           mobileChatOpen
             ? "-translate-x-full md:translate-x-0"
             : "translate-x-0"

@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { motion } from "framer-motion";
 import { Check, ShieldAlert } from "lucide-react";
 
@@ -243,7 +243,7 @@ const PlansAndTrustStep = ({
       </div>
 
       {/* Plan Display Card */}
-      <div className="bg-slate-50 dark:bg-slate-950 border border-black/5 dark:border-white/5 rounded-3xl p-6 text-left max-w-xl mx-auto relative overflow-hidden transition-all duration-300">
+      <div className="bg-slate-50 dark:bg-slate-950 border border-black/5 dark:border-white/5 rounded-xl p-6 text-left max-w-xl mx-auto relative overflow-hidden transition-all duration-300">
         <div className="absolute top-6 right-6 px-3 py-1 rounded-xl bg-primary-600/15 border border-primary-500/20 text-primary-400 text-[8px] font-black uppercase tracking-widest">
           {selectedPlanTab === "free" ? "Başlangıç" : selectedPlanTab === "pro" ? "Hacimli İşler" : "Zirve & Liderlik"}
         </div>
@@ -277,13 +277,13 @@ const PlansAndTrustStep = ({
         
         {selectedPlanTab === "free" && (
           <div className="mt-6 text-center bg-emerald-500/5 border border-emerald-500/10 text-teal-400 text-[10px] font-black uppercase tracking-widest py-3.5 rounded-2xl font-sans">
-            🚀 Başvurunuz Sonrası Bu Ücretsiz Planla Başlayacaksınız!
+            Başvurunuz Sonrası Bu Ücretsiz Planla Başlayacaksınız!
           </div>
         )}
       </div>
 
       {/* Terms and Conditions / Trust Network Agreement */}
-      <div className="space-y-4 max-w-xl mx-auto bg-black/20 border border-black/5 dark:border-white/5 rounded-3xl p-6 text-left">
+      <div className="space-y-4 max-w-xl mx-auto bg-black/20 border border-black/5 dark:border-white/5 rounded-xl p-6 text-left">
         <h5 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
           <ShieldAlert size={14} className="text-primary-500" /> Güvenlik ve Katılım Koşulları
         </h5>
@@ -356,7 +356,7 @@ const PlansAndTrustStep = ({
         <button 
           onClick={handleSubmit}
           disabled={isSubmitting || !acceptedTerms || !acceptedTrust || !acceptedBank}
-          className={`px-8 py-3 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl flex items-center gap-2 ${
+          className={`px-8 py-3 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center gap-2 ${
             (acceptedTerms && acceptedTrust && acceptedBank) 
               ? "bg-teal-500 hover:bg-emerald-500 shadow-teal-500/20"
               : "bg-slate-100 dark:bg-slate-800 text-slate-500 cursor-not-allowed opacity-50"

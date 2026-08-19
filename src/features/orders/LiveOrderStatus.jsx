@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, Clock, Wrench, Package, Truck, Droplet, Star, MapPin, Navigation, Compass } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
@@ -144,7 +144,7 @@ const LiveOrderStatus = ({ order }) => {
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-800"
+            className="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-100 dark:border-slate-800"
         >
             <div className="flex justify-between items-start mb-6">
                 <div>
@@ -243,7 +243,7 @@ const LiveOrderStatus = ({ order }) => {
                                     </MapContainer>
                                     
                                     {/* Premium Map Edge Shadow Overlay */}
-                                    <div className="absolute inset-0 pointer-events-none shadow-xl z-[400]"></div>
+                                    <div className="absolute inset-0 pointer-events-none z-[400]"></div>
                                 </div>
                             </motion.div>
                         )}

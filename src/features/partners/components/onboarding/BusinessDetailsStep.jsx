@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { motion } from "framer-motion";
 import { Briefcase, Phone, FileText } from "lucide-react";
 
@@ -83,7 +83,7 @@ const BusinessDetailsStep = ({
         </button>
         <button 
           onClick={handleNext}
-          className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl active-scale"
+          className="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all active-scale"
         >
           DEVAM ET
         </button>

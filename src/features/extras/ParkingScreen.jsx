@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ParkingCircle, MapPin, Clock, Star, ChevronRight, Search, Filter } from "lucide-react";
 import { supabase } from "../../supabaseClient";
@@ -99,7 +99,7 @@ export default function ParkingScreen() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white pb-32">
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-white/80 dark:bg-[#0a0f24]/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5 px-5 py-4">
+      <div className="sticky top-0 z-20 bg-white/80 dark:bg-[#0a0f24]/80 border-b border-black/5 dark:border-white/5 px-5 py-4">
         <div className="flex items-center gap-3 mb-4">
           <button
             onClick={() => navigate(-1)}
@@ -151,7 +151,7 @@ export default function ParkingScreen() {
           return (
             <div
               key={lot.id}
-              className="bg-white dark:bg-[#0a0f24]/85 border border-black/5 dark:border-white/5 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+              className="bg-white dark:bg-[#0a0f24]/85 border border-black/5 dark:border-white/5 rounded-xl p-5 shadow-sm hover:shadow-md transition-all group cursor-pointer"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-3 flex-1 min-w-0">

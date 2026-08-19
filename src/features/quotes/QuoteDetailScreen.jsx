@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuote } from "../../context/QuoteContext";
 import { useUI } from "../../context/UIContext";
@@ -117,7 +117,7 @@ const QuoteDetailScreen = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
@@ -145,7 +145,7 @@ const QuoteDetailScreen = () => {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <span className="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold">
-                  🛡️
+                  
                 </span>
                 <div>
                   <h3 className="font-black text-sm uppercase tracking-tight text-emerald-600 dark:text-emerald-400">
@@ -206,7 +206,7 @@ const QuoteDetailScreen = () => {
           });
 
           return (
-            <div className="p-4 rounded-3xl bg-slate-900 border border-teal-500/30 text-white flex items-center justify-between gap-4 shadow-xl">
+            <div className="p-4 rounded-xl bg-slate-900 border border-teal-500/30 text-white flex items-center justify-between gap-4">
               <div>
                 <span className="text-[9px] font-black uppercase text-teal-400 tracking-widest block">
                   {arabamEval.fairDealBadgeText}
@@ -548,7 +548,7 @@ const QuoteDetailScreen = () => {
                 onClick={() => navigate(`/payment/${quote.id}`)}
                 className="bg-primary-500 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-slate-900 dark:text-white active-scale"
               >
-                💳 Ödeme Yap
+                Ödeme Yap
               </button>
               <button
                 onClick={() => navigate("/appointments")}

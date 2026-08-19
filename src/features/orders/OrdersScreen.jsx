@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, CheckCircle, Clock, RefreshCw, ShieldCheck, ShoppingBag, Star, Wrench, XCircle } from "lucide-react";
 import { supabase } from "../../supabaseClient";
@@ -131,7 +131,7 @@ const OrdersScreen = () => {
       />
 
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
@@ -193,7 +193,7 @@ const OrdersScreen = () => {
               <div
                 key={order.id}
                 onClick={() => setSelectedOrder(order)}
-                className="glass-card p-5 rounded-3xl border border-black/5 dark:border-white/5 cursor-pointer hover:border-primary-500/30 transition-all group overflow-hidden relative"
+                className="glass-card p-5 rounded-xl border border-black/5 dark:border-white/5 cursor-pointer hover:border-primary-500/30 transition-all group overflow-hidden relative"
               >
                 {/* Gradient highlight for active orders */}
                 {(order.status === "diagnosing" ||

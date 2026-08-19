@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+﻿import React, { useState, useEffect, useMemo } from "react";
 import { Building2, Loader2, MapPinned, ShieldCheck } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
@@ -162,7 +162,7 @@ const PartnerSettingsScreen = () => {
 
   return (
     <div className="space-y-8 pb-24">
-      <section className="glass-card rounded-[2.5rem] border border-black/5 dark:border-white/5 p-8 relative overflow-hidden">
+      <section className="glass-card rounded-xl border border-black/5 dark:border-white/5 p-8 relative overflow-hidden">
         <div className="absolute top-[-60px] right-[-60px] w-48 h-48 bg-primary-500/15 rounded-full blur-3xl" />
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>

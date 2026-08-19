@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { AlertTriangle, Loader2, Truck } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useUI } from "../../context/UIContext";
@@ -69,12 +69,12 @@ const SOSWidget = ({ userId, currentVehicle }) => {
   }
 
   return (
-    <div className="bg-red-500/10 border border-red-500/20 p-6 rounded-[2.5rem] relative overflow-hidden group">
+    <div className="bg-red-500/10 border border-red-500/20 p-6 rounded-xl relative overflow-hidden group">
       <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
       
       <div className="relative z-10 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-red-600 flex items-center justify-center text-slate-900 dark:text-white shadow-xl shadow-red-900/40 group-hover:scale-110 transition-transform duration-500">
+          <div className="w-12 h-12 rounded-2xl bg-red-600 flex items-center justify-center text-slate-900 dark:text-white shadow-red-900/40 group-hover:scale-[1.02] transition-transform duration-500">
             <AlertTriangle size={24} className="animate-pulse" />
           </div>
           <div>

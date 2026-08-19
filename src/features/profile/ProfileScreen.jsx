@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AlertCircle, CalendarDays, Car, ClipboardList, Heart, Loader2, LogIn, LogOut, MapPin, Package, Phone, Settings, ShoppingBag, Trash2, User, X, Mail, Edit3 } from "lucide-react";
 import { triggerHaptic } from "../../utils/haptics";
@@ -92,7 +92,7 @@ const ProfileScreen = () => {
 
   return (
     <div className="p-5 space-y-5 pb-32 animate-fade-in relative">
-      <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-primary-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+      
 
       <VehicleProSettings 
         isOpen={showProSettings} 
@@ -113,16 +113,16 @@ const ProfileScreen = () => {
         </div>
         <button
           onClick={() => setShowSettings(true)}
-          className="p-3 glass-card rounded-2xl hover:bg-black/10 dark:bg-white/10 shadow-2xl transition-all border border-black/10 dark:border-white/10 active-scale"
+          className="p-3 glass-card rounded-2xl hover:bg-black/10 dark:bg-white/10 transition-all border border-black/10 dark:border-white/10 active-scale"
         >
           <Settings size={22} className="text-slate-500 dark:text-slate-400" />
         </button>
       </div>
 
       {/* PROFILE CARD */}
-      <div className="glass-card p-6 rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl flex items-center gap-5 relative overflow-hidden group">
+      <div className="glass-card p-6 rounded-xl border border-black/10 dark:border-white/10 flex items-center gap-5 relative overflow-hidden group">
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-        <div className="w-20 h-20 bg-gradient-to-tr from-primary-600 to-accent-600 rounded-[2rem] flex items-center justify-center text-slate-900 dark:text-white shadow-xl p-0.5 border border-black/20 dark:border-white/20 relative shrink-0">
+        <div className="w-20 h-20 bg-gradient-to-tr from-primary-600 to-accent-600 rounded-[2rem] flex items-center justify-center text-slate-900 dark:text-white p-0.5 border border-black/20 dark:border-white/20 relative shrink-0">
           {userPhoto ? (
             <img
               src={userPhoto}
@@ -163,7 +163,7 @@ const ProfileScreen = () => {
       {isLoggedIn && !profileStatus.isComplete && (
         <div 
           onClick={() => setShowSettings(true)}
-          className="glass-card p-4 rounded-[1.8rem] border border-amber-500/30 bg-amber-500/10 shadow-xl flex items-center justify-between gap-3 cursor-pointer hover:bg-amber-500/20 transition-all active-scale"
+          className="glass-card p-4 rounded-[1.8rem] border border-amber-500/30 bg-amber-500/10 flex items-center justify-between gap-3 cursor-pointer hover:bg-amber-500/20 transition-all active-scale"
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
@@ -184,7 +184,7 @@ const ProfileScreen = () => {
 
       {/* PERSONAL INFO SECTION — only for logged-in users */}
       {isLoggedIn && (
-        <div className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 shadow-xl space-y-1">
+        <div className="glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 space-y-1">
           <div className="flex justify-between items-center mb-3">
             <span className="text-[9px] font-black uppercase tracking-widest text-cyan-400 font-mono">KİŞİSEL BİLGİLER</span>
             <button
@@ -210,7 +210,7 @@ const ProfileScreen = () => {
 
       {/* GUEST CTA — only for non-logged-in users */}
       {!isLoggedIn && (
-        <div className="glass-card p-6 rounded-[2rem] border border-accent-500/20 shadow-xl text-center space-y-4 bg-gradient-to-br from-accent-500/5 to-transparent">
+        <div className="glass-card p-6 rounded-[2rem] border border-accent-500/20 text-center space-y-4 bg-gradient-to-br from-accent-500/5 to-transparent">
           <div className="w-16 h-16 bg-accent-500/10 rounded-2xl flex items-center justify-center mx-auto border border-accent-500/20">
             <LogIn size={28} className="text-accent-500" />
           </div>
@@ -220,7 +220,7 @@ const ProfileScreen = () => {
           </div>
           <button
             onClick={() => setShowLoginModal(true)}
-            className="w-full bg-accent-600 hover:bg-accent-500 text-white py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active-scale shadow-xl flex items-center justify-center gap-2"
+            className="w-full bg-accent-600 hover:bg-accent-500 text-white py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active-scale flex items-center justify-center gap-2"
           >
             <LogIn size={18} /> GİRİŞ YAP / KAYIT OL
           </button>
@@ -235,7 +235,7 @@ const ProfileScreen = () => {
 
       {/* ACTIVE VEHICLE COCKPIT CARD */}
       {isLoggedIn && currentVehicle && (
-        <div className="glass-card p-5 rounded-[2rem] border border-black/10 dark:border-white/10 shadow-xl bg-gradient-to-r from-cyan-500/10 via-sky-500/5 to-transparent relative overflow-hidden">
+        <div className="glass-card p-5 rounded-[2rem] border border-black/10 dark:border-white/10 bg-gradient-to-r from-cyan-500/10 via-sky-500/5 to-transparent relative overflow-hidden">
           <div className="flex justify-between items-center">
             <div>
               <span className="text-[9px] font-black uppercase tracking-widest text-cyan-400 font-mono">SEÇİLİ ARAÇ KOKPİTİ</span>
@@ -261,7 +261,7 @@ const ProfileScreen = () => {
               <button
                 key={idx}
                 onClick={card.onClick}
-                className={`glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 ${colors.hover} transition-all text-left group shadow-xl active-scale relative overflow-hidden`}
+                className={`glass-card p-5 rounded-[2rem] border border-black/5 dark:border-white/5 ${colors.hover} transition-all text-left group active-scale relative overflow-hidden`}
               >
                 <div className={`${colors.bg} w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border ${colors.border}`}>
                   <card.icon size={24} className={colors.text} />
@@ -286,7 +286,7 @@ const ProfileScreen = () => {
               triggerHaptic("impact");
               handleLogout();
             }}
-            className="w-full glass-card border-slate-500/30 text-slate-500 dark:text-slate-400 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-black/5 dark:bg-white/5 transition-all active-scale shadow-2xl flex items-center justify-center gap-3"
+            className="w-full glass-card border-slate-500/30 text-slate-500 dark:text-slate-400 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-black/5 dark:bg-white/5 transition-all active-scale flex items-center justify-center gap-3"
           >
             <LogOut size={20} /> {t.logout}
           </button>
@@ -296,7 +296,7 @@ const ProfileScreen = () => {
               triggerHaptic("impact");
               setShowLoginModal(true);
             }}
-            className="w-full bg-primary-600 hover:bg-primary-500 text-slate-950 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest transition-all active-scale shadow-2xl flex items-center justify-center gap-3"
+            className="w-full bg-primary-600 hover:bg-primary-500 text-slate-950 py-4 rounded-[2rem] font-black text-xs uppercase tracking-widest transition-all active-scale flex items-center justify-center gap-3"
           >
             <LogIn size={20} /> GİRİŞ YAP / KAYIT OL
           </button>
@@ -340,7 +340,7 @@ const ProfileScreen = () => {
 
       {/* Vehicle Selector Modal Wrapper */}
       {showVehicleSelector && (
-        <div className="fixed inset-0 bg-black/80 z-[90] flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in">
+        <div className="fixed inset-0 bg-black/80 z-[90] flex items-center justify-center p-4 animate-in fade-in">
           <div className="relative w-full max-w-md">
             <button
               onClick={() => setShowVehicleSelector(false)}

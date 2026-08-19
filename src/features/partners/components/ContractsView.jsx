@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Shield, FileText, CheckCircle2, User, Landmark, HelpCircle, ShieldAlert } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -157,7 +157,7 @@ export default function ContractsView({ currentUser }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Contract Card */}
-        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 lg:col-span-2 space-y-6">
+        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-6 lg:col-span-2 space-y-6">
           <div className="flex justify-between items-start">
             <div>
               <span className="bg-orange-500/10 text-orange-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">{details.code}</span>
@@ -205,7 +205,7 @@ export default function ContractsView({ currentUser }) {
         {/* Sidebar Info */}
         <div className="space-y-6">
           {/* Required Documents */}
-          <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 space-y-4">
+          <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-6 space-y-4">
             <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
               <FileText size={16} className="text-orange-500" /> Zorunlu Yasal Evraklar
             </h3>
@@ -221,7 +221,7 @@ export default function ContractsView({ currentUser }) {
           </div>
 
           {/* Secure Trust Center Info */}
-          <div className="bg-gradient-to-br from-blue-500/5 to-transparent border border-blue-500/10 rounded-3xl p-6 space-y-3">
+          <div className="bg-gradient-to-br from-blue-500/5 to-transparent border border-blue-500/10 rounded-xl p-6 space-y-3">
             <ShieldAlert size={20} className="text-blue-500" />
             <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Rapidsy Güvence Merkezi</h3>
             <p className="text-[11px] text-slate-500 leading-relaxed">

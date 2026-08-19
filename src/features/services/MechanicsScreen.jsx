@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { ChevronLeft, Clock, Loader2, MapPin, ShieldCheck, SlidersHorizontal, Star, Wrench } from "lucide-react";
 import VehicleDemandForm from "../garage/VehicleDemandForm";
 import { SpecialistCard } from "../../components/Core";
@@ -164,7 +164,7 @@ const MechanicsScreen = () => {
           }}
         />
         {submitting && (
-          <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950/50 backdrop-blur-sm z-50 flex items-center justify-center rounded-3xl">
+          <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950/50 z-50 flex items-center justify-center rounded-xl">
             <Loader2
               className="animate-spin text-primary-500"
               size={48}
@@ -177,12 +177,12 @@ const MechanicsScreen = () => {
 
   return (
     <div className="p-5 pb-32 space-y-6 animate-fade-in relative">
-      <div className="absolute top-[10%] right-[-10%] w-[50%] h-[50%] bg-accent-600/5 rounded-full blur-[100px] pointer-events-none"></div>
+      
       <div className="flex justify-between items-center mb-4">
         <h3 className="font-black text-3xl text-slate-900 dark:text-white tracking-tighter uppercase leading-none">
           {t.mechanics || "Kurumsal Servisler"}
         </h3>
-        <div className="glass-card p-1.5 rounded-2xl flex gap-1 shadow-2xl border border-black/10 dark:border-white/10 backdrop-blur-xl">
+        <div className="glass-card p-1.5 rounded-2xl flex gap-1 border border-black/10 dark:border-white/10">
           <button
             onClick={() => {
               setIsMapView(false);
@@ -260,18 +260,18 @@ const MechanicsScreen = () => {
         </div>
       )}
       {isMapView ? (
-        <div className="h-[60vh] glass-card rounded-[3rem] flex items-center justify-center relative overflow-hidden group shadow-2xl border border-black/5 dark:border-white/5 mx-1">
+        <div className="h-[60vh] glass-card rounded-[3rem] flex items-center justify-center relative overflow-hidden group border border-black/5 dark:border-white/5 mx-1">
           {mapUrl ? (
             <div
-              className="absolute inset-0 bg-cover opacity-30 group-hover:scale-105 transition-transform duration-1000"
+              className="absolute inset-0 bg-cover opacity-30 group-hover:scale-[1.01] transition-transform duration-1000"
               style={{ backgroundImage: `url('${mapUrl}')` }}
             ></div>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900 opacity-50"></div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
-          <div className="relative z-10 glass-card p-8 rounded-[2.5rem] text-center shadow-2xl backdrop-blur-2xl border border-black/10 dark:border-white/10 animate-slide-up">
-            <div className="w-16 h-16 bg-primary-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary-500/20 shadow-xl">
+          <div className="relative z-10 glass-card p-8 rounded-xl text-center border border-black/10 dark:border-white/10 animate-slide-up">
+            <div className="w-16 h-16 bg-primary-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary-500/20">
               <ShieldCheck size={32} className="text-primary-500" />
             </div>
             <p className="font-black text-slate-900 dark:text-white text-xl tracking-tighter mb-1">

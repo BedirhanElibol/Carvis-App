@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../../../supabaseClient";
 import { AlertCircle, ArrowLeft, CheckCircle, Loader2 } from "lucide-react";
@@ -308,7 +308,7 @@ const PartnerAuthScreen = () => {
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-4 bg-gradient-to-br ${currentTheme.bg}`}>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className={`w-full max-w-lg bg-white dark:bg-slate-900/90 backdrop-blur-2xl border ${currentTheme.border} p-8 rounded-3xl shadow-2xl relative overflow-hidden`}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className={`w-full max-w-lg bg-white dark:bg-slate-900/90 border ${currentTheme.border} p-8 rounded-xl relative overflow-hidden`}>
         <div className={`absolute top-0 left-0 w-full h-1.5 bg-${currentTheme.color}-500/50`} />
         
         <div className="flex justify-between items-center mb-8">
@@ -351,7 +351,7 @@ const PartnerAuthScreen = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-5 rounded-2xl text-black text-lg font-black font-sans shadow-xl shadow-${currentTheme.color}-500/10 ${currentTheme.btn} transition-all active:scale-[0.97] flex items-center justify-center gap-3`}
+              className={`w-full py-5 rounded-2xl text-black text-lg font-black font-sans shadow-${currentTheme.color}-500/10 ${currentTheme.btn} transition-all active:scale-[0.97] flex items-center justify-center gap-3`}
             >
               {loading ? <Loader2 className="animate-spin" size={24} /> : (isLogin ? "Sisteme Gir" : (step === 3 ? "Başvuruyu Tamamla" : "Sonraki Adım"))}
             </button>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { ChevronRight, CreditCard, Loader2, MapPin, Package, ShoppingBag, ShoppingCart, Trash2, Wrench, X } from "lucide-react";
 import { useShop } from "../../context/ShopContext";
 import { useUI } from "../../context/UIContext";
@@ -62,8 +62,8 @@ const CartDrawer = () => {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/80 z-[80] flex items-end sm:items-center justify-center backdrop-blur-md animate-in fade-in duration-200">
-        <div className="bg-white dark:bg-slate-900 w-full sm:w-[420px] h-[85vh] sm:h-auto sm:max-h-[90vh] rounded-t-[2.5rem] sm:rounded-[2.5rem] p-6 flex flex-col shadow-2xl animate-in slide-in-from-bottom-full duration-300 border border-black/10 dark:border-white/10">
+      <div className="fixed inset-0 bg-black/80 z-[80] flex items-end sm:items-center justify-center animate-in fade-in duration-200">
+        <div className="bg-white dark:bg-slate-900 w-full sm:w-[420px] h-[85vh] sm:h-auto sm:max-h-[90vh] rounded-t-[2.5rem] sm:rounded-xl p-6 flex flex-col animate-in slide-in-from-bottom-full duration-300 border border-black/10 dark:border-white/10">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-black text-xl text-slate-900 dark:text-white flex items-center gap-2 font-sans">
@@ -249,7 +249,7 @@ const CartDrawer = () => {
               <button
                 onClick={handleCheckout}
                 disabled={cart.length === 0 || isProcessingCheckout}
-                className={`w-full text-slate-900 dark:text-white py-4 rounded-2xl font-black transition flex items-center justify-center gap-2 shadow-xl active-scale font-sans ${
+                className={`w-full text-slate-900 dark:text-white py-4 rounded-2xl font-black transition flex items-center justify-center gap-2 active-scale font-sans ${
                   !selectedAddress && cart.length > 0
                     ? "bg-slate-500 hover:bg-slate-400 opacity-80"
                     : "bg-primary-600 hover:bg-primary-500 shadow-primary-900/50 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -268,7 +268,7 @@ const CartDrawer = () => {
               </button>
 
               {!selectedAddress && cart.length > 0 && (
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-red-500 text-slate-900 dark:text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap shadow-xl before:content-[''] before:absolute before:-bottom-1 before:left-1/2 before:-translate-x-1/2 before:w-2 before:h-2 before:bg-red-500 before:rotate-45">
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-red-500 text-slate-900 dark:text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap before:content-[''] before:absolute before:-bottom-1 before:left-1/2 before:-translate-x-1/2 before:w-2 before:h-2 before:bg-red-500 before:rotate-45">
                   Lütfen önce teslimat adresi seçin
                 </div>
               )}

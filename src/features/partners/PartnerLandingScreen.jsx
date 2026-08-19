@@ -49,7 +49,7 @@ const RoleCard = ({ title, icon: Icon, color, desc, onClick }) => {
   return (
     <motion.div
       whileHover={{ y: -8, scale: 1.01 }}
-      className={`cursor-pointer rounded-[2rem] border backdrop-blur-xl p-6 transition-all duration-300 flex flex-col justify-between h-56 relative overflow-hidden group ${currentTheme.border} ${currentTheme.bg}`}
+      className={`cursor-pointer rounded-[2rem] border p-6 transition-all duration-300 flex flex-col justify-between h-56 relative overflow-hidden group ${currentTheme.border} ${currentTheme.bg}`}
       onClick={onClick}
     >
       {/* Background glow on card hover */}
@@ -90,18 +90,10 @@ const PartnerLandingScreen = () => {
       
       {/* Background Ambience */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-15%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[130px] animate-pulse-slow" />
-        <div className="absolute bottom-[-10%] right-[-15%] w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-[130px] animate-liquid" />
+        
+        
       </div>
 
-      {/* Grid Pattern overlay */}
-      <div 
-        className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-          backgroundSize: "24px 24px"
-        }}
-      ></div>
 
       <div className="z-10 w-full max-w-6xl">
         <div className="text-center mb-16">
@@ -109,7 +101,7 @@ const PartnerLandingScreen = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-md mb-6 shadow-inner"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-6 shadow-inner"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping"></span>
             <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">

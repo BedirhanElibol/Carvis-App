@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+﻿import React, { memo } from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle, ShieldCheck, Star, Cpu, ArrowRight } from "lucide-react";
 
@@ -106,7 +106,7 @@ const LandingProblemSolution = memo(({ t, language }) => {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className="bg-white/60 dark:bg-[#0a0f24]/60 border border-black/5 dark:border-white/5 rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden backdrop-blur-xl shadow-xl flex flex-col justify-between group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+              className="bg-white/60 dark:bg-[#0a0f24]/60 border border-black/5 dark:border-white/5 rounded-xl p-8 space-y-6 relative overflow-hidden flex flex-col justify-between group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
               {/* Subtle background glow effect */}
               <div className={`absolute -inset-24 bg-gradient-to-tr ${card.glow} blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -z-10`} />

@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { CheckCircle2, Clock, Calendar, AlertTriangle, ShieldCheck, Wrench, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -43,7 +43,7 @@ const SmartMaintenanceTimeline = ({ vehicle, onBookMaintenance }) => {
   ];
 
   return (
-    <div className="bg-[#0a0f24]/80 rounded-[2.5rem] p-6 border border-white/10 shadow-xl backdrop-blur-2xl mb-8">
+    <div className="bg-[#0a0f24]/80 rounded-xl p-6 border border-white/10 mb-8">
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 pb-4 border-b border-white/10">
         <div>
           <div className="flex items-center gap-2">

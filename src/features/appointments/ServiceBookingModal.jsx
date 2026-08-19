@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useAppointment } from "../../context/AppointmentContext";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
@@ -84,8 +84,8 @@ const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-lg bg-white dark:bg-slate-900 rounded-t-[2.5rem] sm:rounded-[2.5rem] overflow-hidden border-t sm:border border-black/10 dark:border-white/10 shadow-2xl animate-in slide-in-from-bottom duration-300">
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center p-0 sm:p-4 bg-black/60">
+      <div className="w-full max-w-lg bg-white dark:bg-slate-900 rounded-t-[2.5rem] sm:rounded-xl overflow-hidden border-t sm:border border-black/10 dark:border-white/10 animate-in slide-in-from-bottom duration-300">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -152,7 +152,7 @@ const ServiceBookingModal = ({ isOpen, onClose, sellerId, serviceType, onBooked 
           <button
             onClick={handleBooking}
             disabled={!selectedTime || bookingLoading}
-            className="w-full py-4 rounded-2xl bg-primary-500 text-slate-900 dark:text-white font-bold text-lg shadow-xl shadow-primary-500/20 active-scale disabled:opacity-50 disabled:grayscale transition-all flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-2xl bg-primary-500 text-slate-900 dark:text-white font-bold text-lg shadow-primary-500/20 active-scale disabled:opacity-50 disabled:grayscale transition-all flex items-center justify-center gap-2"
           >
             {bookingLoading ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />

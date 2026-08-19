@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { AlertTriangle, Loader2, Trash2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
@@ -44,8 +44,8 @@ const DeleteAccountModal = ({ show, onClose, showAlert }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-xl z-[200] flex items-center justify-center p-4 animate-in fade-in duration-300">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-[2.5rem] shadow-2xl relative overflow-hidden p-8 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white">
+    <div className="fixed inset-0 bg-slate-950/80 z-[200] flex items-center justify-center p-4 animate-in fade-in duration-300">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-xl relative overflow-hidden p-8 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white">
         <div className="flex flex-col items-center text-center">
           <div className="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mb-6 text-red-500 border border-red-500/20 shadow-lg">
             <Trash2 size={40} />
@@ -88,7 +88,7 @@ const DeleteAccountModal = ({ show, onClose, showAlert }) => {
             <button
               onClick={handleDelete}
               disabled={loading || confirmText !== EXPECTED_TEXT}
-              className="p-4 rounded-2xl bg-red-600 text-white font-black text-xs uppercase tracking-widest hover:bg-red-500 shadow-xl shadow-red-900/20 transition-all active-scale disabled:opacity-30 disabled:grayscale"
+              className="p-4 rounded-2xl bg-red-600 text-white font-black text-xs uppercase tracking-widest hover:bg-red-500 shadow-red-900/20 transition-all active-scale disabled:opacity-30 disabled:grayscale"
             >
               {loading ? <Loader2 className="animate-spin mx-auto" size={18} /> : "HESABIMI SİL"}
             </button>

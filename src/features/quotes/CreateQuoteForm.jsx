@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+﻿import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useUI } from "../../context/UIContext";
@@ -120,7 +120,7 @@ const CreateQuoteForm = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 p-5">
+      <div className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-950/80 border-b border-black/10 dark:border-white/10 p-5">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
@@ -265,7 +265,7 @@ const CreateQuoteForm = () => {
           {/* Bilgilendirme */}
           <div className="glass-card p-4 rounded-2xl border border-primary-500/30 bg-primary-500/5">
             <p className="text-sm text-slate-600 dark:text-slate-300">
-              <span className="font-bold text-primary-400">💡 İpucu:</span>{" "}
+              <span className="font-bold text-primary-400">İpucu:</span>{" "}
               Detaylı ve net teklifler müşteriler tarafından daha çok tercih
               edilir.
             </p>

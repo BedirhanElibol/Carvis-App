@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Briefcase, CreditCard, Phone, Save, Settings, User, X } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 
@@ -50,8 +50,8 @@ const SettingsModal = ({ show, onClose, t, currentUser, showAlert }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 z-[60] flex items-center justify-center p-4 backdrop-blur-md">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-[2.5rem] p-8 animate-in zoom-in-95 duration-200 border border-black/10 dark:border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
+    <div className="fixed inset-0 bg-black/80 z-[60] flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-xl p-8 animate-in zoom-in-95 duration-200 border border-black/10 dark:border-white/10 overflow-y-auto max-h-[90vh]">
         <div className="flex justify-between items-center mb-8">
           <h3 className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter flex items-center gap-3 font-sans">
             <Settings size={28} className="text-primary-500" />
@@ -112,7 +112,7 @@ const SettingsModal = ({ show, onClose, t, currentUser, showAlert }) => {
             <button
               onClick={handleSave}
               disabled={loading}
-              className="w-full bg-primary-600 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl shadow-primary-600/20 active-scale disabled:opacity-50 font-sans"
+              className="w-full bg-primary-600 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 shadow-primary-600/20 active-scale disabled:opacity-50 font-sans"
             >
               <Save size={18} />
               {loading ? "Yükleniyor..." : "Bilgileri Kaydet"}

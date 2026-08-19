@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Landmark, CheckCircle, Percent, Plus, X, AlertCircle } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -89,7 +89,7 @@ export default function PartnerLoanView({ currentUser }) {
       {/* Grid: Promo & Applications */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Active Loan Applications */}
-        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-3xl p-6 lg:col-span-2 space-y-6">
+        <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-6 lg:col-span-2 space-y-6">
           <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Kredi Başvuru Geçmişi</h3>
           
           {loading ? (
@@ -123,7 +123,7 @@ export default function PartnerLoanView({ currentUser }) {
         </div>
 
         {/* Promo Sidebar */}
-        <div className="bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 rounded-3xl p-6 space-y-4">
+        <div className="bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 rounded-xl p-6 space-y-4">
           <div className="bg-orange-500/10 w-10 h-10 rounded-xl flex items-center justify-center">
             <Landmark size={20} className="text-orange-500" />
           </div>
@@ -141,8 +141,8 @@ export default function PartnerLoanView({ currentUser }) {
 
       {/* Application Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 w-full max-w-md rounded-xl p-6 relative">
             <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
               <X size={20} />
             </button>

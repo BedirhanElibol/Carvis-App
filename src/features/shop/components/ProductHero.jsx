@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Heart, ShieldCheck, Truck, PackageCheck, FileBadge, ChevronRight, ArrowRight } from 'lucide-react';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -24,24 +24,24 @@ const ProductHero = ({ product, winnerOffer, buyBoxPrice, t }) => {
 
     return (
         <div className="relative">
-            <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-primary-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+            
 
             <div className="flex justify-between items-center mb-4 relative z-10">
-                <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-widest glass-card px-5 py-3 rounded-2xl shadow-2xl hover:bg-black/10 dark:bg-white/10 active-scale border border-black/10 dark:border-white/10">
+                <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-widest glass-card px-5 py-3 rounded-2xl hover:bg-black/10 dark:bg-white/10 active-scale border border-black/10 dark:border-white/10">
                     <ChevronLeft size={16} className="text-primary-500" /> {t.back}
                 </button>
-                <button onClick={() => toggleFavorite(product.id)} className="p-3 glass-card rounded-full shadow-2xl text-slate-500 hover:text-red-500 transition-all border border-black/10 dark:border-white/10 active-scale">
+                <button onClick={() => toggleFavorite(product.id)} className="p-3 glass-card rounded-full text-slate-500 hover:text-red-500 transition-all border border-black/10 dark:border-white/10 active-scale">
                     <Heart size={20} className={favorites.includes(product.id) ? "fill-red-500 text-red-500" : ""} />
                 </button>
             </div>
 
-            <div className="glass-card !p-6 space-y-6 shadow-2xl rounded-[3rem] border border-black/5 dark:border-white/5 relative overflow-hidden group">
+            <div className="glass-card !p-6 space-y-6 rounded-[3rem] border border-black/5 dark:border-white/5 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-48 h-48 bg-primary-600/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
 
                 <div className="w-full h-80 bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden shadow-inner relative border border-black/5 dark:border-white/5">
-                    <img src={product.img} alt={product.name} className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-1000" />
+                    <img src={product.img} alt={product.name} className="w-full h-full object-cover opacity-90 group-hover:scale-[1.01] transition-transform duration-1000" />
                     {product.certified && (
-                        <div className="absolute top-5 left-5 bg-primary-600 text-slate-900 dark:text-white px-4 py-2 rounded-full text-[10px] font-black flex items-center gap-2 shadow-2xl border border-primary-500/30 uppercase tracking-widest animate-pulse">
+                        <div className="absolute top-5 left-5 bg-primary-600 text-slate-900 dark:text-white px-4 py-2 rounded-full text-[10px] font-black flex items-center gap-2 border border-primary-500/30 uppercase tracking-widest animate-pulse">
                             <ShieldCheck size={16} className="text-primary-200" /> {t.certifiedPart}
                         </div>
                     )}
@@ -89,7 +89,7 @@ const ProductHero = ({ product, winnerOffer, buyBoxPrice, t }) => {
                     </div>
 
                     {product.certified && (
-                        <div className="glass-card border border-primary-500/20 p-5 rounded-[2rem] cursor-pointer hover:bg-primary-500/5 transition-all shadow-xl active-scale" onClick={() => setShowCert(!showCert)}>
+                        <div className="glass-card border border-primary-500/20 p-5 rounded-[2rem] cursor-pointer hover:bg-primary-500/5 transition-all active-scale" onClick={() => setShowCert(!showCert)}>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-2xl bg-primary-600/10 flex items-center justify-center border border-primary-500/20">
@@ -131,10 +131,10 @@ const ProductHero = ({ product, winnerOffer, buyBoxPrice, t }) => {
                         </div>
 
                         <div className="flex gap-4">
-                            <button onClick={handleAddToCart} className="flex-1 glass-card border border-black/10 dark:border-white/10 text-slate-900 dark:text-white py-4.5 rounded-[1.8rem] font-black text-xs uppercase tracking-widest hover:bg-black/5 dark:bg-white/5 transition-all active-scale shadow-2xl">
+                            <button onClick={handleAddToCart} className="flex-1 glass-card border border-black/10 dark:border-white/10 text-slate-900 dark:text-white py-4.5 rounded-[1.8rem] font-black text-xs uppercase tracking-widest hover:bg-black/5 dark:bg-white/5 transition-all active-scale">
                                 {t.addToCart}
                             </button>
-                            <button onClick={handleBuyNow} className="flex-[1.5] bg-primary-600 text-slate-900 dark:text-white py-4.5 rounded-[1.8rem] font-black text-xs uppercase tracking-widest hover:bg-primary-500 transition-all shadow-2xl shadow-primary-900/50 flex justify-center items-center gap-3 active-scale">
+                            <button onClick={handleBuyNow} className="flex-[1.5] bg-primary-600 text-slate-900 dark:text-white py-4.5 rounded-[1.8rem] font-black text-xs uppercase tracking-widest hover:bg-primary-500 transition-all shadow-primary-900/50 flex justify-center items-center gap-3 active-scale">
                                 {t.buyNow} <ArrowRight size={20} />
                             </button>
                         </div>

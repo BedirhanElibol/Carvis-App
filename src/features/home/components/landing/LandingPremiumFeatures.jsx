@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+﻿import React, { memo } from "react";
 import { TrendingUp, Fuel, Wrench, CheckCircle2, Layers, Star, Package, ShieldCheck, Navigation, User, HardDrive, Battery, Zap, FileText } from "lucide-react";
 
 const LandingPremiumFeatures = memo(({t, language}) => {
@@ -25,8 +25,8 @@ const LandingPremiumFeatures = memo(({t, language}) => {
           {/* FEATURE 1: SECURE PAYMENT & LEGAL GUARANTEE (Güvenli Ödeme ve Garanti) */}
           <div className="flex flex-col lg:flex-row items-center gap-16">
             {/* Left: Graphic mockup of Escrow & Payment */}
-            <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 left-0 w-[200px] h-[200px] bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+            <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 relative overflow-hidden group">
+              
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
@@ -105,8 +105,8 @@ const LandingPremiumFeatures = memo(({t, language}) => {
           {/* FEATURE 2: MECHANICS & PARTS (Usta Bulma, Teklif Karşılaştırma ve Yedek Parça) */}
           <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
             {/* Right: Graphic mockup of quotes and compatible parts */}
-            <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-amber-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+            <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 relative overflow-hidden group">
+              
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
@@ -201,8 +201,8 @@ const LandingPremiumFeatures = memo(({t, language}) => {
           {/* FEATURE 3: VERIFIED REVIEWS & RATINGS (Doğrulanmış Yorumlar) */}
           <div className="flex flex-col lg:flex-row items-center gap-16">
             {/* Left: Graphic mockup of Verified Reviews */}
-            <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-teal-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+            <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 relative overflow-hidden group">
+              
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>
@@ -283,8 +283,8 @@ const LandingPremiumFeatures = memo(({t, language}) => {
           {/* FEATURE 4: RAPIDSY ENTERPRISE (BIG DATA & EV ECOSYSTEM) */}
           <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
             {/* Left: Graphic mockup of EV Battery SoH and Big Data Dashboard */}
-            <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 left-0 w-[200px] h-[200px] bg-blue-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+            <div className="w-full lg:w-1/2 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-[#0a0f24] dark:to-[#040817] border border-slate-200 dark:border-white/10 rounded-[3rem] p-6 md:p-8 relative overflow-hidden group">
+              
               
               <div className="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/5 mb-6 text-left">
                 <div>

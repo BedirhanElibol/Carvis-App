@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import { Briefcase, Check, ChevronRight, Clock, FileText, Layers, Loader2, ShieldCheck, X } from "lucide-react";
  
@@ -133,7 +133,7 @@ const PartnerApplications = () => {
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-red-500 group-hover:scale-[1.02] transition-transform">
                     <Briefcase size={24} />
                   </div>
                   <div>
@@ -170,13 +170,13 @@ const PartnerApplications = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedApp(null)}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              className="absolute inset-0 bg-black/80"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl relative"
+              className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-xl overflow-hidden relative"
             >
               <div className="p-8 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-4">

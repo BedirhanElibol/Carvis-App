@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
  
 import { motion, AnimatePresence } from "framer-motion";
 import { Activity, Calendar, CreditCard, Plus, Wrench, X } from "lucide-react";
@@ -43,13 +43,13 @@ const ServiceHistoryModal = ({ show, onClose }) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-black/80 backdrop-blur-md"
+          className="absolute inset-0 bg-black/80"
         />
         <motion.div
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-[2.5rem] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]"
+          className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-xl border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[85vh]"
         >
           {/* Header */}
           <div className="p-6 bg-gradient-to-br from-slate-900 to-slate-950 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
@@ -80,7 +80,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
             {!isAdding ? (
               <button
                 onClick={() => setIsAdding(true)}
-                className="w-full py-4 border-2 border-dashed border-black/10 dark:border-white/10 rounded-3xl flex items-center justify-center gap-3 text-slate-500 dark:text-slate-400 hover:border-primary-500/50 hover:text-primary-400 transition-all group"
+                className="w-full py-4 border-2 border-dashed border-black/10 dark:border-white/10 rounded-xl flex items-center justify-center gap-3 text-slate-500 dark:text-slate-400 hover:border-primary-500/50 hover:text-primary-400 transition-all group"
               >
                 <Plus
                   size={20}
@@ -152,7 +152,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
                   <button
                     onClick={handleSave}
                     disabled={loading || !formData.description}
-                    className="w-full bg-primary-600 text-slate-900 dark:text-white py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary-500 transition shadow-xl shadow-primary-900/40 active-scale disabled:opacity-50 font-sans"
+                    className="w-full bg-primary-600 text-slate-900 dark:text-white py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary-500 transition shadow-primary-900/40 active-scale disabled:opacity-50 font-sans"
                   >
                     {loading ? (
                       <Activity
@@ -173,7 +173,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
                 Geçmiş Kayıtlar
               </h4>
               {maintenanceRecords.length === 0 ? (
-                <div className="text-center py-12 opacity-30 bg-black/5 dark:bg-white/5 rounded-3xl border border-dashed border-black/10 dark:border-white/10">
+                <div className="text-center py-12 opacity-30 bg-black/5 dark:bg-white/5 rounded-xl border border-dashed border-black/10 dark:border-white/10">
                   <Wrench size={32} className="mx-auto mb-2" />
                   <p className="text-xs font-medium font-sans">
                     Henüz bir servis kaydı yok.
@@ -183,7 +183,7 @@ const ServiceHistoryModal = ({ show, onClose }) => {
                 maintenanceRecords.map((record, index) => (
                   <div
                     key={record.id || index}
-                    className="glass-card p-5 rounded-3xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20 transition-all bg-white/[0.02] group"
+                    className="glass-card p-5 rounded-xl border border-black/5 dark:border-white/5 hover:border-black/20 dark:border-white/20 transition-all bg-white/[0.02] group"
                   >
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex items-center gap-3">

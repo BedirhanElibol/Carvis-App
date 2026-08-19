@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { BookOpen, Plus, Search, SearchX, X } from "lucide-react";
 import { OEM_CATALOG } from "../../../constants/mockData";
 
@@ -18,8 +18,8 @@ const ProductCatalogModal = ({ isOpen, onClose, onSelect }) => {
   });
 
   return (
-    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-sm z-[70] flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl flex flex-col animate-in zoom-in-95">
+    <div className="fixed inset-0 bg-slate-50 dark:bg-slate-950/80 z-[70] flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] rounded-xl border border-black/10 dark:border-white/10 flex flex-col animate-in zoom-in-95">
         
         {/* Header */}
         <div className="p-6 border-b border-black/10 dark:border-white/10 flex justify-between items-center bg-black/5 dark:bg-white/5 shrink-0 rounded-t-3xl">
@@ -65,7 +65,7 @@ const ProductCatalogModal = ({ isOpen, onClose, onSelect }) => {
           {filteredCatalog.map((product) => (
             <div key={product.id} className="glass-card rounded-2xl border border-black/5 dark:border-white/5 overflow-hidden flex flex-col hover:border-primary-500/50 transition-colors group">
               <div className="h-32 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
-                <img src={product.image_url} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={product.image_url} alt={product.name} className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500" />
                 <div className="absolute top-2 right-2 bg-black/60 backdrop-blur text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase">
                   {product.category}
                 </div>

@@ -1,11 +1,11 @@
-import React from "react";
+﻿import React from "react";
 import { Bell, CalendarCheck, Fingerprint, Gauge, Shield, ShieldAlert } from "lucide-react";
 
 const VehicleSettingsTab = ({ formData, setFormData, dynamicScore, isSaving, handleSave }) => {
   return (
     <div className="space-y-6">
       {/* Health Overview Gauge */}
-      <div className="p-6 bg-gradient-to-r from-slate-900 to-slate-950 rounded-3xl border border-black/5 dark:border-white/5 flex items-center justify-between">
+      <div className="p-6 bg-gradient-to-r from-slate-900 to-slate-950 rounded-xl border border-black/5 dark:border-white/5 flex items-center justify-between">
         <div className="space-y-1">
           <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">Dinamik Araç Sağlık Analizi</p>
           <p className="text-[10px] text-slate-500 font-medium">Bakım vadeleri ve muayene durumlarına göre skor güncellenir.</p>
@@ -84,7 +84,7 @@ const VehicleSettingsTab = ({ formData, setFormData, dynamicScore, isSaving, han
       </div>
 
       {/* Specific Component Changes */}
-      <div className="p-6 bg-white dark:bg-slate-900/40 rounded-3xl border border-black/5 dark:border-white/5 space-y-4">
+      <div className="p-6 bg-white dark:bg-slate-900/40 rounded-xl border border-black/5 dark:border-white/5 space-y-4">
         <p className="text-[10px] font-black text-primary-500 uppercase tracking-widest">PRO PARÇA DEĞİŞİM GÜNCELİ</p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -119,7 +119,7 @@ const VehicleSettingsTab = ({ formData, setFormData, dynamicScore, isSaving, han
       </div>
 
       {/* Vehicle Type (Ticari / Hususi) Rule Selector */}
-      <div className="p-5 bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-white/10 space-y-3">
+      <div className="p-5 bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl border border-white/10 space-y-3">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-black text-white uppercase tracking-tight">Ruhsat & Kullanım Tipi (Muayene Kuralı)</p>
@@ -136,7 +136,7 @@ const VehicleSettingsTab = ({ formData, setFormData, dynamicScore, isSaving, han
             onClick={() => setFormData({ ...formData, isCommercial: false })}
             className={`p-3.5 rounded-2xl border text-left transition-all ${!formData.isCommercial ? 'bg-cyan-500/10 border-cyan-500/50 text-white' : 'bg-slate-900/60 border-white/5 text-slate-500'}`}
           >
-            <p className="text-xs font-black">🚗 Hususi Otomobil</p>
+            <p className="text-xs font-black">Hususi Otomobil</p>
             <p className="text-[9px] text-slate-400 mt-1">Muayene: <strong className="text-cyan-400">2 Yılda Bir</strong></p>
             <p className="text-[9px] text-slate-400">Bakım: <strong className="text-cyan-400">15.000 KM</strong></p>
           </button>
@@ -189,7 +189,7 @@ const VehicleSettingsTab = ({ formData, setFormData, dynamicScore, isSaving, han
       <button
         onClick={handleSave}
         disabled={isSaving}
-        className="w-full bg-gradient-to-r from-primary-600 to-indigo-600 text-slate-900 dark:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active-scale shadow-xl shadow-primary-900/20"
+        className="w-full bg-gradient-to-r from-primary-600 to-indigo-600 text-slate-900 dark:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all active-scale shadow-primary-900/20"
       >
         {isSaving ? "Kaydediliyor..." : "AYARLARI KAYDET"}
       </button>

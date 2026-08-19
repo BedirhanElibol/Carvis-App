@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+﻿import React, { memo } from "react";
 import { Car, Clock, Wrench, ChevronRight, SearchCheck, FileText, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -25,8 +25,8 @@ const LandingAppShowcase = memo(({t, language}) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left: App Screen Mockup (Sanal Kokpit) */}
-            <div className="lg:col-span-7 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-950 border border-slate-200 dark:border-emerald-500/20 rounded-[3rem] p-6 md:p-10 shadow-2xl dark:shadow-xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-teal-500/10 dark:bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+            <div className="lg:col-span-7 bg-gradient-to-tr from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-950 border border-slate-200 dark:border-emerald-500/20 rounded-[3rem] p-6 md:p-10 dark:shadow-xl relative overflow-hidden group">
+              
               
               {/* Virtual App Header */}
               <div className="flex items-center justify-between pb-6 border-b border-black/5 dark:border-white/5 mb-6">
@@ -51,7 +51,7 @@ const LandingAppShowcase = memo(({t, language}) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
                 
                 {/* Panel 1: Akıllı Garaj / Araç Kartı */}
-                <div className="bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/10 rounded-3xl p-5 shadow-lg backdrop-blur-xl">
+                <div className="bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/10 rounded-xl p-5 shadow-lg">
                   <div className="flex justify-between items-start mb-3">
                     <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 tracking-wider uppercase">GARAJIM / MEVCUT ARAÇ</span>
                     <Car className="text-teal-400" size={16} />
@@ -84,7 +84,7 @@ const LandingAppShowcase = memo(({t, language}) => {
                 </div>
 
                 {/* Panel 2: Aktif Servis Talepleri */}
-                <div className="bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/10 rounded-3xl p-5 shadow-lg backdrop-blur-xl flex flex-col justify-between">
+                <div className="bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/10 rounded-xl p-5 shadow-lg flex flex-col justify-between">
                   <div>
                     <div className="flex justify-between items-start mb-3">
                       <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 tracking-wider uppercase">
@@ -127,14 +127,14 @@ const LandingAppShowcase = memo(({t, language}) => {
                 </div>
 
                 {/* Panel 3: Buy Box Yedek Parça */}
-                <div className="md:col-span-2 bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/10 rounded-3xl p-5 shadow-lg backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="md:col-span-2 bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/10 rounded-xl p-5 shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center shrink-0">
                       <Wrench size={24} className="text-amber-500" />
                     </div>
                     <div className="text-left">
                       <span className="text-[8px] font-black text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                        🏆 BUY BOX EN UYGUN TEKLİF
+                        BUY BOX EN UYGUN TEKLİF
                       </span>
                       <h4 className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-tight mt-1">
                         {language === "tr" ? "Fren Disk & Balata Takımı" : "Brake Disc & Pad Kit"}
@@ -193,7 +193,7 @@ const LandingAppShowcase = memo(({t, language}) => {
               ].map((val, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-white/50 dark:bg-black/40 border border-slate-200 dark:border-emerald-500/10 hover:border-slate-300 dark:hover:border-emerald-500/40 rounded-3xl p-6 transition-all hover:translate-x-1 duration-300 flex items-start gap-4 relative overflow-hidden backdrop-blur-md dark:shadow-xl"
+                  className="bg-white/50 dark:bg-black/40 border border-slate-200 dark:border-emerald-500/10 hover:border-slate-300 dark:hover:border-emerald-500/40 rounded-xl p-6 transition-all hover:translate-x-1 duration-300 flex items-start gap-4 relative overflow-hidden dark:shadow-xl"
                 >
                   <div className={`w-12 h-12 rounded-2xl ${val.color} border flex items-center justify-center shrink-0`}>
                     <val.icon size={22} />

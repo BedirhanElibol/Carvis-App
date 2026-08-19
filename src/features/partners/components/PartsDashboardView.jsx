@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Package, ShoppingBag, AlertTriangle, ChevronRight, BarChart2, Star, Check, Plus, X, AlertCircle } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 
@@ -120,7 +120,7 @@ export default function PartsDashboardView({ currentUser }) {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter glow-orange">Parça Tedarikçi Paneli</h1>
+          <h1 className="text-3xl font-mono font-black text-white uppercase tracking-tighter">Parça Tedarikçi Paneli</h1>
           <p className="text-slate-400 text-xs mt-1">Stok envanterinizi güncelleyin ve parça siparişlerini yönetin.</p>
         </div>
         <div className="flex gap-2">
@@ -141,7 +141,7 @@ export default function PartsDashboardView({ currentUser }) {
           { label: "Kritik Stok Uyarısı", value: stats.lowStockCount, icon: AlertTriangle, color: "text-orange-500", bg: "bg-orange-500/10" },
           { label: "Buy Box Kazanma", value: stats.buyBoxWin, icon: BarChart2, color: "text-teal-400", bg: "bg-teal-500/10" },
         ].map((s) => (
-          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-3xl flex items-center justify-between shadow-sm hover:border-white/10 transition-all duration-300">
+          <div key={s.label} className="glass-card border border-white/5 bg-slate-900/40 p-6 rounded-xl flex items-center justify-between shadow-sm hover:border-white/10 transition-all duration-300">
             <div>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{s.label}</p>
               <h3 className="text-2xl font-mono font-black text-white mt-1.5">{s.value}</h3>
@@ -185,7 +185,7 @@ export default function PartsDashboardView({ currentUser }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Shipping & Orders Queue */}
-        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 lg:col-span-2 space-y-6">
+        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 lg:col-span-2 space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">
               {activeTab === "active" ? "Kargo Bekleyen Siparişler" : "Tamamlanan Siparişler"}
@@ -236,7 +236,7 @@ export default function PartsDashboardView({ currentUser }) {
         </div>
 
         {/* Low Stock Alerts */}
-        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-3xl p-6 space-y-6">
+        <div className="glass-card border border-white/5 bg-slate-900/40 rounded-xl p-6 space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-sm font-mono font-black text-white uppercase tracking-tight">Kritik Stok Seviyesi</h3>
             <span className="bg-orange-500/10 text-orange-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider">UYARI</span>
@@ -271,8 +271,8 @@ export default function PartsDashboardView({ currentUser }) {
 
       {/* Modal: Yeni Ürün Ekle */}
       {isProductModalOpen && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="bg-slate-900 border border-white/10 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-white/10 w-full max-w-md rounded-xl p-6 relative">
             <button onClick={() => setIsProductModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white cursor-pointer">
               <X size={20} />
             </button>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+﻿import React, { useCallback, useEffect, useState } from "react";
 
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/AuthContext";
@@ -112,7 +112,7 @@ const ConsultationManager = () => {
                 {activeTab === 'pool' ? (
                   <button 
                     onClick={() => claimConsultation(c.id)}
-                    className="w-full bg-white text-slate-950 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest active-scale hover:bg-primary-600 hover:text-slate-900 dark:text-white transition-all shadow-xl"
+                    className="w-full bg-white text-slate-950 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest active-scale hover:bg-primary-600 hover:text-slate-900 dark:text-white transition-all"
                   >
                     DANIŞMANLIĞI ÜSTLEN
                   </button>

@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Search, PenTool, ShieldCheck } from "lucide-react";
 
 const LandingHowItWorks = ({ language }) => {
@@ -65,7 +65,7 @@ const LandingHowItWorks = ({ language }) => {
           {/* Step 3 */}
           <div className="flex flex-col items-center relative z-10">
             {/* Top Icon */}
-            <div className="w-16 h-16 rounded-full bg-slate-900 dark:bg-white flex items-center justify-center mb-8 shadow-xl dark:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-colors">
+            <div className="w-16 h-16 rounded-full bg-slate-900 dark:bg-white flex items-center justify-center mb-8 dark:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-colors">
               <ShieldCheck className="text-white dark:text-black" size={28} />
             </div>
             

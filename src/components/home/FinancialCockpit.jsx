@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { ArrowDownRight, ArrowUpRight, BarChart3, Car, ChevronRight, FileText, Fuel, Landmark, PieChart, ShieldCheck, TrendingUp, Wrench, DollarSign } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { calculateVehicleMarketValue, calculateTotalCostOfOwnership } from "../../utils/vehicleValuation";
@@ -89,7 +89,7 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
               exit={{ opacity: 0, y: -10 }}
               whileHover={{ scale: 0.99 }}
               onClick={onOpenProSettings}
-              className="bg-gradient-to-br from-slate-900 via-slate-950 to-black dark:from-slate-900 dark:via-[#0a0f24] dark:to-black rounded-3xl p-6 shadow-2xl relative overflow-hidden text-white border border-white/10 cursor-pointer group"
+              className="bg-gradient-to-br from-slate-900 via-slate-950 to-black dark:from-slate-900 dark:via-[#0a0f24] dark:to-black rounded-xl p-6 relative overflow-hidden text-white border border-white/10 cursor-pointer group"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -101,7 +101,7 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
                       {vehicle?.brand ? `${vehicle.brand} ${vehicle.model || ""}` : "Araç Değeri"}
                     </span>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md group-hover:border-cyan-500/50 transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-cyan-500/50 transition-colors">
                     <Car size={20} className="text-slate-300 group-hover:text-cyan-400 transition-colors" />
                   </div>
                 </div>
@@ -144,7 +144,7 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="bg-slate-900 rounded-3xl p-6 shadow-2xl relative overflow-hidden text-white border border-cyan-500/30 flex flex-col justify-between"
+              className="bg-slate-900 rounded-xl p-6 relative overflow-hidden text-white border border-cyan-500/30 flex flex-col justify-between"
             >
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-2">
@@ -184,7 +184,7 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
         </AnimatePresence>
 
         {/* Insurances & Taxes Column */}
-        <div className="bg-white dark:bg-[#0a0f24]/85 rounded-3xl p-5 shadow-sm border border-slate-200 dark:border-white/10 flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#0a0f24]/85 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-white/10 flex flex-col justify-between">
           <div className="flex justify-between items-center mb-3">
             <h4 className="text-xs font-mono font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Poliçe & Muayene Takibi</h4>
             {onOpenProSettings && (
@@ -252,11 +252,11 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
 
       {/* Valuation Detail Modal */}
       {showValuationModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-slate-900 border border-cyan-500/30 rounded-3xl p-6 max-w-md w-full text-white shadow-2xl space-y-5"
+            className="bg-slate-900 border border-cyan-500/30 rounded-xl p-6 max-w-md w-full text-white space-y-5"
           >
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <h3 className="text-lg font-mono font-black text-cyan-400 flex items-center gap-2">
@@ -292,7 +292,7 @@ const FinancialCockpit = ({ vehicle, onOpenProSettings }) => {
               </div>
 
               <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-xl text-[11px] text-cyan-300">
-                💡 Bu değerleme Türkiye ikinci el ilan verileri, araç yaşı ve km katsayılarına göre canlı güncellenmektedir.
+                Bu değerleme Türkiye ikinci el ilan verileri, araç yaşı ve km katsayılarına göre canlı güncellenmektedir.
               </div>
             </div>
 

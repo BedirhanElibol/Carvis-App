@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+﻿import React, { useState, useEffect, useCallback } from "react";
 import { AlertCircle, Banknote, CheckCircle, Clock, EyeOff, RefreshCw, ShieldCheck, Wrench, X } from "lucide-react";
 import { useUI } from "../../../context/UIContext";
 import { useAuth } from "../../../context/AuthContext";
@@ -422,8 +422,8 @@ const MechanicJobs = () => {
 
       {/* Bid Modal */}
       {showBidModal && selectedJobForBid && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-fade-in">
-          <div className="glass-card w-full max-w-lg p-6 rounded-[2.5rem] border border-black/10 dark:border-white/10 space-y-6 animate-in scale-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 animate-fade-in">
+          <div className="glass-card w-full max-w-lg p-6 rounded-xl border border-black/10 dark:border-white/10 space-y-6 animate-in scale-in duration-200">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="p-2.5 bg-primary-500/10 text-primary-400 rounded-xl border border-primary-500/20">
@@ -559,7 +559,7 @@ const MechanicJobs = () => {
               </button>
               <button
                 onClick={handlePlaceBid}
-                className="bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active-scale shadow-xl shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans"
+                className="bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-slate-900 dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active-scale shadow-primary-900/40 border border-black/10 dark:border-white/10 font-sans"
               >
                 TEKLİF GÖNDER
               </button>

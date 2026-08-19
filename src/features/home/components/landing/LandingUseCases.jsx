@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { 
   Wrench, ShieldCheck, Car, PackageCheck, Sparkles, MapPin, 
   FileSearch, Fuel, Zap, Droplets, ArrowUpRight, CheckCircle2 
@@ -13,7 +13,7 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
         {/* Section Header */}
         <div className="mb-16 text-center md:text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-mono font-bold uppercase tracking-widest mb-4">
-            ⚡ RAPIDSY EKOSİSTEMİ
+            RAPIDSY EKOSİSTEMİ
           </div>
           <h2 className="text-3xl md:text-[44px] font-black text-slate-900 dark:text-white tracking-tight mb-4 leading-tight">
             {language === "tr" 
@@ -31,12 +31,12 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           
           {/* Card 1: Yetkili & Özel Servisler (Span 2) */}
-          <div className="md:col-span-2 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-blue-500/50 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/15 rounded-full blur-[80px] -mr-10 -mt-10 pointer-events-none"></div>
+          <div className="md:col-span-2 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group hover:border-blue-500/50 shadow-slate-200/50 dark:shadow-none transition-all duration-300">
+            
             
             <div className="relative z-10">
               {/* Vibrant Glowing Icon Box */}
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 mb-6 group-hover:scale-[1.02] transition-transform">
                 <Wrench size={26} />
               </div>
 
@@ -58,11 +58,11 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
           </div>
 
           {/* Card 2: Oto Yıkama & Detaylı Kuaför (Span 1) */}
-          <div className="col-span-1 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-cyan-500/50 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-cyan-500/15 rounded-full blur-[60px] pointer-events-none"></div>
+          <div className="col-span-1 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group hover:border-cyan-500/50 shadow-slate-200/50 dark:shadow-none transition-all duration-300">
+            
             
             <div className="relative z-10">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-teal-400 text-slate-950 flex items-center justify-center shadow-lg shadow-cyan-500/30 mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-teal-400 text-slate-950 flex items-center justify-center shadow-lg shadow-cyan-500/30 mb-6 group-hover:scale-[1.02] transition-transform">
                 <Droplets size={26} />
               </div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 tracking-tight font-sans">
@@ -77,11 +77,11 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
           </div>
 
           {/* Card 3: Garantili Yedek Parça (Span 1) */}
-          <div className="col-span-1 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-indigo-500/50 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
-            <div className="absolute top-0 left-0 w-40 h-40 bg-indigo-500/15 rounded-full blur-[60px] pointer-events-none"></div>
+          <div className="col-span-1 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group hover:border-indigo-500/50 shadow-slate-200/50 dark:shadow-none transition-all duration-300">
+            
             
             <div className="relative z-10">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30 mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30 mb-6 group-hover:scale-[1.02] transition-transform">
                 <PackageCheck size={26} />
               </div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 tracking-tight font-sans">
@@ -96,12 +96,12 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
           </div>
 
           {/* Card 4: Akaryakıt & Elektrikli Şarj (Span 2) */}
-          <div className="md:col-span-2 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-amber-500/50 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
-            <div className="absolute top-1/2 left-0 w-64 h-64 bg-amber-500/15 rounded-full blur-[80px] -ml-10 -mt-10 pointer-events-none"></div>
+          <div className="md:col-span-2 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group hover:border-amber-500/50 shadow-slate-200/50 dark:shadow-none transition-all duration-300">
+            
             <div className="relative z-10 flex flex-col h-full">
               
               <div className="flex justify-between items-start mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-slate-950 flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-slate-950 flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:scale-[1.02] transition-transform">
                   <Zap size={26} />
                 </div>
 
@@ -155,11 +155,11 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
           </div>
 
           {/* Card 5: Mobil Ekspertiz (Span 1) */}
-          <div className="col-span-1 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-500/50 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
-            <div className="absolute bottom-0 left-0 w-40 h-40 bg-emerald-500/15 rounded-full blur-[60px] pointer-events-none"></div>
+          <div className="col-span-1 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-500/50 shadow-slate-200/50 dark:shadow-none transition-all duration-300">
+            
             
             <div className="relative z-10">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 mb-6 group-hover:scale-[1.02] transition-transform">
                 <FileSearch size={26} />
               </div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 tracking-tight font-sans">
@@ -174,11 +174,11 @@ const LandingUseCases = ({ language, fuelPrices, fuelCity, isLoadingFuel }) => {
           </div>
 
           {/* Card 6: Dijital Araç Pasaportu (Span 1 - Sigorta YERİNE) */}
-          <div className="col-span-1 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between relative overflow-hidden group hover:border-teal-500/50 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300">
-            <div className="absolute top-1/2 right-0 w-40 h-40 bg-teal-500/15 rounded-full blur-[60px] -translate-y-1/2 pointer-events-none"></div>
+          <div className="col-span-1 bg-white dark:bg-[#0c1224] border border-slate-200/80 dark:border-white/10 rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group hover:border-teal-500/50 shadow-slate-200/50 dark:shadow-none transition-all duration-300">
+            
             
             <div className="relative z-10">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-400 text-slate-950 flex items-center justify-center shadow-lg shadow-teal-500/30 mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-400 text-slate-950 flex items-center justify-center shadow-lg shadow-teal-500/30 mb-6 group-hover:scale-[1.02] transition-transform">
                 <ShieldCheck size={26} />
               </div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 tracking-tight font-sans">

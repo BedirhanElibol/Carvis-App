@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle, ShoppingBag, Trash2 } from "lucide-react";
 import { useShop } from "../../../context/ShopContext";
@@ -35,7 +35,7 @@ const CheckoutCartStep = () => {
         cart.map((item, idx) => (
           <div
             key={idx}
-            className="glass-card p-4 rounded-3xl border border-black/5 dark:border-white/5 flex gap-4 items-center"
+            className="glass-card p-4 rounded-xl border border-black/5 dark:border-white/5 flex gap-4 items-center"
           >
             {" "}
             <div className="w-24 h-24 bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-black/5 dark:border-white/5 shrink-0">
@@ -44,7 +44,7 @@ const CheckoutCartStep = () => {
                 src={
                   item.img ||
                   item.image ||
-                  "https://via.placeholder.com/100?text=🔧"
+                  "https://via.placeholder.com/100?text="
                 }
                 alt={item.name}
                 className="w-full h-full object-cover"
