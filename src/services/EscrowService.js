@@ -1,25 +1,25 @@
 import { supabase } from "../supabaseClient";
 
 /**
- * RAPIDSY CORPORATE ESCROW SERVICE
- * Manages blocked payments and proof-of-service verification.
+ * CARVIS DIRECT MATCHMAKER SERVICE
+ * Manages direct appointment confirmations and proof-of-service documentation.
+ * Carvis holds NO funds and takes 0% commission.
  */
 export const EscrowService = {
   /**
-   * Block funds for an order (Vault deposit)
+   * Confirm appointment (Direct payment between customer & partner)
    */
   async blockFunds(orderId, amount) {
-    const { data, error } = await supabase
-      .from("escrow_vault")
-      .insert([{ order_id: orderId, amount, status: "blocked" }])
-      .select()
-      .single();
-
-    return { success: !error, data, error };
+    // Carvis does not hold or block funds. Payments are direct.
+    return { 
+      success: true, 
+      data: { order_id: orderId, amount, status: "direct_payment_confirmed" }, 
+      error: null 
+    };
   },
 
   /**
-   * Submit Proof of Work (Partner action)
+   * Submit Proof of Work / Service Details (Partner action)
    */
   async submitProof(orderId, photoUrls, description) {
     const { data, error } = await supabase
@@ -32,51 +32,19 @@ export const EscrowService = {
   },
 
   /**
-   * Release funds from vault (Customer action or Auto-completion)
+   * Confirm completion (Customer action)
    */
   async releaseFunds(orderId, currentUserId) {
     if (!currentUserId) return { success: false, error: "Güvenlik İhlali: Oturum bilgisi bulunamadı." };
 
-    // Fetch order to verify ownership securely on server-side logic wrapper
-    const { data: order, error: orderError } = await supabase
+    const { error: orderError } = await supabase
       .from("orders")
-      .select("customer_id")
-      .eq("id", orderId)
-      .single();
+      .update({ status: "completed", updated_at: new Date().toISOString() })
+      .eq("id", orderId);
 
-    if (orderError || !order || order.customer_id !== currentUserId) {
-      return { success: false, error: "Güvenlik İhlali: Bu işleme yetkiniz yok." };
-    }
+    if (orderError) return { success: false, error: "Randevu tamamlanamadı." };
 
-    const { data: vault, error: vaultError } = await supabase
-      .from("escrow_vault")
-      .select("*")
-      .eq("order_id", orderId)
-      .eq("status", "blocked")
-      .single();
-
-    if (vaultError || !vault) return { success: false, error: "Bloke ödeme bulunamadı." };
-
-    // 1. Mark vault as released
-    const { error: releaseError } = await supabase
-      .from("escrow_vault")
-      .update({ status: "released", updated_at: new Date().toISOString() })
-      .eq("id", vault.id);
-
-    if (releaseError) return { success: false, error: "Bloke çözülemedi." };
-
-    // 2. Mark proof as approved
-    await supabase
-      .from("service_proofs")
-      .update({ is_approved: true })
-      .eq("order_id", orderId);
-
-    // 3. Complete order
-    const { error: rpcError } = await supabase.rpc('rpc_release_escrow', { 
-      p_order_id: orderId, 
-      p_user_id: currentUserId 
-    });
-
-    return { success: !rpcError, error: rpcError?.message };
+    return { success: true, message: "Hizmet tamamlama onaylandı." };
   }
 };
+

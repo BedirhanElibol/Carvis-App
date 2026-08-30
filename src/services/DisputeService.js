@@ -5,19 +5,12 @@ import { supabase } from "../supabaseClient";
  */
 export const DisputeService = {
   /**
-   * Opens an escrow dispute and blocks payment release
+   * Submits a partner feedback / complaint report for quality review.
+   * Carvis holds zero funds, so complaints are reviewed for partner profile rating/moderation.
    */
   async openDispute(disputeData) {
     try {
-      // 1. Lock the order's escrow status
-      const { error: orderError } = await supabase
-        .from("orders")
-        .update({ is_escrow_blocked: true })
-        .eq("id", disputeData.orderId);
-
-      if (orderError) throw orderError;
-
-      // 2. Insert dispute record
+      // Record feedback for partner review
       const { data, error } = await supabase
         .from("order_disputes")
         .insert([
@@ -28,7 +21,7 @@ export const DisputeService = {
             reason_category: disputeData.reasonCategory,
             description: disputeData.description,
             evidence_url: disputeData.evidenceUrl || null,
-            status: "under_review"
+            status: "feedback_received"
           }
         ])
         .select()
@@ -37,7 +30,7 @@ export const DisputeService = {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      console.error("Error opening dispute:", error);
+      console.error("Error submitting partner report:", error);
       return { data: null, error };
     }
   },

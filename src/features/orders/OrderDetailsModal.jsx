@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BellRing, Image, ShieldCheck, Truck, X, AlertCircle } from "lucide-react";
 import ServiceTimeline from "./ServiceTimeline";
 import { supabase } from "../../supabaseClient";
@@ -104,10 +104,10 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
             </div>
             <div>
               <p className="text-[10px] font-bold text-primary-400 uppercase tracking-widest">
-                GÜVENLİ KARTLI ÖDEME (CARVIS ÖDEME SİSTEMİ)
+                DOĞRUDAN PARTNER EŞLEŞMESİ (%0 KOMİSYON)
               </p>
               <p className="text-sm text-slate-900 dark:text-white font-medium">
-                Bu servis işlemi Carvis şeffaflık güvencesi altındadır.
+                Ödeme doğrudan partner dükkanında/konumunda tamamlanır. Carvis komisyon almaz.
               </p>
             </div>
           </div>
@@ -287,7 +287,7 @@ const OrderDetailsModal = ({ show, onClose, order }) => {
         customerId={localOrder.customer_id}
         sellerId={localOrder.seller_id}
         sellerName={localOrder.seller?.full_name || localOrder.seller?.company_name || 'Servis Sağlayıcı'}
-        onDisputeOpened={(data) => {
+        onDisputeOpened={(_data) => {
           setLocalOrder(prev => ({ ...prev, is_escrow_blocked: true }));
           showAlert("Başarılı", "Bildiriminiz kaydedildi. Ödemeniz Carvis Güvencesi altında donduruldu.", "success");
         }}

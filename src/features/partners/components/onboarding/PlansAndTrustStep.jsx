@@ -1,189 +1,189 @@
-﻿import React from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Check, ShieldAlert } from "lucide-react";
 
 const planDetails = {
   parking: {
     free: {
-      title: "ÜCRETSİZ BAŞLANGIÇ",
-      desc: "Otopark kapasitenizi sisteme kaydedin ve hemen rezervasyon almaya başlayın.",
-      price: "0 TL / ay",
-      commission: "%10 Rezervasyon Komisyonu",
+      title: "DENEME ABONELİĞİ",
+      desc: "Otopark kapasitenizi sisteme kaydedin ve ilk 14 gün ücretsiz ilan verin.",
+      price: "0 TL / 14 Gün",
+      commission: "%0 Komisyon",
       features: [
         "Profil Oluşturma & Harita Gösterimi",
         "Kapasite & Doluluk Bilgisi Girişi",
-        "Standart Bildirim Akışı",
+        "Doğrudan Müşteri İletişimi",
       ]
     },
     pro: {
-      title: "PRO OTOPARK",
-      desc: "Doluluk yönetimini ve özel tarifelerinizi esnekçe yönetip gelirinizi artırın.",
-      price: "150 TL / ay",
-      commission: "%5 Rezervasyon Komisyonu",
+      title: "STANDART OTOPARK ABONELİĞİ",
+      desc: "Doluluk yönetimini ve özel tarifelerinizi esnekçe yönetip müşteri ağınızı büyütün.",
+      price: "999 TL / ay",
+      commission: "%0 Komisyon",
       features: [
-        "Sınırsız Rezervasyon Alımı",
+        "Sınırsız İlan & Harita Görünürlüğü",
         "Gelişmiş Kapasite Otomasyonu",
         "Özel Tarife & Fiyat Editörü",
-        "Detaylı Finansal Raporlar",
+        "Doğrudan Müşteri Randevuları",
       ]
     },
     premium: {
-      title: "PRESTİJ PREMIUM",
-      desc: "Şehrin en popüler noktalarında harita üstünde en çok tercih edilen otopark olun.",
-      price: "350 TL / ay",
-      commission: "%3 Rezervasyon Komisyonu",
+      title: "PRESTİJ OTOPARK ABONELİĞİ",
+      desc: "Şehrin en popüler noktalarında harita üstünde en öne çıkan otopark olun.",
+      price: "1.499 TL / ay",
+      commission: "%0 Komisyon",
       features: [
         "Haritada En Üst Sıralarda Listelenme",
-        "Bölgesel Reklam & Harita Sponsorluğu",
-        "Rapidsy Trust Güven Rozeti",
+        "Bölgesel Harita Sponsorluğu",
+        "Öne Çıkan Onaylı Partner Rozeti",
         "7/24 Öncelikli Operasyon Desteği",
       ]
     }
   },
   valet: {
     free: {
-      title: "ÜCRETSİZ BAŞLANGIÇ",
-      desc: "Kayıt olun, sertifikanızı yükleyin ve çağrı başına gelir elde edin.",
-      price: "0 TL / ay",
-      commission: "%20 Çağrı Başı Komisyon",
+      title: "DENEME ABONELİĞİ",
+      desc: "Kayıt olun, profilinizi oluşturun ve ilk 14 gün ücretsiz deneyin.",
+      price: "0 TL / 14 Gün",
+      commission: "%0 Komisyon",
       features: [
-        "Profil & Sertifika Kurulumu",
-        "Sınırlı Vale Çağrısı Alımı",
-        "Standart Bildirim Sistemi",
+        "Profil & İletişim Kurulumu",
+        "Harita Konum Listelemesi",
+        "Müşteri Doğrudan Arama",
       ]
     },
     pro: {
-      title: "PRO VALE",
-      desc: "Daha yüksek çağrı kotası ve öncelikli bölgesel yönlendirmelerle kazanın.",
-      price: "150 TL / ay",
-      commission: "%12 Çağrı Başı Komisyon",
+      title: "PRO VALE ABONELİĞİ",
+      desc: "Bölgenizdeki sürücülerin doğrudan size ulaşmasını sağlayın.",
+      price: "999 TL / ay",
+      commission: "%0 Komisyon",
       features: [
-        "Gelişmiş Aylık Çağrı Kotası",
+        "Sınırsız Vale Çağrı Bildirimi",
         "Öncelikli Bölgesel Çağrı Dağıtımı",
-        "Güvenli Vale Kimlik Doğrulama Rozeti",
-        "Puan & Performans Analiz Raporu",
+        "Doğrudan Müşteri İletişimi",
+        "Performans & Değerlendirme Paneli",
       ]
     },
     premium: {
-      title: "PREMIUM ELİT VALE",
-      desc: "Güvenilir premium vale ağında en yüksek öncelik ve dev sigorta koruması.",
-      price: "350 TL / ay",
-      commission: "%8 Çağrı Başı Komisyon",
+      title: "PREMIUM ELİT VALE ABONELİĞİ",
+      desc: "Güvenilir premium vale ağında en yüksek harita önceliğine sahip olun.",
+      price: "1.499 TL / ay",
+      commission: "%0 Komisyon",
       features: [
         "Sınırsız Vale Çağrısı Kabulü",
         "Haritada En Yakın Vale Öncelikli Listelenme",
-        "Rapidsy Trust Eğitim Sertifikalı Vale Rozeti",
-        "Araç Teslim Hasarsızlık Garantisi Desteği",
+        "Onaylı Vale Kimlik Rozeti",
+        "VIP Bölge Sponsorluğu",
       ]
     }
   },
   mechanic: {
     free: {
-      title: "ÜCRETSİZ BAŞLANGIÇ",
-      desc: "Profilinizi oluşturun, bölgenizdeki araç arıza taleplerine ücretsiz teklif verin.",
-      price: "0 TL / ay",
-      commission: "%15 İş Başarı Komisyonu",
+      title: "DENEME ABONELİĞİ",
+      desc: "Profilinizi oluşturun, bölgenizdeki araç arıza taleplerine 14 gün ücretsiz teklif verin.",
+      price: "0 TL / 14 Gün",
+      commission: "%0 Komisyon",
       features: [
         "Profesyonel Servis Profili",
-        "Ayda 5 Arıza Teklifi Gönderme",
+        "Müşteri Taleplerine Doğrudan Teklif",
         "Müşteri Yorum & Değerlendirmeleri",
       ]
     },
     pro: {
-      title: "PRO OTO SERVİS",
-      desc: "Müşteri randevularını, iş emirlerini ve bakım kartlarını profesyonelce yönetin.",
-      price: "150 TL / ay",
-      commission: "%10 İş Başarı Komisyonu",
+      title: "PRO USTA & SERVİS ABONELİĞİ",
+      desc: "Müşteri randevularını ve iş emirlerini yönetin, bölgenizde dükkanınızı büyütün.",
+      price: "1.499 TL / ay",
+      commission: "%0 Komisyon",
       features: [
-        "Ayda 50 Arıza Teklifi Gönderme",
+        "Sınırsız Arıza Teklifi Gönderme",
         "Gelişmiş Randevu Takvimi & İş Emri Paneli",
-        "Dijital Bakım Kartları & Müşteri CRM",
-        "Aylık Finansal Verimlilik Raporları",
+        "Müşteri İletişim Rehberi",
+        "Dükkan İtibar ve Puan Paneli",
       ]
     },
     premium: {
-      title: "PREMIUM AI SERVİS",
-      desc: "Bölgenizde lider, AI teşhisli ve Rapidsy Garantili elit oto servis olun.",
-      price: "350 TL / ay",
-      commission: "%6 İş Başarı Komisyonu",
+      title: "PREMIUM LİDER SERVİS ABONELİĞİ",
+      desc: "Bölgenizde aramalarda en üstte yer alan lider oto servis olun.",
+      price: "2.499 TL / ay",
+      commission: "%0 Komisyon",
       features: [
-        "Sınırsız Arıza Teklifi Gönderme",
         "Arama Sonuçlarında En Üstte Listelenme",
-        "Rapidsy Trust Rozeti & Kalite Taahhütü",
+        "Sınırsız Müşteri Eşleşmesi",
+        "Carvis Onaylı Lider Servis Rozeti",
         "Öncelikli Müşteri Yönlendirmeleri",
       ]
     }
   },
   parts: {
     free: {
-      title: "ÜCRETSİZ BAŞLANGIÇ",
-      desc: "Yedek parça dükkanınızı açın, teklif taleplerini anında yanıtlamaya başlayın.",
-      price: "0 TL / ay",
-      commission: "%15 Satış Komisyonu",
+      title: "DENEME ABONELİĞİ",
+      desc: "Yedek parça dükkanınızı açın, ilk 14 gün ücretsiz parça listeleyin.",
+      price: "0 TL / 14 Gün",
+      commission: "%0 Komisyon",
       features: [
         "Mağaza Profil Kurulumu",
-        "10 Ürün/Stok Listeleme Sınırı",
-        "Standart Sipariş Yönetimi",
+        "Parça Liste Taleplerini Görme",
+        "Doğrudan Müşteri İletişimi",
       ]
     },
     pro: {
-      title: "PRO TEDARİKÇİ",
-      desc: "Toplu ürün yükleme, XML entegrasyonları ve gelişmiş stok araçlarıyla satışları katlayın.",
-      price: "150 TL / ay",
-      commission: "%10 Satış Komisyonu",
+      title: "PRO TEDARİKÇİ ABONELİĞİ",
+      desc: "Parça listelemelerinizi yapın, doğrudan satış bağlantıları kurun.",
+      price: "1.999 TL / ay",
+      commission: "%0 Komisyon",
       features: [
-        "500 Ürün/Stok Listeleme Sınırı",
-        "Toplu Ürün Yükleme & XML Entegrasyonu",
-        "Kampanya & Özel İndirim Tanımlama",
-        "Stok & Sipariş Takip Paneli",
+        "Sınırsız Parça Teklifi Gönderme",
+        "Toplu Stok Listeleme Paneli",
+        "Kampanya & İndirim Duyuruları",
+        "Doğrudan Satış Görüşmeleri",
       ]
     },
     premium: {
-      title: "PREMIUM TEDARİKÇİ",
-      desc: "E-ticarette zirveye oynayıp orijinal tescilli yedek parçalarınızla lider satıcı olun.",
-      price: "350 TL / ay",
-      commission: "%6 Satış Komisyonu",
+      title: "PREMIUM LİDER TEDARİKÇİ ABONELİĞİ",
+      desc: "E-ticarette zirveye oynayın, onaylı yedek parçacı olarak lider konuma gelin.",
+      price: "2.999 TL / ay",
+      commission: "%0 Komisyon",
       features: [
-        "Haritada En Üst Sıralarda Listelenme",
-        "Bölgesel Reklam & Harita Sponsorluğu",
-        "Rapidsy Trust Güven Rozeti",
-        "7/24 Öncelikli Operasyon Desteği",
+        "Arama Sonuçlarında En Üst Sıra",
+        "Bölgesel Harita Sponsorluğu",
+        "Onaylı Tedarikçi Rozeti",
+        "VIP Destek Hattı",
       ]
     }
   },
   carwash: {
     free: {
-      title: "ÜCRETSİZ BAŞLANGIÇ",
-      desc: "Profilinizi oluşturun, bölgenizdeki yıkama taleplerine anında yanıt verin.",
-      price: "0 TL / ay",
-      commission: "%15 Hizmet Komisyonu",
+      title: "DENEME ABONELİĞİ",
+      desc: "Profilinizi oluşturun, bölgenizdeki yıkama randevularını 14 gün ücretsiz alın.",
+      price: "0 TL / 14 Gün",
+      commission: "%0 Komisyon",
       features: [
         "Profil & Harita Kaydı",
-        "Aylık Sınırlı Rezervasyon Kabulü",
+        "Doğrudan İletişim",
         "Standart Bildirim Sistemi",
       ]
     },
     pro: {
-      title: "PRO YIKAMACI",
-      desc: "Sınırsız randevu alımı ve gelişmiş tarife planlamaları ile müşteri ağınızı genişletin.",
-      price: "150 TL / ay",
-      commission: "%10 Hizmet Komisyonu",
+      title: "PRO YIKAMA ABONELİĞİ",
+      desc: "Sınırsız randevu alımı ve harita görünürlüğü ile dükkan müşteri sayınızı artırın.",
+      price: "799 TL / ay",
+      commission: "%0 Komisyon",
       features: [
-        "Sınırsız Randevu Alımı",
+        "Sınırsız Yıkama Randevusu Alımı",
         "Özel Bölgesel Hedefleme & Fiyatlama",
         "Müşteri Sadakat & Yorum Yönetimi",
-        "Aylık Detaylı Gelir Raporları",
+        "Doğrudan Müşteri İletişimi",
       ]
     },
     premium: {
-      title: "PREMIUM MOBİL YIKAMA",
-      desc: "Bölgenizdeki en güvenilir premium seyyar yıkamacı olarak 1. sırada yer alın.",
-      price: "350 TL / ay",
-      commission: "%6 Hizmet Komisyonu",
+      title: "PREMIUM MOBİL YIKAMA ABONELİĞİ",
+      desc: "Bölgenizdeki en görünür yıkama tesisi/mobil yıkamacı olarak öne çıkın.",
+      price: "1.299 TL / ay",
+      commission: "%0 Komisyon",
       features: [
-        "Rapidsy Trust Hijyen & Güven Rozeti",
         "Arama ve Haritada 1. Sıra Garantisi",
-        "Özel Kurumsal Anlaşmalı İş Yönlendirmeleri",
+        "Onaylı Hizmet Sağlayıcı Rozeti",
+        "Özel Kurumsal İlan Listelemesi",
         "Gelişmiş CRM ve Müşteri Paneli",
       ]
     }
@@ -217,10 +217,10 @@ const PlansAndTrustStep = ({
       <div>
         <span className="text-[9px] font-black tracking-widest text-primary-400 uppercase">AŞAMA 3</span>
         <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight mt-1 mb-2 font-sans">
-          Üyelik Planları & Güven Ağı
+          Aylık Üyelik Paketleri & Yasal Bildirim
         </h2>
         <p className="text-amber-400 font-extrabold text-xs bg-amber-500/10 border border-amber-500/20 px-6 py-3 rounded-2xl max-w-2xl mx-auto leading-relaxed mt-3">
-          📢 "Rapidsy'te iş almaya ücretsiz başlayın. İşleriniz büyüdükçe daha fazla görünürlük, daha düşük komisyon ve profesyonel araçlar açılır."
+          🚀 "Carvis işlemlerinizden HİÇBİR KOMİSYON ALMAZ (%0 Komisyon). Sadece aylık sabit üyelik ücreti ile sınırsız müşteri eşleşmesi elde edersiniz!"
         </p>
       </div>
 
@@ -237,7 +237,7 @@ const PlansAndTrustStep = ({
                 : "text-slate-500 hover:text-slate-900 dark:text-white"
             }`}
           >
-            {tab === "free" ? "Free Tier" : tab === "pro" ? "Pro Plan" : "Premium"}
+            {tab === "free" ? "Deneme" : tab === "pro" ? "Pro Plan" : "Premium"}
           </button>
         ))}
       </div>
@@ -245,7 +245,7 @@ const PlansAndTrustStep = ({
       {/* Plan Display Card */}
       <div className="bg-slate-50 dark:bg-slate-950 border border-black/5 dark:border-white/5 rounded-xl p-6 text-left max-w-xl mx-auto relative overflow-hidden transition-all duration-300">
         <div className="absolute top-6 right-6 px-3 py-1 rounded-xl bg-primary-600/15 border border-primary-500/20 text-primary-400 text-[8px] font-black uppercase tracking-widest">
-          {selectedPlanTab === "free" ? "Başlangıç" : selectedPlanTab === "pro" ? "Hacimli İşler" : "Zirve & Liderlik"}
+          {selectedPlanTab === "free" ? "Başlangıç" : selectedPlanTab === "pro" ? "Popüler" : "Zirve & Liderlik"}
         </div>
         <span className="text-[9px] font-black tracking-widest text-slate-500 uppercase">ÖNİZLEME</span>
         <h4 className="text-xl font-black text-slate-900 dark:text-white uppercase mt-1 mb-2 font-sans">
@@ -257,12 +257,12 @@ const PlansAndTrustStep = ({
         
         <div className="flex flex-wrap gap-4 mb-6 pb-4 border-b border-black/5 dark:border-white/5">
           <div className="bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 px-4 py-2 rounded-2xl">
-            <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Sabit Ücret</div>
+            <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Sabit Abonelik</div>
             <div className="text-lg font-black text-slate-900 dark:text-white">{currentPlans[selectedPlanTab].price}</div>
           </div>
           <div className="bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 px-4 py-2 rounded-2xl">
-            <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Komisyon Oranı</div>
-            <div className="text-lg font-black text-teal-400">{currentPlans[selectedPlanTab].commission}</div>
+            <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Satış Komisyonu</div>
+            <div className="text-lg font-black text-emerald-400">%0 KOMİSYON</div>
           </div>
         </div>
 

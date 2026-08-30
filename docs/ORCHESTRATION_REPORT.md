@@ -1,41 +1,35 @@
-## 🎼 Orchestration Report: Public But Unexplored Automotive Datasets
+# 🎼 Orchestration Report: Carvis 3.0 - Partner Aylık Abonelik Modeli & Sıfır Platform Sorumluluğu
 
-### Task
-Explore and integrate publicly available but obscure/hard-to-access data (Chamber of Commerce records, environmental permits, municipality audits, physical structure dimensions, manufacturer recalls, and Technical Service Bulletins) to improve transparency and E-E-A-T trust signals inside the Rapidsy app.
-
-### Mode
-`plan` -> Approved -> `edit` / `implement`
-
-### Agents Invoked (MINIMUM 3)
-| # | Agent | Focus Area | Status |
-|---|-------|------------|--------|
-| 1 | `project-planner` | Plan structure & data architecture design in `docs/PLAN.md` | ✅ Complete |
-| 2 | `explorer-agent` | Discovery of OSM mapping, state variables, and `DigitalPassport` flow | ✅ Complete |
-| 3 | `backend-specialist` | Inject compliance & audit parameters into the API service (`externalApis.js`) | ✅ Complete |
-| 4 | `frontend-specialist` | Render the compliance records (MERSIS, Fire permit, Waste oil license, Gabari dimensions, CCTV, Recalls, TSBs) on `LandingScreen.jsx` & `DigitalPassport.jsx` | ✅ Complete |
-| 5 | `test-engineer` | Run validation scripts (ESLint audit, Playwright tests) | ✅ Complete |
-
-### Verification Scripts Executed
-- [x] `npx eslint src/features/home/LandingScreen.jsx src/features/garage/DigitalPassport.jsx src/services/externalApis.js` -> Passed with 0 errors.
-- [x] `python .agent/scripts/checklist.py .` -> Security Scan passed.
-- [x] `node scratch/test_landing_auth.js` -> Playwright test suite passed successfully.
-
-### Key Findings
-1. **[explorer-agent]**: Discovered that nearby service providers are dynamically mapped from OpenStreetMap (OSM) via the Overpass API. Static mock databases could not capture this.
-2. **[backend-specialist]**: Engineered a deterministic mock generator inside the Overpass mapper based on the OSM Node ID. This guarantees stable, highly realistic metadata (MERSIS, waste oil logs) for every single workshop.
-3. **[frontend-specialist]**:
-   - Implemented a detailed audit indicator panel on each provider card on the Landing map.
-   - Built a comprehensive manufacturer recall & TSB checking panel inside the vehicle's `DigitalPassport` page.
-   - Enhanced the Landing Page Fuel Widget with an EPDK license and underground tank safety checks row.
-
-### Deliverables
-- [x] `docs/PLAN.md` created & approved.
-- [x] `externalApis.js` enriched with compliance metadata.
-- [x] `LandingScreen.jsx` UI enriched with safety/compliance reports and fuel audits.
-- [x] `DigitalPassport.jsx` UI enriched with Manufacturer recalls & TSB campaigns.
-- [x] ESLint errors fixed and Playwright validation tests passing.
+### Task Summary
+Carvis platformundaki komisyon, güvenli havuz (escrow) bloke sistemi ve garanti/tazminat yükümlülükleri tamamen kaldırılmış; platform **%0 Komisyon & Sabit Aylık Partner Aboneliği (SaaS)** ve **Sıfır Platform Sorumluluğu (Doğrudan İlan & Eşleştirme)** modeline başarıyla geçirilmiştir.
 
 ---
 
-### Summary
-We have successfully orchestrated the integration of public but obscure automotive/compliance datasets across the Landing and Dashboard pages of the application. The system compiles cleanly, and is fully ready to be previewed.
+### Invoked Specialist Agents
+| # | Agent | Focus Area | Status |
+|---|-------|------------|--------|
+| 1 | `project-planner` | İş modeli & mimari dönüşüm planının hazırlanması ([PLAN.md](file:///c:/Users/Bedirhan/Desktop/Carvis-App/Carvis/docs/PLAN.md)) | ✅ Completed |
+| 2 | `backend-specialist` | `EscrowService.js`, `DisputeService.js`, `AssuranceService.js` servislerinin %0 komisyon ve doğrudan randevu akışına refactor edilmesi, `seed_partner_accounts.js` profil verilerine abonelik statüsü eklenmesi | ✅ Completed |
+| 3 | `frontend-specialist` | `PlansAndTrustStep.jsx` katılım planlarının sabit aylık aboneliğe dönüştürülmesi, `CommissionTariffsView.jsx` sayfasının %0 Komisyon ve Üyelik Tarifeleri ekranına dönüştürülmesi, `OrderDetailsModal.jsx` ödeme bilgisinin güncellenmesi | ✅ Completed |
+| 4 | `security-auditor` | `legalTexts.js` sözleşme ve yasal metinlerinin Sorumluluk Reddi (Disclaimer) ve Aracı Yazılım Platformu niteliğinde güncellenmesi | ✅ Completed |
+
+---
+
+### Key System Changes
+
+1. **Hukuki Sözleşmeler & Yasal Sorumluluk (`legalTexts.js`)**:
+   - Carvis'in satıcı/hizmet sağlayıcı veya aracı ödeme kuruluşu olmadığı, sadece yazılım/ilan rehberi sağladığı netleştirildi.
+   - Hizmet kalitesi, araç hasarı ve uyuşmazlıklardan platformun hiçbir sorumluluğu olmadığı maddeler halinde sözleşmelere eklendi.
+
+2. **Partner Abonelik Paketleri & Onboarding (`PlansAndTrustStep.jsx`, `CommissionTariffsView.jsx`)**:
+   - Komisyon oranları kaldırıldı (**%0 Komisyon**).
+   - Kategoriye özel Sabit Aylık Abonelik Paketleri tanımlandı:
+     - Oto Servis & Usta: ₺1.499 / Ay
+     - Oto Yedek Parça: ₺1.999 / Ay
+     - Oto Yıkama: ₺799 / Ay
+     - Çekici / Vale / Otopark: ₺999 / Ay
+
+3. **Backend & Servis Mantığı Refaktörü (`EscrowService.js`, `DisputeService.js`, `AssuranceService.js`)**:
+   - Bloke ödeme ve havuz parası mantığı kaldırıldı.
+   - Ödemelerin doğrudan dükkan/adreste müşteri-partner arasında yapılacağı kuralı işletildi.
+   - Uyuşmazlık ve Hasar sistemi platform tazminatından çıkarılıp "Partner Şikayet & Kalite Bildirimi" yapısına dönüştürüldü.

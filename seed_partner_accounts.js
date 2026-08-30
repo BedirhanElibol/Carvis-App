@@ -126,7 +126,7 @@ async function seedPartners() {
         continue;
       }
 
-      // 2. Update Profile to Approved Partner
+      // 2. Update Profile to Approved Partner with Active Monthly Subscription
       const { error: profileError } = await supabase.from('profiles').upsert({
         id: userId,
         email: account.email,
@@ -136,6 +136,9 @@ async function seedPartners() {
         application_status: 'approved',
         is_approved_partner: true,
         is_active_provider: true,
+        subscription_plan: 'pro',
+        subscription_status: 'active',
+        commission_rate: 0,
         updated_at: new Date().toISOString()
       }, { onConflict: 'id' });
 

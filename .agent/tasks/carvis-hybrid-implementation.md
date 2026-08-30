@@ -1,6 +1,6 @@
-# RAPIDSY Hibrit Strateji - Implementation Roadmap
+# CARVIS Hibrit Strateji - Implementation Roadmap
 
-**Proje**: Rapidsy - Araç Yedek Parça & Servis Platformu  
+**Proje**: Carvis - Araç Yedek Parça & Servis Platformu  
 **Strateji**: Hibrit (Marketplace + Teklif Sistemi + AI)  
 **Başlangıç**: 24 Ocak 2026  
 **Durum**: 🟡 In Progress
@@ -69,7 +69,7 @@ Bireysel araç sahipleri, parça tedarikçileri, ustalar ve çekiciler için **t
 - [ ] Webhook handling (ödeme onayı)
 - [ ] Komisyon hesaplama fonksiyonu
 - [ ] Satıcı bakiye yönetimi
-- [ ] Ödeme talepleri (partner → Rapidsy)
+- [ ] Ödeme talepleri (partner → Carvis)
 - [ ] Ödeme geçmişi
 
 ### **Sprint 4: WhatsApp Otomasyon** (2-3 saat)

@@ -1,4 +1,4 @@
-# RAPIDSY - POTANSİYEL SORUNLAR VE ÇÖZÜMLERİ
+# CARVIS - POTANSİYEL SORUNLAR VE ÇÖZÜMLERİ
 
 **Tarih**: 25 Ocak 2026, 00:15  
 **Durum**: Test ve Düzeltme Aşaması

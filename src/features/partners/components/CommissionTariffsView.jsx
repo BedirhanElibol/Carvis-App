@@ -1,131 +1,89 @@
-﻿import React, { useState, useEffect } from "react";
-import { Percent, HelpCircle, RefreshCw, Calculator, DollarSign } from "lucide-react";
-import { supabase } from "../../../supabaseClient";
+import React from "react";
+import { CheckCircle2, ShieldCheck, DollarSign, Sparkles } from "lucide-react";
 
 export default function CommissionTariffsView() {
-  const [rates, setRates] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // Calculator
-  const [price, setPrice] = useState("");
-  const [selectedCategoryRate, setSelectedCategoryRate] = useState(12);
-
-  const fetchRates = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from("commission_rates")
-        .select("*")
-        .order("category", { ascending: true });
-
-      if (!error && data) {
-        setRates(data);
-        if (data.length > 0) {
-          setSelectedCategoryRate(Number(data[0].rate));
-        }
-      }
-    } catch (err) {
-      console.error("Error fetching commission rates:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchRates();
-  }, []);
-
-  // Calculation
-  const commissionValue = price ? (Number(price) * selectedCategoryRate) / 100 : 0;
-  const netEarnings = price ? Number(price) - commissionValue : 0;
+  const subscriptionPlans = [
+    { category: "Oto Servis & Usta", rate: "0%", subFee: "1.499 ₺ / ay", status: "Aktif Abonelik" },
+    { category: "Oto Yedek Parçacı", rate: "0%", subFee: "1.999 ₺ / ay", status: "Aktif Abonelik" },
+    { category: "Oto Yıkama Hizmetleri", rate: "0%", subFee: "799 ₺ / ay", status: "Aktif Abonelik" },
+    { category: "7/24 Yol Yardım & Çekici", rate: "0%", subFee: "999 ₺ / ay", status: "Aktif Abonelik" },
+    { category: "VIP Vale & Otopark", rate: "0%", subFee: "999 ₺ / ay", status: "Aktif Abonelik" },
+  ];
 
   return (
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Komisyon Tarifeleri</h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Kategorilere göre Rapidsy komisyon oranlarını listeleyin ve hakediş hesaplayın.</p>
+        <h1 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Abonelik & Komisyon Tarifeleri</h1>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Carvis %0 Komisyon modeli ile çalışır. Tüm kazancınız tamamen sizde kalır.</p>
+      </div>
+
+      {/* Banner */}
+      <div className="bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-primary-500/10 border border-emerald-500/20 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-emerald-500/20 text-emerald-400 rounded-xl">
+            <Sparkles size={24} />
+          </div>
+          <div>
+            <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase">%0 Komisyon Garantisi</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
+              Carvis müşterilerinizden veya satışlarınızdan hiçbir kesinti yapmaz. Yalnızca sabit aylık paket ücreti ödersiniz.
+            </p>
+          </div>
+        </div>
+        <div className="px-4 py-2 bg-emerald-500 text-slate-950 font-black text-xs uppercase tracking-wider rounded-xl whitespace-nowrap">
+          Tüm Kazanç Sizin
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Rates Table */}
+        {/* Subscription Table */}
         <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-6 lg:col-span-2 space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Kategori Komisyon Oranları</h3>
-            <button
-              onClick={fetchRates}
-              className="p-2 bg-slate-50 hover:bg-slate-100 dark:bg-white/5 dark:hover:bg-white/10 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white"
-            >
-              <RefreshCw size={14} />
-            </button>
+            <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Kategori Bazlı Paket Tarifeleri</h3>
           </div>
 
-          {loading ? (
-            <div className="py-8 text-center text-slate-500 text-xs">Yükleniyor...</div>
-          ) : rates.length === 0 ? (
-            <p className="text-xs text-slate-500 text-center py-4">Tarife bulunamadı.</p>
-          ) : (
-            <div className="divide-y divide-black/5 dark:divide-white/5">
-              {rates.map((r) => (
-                <div key={r.id} className="py-3.5 flex justify-between items-center">
-                  <span className="font-bold text-slate-900 dark:text-white text-xs">{r.category}</span>
-                  <span className="text-xs font-black text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded-full">
-                    %{r.rate}
+          <div className="divide-y divide-black/5 dark:divide-white/5">
+            {subscriptionPlans.map((item, idx) => (
+              <div key={idx} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span className="font-bold text-slate-900 dark:text-white text-xs block">{item.category}</span>
+                  <span className="text-[10px] text-slate-500 font-semibold">{item.subFee}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-black text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded-full flex items-center gap-1">
+                    <CheckCircle2 size={12} /> {item.rate} Komisyon
                   </span>
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Calculator Sidebar */}
+        {/* Info Box */}
         <div className="bg-white dark:bg-slate-900 border border-black/5 dark:border-white/5 rounded-xl p-6 space-y-6 shadow-sm">
           <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-            <Calculator size={18} className="text-emerald-500" /> Hakediş Hesaplayıcı
+            <ShieldCheck size={18} className="text-primary-500" /> Platform Modeli
           </h3>
 
-          <div className="space-y-4">
-            <div>
-              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Satış Fiyatı (₺)</label>
-              <input
-                type="number"
-                placeholder="Örn: 1500"
-                className="w-full bg-slate-50 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-xs focus:outline-none"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
+          <div className="space-y-4 text-xs text-slate-600 dark:text-slate-300">
+            <div className="p-4 bg-slate-50 dark:bg-black/30 rounded-xl space-y-2">
+              <span className="font-bold text-slate-900 dark:text-white block">Doğrudan Ödeme Alın</span>
+              <p className="text-slate-500 text-[11px] leading-relaxed">
+                Müşteri ödemeleri doğrudan iş yerinizde (nakit, kredi kartı vb.) siz alırsınız. Carvis arada para tutmaz ve bloke koymaz.
+              </p>
             </div>
 
-            <div>
-              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kategori Seçimi</label>
-              <select
-                className="w-full bg-slate-50 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-xs focus:outline-none"
-                value={selectedCategoryRate}
-                onChange={(e) => setSelectedCategoryRate(Number(e.target.value))}
-              >
-                {rates.map((r) => (
-                  <option key={r.id} value={r.rate}>
-                    {r.category} (%{r.rate})
-                  </option>
-                ))}
-              </select>
+            <div className="p-4 bg-slate-50 dark:bg-black/30 rounded-xl space-y-2">
+              <span className="font-bold text-slate-900 dark:text-white block">Sınırsız Teklif & İlan</span>
+              <p className="text-slate-500 text-[11px] leading-relaxed">
+                Aboneliğiniz süresince sınırsız müşteri eşleşmesi yapabilir, müşteri listenizi dilediğiniz gibi genişletebilirsiniz.
+              </p>
             </div>
-
-            {price && (
-              <div className="bg-slate-50 dark:bg-black/20 p-4 rounded-xl border border-black/5 dark:border-white/5 space-y-2 text-xs">
-                <div className="flex justify-between text-slate-500">
-                  <span>Komisyon Kesintisi</span>
-                  <span className="font-bold text-red-500">-₺{commissionValue.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-slate-500 pt-2 border-t border-black/5 dark:border-white/5 font-bold">
-                  <span className="text-slate-900 dark:text-white">Alacağınız Tutar</span>
-                  <span className="text-emerald-500">₺{netEarnings.toFixed(2)}</span>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
     </div>
   );
 }
+

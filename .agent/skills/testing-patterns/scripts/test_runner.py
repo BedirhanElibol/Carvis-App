@@ -93,7 +93,6 @@ def run_tests(cmd: list, cwd: Path) -> dict:
             cwd=str(cwd),
             capture_output=True,
             text=True,
-            shell=True, # Added for Windows compatibility
             encoding='utf-8',
             errors='replace',
             timeout=300  # 5 min timeout for tests
