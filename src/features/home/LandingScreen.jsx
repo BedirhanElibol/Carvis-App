@@ -11,7 +11,6 @@ import logo from "../../assets/logo.png";
 import { useUI } from "../../context/UIContext";
 import { useAuth } from "../../context/AuthContext";
 import { getFuelPrices, getNearbyProviders, getCityMetadata, getEGMEDSMarkers } from "../../services/externalApis";
-import LandingVideoHero from "./components/landing/LandingVideoHero";
 import LandingHero from "./components/landing/LandingHero";
 import LandingTrustBanner from "./components/landing/LandingTrustBanner";
 import LandingFeatures from "./components/landing/LandingFeatures";
@@ -223,9 +222,6 @@ const LandingScreen = () => {
       {/* Main Content Scrollable Area */}
       <div className="relative z-10 pt-28 md:pt-36 flex flex-col items-center">
         
-        {/* SCROLL LOCKED VIDEO HERO (TOGGLEABLE) */}
-        <LandingVideoHero />
-
         {/* HERO SECTION */}
         <LandingHero 
           t={t} 

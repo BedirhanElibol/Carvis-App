@@ -6,7 +6,7 @@ import ScrollLockedVideoHero from "../../../../components/ui/scroll-locked-video
  * Set enabled to true to render the scroll-locked video hero on landing,
  * or false to bypass and return null (100% reversible anytime).
  */
-export const SHOW_VIDEO_HERO_BY_DEFAULT = true;
+export const SHOW_VIDEO_HERO_BY_DEFAULT = false;
 
 export default function LandingVideoHero({ enabled = SHOW_VIDEO_HERO_BY_DEFAULT }) {
   if (!enabled) return null;
