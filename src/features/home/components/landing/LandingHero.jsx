@@ -52,8 +52,8 @@ const LandingHero = memo(({ t, language, fuelPrices, fuelCity, isLoadingFuel, on
             className="text-lg md:text-[19px] text-slate-600 dark:text-slate-300 max-w-lg mb-10 leading-relaxed font-normal"
           >
             {language === "tr" 
-              ? "Sanayi sürprizlerini unutun. Aracınızın arıza, bakım veya parça ihtiyaçları için çevrenizdeki en iyi ustalardan anında teklif alın ve havuz ödeme sistemiyle paranızı güvenceye alın." 
-              : "Forget garage surprises. Get instant quotes from the best local mechanics for repairs, maintenance, or parts needs, and secure your money."}
+              ? "Sanayi sürprizlerini unutun. Aracınızın arıza, bakım veya parça ihtiyaçları için çevrenizdeki en iyi ustalardan anında teklif alın, %0 komisyonla doğrudan anlaşın." 
+              : "Forget garage surprises. Get instant quotes from top local mechanics for repairs, maintenance, or parts with 0% commission."}
           </motion.p>
 
           {/* Buttons */}
