@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Search, PenTool, ShieldCheck } from "lucide-react";
 
 const LandingHowItWorks = ({ language }) => {
@@ -76,8 +76,8 @@ const LandingHowItWorks = ({ language }) => {
               </h3>
               <p className="text-slate-600 dark:text-slate-400 text-[14px] leading-relaxed">
                 {language === "tr" 
-                  ? "Bütçenize uygun teklifi seçin. Havuz ödeme sistemimiz sayesinde, aracınız teslim edilene kadar paranız ustaya geçmez." 
-                  : "Choose the bid that fits your budget. Thanks to our escrow system, your money is held until your car is delivered."}
+                  ? "Bütçenize uygun teklifi seçin. %0 komisyonla randevunuzu oluşturup ödemeyi doğrudan partner dükkanında tamamlayın." 
+                  : "Choose the bid that fits your budget with 0% commission and complete payment directly at the partner shop."}
               </p>
             </div>
           </div>

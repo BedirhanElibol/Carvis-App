@@ -1,5 +1,5 @@
 import React from "react";
-import ScrollLockedVideoHero from "../../../components/ui/scroll-locked-video-hero";
+import ScrollLockedVideoHero from "../../../../components/ui/scroll-locked-video-hero";
 
 /**
  * FEATURE TOGGLE / SWITCHABLE LANDING VIDEO HERO

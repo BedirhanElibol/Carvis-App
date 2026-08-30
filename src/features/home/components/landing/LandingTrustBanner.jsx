@@ -59,9 +59,9 @@ const LandingTrustBanner = ({ language }) => {
             <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-500/10 flex items-center justify-center mb-2">
               <BarChart3 size={16} className="text-emerald-600 dark:text-emerald-500" />
             </div>
-            <span className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">%100</span>
-            <span className="text-[15px] text-slate-700 dark:text-slate-300 font-medium mt-1">Havuz Ödeme</span>
-            <span className="text-[13px] text-slate-500 mt-0.5">Paranız güvence altında</span>
+            <span className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">%0</span>
+            <span className="text-[15px] text-slate-700 dark:text-slate-300 font-medium mt-1">Komisyon</span>
+            <span className="text-[13px] text-slate-500 mt-0.5">Doğrudan yerinde ödeme</span>
           </div>
 
           <div className="flex flex-col items-center md:items-start gap-2">

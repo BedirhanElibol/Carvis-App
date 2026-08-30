@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Car, SearchCheck, Cpu, ShieldCheck } from 'lucide-react';
 
@@ -77,10 +77,10 @@ const LandingFeatureCarousel = ({ language, t }) => {
     {
       id: "escrow",
       icon: <ShieldCheck size={32} className="text-sky-500" />,
-      title: language === "tr" ? "Güvenli Havuz Ödemesi" : "Secure Escrow Payment",
+      title: language === "tr" ? "Doğrudan Ödeme (%0 Komisyon)" : "Direct Payment (0% Commission)",
       desc: language === "tr" 
-        ? "Paranız Rapidsy havuzunda güvendedir. Usta işi eksiksiz tamamlayıp siz onay vermeden ödeme karşı tarafa geçmez." 
-        : "Your money is safe in the Rapidsy pool. Payment is not transferred until the mechanic completes the job and you approve.",
+        ? "Carvis %0 komisyonla çalışır. Randevunuzu oluşturur, ödemeyi doğrudan dükkanda partnere yaparsınız." 
+        : "Carvis operates with 0% commission. Book your appointment and pay directly to the partner at the shop.",
       mockupBg: "from-slate-50 to-slate-100 dark:from-slate-950 dark:to-[#0a0f24]",
       content: (
         <div className="flex flex-col items-center justify-center h-full gap-6">

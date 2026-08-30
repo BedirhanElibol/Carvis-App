@@ -1,4 +1,4 @@
-﻿import React, { useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Car, SearchCheck, Cpu, ShieldCheck, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -239,11 +239,11 @@ const LandingScrollFeatures = ({ language, t }) => {
     {
       id: "escrow",
       icon: <ShieldCheck size={32} className="text-white" />,
-      badge: language === "tr" ? "04 / HAVUZ ÖDEME" : "04 / ESCROW PAYMENT",
-      title: language === "tr" ? "Paranız Güvende.\nİşiniz Garanti." : "Your Money is Safe.\nYour Job is Guaranteed.",
+      badge: language === "tr" ? "04 / DOĞRUDAN ÖDEME" : "04 / DIRECT PAYMENT",
+      title: language === "tr" ? "%0 Komisyon.\nDoğrudan Anlaşma." : "0% Commission.\nDirect Payment.",
       desc: language === "tr" 
-        ? "Kredi kartınızla güvenle ödeyin. Tutar Rapidsy havuzuna aktarılır, usta işi eksiksiz teslim edip siz onay vermeden asla karşı tarafa geçmez." 
-        : "Pay securely with your credit card. The amount is held in the Rapidsy pool and never transferred until the mechanic completes the job and you approve.",
+        ? "Carvis %0 komisyon ile çalışır. Teklifinizi seçip randevunuzu onaylayın, ödemeyi doğrudan dükkanda partnere %0 komisyonla yapın." 
+        : "Carvis operates with 0% commission. Choose your bid, confirm appointment, and pay directly to the partner with 0% commission.",
       color: "bg-emerald-500",
       content: (
         <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200/50 dark:border-white/10 w-full flex flex-col items-center justify-center relative overflow-hidden">
