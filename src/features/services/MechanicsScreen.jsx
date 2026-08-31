@@ -39,11 +39,27 @@ const MechanicsScreen = () => {
     setBookingModal({ open: true, sellerId, shopName });
   };
 
-  // API Key Check
-  const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  const mapUrl = GOOGLE_MAPS_API_KEY
-    ? `https://maps.googleapis.com/maps/api/staticmap?center=39.93,32.85&zoom=10&size=600x600&sensor=false&key=${GOOGLE_MAPS_API_KEY}`
-    : null;
+  const [mapUrl, setMapUrl] = useState(null);
+
+  // Fetch Map Image from proxy
+  useEffect(() => {
+    const fetchMap = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke('maps-proxy');
+        if (error) {
+          throw error;
+        }
+        if (data && data.mapUrl) {
+          setMapUrl(data.mapUrl);
+        }
+      } catch (err) {
+        console.error("Failed to load map:", err);
+      }
+    };
+    if (isMapView && !mapUrl) {
+      fetchMap();
+    }
+  }, [isMapView, mapUrl]);
 
   // Fetch Mechanics from DB
   useEffect(() => {
